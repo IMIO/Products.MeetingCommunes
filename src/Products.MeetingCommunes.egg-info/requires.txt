@@ -1,5 +1,0 @@
-setuptools
-Products.PloneMeeting
-
-[test]
-zope.testing
