@@ -68,9 +68,5 @@ def initialize(context):
 
 
     ##code-section custom-init-bottom #fill in your manual code here
-    #XXX change this please...
-    #this is necessary to be able to override PloneMeeting translations...
-    zopeProduct=context._ProductContext__app.Control_Panel.Products.MeetingCommunes
-    zopeProduct.package_name = 'HubSessions.MeetingCommunes'
     ##/code-section custom-init-bottom
 
