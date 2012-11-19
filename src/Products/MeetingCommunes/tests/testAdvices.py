@@ -61,29 +61,11 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         """
         pmta.testAddEditDeleteAdvices(self)
 
-    def test_mc_GiveAdviceOnCreatedItem(self):
+    def test_mc_call_GiveAdviceOnCreatedItem(self):
         """
-          Check that, if configured, an adviser can give an advice when an item is in state 'itemcreated'.
-          XXX This will be removed in PloneMeeting 3 as PM3 manage this now and has his own test.
+          Run the testGiveAdviceOnCreatedItem from PloneMeeting
         """
-        self.setMeetingConfig(self.meetingConfig2.getId())
-        self.meetingConfig.setItemAdviceStates(('itemcreated', 'proposed', 'validated',))
-        self.meetingConfig.setItemAdviceEditStates(('itemcreated', 'proposed', 'validated',))
-        self.meetingConfig.setItemAdviceViewStates(('itemcreated', 'proposed', 'validated',))
-        self.changeUser('pmCreator1')
-        # create an item and ask the advice of group 'vendors'
-        data = {
-            'title': 'Item to advice',
-            'category': 'maintenance',
-            'optionalAdvisers': ('vendors',)
-        }
-        item1 = self.create('MeetingItem', **data)
-        self.assertEquals(item1.needsAdvices(), True)
-        # check than the adviser can see the item
-        self.changeUser('pmReviewer2')
-        import ipdb; ipdb.set_trace()
-        self.failUnless(self.hasPermission('View', item1))
-        self.assertEquals(item1.getAdvicesToGive(), ([('vendors', u'Vendors')], []))
+        pmta.testGiveAdviceOnCreatedItem(self)
 
 
 def test_suite():

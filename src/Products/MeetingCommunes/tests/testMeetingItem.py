@@ -24,6 +24,7 @@
 
 from DateTime import DateTime
 from AccessControl import Unauthorized
+from plone.app.testing import login
 from Products.CMFCore.utils import getToolByName
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
@@ -128,7 +129,7 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''Test the functionnality around MeetingItem.itemIsSigned field.'''
         mtool = getToolByName(self.portal, 'portal_membership')
         authMember = mtool.getAuthenticatedMember
-        self.login('pmCreator1')
+        login(self.portal, 'pmCreator1')
         item = self.create('MeetingItem')
         item.setCategory('development')
         item.setDecision('<p>My decision</p>', mimetype='text/html')

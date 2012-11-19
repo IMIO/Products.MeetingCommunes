@@ -22,6 +22,7 @@
 # 02110-1301, USA.
 #
 
+from plone.app.testing import login
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testMeeting import testMeeting as pmtm
@@ -44,12 +45,12 @@ class testCustomMeeting(MeetingCommunesTestCase, pmtm):
         #configure PloneMeeting
         #test if the category is a MeetingCategory
         #insert items in the meeting depending on the category
-        self.login('admin')
+        login(self.portal, 'admin')
         self.meetingConfig.setUseGroupsAsCategories(False)
         self.meetingConfig.setSortingMethodOnAddItem('on_categories')
 
         #add a Meeting and present several items in different categories
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         i1 = self.create('MeetingItem', title='Item1')
         i1.setCategory('travaux')
         i2 = self.create('MeetingItem', title='Item2')
@@ -105,12 +106,12 @@ class testCustomMeeting(MeetingCommunesTestCase, pmtm):
         #configure PloneMeeting
         #test if the category is a MeetingCategory
         #insert items in the meeting depending on the category
-        self.login('admin')
+        login(self.portal, 'admin')
         self.meetingConfig.setUseGroupsAsCategories(True)
         self.meetingConfig.setSortingMethodOnAddItem('on_proposing_groups')
 
         #add a Meeting and present several items in different categories
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         i1 = self.create('MeetingItem', title='Item1')
         i1.setProposingGroup('developers')
         i2 = self.create('MeetingItem', title='Item2')
@@ -160,7 +161,7 @@ class testCustomMeeting(MeetingCommunesTestCase, pmtm):
         """
         #check that it works
         #check that if the field contains something, it is not intialized again
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         #create some items
         #empty decision
         i1 = self.create('MeetingItem', title='Item1', description="<p>Description Item1</p>")
@@ -200,7 +201,7 @@ class testCustomMeeting(MeetingCommunesTestCase, pmtm):
         """
           The allItemsAtOnce field is only shown for not decided meetings
         """
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         item = self.create('MeetingItem', title='Item1', description="<p>Description Item1</p>")
         item.setProposingGroup('developers')
         m = self.create('Meeting', date='2009/11/26 09:00:00')

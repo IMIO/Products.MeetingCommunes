@@ -22,10 +22,11 @@
 # 02110-1301, USA.
 #
 
+from DateTime import DateTime
+from plone.app.testing import login
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testMeetingItem import testMeetingItem as pmtmi
-from DateTime import DateTime
 
 class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
     """
@@ -54,7 +55,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
            We have to test this adapted method.
            It should only return meetings that are "created" or "frozen"
         """
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         #create 4 meetings with items so we can play the workflow
         #will stay 'created'
         m1 = self._createMeetingWithItems()
@@ -76,18 +77,18 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.assertEquals([m.id for m in item.adapted().getMeetingsAcceptingItems()], [m1.id, m2.id, m3.id])
         #getMeetingsAcceptingItems should only return meetings 
         #that are 'created' or 'frozen' for the meetingMember
-        self.login('pmCreator1')
+        login(self.portal, 'pmCreator1')
         item = self.create('MeetingItem')
         self.assertEquals([m.id for m in item.adapted().getMeetingsAcceptingItems()], [m1.id, m2.id])
 
     def test_mc_GetCertifiedSignatures(self):
         '''Check that the certified signature is defined on developers group but not defined on vendors.'''
         #create an item for test
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         meetingDate = DateTime('2008/06/12 08:00:00')
         self.create('Meeting', date=meetingDate)
         #create items
-        self.login('pmCreator1')
+        login(self.portal, 'pmCreator1')
         i1 = self.create('MeetingItem')
         i1.setProposingGroup('vendors')
         #before present in meeting, certfiedSignatures must be empty
@@ -95,15 +96,15 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.assertEquals(res,'')
         self.assertEquals(isGrpSign,False)
         self.do(i1, 'propose')
-        self.login('pmReviewer1')
+        login(self.portal, 'pmReviewer1')
         self.do(i1, 'validate')
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         self.do(i1, 'present')
         #no signatures defined for vendors group, get meetingconfig signature
         res, isGrpSign = i1.adapted().getCertifiedSignatures()
         self.assertEquals(res,'Pierre Dupont, Bourgmestre - Charles Exemple, 1er Echevin')
         self.assertEquals(isGrpSign,False)
-        self.login('pmCreator1')
+        login(self.portal, 'pmCreator1')
         i2 = self.create('MeetingItem')
         i2.setProposingGroup('developers')
         #before present in meeting, certfiedSignatures must be empty
@@ -111,9 +112,9 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.assertEquals(res,'')
         self.assertEquals(isGrpSign,False)
         self.do(i2, 'propose')
-        self.login('pmReviewer1')
+        login(self.portal, 'pmReviewer1')
         self.do(i2, 'validate')
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         self.do(i2, 'present')
         #signatures defined for developers group, get it
         res, isGrpSign = i2.adapted().getCertifiedSignatures()
@@ -124,17 +125,17 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''Check a meetingItem for developers group return an echevin (the Same group in our case)
            and a meetingItem for vendors return no echevin.'''
         #create an item for test
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         meetingDate = DateTime('2008/06/12 08:00:00')
         self.create('Meeting', date=meetingDate)
         #create items
-        self.login('pmCreator1')
+        login(self.portal, 'pmCreator1')
         i1 = self.create('MeetingItem')
         i1.setProposingGroup('vendors')
         #before present in meeting, certfiedSignatures must be empty
         res = i1.adapted().getEchevinsForProposingGroup()
         self.assertEquals(res,[])
-        self.login('pmCreator1')
+        login(self.portal, 'pmCreator1')
         i2 = self.create('MeetingItem')
         i2.setProposingGroup('developers')
         #before present in meeting, certfiedSignatures must be empty
@@ -143,12 +144,12 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
 
     def test_mc_getDelayedDecision(self):
         '''If item is reported, the decision can be changed'''
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         #create a meeting with items so we can play the workflow
         #will stay 'created'
         m1 = self._createMeetingWithItems()
         self.do(m1, 'freeze')
-        self.do(m1, 'decide')        
+        self.do(m1, 'decide')
         item = m1.getItems()[0]
         item.setDecision('<p>testing decision field</p>')
         #field itemDecisionReportText in configuration is empty
@@ -158,11 +159,13 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         #change field itemDecisionReportText in configuration by python:'item is delay'
         item = m1.getItems()[1]
         meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
-        meetingConfig.setItemDecisionReportText("python:'item is delay'")        
+        login(self.portal, 'admin')
+        meetingConfig.setItemDecisionReportText("python:'item is delay'")
+        login(self.portal, 'pmManager')
         item.setDecision('<p>testing decision field</p>')
         #field itemDecisionReportText in configuration is empty
         self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.do(item, 'delay')       
+        self.do(item, 'delay')
         self.assertEquals(item.getDecision(),'<p>item is delay</p>')
         #change field itemDecisionReportText in configuration by python:'%s delay this item'%here.getDecision()'
         item = m1.getItems()[2]
@@ -177,7 +180,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
     def test_mc_getDecision(self):
         '''If meeting is in decided state, only the meetingManager can
            view the real decision. The other people view a standard message.'''
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         #create a meeting with items so we can play the workflow
         #will stay 'created'
         m1 = self._createMeetingWithItems()
@@ -187,8 +190,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         from Products.PloneMeeting.model.adaptations import performWorkflowAdaptations
         import logging
         logger = logging.getLogger('MeetingCommunes: test')
-        site = self.getPortal()
-        performWorkflowAdaptations(site, meetingConfig, logger)
+        performWorkflowAdaptations(self.portal, meetingConfig, logger)
         item.setDecision('<p>testing decision field</p>')
         self.changeUser('pmCreator1')
         #the decision is avalaible for all people

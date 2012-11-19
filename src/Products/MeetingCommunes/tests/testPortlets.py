@@ -23,6 +23,7 @@
 #
 
 from zope.component import getUtility, getMultiAdapter
+from plone.app.testing import login
 from plone.portlets.interfaces import IPortletManager, IPortletRenderer
 from Products.PloneMeeting.browser import portlet_plonemeeting as pm
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
@@ -41,7 +42,7 @@ class testPortlets(MeetingCommunesTestCase, pmtp):
            template5 is available to everyone but template1 is restricted to group 'developers' and 'vendors'.'''
         #we do the test for the college config
         # pmCreator1 is member of 'developers'
-        self.login('pmCreator1')
+        login(self.portal, 'pmCreator1')
         self.getMeetingFolder()
         context = getattr(self.portal.Members.pmCreator1.mymeetings, self.meetingConfig.getId())
         request = self.portal.REQUEST
@@ -51,7 +52,7 @@ class testPortlets(MeetingCommunesTestCase, pmtp):
         renderer = getMultiAdapter((context, request, view, manager, assignment), IPortletRenderer)
         self.assertEquals( ['template1', 'template2', 'template3', 'template4', 'template5'], [template.getId() for template in renderer.getTemplateItems()])
         # pmCreator2 is member of 'vendors' and can so access template1 that is restricted to 'developers' and 'vendors'
-        self.login('pmCreator2')
+        login(self.portal, 'pmCreator2')
         self.getMeetingFolder()
         context = getattr(self.portal.Members.pmCreator2.mymeetings, self.meetingConfig.getId())
         request = self.portal.REQUEST
@@ -62,7 +63,7 @@ class testPortlets(MeetingCommunesTestCase, pmtp):
         self.assertEquals(['template1', 'template5', ], [template.getId() for template in renderer.getTemplateItems()])
         #no templates for council config...
         # pmCreator1 is member of 'developers'
-        self.login('pmCreator1')
+        login(self.portal, 'pmCreator1')
         self.setMeetingConfig(self.meetingConfig2.getId())
         self.getMeetingFolder()
         context = getattr(self.portal.Members.pmCreator1.mymeetings, self.meetingConfig.getId())
@@ -73,7 +74,7 @@ class testPortlets(MeetingCommunesTestCase, pmtp):
         renderer = getMultiAdapter((context, request, view, manager, assignment), IPortletRenderer)
         self.assertEquals([], [template.getId() for template in renderer.getTemplateItems()])
         # pmCreator2 is member of 'vendors' and can so access template2 that is restricted to 'vendors'
-        self.login('pmCreator2')
+        login(self.portal, 'pmCreator2')
         self.getMeetingFolder()
         context = getattr(self.portal.Members.pmCreator2.mymeetings, self.meetingConfig.getId())
         request = self.portal.REQUEST

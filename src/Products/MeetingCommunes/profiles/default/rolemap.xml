@@ -7,6 +7,7 @@
     <role name="MeetingObserverLocal"/>
     <role name="MeetingObserverLocalCopy"/>
     <role name="MeetingPowerObserver"/>
+    <role name="MeetingPowerObserverLocal"/>
     <role name="MeetingReviewer"/>
 <!-- ##code-section roles -->
 <!-- ##/code-section roles -->

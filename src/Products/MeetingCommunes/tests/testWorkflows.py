@@ -22,12 +22,13 @@
 # 02110-1301, USA.
 #
 
+from DateTime import DateTime
 from AccessControl import Unauthorized
+from plone.app.testing import login
 from Products.MeetingCommunes.config import *
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testWorkflows import testWorkflows as pmtw
-from DateTime import DateTime
 
 class testWorkflows(MeetingCommunesTestCase, pmtw):
     """Tests the default workflows implemented in MeetingCommunes.
@@ -102,7 +103,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         '''This test covers the whole decision workflow. It begins with the
            creation of some items, and ends by closing a meeting.'''
         # pmCreator1 creates an item with 1 annex and proposes it
-        self.login('pmCreator1')
+        login(self.portal, 'pmCreator1')
         item1 = self.create('MeetingItem', title='The first item')
         self.addAnnex(item1)
         self.addAnnex(item1, decisionRelated=True)
@@ -180,7 +181,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         #we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
         # pmCreator1 creates an item with 1 annex and proposes it
-        self.login('pmCreator1')
+        login(self.portal, 'pmCreator1')
         item1 = self.create('MeetingItem', title='The first item')
         self.addAnnex(item1)
         # The creator can add a decision annex on created item
@@ -312,16 +313,16 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
         #if not recurring item is defined, none is added
         #while creating a meeting, no extra items are created...
-        self.login('admin')
+        login(self.portal, 'admin')
         self.portal.delete_givenuid(self.meetingConfig.recurringitems.recItem1.UID())
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
         self.assertEquals(len(meeting.getItems()), 0)
 
     def test_mc_RecurringItemsCollege(self):
         '''Tests the recurring items system.'''
         # First, define recurring items in the meeting config
-        self.login('admin')
+        login(self.portal, 'admin')
         #3 recurring items are already existing by default
         self.create('RecurringMeetingItem', title='Rec item 1',
                     proposingGroup='developers',
@@ -371,7 +372,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
            'presented' state
         """
         # First, define recurring items in the meeting config
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         #create a meeting
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
         #create 2 items and present them to the meeting
@@ -405,7 +406,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
            not decided...
         """
         # First, define recurring items in the meeting config
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         #create a meeting (with 7 items)        
         meetingDate = DateTime().strftime('%y/%m/%d %H:%M:00')
         meeting = self.create('Meeting', date=meetingDate)

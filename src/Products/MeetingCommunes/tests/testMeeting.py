@@ -22,6 +22,7 @@
 # 02110-1301, USA.
 #
 
+from plone.app.testing import login
 from Products.MeetingCommunes.config import *
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
@@ -65,7 +66,7 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         """
         #depending on order of insertion and recurring item,s the result is different
         #between college and council
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         for meetingConfig in self.tool.getActiveConfigs():
             meetingConfigId = meetingConfig.getId()
             self.setMeetingConfig(meetingConfigId)
@@ -81,7 +82,7 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
 
     def test_mc_call_InsertItemCategories(self):
         '''Sort method tested here is "on_categories".'''
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         for meetingConfig in self.tool.getActiveConfigs():
             meetingConfigId = meetingConfig.getId()
             self.setMeetingConfig(meetingConfigId)
@@ -103,7 +104,7 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
            Run the testInsertItemAllGroups from PloneMeeting
         """
         #we do the test for the college config
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         for meetingConfig in ('meeting-config-college', 'meeting-config-council', ):
             self.setMeetingConfig(meetingConfig)
             self.meetingConfig.setSortingMethodOnAddItem('on_all_groups')
@@ -120,7 +121,7 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
     def test_mc_call_InsertItemPrivacyThenProposingGroups(self):
         '''Sort method tested here is "on_privacy_then_proposing_groups".'''
         #we do the test for the college config
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         for meetingConfig in ('meeting-config-college', 'meeting-config-council', ):
             self.setMeetingConfig(meetingConfig)
             self.meetingConfig.setSortingMethodOnAddItem('on_privacy_then_proposing_groups')
@@ -136,7 +137,7 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
 
     def test_mc_call_InsertItemPrivacyThenCategories(self):
         '''Sort method tested here is "on_privacy_then_categories".'''
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         for meetingConfig in ('meeting-config-college', 'meeting-config-council', ):
             self.setMeetingConfig(meetingConfig)
             self.meetingConfig.setSortingMethodOnAddItem('on_privacy_then_categories')
@@ -168,7 +169,7 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         """
            Run the testRemoveOrDeleteLinkedItem from PloneMeeting
         """
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         meeting = self._createMeetingWithItems()
         self.assertEquals([item.id for item in meeting.getItemsInOrder()],
           ['recurringagenda1', 'recurringofficialreport1', 'recurringofficialreport2', 'o2', 'o3', 'o4', 'o5', 'o6'])
@@ -191,7 +192,7 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         """
         # here, the last item number is updated in the config in the doClose
         # not in the doPublish
-        self.login('pmManager')
+        login(self.portal, 'pmManager')
         m1 = self._createMeetingWithItems()
         self.assertEquals(self.meetingConfig.getLastMeetingNumber(), 0)
         self.assertEquals(m1.getMeetingNumber(), -1)

@@ -15,7 +15,7 @@
  <object name="meetingcommunes_templates"
          meta_type="Filesystem Directory View"
          directory="MeetingCommunes/skins/meetingcommunes_templates"/>
-
+ 
  <skin-path name="*">
   <layer insert-after="custom" 
          name="meetingcommunes_images"/>

@@ -22,6 +22,7 @@
 # 02110-1301, USA.
 #
 
+from plone.app.testing import login
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
 
@@ -32,7 +33,7 @@ class testMeetingGroup(MeetingCommunesTestCase):
         MeetingCommunesTestCase.afterSetUp(self)
 
     def testListEchevinServices(self):
-        self.login('admin')
+        login(self.portal, 'admin')
         from Products.Archetypes.atapi import DisplayList
         les = DisplayList([('developers', u'Developers'), ('vendors', u'Vendors')])
         meetingGroups = self.tool.objectValues('MeetingGroup')   

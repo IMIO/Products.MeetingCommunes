@@ -34,6 +34,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="Add portal content"
                   acquired="False">
@@ -67,6 +68,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read decision annex"
                   acquired="False">
@@ -77,6 +79,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read item observations"
                   acquired="False">
@@ -87,6 +90,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read optional advisers"
                   acquired="False">
@@ -97,6 +101,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -131,6 +136,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
  </state>
  <state state_id="accepted_but_modified"
@@ -146,6 +152,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="Add portal content"
                   acquired="False">
@@ -179,6 +186,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read decision annex"
                   acquired="False">
@@ -189,6 +197,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read item observations"
                   acquired="False">
@@ -199,6 +208,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read optional advisers"
                   acquired="False">
@@ -209,6 +219,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -243,6 +254,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
  </state>
  <state state_id="delayed"
@@ -258,6 +270,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="Add portal content"
                   acquired="False">
@@ -291,6 +304,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read decision annex"
                   acquired="False">
@@ -301,6 +315,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read item observations"
                   acquired="False">
@@ -311,6 +326,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read optional advisers"
                   acquired="False">
@@ -321,6 +337,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -355,6 +372,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
  </state>
  <state state_id="itemcreated"
@@ -366,6 +384,7 @@
    <permission-role>Manager</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="Add portal content"
                   acquired="False">
@@ -397,22 +416,26 @@
    <permission-role>Manager</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingManager</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read decision annex"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingManager</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read item observations"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>MeetingMember</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read optional advisers"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>MeetingMember</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -447,6 +470,7 @@
    <permission-role>Manager</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
  </state>
  <state state_id="itemfrozen"
@@ -462,6 +486,7 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="Add portal content"
                   acquired="False">
@@ -497,6 +522,7 @@
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read decision annex"
                   acquired="False">
@@ -506,6 +532,7 @@
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read item observations"
                   acquired="False">
@@ -515,6 +542,7 @@
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read optional advisers"
                   acquired="False">
@@ -524,6 +552,7 @@
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -558,6 +587,7 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
  </state>
  <state state_id="itempublished"
@@ -578,6 +608,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="Add portal content"
                   acquired="False">
@@ -613,6 +644,7 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read decision annex"
                   acquired="False">
@@ -623,6 +655,7 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read item observations"
                   acquired="False">
@@ -633,6 +666,7 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read optional advisers"
                   acquired="False">
@@ -643,6 +677,7 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -678,6 +713,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
  </state>
  <state state_id="pre_accepted"
@@ -695,6 +731,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="Add portal content"
                   acquired="False">
@@ -730,6 +767,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read decision annex"
                   acquired="False">
@@ -740,6 +778,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read item observations"
                   acquired="False">
@@ -750,6 +789,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read optional advisers"
                   acquired="False">
@@ -760,6 +800,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -795,6 +836,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
  </state>
  <state state_id="presented"
@@ -810,6 +852,7 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="Add portal content"
                   acquired="False">
@@ -844,6 +887,7 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read decision annex"
                   acquired="False">
@@ -853,6 +897,7 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read item observations"
                   acquired="False">
@@ -862,6 +907,7 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read optional advisers"
                   acquired="False">
@@ -871,6 +917,7 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -905,6 +952,7 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
  </state>
  <state state_id="proposed"
@@ -918,6 +966,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="Add portal content"
                   acquired="False">
@@ -950,6 +999,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read decision annex"
                   acquired="False">
@@ -957,6 +1007,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read item observations"
                   acquired="False">
@@ -964,6 +1015,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read optional advisers"
                   acquired="False">
@@ -971,6 +1023,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -1007,6 +1060,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
  </state>
  <state state_id="refused"
@@ -1022,6 +1076,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="Add portal content"
                   acquired="False">
@@ -1055,6 +1110,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read decision annex"
                   acquired="False">
@@ -1065,6 +1121,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read item observations"
                   acquired="False">
@@ -1075,6 +1132,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read optional advisers"
                   acquired="False">
@@ -1085,6 +1143,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -1119,6 +1178,7 @@
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
    <permission-role>MeetingPowerObserver</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
  </state>
  <state state_id="validated"
@@ -1134,6 +1194,7 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="Add portal content"
                   acquired="False">
@@ -1168,6 +1229,7 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read decision annex"
                   acquired="False">
@@ -1177,6 +1239,7 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read item observations"
                   acquired="False">
@@ -1186,6 +1249,7 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Read optional advisers"
                   acquired="False">
@@ -1195,6 +1259,7 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -1229,6 +1294,7 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
+   <permission-role>MeetingPowerObserverLocal</permission-role>
   </permission-map>
  </state>
  <transition transition_id="accept"
@@ -1470,5 +1536,7 @@
   <guard>
   </guard>
  </variable>
+<!-- ##code-section FOOT -->
+<!-- ##/code-section FOOT -->
  <!-- We dont use workflow scripts any more, we use subscribers -->
 </dc-workflow>
