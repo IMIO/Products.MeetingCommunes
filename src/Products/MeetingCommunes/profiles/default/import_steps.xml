@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<import-steps>
+
+ 
+
+
+ <import-step 
+    id="MeetingCommunes-Update-RoleMappings" 
+    handler="Products.MeetingCommunes.setuphandlers.updateRoleMappings"
+    title="Update Workflow role mappings for MeetingCommunes"
+    version="2012-10-11T14:18:00.125261">
+   <dependency step="MeetingCommunes-QI-dependencies"/>
+   updates the workflow role mappings for MeetingCommunes
+ </import-step>
+
+ <import-step 
+    id="MeetingCommunes-postInstall" 
+    handler="Products.MeetingCommunes.setuphandlers.postInstall"
+    title="manual coded post-install for MeetingCommunes"
+    version="2012-10-11T14:18:00.125261">
+   <dependency step="MeetingCommunes-QI-dependencies"/>
+   manual coded post-install for MeetingCommunes
+ </import-step>
+
+<!-- ##code-section ADDITIONALSTEPS -->
+<!-- ##/code-section ADDITIONALSTEPS -->
+
+</import-steps>
+ 

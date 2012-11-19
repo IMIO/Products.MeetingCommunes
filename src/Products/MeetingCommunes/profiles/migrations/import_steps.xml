@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<import-steps>
+ <import-step 
+    id="MeetingCommunes-unregisterSomeSteps" 
+    handler="Products.MeetingCommunes.setuphandlers.unregisterSomeSteps"
+    title="Some old steps are no more used, remove them!"
+    version="2012-03-06T10:50:00.000000">
+   Some old steps are no more used, remove them!
+ </import-step>
+ <import-step 
+    id="MeetingCommunes-adaptItemsToValidateTopic" 
+    handler="Products.MeetingCommunes.setuphandlers.adaptItemsToValidateTopic"
+    title="Old versions of the searchitemstovalidate topic did not use a search script, correct this!"
+    version="2012-04-27T15:45:00.000000">
+    <dependency step="MeetingCommunes-unregisterSomeSteps"/>
+   Old versions of the searchitemstovalidate topic did not use a search script, correct this!
+ </import-step>
+</import-steps>

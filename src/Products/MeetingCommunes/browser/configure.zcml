@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    >
+
+    <browser:viewlet
+        name="plone.contentactionsformanager"
+        for="*"
+        manager="plone.app.layout.viewlets.interfaces.IContentViews"
+        class="plone.app.layout.viewlets.common.ContentActionsViewlet"
+        permission="cmf.ManagePortal"
+        /> 
+
+</configure>

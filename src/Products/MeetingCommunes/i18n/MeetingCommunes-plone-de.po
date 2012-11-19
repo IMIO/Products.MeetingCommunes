@@ -1,0 +1,160 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MeetingCommunes\n"
+"POT-Creation-Date: 2007-08-29 07:12-100\n"
+"PO-Revision-Date: 2009-11-10 11:35+0100\n"
+"Last-Translator: Arnold François <arnold.francois@oshz-eupen.be>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: de\n"
+"Language-Name: Deutsch\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+"X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
+
+#. Default: "MeetingCollege"
+msgid "MeetingCollege"
+msgstr "Sitzung des Gemeindekollegiums"
+
+#. Default: "MeetincCouncil"
+msgid "MeetingCouncil"
+msgstr "Sitzung des Gemeinderats"
+
+#. Default: "MeetingItemCollege"
+msgid "MeetingItemCollege"
+msgstr "TOP Kollegium"
+
+#. Default: "MeetingItemCouncil"
+msgid "MeetingItemCouncil"
+msgstr "TOP Rat"
+
+#. Default: "Meeting item BP"
+msgid "MeetingItembp"
+msgstr "TOP Ständiges Präsidium"
+
+#. Default: "Meeting item CAS"
+msgid "MeetingItemcas"
+msgstr "TOP Sozialhilferat"
+
+#. Default: "Meeting item Comitee"
+msgid "MeetingItemcomitee"
+msgstr "TOP Konzertierungsausschuss"
+
+#. Default: "Meeting BP"
+msgid "Meetingbp"
+msgstr "Sitzung Ständiges Präsidium"
+
+#. Default: "Meeting CAS"
+msgid "Meetingcas"
+msgstr "Sitzung Sozialhilferat"
+
+#. Default: "Meeting Comitee"
+msgid "Meetingcomitee"
+msgstr "Sitzung Konzertierungsausschuss"
+
+#. Default: "UID not found!"
+msgid "UID not found!"
+msgstr ""
+
+#. Default: "accept but modify"
+msgid "accept_but_modify"
+msgstr "Angenommen aber ändern"
+
+#. Default: "accept_but_modify_done_descr"
+msgid "accept_but_modify_done_descr"
+msgstr ""
+
+#. Default: "accept_done_descr"
+msgid "accept_done_descr"
+msgstr ""
+
+#. Default: "accepted but modified"
+msgid "accepted_but_modified"
+msgstr "Angenommen aber geändert"
+
+#. Default: "Advices and copies"
+msgid "advices"
+msgstr ""
+
+#. Default: "backToCreated_done_descr"
+msgid "backToCreated_done_descr"
+msgstr "Die Sperrung der Tagesordnung wurde aufgehoben."
+
+#. Default: "backToDecided_done_descr"
+msgid "backToDecided_done_descr"
+msgstr "Das Protokoll kann wieder bearbeitet werden."
+
+#. Default: "backToFrozen_done_descr"
+msgid "backToFrozen_done_descr"
+msgstr "Das Protokoll kann momentan nicht bearbeitet werden."
+
+#. Default: "backToPresented_done_descr."
+msgid "backToPresented_done_descr"
+msgstr ""
+
+#. Default: "close_done_descr"
+msgid "close_done_descr"
+msgstr "Das Protokoll wurde abgeschlossen. Alle TOP, für die kein Beschluss getroffen wurde, wurden automatisch akzeptiert."
+
+#. Default: "Create a plonmeeting item from a plonegov item"
+msgid "create_to_meeting-config-council_from_meeting-config-college"
+msgstr ""
+
+# College meeting workflow transitions specific vocabulary
+#. Default: ""
+msgid "decide"
+msgstr "Protokoll verfassen"
+
+#. Default: "decide_done_descr"
+msgid "decide_done_descr"
+msgstr "Das Protokoll dieser Sitzung kann jetzt verfasst werden."
+
+# College meeting workflow states specific vocabulary
+#. Default: "decided"
+msgid "decided"
+msgstr "Verfassung des Protokolls"
+
+#. Default: "delay_done_descr"
+msgid "delay_done_descr"
+msgstr ""
+
+# transitions descriptions
+#. Default: "freeze_done_descr"
+msgid "freeze_done_descr"
+msgstr "Die Tagesordnung wurde gesperrt."
+
+#. Default: "frozen"
+msgid "frozen"
+msgstr "Gesperrt"
+
+#. Default: "itemfreeze_done_descr"
+msgid "itemfreeze_done_descr"
+msgstr ""
+
+#. Default: "itemfrozen"
+msgid "itemfrozen"
+msgstr "TOP gesperrt"
+
+#. Default: "pre accept"
+msgid "pre_accept"
+msgstr "Provisiorisch aktzeptieren"
+
+#. Default: "pre_accept_done_descr"
+msgid "pre_accept_done_descr"
+msgstr ""
+
+#. Default: "pre accepted"
+msgid "pre_accepted"
+msgstr "Provisorisch akzeptiert"
+
+#. Default: "refuse_done_descr"
+msgid "refuse_done_descr"
+msgstr ""
+
+#. Default: "The item has been successfully transfered to the council."
+msgid "sendto_meeting-config-council_success"
+msgstr ""
+

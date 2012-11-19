@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<object name="portal_workflow" meta_type="Plone Workflow Tool">
+ <object name="meetingcollege_workflow" meta_type="Workflow"/>
+ <object name="meetingcouncil_workflow" meta_type="Workflow"/>
+ <object name="meetingitemcollege_workflow" meta_type="Workflow"/>
+ <object name="meetingitemcouncil_workflow" meta_type="Workflow"/>
+<!-- ##code-section workflowobjects -->
+<!-- ##/code-section workflowobjects -->
+ <bindings>
+  <type type_id="DummyMeetingCollege">
+   <bound-workflow workflow_id="meetingcollege_workflow" />
+  </type>
+  <type type_id="DummyMeetingCouncil">
+   <bound-workflow workflow_id="meetingcouncil_workflow" />
+  </type>
+  <type type_id="DummyMeetingItemCollege">
+   <bound-workflow workflow_id="meetingitemcollege_workflow" />
+  </type>
+  <type type_id="DummyMeetingItemCouncil">
+   <bound-workflow workflow_id="meetingitemcouncil_workflow" />
+  </type>
+<!-- ##code-section workflowbindings -->
+<!-- ##/code-section workflowbindings -->
+ </bindings>
+</object>

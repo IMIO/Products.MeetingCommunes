@@ -1,0 +1,179 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MeetingCommunes\n"
+"POT-Creation-Date: 2005-05-17 15:00-100\n"
+"PO-Revision-Date: 2010-02-10 12:55+0100\n"
+"Last-Translator: Arnold François <arnold.francois@oshz-eupen.be>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: MeetingCommunes\n"
+"Language-code: de\n"
+"Language-name: Deutsch\n"
+"X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
+
+# portal_tabs
+#. Default: "Meeting config College"
+msgid "Meeting config College"
+msgstr ""
+
+#. Default: "Meeting config Council"
+msgid "Meeting config Council"
+msgstr ""
+
+#. Default: "Leave empty if he is not an echevin"
+msgid "MeetingCommune_descr_echevinServices"
+msgstr ""
+
+#. Default: "Leave empty to use the signatures defined on the meeting"
+msgid "MeetingCommune_descr_signatures"
+msgstr ""
+
+#. Default: "Alderman of the following services(departments)"
+msgid "MeetingCommune_label_echevinServices"
+msgstr ""
+
+#. Default: "Signatures Delegation"
+msgid "MeetingCommune_label_signatures"
+msgstr ""
+
+# MeetingItem
+#. Default: "Decision"
+msgid "PloneMeeting_label_decision"
+msgstr "Auszug aus dem Protokoll"
+
+#. Default: "Gives mandatory advice on"
+msgid "PloneMeeting_label_givesMandatoryAdviceOn"
+msgstr ""
+
+#. Default: "Linked items"
+msgid "PloneMeeting_label_predecessor"
+msgstr ""
+
+#. Default: "PloneMeeting"
+msgid "app_name"
+msgstr ""
+
+#. Default: "Add [[ ]] around absent people (like [[Mister Sample Peter]])"
+msgid "assembly_meeting_descr"
+msgstr ""
+
+#. Default: "Create an item council from an item college"
+msgid "create_to_meeting-config-council_from_meeting-config-college"
+msgstr ""
+
+#. Default: "Item created from a college item"
+msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
+msgstr ""
+
+#. Default: "Decision"
+msgid "decision"
+msgstr "Auszug aus dem Protokoll"
+
+#. Default: "Decisions"
+msgid "decisions"
+msgstr "Protokolle"
+
+#. Default: "When advice mandatoriness is enforced, an item can't be inserted into a meeting unless all mandatory advices are given and positive."
+msgid "enforce_advice_mandatoriness_descr"
+msgstr ""
+
+#. Default: "Specify here a TAL expression that will return True if the group must give a mandatory advice on an item.  We receive 'item' as the meeting item to give an advice on.  WARNING if the group of advisers linked to this PloneMeeting group os empty, it will no be considered, despite the result of the TAL expression"
+msgid "gives_mandatory_advice_on_descr"
+msgstr ""
+
+#. Default: "For every field you select here, PloneMeeting will keep track of any change on any item, if it is in one of the 'historizable' states as defined below."
+msgid "historized_item_attrs_descr"
+msgstr ""
+
+#. Default: "For every field you select here, PloneMeeting will keep track of any change on any meeting, if it is in one of the 'historizable' states as defined below."
+msgid "historized_meeting_attrs_descr"
+msgstr ""
+
+#. Default: "Configure PloneMeeting"
+msgid "hs_configuration"
+msgstr ""
+
+#. Default: "Welcome to PloneMeeting!"
+msgid "hs_welcome_title"
+msgstr ""
+
+#. Default: "Public"
+msgid "ip_public"
+msgstr ""
+
+#. Default: "Secret"
+msgid "ip_secret"
+msgstr ""
+
+#. Default: "If you don't fill this field, meeting assembly will be used for this item.  Add [[ ]] around absent people (like [[Mister Sample Peter]])"
+msgid "item_assembly_descr"
+msgstr ""
+
+# Other
+#. Default: "Late items"
+msgid "late_presented_items"
+msgstr "Zur Sitzung hinzugefügte TOP nach deren Sperrung"
+
+#. Default: "Description"
+msgid "meeting_item_description"
+msgstr "Beschreibung der Tagesordnung"
+
+#. Default: "Choose advisers that will have to issue an optional advice for this item"
+msgid "optional_advisers_item_descr"
+msgstr ""
+
+#. Default: "Decision"
+msgid "portletdecisions_title"
+msgstr "Protokolle"
+
+#. Default: "Meeting"
+msgid "portletmeetings_title"
+msgstr "Tagesordnungen"
+
+#. Default: "Commented"
+msgid "positive_with_remarks"
+msgstr ""
+
+#. Default: "PowerObservers"
+msgid "powerObserversGroupTitle"
+msgstr "Power Beobachter"
+
+#. Default: "Present every selected items"
+msgid "present_several_items"
+msgstr "Alle ausgewählten TOP vorbringen"
+
+#. Default: "Configure PloneMeeting"
+msgid "search_advanced"
+msgstr ""
+
+#. Default: "Every decisions"
+msgid "searchalldecisions"
+msgstr "alle Protokolle"
+
+#. Default: "decided items"
+msgid "searchdecideditems"
+msgstr "beschlossenen TOP"
+
+#. Default: "Items of my group"
+msgid "searchgroupitems"
+msgstr "TOP meines Dienstes"
+
+#. Default: "items to validate"
+msgid "searchitemstovalidate"
+msgstr ""
+
+# searches
+#. Default: "proposed items"
+msgid "searchproposeditems"
+msgstr "vorgeschlageneTOP"
+
+#. Default: "validated items"
+msgid "searchvalidateditems"
+msgstr "validierte TOP"
+

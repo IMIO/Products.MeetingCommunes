@@ -1,0 +1,163 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2007-08-29 07:12-100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+"Language-code: en\n"
+"Language-name: English\n"
+"Preferred-encodings: utf-8 latin1\n"
+"X-is-fallback-for: en-us en-ca\n"
+
+#. Default: "MeetingCollege"
+msgid "MeetingCollege"
+msgstr "City college meeting"
+
+#. Default: "MeetincCouncil"
+msgid "MeetingCouncil"
+msgstr "City council meeting"
+
+#. Default: "MeetingItemCollege"
+msgid "MeetingItemCollege"
+msgstr "College item"
+
+#. Default: "MeetingItemCouncil"
+msgid "MeetingItemCouncil"
+msgstr "Council item"
+
+#. Default: "Meeting item BP"
+msgid "MeetingItembp"
+msgstr ""
+
+#. Default: "Meeting item CAS"
+msgid "MeetingItemcas"
+msgstr ""
+
+#. Default: "Meeting item Comitee"
+msgid "MeetingItemcomitee"
+msgstr ""
+
+#. Default: "Meeting BP"
+msgid "Meetingbp"
+msgstr ""
+
+#. Default: "Meeting CAS"
+msgid "Meetingcas"
+msgstr ""
+
+#. Default: "Meeting Comitee"
+msgid "Meetingcomitee"
+msgstr ""
+
+#. Default: "UID not found!"
+msgid "UID not found!"
+msgstr ""
+
+#. Default: "accept but modify"
+msgid "accept_but_modify"
+msgstr ""
+
+#. Default: "accept_but_modify_done_descr"
+msgid "accept_but_modify_done_descr"
+msgstr ""
+
+#. Default: "accept_done_descr"
+msgid "accept_done_descr"
+msgstr ""
+
+#. Default: "accepted but modified"
+msgid "accepted_but_modified"
+msgstr ""
+
+#. Default: "Advices and copies"
+msgid "advices"
+msgstr ""
+
+#. Default: "backToCreated_done_descr"
+msgid "backToCreated_done_descr"
+msgstr "You just cancelled the freeze of the agenda."
+
+#. Default: "backToDecided_done_descr"
+msgid "backToDecided_done_descr"
+msgstr "You can edit the decisions again."
+
+#. Default: "backToFrozen_done_descr"
+msgid "backToFrozen_done_descr"
+msgstr "You are no more able to edit the decisions."
+
+#. Default: "backToPresented_done_descr."
+msgid "backToPresented_done_descr"
+msgstr ""
+
+#. Default: "close_done_descr"
+msgid "close_done_descr"
+msgstr "The decisions have been closed, every items for wich no decisions was taken have been automatically accepted."
+
+#. Default: "Create a plonmeeting item from a plonegov item"
+msgid "create_to_meeting-config-council_from_meeting-config-college"
+msgstr ""
+
+# College meeting workflow transitions specific vocabulary
+#. Default: ""
+msgid "decide"
+msgstr "Write decision"
+
+#. Default: "decide_done_descr"
+msgid "decide_done_descr"
+msgstr "Your are now able to write the decisions."
+
+# College meeting workflow states specific vocabulary
+#. Default: "decided"
+msgid "decided"
+msgstr "Writing decision"
+
+#. Default: "delay_done_descr"
+msgid "delay_done_descr"
+msgstr ""
+
+# transitions descriptions
+#. Default: "freeze_done_descr"
+msgid "freeze_done_descr"
+msgstr "The agenda is now frozen."
+
+#. Default: "frozen"
+msgid "frozen"
+msgstr "Frozen"
+
+#. Default: "itemfreeze_done_descr"
+msgid "itemfreeze_done_descr"
+msgstr ""
+
+#. Default: "itemfrozen"
+msgid "itemfrozen"
+msgstr "frozen"
+
+#. Default: "pre accept"
+msgid "pre_accept"
+msgstr ""
+
+#. Default: "pre_accept_done_descr"
+msgid "pre_accept_done_descr"
+msgstr ""
+
+#. Default: "pre accepted"
+msgid "pre_accepted"
+msgstr ""
+
+#. Default: "refuse_done_descr"
+msgid "refuse_done_descr"
+msgstr ""
+
+#. Default: "The item has been successfully transfered to the council."
+msgid "sendto_meeting-config-council_success"
+msgstr ""
+

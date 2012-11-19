@@ -1,0 +1,191 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2005-05-17 15:00-100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: PloneMeeting\n"
+"Language-code: fr\n"
+"Language-name: French\n"
+"Preferred-encodings: utf-8 latin1\n"
+"X-is-fallback-for: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
+
+# portal_tabs
+#. Default: "Meeting config College"
+msgid "Meeting config College"
+msgstr "Collège Communal"
+
+#. Default: "Meeting config Council"
+msgid "Meeting config Council"
+msgstr "Conseil Communal"
+
+#. Default: "Leave empty if he is not an echevin"
+msgid "MeetingCommune_descr_echevinServices"
+msgstr "Laisser vide si ce n'est pas un échevin"
+
+#. Default: "Leave empty to use the signatures defined on the meeting"
+msgid "MeetingCommune_descr_signatures"
+msgstr "Laisser ce champ vide pour utiliser les signatures qui seront définies sur la séance"
+
+#. Default: "Alderman of the following services(departments)"
+msgid "MeetingCommune_label_echevinServices"
+msgstr "Echevin des services suivants"
+
+#. Default: "Signatures Delegation"
+msgid "MeetingCommune_label_signatures"
+msgstr "Délégation de signatures"
+
+# MeetingItem
+#. Default: "Decision"
+msgid "PloneMeeting_label_decision"
+msgstr "Extrait du Procès-verbal"
+
+#. Default: "Gives mandatory advice on"
+msgid "PloneMeeting_label_givesMandatoryAdviceOn"
+msgstr "L'avis sera automatiquement demandé si"
+
+#. Default: "Linked items"
+msgid "PloneMeeting_label_predecessor"
+msgstr "Point(s) lié(s)"
+
+#. Default: "PloneMeeting"
+msgid "app_name"
+msgstr "PloneMeeting"
+
+#. Default: "Add [[ ]] around absent people (like [[Mister Sample Peter]])"
+msgid "assembly_meeting_descr"
+msgstr "Ajoutez des double crochets [[ ]] autour des personnes absentes, par exemple : [[Mr. Untel Didier]]"
+
+#. Default: "Create an item council from an item college"
+msgid "create_to_meeting-config-council_from_meeting-config-college"
+msgstr "Envoyer vers Conseil Communal"
+
+#. Default: "Item created from a college item"
+msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
+msgstr "Point Conseil Communal créé depuis un point Collège Communal"
+
+#. Default: "Decision"
+msgid "decision"
+msgstr "Extrait du Procès-verbal"
+
+#. Default: "Decisions"
+msgid "decisions"
+msgstr "Procès-verbal"
+
+#. Default: "When advice mandatoriness is enforced, an item can't be inserted into a meeting unless all mandatory advices are given and positive."
+msgid "enforce_advice_mandatoriness_descr"
+msgstr "Quand le caractère obligatoire des avis est d'application, un point ne peut être inséré dans une séance à moins que tous les avis obligatoires (avis automatiques définis au niveau des groupes) n'aient été rendus et soient positifs."
+
+#. Default: "Specify here a TAL expression that will return True if the group must give a mandatory advice on an item.  We receive 'item' as the meeting item to give an advice on.  WARNING if the group of advisers linked to this PloneMeeting group os empty, it will no be considered, despite the result of the TAL expression"
+msgid "gives_mandatory_advice_on_descr"
+msgstr "Spécifiez une expression TAL qui retourne 'True' si le groupe doit automatiquement donner son avis sur le point donné. L'élément 'item' (point) est utilisable dans l'expression. ATTENTION si le groupe de donneurs d'avis lié à ce groupe PloneMeeting est vide, ce groupe ne sera pas pris en compte, quel que soit le résultat de l'expression TAL. De plus, si dans votre configuration de séance, l'option 'Appliquer le caractère obligatoire des avis' est activé, cet avis automatique deviendra obligatoire (et devra nécessairement être positif pour que le point puisse être présenté)."
+
+#. Default: "For every field you select here, PloneMeeting will keep track of any change on any item, if it is in one of the 'historizable' states as defined below."
+msgid "historized_item_attrs_descr"
+msgstr "Pour chaque champ que vous sélectionnez ici, PloneMeeting conservera la trace de tout changement sur chaque point qui est dans un des états listés ci-dessous."
+
+#. Default: "For every field you select here, PloneMeeting will keep track of any change on any meeting, if it is in one of the 'historizable' states as defined below."
+msgid "historized_meeting_attrs_descr"
+msgstr "Pour chaque champ que vous sélectionnez ici, PloneMeeting conservera la trace de tout changement sur chaque séance qui est dans un des états listés ci-dessous."
+
+#. Default: "Configure PloneMeeting"
+msgid "hs_configuration"
+msgstr "Configurer PloneMeeting"
+
+#. Default: "Welcome to PloneMeeting!"
+msgid "hs_welcome_title"
+msgstr "Bienvenue sur PloneMeeting"
+
+#. Default: "Public"
+msgid "ip_public"
+msgstr "Séance publique"
+
+#. Default: "Secret"
+msgid "ip_secret"
+msgstr "Huis clos"
+
+#. Default: "If you don't fill this field, meeting assembly will be used for this item.  Add [[ ]] around absent people (like [[Mister Sample Peter]])"
+msgid "item_assembly_descr"
+msgstr "Si vous ne remplissez pas ce champ, l'assemblée définie sur la séance sera utilisée.  Ajoutez des double crochets [[ ]] autour des personnes absentes, par exemple : [[Mr. Untel Didier]]"
+
+# Other
+#. Default: "Late items"
+msgid "late_presented_items"
+msgstr "Points ajoutés à la séance après gel de celle-ci"
+
+#. Default: "Description"
+msgid "meeting_item_description"
+msgstr "Description dans l'Ordre du jour"
+
+#. Default: "Choose advisers that will have to issue an optional advice for this item"
+msgid "optional_advisers_item_descr"
+msgstr "Sélectionnez les groupes qui pourront remettre un avis sur ce point. Sélectionnez plusieurs groupes à l'aide de CTRL+clic"
+
+#. Default: "Decision"
+msgid "portletdecisions_title"
+msgstr "Procès-verbaux"
+
+#. Default: "Meeting"
+msgid "portletmeetings_title"
+msgstr "Ordres du jour"
+
+#. Default: "Commented"
+msgid "positive_with_remarks"
+msgstr "Commenté"
+
+#. Default: "PowerObservers"
+msgid "powerObserversGroupTitle"
+msgstr "Echevins"
+
+#. Default: "Present every selected items"
+msgid "present_several_items"
+msgstr "Présenter tous les points sélectionnés"
+
+#. Default: "Configure PloneMeeting"
+msgid "search_advanced"
+msgstr "Configurer PloneMeeting"
+
+#. Default: "Every decisions"
+msgid "searchalldecisions"
+msgstr "tous les PVs"
+
+#. Default: "decided items"
+msgid "searchdecideditems"
+msgstr "points décidés"
+
+#. Default: "Items of my group"
+msgid "searchgroupitems"
+msgstr "points de mon service"
+
+#. Default: "items to validate"
+msgid "searchitemstovalidate"
+msgstr "points à valider"
+
+# searches
+#. Default: "proposed items"
+msgid "searchproposeditems"
+msgstr "points proposés"
+
+#. Default: "validated items"
+msgid "searchvalidateditems"
+msgstr "points validés"
+
+#. Default: "Décision used when the item is reported"
+msgid "PloneMeeting_label_itemDecisionReportText"
+msgstr "Décision du point lors d'un report"
+
+#. Default: "When an item is delay, the decision will be replace by the text defined here, as a TAL (Tag Attribute Language) expression whose context includes the name 'here' that represents the impacted item. If you don't know TAL, you may learn it <a href=\"http://zope.org/Documentation/Books/ZopeBook/2_6Edition/ZPT.stx\">here</a>."
+msgid "item_decision_report_text_descr"
+msgstr "Lorsque le point est reporté, la décision sera remplacée par le texte défini ici, sous la forme d'une expression TAL (Tag Attribute Language) dans laquelle le nom 'here', représentant le point courant, peut être utilisé. Voici un exemple : python:'%sLe collège décide de reporter le point'%here.getDecision()"
+
+#. Default: "add_published_state"
+msgid "wa_add_published_state"
+msgstr "Cacher les décisions au service pendant la rédaction du PV."
