@@ -33,7 +33,8 @@ setup(name='Products.MeetingCommunes',
           'Plone',
           'Pillow',
           'testfixtures',
-          'communesplone.iconified_document_actions',],
+          'communesplone.iconified_document_actions',
+          'Products.PloneMeeting',],
       entry_points={},
       )
 
