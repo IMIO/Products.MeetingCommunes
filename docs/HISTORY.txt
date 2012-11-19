@@ -1,5 +1,12 @@
 Products.MeetingCommunes Changelog
-===============================
+=================================
+
+Older versions than 3.0 can be found at http://svn.communesplone.org/svn/communesplone/PloneMeeting/tags/
+Version 1.x are for Plone2.5, 2.x are for Plone3.x and 3+ are for Plone4.x
+
+3.0 (unreleased-plone4)
+-----------------------
+- Migrated to Plone 4 (PloneMeeting 3.x)
 
 2.1.3 (2012-09-19)
 ------------------
