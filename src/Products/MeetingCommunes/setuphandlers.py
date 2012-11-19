@@ -231,9 +231,9 @@ def reinstallPloneMeetingSkin(context, site):
     if isNotMeetingCommunesProfile(context) and not isMeetingCommunesConfigureProfile: return
 
     logStep("reinstallPloneMeetingSkin", context)
-    profileId = u'profile-Products.plonemeetingskin:default'
     try:
-        site.portal_setup.runAllImportStepsFromProfile(profileId)
+        site.portal_setup.runAllImportStepsFromProfile(u'profile-plonetheme.imioapps:default')
+        site.portal_setup.runAllImportStepsFromProfile(u'profile-plonetheme.imioapps:plonemeetingskin')
     except KeyError:
         # if the Products.plonemeetingskin profile is not available
         # (not using plonemeetingskin or in tests?) we pass...
