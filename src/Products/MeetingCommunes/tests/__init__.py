@@ -2,7 +2,7 @@
 #
 # File: tests.py
 #
-# Copyright (c) 2008 by CommunesPlone
+# Copyright (c) 2008-2012 by CommunesPlone
 # Generator: ArchGenXML Version 1.5.2
 #            http://plone.org/products/archgenxml
 #
@@ -24,8 +24,8 @@
 # 02110-1301, USA.
 #
 
-__author__ = """Gauthier Bastien <gbastien@commune.sambreville.be>, Stephan Geulette
-<stephan.geulette@uvcw.be>"""
+__author__ = """Gauthier Bastien <g.bastien@imio.be>, Stephan Geulette
+<s.geulette@imio.be>"""
 __docformat__ = 'plaintext'
 
 

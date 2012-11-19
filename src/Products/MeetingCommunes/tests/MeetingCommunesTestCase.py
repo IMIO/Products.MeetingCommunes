@@ -20,28 +20,32 @@
 # 02110-1301, USA.
 #
 
+import unittest
 import os.path
-from warnings import warn
-from Testing import ZopeTestCase
-from Products.PloneTestCase import PloneTestCase
+
+from plone.app.testing.helpers import setRoles
+from plone.app.testing import login, logout
+
 import Products.PloneMeeting
-# If I do not remove this method, some tests crash.
-#from Products.PloneMeeting.MeetingItem import MeetingItem
+from Products.PloneMeeting.tests.PloneMeetingTestCase import PloneMeetingTestCase
 
-# Initialize Zope & Plone test systems.
-ZopeTestCase.installProduct('MeetingCommunes')
-ZopeTestCase.installProduct('PloneMeeting')
-PloneTestCase.setupPloneSite(products=['MeetingCommunes', 'PloneMeeting'])
+from Products.PloneTestCase.setup import _createHomeFolder
 
-class MeetingCommunesTestCase(PloneTestCase.PloneTestCase):
+from Products.MeetingCommunes.testing import MC_TESTS_PROFILE_FUNCTIONAL
+
+
+class MeetingCommunesTestCase(PloneMeetingTestCase):
     """Base class for defining MeetingCommunes test cases."""
 
     # Some default content
     descriptionText = '<p>Some description</p>'
     decisionText = '<p>Some decision.</p>'
 
-    def afterSetUp(self):
+    layer = MC_TESTS_PROFILE_FUNCTIONAL
+
+    def setUp(self):
         # Define some useful attributes
+        self.portal = self.layer['portal']
         self.tool = self.portal.portal_plonemeeting
         self.wfTool = self.portal.portal_workflow
         self.pmFolder = os.path.dirname(Products.PloneMeeting.__file__)
@@ -49,17 +53,16 @@ class MeetingCommunesTestCase(PloneTestCase.PloneTestCase):
         # Do not use 'userFolderAddUser' to avoid bug in Container
         self.createUser('admin', ('Member','Manager'))
         # Import the tests profile
-        self.login('admin')
-        self.portal.portal_setup.runImportStepFromProfile("profile-Products.MeetingCommunes:tests", "initializetool-MeetingCommunes")
+        login(self.portal, 'admin')
         # Create some member areas
         for userId in ('pmManager', 'pmCreator1', 'pmCreator2'):
-            self.createMemberarea(userId)
+            _createHomeFolder(self.portal, userId)
         # Disable notifications mechanism. This way, the test suite may be
         # executed even on production sites that contain many real users.
         for meetingConfig in self.tool.objectValues('MeetingConfig'):
             meetingConfig.setMailItemEvents([])
             meetingConfig.setMailMeetingEvents([])
-        self.logout()
+        logout()
         # Set the default meeting config
 #        self.meetingConfig = getattr(self.tool, 'plonegov-assembly')
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
@@ -68,8 +71,6 @@ class MeetingCommunesTestCase(PloneTestCase.PloneTestCase):
         self.annexFile = 'INSTALL.TXT'
         self.annexFileType = 'annexeBudget'
         self.annexFileTypeDecision = 'annexeDecision'
-        #classic "logger" is swallowed by the tests, so use "warn"...
-        warn(self._TestCase__testMethodName)
 
     def getTestMethods(self, module, prefix):
         methods = {}
@@ -78,19 +79,13 @@ class MeetingCommunesTestCase(PloneTestCase.PloneTestCase):
                 methods[name] = 0
         return methods
 
-    def createUser(self, username, roles):
-        """ create a user with the good roles """
-        pms = self.portal.portal_membership
-        pms.addMember(username, 'password', [], [])
-        self.setRoles(roles, name=username)
-
     def _adaptCategoriesForTest(self, meetingConfig):
         """
           This test depends on existing categories, so, define the same categories
           as in PloneMeeting
         """
         originalLoggedInUser = self.portal.portal_membership.getAuthenticatedMember().getId()
-        self.login('admin')
+        login(self.portal, 'admin')
         # Remove existing categories
         idsToRemove = []
         for cat in meetingConfig.categories.objectValues('MeetingCategory'):
@@ -112,6 +107,6 @@ class MeetingCommunesTestCase(PloneTestCase.PloneTestCase):
         for item in meetingConfig.recurringitems.objectValues('MeetingItem'):
             item.setCategory('deployment')
         if originalLoggedInUser:
-            self.login(originalLoggedInUser)
+            login(self.portal, originalLoggedInUser)
         else:
-            self.logout()
+            logout()

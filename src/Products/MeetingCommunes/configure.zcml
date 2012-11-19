@@ -5,7 +5,12 @@
            i18n_domain="MeetingCommunes">
 
   <!-- ##code-section configure.zcml.header -->
-  <include package=".browser" />  
+  <include package="Products.CMFPlacefulWorkflow"/>
+  <include package="communesplone.iconified_document_actions"/>
+  <include package="Products.PloneMeeting"/>
+
+  <include package=".browser" />
+
   <adapter for="Products.PloneMeeting.interfaces.IMeetingItem"
            factory="Products.MeetingCommunes.adapters.MeetingItemCollegeWorkflowActions"
            provides="Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions"/>

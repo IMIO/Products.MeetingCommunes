@@ -27,20 +27,13 @@ from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testAdvices import testAdvices as pmta
 
+from Products.MeetingCommunes.testing import MC_TESTS_PROFILE_FUNCTIONAL
+
 class testAdvices(MeetingCommunesTestCase, pmta):
     '''Tests various aspects of advices management.
        Advices are enabled for PloneGov Assembly, not for PloneMeeting Assembly.'''
 
-    def afterSetUp(self):
-        MeetingCommunesTestCase.afterSetUp(self)
-
-    def afterSetUpPM(self):
-        """
-            The afterSetUp method from PloneMeeting must be called in each test and not in afterSetUp method of this class.
-            If not, this test transaction doesn't contain what's done in plonemeeting afterSetUp and it is not cleared
-        """
-        pass
-        #pmta.afterSetUp(self)
+    layer = MC_TESTS_PROFILE_FUNCTIONAL
 
     def test_mc_VerifyTestNumbers(self):
         """
@@ -77,7 +70,7 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         self.meetingConfig.setItemAdviceStates(('itemcreated', 'proposed', 'validated',))
         self.meetingConfig.setItemAdviceEditStates(('itemcreated', 'proposed', 'validated',))
         self.meetingConfig.setItemAdviceViewStates(('itemcreated', 'proposed', 'validated',))
-        self.login('pmCreator1')
+        self.changeUser('pmCreator1')
         # create an item and ask the advice of group 'vendors'
         data = {
             'title': 'Item to advice',
@@ -87,7 +80,8 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         item1 = self.create('MeetingItem', **data)
         self.assertEquals(item1.needsAdvices(), True)
         # check than the adviser can see the item
-        self.login('pmReviewer2')
+        self.changeUser('pmReviewer2')
+        import ipdb; ipdb.set_trace()
         self.failUnless(self.hasPermission('View', item1))
         self.assertEquals(item1.getAdvicesToGive(), ([('vendors', u'Vendors')], []))
 
