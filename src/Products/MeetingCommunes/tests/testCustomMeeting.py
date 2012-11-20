@@ -32,9 +32,6 @@ class testCustomMeeting(MeetingCommunesTestCase, pmtm):
         Tests the Meeting adapted methods
     """
 
-    def afterSetUp(self):
-        MeetingCommunesTestCase.afterSetUp(self)
-
     def test_mc_GetPrintableItemsByCategoryWithMeetingCategory(self):
         """
             This method aimed to ease printings should return a list of items ordered by category

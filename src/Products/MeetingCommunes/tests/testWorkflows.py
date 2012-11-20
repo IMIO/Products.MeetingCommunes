@@ -31,27 +31,7 @@ from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
 from Products.PloneMeeting.tests.testWorkflows import testWorkflows as pmtw
 
 class testWorkflows(MeetingCommunesTestCase, pmtw):
-    """Tests the default workflows implemented in MeetingCommunes.
-
-       WARNING:
-       The Plone test system seems to be bugged: it does not seem to take into
-       account the write_permission and read_permission tags that are defined
-       on some attributes of the Archetypes model. So when we need to check
-       that a user is not authorized to set the value of a field protected
-       in this way, we do not try to use the accessor to trigger an exception
-       (self.assertRaise). Instead, we check that the user has the permission
-       to do so (getSecurityManager().checkPermission)."""
-
-    def afterSetUp(self):
-        MeetingCommunesTestCase.afterSetUp(self)
-
-    def afterSetUpPM(self):
-        """
-            The afterSetUp method from PloneMeeting must be called in each test and not in afterSetUp method of this class.
-            If not, this test transaction doesn't contain what's done in plonemeeting afterSetUp and it is not cleared
-        """
-        pass
-        #pmtw.afterSetUp(self)
+    """Tests the default workflows implemented in MeetingCommunes."""
 
     def test_mc_VerifyTestNumbers(self):
         """

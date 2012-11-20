@@ -33,8 +33,6 @@ class testAdvices(MeetingCommunesTestCase, pmta):
     '''Tests various aspects of advices management.
        Advices are enabled for PloneGov Assembly, not for PloneMeeting Assembly.'''
 
-    layer = MC_TESTS_PROFILE_FUNCTIONAL
-
     def test_mc_VerifyTestNumbers(self):
         """
             We verify that there are the same test methods in original product and this sub-product
