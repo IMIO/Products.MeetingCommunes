@@ -923,7 +923,7 @@ class MeetingItemCollegeWorkflowActions(MeetingItemWorkflowActions):
         # Send, if configured, a mail to the person who created the item
         clonedItem.sendMailIfRelevant('itemDelayed', 'Owner', isRole=True)
         meetingConfig = self.context.portal_plonemeeting.getMeetingConfig(self.context)
-        itemDecisionReportText = meetingConfig.getItemDecisionReportText()
+        itemDecisionReportText = meetingConfig.getRawItemDecisionReportText()
         if itemDecisionReportText.strip():
             from Products.CMFCore.Expression import Expression, createExprContext
             portal = self.context.portal_url.getPortalObject()
@@ -931,7 +931,7 @@ class MeetingItemCollegeWorkflowActions(MeetingItemWorkflowActions):
             try:
                 res = Expression(itemDecisionReportText)(ctx)
             except Exception, e:
-                self.context.portal_plonemeeting.plone_utils.addPortalMessage(PloneMeetingError(DECISION_ERROR % str(e)))
+                self.context.plone_utils.addPortalMessage(PloneMeetingError(DECISION_ERROR % str(e)))
                 return                
             self.context.setDecision(res)
 

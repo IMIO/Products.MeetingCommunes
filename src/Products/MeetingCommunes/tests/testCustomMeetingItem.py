@@ -33,9 +33,6 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         Tests the Meeting adapted methods
     """
 
-    def afterSetUp(self):
-        MeetingCommunesTestCase.afterSetUp(self)
-
     def _createMeetingWithItems(self):
         '''Create a meeting with a bunch of items.'''
         meetingDate = DateTime().strftime('%y/%m/%d %H:%M:%S')
@@ -151,31 +148,30 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.do(m1, 'freeze')
         self.do(m1, 'decide')
         item = m1.getItems()[0]
-        item.setDecision('<p>testing decision field</p>')
+        item.setDecision('<p>Testing decision field</p>')
         #field itemDecisionReportText in configuration is empty
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
+        self.assertEquals(item.getDecision(),'<p>Testing decision field</p>')
         self.do(item, 'delay')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
+        self.assertEquals(item.getDecision(),'<p>Testing decision field</p>')
         #change field itemDecisionReportText in configuration by python:'item is delay'
         item = m1.getItems()[1]
         meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
         login(self.portal, 'admin')
-        meetingConfig.setItemDecisionReportText("python:'item is delay'")
+        meetingConfig.setItemDecisionReportText("python:'<p>Item is delayed</p>'")
         login(self.portal, 'pmManager')
-        item.setDecision('<p>testing decision field</p>')
+        item.setDecision('<p>Testing decision field</p>')
         #field itemDecisionReportText in configuration is empty
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
+        self.assertEquals(item.getDecision(),'<p>Testing decision field</p>')
         self.do(item, 'delay')
-        self.assertEquals(item.getDecision(),'<p>item is delay</p>')
+        self.assertEquals(item.getDecision(),'<p>Item is delayed</p>')
         #change field itemDecisionReportText in configuration by python:'%s delay this item'%here.getDecision()'
         item = m1.getItems()[2]
         meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
-        meetingConfig.setItemDecisionReportText("python:'%s delay this item'%here.getDecision()")
-        item.setDecision('<p>testing decision field</p>')
+        meetingConfig.setItemDecisionReportText("python:'%s<p>Delay this item</p>' % here.getDecision()")
+        item.setDecision('<p>Testing decision field</p>')
         #field itemDecisionReportText in configuration is empty
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
         self.do(item, 'delay')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p> delay this item')
+        self.assertEquals(item.getDecision(),'<p>Testing decision field</p><p>Delay this item</p>')
 
     def test_mc_getDecision(self):
         '''If meeting is in decided state, only the meetingManager can

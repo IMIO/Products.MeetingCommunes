@@ -35,17 +35,6 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         Tests the MeetingItem class methods.
     """
 
-    def afterSetUp(self):
-        MeetingCommunesTestCase.afterSetUp(self)
-
-    def afterSetUpPM(self):
-        """
-            The afterSetUp method from PloneMeeting must be called in each test and not in afterSetUp method of this class.
-            If not, this test transaction doesn't contain what's done in plonemeeting afterSetUp and it is not cleared
-        """
-        pass
-        #pmtmi.afterSetUp(self)
-
     def test_mc_VerifyTestNumbers(self):
         """
             We verify that there are the same test methods in original product and this sub-product
@@ -121,9 +110,17 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
            the TAL expression defined on every MeetingGroup.asCopyGroupOn.'''
         pmtmi.testAddAutoCopyGroups(self)
 
-    def test_mc_call_ItemAdvise(self):
+    def test_mc_call_UpdateAdvices(self):
         '''See doc string in PloneMeeting.'''
-        pmtmi.testItemAdvise(self)
+        pmtmi.testUpdateAdvices(self)
+
+    def test_mc_call_SendItemToOtherMCWithAnnexes(self):
+        '''See doc string in PloneMeeting.'''
+        pmtmi.testSendItemToOtherMCWithAnnexes(self)
+
+    def test_mc_call_CopyGroups(self):
+        '''See doc string in PloneMeeting.'''
+        pmtmi.testCopyGroups(self)
 
     def test_mc_call_ItemIsSigned(self):
         '''Test the functionnality around MeetingItem.itemIsSigned field.'''

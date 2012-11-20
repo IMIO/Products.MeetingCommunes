@@ -29,9 +29,6 @@ from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
 class testMeetingGroup(MeetingCommunesTestCase):
     '''Tests the MeetingGroup adapted methods.'''
 
-    def afterSetUp(self):
-        MeetingCommunesTestCase.afterSetUp(self)
-
     def testListEchevinServices(self):
         login(self.portal, 'admin')
         from Products.Archetypes.atapi import DisplayList

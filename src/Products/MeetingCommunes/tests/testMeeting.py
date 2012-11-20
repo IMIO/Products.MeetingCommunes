@@ -33,17 +33,6 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         Tests the Meeting class methods.
     """
 
-    def afterSetUp(self):
-        MeetingCommunesTestCase.afterSetUp(self)
-
-    def afterSetUpPM(self):
-        """
-            The afterSetUp method from PloneMeeting must be called in each test and not in afterSetUp method of this class.
-            If not, this test transaction doesn't contain what's done in plonemeeting afterSetUp and it is not cleared
-        """
-        pass
-        #pmtm.afterSetUp(self)
-
     def test_mc_VerifyTestNumbers(self):
         """
             We verify that there are the same test methods in original product and this sub-product

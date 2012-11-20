@@ -44,27 +44,7 @@ class MeetingCommunesTestCase(PloneMeetingTestCase):
     layer = MC_TESTS_PROFILE_FUNCTIONAL
 
     def setUp(self):
-        # Define some useful attributes
-        self.portal = self.layer['portal']
-        self.tool = self.portal.portal_plonemeeting
-        self.wfTool = self.portal.portal_workflow
-        self.pmFolder = os.path.dirname(Products.PloneMeeting.__file__)
-        # Create admin user
-        # Do not use 'userFolderAddUser' to avoid bug in Container
-        self.createUser('admin', ('Member','Manager'))
-        # Import the tests profile
-        login(self.portal, 'admin')
-        # Create some member areas
-        for userId in ('pmManager', 'pmCreator1', 'pmCreator2'):
-            _createHomeFolder(self.portal, userId)
-        # Disable notifications mechanism. This way, the test suite may be
-        # executed even on production sites that contain many real users.
-        for meetingConfig in self.tool.objectValues('MeetingConfig'):
-            meetingConfig.setMailItemEvents([])
-            meetingConfig.setMailMeetingEvents([])
-        logout()
-        # Set the default meeting config
-#        self.meetingConfig = getattr(self.tool, 'plonegov-assembly')
+        PloneMeetingTestCase.setUp(self)
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
         self.meetingConfig2 = getattr(self.tool, 'meeting-config-council')
         # Set the default file and file type for adding annexes

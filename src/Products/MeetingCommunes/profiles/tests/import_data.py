@@ -2,10 +2,19 @@
 from Products.PloneMeeting.profiles import *
 
 # File types -------------------------------------------------------------------
+
 annexe = MeetingFileTypeDescriptor('annexe', 'Annexe', 'attach.png', '')
 annexeBudget = MeetingFileTypeDescriptor('annexeBudget', 'Article Budgetaire', 'budget.png', '')
 annexeCahier = MeetingFileTypeDescriptor('annexeCahier', 'Cahier des Charges', 'cahier.gif', '')
 annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe a la decision', 'attach.png', '', True)
+# Some type of annexes taken from the default PloneMeeting test profile
+marketingAnalysis = MeetingFileTypeDescriptor(
+    'marketing-annex', 'Marketing annex(es)', 'attach.png', '', True,
+    active=False)
+overheadAnalysis = MeetingFileTypeDescriptor(
+    'overhead-analysis', 'Administrative overhead analysis',
+    'attach.png', '')
+
 
 # Categories -------------------------------------------------------------------
 recurring = CategoryDescriptor('recurrents', 'Recurrents')
@@ -61,7 +70,8 @@ collegeMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
 collegeMeeting.signatures = 'Pierre Dupont, Bourgmestre - Charles Exemple, 1er Echevin'
 collegeMeeting.categories = categories
 collegeMeeting.shortName = 'College'
-collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision]
+collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision,
+                                   overheadAnalysis, marketingAnalysis]
 collegeMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
 collegeMeeting.xhtmlTransformFields = ('description', 'detailedDescription', 'decision', 'observations', )
 collegeMeeting.xhtmlTransformTypes = ('removeBlanks',)
@@ -137,7 +147,7 @@ collegeMeeting.recurringItems = [
         description='Contrôle médical systématique agent contractuel',
         category='',
         proposingGroup='developers',
-        templateUsingGroups=['developers',],
+        templateUsingGroups=['vendors',],
         usages=['as_template_item',],
         decision="""
             <p>Vu la loi du 26 mai 2002 instituant le droit à l’intégration sociale;</p>
@@ -152,68 +162,6 @@ collegeMeeting.recurringItems = [
 <p><strong>Article 1</strong> : De convoquer XXX devant  Monsieur le Secrétaire communal f.f. afin de lui rappeler ses obligations en la matière.</p>
 <p><strong>Article 2</strong> :  De prévenir XXX, qu’en cas de récidive, il sera proposé par le Secrétaire communal au Collège de transformer les jours de congés de maladie en absence injustifiée (retenue sur traitement avec application de la loi du 26 mai 2002 citée ci-dessus).</p>
 <p><strong>Article 3</strong> : De charger le service du personnel du suivi de ce dossier.</p>"""),
-    RecurringItemDescriptor(
-        id='template3',
-        title='Engagement temporaire',
-        description='Engagement temporaire',
-        category='',
-        proposingGroup='developers',
-        templateUsingGroups=['developers',],
-        usages=['as_template_item',],
-        decision="""<p>Considérant qu’il y a lieu de pourvoir au remplacement de Madame XXX, XXX bénéficiant d’une interruption de carrière pour convenances personnelles pour l’année scolaire 2009/2010. &nbsp;</p>
-<p>Attendu qu’un appel public a été lancé au mois de mai dernier;</p>
-<p>Vu la circulaire N° 2772 de la Communauté Française&nbsp;du 29 juin 2009 concernant &nbsp;la gestion des carrières administrative et pécuniaire dans l’enseignement fondamental ordinaire et principalement le chapitre 3 relatif aux engagements temporaires pendant l’année scolaire 2009/2010;</p>
-<p>Vu la proposition du directeur concerné d’attribuer cet emploi à Monsieur XXX, titulaire des titres requis;</p>
-<p>Vu le décret de la Communauté Française du 13 juillet 1998 portant restructuration de l’enseignement&nbsp;maternel et primaire ordinaires avec effet au 1er octobre 1998;</p>
-<p>Vu la loi du 29 mai 1959 (Pacte scolaire) et les articles L1122-19 et L1213-1 du Code de la démocratie locale et de la décentralisation;</p>
-<p>Vu l’avis favorable de l’Echevin de l’Enseignement;</p>
-<p><b>DECIDE&nbsp;:</b><br>
-<b><br> Article 1<sup>er</sup></b> :</p>
-<p>Au scrutin secret et à l’unanimité, de désigner Monsieur XXX, né le XXX à XXX et domicilié à XXX, en qualité d’instituteur maternel temporaire mi-temps en remplacement de Madame XXX aux écoles communales fondamentales de Sambreville (section de XXX) du XXX au XXX.</p>
-<p><b>Article 2</b> :</p>
-<p>L’horaire hebdomadaire de l’intéressé est fixé à 13 périodes.</p>
-<p><b>Article 3&nbsp;:</b></p>
-<p>La présente délibération sera soumise à la ratification du Conseil Communal. Elle sera transmise au Bureau Régional de l’Enseignement primaire et maternel, à l’Inspectrice Cantonale et à la direction concernée.</p>"""),
-    RecurringItemDescriptor(
-        id='template4',
-        title='Prestation réduite',
-        description='Prestation réduite',
-        category='',
-        proposingGroup='developers',
-        templateUsingGroups=['developers',],
-        usages=['as_template_item',],
-        decision="""<p>Vu la loi de redressement du 22 janvier 1985 (article 99 et suivants) et de l’Arrêté Royal du 12 août 1991 (tel que modifié) relatifs à l’interruption de carrière professionnelle dans l’enseignement;</p>
-<p>Vu la lettre du XXX par laquelle Madame XXX, institutrice maternelle, sollicite le renouvellement pendant l’année scolaire 2009/2010 de son congé pour prestations réduites mi-temps pour convenances personnelles dont elle bénéficie depuis le 01 septembre 2006;</p>
-<p>Attendu que le remplacement de l’intéressée&nbsp;est assuré pour la prochaine rentrée scolaire;</p>
-<p>Vu le décret de la Communauté Française du 13 juillet 1988 portant restructuration de l’enseignement maternel et primaire ordinaires avec effet au 1er octobre 1998;</p>
-<p>Vu la loi du 29 mai 1959 (Pacte Scolaire) et les articles L1122-19 et L1213-1 du code de la démocratie locale et de la décentralisation;</p>
-<p>Vu l’avis favorable de l’Echevin de l’Enseignement;</p>
-<p><b>DECIDE&nbsp;:</b><br><b><br> Article 1<sup>er</sup></b>&nbsp;:</p>
-<p>Au scrutin secret et à l’unanimité, d’accorder à Madame XXX le congé pour prestations réduites mi-temps sollicité pour convenances personnelles en qualité d’institutrice maternelle aux écoles communales fondamentales&nbsp;&nbsp;de Sambreville (section de XXX).</p>
-<p><b>Article 2</b> :</p>
-<p>Une activité lucrative est autorisée durant ce congé qui est assimilé à une période d’activité de service, dans le respect de la réglementation relative au cumul.</p>
-<p><b>Article 3&nbsp;:</b></p>
-<p>La présente délibération sera soumise pour accord au prochain Conseil, transmise au Bureau Régional de l’Enseignement primaire et maternel, à&nbsp;l’Inspectrice Cantonale, à la direction concernée et à l’intéressée.</p>"""),
-    RecurringItemDescriptor(
-        id='template5',
-        title='Exemple modèle disponible pour tous',
-        description='Exemple modèle disponible pour tous',
-        category='',
-        proposingGroup='',
-        templateUsingGroups=[],
-        usages=['as_template_item',],
-        decision="""<p>Vu la loi du XXX;</p>
-<p>Vu ...;</p>
-<p>Attendu que ...;</p>
-<p>Vu le décret de la Communauté Française du ...;</p>
-<p>Vu la loi du ...;</p>
-<p>Vu l’avis favorable de ...;</p>
-<p><b>DECIDE&nbsp;:</b><br><b><br> Article 1<sup>er</sup></b>&nbsp;:</p>
-<p>...</p>
-<p><b>Article 2</b> :</p>
-<p>...</p>
-<p><b>Article 3&nbsp;:</b></p>
-<p>...</p>"""),
 ]
 
 # Conseil communal

@@ -35,20 +35,12 @@ class testUtils(MeetingCommunesTestCase):
         Tests the Extensions/utils methods.
     """
 
-    def afterSetUp(self):
-        MeetingCommunesTestCase.afterSetUp(self)
+    def setUp(self):
+        MeetingCommunesTestCase.setUp(self)
         #add the ExternalMethod export_meetinggroups in Zope
         manage_addExternalMethod(self.portal.aq_inner.aq_parent, 'export_meetinggroups', '', 'Products.MeetingCommunes.utils', 'export_meetinggroups')
         #add the ExternalMethod import_meetinggroups in Zope
         manage_addExternalMethod(self.portal.aq_inner.aq_parent, 'import_meetinggroups', '', 'Products.MeetingCommunes.utils', 'import_meetinggroups')
-        
-    def afterSetUpPM(self):
-        """
-            The afterSetUp method from PloneMeeting must be called in each test and not in afterSetUp method of this class.
-            If not, this test transaction doesn't contain what's done in plonemeeting afterSetUp and it is not cleared
-        """
-        pass
-        #pmtw.afterSetUp(self)
 
     def _exportMeetingGroups(self):
         return self.portal.export_meetinggroups()
