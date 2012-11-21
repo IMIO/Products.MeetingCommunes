@@ -85,7 +85,7 @@ def initializeTool(context):
     #magic between quickinstaller and portal_setup
     #so install it manually
     _installPloneMeeting(context)
-    return ToolInitializer(context, 'Products.MeetingCommunes').run()
+    return ToolInitializer(context, PROJECTNAME).run()
 
 def _addTopics(context, site):
     '''
