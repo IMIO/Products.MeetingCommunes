@@ -143,7 +143,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # pmManager adds a decision for item2, decides and closes the meeting
         self.changeUser('pmManager')
         item2.setDecision(self.decisionText)
-        self.addAnnex(item2, annexPath='profiles/default/metadata.xml', decisionRelated=True)
+        self.addAnnex(item2, decisionRelated=True)
         # Meeting.showItemAdvices returns True in any case (the meeting is not decided here)
         self.assertEquals(meeting.adapted().showItemAdvices(), True)
         self.do(meeting, 'decide')
@@ -244,7 +244,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.assertEquals(duplicatedItem.getPredecessor().UID(), item1.UID())
         # when duplicated on delay, annexes are kept
         self.assertEquals(len(duplicatedItem.getAnnexes()), 1)
-        self.addAnnex(item2, annexPath='profiles/default/metadata.xml', decisionRelated=True)
+        self.addAnnex(item2, decisionRelated=True)
         self.failIf(len(self.transitions(meeting)) != 2)
         # When a meeting is closed, items without a decision are automatically 'accepted'
         self.do(meeting, 'close')
