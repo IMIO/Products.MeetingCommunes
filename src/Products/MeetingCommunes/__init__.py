@@ -58,6 +58,7 @@ DirectoryView.registerDirectory('skins', product_globals)
 
 
 ##code-section custom-init-head #fill in your manual code here
+import model.pm_updates
 ##/code-section custom-init-head
 
 
