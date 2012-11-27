@@ -97,9 +97,9 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.do(i1, 'validate')
         login(self.portal, 'pmManager')
         self.do(i1, 'present')
-        #no signatures defined for vendors group, get meetingconfig signature
+        # no signatures defined for vendors group, the MeetingConfig.certifiedSignatures are used
         res, isGrpSign = i1.adapted().getCertifiedSignatures()
-        self.assertEquals(res,'Pierre Dupont, Bourgmestre - Charles Exemple, 1er Echevin')
+        self.assertEquals(res,'Mr Pr\xc3\xa9sent Actuellement, Bourgmestre ff - Charles Exemple, Secr\xc3\xa9taire communal')
         self.assertEquals(isGrpSign,False)
         login(self.portal, 'pmCreator1')
         i2 = self.create('MeetingItem')

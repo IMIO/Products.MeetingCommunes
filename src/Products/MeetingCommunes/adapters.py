@@ -584,18 +584,19 @@ class CustomMeetingItem(MeetingItem):
 
     security.declarePublic('getCertifiedSignatures')
     def getCertifiedSignatures(self):
-        '''Gets the certified signatures for this item. If no signature is defined on proposing group,
-           meeting-config signatures are returned.'''
+        '''Gets the certified signatures for this item.
+           Either use signatures defined on the proposing MeetingGroup if exists,
+           or use the meetingConfig certified signatures.'''
         item = self.getSelf()
         if not item.hasMeeting():
             return '', False
-        res = item.getProposingGroup(theObject=True).getSignatures()
-        is_groupe_signature = True
-        if not res:
+        signature = item.getProposingGroup(theObject=True).getSignatures()
+        hasGroupSignature = True
+        if not signature:
             meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
-            res = meetingConfig.getSignatures()
-            is_groupe_signature = False
-        return res, is_groupe_signature
+            signature = meetingConfig.getCertifiedSignatures()
+            hasGroupSignature = False
+        return signature, hasGroupSignature
 
     def getEchevinsForProposingGroup(self):
         '''Returns all echevins defined for the proposing group'''
@@ -607,7 +608,7 @@ class CustomMeetingItem(MeetingItem):
         return res
 
     security.declarePublic('getPredecessors')
-    def getPredecessors(self):
+    def getPredecessors(self, **kwargs):
         '''Adapted method getPredecessors showing informations about every linked items'''
         pmtool = getToolByName(self.context, "portal_plonemeeting")
         predecessor = self.context.getPredecessor()
@@ -687,15 +688,16 @@ class CustomMeetingItem(MeetingItem):
         return res
 
     security.declarePublic('getDecision')
-    def getDecision(self, keepWithNext=False):
+    def getDecision(self, keepWithNext=False, **kwargs):
         '''Overridden version of 'decision' field accessor. It allows to specify
            p_keepWithNext=True. In that case, the last paragraph of bullet in
            field "decision" will get a specific CSS class that will keep it with
            next paragraph. Useful when including the decision in a document
            template and avoid having the signatures, just below it, being alone
-           on the next page. And d'on't show decision for no-meeting manager if meeting state is 'decided'''
+           on the next page. Manage the 'add_published_state' workflowAdaptation that
+           hides the decision for no-managers if meeting state is 'decided.'''
         item = self.getSelf()
-        res = self.getField('decision').get(self)
+        res = self.getField('decision').get(self, **kwargs)
         if keepWithNext: res = self.signatureNotAlone(res)
         meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
         adaptations = meetingConfig.getWorkflowAdaptations()
