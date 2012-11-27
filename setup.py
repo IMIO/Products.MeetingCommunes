@@ -24,7 +24,9 @@ setup(name='Products.MeetingCommunes',
       extras_require=dict(
             test=['unittest2', 'zope.testing', 'plone.testing',
                   'testfixtures',
-                  'plone.app.testing','communesplone.iconified_document_actions','Products.CMFPlacefulWorkflow', 'zope.testing', 'Products.PloneTestCase'],
+                  'plone.app.testing','communesplone.iconified_document_actions',
+                  'Products.CMFPlacefulWorkflow', 'zope.testing',
+                  'Products.PloneTestCase', 'collective.ckeditor', 'plonetheme.imioapps'],
             templates=['Genshi',
                   ]),
       install_requires=[
@@ -34,7 +36,9 @@ setup(name='Products.MeetingCommunes',
           'Pillow',
           'testfixtures',
           'communesplone.iconified_document_actions',
-          'Products.PloneMeeting',],
+          'Products.PloneMeeting',
+          'collective.ckeditor',
+          'plonetheme.imioapps'],
       entry_points={},
       )
 

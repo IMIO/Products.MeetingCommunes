@@ -2,5 +2,9 @@
 <metadata>
   <version>for.PloneMeeting.7</version>
   <!-- ##code-section METADATA -->
+  <dependencies>
+    <dependency>profile-collective.ckeditor:default</dependency>
+    <dependency>profile-plonetheme.imioapps:plonemeetingskin</dependency>
+  </dependencies>
   <!-- ##/code-section METADATA -->
 </metadata>
