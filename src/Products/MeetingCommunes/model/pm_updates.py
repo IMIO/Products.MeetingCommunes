@@ -41,9 +41,9 @@ def update_group_schema(baseSchema):
             name='signatures',
             widget=TextAreaWidget(
                 label='Signatures',
-                label_msgid='MeetingCommune_label_signatures',
+                label_msgid='MeetingCommunes_label_signatures',
                 description='Leave empty to use the signatures defined on the meeting',
-                description_msgid='MeetingCommune_descr_signatures',
+                description_msgid='MeetingCommunes_descr_signatures',
                 i18n_domain='PloneMeeting',
             ),
         ),
@@ -51,7 +51,6 @@ def update_group_schema(baseSchema):
 
     completeSchema = baseSchema + specificSchema.copy()
     return completeSchema
-
 MeetingGroup.schema = update_group_schema(MeetingGroup.schema)
 
 
@@ -75,7 +74,6 @@ def update_config_schema(baseSchema):
     completeConfigSchema = baseSchema + specificSchema.copy()
     completeConfigSchema.moveField('itemDecisionReportText', after='budgetDefault')    
     return completeConfigSchema
-
 MeetingConfig.schema = update_config_schema(MeetingConfig.schema)
 
 

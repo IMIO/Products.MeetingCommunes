@@ -123,11 +123,11 @@ msgid "MeetingCommune_descr_echevinServices"
 msgstr ""
 
 #. Default: "Leave empty to use the signatures defined on the meeting"
-msgid "MeetingCommune_descr_signatures"
+msgid "MeetingCommunes_descr_signatures"
 msgstr ""
 
 #. Default: "Signatures Delegation"
-msgid "MeetingCommune_label_signatures"
+msgid "MeetingCommunes_label_signatures"
 msgstr ""
 
 #. Default: "Gives mandatory advice on"

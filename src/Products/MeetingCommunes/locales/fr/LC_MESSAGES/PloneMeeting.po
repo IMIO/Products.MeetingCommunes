@@ -31,16 +31,16 @@ msgstr "Conseil Communal"
 msgid "MeetingCommune_descr_echevinServices"
 msgstr "Laisser vide si ce n'est pas un échevin"
 
-#. Default: "Leave empty to use the signatures defined on the meeting"
-msgid "MeetingCommune_descr_signatures"
-msgstr "Laisser ce champ vide pour utiliser les signatures qui seront définies sur la séance"
-
 #. Default: "Alderman of the following services(departments)"
 msgid "MeetingCommune_label_echevinServices"
 msgstr "Echevin des services suivants"
 
+#. Default: "Leave empty to use the signatures defined on the meeting"
+msgid "MeetingCommunes_descr_signatures"
+msgstr "Laisser ce champ vide pour utiliser les signatures qui seront définies sur la séance"
+
 #. Default: "Signatures Delegation"
-msgid "MeetingCommune_label_signatures"
+msgid "MeetingCommunes_label_signatures"
 msgstr "Délégation de signatures"
 
 # MeetingItem

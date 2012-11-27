@@ -28,16 +28,16 @@ msgstr ""
 msgid "MeetingCommune_descr_echevinServices"
 msgstr ""
 
-#. Default: "Leave empty to use the signatures defined on the meeting"
-msgid "MeetingCommune_descr_signatures"
-msgstr ""
-
 #. Default: "Alderman of the following services(departments)"
 msgid "MeetingCommune_label_echevinServices"
 msgstr ""
 
+#. Default: "Leave empty to use the signatures defined on the meeting"
+msgid "MeetingCommunes_descr_signatures"
+msgstr ""
+
 #. Default: "Signatures Delegation"
-msgid "MeetingCommune_label_signatures"
+msgid "MeetingCommunes_label_signatures"
 msgstr ""
 
 # MeetingItem
