@@ -5,6 +5,10 @@
            i18n_domain="MeetingCommunes">
 
   <!-- ##code-section configure.zcml.header -->
+  <!-- registerTranslations before including package Products.PloneMeeting
+       so Products.MeetingCommunes can overrides Products.PloneMeeting translations -->
+  <i18n:registerTranslations directory="locales" />
+
   <include package="Products.CMFPlacefulWorkflow"/>
   <include package="communesplone.iconified_document_actions"/>
   <include package="plonetheme.imioapps"/>
@@ -52,10 +56,10 @@
   <adapter for="Products.PloneMeeting.interfaces.IMeeting"
            factory="Products.MeetingCommunes.adapters.CustomMeeting"
            provides="Products.PloneMeeting.interfaces.IMeetingCustom"/>
-           
+
   <adapter for="Products.PloneMeeting.interfaces.IMeetingGroup"
            factory="Products.MeetingCommunes.adapters.CustomMeetingGroup"
-           provides="Products.PloneMeeting.interfaces.IMeetingGroupCustom"/>           
+           provides="Products.PloneMeeting.interfaces.IMeetingGroupCustom"/>
 
   <!-- ##/code-section configure.zcml.header -->
 

@@ -80,20 +80,60 @@ msgstr ""
 msgid "advices"
 msgstr ""
 
+#. Default: "Back to created"
+msgid "backToCreated"
+msgstr ""
+
 #. Default: "backToCreated_done_descr"
 msgid "backToCreated_done_descr"
+msgstr ""
+
+#. Default: "Back to decided"
+msgid "backToDecided"
 msgstr ""
 
 #. Default: "backToDecided_done_descr"
 msgid "backToDecided_done_descr"
 msgstr ""
 
+#. Default: "Back to frozen"
+msgid "backToFrozen"
+msgstr ""
+
 #. Default: "backToFrozen_done_descr"
 msgid "backToFrozen_done_descr"
 msgstr ""
 
+#. Default: "Back to item created"
+msgid "backToItemCreated"
+msgstr ""
+
+#. Default: "Back to item frozen"
+msgid "backToItemFrozen"
+msgstr ""
+
+#. Default: "Back to presented"
+msgid "backToPresented"
+msgstr ""
+
 #. Default: "backToPresented_done_descr."
 msgid "backToPresented_done_descr"
+msgstr ""
+
+#. Default: "Back to pre-validated"
+msgid "backToPrevalidated"
+msgstr ""
+
+#. Default: "Back to proposed"
+msgid "backToProposed"
+msgstr ""
+
+#. Default: "Back to published"
+msgid "backToPublished"
+msgstr ""
+
+#. Default: "Remove"
+msgid "backToValidated"
 msgstr ""
 
 #. Default: "close_done_descr"
