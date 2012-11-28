@@ -277,9 +277,13 @@ def finalizeExampleInstance(context):
                           getattr(mc_council.topics, 'searchitemstovalidate'),
                           getattr(mc_council.topics, 'searchallitemsincopy'),
                          ])
-    #finally, reinstall plonemeetingskin because PM has been installed before
-    #the import_data profile and messed up skins layers
-    reinstallPloneMeetingSkin(context, site)
+    #finally, re-launch plonemeetingskin and MeetingCommunes skins step
+    # because PM has been installed before the import_data profile and messed up skins layers
+    site.portal_setup.runImportStepFromProfile(u'profile-Products.MeetingCommunes:default', 'skins')
+    site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:default', 'skins')
+    site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:plonemeetingskin', 'skins')
+
+    
 
 # ------------------------------------------------------------------------------
 # ---------------------- MIGRATIONS SCRIPTS ------------------------------------
