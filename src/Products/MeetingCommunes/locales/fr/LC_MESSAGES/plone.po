@@ -84,7 +84,7 @@ msgstr "Avis et copies"
 
 #. Default: "Back to created"
 msgid "backToCreated"
-msgstr "Remettre \"en création\""
+msgstr "Remettre \"En création\""
 
 #. Default: "backToCreated_done_descr"
 msgid "backToCreated_done_descr"
@@ -92,7 +92,7 @@ msgstr "Vous venez d'annuler le gel de l'ordre du jour."
 
 #. Default: "Back to decided"
 msgid "backToDecided"
-msgstr "Remettre en \"rédaction du PV\""
+msgstr "Remettre en \"Rédaction du PV\""
 
 #. Default: "backToDecided_done_descr"
 msgid "backToDecided_done_descr"
@@ -100,7 +100,7 @@ msgstr "Vous pouvez à nouveau modifier le procès-verbal."
 
 #. Default: "Back to frozen"
 msgid "backToFrozen"
-msgstr "Remettre en \"gelée\""
+msgstr "Remettre en \"Gelée\""
 
 #. Default: "backToFrozen_done_descr"
 msgid "backToFrozen_done_descr"
@@ -108,15 +108,15 @@ msgstr "Vous ne pouvez plus rédiger le Procès-verbal pour l'instant."
 
 #. Default: "Back to item created"
 msgid "backToItemCreated"
-msgstr "Remettre \"en création\""
+msgstr "Remettre \"En création\""
 
 #. Default: "Back to item frozen"
 msgid "backToItemFrozen"
-msgstr "Remettre en \"gelé\""
+msgstr "Remettre en \"Gelé\""
 
 #. Default: "Back to presented"
 msgid "backToPresented"
-msgstr "Remettre en \"présenté\""
+msgstr "Remettre en \"Présenté\""
 
 #. Default: "backToPresented_done_descr."
 msgid "backToPresented_done_descr"
@@ -124,15 +124,15 @@ msgstr "Le point a été remis dans l'état 'présenté'."
 
 #. Default: "Back to pre-validated"
 msgid "backToPrevalidated"
-msgstr "Remettre en \"accepté provisoirement\""
+msgstr "Remettre en \"Accepté provisoirement\""
 
 #. Default: "Back to proposed"
 msgid "backToProposed"
-msgstr "Remettre en \"proposé\""
+msgstr "Remettre en \"Proposé\""
 
 #. Default: "Back to published"
 msgid "backToPublished"
-msgstr "Remettre en \"publié\""
+msgstr "Remettre en \"Publié\""
 
 #. Default: "Remove"
 msgid "backToValidated"
