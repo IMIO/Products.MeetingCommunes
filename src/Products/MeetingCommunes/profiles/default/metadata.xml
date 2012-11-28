@@ -5,6 +5,7 @@
   <dependencies>
     <dependency>profile-collective.ckeditor:default</dependency>
     <dependency>profile-plonetheme.imioapps:plonemeetingskin</dependency>
+    <dependency>profile-communesplone.iconified_document_actions:default</dependency>
   </dependencies>
   <!-- ##/code-section METADATA -->
 </metadata>
