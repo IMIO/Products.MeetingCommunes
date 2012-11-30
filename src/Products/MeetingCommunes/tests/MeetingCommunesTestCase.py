@@ -20,16 +20,9 @@
 # 02110-1301, USA.
 #
 
-import unittest
-import os.path
-
-from plone.app.testing.helpers import setRoles
 from plone.app.testing import login, logout
 
-import Products.PloneMeeting
 from Products.PloneMeeting.tests.PloneMeetingTestCase import PloneMeetingTestCase
-
-from Products.PloneTestCase.setup import _createHomeFolder
 
 from Products.MeetingCommunes.testing import MC_TESTS_PROFILE_FUNCTIONAL
 
@@ -51,6 +44,7 @@ class MeetingCommunesTestCase(PloneMeetingTestCase):
         self.annexFile = 'INSTALL.TXT'
         self.annexFileType = 'annexeBudget'
         self.annexFileTypeDecision = 'annexeDecision'
+        self.transitionsToCloseAMeeting = ('freeze', 'publish', 'decide', 'close')
 
     def getTestMethods(self, module, prefix):
         methods = {}

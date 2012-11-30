@@ -27,16 +27,13 @@ from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testAdvices import testAdvices as pmta
 
-from Products.MeetingCommunes.testing import MC_TESTS_PROFILE_FUNCTIONAL
 
 class testAdvices(MeetingCommunesTestCase, pmta):
     '''Tests various aspects of advices management.
        Advices are enabled for PloneGov Assembly, not for PloneMeeting Assembly.'''
 
     def test_mc_VerifyTestNumbers(self):
-        """
-            We verify that there are the same test methods in original product and this sub-product
-        """
+        '''We verify that there are the same test methods in original product and this sub-product.'''
         tpm = self.getTestMethods(pmta, 'test')
         tmc = self.getTestMethods(testAdvices, 'test_mc_call_')
         missing = []
@@ -48,21 +45,15 @@ class testAdvices(MeetingCommunesTestCase, pmta):
             self.fail("missing test methods %s from PloneMeeting test class '%s'" % (missing, 'testAdvices'))
 
     def test_mc_call_ViewItemToAdvice(self):
-        """
-          Run the testViewItemToAdvice from PloneMeeting
-        """
+        '''Run the testViewItemToAdvice from PloneMeeting.'''
         pmta.testViewItemToAdvice(self)
 
     def test_mc_call_AddEditDeleteAdvices(self):
-        """
-          Run the testAddEditDeleteAdvices from PloneMeeting
-        """
+        '''Run the testAddEditDeleteAdvices from PloneMeeting.'''
         pmta.testAddEditDeleteAdvices(self)
 
     def test_mc_call_GiveAdviceOnCreatedItem(self):
-        """
-          Run the testGiveAdviceOnCreatedItem from PloneMeeting
-        """
+        '''Run the testGiveAdviceOnCreatedItem from PloneMeeting.'''
         pmta.testGiveAdviceOnCreatedItem(self)
 
 
