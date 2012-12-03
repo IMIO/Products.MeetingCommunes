@@ -115,6 +115,14 @@ msgstr ""
 msgid "close_done_descr"
 msgstr ""
 
+#. Default: "backToDecisionsPublished_done_descr"
+msgid "backToDecisionsPublished_done_descr"
+msgstr ""
+
+#. Default: "publish_decisions_done_descr"
+msgid "publish_decisions_done_descr"
+msgstr ""
+
 #. Default: "Meeting BP"
 msgid "Meetingbp"
 msgstr ""
@@ -189,6 +197,18 @@ msgstr ""
 
 #. Default: "Back to published"
 msgid "backToPublished"
+msgstr ""
+
+#. Default: "Back to decisions published"
+msgid "backToDecisionsPublished"
+msgstr ""
+
+#. Default: "Decisions published"
+msgid "decisions_published"
+msgstr ""
+
+#. Default: "Publish decisions"
+msgid "publish_decisions"
 msgstr ""
 
 #. Default: "Remove"

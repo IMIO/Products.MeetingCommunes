@@ -98,6 +98,14 @@ msgstr ""
 msgid "backToDecided_done_descr"
 msgstr "Usted puede editar nuevamente las actas."
 
+#. Default: "Back to decisions published"
+msgid "backToDecisionsPublished"
+msgstr ""
+
+#. Default: "backToDecisionsPublished_done_descr"
+msgid "backToDecisionsPublished_done_descr"
+msgstr ""
+
 #. Default: "Back to frozen"
 msgid "backToFrozen"
 msgstr ""
@@ -160,6 +168,10 @@ msgstr "Usted ahora puede escribir el acta de esta reunión"
 msgid "decided"
 msgstr "redacción de Acta"
 
+#. Default: "Decisions published"
+msgid "decisions_published"
+msgstr ""
+
 #. Default: "delay_done_descr"
 msgid "delay_done_descr"
 msgstr ""
@@ -191,6 +203,14 @@ msgstr ""
 
 #. Default: "pre accepted"
 msgid "pre_accepted"
+msgstr ""
+
+#. Default: "Publish decisions"
+msgid "publish_decisions"
+msgstr ""
+
+#. Default: "publish_decisions_done_descr"
+msgid "publish_decisions_done_descr"
 msgstr ""
 
 #. Default: "refuse_done_descr"

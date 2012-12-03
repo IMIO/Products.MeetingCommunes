@@ -24,6 +24,7 @@ import re
 from appy.gen import No
 from appy.gen.utils import Keywords
 from zope.interface import implements
+from zope.i18n import translate
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import DisplayList
 from Globals import InitializeClass
@@ -89,7 +90,7 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
             # call original perform of PloneMeeting
             originalPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdaptation=wfAdaptation)
         elif wfAdaptation == 'no_publication':
-            # we override the 'no_publication' wfAdaptation
+            # we override the PloneMeeting's 'no_publication' wfAdaptation
             # First, update the meeting workflow
             wf = meetingWorkflow
             # Delete transitions 'publish' and 'backToPublished'
@@ -124,62 +125,77 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
                 wf.states.deleteStates(['itempublished'])
             logger.info(WF_APPLIED % "no_publication")
         elif wfAdaptation == 'add_published_state':
-            # "add_published_state" add state 'published' in the meeting workflow
+            # "add_published_state" add state 'decisions_published' in the meeting workflow
             # The idea is to let people "finalize" the meeting even after is has been
-            # published, a finalized version, ie, some hours or minutes before the meeting begins.
+            # decisions_published, a finalized version, ie, some hours or minutes before the meeting begins.
             # When the meeting is in decided state, we hide the decision for no-meetingManager
             # First, update the meeting workflow
             wf = meetingWorkflow
-            # add transitions 'publish' and 'backToPublished'
-            if 'published' not in wf.states: wf.states.addState('published')
+            # add state 'decision_published'
+            if 'decisions_published' not in wf.states: wf.states.addState('decisions_published')
             # Create new transitions linking the new state to existing ones
             # ('decided' and 'closed').
-            for tr in ('publish', 'backToPublished'):
+            # add transitions 'publish_decision' and 'backToDecisionPublished'
+            for tr in ('publish_decisions', 'backToDecisionsPublished'):
                 if tr not in wf.transitions: wf.transitions.addTransition(tr)
-            transition = wf.transitions['publish']
-            transition.setProperties(title='publish',
-                new_state_id='published', trigger_type=1, script_name='',
-                actbox_name='publish', actbox_url='',actbox_category='workflow',
-                props={'guard_expr': 'python:here.wfConditions().mayPublish()'})
-            transition = wf.transitions['backToPublished']
-            transition.setProperties(title='backToPublished',
-                new_state_id='published', trigger_type=1, script_name='',
-                actbox_name='backToPublished', actbox_url='',
+            transition = wf.transitions['publish_decisions']
+            transition.setProperties(title='publish_decisions',
+                new_state_id='decisions_published', trigger_type=1, script_name='',
+                actbox_name='publish_decisions', actbox_url='',actbox_category='workflow',
+                props={'guard_expr': 'python:here.wfConditions().mayPublishDecisions()'})
+            transition = wf.transitions['backToDecisionsPublished']
+            transition.setProperties(title='backToDecisionsPublished',
+                new_state_id='decisions_published', trigger_type=1, script_name='',
+                actbox_name='backToDecisionsPublished', actbox_url='',
                 actbox_category='workflow',
                 props={'guard_expr': 'python:here.wfConditions().mayCorrect()'})
             # Update connections between states and transitions
             wf.states['decided'].setProperties(
                 title='decided', description='',
-                transitions=['backToFrozen', 'publish'])
-            wf.states['published'].setProperties(
-                title='published', description='',
+                transitions=['backToFrozen', 'publish_decisions'])
+            wf.states['decisions_published'].setProperties(
+                title='decisions_published', description='',
                 transitions=['backToDecided', 'close'])
             wf.states['closed'].setProperties(
                 title='closed', description='',
-                transitions=['backToPublished',])
-            # Initialize permission->roles mapping for new state "published",
+                transitions=['backToDecisionsPublished',])
+            # Initialize permission->roles mapping for new state "decisions_published",
             # which is the same as state "frozen" (or "decided")in the previous setting.
             frozen = wf.states['frozen']
-            published = wf.states['published']
+            decisions_published = wf.states['decisions_published']
             for permission, roles in frozen.permission_roles.iteritems():
-                published.setPermission(permission, 0, roles)            
+                decisions_published.setPermission(permission, 0, roles)            
             # Transition "backToPublished" must be protected by a popup, like
             # any other "correct"-like transition.
             toConfirm = meetingConfig.getTransitionsToConfirm()
-            if 'Meeting.backToPublished' not in toConfirm:
+            if 'Meeting.backToDecisionsPublished' not in toConfirm:
                 toConfirm = list(toConfirm)
-                toConfirm.append('Meeting.backToPublished')
+                toConfirm.append('Meeting.backToDecisionsPublished')
                 meetingConfig.setTransitionsToConfirm(toConfirm)
-            # State "published" must be selected in DecisionTopicStates (queries)
+            # State "decisions_published" must be selected in DecisionTopicStates (queries)
             queryStates = meetingConfig.getDecisionTopicStates()
-            if 'published' not in queryStates:
+            if 'decisions_published' not in queryStates:
                 queryStates = list(queryStates)
-                queryStates.append('published')
+                queryStates.append('decisions_published')
                 meetingConfig.setDecisionTopicStates(queryStates)
                 # Update the topics definitions for taking this into account.
                 meetingConfig.updateTopics()
             logger.info(WF_APPLIED % "add_published_state")
 adaptations.performWorkflowAdaptations = customPerformWorkflowAdaptations
+
+originalValidate_workflowAdaptations = MeetingConfig.validate_workflowAdaptations
+def validate_workflowAdaptations(self, v):
+    '''This method ensures that the combination of used workflow
+       adaptations is valid.'''
+    pmmsg = originalValidate_workflowAdaptations(self, v)
+    if pmmsg:
+        return pmmsg
+
+    msg = translate('wa_conflicts', domain='PloneMeeting', context=self.REQUEST)
+    # 'add_published_state' and 'no_publication' are not working together
+    if ('add_published_state' in v) and ('no_publication' in v):
+        return msg
+MeetingConfig.validate_workflowAdaptations = validate_workflowAdaptations
 
 # ------------------------------------------------------------------------------
 class CustomMeeting(Meeting):
@@ -728,18 +744,18 @@ class CustomMeetingItem(MeetingItem):
         '''Helper method to have a printable version of advices.'''
         item = self.getSelf()
         itemAdvicesByType = item.getAdvicesByType()        
-        res = "<p><u>%s :</u></p>" % item.utranslate('advices', domain='PloneMeeting')
+        res = "<p><u>%s :</u></p>" % translate('advices', domain='PloneMeeting', context=item.REQUEST)
         if itemAdvicesByType:
             res = res + "<p>"
         for adviceType in itemAdvicesByType:
             for advice in itemAdvicesByType[adviceType]:
-                res = res + "<u>%s : %s</u><br />" % (advice['name'], item.utranslate([advice['type']][0], domain='PloneMeeting'))
+                res = res + "<u>%s : %s</u><br />" % (advice['name'], translate([advice['type']][0], domain='PloneMeeting', context=item.REQUEST))
                 if advice.has_key('comment'):
                     res = res + "%s<br />" % advice['comment']
         if itemAdvicesByType:
             res = res + "</p>"
         if not itemAdvicesByType:
-            return "<p><u>%s : -</u></p>" % item.utranslate('advices', domain='PloneMeeting')
+            return "<p><u>%s : -</u></p>" % translate('advices', domain='PloneMeeting', context=item.REQUEST)
         return res
 
     security.declarePublic('getDecision')
@@ -759,8 +775,8 @@ class CustomMeetingItem(MeetingItem):
         adaptations = meetingConfig.getWorkflowAdaptations()
         if 'add_published_state' in adaptations and item.getMeeting() and \
             item.getMeeting().queryState() == 'decided' and not item.portal_plonemeeting.isManager():
-            return item.utranslate(msgid='decision_under_edition', domain='PloneMeeting', context=item.REQUEST,
-                                   default='<p>The decision is currently under edit by managers, you can not access it</p>')
+            return translate('decision_under_edit', domain='PloneMeeting', context=item.REQUEST,
+                             default='<p>The decision is currently under edit by managers, you can not access it</p>')
         return res
     MeetingItem.getDecision=getDecision
     MeetingItem.getRawDecision=getDecision        
@@ -876,10 +892,20 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
                                                   item.Description()))
                 item.reindexObject()
 
+    security.declarePrivate('doPublish_decisions')
+    def doPublish_decisions(self, stateChange):
+        '''When the wfAdaptation 'add_published_state' is activated.'''
+        pass
+
     security.declarePrivate('doBackToCreated')
     def doBackToCreated(self, stateChange):
         '''When a meeting go back to the "created" state, for example the
            meeting manager wants to add an item, we do not do anything.'''
+        pass
+
+    security.declarePrivate('doBackToDecisionsPublished')
+    def doBackToDecisionsPublished(self, stateChange):
+        '''When the wfAdaptation 'add_published_state' is activated.'''
         pass
 
 # ------------------------------------------------------------------------------
@@ -896,7 +922,7 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
         if checkPermission(ReviewPortalContent, self.context):
             res = True # At least at present            
             if not self.context.getRawItems():
-                res = No(self.context.utranslate('item_required_to_publish'))
+                res = No(translate('item_required_to_publish', domain='PloneMeeting', context=self.context.REQUEST))
         return res
         
     security.declarePublic('mayClose')
@@ -937,6 +963,16 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
             # back to created.
             if checkPermission(ReviewPortalContent, self.context):
                 return True
+        return res
+
+    security.declarePublic('mayPublishDecisions')
+    def mayPublishDecisions(self):
+        '''Used when 'add_published_state' wfAdaptation is active.'''
+        res = False
+        # The user just needs the "Review portal content" permission on the
+        # object to close it.
+        if checkPermission(ReviewPortalContent, self.context):
+            res = True
         return res
 
 # ------------------------------------------------------------------------------
@@ -1123,6 +1159,11 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
                                                   item.Description()))
                 item.reindexObject()
 
+    security.declarePrivate('doPublish_decisions')
+    def doPublish_decisions(self, stateChange):
+        '''When the wfAdaptation 'add_published_state' is activated.'''
+        pass
+
     security.declarePrivate('doPublish')
     def doPublish(self, stateChange):
         '''When publishing the meeting, every items must be automatically set to
@@ -1132,6 +1173,11 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
                 self.context.portal_workflow.doActionFor(item, 'itemfreeze')
             if item.queryState() == 'itemfrozen':
                 self.context.portal_workflow.doActionFor(item, 'itempublish')
+
+    security.declarePrivate('doBackToDecisionsPublished')
+    def doBackToDecisionsPublished(self, stateChange):
+        '''When the wfAdaptation 'add_published_state' is activated.'''
+        pass
 
 # ------------------------------------------------------------------------------
 class MeetingCouncilWorkflowConditions(MeetingCollegeWorkflowConditions):
@@ -1162,6 +1208,16 @@ class MeetingCouncilWorkflowConditions(MeetingCollegeWorkflowConditions):
             # back to created.
             if checkPermission(ReviewPortalContent, self.context):
                 return True
+        return res
+
+    security.declarePublic('mayPublishDecisions')
+    def mayPublishDecisions(self):
+        '''Used when 'add_published_state' wfAdaptation is active.'''
+        res = False
+        # The user just needs the "Review portal content" permission on the
+        # object to close it.
+        if checkPermission(ReviewPortalContent, self.context):
+            res = True
         return res
 
 # ------------------------------------------------------------------------------

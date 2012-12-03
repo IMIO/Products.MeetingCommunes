@@ -98,6 +98,14 @@ msgstr "Remettre en \"Rédaction du PV\""
 msgid "backToDecided_done_descr"
 msgstr "Vous pouvez à nouveau modifier le procès-verbal."
 
+#. Default: "Back to decisions published"
+msgid "backToDecisionsPublished"
+msgstr "Remettre en \"Décisions publiées\""
+
+#. Default: "backToDecisionsPublished_done_descr"
+msgid "backToDecisionsPublished_done_descr"
+msgstr "La séance a été remise en \"Décisions publiées\""
+
 #. Default: "Back to frozen"
 msgid "backToFrozen"
 msgstr "Remettre en \"Gelée\""
@@ -160,6 +168,10 @@ msgstr "Vous pouvez maintenant rédiger le Procès-verbal de cette séance."
 msgid "decided"
 msgstr "Rédaction du PV"
 
+#. Default: "Decisions published"
+msgid "decisions_published"
+msgstr "Décisions publiées"
+
 #. Default: "delay_done_descr"
 msgid "delay_done_descr"
 msgstr "Le point a été reporté. Il a été dupliqué chez le service proposant afin qu'il puisse facilement le proposer à nouveau."
@@ -192,6 +204,14 @@ msgstr "Le point a été accepté provisoirement."
 #. Default: "pre accepted"
 msgid "pre_accepted"
 msgstr "Accepté provisoirement"
+
+#. Default: "Publish decisions"
+msgid "publish_decisions"
+msgstr "Publier les décisions"
+
+#. Default: "publish_decisions_done_descr"
+msgid "publish_decisions_done_descr"
+msgstr "Les décisions ont été publiées et sont maintenant visibles par les personnes pouvant voir le point."
 
 #. Default: "refuse_done_descr"
 msgid "refuse_done_descr"

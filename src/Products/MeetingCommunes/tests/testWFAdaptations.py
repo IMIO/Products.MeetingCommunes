@@ -148,6 +148,15 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         logger = logging.getLogger('MeetingCommunes: tests')
         performWorkflowAdaptations(self.portal, self.meetingConfig, logger)
         self._add_published_state_active()
+        
+        # test also for the meetingcouncil_workflow
+        self.meetingConfig = self.meetingConfig2
+        self._add_published_state_inactive()
+        self.meetingConfig.setWorkflowAdaptations('add_published_state')
+        logger = logging.getLogger('MeetingCommunes: tests')
+        performWorkflowAdaptations(self.portal, self.meetingConfig, logger)
+        # check while the wfAdaptation is not activated
+        self._add_published_state_active()
 
     def _add_published_state_inactive(self):
         '''Tests while 'add_published_state' wfAdaptation is inactive.
@@ -162,29 +171,24 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
         self.changeUser('pmManager')
         self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.do(m1, 'freeze')
-        # the decision is avalaible for all people
-        self.changeUser('pmCreator1')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.changeUser('pmManager')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.do(m1, 'decide')
-        # the decision is only avalaible for meetingManager
-        self.changeUser('pmCreator1')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.changeUser('pmManager')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        # change the decision
-        item.setDecision('<p>Decision adapted by pmManager</p>')
-        item.reindexObject()
-        # no 'publish' transition in the WF if the wfAdaptation is not activated
-        self.failIf('publish' in self.transitions(m1))
-        self.do(m1, 'close')
-        # the decision is still viawable when the item is decided (accepted by default when the meeting is closed)
-        self.changeUser('pmCreator1')
-        self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
-        self.changeUser('pmManager')
-        self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
+        decisionHasBeenChanged = False
+        for tr in self.transitionsToCloseAMeeting:
+            login(self.portal, 'pmManager')
+            if tr in self.transitions(m1):
+                self.do(m1, tr)
+            else:
+                continue
+            # even when the Meeting is decided, the real decision is viewable
+            if not decisionHasBeenChanged and m1.queryState() == 'decided':
+                decisionHasBeenChanged = True
+                item.setDecision('<p>Decision adapted by pmManager</p>')
+                item.reindexObject()
+            login(self.portal, 'pmCreator1')
+            if decisionHasBeenChanged:
+                self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
+            else:
+                self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
+        self.failUnless(decisionHasBeenChanged)
 
     def _add_published_state_active(self):
         '''Tests while 'add_published_state' wfAdaptation is active.'''
@@ -197,33 +201,32 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
         self.changeUser('pmManager')
         self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.do(m1, 'freeze')
-        # the decision is avalaible for all people
-        self.changeUser('pmCreator1')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.changeUser('pmManager')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.do(m1, 'decide')
-        # the decision is only avalaible for meetingManager
-        self.changeUser('pmCreator1')
-        self.assertEquals(item.getDecision(),'<p>The decision is currently under edit by managers, you can not access it</p>')
-        self.changeUser('pmManager')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        # change the decision
-        item.setDecision('<p>Decision adapted by pmManager</p>')
-        item.reindexObject()
-        self.do(m1, 'publish')
-        # the adapted decision is available for every users that may see the item
-        self.changeUser('pmCreator1')
-        self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
-        self.changeUser('pmManager')
-        self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
-        self.do(m1, 'close')
-        # the decision is still viawable when the item is decided (accepted by default when the meeting is closed)
-        self.changeUser('pmCreator1')
-        self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
-        self.changeUser('pmManager')
-        self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
+        decisionHasBeenChanged = decisionsHaveBeenPublished = False
+        # a 'publish_decision' is added after the 'decide' transition
+        wfAdaptedTransitionsToCloseAMeeting = list(self.transitionsToCloseAMeeting)
+        wfAdaptedTransitionsToCloseAMeeting.insert(wfAdaptedTransitionsToCloseAMeeting.index('decide')+1, 'publish_decisions')
+        for tr in wfAdaptedTransitionsToCloseAMeeting:
+            login(self.portal, 'pmManager')
+            if tr in self.transitions(m1):
+                self.do(m1, tr)
+            else:
+                continue
+            if tr == 'publish_decisions':
+                decisionsHaveBeenPublished = True
+            # just when the Meeting is decided, the decision is not viewable by non Managers
+            if not decisionsHaveBeenPublished and m1.queryState() == 'decided':
+                decisionHasBeenChanged = True
+                item.setDecision('<p>Decision adapted by pmManager</p>')
+                item.reindexObject()
+            login(self.portal, 'pmCreator1')
+            if decisionHasBeenChanged and m1.queryState() == 'decided':
+                self.assertEquals(item.getDecision(),'<p>The decision is currently under edit by managers, you can not access it</p>')
+            elif decisionHasBeenChanged:
+                self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
+            else:
+                self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
+        self.failUnless(decisionHasBeenChanged)
+        self.failUnless(decisionsHaveBeenPublished)
 
 
 
