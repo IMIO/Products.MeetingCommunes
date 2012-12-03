@@ -749,8 +749,9 @@ class CustomMeetingItem(MeetingItem):
            field "decision" will get a specific CSS class that will keep it with
            next paragraph. Useful when including the decision in a document
            template and avoid having the signatures, just below it, being alone
-           on the next page. Manage the 'add_published_state' workflowAdaptation that
-           hides the decision for no-managers if meeting state is 'decided.'''
+           on the next page.
+           Manage the 'add_published_state' workflowAdaptation that
+           hides the decision for non-managers if meeting state is 'decided.'''
         item = self.getSelf()
         res = self.getField('decision').get(self, **kwargs)
         if keepWithNext: res = self.signatureNotAlone(res)
@@ -758,7 +759,8 @@ class CustomMeetingItem(MeetingItem):
         adaptations = meetingConfig.getWorkflowAdaptations()
         if 'add_published_state' in adaptations and item.getMeeting() and \
             item.getMeeting().queryState() == 'decided' and not item.portal_plonemeeting.isManager():
-            return '<p> La décision est actuellement en cours de rédaction </p>'
+            return item.utranslate(msgid='decision_under_edition', domain='PloneMeeting', context=item.REQUEST,
+                                   default='<p>The decision is currently under edit by managers, you can not access it</p>')
         return res
     MeetingItem.getDecision=getDecision
     MeetingItem.getRawDecision=getDecision        

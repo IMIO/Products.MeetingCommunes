@@ -80,6 +80,10 @@ msgstr ""
 msgid "decision"
 msgstr "Extracto de Acta"
 
+#. Default: "<p>The decision is currently under edit by managers, you can not access it</p>"
+msgid "decision_under_edit"
+msgstr ""
+
 #. Default: "Decisions"
 msgid "decisions"
 msgstr "Actas"

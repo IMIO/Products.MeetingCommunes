@@ -30,7 +30,7 @@ from Products.PloneMeeting.tests.testMeetingItem import testMeetingItem as pmtmi
 
 class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
     """
-        Tests the Meeting adapted methods
+        Tests the MeetingItem adapted methods
     """
 
     def _createMeetingWithItems(self):
@@ -173,51 +173,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.do(item, 'delay')
         self.assertEquals(item.getDecision(),'<p>Testing decision field</p><p>Delay this item</p>')
 
-    def test_mc_getDecision(self):
-        '''If meeting is in decided state, only the meetingManager can
-           view the real decision. The other people view a standard message.'''
-        login(self.portal, 'pmManager')
-        #create a meeting with items so we can play the workflow
-        #will stay 'created'
-        m1 = self._createMeetingWithItems()
-        item = m1.getItems()[0]
-        meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
-        meetingConfig.setWorkflowAdaptations('add_published_state')
-        from Products.PloneMeeting.model.adaptations import performWorkflowAdaptations
-        import logging
-        logger = logging.getLogger('MeetingCommunes: test')
-        performWorkflowAdaptations(self.portal, meetingConfig, logger)
-        item.setDecision('<p>testing decision field</p>')
-        self.changeUser('pmCreator1')
-        #the decision is avalaible for all people
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.changeUser('pmManager')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.do(m1, 'freeze')
-        #the decision is avalaible for all people
-        self.changeUser('pmCreator1')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.changeUser('pmManager')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.do(m1, 'decide')
-        #the decision is only avalaible for meetingManager
-        self.changeUser('pmCreator1')
-        self.assertEquals(item.getDecision(),'<p> La décision est actuellement en cours de rédaction </p>')
-        self.changeUser('pmManager')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.do(m1, 'publish')
-        #the decision is avalaible for all people
-        self.changeUser('pmCreator1')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.changeUser('pmManager')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.do(m1, 'close')
-        #the decision is avalaible for all people
-        self.changeUser('pmCreator1')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.changeUser('pmManager')
-        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

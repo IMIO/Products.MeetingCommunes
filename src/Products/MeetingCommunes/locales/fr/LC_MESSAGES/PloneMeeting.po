@@ -80,6 +80,10 @@ msgstr "Point Conseil Communal créé depuis un point Collège Communal"
 msgid "decision"
 msgstr "Extrait du Procès-verbal"
 
+#. Default: "<p>The decision is currently under edit by managers, you can not access it</p>"
+msgid "decision_under_edit"
+msgstr "<p>La décision est actuellement en cours de rédaction</p>"
+
 #. Default: "Decisions"
 msgid "decisions"
 msgstr "Procès-verbal"

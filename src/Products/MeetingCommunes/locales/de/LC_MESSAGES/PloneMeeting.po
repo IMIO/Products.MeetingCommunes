@@ -79,6 +79,10 @@ msgstr ""
 msgid "decision"
 msgstr "Auszug aus dem Protokoll"
 
+#. Default: "<p>The decision is currently under edit by managers, you can not access it</p>"
+msgid "decision_under_edit"
+msgstr ""
+
 #. Default: "Decisions"
 msgid "decisions"
 msgstr "Protokolle"
