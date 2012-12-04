@@ -293,9 +293,9 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
         #if not recurring item is defined, none is added
         #while creating a meeting, no extra items are created...
-        login(self.portal, 'admin')
+        self.changeUser('admin')
         self.portal.restrictedTraverse('@@delete_givenuid')(self.meetingConfig.recurringitems.recItem1.UID())
-        login(self.portal, 'pmManager')
+        self.changeUser('pmManager')
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
         self.assertEquals(len(meeting.getItems()), 0)
 
