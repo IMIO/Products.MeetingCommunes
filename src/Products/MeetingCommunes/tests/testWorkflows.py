@@ -109,7 +109,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # pmManager inserts item1 into the meeting and publishes it
         self.changeUser('pmManager')
         managerAnnex = self.addAnnex(item1)
-        self.portal.delete_givenuid(managerAnnex.UID())
+        self.portal.restrictedTraverse('@@delete_givenuid')(managerAnnex.UID())
         self.do(item1, 'present')
         # Now reviewers can't add annexes anymore
         self.changeUser('pmReviewer1')
@@ -192,7 +192,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # pmManager inserts item1 into the meeting and freezes it
         self.changeUser('pmManager')
         managerAnnex = self.addAnnex(item1)
-        self.portal.delete_givenuid(managerAnnex.UID())
+        self.portal.restrictedTraverse('@@delete_givenuid')(managerAnnex.UID())
         self.do(item1, 'present')
         self.changeUser('pmCreator1')
         # The creator cannot add any kind of annex on presented item
@@ -294,7 +294,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         #if not recurring item is defined, none is added
         #while creating a meeting, no extra items are created...
         login(self.portal, 'admin')
-        self.portal.delete_givenuid(self.meetingConfig.recurringitems.recItem1.UID())
+        self.portal.restrictedTraverse('@@delete_givenuid')(self.meetingConfig.recurringitems.recItem1.UID())
         login(self.portal, 'pmManager')
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
         self.assertEquals(len(meeting.getItems()), 0)

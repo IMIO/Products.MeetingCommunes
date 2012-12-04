@@ -169,7 +169,7 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
           ['recurringagenda1', 'recurringofficialreport1', 'recurringofficialreport2', 'o2', 'o3', 'o4', 'o6'])
         #delete a linked item
         item4 = getattr(meeting, 'o4')
-        meeting.delete_givenuid(item4.UID())
+        meeting.restrictedTraverse('@@delete_givenuid')(item4.UID())
         self.assertEquals([item.id for item in meeting.getItemsInOrder()],
           ['recurringagenda1', 'recurringofficialreport1', 'recurringofficialreport2', 'o2', 'o3', 'o6'])
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
