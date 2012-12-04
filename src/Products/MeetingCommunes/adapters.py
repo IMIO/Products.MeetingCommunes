@@ -123,7 +123,7 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
             # Delete state 'published'
             if 'itempublished' in wf.states:
                 wf.states.deleteStates(['itempublished'])
-            logger.info(WF_APPLIED % "no_publication")
+            logger.info(WF_APPLIED % ("no_publication", meetingConfig.getId()))
         elif wfAdaptation == 'add_published_state':
             # "add_published_state" add state 'decisions_published' in the meeting workflow
             # The idea is to let people "finalize" the meeting even after is has been
@@ -180,7 +180,7 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
                 meetingConfig.setDecisionTopicStates(queryStates)
                 # Update the topics definitions for taking this into account.
                 meetingConfig.updateTopics()
-            logger.info(WF_APPLIED % "add_published_state")
+            logger.info(WF_APPLIED % ("add_published_state", meetingConfig.getId()))
 adaptations.performWorkflowAdaptations = customPerformWorkflowAdaptations
 
 originalValidate_workflowAdaptations = MeetingConfig.validate_workflowAdaptations
