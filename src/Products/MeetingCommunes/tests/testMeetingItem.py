@@ -133,9 +133,11 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         # MeetingMember can not setItemIsSigned
         self.assertEquals(item.maySignItem(authMember()), False)
         self.assertRaises(Unauthorized, item.setItemIsSigned, True)
+        self.assertRaises(Unauthorized, item.restrictedTraverse('@@toggle_item_is_signed'), item.UID())
         # MeetingManagers neither, the item must be decided...
         self.changeUser('pmManager')
         self.assertRaises(Unauthorized, item.setItemIsSigned, True)
+        self.assertRaises(Unauthorized, item.restrictedTraverse('@@toggle_item_is_signed'), item.UID())
         meetingDate = DateTime('2008/06/12 08:00:00')
         meeting = self.create('Meeting', date=meetingDate)
         self.changeUser('pmCreator1')
@@ -146,18 +148,28 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.do(item, 'present')
         self.assertEquals(item.maySignItem(authMember()), False)
         self.assertRaises(Unauthorized, item.setItemIsSigned, True)
+        self.assertRaises(Unauthorized, item.restrictedTraverse('@@toggle_item_is_signed'), item.UID())
         self.do(meeting, 'freeze')
         self.assertEquals(item.maySignItem(authMember()), False)
         self.assertRaises(Unauthorized, item.setItemIsSigned, True)
+        self.assertRaises(Unauthorized, item.restrictedTraverse('@@toggle_item_is_signed'), item.UID())
         self.do(meeting, 'decide')
         self.assertEquals(item.maySignItem(authMember()), False)
         self.assertRaises(Unauthorized, item.setItemIsSigned, True)
+        self.assertRaises(Unauthorized, item.restrictedTraverse('@@toggle_item_is_signed'), item.UID())
         # now accept the item so MeetingManagers can sign it
         self.do(item, 'accept')
         self.assertEquals(item.maySignItem(authMember()), True)
         item.setItemIsSigned(True)
         # a signed item can still be unsigned until the meeting is closed
         self.assertEquals(item.maySignItem(authMember()), True)
+        # call to @@toggle_item_is_signed will set it back to False (toggle)
+        item.restrictedTraverse('@@toggle_item_is_signed')(item.UID())
+        self.assertEquals(item.getItemIsSigned(), False)
+        # toggle itemIsSigned value again
+        item.restrictedTraverse('@@toggle_item_is_signed')(item.UID())
+        self.assertEquals(item.getItemIsSigned(), True)
+        # check accessing setItemIsSigned directly
         item.setItemIsSigned(False)
         self.do(meeting, 'close')
         # still able to sign an unsigned item in a closed meeting
@@ -166,6 +178,7 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         item.setItemIsSigned(True)
         self.assertEquals(item.maySignItem(authMember()), False)
         self.assertRaises(Unauthorized, item.setItemIsSigned, False)
+        self.assertRaises(Unauthorized, item.restrictedTraverse('@@toggle_item_is_signed'), item.UID())
 
 
 def test_suite():
