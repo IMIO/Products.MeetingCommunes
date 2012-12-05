@@ -28,7 +28,6 @@ from zope.i18n import translate
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import DisplayList
 from Globals import InitializeClass
-from AccessControl import getSecurityManager
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.PloneMeeting.MeetingItem import MeetingItem, \
@@ -1040,7 +1039,6 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
 
     def __init__(self, item):
         self.context = item # Implements IMeetingItem
-        self.sm = getSecurityManager()
 
     security.declarePublic('mayDecide')
     def mayDecide(self):
