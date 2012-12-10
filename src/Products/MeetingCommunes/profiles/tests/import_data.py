@@ -74,7 +74,7 @@ collegeMeeting.shortName = 'College'
 collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision,
                                    overheadAnalysis, marketingAnalysis]
 collegeMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
-collegeMeeting.xhtmlTransformFields = ('description', 'detailedDescription', 'decision', 'observations', )
+collegeMeeting.xhtmlTransformFields = ('MeetingItem.description', 'MeetingItem.detailedDescription', 'MeetingItem.decision', 'MeetingItem.observations', 'Meeting.observations', )
 collegeMeeting.xhtmlTransformTypes = ('removeBlanks',)
 collegeMeeting.itemWorkflow = 'meetingitemcollege_workflow'
 collegeMeeting.meetingWorkflow = 'meetingcollege_workflow'
@@ -175,7 +175,7 @@ councilMeeting.certifiedSignatures = 'Mr Présent Actuellement, Bourgmestre ff -
 councilMeeting.categories = categories
 councilMeeting.shortName = 'Council'
 councilMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision]
-councilMeeting.xhtmlTransformFields = ('description', 'detailedDescription', 'decision', 'observations', )
+councilMeeting.xhtmlTransformFields = ('MeetingItem.description', 'MeetingItem.detailedDescription', 'MeetingItem.decision', 'MeetingItem.observations', 'Meeting.observations', )
 councilMeeting.xhtmlTransformTypes = ('removeBlanks',)
 councilMeeting.itemWorkflow = 'meetingitemcouncil_workflow'
 councilMeeting.meetingWorkflow = 'meetingcouncil_workflow'
