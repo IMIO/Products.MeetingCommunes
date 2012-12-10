@@ -56,6 +56,11 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         '''Run the testGiveAdviceOnCreatedItem from PloneMeeting.'''
         pmta.testGiveAdviceOnCreatedItem(self)
 
+    def test_mc_call_AdvicesInvalidation(self):
+        '''Run the testAdvicesInvalidation from PloneMeeting.'''
+        pmta.testAdvicesInvalidation(self)
+
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
