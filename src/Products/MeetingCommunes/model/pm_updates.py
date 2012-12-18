@@ -39,6 +39,7 @@ def update_group_schema(baseSchema):
         # field used to define specific signatures for a MeetingGroup
         TextField(
             name='signatures',
+            allowable_content_types=('text/plain',),
             widget=TextAreaWidget(
                 label='Signatures',
                 label_msgid='MeetingCommunes_label_signatures',
@@ -46,6 +47,7 @@ def update_group_schema(baseSchema):
                 description_msgid='MeetingCommunes_descr_signatures',
                 i18n_domain='PloneMeeting',
             ),
+            default_content_type='text/plain',
         ),
     ),)
 
