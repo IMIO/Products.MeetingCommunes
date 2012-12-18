@@ -27,17 +27,17 @@ msgstr "Collège Communal"
 msgid "Meeting config Council"
 msgstr "Conseil Communal"
 
-#. Default: "Leave empty if he is not an echevin"
+#. Default: "If the group is responsible of other groups, select them here above, either do not select any elements of the list."
 msgid "MeetingCommune_descr_echevinServices"
-msgstr "Laisser vide si ce n'est pas un échevin"
+msgstr "Si ce groupe est responsable d'autres groupes, selectionnez les ci-dessous."
 
 #. Default: "Alderman of the following services(departments)"
 msgid "MeetingCommune_label_echevinServices"
 msgstr "Echevin des services suivants"
 
-#. Default: "Leave empty to use the signatures defined on the meeting"
+#. Default: "msgstr "If you specify sigantures here, it will be used while generating documents of this proposing group.  Either, signatures defined on the meeting will be used."
 msgid "MeetingCommunes_descr_signatures"
-msgstr "Laisser ce champ vide pour utiliser les signatures qui seront définies sur la séance"
+msgstr "Si vous spécifiez des signatures dans ce champ, elle seront utilisées pour les points proposés par ce groupe, si le champ est vide, les signatures définies sur la séance seront utilisées."
 
 #. Default: "Signatures Delegation"
 msgid "MeetingCommunes_label_signatures"
