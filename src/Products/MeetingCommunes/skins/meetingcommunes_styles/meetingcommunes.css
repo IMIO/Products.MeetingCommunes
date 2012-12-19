@@ -167,6 +167,17 @@
     border: 2px solid black;
 }
 
+.state-decisions_published, .label-state-decisions_published {
+    color: black !important;
+}
+#plone-contentmenu-workflow .state-decisions_published {
+    border-radius: 0.5em 0.5em 0.5em 0.5em;
+    background-color: black;
+    padding: 0 0.5em;
+    color: white !important;
+    border: 2px solid black;
+}
+
 .state-closed, .label-state-closed {
     color: grey !important;
 }
