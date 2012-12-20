@@ -32,7 +32,7 @@ setup(name='Products.MeetingCommunes',
       install_requires=[
           'setuptools',
           'appy',
-          'Plone',
+          'Products.CMFPlone',
           'Pillow',
           'testfixtures',
           'communesplone.iconified_document_actions',
