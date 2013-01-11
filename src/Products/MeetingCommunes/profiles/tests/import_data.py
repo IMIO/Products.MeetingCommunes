@@ -37,6 +37,8 @@ pmReviewer1 = UserDescriptor('pmReviewer1', [])
 pmCreator2 = UserDescriptor('pmCreator2', [])
 pmReviewer2 = UserDescriptor('pmReviewer2', [])
 pmAdviser1 = UserDescriptor('pmAdviser1', [])
+voter1 = UserDescriptor('voter1', [], fullname = 'M. Voter One')
+voter2 = UserDescriptor('voter2', [], fullname = 'M. Voter Two')
 
 developers = GroupDescriptor('developers', 'Developers', 'Devel', givesMandatoryAdviceOn="python:False")
 developers.creators.append(pmCreator1)
@@ -57,6 +59,25 @@ vendors.reviewers.append(pmReviewer2)
 vendors.observers.append(pmReviewer2)
 vendors.advisers.append(pmReviewer2)
 setattr(vendors, 'signatures', '')
+
+# Do voters able to see items to vote for
+developers.observers.append(voter1)
+developers.observers.append(voter2)
+vendors.observers.append(voter1)
+vendors.observers.append(voter2)
+
+pmManager_observer = MeetingUserDescriptor('pmManager',
+                                           duty='Secrétaire de la Chancellerie',
+                                           usages=['assemblyMember'])
+cadranel_signer = MeetingUserDescriptor('cadranel', duty='Secrétaire',
+                                       usages=['assemblyMember', 'signer'],
+                                       signatureImage='SignatureCadranel.jpg',
+                                       signatureIsDefault=True)
+# Add meeting users (voting purposes)
+muser_voter1  = MeetingUserDescriptor('voter1', duty='Voter1',
+                                       usages=['assemblyMember', 'voter',])
+muser_voter2  = MeetingUserDescriptor('voter2', duty='Voter2',
+                                       usages=['assemblyMember', 'voter'])
 
 # Meeting configurations -------------------------------------------------------
 # college
@@ -203,6 +224,8 @@ councilMeeting.itemAdviceEditStates = ['proposed',]
 councilMeeting.itemAdviceViewStates = ['presented',]
 councilMeeting.useCopies = True
 councilMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'),]
+councilMeeting.useVotes = True
+councilMeeting.meetingUsers = [muser_voter1, muser_voter2,]
 councilMeeting.recurringItems = [
     RecurringItemDescriptor('recItem1', 'Recurring item #1',
     'vendors', category='developers', description='<p>This is the first recurring item.</p>',
