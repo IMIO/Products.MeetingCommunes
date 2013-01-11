@@ -856,14 +856,20 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
     implements(IMeetingCollegeWorkflowActions)
     security = ClassSecurityInfo()
 
-    security.declarePrivate('doClose')
-    def doClose(self, stateChange):
-        # Every item that is "presented" will be automatically set to "accepted"
+    def _acceptEveryItems(self):
+        """Helper method for accepting every items."""
+        # Every item that is not decided will be automatically set to "accepted"
         for item in self.context.getAllItems():
             if item.queryState() == 'presented':
                 self.context.portal_workflow.doActionFor(item, 'itemfreeze')
             if item.queryState() in ['itemfrozen', 'pre_accepted', ]:
                 self.context.portal_workflow.doActionFor(item, 'accept')
+
+    security.declarePrivate('doClose')
+    def doClose(self, stateChange):
+        '''Accept every items that are not still decided and manage
+           first/last item number.'''
+        self._acceptEveryItems()
         meetingConfig = self.context.portal_plonemeeting.getMeetingConfig( 
         self.context)
         self.context.setFirstItemNumber(meetingConfig.getLastItemNumber()+1)
@@ -894,7 +900,7 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
     security.declarePrivate('doPublish_decisions')
     def doPublish_decisions(self, stateChange):
         '''When the wfAdaptation 'add_published_state' is activated.'''
-        pass
+        self._acceptEveryItems()
 
     security.declarePrivate('doBackToCreated')
     def doBackToCreated(self, stateChange):

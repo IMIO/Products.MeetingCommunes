@@ -221,6 +221,7 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
             login(self.portal, 'pmCreator1')
             if decisionHasBeenChanged and m1.queryState() == 'decided':
                 self.assertEquals(item.getDecision(),'<p>The decision is currently under edit by managers, you can not access it</p>')
+            # decisionHasBeenChanged and wf state is after 'decided'
             elif decisionHasBeenChanged:
                 self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
             else:
