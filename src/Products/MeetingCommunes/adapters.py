@@ -1113,8 +1113,9 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
     implements(IMeetingCouncilWorkflowActions)
     security = ClassSecurityInfo()
 
-    security.declarePrivate('doClose')
-    def doClose(self, stateChange):
+    def _acceptEveryItems(self):
+        """Helper method for accepting every items."""
+        # Every item that is not decided will be automatically set to "accepted"
         # Every item that is "presented" will be automatically set to "accepted"
         for item in self.context.getAllItems():
             if item.queryState() == 'presented':
@@ -1126,10 +1127,15 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
                     # in the case we selected the 'no_publication' wfAdaptation
                     # the itempublish transition does not exist anymore...
                     pass
-            if item.queryState() in ['itempublished', 'pre_accepted', ]:
+            if item.queryState() in ('itemfrozen', 'itempublished', 'pre_accepted',):
                 self.context.portal_workflow.doActionFor(item, 'accept')
-        meetingConfig = self.context.portal_plonemeeting.getMeetingConfig( 
-        self.context) 
+
+    security.declarePrivate('doClose')
+    def doClose(self, stateChange):
+        '''Accept every items that are not still decided and manage
+           first/last item number.'''
+        self._acceptEveryItems()
+        meetingConfig = self.context.portal_plonemeeting.getMeetingConfig(self.context)
         self.context.setFirstItemNumber(meetingConfig.getLastItemNumber()+1)
         # Update the item counter which is global to the meeting config
         meetingConfig.setLastItemNumber(meetingConfig.getLastItemNumber() +\
@@ -1165,7 +1171,7 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
     security.declarePrivate('doPublish_decisions')
     def doPublish_decisions(self, stateChange):
         '''When the wfAdaptation 'add_published_state' is activated.'''
-        pass
+        self._acceptEveryItems()
 
     security.declarePrivate('doPublish')
     def doPublish(self, stateChange):
@@ -1288,7 +1294,7 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
         res = False
         if checkPermission(ReviewPortalContent, self.context):
             if self.context.hasMeeting() and \
-               (self.context.getMeeting().queryState() in ('published', 'decided', 'closed')):
+               (self.context.getMeeting().queryState() in ('published', 'decided', 'closed', 'decisions_published',)):
                 res = True
         return res
 
@@ -1318,6 +1324,17 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
                     if meetingState != 'closed':
                         res = True
         return res
+
+    security.declarePublic('mayDecide')
+    def mayDecide(self):
+        '''We may decide an item if the linked meeting is in relevant state.'''
+        res = False
+        meeting = self.context.getMeeting()
+        if checkPermission(ReviewPortalContent, self.context) and \
+           meeting and (meeting.queryState() in ('decided', 'closed', 'decisions_published',)):
+            res = True
+        return res
+
 
 # ------------------------------------------------------------------------------
 InitializeClass(CustomMeeting)
