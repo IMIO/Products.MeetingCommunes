@@ -957,9 +957,9 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
         from Products.PloneMeeting.Meeting import MeetingWorkflowConditions
         res = MeetingWorkflowConditions.mayCorrect(self)
         currentState = self.context.queryState()
-        if not res and currentState == "frozen":
-            # Change the behaviour for being able to correct a frozen meeting
-            # back to created.
+        if not res and (currentState in ("frozen", "decisions_published",)):
+            # Change the behaviour for being able to correct a
+            # frozen or decisions_published meeting
             if checkPermission(ReviewPortalContent, self.context):
                 return True
         return res
@@ -1042,12 +1042,11 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
 
     security.declarePublic('mayDecide')
     def mayDecide(self):
-        '''We may decide an item if the linked meeting is in the 'decided'
-           state.'''
+        '''We may decide an item if the linked meeting is in relevant state.'''
         res = False
         meeting = self.context.getMeeting()
         if checkPermission(ReviewPortalContent, self.context) and \
-           meeting and (meeting.queryState() in ['decided', 'closed']):
+           meeting and (meeting.queryState() in ['decided', 'closed', 'decisions_published',]):
             res = True
         return res
 
