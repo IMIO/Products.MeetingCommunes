@@ -211,6 +211,14 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
                 self.do(m1, tr)
             else:
                 continue
+            # test that a presented item can be automatically accepted while the meeting is set to 'decisions_publihsed'
+            if tr == 'decide':
+                # the item has been automatically frozen
+                while item.queryState() != 'presented':
+                    for tr in self.transitions(item):
+                        if tr.startswith('backTo'):
+                            self.do(item, tr)
+                            break
             if tr == 'publish_decisions':
                 decisionsHaveBeenPublished = True
             # just when the Meeting is decided, the decision is not viewable by non Managers

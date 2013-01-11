@@ -1056,7 +1056,7 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
             res = True
         return res
 
-    security.declarePublic('isLateFor')    
+    security.declarePublic('isLateFor')
     def isLateFor(self, meeting):
         res = False
         if meeting and (meeting.queryState() in ['frozen', 'decided']) and \
@@ -1073,7 +1073,7 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
         res = False
         if checkPermission(ReviewPortalContent, self.context):
             if self.context.hasMeeting() and \
-               (self.context.getMeeting().queryState() in ('frozen', 'decided', 'closed')):
+               (self.context.getMeeting().queryState() in ('frozen', 'decided', 'closed', 'decisions_published', )):
                 res = True
         return res
 
@@ -1276,7 +1276,7 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
         res = False
         if checkPermission(ReviewPortalContent, self.context):
             if self.context.hasMeeting() and \
-               (self.context.getMeeting().queryState() in ('frozen', 'published', 'decided', 'closed')):
+               (self.context.getMeeting().queryState() in ('frozen', 'published', 'decided', 'closed', 'decisions_published',)):
                 res = True
         return res
 
