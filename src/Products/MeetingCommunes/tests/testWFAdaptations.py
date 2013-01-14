@@ -163,82 +163,86 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
            In this case, the decision is always accessible by the creator no matter it is
            adapted by any MeetingManagers.  There is NO extra 'published' state moreover.'''
         login(self.portal, 'pmManager')
-        m1 = self._createMeetingWithItems()
-        item = m1.getItems()[0]
+        meeting = self._createMeetingWithItems()
+        item = meeting.getItems()[0]
         item.setDecision('<p>testing decision field</p>')
         self.changeUser('pmCreator1')
         # relevant users can see the decision
         self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
         self.changeUser('pmManager')
         self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        decisionHasBeenChanged = False
-        for tr in self.transitionsToCloseAMeeting:
-            login(self.portal, 'pmManager')
-            if tr in self.transitions(m1):
-                self.do(m1, tr)
-            else:
-                continue
-            # even when the Meeting is decided, the real decision is viewable
-            if not decisionHasBeenChanged and m1.queryState() == 'decided':
-                decisionHasBeenChanged = True
-                item.setDecision('<p>Decision adapted by pmManager</p>')
-                item.reindexObject()
-            login(self.portal, 'pmCreator1')
-            if decisionHasBeenChanged:
-                self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
-            else:
-                self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.failUnless(decisionHasBeenChanged)
+        self.do(meeting, 'freeze')
+        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
+        # maybe we have a 'publish' transition
+        if 'publish' in self.transitions(meeting):
+            self.do(meeting, 'publish')
+            self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
+        self.do(meeting, 'decide')
+        # set a decision...
+        item.setDecision('<p>Decision adapted by pmManager</p>')
+        item.reindexObject()
+        # it is immediatelly viewable by the item's creator as
+        # the 'add_published_state' wfAdaptation is not enabled
+        login(self.portal, 'pmCreator1')
+        self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
+        self.changeUser('pmManager')
+        self.do(meeting, 'close')
+        login(self.portal, 'pmCreator1')
+        self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
+        # the item has been automatically accepted
+        self.assertEquals(item.queryState(), 'accepted')
 
     def _add_published_state_active(self):
         '''Tests while 'add_published_state' wfAdaptation is active.'''
         login(self.portal, 'pmManager')
-        m1 = self._createMeetingWithItems()
-        item = m1.getItems()[0]
+        meeting = self._createMeetingWithItems()
+        item = meeting.getItems()[0]
         item.setDecision('<p>testing decision field</p>')
         self.changeUser('pmCreator1')
         # relevant users can see the decision
         self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
         self.changeUser('pmManager')
         self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        decisionHasBeenChanged = decisionsHaveBeenPublished = False
-        # a 'publish_decision' is added after the 'decide' transition
-        wfAdaptedTransitionsToCloseAMeeting = list(self.transitionsToCloseAMeeting)
-        wfAdaptedTransitionsToCloseAMeeting.insert(wfAdaptedTransitionsToCloseAMeeting.index('decide')+1, 'publish_decisions')
-        for tr in wfAdaptedTransitionsToCloseAMeeting:
-            login(self.portal, 'pmManager')
-            if tr in self.transitions(m1):
-                self.do(m1, tr)
-            else:
-                continue
-            # test that a presented item can be automatically accepted while the meeting
-            # is set to 'decisions_published', starting from 'presented'
-            if tr == 'decide':
-                # the item has been automatically frozen
-                while item.queryState() != 'presented':
-                    for tr in self.transitions(item):
-                        if tr.startswith('backTo'):
-                            self.do(item, tr)
-                            break
-            if tr == 'publish_decisions':
-                decisionsHaveBeenPublished = True
-                # while 'publish_decisions', the items are automatically accepted
-                self.assertEquals(item.queryState(), 'accepted')
-            # just when the Meeting is decided, the decision is not viewable by non Managers
-            if not decisionsHaveBeenPublished and m1.queryState() == 'decided':
-                decisionHasBeenChanged = True
-                item.setDecision('<p>Decision adapted by pmManager</p>')
-                item.reindexObject()
-            login(self.portal, 'pmCreator1')
-            if decisionHasBeenChanged and m1.queryState() == 'decided':
-                self.assertEquals(item.getDecision(),'<p>The decision is currently under edit by managers, you can not access it</p>')
-            # decisionHasBeenChanged and wf state is after 'decided'
-            elif decisionHasBeenChanged:
-                self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
-            else:
-                self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
-        self.failUnless(decisionHasBeenChanged)
-        self.failUnless(decisionsHaveBeenPublished)
+        self.do(meeting, 'freeze')
+        self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
+        # maybe we have a 'publish' transition
+        if 'publish' in self.transitions(meeting):
+            self.do(meeting, 'publish')
+            self.assertEquals(item.getDecision(),'<p>testing decision field</p>')
+        self.do(meeting, 'decide')
+        # set a decision...
+        item.setDecision('<p>Decision adapted by pmManager</p>')
+        item.reindexObject()
+        # test that a presented item can be automatically accepted while the meeting
+        # is set to 'decisions_published', starting from 'presented'
+        # the item has been automatically frozen
+        while item.queryState() != 'presented':
+            for tr in self.transitions(item):
+                if tr.startswith('backTo'):
+                    self.do(item, tr)
+                    break
+        # the decision is NOT viewable by the item's creator as
+        # the 'add_published_state' wfAdaptation is enabled
+        login(self.portal, 'pmCreator1')
+        self.assertEquals(item.getDecision(),'<p>The decision is currently under edit by managers, you can not access it</p>')
+        self.changeUser('pmManager')
+        # MeetingManagers see it correctly
+        self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
+        # a 'publish_decisions' transition is added after 'decide'
+        self.do(meeting, 'publish_decisions')
+        self.assertEquals(meeting.queryState(), 'decisions_published')
+        self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
+        # now that the meeting is in the 'decisions_published' state, decision is viewable to item's creator
+        login(self.portal, 'pmCreator1')
+        self.assertEquals(item.getDecision(),'<p>Decision adapted by pmManager</p>')
+        # items are automatically accepted when decisions are published
+        self.assertEquals(item.queryState(), 'accepted')
+        self.changeUser('pmManager')
+        # every items of the meeting are accepted
+        for itemInMeeting in meeting.getItems():
+            self.assertEquals(itemInMeeting.queryState(), 'accepted')
+        self.do(meeting, 'close')
+        self.assertEquals(item.queryState(), 'accepted')
 
 
 
