@@ -42,20 +42,20 @@ decisionsTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                               'here.portal_plonemeeting.isManager()'
 
 itemProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
-itemProjectTemplate.podTemplate = 'college-projet-deliberation.odt'
+itemProjectTemplate.podTemplate = 'projet-deliberation.odt'
 itemProjectTemplate.podCondition = 'python:here.meta_type=="MeetingItem" and not here.hasMeeting()'
 
 itemProjectTemplatePDF = PodTemplateDescriptor('projet-deliberation-pdf', 'Projet délibération')
-itemProjectTemplatePDF.podTemplate = 'college-projet-deliberation.odt'
+itemProjectTemplatePDF.podTemplate = 'projet-deliberation.odt'
 itemProjectTemplatePDF.podFormat = 'pdf'
 itemProjectTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem" and not here.hasMeeting()'
 
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
-itemTemplate.podTemplate = 'college-deliberation.odt'
+itemTemplate.podTemplate = 'deliberation.odt'
 itemTemplate.podCondition = 'python:here.meta_type=="MeetingItem" and here.hasMeeting()'
 
 itemTemplatePDF = PodTemplateDescriptor('deliberation-pdf', 'Délibération')
-itemTemplatePDF.podTemplate = 'college-deliberation.odt'
+itemTemplatePDF.podTemplate = 'deliberation.odt'
 itemTemplatePDF.podFormat = 'pdf'
 itemTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem" and here.hasMeeting()'
 
@@ -96,20 +96,20 @@ itemCouncilRapportTemplatePDF.podFormat = 'pdf'
 itemCouncilRapportTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem"'
 
 itemCouncilProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
-itemCouncilProjectTemplate.podTemplate = 'council-projet-deliberation.odt'
+itemCouncilProjectTemplate.podTemplate = 'projet-deliberation.odt'
 itemCouncilProjectTemplate.podCondition = 'python:here.meta_type=="MeetingItem" and not here.hasMeeting()'
 
 itemCouncilProjectTemplatePDF = PodTemplateDescriptor('projet-deliberation-pdf', 'Projet délibération')
-itemCouncilProjectTemplatePDF.podTemplate = 'council-projet-deliberation.odt'
+itemCouncilProjectTemplatePDF.podTemplate = 'projet-deliberation.odt'
 itemCouncilProjectTemplatePDF.podFormat = 'pdf'
 itemCouncilProjectTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem" and not here.hasMeeting()'
 
 itemCouncilTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
-itemCouncilTemplate.podTemplate = 'council-deliberation.odt'
+itemCouncilTemplate.podTemplate = 'deliberation.odt'
 itemCouncilTemplate.podCondition = 'python:here.meta_type=="MeetingItem" and here.hasMeeting()'
 
 itemCouncilTemplatePDF = PodTemplateDescriptor('deliberation-pdf', 'Délibération')
-itemCouncilTemplatePDF.podTemplate = 'council-deliberation.odt'
+itemCouncilTemplatePDF.podTemplate = 'deliberation.odt'
 itemCouncilTemplatePDF.podFormat = 'pdf'
 itemCouncilTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem" and here.hasMeeting()'
 
@@ -121,6 +121,7 @@ councilTemplates = [agendaCouncilTemplate, agendaCouncilTemplatePDF,
 # Users and groups -------------------------------------------------------------
 secretaire = UserDescriptor('secretaire', ['MeetingManager'], email="test@test.be", fullname="Henry Secrétaire")
 bourgmestre = UserDescriptor('bourgmestre', [], email="test@test.be", fullname="Pierre Bourgmestre")
+receveur = UserDescriptor('receveur', [], email="test@test.be", fullname="Receveur communal")
 agentInfo = UserDescriptor('agentInfo', [], email="test@test.be", fullname="Agent Service Informatique")
 agentCompta = UserDescriptor('agentCompta', [], email="test@test.be", fullname="Agent Service Comptabilité")
 agentPers = UserDescriptor('agentPers', [], email="test@test.be", fullname="Agent Service du Personnel")
@@ -128,6 +129,8 @@ agentTrav = UserDescriptor('agentTrav', [], email="test@test.be", fullname="Agen
 chefPers = UserDescriptor('chefPers', [], email="test@test.be", fullname="Chef Personnel")
 chefCompta = UserDescriptor('chefCompta', [], email="test@test.be", fullname="Chef Comptabilité")
 echevinPers = UserDescriptor('echevinPers', [], email="test@test.be", fullname="Echevin du Personnel")
+echevinTrav = UserDescriptor('echevinTrav', [], email="test@test.be", fullname="Echevin des Travaux")
+
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel")
 
 groups = [
@@ -160,6 +163,8 @@ groups[2].creators.append(chefPers)
 groups[2].reviewers.append(chefPers)
 groups[2].observers.append(chefPers)
 groups[2].observers.append(echevinPers)
+groups[2].observers.append(echevinTrav)
+groups[2].observers.append(receveur)
 groups[2].advisers.append(emetteuravisPers)
 
 groups[3].creators.append(agentCompta)
@@ -408,11 +413,13 @@ councilMeeting.useCopies = True
 councilMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'), groups[1].getIdSuffixed('reviewers'), groups[2].getIdSuffixed('reviewers'), groups[4].getIdSuffixed('reviewers')]
 councilMeeting.podTemplates = councilTemplates
 
-secretaire_mu = MeetingUserDescriptor('secretaire', duty='Secrétaire communal', usages=['assemblyMember', 'signer', 'asker', ])
-bourgmestre_mu = MeetingUserDescriptor('bourgmestre', duty='Bourgmestre', usages=['assemblyMember', 'asker', ])
+bourgmestre_mu = MeetingUserDescriptor('bourgmestre', duty='Bourgmestre', usages=['assemblyMember', 'signer', 'asker', ], signatureIsDefault=True)
+receveur_mu = MeetingUserDescriptor('receveur', duty='Receveur communal', usages=['assemblyMember', 'signer', 'asker', ])
 echevinPers_mu = MeetingUserDescriptor('echevinPers', duty='Echevin GRH', usages=['assemblyMember', 'asker', ])
+echevinTrav_mu = MeetingUserDescriptor('echevinTrav', duty='Echevin Travaux', usages=['assemblyMember', 'asker', ])
+secretaire_mu = MeetingUserDescriptor('secretaire', duty='Secrétaire communal', usages=['assemblyMember', 'signer', 'asker', ], signatureIsDefault=True)
 
-councilMeeting.meetingUsers = [secretaire_mu, bourgmestre_mu, echevinPers_mu, ]
+councilMeeting.meetingUsers = [bourgmestre_mu, receveur_mu, echevinPers_mu, echevinTrav_mu, secretaire_mu]
 
 councilMeeting.recurringItems = [
     RecurringItemDescriptor(

@@ -594,12 +594,60 @@ class CustomMeeting(Meeting):
     Meeting.showAllItemsAtOnce=showAllItemsAtOnce
 
     security.declarePublic('getStrikedAssembly')
-    def getStrikedAssembly(self):
+    def getStrikedAssembly(self, groupByDuty=True):
         '''
-            The text between [[xxx]] is striked. Used to mark Absentee
-            You can define mltAssembly to customize your assembly (bold, italics, ...)
+          Generates an HTML version of the Assembly :
+          - strikes absents (represented using [[Member assembly name]])
+          - add a 'mltAssembly' class to generated <p> so it can be used in the Pod Template
+          If p_groupByDuty is True, the result will be generated with members having the same
+          duty grouped, and the duty only displayed once at the end of the list of members
+          having this duty...
         '''
-        return self.context.getAssembly().replace('[[','<strike>').replace(']]','</strike>').replace('<p>','<p class="mltAssembly">')
+        meeting = self.getSelf()
+        # either we use free textarea to define assembly...
+        if meeting.getAssembly():
+            return self.context.getAssembly().replace('[[','<strike>').replace(']]','</strike>').replace('<p>','<p class="mltAssembly">')
+        # or we use MeetingUsers
+        elif meeting.getAttendees():
+            res = []
+            attendeeIds = meeting.getAttendees()
+            groupedByDuty = OrderedDict()
+            for mUser in meeting.getAllUsedMeetingUsers():
+                userId = mUser.getId()
+                userTitle = mUser.Title()
+                userDuty = mUser.getDuty()
+                # if we group by duty, create an OrderedDict where the key is the duty
+                # and the value is a list of meetingUsers having this duty
+                if groupByDuty:
+                    if not groupedByDuty.has_key(userDuty):
+                        groupedByDuty[userDuty] = []
+                    if userId in attendeeIds:
+                        groupedByDuty[userDuty].append(mUser.Title())
+                    else:
+                        groupedByDuty[userDuty].append("<strike>%s</strike>" % userTitle)
+                else:
+                    if userId in attendeeIds:
+                        res.append("%s - %s" % (mUser.Title(), userDuty))
+                    else:
+                        res.append("<strike>%s - %s</strike>" % (mUser.Title(), userDuty))
+            if groupByDuty:
+                for duty in groupedByDuty:
+                    # check if every member of given duty are striked, we strike the duty also
+                    everyStriked = True
+                    for elt in groupedByDuty[duty]:
+                        if not elt.startswith('<strike>'):
+                            everyStriked = False
+                            break
+                    res.append(', '.join(groupedByDuty[duty]) + ' - ' + duty)
+                    if len(groupedByDuty[duty]) > 1:
+                        # add a trailing 's' to the duty if several members have the same duty...
+                        res[-1] = res[-1] + 's'
+                    if everyStriked:
+                        lastAdded = res[-1]
+                        # strike the entire line and remove existing <strike> tags
+                        lastAdded = "<strike>" + lastAdded.replace('<strike>', '').replace('</strike>', '') + "</strike>"
+                        res[-1] = lastAdded
+            return "<p class='mltAssembly'>" + '<br />'.join(res) + "</p>"
 
 class CustomMeetingItem(MeetingItem):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
@@ -652,7 +700,7 @@ class CustomMeetingItem(MeetingItem):
           - strikes absents (represented using [[Member assembly name]])
           - add a 'mltAssembly' class to generated <p> so it can be used in the Pod Template
           If p_groupByDuty is True, the result will be generated with members having the same
-          du ty grouped, and the duty only displayed once at the end of the list of members
+          duty grouped, and the duty only displayed once at the end of the list of members
           having this duty...
         '''
         item = self.getSelf()
@@ -704,7 +752,7 @@ class CustomMeetingItem(MeetingItem):
             return "<p class='mltAssembly'>" + '<br />'.join(res) + "</p>"
 
     security.declarePublic('getCertifiedSignatures')
-    def getCertifiedSignatures(self):
+    def getCertifiedSignatures(self, forceUseCertifiedSignaturesField=False):
         '''Gets the certified signatures for this item.
            Either use signatures defined on the proposing MeetingGroup if exists,
            or use the meetingConfig certified signatures.'''
@@ -715,8 +763,22 @@ class CustomMeetingItem(MeetingItem):
         hasGroupSignature = True
         if not signature:
             meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
-            signature = meetingConfig.getCertifiedSignatures()
-            hasGroupSignature = False
+            # either use the certifiedSignatures or check for certified signatories
+            # from MeetingUsers having the usage 'voter' and being 'default signatories'
+            # first check if we use MeetingUsers
+            if not meetingConfig.isUsingMeetingUsers() or forceUseCertifiedSignaturesField:
+                signature = meetingConfig.getCertifiedSignatures()
+                hasGroupSignature = False
+            else:
+                # we use MeetingUsers
+                signatories = meetingConfig.getMeetingUsers(usages=('signer',))
+                res = []
+                for signatory in signatories:
+                    if signatory.getSignatureIsDefault():
+                        particule = signatory.getGender() == 'm' and 'Le' or 'La'
+                        res.append("%s %s" % (particule, signatory.getDuty()))
+                        res.append("%s" % signatory.Title())
+                signature = '\n'.join(res)
         return signature, hasGroupSignature
 
     def getEchevinsForProposingGroup(self):
