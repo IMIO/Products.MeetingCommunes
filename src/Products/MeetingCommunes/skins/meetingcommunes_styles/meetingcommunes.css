@@ -191,6 +191,7 @@
 
 /* used in element history */
 .transition-accept { color: green !important; }
+.transition-accept_but_modify { color: green !important; }
 .transition-publish_decisions { color: #436976 !important; }
 .transition-close { color: grey !important; }
 
