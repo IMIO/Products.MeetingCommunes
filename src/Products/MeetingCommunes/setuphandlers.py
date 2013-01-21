@@ -51,6 +51,7 @@ def postInstall(context):
     showHomeTab(context, site)
     recreateMeetingConfigsPortalTabs(context, site)
     reinstallPloneMeetingSkin(context, site)
+    reorderCss(context, site)
 
 
 
@@ -283,7 +284,22 @@ def finalizeExampleInstance(context):
     site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:default', 'skins')
     site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:plonemeetingskin', 'skins')
 
+def reorderCss(context, site):
+    """
+       Make sure CSS are correctly reordered in portal_css so things
+       work as expected...
+    """
+    if isNotMeetingCommunesProfile(context): return
+
+    logStep("reorderCss", context)
     
+    portal_css = site.portal_css
+    css = ['plonemeeting.css', 'meeting.css', 'meetingitem.css', 'meetingcommunes.css', 'imioapps.css', 'plonemeetingskin.css', 'ploneCustom.css']
+    css.reverse()
+    for resource in css:
+        portal_css.moveResourceToBottom(css)
+
+
 
 # ------------------------------------------------------------------------------
 # ---------------------- MIGRATIONS SCRIPTS ------------------------------------
