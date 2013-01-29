@@ -21,7 +21,7 @@
 #
 # ------------------------------------------------------------------------------
 import re
-from ordereddict import OrderedDict
+from collections import OrderedDict
 from appy.gen import No
 from appy.gen.utils import Keywords
 from zope.interface import implements
