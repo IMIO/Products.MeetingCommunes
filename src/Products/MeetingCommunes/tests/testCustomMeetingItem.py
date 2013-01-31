@@ -33,20 +33,6 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         Tests the MeetingItem adapted methods
     """
 
-    def _createMeetingWithItems(self):
-        '''Create a meeting with a bunch of items.'''
-        meetingDate = DateTime().strftime('%y/%m/%d %H:%M:%S')
-        meeting = self.create('Meeting', date=meetingDate)
-        item1 = self.create('MeetingItem')
-        item1.setProposingGroup('developers')
-        item2 = self.create('MeetingItem')
-        item2.setProposingGroup('vendors')
-        for item in (item1, item2):
-            self.do(item, 'propose')
-            self.do(item, 'validate')
-            self.do(item, 'present')
-        return meeting
-
     def test_mc_GetMeetingsAcceptingItems(self):
         """
            We have to test this adapted method.
@@ -55,16 +41,16 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         login(self.portal, 'pmManager')
         #create 4 meetings with items so we can play the workflow
         #will stay 'created'
-        m1 = self._createMeetingWithItems()
+        m1 = self.create('Meeting', date=DateTime('2013/02/01 08:00:00'))
         #go to state 'frozen'
-        m2 = self._createMeetingWithItems()
+        m2 = self.create('Meeting', date=DateTime('2013/02/08 08:00:00'))
         self.do(m2, 'freeze')
         #go to state 'decided'
-        m3 = self._createMeetingWithItems()
+        m3 = self.create('Meeting', date=DateTime('2013/02/15 08:00:00'))
         self.do(m3, 'freeze')
         self.do(m3, 'decide')
         #go to state 'closed'
-        m4 = self._createMeetingWithItems()
+        m4 = self.create('Meeting', date=DateTime('2013/02/22 08:00:00'))
         self.do(m4, 'freeze')
         self.do(m4, 'decide')
         self.do(m4, 'close')
