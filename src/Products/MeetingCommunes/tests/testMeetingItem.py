@@ -122,6 +122,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         pmtmi.testCopyGroups(self)
 
+    def test_mc_call_PowerObserversGroups(self):
+        '''See doc string in PloneMeeting.'''
+        pmtmi.testPowerObserversGroups(self)
+
     def test_mc_call_ItemIsSigned(self):
         '''Test the functionnality around MeetingItem.itemIsSigned field.'''
         mtool = getToolByName(self.portal, 'portal_membership')

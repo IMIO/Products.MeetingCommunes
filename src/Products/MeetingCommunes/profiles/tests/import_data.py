@@ -39,6 +39,7 @@ pmReviewer2 = UserDescriptor('pmReviewer2', [])
 pmAdviser1 = UserDescriptor('pmAdviser1', [])
 voter1 = UserDescriptor('voter1', [], fullname = 'M. Voter One')
 voter2 = UserDescriptor('voter2', [], fullname = 'M. Voter Two')
+powerobserver1 = UserDescriptor('powerobserver1', [], fullname = 'M. Power Observer')
 
 developers = GroupDescriptor('developers', 'Developers', 'Devel', givesMandatoryAdviceOn="python:False")
 developers.creators.append(pmCreator1)
@@ -118,6 +119,8 @@ collegeMeeting.useAdvices = True
 collegeMeeting.itemAdviceStates = ['proposed', 'validated']
 collegeMeeting.itemAdviceEditStates = ['proposed',]
 collegeMeeting.itemAdviceViewStates = ['presented',]
+collegeMeeting.itemPowerObserversStates = ('itemcreated', 'presented', 'accepted', 'delayed', 'refused')
+collegeMeeting.meetingPowerObserversStates = ('frozen', 'published', 'decided', 'closed')
 collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'),]
 
@@ -222,6 +225,8 @@ councilMeeting.useAdvices = True
 councilMeeting.itemAdviceStates = ['proposed', 'validated']
 councilMeeting.itemAdviceEditStates = ['proposed',]
 councilMeeting.itemAdviceViewStates = ['presented',]
+councilMeeting.itemPowerObserversStates = collegeMeeting.itemPowerObserversStates
+councilMeeting.meetingPowerObserversStates = collegeMeeting.meetingPowerObserversStates
 councilMeeting.useCopies = True
 councilMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'),]
 councilMeeting.useVotes = True
@@ -240,4 +245,5 @@ data = PloneMeetingConfiguration(
            meetingConfigs=(collegeMeeting, councilMeeting),
            groups=(developers, vendors))
 data.unoEnabledPython='/usr/bin/python'
+data.usersOutsideGroups = [voter1, voter2, powerobserver1]
 # ------------------------------------------------------------------------------
