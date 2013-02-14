@@ -70,10 +70,6 @@ msgstr ""
 msgid "searchdecideditems"
 msgstr ""
 
-#. Default: "PowerObservers"
-msgid "powerObserversGroupTitle"
-msgstr ""
-
 #. Default: "PloneMeeting"
 msgid "app_name"
 msgstr ""

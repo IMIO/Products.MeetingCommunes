@@ -130,6 +130,7 @@ chefPers = UserDescriptor('chefPers', [], email="test@test.be", fullname="Chef P
 chefCompta = UserDescriptor('chefCompta', [], email="test@test.be", fullname="Chef Comptabilité")
 echevinPers = UserDescriptor('echevinPers', [], email="test@test.be", fullname="Echevin du Personnel")
 echevinTrav = UserDescriptor('echevinTrav', [], email="test@test.be", fullname="Echevin des Travaux")
+conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Conseiller")
 
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel")
 
@@ -145,7 +146,6 @@ groups = [
 groups[0].creators.append(secretaire)
 groups[0].reviewers.append(secretaire)
 groups[0].observers.append(secretaire)
-groups[0].observers.append(bourgmestre)
 groups[0].advisers.append(secretaire)
 
 groups[1].creators.append(agentInfo)
@@ -163,7 +163,6 @@ groups[2].creators.append(chefPers)
 groups[2].reviewers.append(chefPers)
 groups[2].observers.append(chefPers)
 groups[2].observers.append(echevinPers)
-groups[2].observers.append(echevinTrav)
 groups[2].observers.append(receveur)
 groups[2].advisers.append(emetteuravisPers)
 
@@ -180,6 +179,7 @@ groups[4].creators.append(secretaire)
 groups[4].reviewers.append(agentTrav)
 groups[4].reviewers.append(secretaire)
 groups[4].observers.append(agentTrav)
+groups[4].observers.append(echevinTrav)
 groups[4].advisers.append(agentTrav)
 
 # Meeting configurations -------------------------------------------------------
@@ -442,4 +442,5 @@ data = PloneMeetingConfiguration(
 data.unoEnabledPython='/usr/bin/python'
 data.usedColorSystem='state_color'
 data.enableUserPreferences=False
+data.usersOutsideGroups = [bourgmestre, conseiller]
 # ------------------------------------------------------------------------------

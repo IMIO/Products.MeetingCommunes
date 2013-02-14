@@ -46,7 +46,6 @@ def postInstall(context):
     site = context.getSite()
     #need to reinstall PloneMeeting after reinstalling MC workflows to re-apply wfAdaptations
     reinstallPloneMeeting(context, site)
-    addPowerObserversGroup(context, site)
     adaptFCKMenuStyles(context, site)
     showHomeTab(context, site)
     recreateMeetingConfigsPortalTabs(context, site)
@@ -160,18 +159,6 @@ def _installPloneMeeting(context):
     profileId = u'profile-Products.PloneMeeting:default'
     site.portal_setup.runAllImportStepsFromProfile(profileId)
 
-def addPowerObserversGroup(context, site):
-    """
-      Add a Plone group configured to receive MeetingPowerObservers
-      These users can see the items and meetings since they are frozen
-    """
-    if isNotMeetingCommunesProfile(context): return
-    logStep("addPowerObserversGroup", context)
-    groupId = "meetingpowerobservers"
-    if not groupId in site.portal_groups.listGroupIds():
-        site.portal_groups.addGroup(groupId, title=site.utranslate("powerObserversGroupTitle", domain='PloneMeeting'))
-        site.portal_groups.setRolesForGroup(groupId, ('MeetingObserverGlobal','MeetingPowerObserver'))
-
 def adaptFCKMenuStyles(context, site):
     """
        Add the "highlight-red" style to the FCK menu styles
@@ -250,10 +237,15 @@ def finalizeExampleInstance(context):
     site = context.getSite()
 
     logStep("finalizeExampleInstance", context)
-    # add the test user 'bourgmestre' to the PowerObservers group
+    # add the test user 'bourgmestre' to every '_powerobservers' groups
     member = site.portal_membership.getMemberById('bourgmestre')
     if member:
-        site.portal_groups.addPrincipalToGroup(member.getId(), 'meetingpowerobservers')
+        site.portal_groups.addPrincipalToGroup(member.getId(), 'meeting-config-college_powerobservers')
+        site.portal_groups.addPrincipalToGroup(member.getId(), 'meeting-config-council_powerobservers')
+    # add the test user 'conseiller' to only the every 'meeting-config-council_powerobservers' groups
+    member = site.portal_membership.getMemberById('conseiller')
+    if member:
+        site.portal_groups.addPrincipalToGroup(member.getId(), 'meeting-config-council_powerobservers')
 
     # add some topics
     _addTopics(context, site)
@@ -298,45 +290,5 @@ def reorderCss(context, site):
     css.reverse()
     for resource in css:
         portal_css.moveResourceToBottom(css)
-
-
-
-# ------------------------------------------------------------------------------
-# ---------------------- MIGRATIONS SCRIPTS ------------------------------------
-# ------------------------------------------------------------------------------
-
-def unregisterSomeSteps(context):
-    """
-      Some old steps are no more used, remove them!
-    """
-    if not isMeetingCommunesMigrationProfile(context): return
-
-    logStep("unregisterSomeSteps", context)
-
-    site = context.getSite()
-    stepsToRemove = ['addSearches-MeetingCommunes', 'MeetingCommunes-addPowerObserversGroup', ]
-    for stepToRemove in stepsToRemove:
-        try:
-            site.portal_setup._import_registry.unregisterStep(stepToRemove)
-        except KeyError:
-            #the step does not exist (already removed)
-            pass
-
-def adaptItemsToValidateTopic(context):
-    """
-      Old versions of the searchitemstovalidate topic did not use a search script, correct this!
-    """
-    if not isMeetingCommunesMigrationProfile(context): return
-
-    logStep("adaptItemsToValidateTopic", context)
-
-    site = context.getSite()
-    for mc in site.portal_plonemeeting.objectValues('MeetingConfig'):
-        topic = getattr(mc.topics, 'searchitemstovalidate', None)
-        if topic:
-            if not topic.hasProperty(TOPIC_SEARCH_SCRIPT):
-                topic.manage_addProperty(TOPIC_SEARCH_SCRIPT, 'searchItemsToValidate', 'string')
-            else:
-                topic.manage_changeProperties(topic_search_script='searchItemsToValidate')
 
 ##/code-section FOOT

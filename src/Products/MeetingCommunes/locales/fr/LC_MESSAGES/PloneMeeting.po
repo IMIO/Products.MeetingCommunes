@@ -153,10 +153,6 @@ msgstr "Ordres du jour"
 msgid "positive_with_remarks"
 msgstr "Commenté"
 
-#. Default: "PowerObservers"
-msgid "powerObserversGroupTitle"
-msgstr "Echevins"
-
 #. Default: "Present every selected items"
 msgid "present_several_items"
 msgstr "Présenter tous les points sélectionnés"

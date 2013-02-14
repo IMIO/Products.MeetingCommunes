@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <metadata>
-  <version>for.PloneMeeting.10</version>
+  <version>3.0</version>
   <!-- ##code-section METADATA -->
   <dependencies>
     <dependency>profile-collective.ckeditor:default</dependency>

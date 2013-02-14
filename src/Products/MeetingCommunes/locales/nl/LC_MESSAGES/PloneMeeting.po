@@ -150,10 +150,6 @@ msgstr "Vergadering"
 msgid "positive_with_remarks"
 msgstr ""
 
-#. Default: "PowerObservers"
-msgid "powerObserversGroupTitle"
-msgstr ""
-
 #. Default: "Present every selected items"
 msgid "present_several_items"
 msgstr "Presenteer alle geselekteerde items"

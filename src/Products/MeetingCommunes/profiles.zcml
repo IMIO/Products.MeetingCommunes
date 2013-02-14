@@ -45,12 +45,13 @@
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFCore.interfaces.ISiteRoot"/>
 
-  <genericsetup:registerProfile
-    name="migrations"
-    title="MeetingCommunes / Migrations"
-    description="MeetingCommunes profile for performing migrations"
-    provides="Products.GenericSetup.interfaces.EXTENSION"
-    for="Products.CMFCore.interfaces.ISiteRoot" />
+  <genericsetup:upgradeStep
+      title="Go to MeetingCommunes 3.0"
+      description=""
+      source="*"
+      destination="3.0"
+      handler="Products.MeetingCommunes.migrations.migrate_to_3_0.migrate"
+      profile="Products.MeetingCommunes:default" />
 
   <!-- ##/code-section profiles.zcml-bottom -->
 
