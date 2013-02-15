@@ -15,11 +15,15 @@ SVN repository: http://svn.communesplone.org/svn/communesplone/Products.MeetingC
 IRC:            irc://freenode.net/#plone.be
 
 3. License
-===============
+==========
 Please look at LICENSE.txt, LICENSE.ZPL and LICENSE.GPL
 
 The authors,
 
-        Gauthier BASTIEN - 2008-2012 <g.bastien@imio.be>, 
-        Stephan GEULETTE - 2008-2012 <s.geulette@imio.be>,
-        André NUYENS - 2010-2012 <a.nuyens@imio.be>
+        Gauthier BASTIEN - 2008-2013 <g.bastien@imio.be>, 
+        Stephan GEULETTE - 2008-2013 <s.geulette@imio.be>,
+        André NUYENS - 2010-2013 <a.nuyens@imio.be>
+
+4. Changes
+==========
+Please look at HISTORY.txt
