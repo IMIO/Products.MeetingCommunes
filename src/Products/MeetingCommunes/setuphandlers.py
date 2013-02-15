@@ -46,7 +46,6 @@ def postInstall(context):
     site = context.getSite()
     #need to reinstall PloneMeeting after reinstalling MC workflows to re-apply wfAdaptations
     reinstallPloneMeeting(context, site)
-    adaptFCKMenuStyles(context, site)
     showHomeTab(context, site)
     reinstallPloneMeetingSkin(context, site)
     reorderCss(context, site)
@@ -156,27 +155,6 @@ def _installPloneMeeting(context):
     site = context.getSite()
     profileId = u'profile-Products.PloneMeeting:default'
     site.portal_setup.runAllImportStepsFromProfile(profileId)
-
-def adaptFCKMenuStyles(context, site):
-    """
-       Add the "highlight-red" style to the FCK menu styles
-    """
-    if isNotMeetingCommunesProfile(context): return
-
-    logStep("adaptFCKMenuStyles", context)
-
-    fckeditor_properties = getattr(site.portal_properties, 'fckeditor_properties', None)
-
-    if fckeditor_properties:
-        fck_menu_styles = fckeditor_properties.fck_menu_styles
-        if not "highlight-red" in fck_menu_styles:
-            # Add the style
-            newStyle = """
-<Style name="Mettre en évidence" element="span">
-<Attribute name="class" value="highlight-red" />
-</Style>"""
-            fck_menu_styles=fck_menu_styles+newStyle
-            fckeditor_properties.manage_changeProperties(fck_menu_styles=fck_menu_styles)
 
 def showHomeTab(context, site):
     """
