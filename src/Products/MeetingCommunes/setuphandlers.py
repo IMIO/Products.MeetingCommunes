@@ -48,10 +48,8 @@ def postInstall(context):
     reinstallPloneMeeting(context, site)
     adaptFCKMenuStyles(context, site)
     showHomeTab(context, site)
-    recreateMeetingConfigsPortalTabs(context, site)
     reinstallPloneMeetingSkin(context, site)
     reorderCss(context, site)
-
 
 
 ##code-section FOOT
@@ -193,23 +191,6 @@ def showHomeTab(context, site):
         index_html.visible = True
     else:
         logger.info("The 'Home' tab does not exist !!!")
-
-def recreateMeetingConfigsPortalTabs(context, site):
-    """
-       portal_tabs for a MeetingConfig are created during
-       PloneMeeting MeetingConfigs creation (at install time).
-       This is "logged" by portal_quickinstaller and when reinstalling,
-       these tabs are removed...
-       Instead of using actions.xml, we recreate them for every existing
-       MeetingConfigs so it works with every profiles (example_fr, zcpas, ...)
-    """
-    if isNotMeetingCommunesProfile(context): return
-
-    logStep("recreateMeetingConfigsPortalTabs", context)
-    
-    cfgs = site.portal_plonemeeting.objectValues('MeetingConfig')
-    for cfg in cfgs:
-        cfg.createTab()
 
 def reinstallPloneMeetingSkin(context, site):
     """
