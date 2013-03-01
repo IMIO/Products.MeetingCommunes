@@ -116,7 +116,8 @@ itemCouncilTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem" and 
 councilTemplates = [agendaCouncilTemplate, agendaCouncilTemplatePDF,
                     decisionsCouncilTemplate, decisionsCouncilTemplatePDF,
                     itemCouncilRapportTemplate, itemCouncilRapportTemplatePDF,
-                    itemCouncilTemplate, itemCouncilTemplatePDF, itemCouncilProjectTemplate, itemCouncilProjectTemplatePDF, ]
+                    itemCouncilTemplate, itemCouncilTemplatePDF,
+                    itemCouncilProjectTemplate, itemCouncilProjectTemplatePDF, ]
 
 # Users and groups -------------------------------------------------------------
 secretaire = UserDescriptor('secretaire', ['MeetingManager'], email="test@test.be", fullname="Henry Secrétaire")
@@ -199,12 +200,36 @@ Place3\r"""
 collegeMeeting.categories = categories
 collegeMeeting.shortName = 'College'
 collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision]
-collegeMeeting.usedItemAttributes = ['detailedDescription', 'budgetInfos', 'observations', 'toDiscuss', 'itemAssembly', 'itemIsSigned', ]
+collegeMeeting.usedItemAttributes = ['detailedDescription',
+                                     'budgetInfos',
+                                     'observations',
+                                     'toDiscuss',
+                                     'itemAssembly',
+                                     'itemIsSigned', ]
 collegeMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 collegeMeeting.recordMeetingHistoryStates = []
-collegeMeeting.itemsListVisibleColumns = ['toDiscuss', 'state', 'proposingGroup', 'annexes', 'annexesDecision', 'advices', 'actions', 'itemIsSigned', ]
-collegeMeeting.itemColumns = ['creator', 'state', 'proposingGroup', 'annexes', 'annexesDecision', 'advices', 'actions', 'meeting', 'itemIsSigned', ]
-collegeMeeting.xhtmlTransformFields = ('MeetingItem.description', 'MeetingItem.detailedDescription', 'MeetingItem.decision', 'MeetingItem.observations', 'Meeting.observations', )
+collegeMeeting.itemsListVisibleColumns = ['toDiscuss',
+                                          'state',
+                                          'proposingGroup',
+                                          'annexes',
+                                          'annexesDecision',
+                                          'advices',
+                                          'actions',
+                                          'itemIsSigned', ]
+collegeMeeting.itemColumns = ['creator',
+                              'state',
+                              'proposingGroup',
+                              'annexes',
+                              'annexesDecision',
+                              'advices',
+                              'actions',
+                              'meeting',
+                              'itemIsSigned', ]
+collegeMeeting.xhtmlTransformFields = ('MeetingItem.description',
+                                       'MeetingItem.detailedDescription',
+                                       'MeetingItem.decision',
+                                       'MeetingItem.observations',
+                                       'Meeting.observations', )
 collegeMeeting.xhtmlTransformTypes = ('removeBlanks',)
 collegeMeeting.itemWorkflow = 'meetingitemcollege_workflow'
 collegeMeeting.meetingWorkflow = 'meetingcollege_workflow'
@@ -212,8 +237,17 @@ collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IM
 collegeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
 collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
 collegeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions'
-collegeMeeting.transitionsToConfirm = ['MeetingItem.delay',]
-collegeMeeting.itemTopicStates = ('itemcreated', 'proposed', 'validated', 'presented', 'itemfrozen', 'pre_accepted', 'accepted', 'refused', 'delayed', 'accepted_but_modified', )
+collegeMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
+collegeMeeting.itemTopicStates = ('itemcreated',
+                                  'proposed',
+                                  'validated',
+                                  'presented',
+                                  'itemfrozen',
+                                  'pre_accepted',
+                                  'accepted',
+                                  'refused',
+                                  'delayed',
+                                  'accepted_but_modified', )
 collegeMeeting.meetingTopicStates = ('created', 'frozen')
 collegeMeeting.decisionTopicStates = ('decided', 'closed')
 collegeMeeting.enforceAdviceMandatoriness = False
@@ -227,14 +261,24 @@ collegeMeeting.meetingDocFormats = ('odt', 'pdf')
 collegeMeeting.useAdvices = True
 collegeMeeting.itemAdviceStates = ('validated',)
 collegeMeeting.itemAdviceEditStates = ('validated',)
-collegeMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted', 'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
+collegeMeeting.itemAdviceViewStates = ('validated',
+                                       'presented',
+                                       'itemfrozen',
+                                       'accepted',
+                                       'refused',
+                                       'accepted_but_modified',
+                                       'delayed',
+                                       'pre_accepted',)
 collegeMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 collegeMeeting.enableAdviceInvalidation = False
 collegeMeeting.itemAdviceInvalidateStates = []
 collegeMeeting.itemPowerObserversStates = ('itemfrozen', 'accepted', 'delayed', 'refused', 'accepted_but_modified')
 collegeMeeting.meetingPowerObserversStates = ('created', 'frozen', 'decided', 'closed')
 collegeMeeting.useCopies = True
-collegeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'), groups[1].getIdSuffixed('reviewers'), groups[2].getIdSuffixed('reviewers'), groups[4].getIdSuffixed('reviewers')]
+collegeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
+                                       groups[1].getIdSuffixed('reviewers'),
+                                       groups[2].getIdSuffixed('reviewers'),
+                                       groups[4].getIdSuffixed('reviewers')]
 collegeMeeting.podTemplates = collegeTemplates
 
 collegeMeeting.recurringItems = [
@@ -380,12 +424,34 @@ Place3\n\r"""
 councilMeeting.categories = categories
 councilMeeting.shortName = 'Council'
 councilMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision]
-councilMeeting.usedItemAttributes = ['detailedDescription', 'oralQuestion', 'itemInitiator', 'observations', 'privacy', 'itemAssembly', ]
-councilMeeting.usedMeetingAttributes = ['startDate', 'midDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
+councilMeeting.usedItemAttributes = ['detailedDescription',
+                                     'oralQuestion',
+                                     'itemInitiator',
+                                     'observations',
+                                     'privacy',
+                                     'itemAssembly', ]
+councilMeeting.usedMeetingAttributes = ['startDate',
+                                        'midDate',
+                                        'endDate',
+                                        'signatures',
+                                        'assembly',
+                                        'place',
+                                        'observations', ]
 councilMeeting.recordMeetingHistoryStates = []
 councilMeeting.itemsListVisibleColumns = ['state', 'proposingGroup', 'annexes', 'annexesDecision', 'actions', ]
-councilMeeting.itemColumns = ['creator', 'state', 'proposingGroup', 'annexes', 'annexesDecision', 'advices', 'actions', 'meeting', ]
-councilMeeting.xhtmlTransformFields = ('MeetingItem.description', 'MeetingItem.detailedDescription', 'MeetingItem.decision', 'MeetingItem.observations', 'Meeting.observations', )
+councilMeeting.itemColumns = ['creator',
+                              'state',
+                              'proposingGroup',
+                              'annexes',
+                              'annexesDecision',
+                              'advices',
+                              'actions',
+                              'meeting', ]
+councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
+                                       'MeetingItem.detailedDescription',
+                                       'MeetingItem.decision',
+                                       'MeetingItem.observations',
+                                       'Meeting.observations', )
 councilMeeting.xhtmlTransformTypes = ('removeBlanks',)
 councilMeeting.itemWorkflow = 'meetingitemcouncil_workflow'
 councilMeeting.meetingWorkflow = 'meetingcouncil_workflow'
@@ -395,7 +461,17 @@ councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces
 councilMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowActions'
 councilMeeting.transitionsToConfirm = []
 #show every items states
-councilMeeting.itemTopicStates = ('itemcreated', 'proposed', 'validated', 'presented', 'itemfrozen', 'itempublished', 'accepted', 'pre_accepted', 'accepted_but_modified', 'refused', 'delayed')
+councilMeeting.itemTopicStates = ('itemcreated',
+                                  'proposed',
+                                  'validated',
+                                  'presented',
+                                  'itemfrozen',
+                                  'itempublished',
+                                  'accepted',
+                                  'pre_accepted',
+                                  'accepted_but_modified',
+                                  'refused',
+                                  'delayed')
 councilMeeting.meetingTopicStates = ('created', 'frozen', 'published')
 councilMeeting.decisionTopicStates = ('decided', 'closed')
 councilMeeting.itemAdviceStates = ('validated',)
@@ -411,17 +487,36 @@ councilMeeting.useAdvices = False
 councilMeeting.itemAdviceStates = ()
 councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
-councilMeeting.itemPowerObserversStates = ('itemfrozen', 'itempublished', 'accepted', 'delayed', 'refused', 'accepted_but_modified')
+councilMeeting.itemPowerObserversStates = ('itemfrozen',
+                                           'itempublished',
+                                           'accepted', 'delayed',
+                                           'refused',
+                                           'accepted_but_modified')
 councilMeeting.meetingPowerObserversStates = ('created', 'frozen', 'published', 'decided', 'closed')
 councilMeeting.useCopies = True
-councilMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'), groups[1].getIdSuffixed('reviewers'), groups[2].getIdSuffixed('reviewers'), groups[4].getIdSuffixed('reviewers')]
+councilMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
+                                       groups[1].getIdSuffixed('reviewers'),
+                                       groups[2].getIdSuffixed('reviewers'),
+                                       groups[4].getIdSuffixed('reviewers')]
 councilMeeting.podTemplates = councilTemplates
 
-bourgmestre_mu = MeetingUserDescriptor('bourgmestre', duty='Bourgmestre', usages=['assemblyMember', 'signer', 'asker', ], signatureIsDefault=True)
-receveur_mu = MeetingUserDescriptor('receveur', duty='Receveur communal', usages=['assemblyMember', 'signer', 'asker', ])
-echevinPers_mu = MeetingUserDescriptor('echevinPers', duty='Echevin GRH', usages=['assemblyMember', 'asker', ])
-echevinTrav_mu = MeetingUserDescriptor('echevinTrav', duty='Echevin Travaux', usages=['assemblyMember', 'asker', ])
-secretaire_mu = MeetingUserDescriptor('secretaire', duty='Secrétaire communal', usages=['assemblyMember', 'signer', 'asker', ], signatureIsDefault=True)
+bourgmestre_mu = MeetingUserDescriptor('bourgmestre',
+                                       duty='Bourgmestre',
+                                       usages=['assemblyMember', 'signer', 'asker', ],
+                                       signatureIsDefault=True)
+receveur_mu = MeetingUserDescriptor('receveur',
+                                    duty='Receveur communal',
+                                    usages=['assemblyMember', 'signer', 'asker', ])
+echevinPers_mu = MeetingUserDescriptor('echevinPers',
+                                       duty='Echevin GRH',
+                                       usages=['assemblyMember', 'asker', ])
+echevinTrav_mu = MeetingUserDescriptor('echevinTrav',
+                                       duty='Echevin Travaux',
+                                       usages=['assemblyMember', 'asker', ])
+secretaire_mu = MeetingUserDescriptor('secretaire',
+                                      duty='Secrétaire communal',
+                                      usages=['assemblyMember', 'signer', 'asker', ],
+                                      signatureIsDefault=True)
 
 councilMeeting.meetingUsers = [bourgmestre_mu, receveur_mu, echevinPers_mu, echevinTrav_mu, secretaire_mu]
 
@@ -439,8 +534,8 @@ data = PloneMeetingConfiguration(
            meetingFolderTitle='Mes séances',
            meetingConfigs=(collegeMeeting, councilMeeting),
            groups=groups)
-data.unoEnabledPython='/usr/bin/python'
-data.usedColorSystem='state_color'
-data.enableUserPreferences=False
+data.unoEnabledPython = '/usr/bin/python'
+data.usedColorSystem = 'state_color'
+data.enableUserPreferences = False
 data.usersOutsideGroups = [bourgmestre, conseiller]
 # ------------------------------------------------------------------------------
