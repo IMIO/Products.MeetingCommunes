@@ -157,6 +157,10 @@ msgstr "Commenté"
 msgid "present_several_items"
 msgstr "Présenter tous les points sélectionnés"
 
+#. Default: "Configure PloneMeeting"
+msgid "search_advanced"
+msgstr ""
+
 #. Default: "Every decisions"
 msgid "searchalldecisions"
 msgstr "tous les PVs"

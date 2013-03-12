@@ -147,10 +147,6 @@ msgstr ""
 msgid "MeetingItemcomitee"
 msgstr ""
 
-#. Default: "Advices and copies"
-msgid "advices"
-msgstr ""
-
 #. Default: "UID not found!"
 msgid "UID not found!"
 msgstr ""

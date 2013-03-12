@@ -78,10 +78,6 @@ msgstr "Le point a été accepté."
 msgid "accepted_but_modified"
 msgstr "Accepté avec modifications"
 
-#. Default: "Advices and copies"
-msgid "advices"
-msgstr "Avis et copies"
-
 #. Default: "Back to created"
 msgid "backToCreated"
 msgstr "Remettre \"En création\""

@@ -76,10 +76,6 @@ msgstr ""
 msgid "accepted_but_modified"
 msgstr ""
 
-#. Default: "Advices and copies"
-msgid "advices"
-msgstr ""
-
 #. Default: "Back to created"
 msgid "backToCreated"
 msgstr ""
