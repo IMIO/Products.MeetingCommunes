@@ -10,6 +10,7 @@ def migrate(context):
     portal = context.portal_url.getPortalObject()
     _adaptItemsToValidateTopic(portal)
     _removeGlobalPowerObservers(portal)
+    portal.portal_setup.runAllImportStepsFromProfile(u'profile-Products.MeetingCommunes:default')
 
 
 def _adaptItemsToValidateTopic(portal):
@@ -24,6 +25,7 @@ def _adaptItemsToValidateTopic(portal):
                 topic.manage_addProperty(TOPIC_SEARCH_SCRIPT, 'searchItemsToValidate', 'string')
             else:
                 topic.manage_changeProperties(topic_search_script='searchItemsToValidate')
+
 
 def _removeGlobalPowerObservers(portal):
     """
