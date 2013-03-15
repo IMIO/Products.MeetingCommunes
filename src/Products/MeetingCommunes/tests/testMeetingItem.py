@@ -30,6 +30,7 @@ from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testMeetingItem import testMeetingItem as pmtmi
 
+
 class testMeetingItem(MeetingCommunesTestCase, pmtmi):
     """
         Tests the MeetingItem class methods.
@@ -44,7 +45,7 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         missing = []
         for key in tpm:
             key2 = key.replace('test', 'test_mc_call_')
-            if not tmc.has_key(key2):
+            if not key2 in tmc:
                 missing.append(key)
         if len(missing):
             self.fail("missing test methods %s from PloneMeeting test class '%s'" % (missing, 'testMeetingItem'))
@@ -96,7 +97,7 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
            proposingGroups is not empty.'''
         #we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        self.meetingConfig.useGroupsAsCategories=False
+        self.meetingConfig.useGroupsAsCategories = False
         self._adaptCategoriesForTest(self.meetingConfig)
         pmtmi.testSelectableCategories(self)
 
