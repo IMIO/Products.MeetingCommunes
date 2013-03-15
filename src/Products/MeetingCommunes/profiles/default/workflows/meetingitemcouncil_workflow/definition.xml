@@ -33,7 +33,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -68,7 +67,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -80,7 +78,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -92,7 +89,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -104,7 +100,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -140,7 +135,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -157,7 +151,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -192,7 +185,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -204,7 +196,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -216,7 +207,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -228,7 +218,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -264,7 +253,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -281,7 +269,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -316,7 +303,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -328,7 +314,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -340,7 +325,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -352,7 +336,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -388,7 +371,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -625,7 +607,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -662,7 +643,6 @@
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -674,7 +654,6 @@
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -686,7 +665,6 @@
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -698,7 +676,6 @@
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -735,7 +712,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -754,7 +730,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -791,7 +766,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -803,7 +777,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -815,7 +788,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -827,7 +799,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -864,7 +835,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -1105,7 +1075,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -1140,7 +1109,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -1152,7 +1120,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -1164,7 +1131,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -1176,7 +1142,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
@@ -1212,7 +1177,6 @@
    <permission-role>MeetingObserverLocal</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingObserverLocalCopy</permission-role>
-   <permission-role>MeetingPowerObserver</permission-role>
    <permission-role>MeetingPowerObserverLocal</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
   </permission-map>
