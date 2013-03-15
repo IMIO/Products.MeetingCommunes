@@ -64,4 +64,7 @@ def _removeGlobalPowerObservers(portal):
         data.remove('MeetingPowerObserver')
         portal.__ac_roles__ = tuple(data)
         # then in portal_role_manager
-        portal.acl_users.portal_role_manager.removeRole('MeetingPowerObserver')
+        try:
+            portal.acl_users.portal_role_manager.removeRole('MeetingPowerObserver')
+        except KeyError:
+            pass
