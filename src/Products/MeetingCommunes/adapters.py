@@ -657,8 +657,6 @@ class CustomMeetingItem(MeetingItem):
 
     customItemPositiveDecidedStates = ('accepted', 'accepted_but_modified', )
     MeetingItem.itemPositiveDecidedStates = customItemPositiveDecidedStates
-    customItemDecidedStates = ('accepted', 'refused', 'delayed', 'accepted_but_modified', )
-    MeetingItem.itemDecidedStates = customItemDecidedStates
 
     def __init__(self, item):
         self.context = item
