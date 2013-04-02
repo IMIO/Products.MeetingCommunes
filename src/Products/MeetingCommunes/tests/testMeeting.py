@@ -214,7 +214,7 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         self.assertEquals(m2.getMeetingNumber(), 2)
         self.assertEquals(self.meetingConfig.getLastMeetingNumber(), 2)
         
-    def test_mc_testDecideSeveralItems(self):
+    def test_mc_call_DecideSeveralItems(self):
         """Call PloneMeeting test"""
         self.testDecideSeveralItems()
 
