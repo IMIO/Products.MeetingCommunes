@@ -213,7 +213,10 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         self.do(m2, 'close')
         self.assertEquals(m2.getMeetingNumber(), 2)
         self.assertEquals(self.meetingConfig.getLastMeetingNumber(), 2)
-
+        
+    def test_mc_testDecideSeveralItems(self):
+        """Call PloneMeeting test"""
+        self.testDecideSeveralItems()
 
 def test_suite():
     from unittest import TestSuite, makeSuite
