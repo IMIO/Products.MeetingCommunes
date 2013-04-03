@@ -26,8 +26,7 @@ categories = [recurring,
               CategoryDescriptor('personnel', 'Personnel'),
               CategoryDescriptor('population', 'Population/Etat-civil'),
               CategoryDescriptor('locations', 'Locations'),
-              CategoryDescriptor('divers', 'Divers'),
-             ]
+              CategoryDescriptor('divers', 'Divers'), ]
 
 # Users and groups -------------------------------------------------------------
 pmManager = UserDescriptor('pmManager', ['MeetingManager'])
@@ -37,10 +36,10 @@ pmReviewer1 = UserDescriptor('pmReviewer1', [])
 pmCreator2 = UserDescriptor('pmCreator2', [])
 pmReviewer2 = UserDescriptor('pmReviewer2', [])
 pmAdviser1 = UserDescriptor('pmAdviser1', [])
-voter1 = UserDescriptor('voter1', [], fullname = 'M. Voter One')
-voter2 = UserDescriptor('voter2', [], fullname = 'M. Voter Two')
-powerobserver1 = UserDescriptor('powerobserver1', [], fullname = 'M. Power Observer1')
-powerobserver2 = UserDescriptor('powerobserver2', [], fullname = 'M. Power Observer2')
+voter1 = UserDescriptor('voter1', [], fullname='M. Voter One')
+voter2 = UserDescriptor('voter2', [], fullname='M. Voter Two')
+powerobserver1 = UserDescriptor('powerobserver1', [], fullname='M. Power Observer1')
+powerobserver2 = UserDescriptor('powerobserver2', [], fullname='M. Power Observer2')
 
 developers = GroupDescriptor('developers', 'Developers', 'Devel', givesMandatoryAdviceOn="python:False")
 developers.creators.append(pmCreator1)
@@ -72,14 +71,14 @@ pmManager_observer = MeetingUserDescriptor('pmManager',
                                            duty='Secrétaire de la Chancellerie',
                                            usages=['assemblyMember'])
 cadranel_signer = MeetingUserDescriptor('cadranel', duty='Secrétaire',
-                                       usages=['assemblyMember', 'signer'],
-                                       signatureImage='SignatureCadranel.jpg',
-                                       signatureIsDefault=True)
+                                        usages=['assemblyMember', 'signer'],
+                                        signatureImage='SignatureCadranel.jpg',
+                                        signatureIsDefault=True)
 # Add meeting users (voting purposes)
-muser_voter1  = MeetingUserDescriptor('voter1', duty='Voter1',
-                                       usages=['assemblyMember', 'voter',])
-muser_voter2  = MeetingUserDescriptor('voter2', duty='Voter2',
-                                       usages=['assemblyMember', 'voter'])
+muser_voter1 = MeetingUserDescriptor('voter1', duty='Voter1',
+                                     usages=['assemblyMember', 'voter', ])
+muser_voter2 = MeetingUserDescriptor('voter2', duty='Voter2',
+                                     usages=['assemblyMember', 'voter', ])
 
 # Meeting configurations -------------------------------------------------------
 # college
@@ -87,9 +86,9 @@ collegeMeeting = MeetingConfigDescriptor(
     'meeting-config-college', 'College Communal',
     'College communal', isDefault=True)
 collegeMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
-                           'Charles Exemple - 1er Echevin,\n' \
-                           'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
-                           'Jacqueline Exemple, Responsable du CPAS'
+                          'Charles Exemple - 1er Echevin,\n' \
+                          'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
+                          'Jacqueline Exemple, Responsable du CPAS'
 collegeMeeting.signatures = 'Pierre Dupont, Bourgmestre - Charles Exemple, Secrétaire communal'
 collegeMeeting.certifiedSignatures = 'Mr Présent Actuellement, Bourgmestre ff - Charles Exemple, Secrétaire communal'
 collegeMeeting.categories = categories
@@ -97,7 +96,11 @@ collegeMeeting.shortName = 'College'
 collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision,
                                    overheadAnalysis, marketingAnalysis]
 collegeMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
-collegeMeeting.xhtmlTransformFields = ('MeetingItem.description', 'MeetingItem.detailedDescription', 'MeetingItem.decision', 'MeetingItem.observations', 'Meeting.observations', )
+collegeMeeting.xhtmlTransformFields = ('MeetingItem.description',
+                                       'MeetingItem.detailedDescription',
+                                       'MeetingItem.decision',
+                                       'MeetingItem.observations',
+                                       'Meeting.observations', )
 collegeMeeting.xhtmlTransformTypes = ('removeBlanks',)
 collegeMeeting.itemWorkflow = 'meetingitemcollege_workflow'
 collegeMeeting.meetingWorkflow = 'meetingcollege_workflow'
@@ -121,9 +124,10 @@ collegeMeeting.itemAdviceStates = ['proposed', 'validated']
 collegeMeeting.itemAdviceEditStates = ['proposed',]
 collegeMeeting.itemAdviceViewStates = ['presented',]
 collegeMeeting.itemPowerObserversStates = ('itemcreated', 'presented', 'accepted', 'delayed', 'refused')
+collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified','pre_accepted']
 collegeMeeting.meetingPowerObserversStates = ('frozen', 'published', 'decided', 'closed')
 collegeMeeting.useCopies = True
-collegeMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'),]
+collegeMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'), ]
 
 collegeMeeting.recurringItems = [
     RecurringItemDescriptor(
@@ -200,7 +204,11 @@ councilMeeting.certifiedSignatures = 'Mr Présent Actuellement, Bourgmestre ff -
 councilMeeting.categories = categories
 councilMeeting.shortName = 'Council'
 councilMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision]
-councilMeeting.xhtmlTransformFields = ('MeetingItem.description', 'MeetingItem.detailedDescription', 'MeetingItem.decision', 'MeetingItem.observations', 'Meeting.observations', )
+councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
+                                       'MeetingItem.detailedDescription',
+                                       'MeetingItem.decision',
+                                       'MeetingItem.observations',
+                                       'Meeting.observations', )
 councilMeeting.xhtmlTransformTypes = ('removeBlanks',)
 councilMeeting.itemWorkflow = 'meetingitemcouncil_workflow'
 councilMeeting.meetingWorkflow = 'meetingcouncil_workflow'
@@ -210,7 +218,15 @@ councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces
 councilMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowActions'
 #show every items states
 councilMeeting.transitionsToConfirm = []
-councilMeeting.itemTopicStates = ('itemcreated', 'proposed', 'validated', 'presented', 'accepted', 'pre_accepted', 'accepted_but_modified', 'refused', 'delayed')
+councilMeeting.itemTopicStates = ('itemcreated',
+                                  'proposed',
+                                  'validated',
+                                  'presented',
+                                  'accepted',
+                                  'pre_accepted',
+                                  'accepted_but_modified',
+                                  'refused',
+                                  'delayed')
 councilMeeting.meetingTopicStates = ('created', 'frozen', 'published')
 councilMeeting.decisionTopicStates = ('decided', 'closed')
 councilMeeting.itemAdviceStates = ('validated',)
@@ -226,25 +242,29 @@ councilMeeting.useAdvices = True
 councilMeeting.itemAdviceStates = ['proposed', 'validated']
 councilMeeting.itemAdviceEditStates = ['proposed',]
 councilMeeting.itemAdviceViewStates = ['presented',]
+councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified','pre_accepted']
 councilMeeting.itemPowerObserversStates = collegeMeeting.itemPowerObserversStates
 councilMeeting.meetingPowerObserversStates = collegeMeeting.meetingPowerObserversStates
 councilMeeting.useCopies = True
-councilMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'),]
+councilMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'), ]
 councilMeeting.useVotes = True
 councilMeeting.meetingUsers = [muser_voter1, muser_voter2,]
 councilMeeting.recurringItems = [
-    RecurringItemDescriptor('recItem1', 'Recurring item #1',
-    'vendors', category='developers', description='<p>This is the first recurring item.</p>',
-    decision='Recurring Item approved')
+    RecurringItemDescriptor('recItem1',
+                            'Recurring item #1',
+                            'vendors',
+                            category='developers',
+                            description='<p>This is the first recurring item.</p>',
+                            decision='Recurring Item approved')
 ]
 
 #no recurring items for this meetingConfig, only for tests !!!
 #so we can test a meetingConfig with recurring items (college) and without (council)
 
 data = PloneMeetingConfiguration(
-           meetingFolderTitle='Mes seances',
-           meetingConfigs=(collegeMeeting, councilMeeting),
-           groups=(developers, vendors))
-data.unoEnabledPython='/usr/bin/python'
+    meetingFolderTitle='Mes seances',
+    meetingConfigs=(collegeMeeting, councilMeeting),
+    groups=(developers, vendors))
+data.unoEnabledPython = '/usr/bin/python'
 data.usersOutsideGroups = [voter1, voter2, powerobserver1, powerobserver2]
 # ------------------------------------------------------------------------------

@@ -67,19 +67,20 @@ class MeetingCommunesTestCase(PloneMeetingTestCase):
         meetingConfig.categories.manage_delObjects(idsToRemove)
         # Add new catgories
         # These are categories defined in PloneMeeting/profiles/test/import_data.py
-        categories = [
-                      ('deployment', 'Deployment topics'),
+        categories = [('deployment', 'Deployment topics'),
                       ('maintenance', 'Maintenance topics'),
                       ('development', 'Development topics'),
                       ('events', 'Events'),
                       ('research', 'Research topics'),
                       ('projects', 'Projects'),
-                     ]
+                      ('subproducts', 'Subproducts'), ]
         for cat in categories:
             meetingConfig.categories.invokeFactory('MeetingCategory', id=cat[0], title=cat[1])
         #change the category of recurring items
         for item in meetingConfig.recurringitems.objectValues('MeetingItem'):
             item.setCategory('deployment')
+        # subproducts is a usingGroups category
+        meetingConfig.categories.subproducts.setUsingGroups(('vendors',))
         if originalLoggedInUser:
             login(self.portal, originalLoggedInUser)
         else:

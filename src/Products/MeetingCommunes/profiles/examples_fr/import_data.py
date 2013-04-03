@@ -273,6 +273,7 @@ collegeMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative
 collegeMeeting.enableAdviceInvalidation = False
 collegeMeeting.itemAdviceInvalidateStates = []
 collegeMeeting.itemPowerObserversStates = ('itemfrozen', 'accepted', 'delayed', 'refused', 'accepted_but_modified')
+collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified','pre_accepted']
 collegeMeeting.meetingPowerObserversStates = ('created', 'frozen', 'decided', 'closed')
 collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
@@ -487,6 +488,7 @@ councilMeeting.useAdvices = False
 councilMeeting.itemAdviceStates = ()
 councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
+councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified','pre_accepted']
 councilMeeting.itemPowerObserversStates = ('itemfrozen',
                                            'itempublished',
                                            'accepted', 'delayed',

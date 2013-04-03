@@ -25,6 +25,7 @@ from Products.PloneMeeting.config import TOPIC_TYPE, TOPIC_SEARCH_SCRIPT, TOPIC_
 from Products.PloneMeeting.exportimport.content import ToolInitializer
 ##/code-section HEAD
 
+
 def isNotMeetingCommunesProfile(context):
     return context.readDataFile("MeetingCommunes_marker.txt") is None
 
@@ -40,7 +41,8 @@ def updateRoleMappings(context):
 def postInstall(context):
     """Called as at the end of the setup process. """
     # the right place for your custom code
-    if isNotMeetingCommunesProfile(context): return
+    if isNotMeetingCommunesProfile(context):
+        return
     logStep("postInstall", context)
     site = context.getSite()
     #need to reinstall PloneMeeting after reinstalling MC workflows to re-apply wfAdaptations
@@ -55,14 +57,17 @@ def postInstall(context):
 def logStep(method, context):
     logger.info("Applying '%s' in profile '%s'"%(method, '/'.join(context._profile_path.split(os.sep)[-3:])))
 
+
 def isMeetingCommunesConfigureProfile(context):
     return context.readDataFile("MeetingCommunes_examples_fr_marker.txt") or \
-           context.readDataFile("MeetingCommunes_examples_marker.txt") or \
-           context.readDataFile("MeetingCommunes_cpas_marker.txt") or \
-           context.readDataFile("MeetingCommunes_tests_marker.txt")
+        context.readDataFile("MeetingCommunes_examples_marker.txt") or \
+        context.readDataFile("MeetingCommunes_cpas_marker.txt") or \
+        context.readDataFile("MeetingCommunes_tests_marker.txt")
+
 
 def isMeetingCommunesMigrationProfile(context):
     return context.readDataFile("MeetingCommunes_migrations_marker.txt")
+
 
 def installMeetingCommunes(context):
     """ Run the default profile"""
@@ -72,10 +77,12 @@ def installMeetingCommunes(context):
     portal = context.getSite()
     portal.portal_setup.runAllImportStepsFromProfile('profile-Products.MeetingCommunes:default')
 
+
 def initializeTool(context):
     '''Initialises the PloneMeeting tool based on information from the current
        profile.'''
-    if not isMeetingCommunesConfigureProfile(context): return
+    if not isMeetingCommunesConfigureProfile(context):
+        return
 
     logStep("initializeTool", context)
     #PloneMeeting is no more a dependency to avoid
@@ -84,34 +91,34 @@ def initializeTool(context):
     _installPloneMeeting(context)
     return ToolInitializer(context, PROJECTNAME).run()
 
+
 def _addTopics(context, site):
     '''
        Add searches to the added meetingConfigs
        Proposed items, validated items and decided items
     '''
-
     logStep("_addTopics", context)
     topicsInfo = (
-    # Items in state 'proposed'
-    ( 'searchproposeditems',
-    (  ('Type', 'ATPortalTypeCriterion', 'MeetingItem'),
-    ), ('proposed', ), "python: not here.portal_plonemeeting.userIsAmong('reviewers')", '',
-    ),
-    # Items that need to be validated
-    ( 'searchitemstovalidate',
-    (  ('Type', 'ATPortalTypeCriterion', 'MeetingItem'),
-    ), ('proposed', ), "python: here.portal_plonemeeting.userIsAmong('reviewers')", 'searchItemsToValidate',
-    ),
-    # Items in state 'validated'
-    ( 'searchvalidateditems',
-    (  ('Type', 'ATPortalTypeCriterion', 'MeetingItem'),
-    ), ('validated', ), '', '',
-    ),
-    # All 'decided' items
-    ( 'searchdecideditems',
-    (  ('Type', 'ATPortalTypeCriterion', 'MeetingItem'),
-    ), ('accepted', 'refused', 'delayed', 'accepted_but_modified',), '', '',
-    ),
+        # Items in state 'proposed'
+        ('searchproposeditems',
+        (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
+        ('proposed', ), "python: not here.portal_plonemeeting.userIsAmong('reviewers')", '',
+         ),
+        # Items that need to be validated
+        ('searchitemstovalidate',
+        (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
+        ('proposed', ), "python: here.portal_plonemeeting.userIsAmong('reviewers')", 'searchItemsToValidate',
+         ),
+        # Items in state 'validated'
+        ('searchvalidateditems',
+        (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
+        ('validated', ), '', '',
+         ),
+        # All 'decided' items
+        ('searchdecideditems',
+        (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
+        ('accepted', 'refused', 'delayed', 'accepted_but_modified',), '', '',
+         ),
     )
 
     #Add these searches by meeting config
@@ -142,19 +149,22 @@ def _addTopics(context, site):
             topic.setCustomViewFields(['Title', 'CreationDate', 'Creator', 'review_state'])
             topic.reindexObject()
 
+
 def reinstallPloneMeeting(context, site):
     '''Reinstall PloneMeeting so after install methods are called and applied,
        like performWorkflowAdaptations for example.'''
 
     if isNotMeetingCommunesProfile(context): return
 
-    logStep("reinstallPloneMeeting", context)    
+    logStep("reinstallPloneMeeting", context)
     _installPloneMeeting(context)
+
 
 def _installPloneMeeting(context):
     site = context.getSite()
     profileId = u'profile-Products.PloneMeeting:default'
     site.portal_setup.runAllImportStepsFromProfile(profileId)
+
 
 def showHomeTab(context, site):
     """
@@ -163,12 +173,13 @@ def showHomeTab(context, site):
     if isNotMeetingCommunesProfile(context): return
 
     logStep("showHomeTab", context)
-    
+
     index_html = getattr(site.portal_actions.portal_tabs, 'index_html', None)
     if index_html:
         index_html.visible = True
     else:
         logger.info("The 'Home' tab does not exist !!!")
+
 
 def reinstallPloneMeetingSkin(context, site):
     """
@@ -185,6 +196,7 @@ def reinstallPloneMeetingSkin(context, site):
         # if the Products.plonemeetingskin profile is not available
         # (not using plonemeetingskin or in tests?) we pass...
         pass
+
 
 def finalizeExampleInstance(context):
     """
@@ -214,36 +226,43 @@ def finalizeExampleInstance(context):
     mc_college = getattr(site.portal_plonemeeting, 'meeting-config-college')
     mc_college.setMeetingConfigsToCloneTo(['meeting-config-council', ])
     # add some topcis to the portlet_todo
-    mc_college.setToDoListTopics([getattr(mc_college.topics, 'searchdecideditems'),
-                          getattr(mc_college.topics, 'searchitemstovalidate'),
-                          getattr(mc_college.topics, 'searchallitemsincopy'),
-                          getattr(mc_college.topics, 'searchallitemstoadvice'),
-                         ])
+    mc_college.setToDoListTopics(
+        [getattr(mc_college.topics, 'searchdecideditems'),
+         getattr(mc_college.topics, 'searchitemstovalidate'),
+         getattr(mc_college.topics, 'searchallitemsincopy'),
+         getattr(mc_college.topics, 'searchallitemstoadvice'),
+         ])
     # call updateCloneToOtherMCActions inter alia
     mc_college.at_post_edit_script()
 
     # define some parameters for 'meeting-config-council'
     mc_council = getattr(site.portal_plonemeeting, 'meeting-config-council')
     # add some topcis to the portlet_todo
-    mc_council.setToDoListTopics([getattr(mc_council.topics, 'searchdecideditems'),
-                          getattr(mc_council.topics, 'searchitemstovalidate'),
-                          getattr(mc_council.topics, 'searchallitemsincopy'),
-                         ])
+    mc_council.setToDoListTopics(
+        [getattr(mc_council.topics, 'searchdecideditems'),
+         getattr(mc_council.topics, 'searchitemstovalidate'),
+         getattr(mc_council.topics, 'searchallitemsincopy'),
+         ])
     #finally, re-launch plonemeetingskin and MeetingCommunes skins step
     # because PM has been installed before the import_data profile and messed up skins layers
     site.portal_setup.runImportStepFromProfile(u'profile-Products.MeetingCommunes:default', 'skins')
     site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:default', 'skins')
     site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:plonemeetingskin', 'skins')
+    # call reoerderCss again because it is correctly called while re-installing MeetingCommunes
+    # but not while a profile is called from PloneMeeting
+    reorderCss(context, site)
+
 
 def reorderCss(context, site):
     """
        Make sure CSS are correctly reordered in portal_css so things
        work as expected...
     """
-    if isNotMeetingCommunesProfile(context): return
+    if isNotMeetingCommunesProfile(context):
+        return
 
     logStep("reorderCss", context)
-    
+
     portal_css = site.portal_css
     css = ['plonemeeting.css', 'meeting.css', 'meetingitem.css', 'meetingcommunes.css', 'imioapps.css', 'plonemeetingskin.css', 'ploneCustom.css']
     css.reverse()

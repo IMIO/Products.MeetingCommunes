@@ -32,18 +32,18 @@ from Globals import InitializeClass
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.PloneMeeting.MeetingItem import MeetingItem, \
-     MeetingItemWorkflowConditions, MeetingItemWorkflowActions
-from Products.PloneMeeting.MeetingGroup import MeetingGroup     
+    MeetingItemWorkflowConditions, MeetingItemWorkflowActions
+from Products.PloneMeeting.MeetingGroup import MeetingGroup
 from Products.PloneMeeting.Meeting import MeetingWorkflowActions, \
-     MeetingWorkflowConditions, Meeting
+    MeetingWorkflowConditions, Meeting
 from Products.PloneMeeting.MeetingConfig import MeetingConfig
 from Products.PloneMeeting.interfaces import IMeetingCustom, IMeetingItemCustom, \
-                                             IMeetingGroupCustom, IMeetingConfigCustom
+    IMeetingGroupCustom, IMeetingConfigCustom
 from Products.MeetingCommunes.interfaces import \
-     IMeetingItemCollegeWorkflowConditions, IMeetingItemCollegeWorkflowActions,\
-     IMeetingCollegeWorkflowConditions, IMeetingCollegeWorkflowActions, \
-     IMeetingItemCouncilWorkflowConditions, IMeetingItemCouncilWorkflowActions,\
-     IMeetingCouncilWorkflowConditions, IMeetingCouncilWorkflowActions
+    IMeetingItemCollegeWorkflowConditions, IMeetingItemCollegeWorkflowActions,\
+    IMeetingCollegeWorkflowConditions, IMeetingCollegeWorkflowActions, \
+    IMeetingItemCouncilWorkflowConditions, IMeetingItemCouncilWorkflowActions,\
+    IMeetingCouncilWorkflowConditions, IMeetingCouncilWorkflowActions
 from Products.PloneMeeting.utils import checkPermission
 from Products.CMFCore.permissions import ReviewPortalContent, ModifyPortalContent, View
 from Products.PloneMeeting.utils import getCurrentMeetingObject, spanifyLink
@@ -64,13 +64,14 @@ if 'archiving' in customwfAdaptations:
     customwfAdaptations.remove('archiving')
 
 MeetingConfig.wfAdaptations = customwfAdaptations
-
 originalPerformWorkflowAdaptations = adaptations.performWorkflowAdaptations
+
+
 def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdaptation=None):
     '''This function applies workflow changes as specified by the
        p_meetingConfig.'''
 
-    wfAdaptations = specificAdaptation and [specificAdaptation,] or meetingConfig.getWorkflowAdaptations()
+    wfAdaptations = specificAdaptation and [specificAdaptation, ] or meetingConfig.getWorkflowAdaptations()
 
     #while reinstalling a separate profile, the workflow could not exist
     meetingWorkflow = getattr(site.portal_workflow, meetingConfig.getMeetingWorkflow(), None)
@@ -83,7 +84,8 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
         return
 
     error = meetingConfig.validate_workflowAdaptations(wfAdaptations)
-    if error: raise Exception(error)
+    if error:
+        raise Exception(error)
 
     for wfAdaptation in wfAdaptations:
         if not wfAdaptation in ['no_publication', 'add_published_state', ]:
@@ -95,7 +97,8 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
             wf = meetingWorkflow
             # Delete transitions 'publish' and 'backToPublished'
             for tr in ('publish', 'backToPublished'):
-                if tr in wf.transitions: wf.transitions.deleteTransitions([tr])
+                if tr in wf.transitions:
+                    wf.transitions.deleteTransitions([tr])
             # Update connections between states and transitions
             wf.states['frozen'].setProperties(
                 title='frozen', description='',
@@ -103,12 +106,14 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
             wf.states['decided'].setProperties(
                 title='decided', description='', transitions=['backToFrozen', 'close'])
             # Delete state 'published'
-            if 'published' in wf.states: wf.states.deleteStates(['published'])
+            if 'published' in wf.states:
+                wf.states.deleteStates(['published'])
             # Then, update the item workflow.
             wf = itemWorkflow
             # Delete transitions 'itempublish' and 'backToItemPublished'
             for tr in ('itempublish', 'backToItemPublished'):
-                if tr in wf.transitions: wf.transitions.deleteTransitions([tr])
+                if tr in wf.transitions:
+                    wf.transitions.deleteTransitions([tr])
             # Update connections between states and transitions
             wf.states['itemfrozen'].setProperties(
                 title='itemfrozen', description='',
@@ -116,10 +121,10 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
             for decidedState in ['accepted', 'refused', 'delayed', 'accepted_but_modified']:
                 wf.states[decidedState].setProperties(
                     title=decidedState, description='',
-                    transitions=['backToItemFrozen',])
+                    transitions=['backToItemFrozen', ])
             wf.states['pre_accepted'].setProperties(
                 title='pre_accepted', description='',
-                transitions=['accept','accept_but_modify', 'backToItemFrozen'])
+                transitions=['accept', 'accept_but_modify', 'backToItemFrozen'])
             # Delete state 'published'
             if 'itempublished' in wf.states:
                 wf.states.deleteStates(['itempublished'])
@@ -132,23 +137,25 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
             # First, update the meeting workflow
             wf = meetingWorkflow
             # add state 'decision_published'
-            if 'decisions_published' not in wf.states: wf.states.addState('decisions_published')
+            if 'decisions_published' not in wf.states:
+                wf.states.addState('decisions_published')
             # Create new transitions linking the new state to existing ones
             # ('decided' and 'closed').
             # add transitions 'publish_decision' and 'backToDecisionPublished'
             for tr in ('publish_decisions', 'backToDecisionsPublished'):
-                if tr not in wf.transitions: wf.transitions.addTransition(tr)
+                if tr not in wf.transitions:
+                    wf.transitions.addTransition(tr)
             transition = wf.transitions['publish_decisions']
             transition.setProperties(title='publish_decisions',
-                new_state_id='decisions_published', trigger_type=1, script_name='',
-                actbox_name='publish_decisions', actbox_url='',actbox_category='workflow',
-                props={'guard_expr': 'python:here.wfConditions().mayPublishDecisions()'})
+                                     new_state_id='decisions_published', trigger_type=1, script_name='',
+                                     actbox_name='publish_decisions', actbox_url='', actbox_category='workflow',
+                                     props={'guard_expr': 'python:here.wfConditions().mayPublishDecisions()'})
             transition = wf.transitions['backToDecisionsPublished']
             transition.setProperties(title='backToDecisionsPublished',
-                new_state_id='decisions_published', trigger_type=1, script_name='',
-                actbox_name='backToDecisionsPublished', actbox_url='',
-                actbox_category='workflow',
-                props={'guard_expr': 'python:here.wfConditions().mayCorrect()'})
+                                     new_state_id='decisions_published', trigger_type=1, script_name='',
+                                     actbox_name='backToDecisionsPublished', actbox_url='',
+                                     actbox_category='workflow',
+                                     props={'guard_expr': 'python:here.wfConditions().mayCorrect()'})
             # Update connections between states and transitions
             wf.states['decided'].setProperties(
                 title='decided', description='',
@@ -164,7 +171,7 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
             frozen = wf.states['frozen']
             decisions_published = wf.states['decisions_published']
             for permission, roles in frozen.permission_roles.iteritems():
-                decisions_published.setPermission(permission, 0, roles)            
+                decisions_published.setPermission(permission, 0, roles)
             # Transition "backToPublished" must be protected by a popup, like
             # any other "correct"-like transition.
             toConfirm = meetingConfig.getTransitionsToConfirm()
@@ -183,7 +190,10 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
             logger.info(WF_APPLIED % ("add_published_state", meetingConfig.getId()))
 adaptations.performWorkflowAdaptations = customPerformWorkflowAdaptations
 
+
 originalValidate_workflowAdaptations = MeetingConfig.validate_workflowAdaptations
+
+
 def validate_workflowAdaptations(self, v):
     '''This method ensures that the combination of used workflow
        adaptations is valid.'''
@@ -197,7 +207,7 @@ def validate_workflowAdaptations(self, v):
         return msg
 MeetingConfig.validate_workflowAdaptations = validate_workflowAdaptations
 
-# ------------------------------------------------------------------------------
+
 class CustomMeeting(Meeting):
     '''Adapter that adapts a meeting implementing IMeeting to the
        interface IMeetingCustom.'''
@@ -205,8 +215,13 @@ class CustomMeeting(Meeting):
     implements(IMeetingCustom)
     security = ClassSecurityInfo()
 
-    def __init__(self, item):
-        self.context = item
+    def __init__(self, meeting):
+        self.context = meeting
+
+    security.declarePublic('isDecided')
+    def isDecided(self):
+        meeting = self.getSelf()
+        return meeting.queryState() in ('decided', 'closed', 'archived', 'decisions_published', )
 
     # Implements here methods that will be used by templates
     security.declarePublic('getPrintableItems')
@@ -228,9 +243,11 @@ class CustomMeeting(Meeting):
         # oralQuestion can be 'both' or False or True
         # toDiscuss can be 'both' or 'False' or 'True'
         for elt in itemUids:
-            if elt == '': itemUids.remove(elt)
+            if elt == '':
+                itemUids.remove(elt)
         #no filtering, return the items ordered
-        if not categories and not ignore_review_states and privacy == '*' and oralQuestion == 'both' and toDiscuss == 'both':
+        if not categories and not ignore_review_states and privacy == '*' and \
+           oralQuestion == 'both' and toDiscuss == 'both':
             return self.context.getItemsInOrder(late=late, uids=itemUids)
         # Either, we will have to filter the state here and check privacy
         filteredItemUids = []
@@ -254,7 +271,7 @@ class CustomMeeting(Meeting):
         if not filteredItemUids:
             return []
         else:
-            items = self.context.getItemsInOrder(late=late, uids=filteredItemUids) 
+            items = self.context.getItemsInOrder(late=late, uids=filteredItemUids)
             if renumber:
                 #return a list of tuple with first element the number and second
                 #element the item itself
@@ -273,9 +290,9 @@ class CustomMeeting(Meeting):
         res = None
         groupAcronym = group.getAcronym()
         for prefix in groupPrefixes.iterkeys():
-           if groupAcronym.startswith(prefix):
-               res = prefix
-               break
+            if groupAcronym.startswith(prefix):
+                res = prefix
+                break
         return res
 
     def _getGroupIndex(self, group, groups, groupPrefixes):
@@ -287,22 +304,23 @@ class CustomMeeting(Meeting):
            p_groups.'''
         prefix = self._getAcronymPrefix(group, groupPrefixes)
         if not prefix:
-            if group not in groups: return -1
-            else: return groups.index(group)
+            if group not in groups:
+                return -1
+            else:
+                return groups.index(group)
         else:
             for gp in groups:
                 if gp.getAcronym().startswith(prefix):
                     return groups.index(gp)
             return -1
 
-    def _insertGroupInCategory(self, categoryList, meetingGroup, groupPrefixes,
-        groups, item=None):
+    def _insertGroupInCategory(self, categoryList, meetingGroup, groupPrefixes, groups, item=None):
         '''Inserts a group list corresponding to p_meetingGroup in the given
            p_categoryList, following meeting group order as defined in the
            main configuration (groups from the config are in p_groups).
            If p_item is specified, the item is appended to the group list.'''
         usedGroups = [g[0] for g in categoryList[1:]]
-        groupIndex = self._getGroupIndex(meetingGroup,usedGroups,groupPrefixes)
+        groupIndex = self._getGroupIndex(meetingGroup, usedGroups,groupPrefixes)
         if groupIndex == -1:
             # Insert the group among used groups at the right place.
             groupInserted = False
@@ -310,16 +328,21 @@ class CustomMeeting(Meeting):
             for usedGroup in usedGroups:
                 i += 1
                 if groups.index(meetingGroup) < groups.index(usedGroup):
-                    if item: categoryList.insert(i+1, [meetingGroup, item])
-                    else:    categoryList.insert(i+1, [meetingGroup])
+                    if item:
+                        categoryList.insert(i+1, [meetingGroup, item])
+                    else:
+                        categoryList.insert(i+1, [meetingGroup])
                     groupInserted = True
                     break
             if not groupInserted:
-                if item: categoryList.append([meetingGroup, item])
-                else:    categoryList.append([meetingGroup])
+                if item:
+                    categoryList.append([meetingGroup, item])
+                else:
+                    categoryList.append([meetingGroup])
         else:
             # Insert the item into the existing group.
-            if item: categoryList[groupIndex+1].append(item)
+            if item:
+                categoryList[groupIndex+1].append(item)
 
     def _insertItemInCategory(self, categoryList, item, byProposingGroup,
         groupPrefixes, groups):
@@ -327,7 +350,8 @@ class CustomMeeting(Meeting):
            list of all items of a given category. if p_byProposingGroup is True,
            we must add it in a sub-list containing items of a given proposing
            group. Else, we simply append it to p_category.'''
-        if not byProposingGroup: categoryList.append(item)
+        if not byProposingGroup:
+            categoryList.append(item)
         else:
             group = item.getProposingGroup(True)
             self._insertGroupInCategory(categoryList, group, groupPrefixes,
@@ -335,9 +359,9 @@ class CustomMeeting(Meeting):
 
     security.declarePublic('getPrintableItemsByCategory')
     def getPrintableItemsByCategory(self, itemUids=[], late=False,
-        ignore_review_states=[], by_proposing_group=False, group_prefixes={},
-        oralQuestion='both',toDiscuss='both',
-        includeEmptyCategories=False, includeEmptyGroups=False):
+                                    ignore_review_states=[], by_proposing_group=False, group_prefixes={},
+                                    oralQuestion='both', toDiscuss='both',
+                                    includeEmptyCategories=False, includeEmptyGroups=False):
         '''Returns a list of (late-)items (depending on p_late) ordered by
            category. Items being in a state whose name is in
            p_ignore_review_state will not be included in the result.
@@ -368,7 +392,8 @@ class CustomMeeting(Meeting):
         previousCatId = None
         # Retrieve the list of items
         for elt in itemUids:
-            if elt == '': itemUids.remove(elt)
+            if elt == '':
+                itemUids.remove(elt)
         items = self.context.getItemsInOrder(late=late, uids=itemUids)
         if by_proposing_group:
             groups = self.context.portal_plonemeeting.getActiveGroups()
@@ -377,9 +402,12 @@ class CustomMeeting(Meeting):
         if items:
             for item in items:
                 # Check if the review_state has to be taken into account
-                if item.queryState() in ignore_review_states: continue
-                elif not (oralQuestion == 'both' or item.getOralQuestion() == oralQuestion): continue
-                elif not (toDiscuss == 'both' or item.getToDiscuss() == toDiscuss): continue
+                if item.queryState() in ignore_review_states:
+                    continue
+                elif not (oralQuestion == 'both' or item.getOralQuestion() == oralQuestion):
+                    continue
+                elif not (toDiscuss == 'both' or item.getToDiscuss() == toDiscuss):
+                    continue
                 currentCat = item.getCategory(theObject=True)
                 currentCatId = currentCat.getId()
                 if currentCatId != previousCatId:
@@ -392,16 +420,16 @@ class CustomMeeting(Meeting):
                             break
                     if catExists:
                         self._insertItemInCategory(catList, item,
-                            by_proposing_group, group_prefixes, groups)
+                                                   by_proposing_group, group_prefixes, groups)
                     else:
                         res.append([currentCat])
                         self._insertItemInCategory(res[-1], item,
-                            by_proposing_group, group_prefixes, groups)
-                    previousCatId = currentCatId                
+                                                   by_proposing_group, group_prefixes, groups)
+                    previousCatId = currentCatId
                 else:
                     # Append the item to the same category
                     self._insertItemInCategory(res[-1], item,
-                        by_proposing_group, group_prefixes, groups)
+                                               by_proposing_group, group_prefixes, groups)
         if includeEmptyCategories:
             meetingConfig = self.context.portal_plonemeeting.getMeetingConfig(
                 self.context)
@@ -426,7 +454,7 @@ class CustomMeeting(Meeting):
             # Include, in every category list, not already used groups.
             # But first, compute "macro-groups": we will put one group for
             # every existing macro-group.
-            macroGroups = [] # Contains only 1 group of every "macro-group"
+            macroGroups = []  # Contains only 1 group of every "macro-group"
             consumedPrefixes = []
             for group in groups:
                 prefix = self._getAcronymPrefix(group, group_prefixes)
@@ -449,7 +477,7 @@ class CustomMeeting(Meeting):
 
     security.declarePublic('getPrintableItemsByNumCategory')
     def getPrintableItemsByNumCategory(self, late=False, uids=[],
-        catstoexclude=[], exclude=True, allItems=False):
+                                       catstoexclude=[], exclude=True, allItems=False):
         '''Returns a list of items ordered by category number. If there are many
            items by category, there is always only one category, even if the
            user have chosen a different order. If exclude=True , catstoexclude
@@ -461,17 +489,17 @@ class CustomMeeting(Meeting):
            late items AND items in order.'''
         def getPrintableNumCategory(current_cat):
             '''Method used here above.'''
-            current_cat_id =current_cat.getId ()
-            current_cat_name= current_cat.Title()
-            current_cat_name=current_cat_name[0:2]
-            try :
-                catNum=int(current_cat_name)
-            except ValueError : 
-                current_cat_name=current_cat_name[0:1]
-                try :
-                    catNum=int(current_cat_name)
-                except ValueError : 
-                    catNum=current_cat_id
+            current_cat_id = current_cat.getId ()
+            current_cat_name = current_cat.Title()
+            current_cat_name = current_cat_name[0:2]
+            try:
+                catNum = int(current_cat_name)
+            except ValueError:
+                current_cat_name = current_cat_name[0:1]
+                try:
+                    catNum = int(current_cat_name)
+                except ValueError:
+                    catNum = current_cat_id
             return catNum
 
         itemsGetter = self.context.getItems
@@ -490,56 +518,56 @@ class CustomMeeting(Meeting):
         # First, we create the category and for each category, we create a
         # dictionary that must contain the list of item in in res[catnum][1]
         for item in items:
-            if uids :
-                if (item.UID() in uids) :
-                    inuid="ok"
-                else :
-                    inuid="ko"
+            if uids:
+                if (item.UID() in uids):
+                    inuid = "ok"
+                else:
+                    inuid = "ko"
             else:
-                inuid="ok"
-            if (inuid=="ok") :
+                inuid = "ok"
+            if (inuid == "ok"):
                 current_cat = item.getCategory(theObject=True)
-                catNum=getPrintableNumCategory(current_cat)
-                if res.has_key(catNum) :
-                    res[catNum][1][item.getItemNumber()] = item  
-                else :
-                    res[catNum]={}
+                catNum = getPrintableNumCategory(current_cat)
+                if catNum in res:
+                    res[catNum][1][item.getItemNumber()] = item
+                else:
+                    res[catNum] = {}
                     #first value of the list is the category object
-                    res[catNum][0]=item.getCategory(True)
+                    res[catNum][0] = item.getCategory(True)
                     #second value of the list is a list of items
-                    res[catNum][1]={}
+                    res[catNum][1] = {}
                     res[catNum][1][item.getItemNumber()] = item
 
         # Now we must sort the res dictionary with the key (containing catnum)
         # and copy it in the returned array.
-        reskey=res.keys()
+        reskey = res.keys()
         reskey.sort()
         ressort = []
         for i in reskey:
-            if catstoexclude :
-                if (i in catstoexclude) :
-                    if (exclude==False) :
-                        guard=True
+            if catstoexclude:
+                if (i in catstoexclude):
+                    if exclude is False:
+                        guard = True
                     else:
-                        guard=False
+                        guard = False
                 else:
-                    if (exclude==False) :
-                        guard=False
+                    if exclude is False:
+                        guard = False
                     else:
-                        guard=True
-            else :
-                guard=True
+                        guard = True
+            else:
+                guard = True
 
-            if (guard==True) :
-                k=0
-                ressorti=[]
+            if guard is True:
+                k = 0
+                ressorti = []
                 ressorti.append(res[i][0])
-                resitemkey=res[i][1].keys()
+                resitemkey = res[i][1].keys()
                 resitemkey.sort()
-                ressorti1=[]
+                ressorti1 = []
                 for j in resitemkey:
-                    k=k+1
-                    ressorti1.append([res[i][1][j],k])
+                    k = k+1
+                    ressorti1.append([res[i][1][j], k])
                 ressorti.append(ressorti1)
                 ressort.append(ressorti)
         return ressort
@@ -553,9 +581,11 @@ class CustomMeeting(Meeting):
         meetingConfig = self.context.portal_plonemeeting.getMeetingConfig(
             self.context)
         meetingTypeName = meetingConfig.getMeetingTypeName()
-        allMeetings = self.context.portal_catalog(portal_type=meetingTypeName,
-            getDate={'query': self.context.getDate()-searchMeetingsInterval,\
-            'range': 'min'}, sort_on='getDate', sort_order='reverse')
+        allMeetings = self.context.portal_catalog(
+            portal_type=meetingTypeName,
+            getDate={'query': self.context.getDate()-searchMeetingsInterval,
+                     'range': 'min'},
+            sort_on='getDate', sort_order='reverse')
         res = None
         for meeting in allMeetings:
             if (meeting.getObject().getDate() < meetingDate):
@@ -591,7 +621,7 @@ class CustomMeeting(Meeting):
             return True
         else:
             return False
-    Meeting.showAllItemsAtOnce=showAllItemsAtOnce
+    Meeting.showAllItemsAtOnce = showAllItemsAtOnce
 
     security.declarePublic('getStrikedAssembly')
     def getStrikedAssembly(self, groupByDuty=True):
@@ -606,7 +636,7 @@ class CustomMeeting(Meeting):
         meeting = self.getSelf()
         # either we use free textarea to define assembly...
         if meeting.getAssembly():
-            return self.context.getAssembly().replace('[[','<strike>').replace(']]','</strike>').replace('<p>','<p class="mltAssembly">')
+            return self.context.getAssembly().replace('[[', '<strike>').replace(']]', '</strike>').replace('<p>', '<p class="mltAssembly">')
         # or we use MeetingUsers
         elif meeting.getAttendees():
             res = []
@@ -619,7 +649,7 @@ class CustomMeeting(Meeting):
                 # if we group by duty, create an OrderedDict where the key is the duty
                 # and the value is a list of meetingUsers having this duty
                 if groupByDuty:
-                    if not groupedByDuty.has_key(userDuty):
+                    if not userDuty in groupedByDuty:
                         groupedByDuty[userDuty] = []
                     if userId in attendeeIds:
                         groupedByDuty[userDuty].append(mUser.Title())
@@ -649,6 +679,7 @@ class CustomMeeting(Meeting):
                         res[-1] = lastAdded
             return "<p class='mltAssembly'>" + '<br />'.join(res) + "</p>"
 
+
 class CustomMeetingItem(MeetingItem):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
        interface IMeetingItemCustom.'''
@@ -657,8 +688,6 @@ class CustomMeetingItem(MeetingItem):
 
     customItemPositiveDecidedStates = ('accepted', 'accepted_but_modified', )
     MeetingItem.itemPositiveDecidedStates = customItemPositiveDecidedStates
-    customItemDecidedStates = ('accepted', 'refused', 'delayed', 'accepted_but_modified', )
-    MeetingItem.itemDecidedStates = customItemDecidedStates
 
     def __init__(self, item):
         self.context = item
@@ -669,11 +698,10 @@ class CustomMeetingItem(MeetingItem):
            in the 'created' or 'frozen' state.'''
         pmtool = getToolByName(self.context, "portal_plonemeeting")
         catalogtool = getToolByName(self.context, "portal_catalog")
-        meetingPortalType = pmtool.getMeetingConfig(\
-                            self.context).getMeetingTypeName()
+        meetingPortalType = pmtool.getMeetingConfig(self.context).getMeetingTypeName()
         # If the current user is a meetingManager (or a Manager),
         # he is able to add a meetingitem to a 'decided' meeting.
-        review_state=['created', 'frozen', ]
+        review_state = ['created', 'frozen', ]
         member = self.context.portal_membership.getAuthenticatedMember()
         if member.has_role('MeetingManager') or member.has_role('Manager'):
             review_state.append('decided')
@@ -706,7 +734,7 @@ class CustomMeetingItem(MeetingItem):
         item = self.getSelf()
         # either we use free textarea to define assembly...
         if item.getItemAssembly():
-            return self.context.getItemAssembly().replace('[[','<strike>').replace(']]','</strike>').replace('<p>','<p class="mltAssembly">')
+            return self.context.getItemAssembly().replace('[[', '<strike>').replace(']]', '</strike>').replace('<p>', '<p class="mltAssembly">')
         # or we use MeetingUsers
         elif item.getAttendees():
             res = []
@@ -720,7 +748,7 @@ class CustomMeetingItem(MeetingItem):
                 # if we group by duty, create an OrderedDict where the key is the duty
                 # and the value is a list of meetingUsers having this duty
                 if groupByDuty:
-                    if not groupedByDuty.has_key(userDuty):
+                    if not userDuty in groupedByDuty:
                         groupedByDuty[userDuty] = []
                     if userId in attendeeIds:
                         groupedByDuty[userDuty].append(mUser.Title())
@@ -786,7 +814,7 @@ class CustomMeetingItem(MeetingItem):
         res = []
         pmtool = getToolByName(self.context, "portal_plonemeeting")
         for group in pmtool.getActiveGroups():
-            if self.context.getProposingGroup() in group.getEchevinServices():  
+            if self.context.getProposingGroup() in group.getEchevinServices():
                 res.append(group.id)
         return res
 
@@ -800,16 +828,16 @@ class CustomMeetingItem(MeetingItem):
         while predecessor:
             predecessors.append(predecessor)
             predecessor = predecessor.getPredecessor()
-    
+
         #keep order
         predecessors.reverse()
-    
+
         #retrieve backrefs too
         brefs = self.context.getBRefs('ItemPredecessor')
         while brefs:
             predecessors = predecessors + brefs
             brefs = brefs[0].getBRefs('ItemPredecessor')
-    
+
         res = []
         for predecessor in predecessors:
             showColors = pmtool.showColorsForUser()
@@ -855,14 +883,16 @@ class CustomMeetingItem(MeetingItem):
     def printAdvicesInfos(self):
         '''Helper method to have a printable version of advices.'''
         item = self.getSelf()
-        itemAdvicesByType = item.getAdvicesByType()        
+        itemAdvicesByType = item.getAdvicesByType()
         res = "<p><u>%s :</u></p>" % translate('advices', domain='PloneMeeting', context=item.REQUEST)
         if itemAdvicesByType:
             res = res + "<p>"
         for adviceType in itemAdvicesByType:
             for advice in itemAdvicesByType[adviceType]:
-                res = res + "<u>%s : %s</u><br />" % (advice['name'], translate([advice['type']][0], domain='PloneMeeting', context=item.REQUEST))
-                if advice.has_key('comment'):
+                res = res + "<u>%s : %s</u><br />" % (advice['name'], translate([advice['type']][0],
+                                                                                domain='PloneMeeting',
+                                                                                context=item.REQUEST))
+                if 'comment' in advice:
                     res = res + "%s<br />" % advice['comment']
         if itemAdvicesByType:
             res = res + "</p>"
@@ -882,18 +912,19 @@ class CustomMeetingItem(MeetingItem):
            hides the decision for non-managers if meeting state is 'decided.'''
         item = self.getSelf()
         res = self.getField('decision').get(self, **kwargs)
-        if keepWithNext: res = self.signatureNotAlone(res)
+        if keepWithNext:
+            res = self.signatureNotAlone(res)
         meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
         adaptations = meetingConfig.getWorkflowAdaptations()
         if 'add_published_state' in adaptations and item.getMeeting() and \
-            item.getMeeting().queryState() == 'decided' and not item.portal_plonemeeting.isManager():
+           item.getMeeting().queryState() == 'decided' and not item.portal_plonemeeting.isManager():
             return translate('decision_under_edit', domain='PloneMeeting', context=item.REQUEST,
                              default='<p>The decision is currently under edit by managers, you can not access it</p>')
         return res
-    MeetingItem.getDecision=getDecision
-    MeetingItem.getRawDecision=getDecision        
+    MeetingItem.getDecision = getDecision
+    MeetingItem.getRawDecision = getDecision
 
-# ------------------------------------------------------------------------------
+
 class CustomMeetingGroup(MeetingGroup):
     '''Adapter that adapts a meeting group implementing IMeetingGroup to the
        interface IMeetingGroupCustom.'''
@@ -912,11 +943,11 @@ class CustomMeetingGroup(MeetingGroup):
         # Get every Plone group related to a MeetingGroup
         for group in pmtool.getActiveGroups():
             res.append((group.id, group.getProperty('title')))
-    
+
         return DisplayList(tuple(res))
     MeetingGroup.listEchevinServices = listEchevinServices
 
-# ------------------------------------------------------------------------------
+
 class CustomMeetingConfig(MeetingConfig):
     '''Adapter that adapts a meetingConfig implementing IMeetingConfig to the
        interface IMeetingConfigCustom.'''
@@ -929,7 +960,7 @@ class CustomMeetingConfig(MeetingConfig):
 
     #we need to be able to give an advice in the initial_state
     from Products.PloneMeeting.MeetingConfig import MeetingConfig
-    MeetingConfig.listItemStatesInitExcepted = MeetingConfig.listItemStates        
+    MeetingConfig.listItemStatesInitExcepted = MeetingConfig.listItemStates
 
     security.declarePublic('searchItemsToValidate')
     def searchItemsToValidate(self, sortKey, sortOrder, filterKey, filterValue, **kwargs):
@@ -954,14 +985,15 @@ class CustomMeetingConfig(MeetingConfig):
                   'sort_order': sortOrder
                   }
         # Manage filter
-        if filterKey: params[filterKey] = Keywords(filterValue).get()
+        if filterKey:
+            params[filterKey] = Keywords(filterValue).get()
         # update params with kwargs
         params.update(kwargs)
         # Perform the query in portal_catalog
         return self.portal_catalog(**params)
     MeetingConfig.searchItemsToValidate = searchItemsToValidate
 
-# ------------------------------------------------------------------------------
+
 class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
        interface IMeetingCollegeWorkflowActions'''
@@ -983,12 +1015,11 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
         '''Accept every items that are not still decided and manage
            first/last item number.'''
         self._acceptEveryItems()
-        meetingConfig = self.context.portal_plonemeeting.getMeetingConfig( 
-        self.context)
+        meetingConfig = self.context.portal_plonemeeting.getMeetingConfig(self.context)
         self.context.setFirstItemNumber(meetingConfig.getLastItemNumber()+1)
         # Update the item counter which is global to the meeting config
-        meetingConfig.setLastItemNumber(meetingConfig.getLastItemNumber() +\
-                                        len(self.context.getItems()) + \
+        meetingConfig.setLastItemNumber(meetingConfig.getLastItemNumber() +
+                                        len(self.context.getItems()) +
                                         len(self.context.getLateItems()))
 
     security.declarePrivate('doDecide')
@@ -1038,11 +1069,11 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
     def mayFreeze(self):
         res = False
         if checkPermission(ReviewPortalContent, self.context):
-            res = True # At least at present            
+            res = True  # At least at present
             if not self.context.getRawItems():
                 res = No(translate('item_required_to_publish', domain='PloneMeeting', context=self.context.REQUEST))
         return res
-        
+
     security.declarePublic('mayClose')
     def mayClose(self):
         res = False
@@ -1066,7 +1097,7 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
            - the meeting state is in ('created', 'frozen', 'decided', )'''
         res = False
         if checkPermission(ModifyPortalContent, self.context) and \
-        self.context.queryState() in ('created', 'frozen', 'decided'):
+           self.context.queryState() in ('created', 'frozen', 'decided'):
             res = True
         return res
 
@@ -1093,7 +1124,7 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
             res = True
         return res
 
-# ------------------------------------------------------------------------------
+
 class MeetingItemCollegeWorkflowActions(MeetingItemWorkflowActions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
        interface IMeetingItemCollegeWorkflowActions'''
@@ -1115,10 +1146,12 @@ class MeetingItemCollegeWorkflowActions(MeetingItemWorkflowActions):
             wTool.doActionFor(self.context, 'itemfreeze')
 
     security.declarePrivate('doAccept_but_modify')
-    def doAccept_but_modify(self, stateChange): pass
+    def doAccept_but_modify(self, stateChange):
+        pass
 
     security.declarePrivate('doPre_accept')
-    def doPre_accept(self, stateChange): pass
+    def doPre_accept(self, stateChange):
+        pass
 
     security.declarePrivate('doDelay')
     def doDelay(self, stateChange):
@@ -1145,10 +1178,10 @@ class MeetingItemCollegeWorkflowActions(MeetingItemWorkflowActions):
                 res = Expression(itemDecisionReportText)(ctx)
             except Exception, e:
                 self.context.plone_utils.addPortalMessage(PloneMeetingError(DECISION_ERROR % str(e)))
-                return                
+                return
             self.context.setDecision(res)
 
-# ------------------------------------------------------------------------------
+
 class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
        interface IMeetingItemCollegeWorkflowConditions'''
@@ -1157,7 +1190,7 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
     security = ClassSecurityInfo()
 
     def __init__(self, item):
-        self.context = item # Implements IMeetingItem
+        self.context = item  # Implements IMeetingItem
 
     security.declarePublic('mayDecide')
     def mayDecide(self):
@@ -1165,7 +1198,7 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
         res = False
         meeting = self.context.getMeeting()
         if checkPermission(ReviewPortalContent, self.context) and \
-           meeting and (meeting.queryState() in ['decided', 'closed', 'decisions_published',]):
+           meeting and (meeting.queryState() in ['decided', 'closed', 'decisions_published', ]):
             res = True
         return res
 
@@ -1201,9 +1234,9 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
         currentState = self.context.queryState()
         # Manage our own behaviour now when the item is linked to a meeting,
         # a MeetingManager can correct anything except if the meeting is closed
-        if not res and currentState in ['presented', 'itemfrozen', \
-            'delayed', 'refused', 'accepted', 'accepted_but_modified', \
-            'pre_accepted']:
+        if not res and currentState in ['presented', 'itemfrozen', 'delayed',
+                                        'refused', 'accepted', 'accepted_but_modified',
+                                        'pre_accepted']:
             if checkPermission(ReviewPortalContent, self.context):
                 # Get the meeting
                 meeting = self.context.getMeeting()
@@ -1218,7 +1251,7 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
                         res = True
         return res
 
-# ------------------------------------------------------------------------------
+
 class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
        interface IMeetingCouncilWorkflowActions'''
@@ -1251,8 +1284,8 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
         meetingConfig = self.context.portal_plonemeeting.getMeetingConfig(self.context)
         self.context.setFirstItemNumber(meetingConfig.getLastItemNumber()+1)
         # Update the item counter which is global to the meeting config
-        meetingConfig.setLastItemNumber(meetingConfig.getLastItemNumber() +\
-                                        len(self.context.getItems()) + \
+        meetingConfig.setLastItemNumber(meetingConfig.getLastItemNumber() +
+                                        len(self.context.getItems()) +
                                         len(self.context.getLateItems()))
 
     security.declarePrivate('doDecide')
@@ -1301,7 +1334,7 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
         '''When the wfAdaptation 'add_published_state' is activated.'''
         pass
 
-# ------------------------------------------------------------------------------
+
 class MeetingCouncilWorkflowConditions(MeetingCollegeWorkflowConditions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
        interface IMeetingCouncilWorkflowConditions'''
@@ -1315,7 +1348,7 @@ class MeetingCouncilWorkflowConditions(MeetingCollegeWorkflowConditions):
            - the meeting state is in ('created', 'frozen', 'decided', )'''
         res = False
         if checkPermission(ModifyPortalContent, self.context) and \
-        self.context.queryState() in ('created', 'frozen', 'decided'):
+           self.context.queryState() in ('created', 'frozen', 'decided'):
             res = True
         return res
 
@@ -1342,7 +1375,7 @@ class MeetingCouncilWorkflowConditions(MeetingCollegeWorkflowConditions):
             res = True
         return res
 
-# ------------------------------------------------------------------------------
+
 class MeetingItemCouncilWorkflowActions(MeetingItemCollegeWorkflowActions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
        interface IMeetingItemCouncilWorkflowActions'''
@@ -1367,7 +1400,7 @@ class MeetingItemCouncilWorkflowActions(MeetingItemCollegeWorkflowActions):
             wTool.doActionFor(self.context, 'itemfreeze')
             wTool.doActionFor(self.context, 'itempublish')
 
-# ------------------------------------------------------------------------------
+
 class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
        interface IMeetingItemCouncilWorkflowConditions'''
@@ -1375,7 +1408,7 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
     implements(IMeetingItemCouncilWorkflowConditions)
     security = ClassSecurityInfo()
 
-    security.declarePublic('isLateFor')    
+    security.declarePublic('isLateFor')
     def isLateFor(self, meeting):
         res = False
         if meeting and (meeting.queryState() in ['frozen', 'published', 'decided']) and \
@@ -1395,7 +1428,11 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
         res = False
         if checkPermission(ReviewPortalContent, self.context):
             if self.context.hasMeeting() and \
-               (self.context.getMeeting().queryState() in ('frozen', 'published', 'decided', 'closed', 'decisions_published',)):
+               (self.context.getMeeting().queryState() in ('frozen',
+                                                           'published',
+                                                           'decided',
+                                                           'closed',
+                                                           'decisions_published', )):
                 res = True
         return res
 
@@ -1422,8 +1459,8 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
         currentState = self.context.queryState()
         # Manage our own behaviour now when the item is linked to a meeting,
         # a MeetingManager can correct anything except if the meeting is closed
-        if not res and currentState in ['presented', 'itempublished', 'itemfrozen', \
-            'delayed', 'refused', 'accepted', 'accepted_but_modified', 'pre_accepted']:
+        if not res and currentState in ['presented', 'itempublished', 'itemfrozen',
+           'delayed', 'refused', 'accepted', 'accepted_but_modified', 'pre_accepted']:
             if checkPermission(ReviewPortalContent, self.context):
                 # Get the meeting
                 meeting = self.context.getMeeting()
