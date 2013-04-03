@@ -217,6 +217,7 @@ class testCustomMeeting(MeetingCommunesTestCase, pmtm):
         self.do(m, 'close')
         self.failIf(m.showAllItemsAtOnce())
 
+
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()

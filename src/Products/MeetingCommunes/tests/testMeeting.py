@@ -23,10 +23,10 @@
 #
 
 from plone.app.testing import login
-from Products.MeetingCommunes.config import *
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testMeeting import testMeeting as pmtm
+
 
 class testMeeting(MeetingCommunesTestCase, pmtm):
     """
@@ -42,7 +42,7 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         missing = []
         for key in tpm:
             key2 = key.replace('test', 'test_mc_call_')
-            if not tmc.has_key(key2):
+            if not key2 in tmc:
                 missing.append(key)
         if len(missing):
             self.fail("missing test methods %s from PloneMeeting test class '%s'" % (missing, 'testMeeting'))
@@ -65,7 +65,14 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
                 expected = ['recItem1', 'o3', 'o5', 'o2', 'o4', 'o6']
             if meetingConfigId == 'meeting-config-college':
                 #here, we have recurring items
-                expected = ['recurringagenda1', 'recurringofficialreport1', 'recurringofficialreport2', 'o2', 'o3', 'o4', 'o5', 'o6', ]
+                expected = ['recurringagenda1',
+                            'recurringofficialreport1',
+                            'recurringofficialreport2',
+                            'o2',
+                            'o3',
+                            'o4',
+                            'o5',
+                            'o6', ]
             self.assertEquals([item.id for item in meeting.getItemsInOrder()],
                               expected)
 
@@ -84,7 +91,14 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
                 expected = ['recItem1', 'o3', 'o4', 'o5', 'o6', 'o2']
             if meetingConfigId == 'meeting-config-college':
                 #here, we have recurring items
-                expected = ['recurringagenda1', 'recurringofficialreport1', 'recurringofficialreport2', 'o3', 'o4', 'o5', 'o6', 'o2']
+                expected = ['recurringagenda1',
+                            'recurringofficialreport1',
+                            'recurringofficialreport2',
+                            'o3',
+                            'o4',
+                            'o5',
+                            'o6',
+                            'o2']
             self.assertEquals([item.id for item in meeting.getItemsInOrder()],
                               expected)
 
@@ -103,7 +117,14 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
                 expected = ['recItem1', 'o3', 'o5', 'o2', 'o4', 'o6']
             if meetingConfig == 'meeting-config-college':
                 #here, we have recurring items
-                expected = ['recurringagenda1', 'recurringofficialreport1', 'recurringofficialreport2', 'o3', 'o5', 'o2', 'o4', 'o6']
+                expected = ['recurringagenda1',
+                            'recurringofficialreport1',
+                            'recurringofficialreport2',
+                            'o3',
+                            'o5',
+                            'o2',
+                            'o4',
+                            'o6']
             self.assertEquals([item.id for item in meeting.getItemsInOrder()],
                               expected)
 
@@ -120,7 +141,14 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
                 expected = ['recItem1', 'o3', 'o2', 'o6', 'o5', 'o4']
             if meetingConfig == 'meeting-config-college':
                 #here, we have recurring items
-                expected = ['recurringagenda1', 'recurringofficialreport1', 'recurringofficialreport2', 'o3', 'o2', 'o6', 'o5', 'o4']
+                expected = ['recurringagenda1',
+                            'recurringofficialreport1',
+                            'recurringofficialreport2',
+                            'o3',
+                            'o2',
+                            'o6',
+                            'o5',
+                            'o4']
             self.assertEquals([item.id for item in meeting.getItemsInOrder()],
                               expected)
 
@@ -139,7 +167,14 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
                 expected = ['recItem1', 'o3', 'o6', 'o2', 'o4', 'o5']
             if meetingConfig == 'meeting-config-college':
                 #here, we have recurring items
-                expected = ['recurringagenda1', 'recurringofficialreport1', 'recurringofficialreport2', 'o3', 'o6', 'o2', 'o4', 'o5']
+                expected = ['recurringagenda1',
+                            'recurringofficialreport1',
+                            'recurringofficialreport2',
+                            'o3',
+                            'o6',
+                            'o2',
+                            'o4',
+                            'o5']
             self.assertEquals([item.id for item in meeting.getItemsInOrder()],
                               expected)
 
@@ -161,17 +196,35 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         login(self.portal, 'pmManager')
         meeting = self._createMeetingWithItems()
         self.assertEquals([item.id for item in meeting.getItemsInOrder()],
-          ['recurringagenda1', 'recurringofficialreport1', 'recurringofficialreport2', 'o2', 'o3', 'o4', 'o5', 'o6'])
+                          ['recurringagenda1',
+                           'recurringofficialreport1',
+                           'recurringofficialreport2',
+                           'o2',
+                           'o3',
+                           'o4',
+                           'o5',
+                           'o6'])
         #remove an item
         item5 = getattr(meeting, 'o5')
         meeting.removeItem(item5)
         self.assertEquals([item.id for item in meeting.getItemsInOrder()],
-          ['recurringagenda1', 'recurringofficialreport1', 'recurringofficialreport2', 'o2', 'o3', 'o4', 'o6'])
+                          ['recurringagenda1',
+                           'recurringofficialreport1',
+                           'recurringofficialreport2',
+                           'o2',
+                           'o3',
+                           'o4',
+                           'o6'])
         #delete a linked item
         item4 = getattr(meeting, 'o4')
         meeting.restrictedTraverse('@@delete_givenuid')(item4.UID())
         self.assertEquals([item.id for item in meeting.getItemsInOrder()],
-          ['recurringagenda1', 'recurringofficialreport1', 'recurringofficialreport2', 'o2', 'o3', 'o6'])
+                          ['recurringagenda1',
+                           'recurringofficialreport1',
+                           'recurringofficialreport2',
+                           'o2',
+                           'o3',
+                           'o6'])
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
         pmtm.testRemoveOrDeleteLinkedItem(self)
 
@@ -213,10 +266,13 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         self.do(m2, 'close')
         self.assertEquals(m2.getMeetingNumber(), 2)
         self.assertEquals(self.meetingConfig.getLastMeetingNumber(), 2)
-        
+
     def test_mc_call_DecideSeveralItems(self):
-        """Call PloneMeeting test"""
+        """
+          Run the testDecideSeveralItems from PloneMeeting
+        """
         self.testDecideSeveralItems()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
