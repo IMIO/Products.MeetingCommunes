@@ -2,6 +2,7 @@
 import logging
 logger = logging.getLogger('MeetingCommunes')
 from Products.PloneMeeting.config import TOPIC_SEARCH_SCRIPT, POWEROBSERVERS_GROUP_SUFFIX
+from Products.PloneMeeting.model.adaptations import performWorkflowAdaptations
 
 
 def migrate(context):
@@ -10,6 +11,7 @@ def migrate(context):
     portal = context.portal_url.getPortalObject()
     _adaptItemsToValidateTopic(portal)
     _removeGlobalPowerObservers(portal)
+    _adaptCouncilWorkflows(portal)
     portal.portal_setup.runAllImportStepsFromProfile(u'profile-Products.MeetingCommunes:default')
 
 
@@ -68,3 +70,19 @@ def _removeGlobalPowerObservers(portal):
             portal.acl_users.portal_role_manager.removeRole('MeetingPowerObserver')
         except KeyError:
             pass
+
+
+def _adaptCouncilWorkflows(portal):
+    """
+      By default, make the council workflow behave like the college workflow by
+      applying the 'no_publication' and 'no_global_observation' wfAdaptations.
+    """
+    logger.info("Adaptating council workflows")
+    council_cfg = getattr(portal.portal_plonemeeting, 'meeting-config-council', None)
+    if council_cfg is None:
+        logger.info("No MeetingConfig found for council!")
+        return
+    if council_cfg.getItemWorkflow() == 'meetingitemcouncil_workflow' and \
+       council_cfg.getMeetingWorkflow() == 'meetingcouncil_workflow':
+        council_cfg.setWorkflowAdaptations(['no_global_observation', 'no_publication'])
+        performWorkflowAdaptations(portal, council_cfg, logger)
