@@ -84,5 +84,10 @@ def _adaptCouncilWorkflows(portal):
         return
     if council_cfg.getItemWorkflow() == 'meetingitemcouncil_workflow' and \
        council_cfg.getMeetingWorkflow() == 'meetingcouncil_workflow':
-        council_cfg.setWorkflowAdaptations(['no_global_observation', 'no_publication'])
+        wfAdaptations = list(council_cfg.getWorkflowAdaptations())
+        if not 'no_global_observation' in wfAdaptations:
+            wfAdaptations.append('no_global_observation')
+        if not 'no_publication' in wfAdaptations:
+            wfAdaptations.append('no_publication')
+        council_cfg.setWorkflowAdaptations(wfAdaptations)
         performWorkflowAdaptations(portal, council_cfg, logger)
