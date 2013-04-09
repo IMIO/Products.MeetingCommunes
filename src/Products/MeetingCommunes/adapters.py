@@ -165,7 +165,7 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
                 transitions=['backToDecided', 'close'])
             wf.states['closed'].setProperties(
                 title='closed', description='',
-                transitions=['backToDecisionsPublished',])
+                transitions=['backToDecisionsPublished', ])
             # Initialize permission->roles mapping for new state "decisions_published",
             # which is the same as state "frozen" (or "decided")in the previous setting.
             frozen = wf.states['frozen']
@@ -320,7 +320,7 @@ class CustomMeeting(Meeting):
            main configuration (groups from the config are in p_groups).
            If p_item is specified, the item is appended to the group list.'''
         usedGroups = [g[0] for g in categoryList[1:]]
-        groupIndex = self._getGroupIndex(meetingGroup, usedGroups,groupPrefixes)
+        groupIndex = self._getGroupIndex(meetingGroup, usedGroups, groupPrefixes)
         if groupIndex == -1:
             # Insert the group among used groups at the right place.
             groupInserted = False
@@ -344,8 +344,7 @@ class CustomMeeting(Meeting):
             if item:
                 categoryList[groupIndex+1].append(item)
 
-    def _insertItemInCategory(self, categoryList, item, byProposingGroup,
-        groupPrefixes, groups):
+    def _insertItemInCategory(self, categoryList, item, byProposingGroup, groupPrefixes, groups):
         '''This method is used by the next one for inserting an item into the
            list of all items of a given category. if p_byProposingGroup is True,
            we must add it in a sub-list containing items of a given proposing
@@ -354,8 +353,7 @@ class CustomMeeting(Meeting):
             categoryList.append(item)
         else:
             group = item.getProposingGroup(True)
-            self._insertGroupInCategory(categoryList, group, groupPrefixes,
-                                        groups, item)
+            self._insertGroupInCategory(categoryList, group, groupPrefixes, groups, item)
 
     security.declarePublic('getPrintableItemsByCategory')
     def getPrintableItemsByCategory(self, itemUids=[], late=False,
@@ -489,7 +487,7 @@ class CustomMeeting(Meeting):
            late items AND items in order.'''
         def getPrintableNumCategory(current_cat):
             '''Method used here above.'''
-            current_cat_id = current_cat.getId ()
+            current_cat_id = current_cat.getId()
             current_cat_name = current_cat.Title()
             current_cat_name = current_cat_name[0:2]
             try:
@@ -636,7 +634,8 @@ class CustomMeeting(Meeting):
         meeting = self.getSelf()
         # either we use free textarea to define assembly...
         if meeting.getAssembly():
-            return self.context.getAssembly().replace('[[', '<strike>').replace(']]', '</strike>').replace('<p>', '<p class="mltAssembly">')
+            return self.context.getAssembly().replace('[[', '<strike>').replace(']]', '</strike>'). \
+                replace('<p>', '<p class="mltAssembly">')
         # or we use MeetingUsers
         elif meeting.getAttendees():
             res = []
@@ -675,7 +674,8 @@ class CustomMeeting(Meeting):
                     if everyStriked:
                         lastAdded = res[-1]
                         # strike the entire line and remove existing <strike> tags
-                        lastAdded = "<strike>" + lastAdded.replace('<strike>', '').replace('</strike>', '') + "</strike>"
+                        lastAdded = "<strike>" + lastAdded.replace('<strike>', '').replace('</strike>', '') + \
+                                    "</strike>"
                         res[-1] = lastAdded
             return "<p class='mltAssembly'>" + '<br />'.join(res) + "</p>"
 
@@ -734,7 +734,8 @@ class CustomMeetingItem(MeetingItem):
         item = self.getSelf()
         # either we use free textarea to define assembly...
         if item.getItemAssembly():
-            return self.context.getItemAssembly().replace('[[', '<strike>').replace(']]', '</strike>').replace('<p>', '<p class="mltAssembly">')
+            return self.context.getItemAssembly().replace('[[', '<strike>'). \
+                replace(']]', '</strike>').replace('<p>', '<p class="mltAssembly">')
         # or we use MeetingUsers
         elif item.getAttendees():
             res = []
@@ -774,7 +775,9 @@ class CustomMeetingItem(MeetingItem):
                     if everyStriked:
                         lastAdded = res[-1]
                         # strike the entire line and remove existing <strike> tags
-                        lastAdded = "<strike>" + lastAdded.replace('<strike>', '').replace('</strike>', '') + "</strike>"
+                        lastAdded = "<strike>" + \
+                                    lastAdded.replace('<strike>', '').replace('</strike>', '') + \
+                                    "</strike>"
                         res[-1] = lastAdded
 
             return "<p class='mltAssembly'>" + '<br />'.join(res) + "</p>"
@@ -1057,7 +1060,7 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
         '''When the wfAdaptation 'add_published_state' is activated.'''
         pass
 
-# ------------------------------------------------------------------------------
+
 class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
        interface IMeetingCollegeWorkflowConditions'''
@@ -1161,13 +1164,9 @@ class MeetingItemCollegeWorkflowActions(MeetingItemWorkflowActions):
         DECISION_ERROR = 'There was an error in the TAL expression for defining the ' \
             'decision when an item is reported. Please check this in your meeting config. ' \
             'Original exception: %s'
-        creator = self.context.Creator()
-        # We create a copy in the initial item state, in the folder of creator.
-        clonedItem = self.context.clone(copyAnnexes=True, newOwnerId=creator,
-                                        cloneEventAction='create_from_predecessor')
-        clonedItem.setPredecessor(self.context)
-        # Send, if configured, a mail to the person who created the item
-        clonedItem.sendMailIfRelevant('itemDelayed', 'Owner', isRole=True)
+        # call PloneMeeting's doDelay then make our additional things
+        MeetingItemWorkflowActions.doDelay(self, stateChange)
+        # manage itemDecisionReportText
         meetingConfig = self.context.portal_plonemeeting.getMeetingConfig(self.context)
         itemDecisionReportText = meetingConfig.getRawItemDecisionReportText()
         if itemDecisionReportText.strip():
