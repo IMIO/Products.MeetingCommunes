@@ -16,7 +16,7 @@ categories = [recurring,
               CategoryDescriptor('population', 'Population/Etat-civil'),
               CategoryDescriptor('locations', 'Locations'),
               CategoryDescriptor('divers', 'Divers'),
-             ]
+              ]
 
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
@@ -28,18 +28,18 @@ agendaTemplatePDF = PodTemplateDescriptor('oj-pdf', 'Ordre du jour')
 agendaTemplatePDF.podTemplate = 'college-oj.odt'
 agendaTemplatePDF.podFormat = 'pdf'
 agendaTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                                 'here.portal_plonemeeting.isManager()'
 
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsTemplate.podTemplate = 'college-pv.odt'
 decisionsTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                                 'here.portal_plonemeeting.isManager()'
 
 decisionsTemplatePDF = PodTemplateDescriptor('pv-pdf', 'Procès-verbal')
 decisionsTemplatePDF.podTemplate = 'college-pv.odt'
 decisionsTemplatePDF.podFormat = 'pdf'
 decisionsTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                                    'here.portal_plonemeeting.isManager()'
 
 itemProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
 itemProjectTemplate.podTemplate = 'projet-deliberation.odt'
@@ -60,31 +60,32 @@ itemTemplatePDF.podFormat = 'pdf'
 itemTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem" and here.hasMeeting()'
 
 collegeTemplates = [agendaTemplate, agendaTemplatePDF,
-                decisionsTemplate, decisionsTemplatePDF,
-                itemProjectTemplate, itemProjectTemplatePDF, itemTemplate, itemTemplatePDF]
+                    decisionsTemplate, decisionsTemplatePDF,
+                    itemProjectTemplate, itemProjectTemplatePDF,
+                    itemTemplate, itemTemplatePDF]
 
 # Pod templates ----------------------------------------------------------------
 agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaCouncilTemplate.podTemplate = 'council-oj.odt'
 agendaCouncilTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                                     'here.portal_plonemeeting.isManager()'
 
 agendaCouncilTemplatePDF = PodTemplateDescriptor('oj-pdf', 'Ordre du jour')
 agendaCouncilTemplatePDF.podTemplate = 'council-oj.odt'
 agendaCouncilTemplatePDF.podFormat = 'pdf'
 agendaCouncilTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                                        'here.portal_plonemeeting.isManager()'
 
 decisionsCouncilTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsCouncilTemplate.podTemplate = 'council-pv.odt'
 decisionsCouncilTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                                        'here.portal_plonemeeting.isManager()'
 
 decisionsCouncilTemplatePDF = PodTemplateDescriptor('pv-pdf', 'Procès-verbal')
 decisionsCouncilTemplatePDF.podTemplate = 'council-pv.odt'
 decisionsCouncilTemplatePDF.podFormat = 'pdf'
 decisionsCouncilTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                                           'here.portal_plonemeeting.isManager()'
 
 itemCouncilRapportTemplate = PodTemplateDescriptor('rapport', 'Rapport')
 itemCouncilRapportTemplate.podTemplate = 'council-rapport.odt'
@@ -135,13 +136,11 @@ conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Co
 
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel")
 
-groups = [
-           GroupDescriptor('secretariat', 'Secretariat communal', 'Secr'),
-           GroupDescriptor('informatique', 'Service informatique', 'Info'),
-           GroupDescriptor('personnel', 'Service du personnel', 'Pers'),
-           GroupDescriptor('comptabilite', 'Service comptabilité', 'Compt', givesMandatoryAdviceOn='python:True'),
-           GroupDescriptor('travaux', 'Service travaux', 'Trav'),
-         ]
+groups = [GroupDescriptor('secretariat', 'Secretariat communal', 'Secr'),
+          GroupDescriptor('informatique', 'Service informatique', 'Info'),
+          GroupDescriptor('personnel', 'Service du personnel', 'Pers'),
+          GroupDescriptor('comptabilite', 'Service comptabilité', 'Compt', givesMandatoryAdviceOn='python:True'),
+          GroupDescriptor('travaux', 'Service travaux', 'Trav'), ]
 
 # MeetingManager
 groups[0].creators.append(secretaire)
@@ -189,9 +188,9 @@ collegeMeeting = MeetingConfigDescriptor(
     'meeting-config-college', 'Collège Communal',
     'Collège communal', isDefault=True)
 collegeMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
-                           'Charles Exemple - 1er Echevin,\n' \
-                           'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
-                           'Jacqueline Exemple, Responsable du CPAS'
+                          'Charles Exemple - 1er Echevin,\n' \
+                          'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
+                          'Jacqueline Exemple, Responsable du CPAS'
 collegeMeeting.signatures = 'Le Secrétaire communal\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
 collegeMeeting.certifiedSignatures = 'Le Secrétaire communal\nVraiment Présent\nLe Bourgmestre\nCharles Exemple'
 collegeMeeting.places = """Place1\r
@@ -273,7 +272,7 @@ collegeMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative
 collegeMeeting.enableAdviceInvalidation = False
 collegeMeeting.itemAdviceInvalidateStates = []
 collegeMeeting.itemPowerObserversStates = ('itemfrozen', 'accepted', 'delayed', 'refused', 'accepted_but_modified')
-collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified','pre_accepted']
+collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 collegeMeeting.meetingPowerObserversStates = ('created', 'frozen', 'decided', 'closed')
 collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
@@ -310,8 +309,8 @@ collegeMeeting.recurringItems = [
         description='Tutelle CPAS',
         category='personnel',
         proposingGroup='secretariat',
-        templateUsingGroups=['secretariat',],
-        usages=['as_template_item',],
+        templateUsingGroups=['secretariat', ],
+        usages=['as_template_item', ],
         decision="""<p>Vu la loi du 8 juillet 1976 organique des centres publics d'action sociale et plus particulièrement son article 111;</p>
 <p>Vu l'Arrêté du Gouvernement Wallon du 22 avril 2004 portant codification de la législation relative aux pouvoirs locaux tel que confirmé par le décret du 27 mai 2004 du Conseil régional wallon;</p>
 <p>Attendu que les décisions suivantes du Bureau permanent/du Conseil de l'Action sociale du XXX ont été reçues le XXX dans le cadre de la tutelle générale sur les centres publics d'action sociale :</p>
@@ -330,8 +329,8 @@ collegeMeeting.recurringItems = [
         description='Contrôle médical systématique agent contractuel',
         category='personnel',
         proposingGroup='personnel',
-        templateUsingGroups=['personnel',],
-        usages=['as_template_item',],
+        templateUsingGroups=['personnel', ],
+        usages=['as_template_item', ],
         decision="""
             <p>Vu la loi du 26 mai 2002 instituant le droit à l’intégration sociale;</p>
 <p>Vu la délibération du Conseil communal du 29 juin 2009 concernant le cahier spécial des charges relatif au marché de services portant sur le contrôle des agents communaux absents pour raisons médicales;</p>
@@ -351,8 +350,8 @@ collegeMeeting.recurringItems = [
         description='Engagement temporaire',
         category='personnel',
         proposingGroup='personnel',
-        templateUsingGroups=['personnel',],
-        usages=['as_template_item',],
+        templateUsingGroups=['personnel', ],
+        usages=['as_template_item', ],
         decision="""<p>Considérant qu’il y a lieu de pourvoir au remplacement de Madame XXX, XXX bénéficiant d’une interruption de carrière pour convenances personnelles pour l’année scolaire 2009/2010. &nbsp;</p>
 <p>Attendu qu’un appel public a été lancé au mois de mai dernier;</p>
 <p>Vu la circulaire N° 2772 de la Communauté Française&nbsp;du 29 juin 2009 concernant &nbsp;la gestion des carrières administrative et pécuniaire dans l’enseignement fondamental ordinaire et principalement le chapitre 3 relatif aux engagements temporaires pendant l’année scolaire 2009/2010;</p>
@@ -373,8 +372,8 @@ collegeMeeting.recurringItems = [
         description='Prestation réduite',
         category='personnel',
         proposingGroup='personnel',
-        templateUsingGroups=['personnel',],
-        usages=['as_template_item',],
+        templateUsingGroups=['personnel', ],
+        usages=['as_template_item', ],
         decision="""<p>Vu la loi de redressement du 22 janvier 1985 (article 99 et suivants) et de l’Arrêté Royal du 12 août 1991 (tel que modifié) relatifs à l’interruption de carrière professionnelle dans l’enseignement;</p>
 <p>Vu la lettre du XXX par laquelle Madame XXX, institutrice maternelle, sollicite le renouvellement pendant l’année scolaire 2009/2010 de son congé pour prestations réduites mi-temps pour convenances personnelles dont elle bénéficie depuis le 01 septembre 2006;</p>
 <p>Attendu que le remplacement de l’intéressée&nbsp;est assuré pour la prochaine rentrée scolaire;</p>
@@ -394,7 +393,7 @@ collegeMeeting.recurringItems = [
         category='personnel',
         proposingGroup='',
         templateUsingGroups=[],
-        usages=['as_template_item',],
+        usages=['as_template_item', ],
         decision="""<p>Vu la loi du XXX;</p>
 <p>Vu ...;</p>
 <p>Attendu que ...;</p>
@@ -414,9 +413,9 @@ councilMeeting = MeetingConfigDescriptor(
     'meeting-config-council', 'Conseil Communal',
     'Conseil Communal')
 councilMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
-                           'Charles Exemple - 1er Echevin,\n' \
-                           'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
-                           'Jacqueline Exemple, Responsable du CPAS'
+                          'Charles Exemple - 1er Echevin,\n' \
+                          'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
+                          'Jacqueline Exemple, Responsable du CPAS'
 councilMeeting.signatures = 'Le Secrétaire communal\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
 councilMeeting.certifiedSignatures = 'Le Secrétaire communal\nVraiment Présent\nLe Bourgmestre\nCharles Exemple'
 councilMeeting.places = """Place1\n\r
@@ -488,7 +487,7 @@ councilMeeting.useAdvices = False
 councilMeeting.itemAdviceStates = ()
 councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
-councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified','pre_accepted']
+councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 councilMeeting.itemPowerObserversStates = ('itemfrozen',
                                            'itempublished',
                                            'accepted', 'delayed',
@@ -529,13 +528,11 @@ councilMeeting.recurringItems = [
         description='Approuve le procès-verbal de la séance antérieure',
         category='recurrents',
         proposingGroup='secretariat',
-        decision='Procès-verbal approuvé'),
-    ]
+        decision='Procès-verbal approuvé'), ]
 
-data = PloneMeetingConfiguration(
-           meetingFolderTitle='Mes séances',
-           meetingConfigs=(collegeMeeting, councilMeeting),
-           groups=groups)
+data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
+                                 meetingConfigs=(collegeMeeting, councilMeeting),
+                                 groups=groups)
 data.unoEnabledPython = '/usr/bin/python'
 data.usedColorSystem = 'state_color'
 data.enableUserPreferences = False
