@@ -62,7 +62,7 @@ def isMeetingCommunesConfigureProfile(context):
     return context.readDataFile("MeetingCommunes_examples_fr_marker.txt") or \
         context.readDataFile("MeetingCommunes_examples_marker.txt") or \
         context.readDataFile("MeetingCommunes_cpas_marker.txt") or \
-        context.readDataFile("MeetingCommunes_tests_marker.txt")
+        context.readDataFile("MeetingCommunes_testing_marker.txt")
 
 
 def isMeetingCommunesMigrationProfile(context):
@@ -194,7 +194,7 @@ def reinstallPloneMeetingSkin(context, site):
         site.portal_setup.runAllImportStepsFromProfile(u'profile-plonetheme.imioapps:plonemeetingskin')
     except KeyError:
         # if the Products.plonemeetingskin profile is not available
-        # (not using plonemeetingskin or in tests?) we pass...
+        # (not using plonemeetingskin or in testing?) we pass...
         pass
 
 

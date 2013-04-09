@@ -24,7 +24,7 @@ from plone.app.testing import login, logout
 
 from Products.PloneMeeting.tests.PloneMeetingTestCase import PloneMeetingTestCase
 
-from Products.MeetingCommunes.testing import MC_TESTS_PROFILE_FUNCTIONAL
+from Products.MeetingCommunes.testing import MC_TEST_PROFILE_FUNCTIONAL
 
 
 class MeetingCommunesTestCase(PloneMeetingTestCase):
@@ -34,7 +34,7 @@ class MeetingCommunesTestCase(PloneMeetingTestCase):
     descriptionText = '<p>Some description</p>'
     decisionText = '<p>Some decision.</p>'
 
-    layer = MC_TESTS_PROFILE_FUNCTIONAL
+    layer = MC_TEST_PROFILE_FUNCTIONAL
 
     def setUp(self):
         PloneMeetingTestCase.setUp(self)
