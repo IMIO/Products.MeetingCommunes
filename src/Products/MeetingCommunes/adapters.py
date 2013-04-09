@@ -117,7 +117,7 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
             # Update connections between states and transitions
             wf.states['itemfrozen'].setProperties(
                 title='itemfrozen', description='',
-                transitions=['accept', 'refuse', 'delay', 'pre_accept', 'backToPresented'])
+                transitions=['accept', 'accept_but_modify', 'refuse', 'delay', 'pre_accept', 'backToPresented'])
             for decidedState in ['accepted', 'refused', 'delayed', 'accepted_but_modified']:
                 wf.states[decidedState].setProperties(
                     title=decidedState, description='',
