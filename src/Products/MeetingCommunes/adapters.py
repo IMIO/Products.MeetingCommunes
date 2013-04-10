@@ -821,53 +821,6 @@ class CustomMeetingItem(MeetingItem):
                 res.append(group.id)
         return res
 
-    security.declarePublic('getPredecessors')
-    def getPredecessors(self, **kwargs):
-        '''Adapted method getPredecessors showing informations about every linked items'''
-        pmtool = getToolByName(self.context, "portal_plonemeeting")
-        predecessor = self.context.getPredecessor()
-        predecessors = []
-        #retrieve every predecessors
-        while predecessor:
-            predecessors.append(predecessor)
-            predecessor = predecessor.getPredecessor()
-
-        #keep order
-        predecessors.reverse()
-
-        #retrieve backrefs too
-        brefs = self.context.getBRefs('ItemPredecessor')
-        while brefs:
-            predecessors = predecessors + brefs
-            brefs = brefs[0].getBRefs('ItemPredecessor')
-
-        res = []
-        for predecessor in predecessors:
-            showColors = pmtool.showColorsForUser()
-            coloredLink = pmtool.getColoredLink(predecessor, showColors=showColors)
-            #extract title from coloredLink that is HTML and complete it
-            originalTitle = re.sub('<[^>]*>', '', coloredLink).strip()
-            #remove '&nbsp;' left at the beginning of the string
-            originalTitle = originalTitle.lstrip('&nbsp;')
-            title = originalTitle
-            meeting = predecessor.getMeeting()
-            #display the meeting date if the item is linked to a meeting
-            if meeting:
-                title = "%s (%s)" % (title, pmtool.formatDate(meeting.getDate()).encode('utf-8'))
-            #show that the linked item is not of the same portal_type
-            if not predecessor.portal_type == self.context.portal_type:
-                title = title + '*'
-            #only replace last occurence because title appear in the "title" tag,
-            #could be the same as the last part of url (id), ...
-            splittedColoredLink = coloredLink.split(originalTitle)
-            splittedColoredLink[-2] = splittedColoredLink[-2] + title + splittedColoredLink[-1]
-            splittedColoredLink.pop(-1)
-            coloredLink = originalTitle.join(splittedColoredLink)
-            if not checkPermission(View, predecessor):
-                coloredLink = spanifyLink(coloredLink)
-            res.append(coloredLink)
-        return res
-
     security.declarePublic('getIcons')
     def getIcons(self, inMeeting, meeting):
         '''Check docstring in PloneMeeting interfaces.py.'''
