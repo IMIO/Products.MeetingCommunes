@@ -56,10 +56,6 @@ msgstr "L'avis sera automatiquement demandé si"
 msgid "PloneMeeting_label_itemDecisionReportText"
 msgstr "Décision du point lors d'un report"
 
-#. Default: "Linked items"
-msgid "PloneMeeting_label_predecessor"
-msgstr "Point(s) lié(s)"
-
 #. Default: "PloneMeeting"
 msgid "app_name"
 msgstr "PloneMeeting"

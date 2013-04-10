@@ -106,10 +106,6 @@ msgstr ""
 msgid "ip_secret"
 msgstr ""
 
-#. Default: "Linked items"
-msgid "PloneMeeting_label_predecessor"
-msgstr ""
-
 #. Default: "Alderman of the following services(departments)"
 msgid "MeetingCommune_label_echevinServices"
 msgstr ""
@@ -182,4 +178,3 @@ msgstr ""
 #. Default: "<p>The decision is currently under edit by managers, you can not access it</p>"
 msgid "decision_under_edit"
 msgstr ""
-
