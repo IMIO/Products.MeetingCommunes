@@ -642,8 +642,7 @@ class CustomMeetingItem(MeetingItem):
         # If the current user is a meetingManager (or a Manager),
         # he is able to add a meetingitem to a 'decided' meeting.
         review_state = ['created', 'frozen', ]
-        member = self.context.portal_membership.getAuthenticatedMember()
-        if member.has_role('MeetingManager') or member.has_role('Manager'):
+        if self.context.portal_plonemeeting.isManager():
             review_state.append('decided')
         res = catalogtool.unrestrictedSearchResults(
             portal_type=meetingPortalType,
@@ -1023,6 +1022,14 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
     def __init__(self, item):
         self.context = item  # Implements IMeetingItem
 
+    security.declarePublic('mayDelete')
+    def mayDelete(self):
+        '''
+          By default it is not possible to delete an item if some
+          decision annexes exist.  Here we do not care about this...
+        '''
+        return True
+
     security.declarePublic('mayDecide')
     def mayDecide(self):
         '''We may decide an item if the linked meeting is in relevant state.'''
@@ -1250,6 +1257,14 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
                 if itemValidationDate > meetingFreezingDate:
                     res = True
         return res
+
+    security.declarePublic('mayDelete')
+    def mayDelete(self):
+        '''
+          By default it is not possible to delete an item if some
+          decision annexes exist.  Here we do not care about this...
+        '''
+        return True
 
     security.declarePublic('mayFreeze')
     def mayFreeze(self):
