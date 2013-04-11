@@ -55,10 +55,6 @@ msgstr ""
 msgid "PloneMeeting_label_itemDecisionReportText"
 msgstr ""
 
-#. Default: "Linked items"
-msgid "PloneMeeting_label_predecessor"
-msgstr ""
-
 #. Default: "PloneMeeting"
 msgid "app_name"
 msgstr ""

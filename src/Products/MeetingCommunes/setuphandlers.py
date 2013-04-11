@@ -23,6 +23,7 @@ import transaction
 ##code-section HEAD
 from Products.PloneMeeting.config import TOPIC_TYPE, TOPIC_SEARCH_SCRIPT, TOPIC_TAL_EXPRESSION
 from Products.PloneMeeting.exportimport.content import ToolInitializer
+from Products.PloneMeeting.model.adaptations import performWorkflowAdaptations
 ##/code-section HEAD
 
 
@@ -62,7 +63,7 @@ def isMeetingCommunesConfigureProfile(context):
     return context.readDataFile("MeetingCommunes_examples_fr_marker.txt") or \
         context.readDataFile("MeetingCommunes_examples_marker.txt") or \
         context.readDataFile("MeetingCommunes_cpas_marker.txt") or \
-        context.readDataFile("MeetingCommunes_tests_marker.txt")
+        context.readDataFile("MeetingCommunes_testing_marker.txt")
 
 
 def isMeetingCommunesMigrationProfile(context):
@@ -133,7 +134,7 @@ def _addTopics(context, site):
             topic.setTitle(topicId)
             for criterionName, criterionType, criterionValue in topicCriteria:
                 criterion = topic.addCriterion(field=criterionName,
-                                                criterion_type=criterionType)
+                                               criterion_type=criterionType)
                 topic.manage_addProperty(TOPIC_TYPE, criterionValue, 'string')
                 criterionValue = '%s%s' % (criterionValue, meetingConfig.getShortName())
                 criterion.setValue([criterionValue])
@@ -154,7 +155,8 @@ def reinstallPloneMeeting(context, site):
     '''Reinstall PloneMeeting so after install methods are called and applied,
        like performWorkflowAdaptations for example.'''
 
-    if isNotMeetingCommunesProfile(context): return
+    if isNotMeetingCommunesProfile(context):
+        return
 
     logStep("reinstallPloneMeeting", context)
     _installPloneMeeting(context)
@@ -170,7 +172,8 @@ def showHomeTab(context, site):
     """
        Make sure the 'home' tab is shown...
     """
-    if isNotMeetingCommunesProfile(context): return
+    if isNotMeetingCommunesProfile(context):
+        return
 
     logStep("showHomeTab", context)
 
@@ -186,7 +189,8 @@ def reinstallPloneMeetingSkin(context, site):
        Reinstall Products.plonemeetingskin as the reinstallation of MeetingCommunes
        change the portal_skins layers order
     """
-    if isNotMeetingCommunesProfile(context) and not isMeetingCommunesConfigureProfile: return
+    if isNotMeetingCommunesProfile(context) and not isMeetingCommunesConfigureProfile:
+        return
 
     logStep("reinstallPloneMeetingSkin", context)
     try:
@@ -194,7 +198,7 @@ def reinstallPloneMeetingSkin(context, site):
         site.portal_setup.runAllImportStepsFromProfile(u'profile-plonetheme.imioapps:plonemeetingskin')
     except KeyError:
         # if the Products.plonemeetingskin profile is not available
-        # (not using plonemeetingskin or in tests?) we pass...
+        # (not using plonemeetingskin or in testing?) we pass...
         pass
 
 
@@ -203,7 +207,8 @@ def finalizeExampleInstance(context):
        Some parameters can not be handled by the PloneMeeting installation,
        so we handle this here
     """
-    if not isMeetingCommunesConfigureProfile(context): return
+    if not isMeetingCommunesConfigureProfile(context):
+        return
 
     site = context.getSite()
 
@@ -243,7 +248,12 @@ def finalizeExampleInstance(context):
          getattr(mc_council.topics, 'searchitemstovalidate'),
          getattr(mc_council.topics, 'searchallitemsincopy'),
          ])
-    #finally, re-launch plonemeetingskin and MeetingCommunes skins step
+    # define default workflowAdaptations for council
+    # due to some weird problems, the wfAdaptations can not be defined
+    # thru the import_data...
+    mc_council.setWorkflowAdaptations(['no_global_observation', 'no_publication'])
+    performWorkflowAdaptations(site, mc_council, logger)
+    # finally, re-launch plonemeetingskin and MeetingCommunes skins step
     # because PM has been installed before the import_data profile and messed up skins layers
     site.portal_setup.runImportStepFromProfile(u'profile-Products.MeetingCommunes:default', 'skins')
     site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:default', 'skins')

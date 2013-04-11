@@ -20,8 +20,6 @@
 # 02110-1301, USA.
 #
 # ------------------------------------------------------------------------------
-import re
-from collections import OrderedDict
 from appy.gen import No
 from appy.gen.utils import Keywords
 from zope.interface import implements
@@ -45,8 +43,8 @@ from Products.MeetingCommunes.interfaces import \
     IMeetingItemCouncilWorkflowConditions, IMeetingItemCouncilWorkflowActions,\
     IMeetingCouncilWorkflowConditions, IMeetingCouncilWorkflowActions
 from Products.PloneMeeting.utils import checkPermission
-from Products.CMFCore.permissions import ReviewPortalContent, ModifyPortalContent, View
-from Products.PloneMeeting.utils import getCurrentMeetingObject, spanifyLink
+from Products.CMFCore.permissions import ReviewPortalContent, ModifyPortalContent
+from Products.PloneMeeting.utils import getCurrentMeetingObject
 from Products.PloneMeeting import PloneMeetingError
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import *
@@ -117,7 +115,7 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
             # Update connections between states and transitions
             wf.states['itemfrozen'].setProperties(
                 title='itemfrozen', description='',
-                transitions=['accept', 'refuse', 'delay', 'pre_accept', 'backToPresented'])
+                transitions=['accept', 'accept_but_modify', 'refuse', 'delay', 'pre_accept', 'backToPresented'])
             for decidedState in ['accepted', 'refused', 'delayed', 'accepted_but_modified']:
                 wf.states[decidedState].setProperties(
                     title=decidedState, description='',
@@ -165,7 +163,7 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
                 transitions=['backToDecided', 'close'])
             wf.states['closed'].setProperties(
                 title='closed', description='',
-                transitions=['backToDecisionsPublished',])
+                transitions=['backToDecisionsPublished', ])
             # Initialize permission->roles mapping for new state "decisions_published",
             # which is the same as state "frozen" (or "decided")in the previous setting.
             frozen = wf.states['frozen']
@@ -320,7 +318,7 @@ class CustomMeeting(Meeting):
            main configuration (groups from the config are in p_groups).
            If p_item is specified, the item is appended to the group list.'''
         usedGroups = [g[0] for g in categoryList[1:]]
-        groupIndex = self._getGroupIndex(meetingGroup, usedGroups,groupPrefixes)
+        groupIndex = self._getGroupIndex(meetingGroup, usedGroups, groupPrefixes)
         if groupIndex == -1:
             # Insert the group among used groups at the right place.
             groupInserted = False
@@ -344,8 +342,7 @@ class CustomMeeting(Meeting):
             if item:
                 categoryList[groupIndex+1].append(item)
 
-    def _insertItemInCategory(self, categoryList, item, byProposingGroup,
-        groupPrefixes, groups):
+    def _insertItemInCategory(self, categoryList, item, byProposingGroup, groupPrefixes, groups):
         '''This method is used by the next one for inserting an item into the
            list of all items of a given category. if p_byProposingGroup is True,
            we must add it in a sub-list containing items of a given proposing
@@ -354,8 +351,7 @@ class CustomMeeting(Meeting):
             categoryList.append(item)
         else:
             group = item.getProposingGroup(True)
-            self._insertGroupInCategory(categoryList, group, groupPrefixes,
-                                        groups, item)
+            self._insertGroupInCategory(categoryList, group, groupPrefixes, groups, item)
 
     security.declarePublic('getPrintableItemsByCategory')
     def getPrintableItemsByCategory(self, itemUids=[], late=False,
@@ -489,7 +485,7 @@ class CustomMeeting(Meeting):
            late items AND items in order.'''
         def getPrintableNumCategory(current_cat):
             '''Method used here above.'''
-            current_cat_id = current_cat.getId ()
+            current_cat_id = current_cat.getId()
             current_cat_name = current_cat.Title()
             current_cat_name = current_cat_name[0:2]
             try:
@@ -623,62 +619,6 @@ class CustomMeeting(Meeting):
             return False
     Meeting.showAllItemsAtOnce = showAllItemsAtOnce
 
-    security.declarePublic('getStrikedAssembly')
-    def getStrikedAssembly(self, groupByDuty=True):
-        '''
-          Generates an HTML version of the Assembly :
-          - strikes absents (represented using [[Member assembly name]])
-          - add a 'mltAssembly' class to generated <p> so it can be used in the Pod Template
-          If p_groupByDuty is True, the result will be generated with members having the same
-          duty grouped, and the duty only displayed once at the end of the list of members
-          having this duty...
-        '''
-        meeting = self.getSelf()
-        # either we use free textarea to define assembly...
-        if meeting.getAssembly():
-            return self.context.getAssembly().replace('[[', '<strike>').replace(']]', '</strike>').replace('<p>', '<p class="mltAssembly">')
-        # or we use MeetingUsers
-        elif meeting.getAttendees():
-            res = []
-            attendeeIds = meeting.getAttendees()
-            groupedByDuty = OrderedDict()
-            for mUser in meeting.getAllUsedMeetingUsers():
-                userId = mUser.getId()
-                userTitle = mUser.Title()
-                userDuty = mUser.getDuty()
-                # if we group by duty, create an OrderedDict where the key is the duty
-                # and the value is a list of meetingUsers having this duty
-                if groupByDuty:
-                    if not userDuty in groupedByDuty:
-                        groupedByDuty[userDuty] = []
-                    if userId in attendeeIds:
-                        groupedByDuty[userDuty].append(mUser.Title())
-                    else:
-                        groupedByDuty[userDuty].append("<strike>%s</strike>" % userTitle)
-                else:
-                    if userId in attendeeIds:
-                        res.append("%s - %s" % (mUser.Title(), userDuty))
-                    else:
-                        res.append("<strike>%s - %s</strike>" % (mUser.Title(), userDuty))
-            if groupByDuty:
-                for duty in groupedByDuty:
-                    # check if every member of given duty are striked, we strike the duty also
-                    everyStriked = True
-                    for elt in groupedByDuty[duty]:
-                        if not elt.startswith('<strike>'):
-                            everyStriked = False
-                            break
-                    res.append(', '.join(groupedByDuty[duty]) + ' - ' + duty)
-                    if len(groupedByDuty[duty]) > 1:
-                        # add a trailing 's' to the duty if several members have the same duty...
-                        res[-1] = res[-1] + 's'
-                    if everyStriked:
-                        lastAdded = res[-1]
-                        # strike the entire line and remove existing <strike> tags
-                        lastAdded = "<strike>" + lastAdded.replace('<strike>', '').replace('</strike>', '') + "</strike>"
-                        res[-1] = lastAdded
-            return "<p class='mltAssembly'>" + '<br />'.join(res) + "</p>"
-
 
 class CustomMeetingItem(MeetingItem):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
@@ -702,8 +642,7 @@ class CustomMeetingItem(MeetingItem):
         # If the current user is a meetingManager (or a Manager),
         # he is able to add a meetingitem to a 'decided' meeting.
         review_state = ['created', 'frozen', ]
-        member = self.context.portal_membership.getAuthenticatedMember()
-        if member.has_role('MeetingManager') or member.has_role('Manager'):
+        if self.context.portal_plonemeeting.isManager():
             review_state.append('decided')
         res = catalogtool.unrestrictedSearchResults(
             portal_type=meetingPortalType,
@@ -720,64 +659,6 @@ class CustomMeetingItem(MeetingItem):
         if (item.queryState() in ('accepted', 'refused', 'delayed')):
             res = True
         return res
-
-    security.declarePublic('getStrikedItemAssembly')
-    def getStrikedItemAssembly(self, groupByDuty=False):
-        '''
-          Generates an HTML version of the itemAssembly :
-          - strikes absents (represented using [[Member assembly name]])
-          - add a 'mltAssembly' class to generated <p> so it can be used in the Pod Template
-          If p_groupByDuty is True, the result will be generated with members having the same
-          duty grouped, and the duty only displayed once at the end of the list of members
-          having this duty...
-        '''
-        item = self.getSelf()
-        # either we use free textarea to define assembly...
-        if item.getItemAssembly():
-            return self.context.getItemAssembly().replace('[[', '<strike>').replace(']]', '</strike>').replace('<p>', '<p class="mltAssembly">')
-        # or we use MeetingUsers
-        elif item.getAttendees():
-            res = []
-            attendeeIds = [attendee.getId() for attendee in item.getAttendees()]
-            meeting = item.getMeeting()
-            groupedByDuty = OrderedDict()
-            for mUser in meeting.getAllUsedMeetingUsers():
-                userId = mUser.getId()
-                userTitle = mUser.Title()
-                userDuty = mUser.getDuty()
-                # if we group by duty, create an OrderedDict where the key is the duty
-                # and the value is a list of meetingUsers having this duty
-                if groupByDuty:
-                    if not userDuty in groupedByDuty:
-                        groupedByDuty[userDuty] = []
-                    if userId in attendeeIds:
-                        groupedByDuty[userDuty].append(mUser.Title())
-                    else:
-                        groupedByDuty[userDuty].append("<strike>%s</strike>" % userTitle)
-                else:
-                    if userId in attendeeIds:
-                        res.append("%s - %s" % (mUser.Title(), userDuty))
-                    else:
-                        res.append("<strike>%s - %s</strike>" % (mUser.Title(), userDuty))
-            if groupByDuty:
-                for duty in groupedByDuty:
-                    # check if every member of given duty are striked, we strike the duty also
-                    everyStriked = True
-                    for elt in groupedByDuty[duty]:
-                        if not elt.startswith('<strike>'):
-                            everyStriked = False
-                            break
-                    res.append(', '.join(groupedByDuty[duty]) + ' - ' + duty)
-                    if len(groupedByDuty[duty]) > 1:
-                        # add a trailing 's' to the duty if several members have the same duty...
-                        res[-1] = res[-1] + 's'
-                    if everyStriked:
-                        lastAdded = res[-1]
-                        # strike the entire line and remove existing <strike> tags
-                        lastAdded = "<strike>" + lastAdded.replace('<strike>', '').replace('</strike>', '') + "</strike>"
-                        res[-1] = lastAdded
-
-            return "<p class='mltAssembly'>" + '<br />'.join(res) + "</p>"
 
     security.declarePublic('getCertifiedSignatures')
     def getCertifiedSignatures(self, forceUseCertifiedSignaturesField=False):
@@ -816,53 +697,6 @@ class CustomMeetingItem(MeetingItem):
         for group in pmtool.getActiveGroups():
             if self.context.getProposingGroup() in group.getEchevinServices():
                 res.append(group.id)
-        return res
-
-    security.declarePublic('getPredecessors')
-    def getPredecessors(self, **kwargs):
-        '''Adapted method getPredecessors showing informations about every linked items'''
-        pmtool = getToolByName(self.context, "portal_plonemeeting")
-        predecessor = self.context.getPredecessor()
-        predecessors = []
-        #retrieve every predecessors
-        while predecessor:
-            predecessors.append(predecessor)
-            predecessor = predecessor.getPredecessor()
-
-        #keep order
-        predecessors.reverse()
-
-        #retrieve backrefs too
-        brefs = self.context.getBRefs('ItemPredecessor')
-        while brefs:
-            predecessors = predecessors + brefs
-            brefs = brefs[0].getBRefs('ItemPredecessor')
-
-        res = []
-        for predecessor in predecessors:
-            showColors = pmtool.showColorsForUser()
-            coloredLink = pmtool.getColoredLink(predecessor, showColors=showColors)
-            #extract title from coloredLink that is HTML and complete it
-            originalTitle = re.sub('<[^>]*>', '', coloredLink).strip()
-            #remove '&nbsp;' left at the beginning of the string
-            originalTitle = originalTitle.lstrip('&nbsp;')
-            title = originalTitle
-            meeting = predecessor.getMeeting()
-            #display the meeting date if the item is linked to a meeting
-            if meeting:
-                title = "%s (%s)" % (title, pmtool.formatDate(meeting.getDate()).encode('utf-8'))
-            #show that the linked item is not of the same portal_type
-            if not predecessor.portal_type == self.context.portal_type:
-                title = title + '*'
-            #only replace last occurence because title appear in the "title" tag,
-            #could be the same as the last part of url (id), ...
-            splittedColoredLink = coloredLink.split(originalTitle)
-            splittedColoredLink[-2] = splittedColoredLink[-2] + title + splittedColoredLink[-1]
-            splittedColoredLink.pop(-1)
-            coloredLink = originalTitle.join(splittedColoredLink)
-            if not checkPermission(View, predecessor):
-                coloredLink = spanifyLink(coloredLink)
-            res.append(coloredLink)
         return res
 
     security.declarePublic('getIcons')
@@ -1057,7 +891,7 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
         '''When the wfAdaptation 'add_published_state' is activated.'''
         pass
 
-# ------------------------------------------------------------------------------
+
 class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
        interface IMeetingCollegeWorkflowConditions'''
@@ -1161,13 +995,9 @@ class MeetingItemCollegeWorkflowActions(MeetingItemWorkflowActions):
         DECISION_ERROR = 'There was an error in the TAL expression for defining the ' \
             'decision when an item is reported. Please check this in your meeting config. ' \
             'Original exception: %s'
-        creator = self.context.Creator()
-        # We create a copy in the initial item state, in the folder of creator.
-        clonedItem = self.context.clone(copyAnnexes=True, newOwnerId=creator,
-                                        cloneEventAction='create_from_predecessor')
-        clonedItem.setPredecessor(self.context)
-        # Send, if configured, a mail to the person who created the item
-        clonedItem.sendMailIfRelevant('itemDelayed', 'Owner', isRole=True)
+        # call PloneMeeting's doDelay then make our additional things
+        MeetingItemWorkflowActions.doDelay(self, stateChange)
+        # manage itemDecisionReportText
         meetingConfig = self.context.portal_plonemeeting.getMeetingConfig(self.context)
         itemDecisionReportText = meetingConfig.getRawItemDecisionReportText()
         if itemDecisionReportText.strip():
@@ -1191,6 +1021,14 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
 
     def __init__(self, item):
         self.context = item  # Implements IMeetingItem
+
+    security.declarePublic('mayDelete')
+    def mayDelete(self):
+        '''
+          By default it is not possible to delete an item if some
+          decision annexes exist.  Here we do not care about this...
+        '''
+        return True
 
     security.declarePublic('mayDecide')
     def mayDecide(self):
@@ -1419,6 +1257,14 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
                 if itemValidationDate > meetingFreezingDate:
                     res = True
         return res
+
+    security.declarePublic('mayDelete')
+    def mayDelete(self):
+        '''
+          By default it is not possible to delete an item if some
+          decision annexes exist.  Here we do not care about this...
+        '''
+        return True
 
     security.declarePublic('mayFreeze')
     def mayFreeze(self):
