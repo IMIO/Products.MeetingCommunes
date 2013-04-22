@@ -56,7 +56,8 @@ def postInstall(context):
 
 ##code-section FOOT
 def logStep(method, context):
-    logger.info("Applying '%s' in profile '%s'"%(method, '/'.join(context._profile_path.split(os.sep)[-3:])))
+    logger.info("Applying '%s' in profile '%s'" %
+                (method, '/'.join(context._profile_path.split(os.sep)[-3:])))
 
 
 def isMeetingCommunesConfigureProfile(context):
@@ -210,54 +211,65 @@ def finalizeExampleInstance(context):
     if not isMeetingCommunesConfigureProfile(context):
         return
 
+    # finalizeExampleInstance will behave differently if on
+    # a Commune instance or CPAS instance
+    specialUserId = 'bourgmestre'
+    meetingConfig1Id = 'meeting-config-college'
+    meetingConfig2Id = 'meeting-config-council'
+    if context.readDataFile("MeetingCommunes_cpas_marker.txt"):
+        specialUserId = 'president'
+        meetingConfig1Id = 'meeting-config-bp'
+        meetingConfig2Id = 'meeting-config-cas'
+
     site = context.getSite()
 
     logStep("finalizeExampleInstance", context)
     # add the test user 'bourgmestre' to every '_powerobservers' groups
-    member = site.portal_membership.getMemberById('bourgmestre')
+    member = site.portal_membership.getMemberById(specialUserId)
     if member:
-        site.portal_groups.addPrincipalToGroup(member.getId(), 'meeting-config-college_powerobservers')
-        site.portal_groups.addPrincipalToGroup(member.getId(), 'meeting-config-council_powerobservers')
+        site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig1Id)
+        site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
     # add the test user 'conseiller' to only the every 'meeting-config-council_powerobservers' groups
     member = site.portal_membership.getMemberById('conseiller')
     if member:
-        site.portal_groups.addPrincipalToGroup(member.getId(), 'meeting-config-council_powerobservers')
+        site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
 
     # add some topics
     _addTopics(context, site)
 
     # define some parameters for 'meeting-config-college'
     # items are sendable to the 'meeting-config-council'
-    mc_college = getattr(site.portal_plonemeeting, 'meeting-config-college')
-    mc_college.setMeetingConfigsToCloneTo(['meeting-config-council', ])
+    mc_college_or_bp = getattr(site.portal_plonemeeting, meetingConfig1Id)
+    mc_college_or_bp.setMeetingConfigsToCloneTo([meetingConfig2Id, ])
     # add some topcis to the portlet_todo
-    mc_college.setToDoListTopics(
-        [getattr(mc_college.topics, 'searchdecideditems'),
-         getattr(mc_college.topics, 'searchitemstovalidate'),
-         getattr(mc_college.topics, 'searchallitemsincopy'),
-         getattr(mc_college.topics, 'searchallitemstoadvice'),
+    mc_college_or_bp.setToDoListTopics(
+        [getattr(mc_college_or_bp.topics, 'searchdecideditems'),
+         getattr(mc_college_or_bp.topics, 'searchitemstovalidate'),
+         getattr(mc_college_or_bp.topics, 'searchallitemsincopy'),
+         getattr(mc_college_or_bp.topics, 'searchallitemstoadvice'),
          ])
     # call updateCloneToOtherMCActions inter alia
-    mc_college.at_post_edit_script()
+    mc_college_or_bp.at_post_edit_script()
 
     # define some parameters for 'meeting-config-council'
-    mc_council = getattr(site.portal_plonemeeting, 'meeting-config-council')
+    mc_council_or_cas = getattr(site.portal_plonemeeting, meetingConfig2Id)
     # add some topcis to the portlet_todo
-    mc_council.setToDoListTopics(
-        [getattr(mc_council.topics, 'searchdecideditems'),
-         getattr(mc_council.topics, 'searchitemstovalidate'),
-         getattr(mc_council.topics, 'searchallitemsincopy'),
+    mc_council_or_cas.setToDoListTopics(
+        [getattr(mc_council_or_cas.topics, 'searchdecideditems'),
+         getattr(mc_council_or_cas.topics, 'searchitemstovalidate'),
+         getattr(mc_council_or_cas.topics, 'searchallitemsincopy'),
          ])
-    # define default workflowAdaptations for council
-    # due to some weird problems, the wfAdaptations can not be defined
-    # thru the import_data...
-    mc_council.setWorkflowAdaptations(['no_global_observation', 'no_publication'])
-    performWorkflowAdaptations(site, mc_council, logger)
+
     # finally, re-launch plonemeetingskin and MeetingCommunes skins step
     # because PM has been installed before the import_data profile and messed up skins layers
     site.portal_setup.runImportStepFromProfile(u'profile-Products.MeetingCommunes:default', 'skins')
     site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:default', 'skins')
     site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:plonemeetingskin', 'skins')
+    # define default workflowAdaptations for council
+    # due to some weird problems, the wfAdaptations can not be defined
+    # thru the import_data...
+    mc_council_or_cas.setWorkflowAdaptations(['no_global_observation', 'no_publication'])
+    performWorkflowAdaptations(site, mc_council_or_cas, logger)
     # call reoerderCss again because it is correctly called while re-installing MeetingCommunes
     # but not while a profile is called from PloneMeeting
     reorderCss(context, site)
@@ -268,15 +280,20 @@ def reorderCss(context, site):
        Make sure CSS are correctly reordered in portal_css so things
        work as expected...
     """
-    if isNotMeetingCommunesProfile(context):
+    if isNotMeetingCommunesProfile(context) and not isMeetingCommunesConfigureProfile(context):
         return
 
     logStep("reorderCss", context)
 
     portal_css = site.portal_css
-    css = ['plonemeeting.css', 'meeting.css', 'meetingitem.css', 'meetingcommunes.css', 'imioapps.css', 'plonemeetingskin.css', 'ploneCustom.css']
-    css.reverse()
+    css = ['plonemeeting.css',
+           'meeting.css',
+           'meetingitem.css',
+           'meetingcommunes.css',
+           'imioapps.css',
+           'plonemeetingskin.css',
+           'ploneCustom.css']
     for resource in css:
-        portal_css.moveResourceToBottom(css)
+        portal_css.moveResourceToBottom(resource)
 
 ##/code-section FOOT

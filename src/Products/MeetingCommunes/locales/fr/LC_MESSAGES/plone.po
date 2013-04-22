@@ -146,10 +146,6 @@ msgstr "Retirer"
 msgid "close_done_descr"
 msgstr "Le procès-verbal est maintenant clôturé, tous les points pour lesquels aucune décision n'avait été prise ont été automatiquement acceptés."
 
-#. Default: "Create a plonmeeting item from a plonegov item"
-msgid "create_to_meeting-config-council_from_meeting-config-college"
-msgstr "Envoyer vers Conseil Communal"
-
 # College meeting workflow transitions specific vocabulary
 #. Default: ""
 msgid "decide"
@@ -213,7 +209,22 @@ msgstr "Les décisions ont été publiées et sont maintenant visibles par les p
 msgid "refuse_done_descr"
 msgstr "Le point a été refusé."
 
+#. Default: "The item has been successfully transfered to the bp."
+msgid "sendto_meeting-config-bp_success"
+msgstr "Le point a été envoyé au Bureau permanent."
+
+#. Default: "The item has been successfully transfered to the cas."
+msgid "sendto_meeting-config-cas_success"
+msgstr "Le point a été envoyé au Conseil de l'Action Sociale."
+
+#. Default: "The item has been successfully transfered to the college."
+msgid "sendto_meeting-config-college_success"
+msgstr "Le point a été envoyé au Collège."
+
+#. Default: "The item has been successfully transfered to the comitee."
+msgid "sendto_meeting-config-comitee_success"
+msgstr "Le point a été envoyé au Comité de concertation."
+
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
 msgstr "Le point a été envoyé au Conseil communal."
-

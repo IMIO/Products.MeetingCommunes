@@ -17,7 +17,7 @@ categories = [
               CategoryDescriptor('eco-sociale', 'Economie sociale'),
               CategoryDescriptor('aide-familles', "Service d'aide aux familles"),
               CategoryDescriptor('marches-publics', 'Marchés publics'),
-              CategoryDescriptor('divers', 'Divers'), 
+              CategoryDescriptor('divers', 'Divers'),
              ]
 
 # Pod templates ----------------------------------------------------------------
@@ -80,6 +80,7 @@ allTemplates = [agendaTemplate, agendaTemplatePDF,
                 itemTemplate, itemTemplatePDF]
 
 # Users and groups -------------------------------------------------------------
+president = UserDescriptor('president', [], email="test@test.be", fullname="Président")
 secretaire = UserDescriptor('secretaire', ['MeetingManager'], email="test@test.be")
 agentInfo = UserDescriptor('agentInfo', [], email="test@test.be")
 agentCompta = UserDescriptor('agentCompta', [], email="test@test.be")
@@ -89,6 +90,7 @@ chefPers = UserDescriptor('chefPers', [], email="test@test.be")
 chefCompta = UserDescriptor('chefCompta', [], email="test@test.be")
 echevinPers = UserDescriptor('echevinPers', [], email="test@test.be")
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be")
+conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Conseiller")
 
 groups = [
           GroupDescriptor('admingen', 'Administration générale', 'AdminGen'),
@@ -303,4 +305,7 @@ data = PloneMeetingConfiguration(
            meetingConfigs=(bpMeeting, casMeeting, comiteeMeeting,),
            groups=groups)
 data.unoEnabledPython='/usr/bin/python'
+data.usedColorSystem = 'state_color'
+data.enableUserPreferences = False
+data.usersOutsideGroups = [president, conseiller]
 # ------------------------------------------------------------------------------
