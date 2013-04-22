@@ -50,7 +50,6 @@ def postInstall(context):
     reinstallPloneMeeting(context, site)
     showHomeTab(context, site)
     reinstallPloneMeetingSkin(context, site)
-    reorderCss(context, site)
 
 
 
@@ -270,18 +269,17 @@ def finalizeExampleInstance(context):
     # thru the import_data...
     mc_council_or_cas.setWorkflowAdaptations(['no_global_observation', 'no_publication'])
     performWorkflowAdaptations(site, mc_council_or_cas, logger)
-    # call reoerderCss again because it is correctly called while re-installing MeetingCommunes
-    # but not while a profile is called from PloneMeeting
-    reorderCss(context, site)
 
 
-def reorderCss(context, site):
+def reorderCss(context):
     """
        Make sure CSS are correctly reordered in portal_css so things
        work as expected...
     """
     if isNotMeetingCommunesProfile(context) and not isMeetingCommunesConfigureProfile(context):
         return
+
+    site = context.getSite()
 
     logStep("reorderCss", context)
 
