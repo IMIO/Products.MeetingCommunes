@@ -19,72 +19,73 @@ categories = [recurring,
              ]
 
 # Pod templates ----------------------------------------------------------------
-agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
+agendaTemplate = PodTemplateDescriptor('oj', 'Agenda')
 agendaTemplate.podTemplate = 'college-oj.odt'
 agendaTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                               'here.portal_plonemeeting.isManager()'
 
-agendaTemplatePDF = PodTemplateDescriptor('oj-pdf', 'Ordre du jour')
+agendaTemplatePDF = PodTemplateDescriptor('oj-pdf', 'Agenda')
 agendaTemplatePDF.podTemplate = 'college-oj.odt'
 agendaTemplatePDF.podFormat = 'pdf'
 agendaTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                                 'here.portal_plonemeeting.isManager()'
 
-decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
+decisionsTemplate = PodTemplateDescriptor('pv', 'Report')
 decisionsTemplate.podTemplate = 'college-pv.odt'
 decisionsTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                                 'here.portal_plonemeeting.isManager()'
 
-decisionsTemplatePDF = PodTemplateDescriptor('pv-pdf', 'Procès-verbal')
+decisionsTemplatePDF = PodTemplateDescriptor('pv-pdf', 'Report')
 decisionsTemplatePDF.podTemplate = 'college-pv.odt'
 decisionsTemplatePDF.podFormat = 'pdf'
 decisionsTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                                    'here.portal_plonemeeting.isManager()'
 
-itemProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
-itemProjectTemplate.podTemplate = 'college-projet-deliberation.odt'
+itemProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Decision project')
+itemProjectTemplate.podTemplate = 'projet-deliberation.odt'
 itemProjectTemplate.podCondition = 'python:here.meta_type=="MeetingItem" and not here.hasMeeting()'
 
-itemProjectTemplatePDF = PodTemplateDescriptor('projet-deliberation-pdf', 'Projet délibération')
-itemProjectTemplatePDF.podTemplate = 'college-projet-deliberation.odt'
+itemProjectTemplatePDF = PodTemplateDescriptor('projet-deliberation-pdf', 'Decision project')
+itemProjectTemplatePDF.podTemplate = 'projet-deliberation.odt'
 itemProjectTemplatePDF.podFormat = 'pdf'
 itemProjectTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem" and not here.hasMeeting()'
 
-itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
-itemTemplate.podTemplate = 'college-deliberation.odt'
+itemTemplate = PodTemplateDescriptor('deliberation', 'Decision')
+itemTemplate.podTemplate = 'deliberation.odt'
 itemTemplate.podCondition = 'python:here.meta_type=="MeetingItem" and here.hasMeeting()'
 
-itemTemplatePDF = PodTemplateDescriptor('deliberation-pdf', 'Délibération')
-itemTemplatePDF.podTemplate = 'college-deliberation.odt'
+itemTemplatePDF = PodTemplateDescriptor('deliberation-pdf', 'Decision')
+itemTemplatePDF.podTemplate = 'deliberation.odt'
 itemTemplatePDF.podFormat = 'pdf'
 itemTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem" and here.hasMeeting()'
 
 collegeTemplates = [agendaTemplate, agendaTemplatePDF,
-                decisionsTemplate, decisionsTemplatePDF,
-                itemProjectTemplate, itemProjectTemplatePDF, itemTemplate, itemTemplatePDF]
+                    decisionsTemplate, decisionsTemplatePDF,
+                    itemProjectTemplate, itemProjectTemplatePDF,
+                    itemTemplate, itemTemplatePDF]
 
 # Pod templates ----------------------------------------------------------------
 agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaCouncilTemplate.podTemplate = 'council-oj.odt'
 agendaCouncilTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                                     'here.portal_plonemeeting.isManager()'
 
 agendaCouncilTemplatePDF = PodTemplateDescriptor('oj-pdf', 'Ordre du jour')
 agendaCouncilTemplatePDF.podTemplate = 'council-oj.odt'
 agendaCouncilTemplatePDF.podFormat = 'pdf'
 agendaCouncilTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                                        'here.portal_plonemeeting.isManager()'
 
 decisionsCouncilTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsCouncilTemplate.podTemplate = 'council-pv.odt'
 decisionsCouncilTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                                        'here.portal_plonemeeting.isManager()'
 
 decisionsCouncilTemplatePDF = PodTemplateDescriptor('pv-pdf', 'Procès-verbal')
 decisionsCouncilTemplatePDF.podTemplate = 'council-pv.odt'
 decisionsCouncilTemplatePDF.podFormat = 'pdf'
 decisionsCouncilTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                                           'here.portal_plonemeeting.isManager()'
 
 itemCouncilRapportTemplate = PodTemplateDescriptor('rapport', 'Rapport')
 itemCouncilRapportTemplate.podTemplate = 'council-rapport.odt'
@@ -96,31 +97,32 @@ itemCouncilRapportTemplatePDF.podFormat = 'pdf'
 itemCouncilRapportTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem"'
 
 itemCouncilProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
-itemCouncilProjectTemplate.podTemplate = 'council-projet-deliberation.odt'
+itemCouncilProjectTemplate.podTemplate = 'projet-deliberation.odt'
 itemCouncilProjectTemplate.podCondition = 'python:here.meta_type=="MeetingItem" and not here.hasMeeting()'
 
 itemCouncilProjectTemplatePDF = PodTemplateDescriptor('projet-deliberation-pdf', 'Projet délibération')
-itemCouncilProjectTemplatePDF.podTemplate = 'council-projet-deliberation.odt'
+itemCouncilProjectTemplatePDF.podTemplate = 'projet-deliberation.odt'
 itemCouncilProjectTemplatePDF.podFormat = 'pdf'
 itemCouncilProjectTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem" and not here.hasMeeting()'
 
 itemCouncilTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
-itemCouncilTemplate.podTemplate = 'council-deliberation.odt'
+itemCouncilTemplate.podTemplate = 'deliberation.odt'
 itemCouncilTemplate.podCondition = 'python:here.meta_type=="MeetingItem" and here.hasMeeting()'
 
 itemCouncilTemplatePDF = PodTemplateDescriptor('deliberation-pdf', 'Délibération')
-itemCouncilTemplatePDF.podTemplate = 'council-deliberation.odt'
+itemCouncilTemplatePDF.podTemplate = 'deliberation.odt'
 itemCouncilTemplatePDF.podFormat = 'pdf'
 itemCouncilTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem" and here.hasMeeting()'
 
 councilTemplates = [agendaCouncilTemplate, agendaCouncilTemplatePDF,
                     decisionsCouncilTemplate, decisionsCouncilTemplatePDF,
                     itemCouncilRapportTemplate, itemCouncilRapportTemplatePDF,
-                    itemCouncilTemplate, itemCouncilTemplatePDF, itemCouncilProjectTemplate, itemCouncilProjectTemplatePDF, ]
+                    itemCouncilTemplate, itemCouncilTemplatePDF,
+                    itemCouncilProjectTemplate, itemCouncilProjectTemplatePDF, ]
 
 # Users and groups -------------------------------------------------------------
-secretary = UserDescriptor('secretary', ['MeetingManager'], email="test@test.be")
 burgmester = UserDescriptor('burgmester', [], email="test@test.be", fullname="Pierre Bourgmestre")
+secretary = UserDescriptor('secretary', ['MeetingManager'], email="test@test.be")
 computOfficial = UserDescriptor('computOfficial', [], email="test@test.be")
 accountOfficial = UserDescriptor('accountOfficial', [], email="test@test.be")
 persOfficial = UserDescriptor('persOfficial', [], email="test@test.be")
@@ -129,20 +131,18 @@ persLeader = UserDescriptor('persLeader', [], email="test@test.be")
 accountLeader = UserDescriptor('accountLeader', [], email="test@test.be")
 echevinPers = UserDescriptor('echevinPers', [], email="test@test.be")
 persAdviser = UserDescriptor('persAdviser', [], email="test@test.be")
+counselor = UserDescriptor('counselor', [], email="test@test.be")
 
-groups = [
-           GroupDescriptor('secretariat', 'Secretariat', 'Secr'),
-           GroupDescriptor('computing', 'Computing department', 'Comp'),
-           GroupDescriptor('personnel', 'Personnel department', 'Pers'),
-           GroupDescriptor('accountancy', 'Accountancy department', 'Acc', givesMandatoryAdviceOn='python:True'),
-           GroupDescriptor('work', 'Work department', 'Work'),
-         ]
+groups = [GroupDescriptor('secretariat', 'Secretariat', 'Secr'),
+          GroupDescriptor('computing', 'Computing department', 'Comp'),
+          GroupDescriptor('personnel', 'Personnel department', 'Pers'),
+          GroupDescriptor('accountancy', 'Accountancy department', 'Acc', givesMandatoryAdviceOn='python:True'),
+          GroupDescriptor('work', 'Work department', 'Work'), ]
 
 # MeetingManager
 groups[0].creators.append(secretary)
 groups[0].reviewers.append(secretary)
 groups[0].observers.append(secretary)
-groups[0].observers.append(burgmester)
 groups[0].advisers.append(secretary)
 
 groups[1].creators.append(computOfficial)
@@ -276,7 +276,11 @@ councilMeeting.usedMeetingAttributes = ['startDate', 'midDate', 'endDate', 'sign
 councilMeeting.recordMeetingHistoryStates = []
 councilMeeting.itemsListVisibleColumns = ['state', 'proposingGroup', 'annexes', 'annexesDecision', 'actions', ]
 councilMeeting.itemColumns = ['creator', 'state', 'proposingGroup', 'annexes', 'annexesDecision', 'advices', 'actions', 'meeting', ]
-councilMeeting.xhtmlTransformFields = ('MeetingItem.description', 'MeetingItem.detailedDescription', 'MeetingItem.decision', 'MeetingItem.observations', 'Meeting.observations', )
+councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
+                                       'MeetingItem.detailedDescription',
+                                       'MeetingItem.decision',
+                                       'MeetingItem.observations',
+                                       'Meeting.observations', )
 councilMeeting.xhtmlTransformTypes = ('removeBlanks',)
 councilMeeting.itemWorkflow = 'meetingitemcouncil_workflow'
 councilMeeting.meetingWorkflow = 'meetingcouncil_workflow'
@@ -286,7 +290,17 @@ councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces
 councilMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowActions'
 #show every items states
 councilMeeting.transitionsToConfirm = []
-councilMeeting.itemTopicStates = ('itemcreated', 'proposed', 'validated', 'presented', 'itemfrozen', 'itempublished', 'accepted', 'pre_accepted', 'accepted_but_modified', 'refused', 'delayed')
+councilMeeting.itemTopicStates = ('itemcreated',
+                                  'proposed',
+                                  'validated',
+                                  'presented',
+                                  'itemfrozen',
+                                  'itempublished',
+                                  'accepted',
+                                  'pre_accepted',
+                                  'accepted_but_modified',
+                                  'refused',
+                                  'delayed')
 councilMeeting.meetingTopicStates = ('created', 'frozen', 'published')
 councilMeeting.decisionTopicStates = ('decided', 'closed')
 councilMeeting.itemAdviceStates = ('validated',)
@@ -303,10 +317,18 @@ councilMeeting.useAdvices = False
 councilMeeting.itemPowerObserversStates = ('itemfrozen', 'accepted', 'delayed', 'refused', 'accepted_but_modified')
 councilMeeting.meetingPowerObserversStates = ('created', 'frozen', 'published', 'decided', 'closed')
 councilMeeting.useCopies = True
-councilMeeting.selectableCopyGroups = ['secretariat_reviewers', 'computing_reviewers', 'personnel_reviewers', 'accountancy_reviewers', 'work_reviewers']
+councilMeeting.selectableCopyGroups = ['secretariat_reviewers',
+                                       'computing_reviewers',
+                                       'personnel_reviewers',
+                                       'accountancy_reviewers',
+                                       'work_reviewers']
 councilMeeting.podTemplates = councilTemplates
 
-secretaire_mu = MeetingUserDescriptor('secretaire', duty='Secrétaire communal', usages=['assemblyMember', 'signer', 'asker', ])
+secretaire_mu = MeetingUserDescriptor('secretaire',
+                                      duty='Secrétaire communal',
+                                      usages=['assemblyMember',
+                                              'signer',
+                                              'asker', ])
 bourgmestre_mu = MeetingUserDescriptor('bourgmestre', duty='Bourgmestre', usages=['assemblyMember', 'asker', ])
 echevinPers_mu = MeetingUserDescriptor('echevinPers', duty='Echevin GRH', usages=['assemblyMember', 'asker', ])
 
@@ -319,12 +341,14 @@ councilMeeting.recurringItems = [
         description='Approve the decisions report of the last meeting',
         category='recurring',
         proposingGroup='secretariat',
-        decision='The last decisions report is approved.'),
-    ]
+        decision='The last decisions report is approved.'), ]
 
 data = PloneMeetingConfiguration(
-           meetingFolderTitle='My meetings',
-           meetingConfigs=(collegeMeeting,councilMeeting),
-           groups=groups)
-data.unoEnabledPython='/usr/bin/python'
+    meetingFolderTitle='My meetings',
+    meetingConfigs=(collegeMeeting, councilMeeting),
+    groups=groups)
+data.unoEnabledPython = '/usr/bin/python'
+data.usedColorSystem = 'state_color'
+data.enableUserPreferences = False
+data.usersOutsideGroups = [burgmester, counselor]
 # ------------------------------------------------------------------------------

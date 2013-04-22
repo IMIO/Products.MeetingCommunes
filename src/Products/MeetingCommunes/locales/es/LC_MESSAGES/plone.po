@@ -146,10 +146,6 @@ msgstr ""
 msgid "close_done_descr"
 msgstr "El acta ha sido cerrada, todos los temas para el cual no tiene decisiones tomadas fueron automáticamente aceptadas."
 
-#. Default: "Create a plonmeeting item from a plonegov item"
-msgid "create_to_meeting-config-council_from_meeting-config-college"
-msgstr ""
-
 # College meeting workflow transitions specific vocabulary
 #. Default: ""
 msgid "decide"
@@ -211,6 +207,22 @@ msgstr ""
 
 #. Default: "refuse_done_descr"
 msgid "refuse_done_descr"
+msgstr ""
+
+#. Default: "The item has been successfully transfered to the bp."
+msgid "sendto_meeting-config-bp_success"
+msgstr ""
+
+#. Default: "The item has been successfully transfered to the cas."
+msgid "sendto_meeting-config-cas_success"
+msgstr ""
+
+#. Default: "The item has been successfully transfered to the college."
+msgid "sendto_meeting-config-college_success"
+msgstr ""
+
+#. Default: "The item has been successfully transfered to the comitee."
+msgid "sendto_meeting-config-comitee_success"
 msgstr ""
 
 #. Default: "The item has been successfully transfered to the council."

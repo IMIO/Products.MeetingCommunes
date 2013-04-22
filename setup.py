@@ -23,7 +23,6 @@ setup(name='Products.MeetingCommunes',
       zip_safe=False,
       extras_require=dict(
             test=['unittest2', 'zope.testing', 'plone.testing',
-                  'testfixtures',
                   'plone.app.testing','communesplone.iconified_document_actions',
                   'Products.CMFPlacefulWorkflow', 'zope.testing',
                   'Products.PloneTestCase', 'collective.ckeditor', 'plonetheme.imioapps'],
