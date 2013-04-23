@@ -56,6 +56,14 @@ msgstr ""
 msgid "PloneMeeting_label_itemDecisionReportText"
 msgstr ""
 
+#. Default: "accept_but_modify_done_descr"
+msgid "accept_but_modify_done_descr"
+msgstr ""
+
+#. Default: "accept_done_descr"
+msgid "accept_done_descr"
+msgstr ""
+
 #. Default: "PloneMeeting"
 msgid "app_name"
 msgstr ""
@@ -64,12 +72,40 @@ msgstr ""
 msgid "assembly_meeting_descr"
 msgstr ""
 
+#. Default: "backToCreated_done_descr"
+msgid "backToCreated_done_descr"
+msgstr ""
+
+#. Default: "backToDecided_done_descr"
+msgid "backToDecided_done_descr"
+msgstr ""
+
+#. Default: "backToDecisionsPublished_done_descr"
+msgid "backToDecisionsPublished_done_descr"
+msgstr ""
+
+#. Default: "backToFrozen_done_descr"
+msgid "backToFrozen_done_descr"
+msgstr ""
+
+#. Default: "backToPresented_done_descr."
+msgid "backToPresented_done_descr"
+msgstr ""
+
+#. Default: "close_done_descr"
+msgid "close_done_descr"
+msgstr ""
+
 #. Default: "Create an item council from an item college"
 msgid "create_to_meeting-config-council_from_meeting-config-college"
 msgstr ""
 
 #. Default: "Item created from a college item"
 msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
+msgstr ""
+
+#. Default: "decide_done_descr"
+msgid "decide_done_descr"
 msgstr ""
 
 #. Default: "Decision"
@@ -84,8 +120,17 @@ msgstr ""
 msgid "decisions"
 msgstr "Actas"
 
+#. Default: "delay_done_descr"
+msgid "delay_done_descr"
+msgstr ""
+
 #. Default: "When advice mandatoriness is enforced, an item can't be inserted into a meeting unless all mandatory advices are given and positive."
 msgid "enforce_advice_mandatoriness_descr"
+msgstr ""
+
+# transitions descriptions
+#. Default: "freeze_done_descr"
+msgid "freeze_done_descr"
 msgstr ""
 
 #. Default: "Specify here a TAL expression that will return True if the group must give a mandatory advice on an item.  We receive 'item' as the meeting item to give an advice on.  WARNING if the group of advisers linked to this PloneMeeting group os empty, it will no be considered, despite the result of the TAL expression"
@@ -124,6 +169,10 @@ msgstr ""
 msgid "item_decision_report_text_descr"
 msgstr ""
 
+#. Default: "itemfreeze_done_descr"
+msgid "itemfreeze_done_descr"
+msgstr ""
+
 # Other
 #. Default: "Late items"
 msgid "late_presented_items"
@@ -149,9 +198,21 @@ msgstr "Agenda"
 msgid "positive_with_remarks"
 msgstr ""
 
+#. Default: "pre_accept_done_descr"
+msgid "pre_accept_done_descr"
+msgstr ""
+
 #. Default: "Present every selected items"
 msgid "present_several_items"
 msgstr "Presentar todos los temas seleccionados"
+
+#. Default: "publish_decisions_done_descr"
+msgid "publish_decisions_done_descr"
+msgstr ""
+
+#. Default: "refuse_done_descr"
+msgid "refuse_done_descr"
+msgstr ""
 
 #. Default: "Configure PloneMeeting"
 msgid "search_advanced"
