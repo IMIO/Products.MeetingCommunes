@@ -290,6 +290,7 @@ def reorderCss(context):
            'meetingcommunes.css',
            'imioapps.css',
            'plonemeetingskin.css',
+           'imioapps_IEFixes.css',
            'ploneCustom.css']
     for resource in css:
         portal_css.moveResourceToBottom(resource)
