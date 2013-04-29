@@ -718,12 +718,12 @@ class CustomMeetingItem(MeetingItem):
         '''Helper method to have a printable version of advices.'''
         item = self.getSelf()
         itemAdvicesByType = item.getAdvicesByType()
-        res = "<p><u>%s :</u></p>" % translate('advices', domain='PloneMeeting', context=item.REQUEST)
+        res = "<p><u>%s :</u></p>" % translate('PloneMeeting_label_advices', domain='PloneMeeting', context=item.REQUEST)
         if itemAdvicesByType:
             res = res + "<p>"
         for adviceType in itemAdvicesByType:
             for advice in itemAdvicesByType[adviceType]:
-                res = res + "<u>%s : %s</u><br />" % (advice['name'], translate([advice['type']][0],
+                res = res + "<u>%s :</u> %s<br />" % (advice['name'], translate([advice['type']][0],
                                                                                 domain='PloneMeeting',
                                                                                 context=item.REQUEST))
                 if 'comment' in advice:
@@ -732,7 +732,7 @@ class CustomMeetingItem(MeetingItem):
             res = res + "</p>"
         if not itemAdvicesByType:
             return "<p><u>%s : -</u></p>" % translate('advices', domain='PloneMeeting', context=item.REQUEST)
-        return res
+        return res.encode('utf-8')
 
     security.declarePublic('getDecision')
     def getDecision(self, keepWithNext=False, **kwargs):
