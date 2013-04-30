@@ -240,3 +240,11 @@ msgstr ""
 #. Default: "publish_decisions_done_descr"
 msgid "publish_decisions_done_descr"
 msgstr ""
+
+#. Default: "accepted but modified"
+msgid "icon_help_accepted_but_modified"
+msgstr ""
+
+#. Default: "pre accepted"
+msgid "icon_help_pre_accepted"
+msgstr ""

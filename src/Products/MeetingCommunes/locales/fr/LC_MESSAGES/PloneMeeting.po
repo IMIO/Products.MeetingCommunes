@@ -153,6 +153,14 @@ msgstr "Configurer PloneMeeting"
 msgid "hs_welcome_title"
 msgstr "Bienvenue sur PloneMeeting"
 
+#. Default: "accepted but modified"
+msgid "icon_help_accepted_but_modified"
+msgstr "Accepté avec modifications"
+
+#. Default: "pre accepted"
+msgid "icon_help_pre_accepted"
+msgstr "Accepté provisoirement"
+
 #. Default: "Public"
 msgid "ip_public"
 msgstr "Séance publique"
@@ -246,4 +254,3 @@ msgstr "points validés"
 #. Default: "add_published_state"
 msgid "wa_add_published_state"
 msgstr "Cacher les décisions au service pendant la rédaction du PV"
-

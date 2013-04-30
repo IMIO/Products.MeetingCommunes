@@ -708,9 +708,9 @@ class CustomMeetingItem(MeetingItem):
         # Add our icons for accepted_but_modified and pre_accepted
         itemState = item.queryState()
         if itemState == 'accepted_but_modified':
-            res.append(('accepted_but_modified.png', 'accepted_but_modified'))
+            res.append(('accepted_but_modified.png', 'icon_help_accepted_but_modified'))
         elif itemState == 'pre_accepted':
-            res.append(('pre_accepted.png', 'pre_accepted'))
+            res.append(('pre_accepted.png', 'icon_help_pre_accepted'))
         return res
 
     security.declarePublic('printAdvicesInfos')

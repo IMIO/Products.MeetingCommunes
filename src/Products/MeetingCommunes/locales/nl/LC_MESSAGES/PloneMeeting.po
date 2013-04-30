@@ -150,6 +150,14 @@ msgstr ""
 msgid "hs_welcome_title"
 msgstr ""
 
+#. Default: "accepted but modified"
+msgid "icon_help_accepted_but_modified"
+msgstr ""
+
+#. Default: "pre accepted"
+msgid "icon_help_pre_accepted"
+msgstr ""
+
 #. Default: "Public"
 msgid "ip_public"
 msgstr ""

@@ -152,6 +152,14 @@ msgstr ""
 msgid "hs_welcome_title"
 msgstr ""
 
+#. Default: "accepted but modified"
+msgid "icon_help_accepted_but_modified"
+msgstr "Angenommen aber geändert"
+
+#. Default: "pre accepted"
+msgid "icon_help_pre_accepted"
+msgstr "Provisorisch akzeptiert"
+
 #. Default: "Public"
 msgid "ip_public"
 msgstr ""
@@ -245,4 +253,3 @@ msgstr "validierte TOP"
 #. Default: "add_published_state"
 msgid "wa_add_published_state"
 msgstr ""
-
