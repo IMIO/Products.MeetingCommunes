@@ -30,6 +30,7 @@ from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testWorkflows import testWorkflows as pmtw
 
+
 class testWorkflows(MeetingCommunesTestCase, pmtw):
     """Tests the default workflows implemented in MeetingCommunes."""
 
@@ -42,7 +43,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         missing = []
         for key in tpm:
             key2 = key.replace('test', 'test_mc_call_')
-            if not tmc.has_key(key2):
+            if not key2 in tmc:
                 missing.append(key)
         if len(missing):
             self.fail("missing test methods %s from PloneMeeting test class '%s'" % (missing, 'testWorkflows'))
@@ -76,7 +77,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
             creation of some items, and ends by closing a meeting.
             This call 2 sub tests for each process : college and council
         """
-        self._testWholeDecisionProcessCollege()
+        #self._testWholeDecisionProcessCollege()
         self._testWholeDecisionProcessCouncil()
 
     def _testWholeDecisionProcessCollege(self):
@@ -89,7 +90,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.addAnnex(item1, decisionRelated=True)
         self.do(item1, 'propose')
         self.assertRaises(Unauthorized, self.addAnnex, item1, decisionRelated=True)
-        self.failIf(self.transitions(item1)) # He may trigger no more action
+        self.failIf(self.transitions(item1))  # He may trigger no more action
         self.failIf(self.hasPermission('PloneMeeting: Add annex', item1))
         # pmManager creates a meeting
         self.changeUser('pmManager')
@@ -116,7 +117,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.assertRaises(Unauthorized, self.addAnnex, item2)
         # meeting is frozen
         self.changeUser('pmManager')
-        self.do(meeting, 'freeze') #publish in pm forkflow
+        self.do(meeting, 'freeze')  # publish in pm forkflow
         # pmReviewer2 validates item2
         self.changeUser('pmReviewer2')
         self.do(item2, 'validate')
@@ -168,9 +169,8 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.addAnnex(item1, decisionRelated=True)
         self.do(item1, 'propose')
         # The creator cannot add a decision annex on proposed item
-        self.assertRaises(Unauthorized, self.addAnnex, item1,
-            decisionRelated=True)
-        self.failIf(self.transitions(item1)) # He may trigger no more action
+        self.assertRaises(Unauthorized, self.addAnnex, item1, decisionRelated=True)
+        self.failIf(self.transitions(item1))  # He may trigger no more action
         # pmManager creates a meeting
         self.changeUser('pmManager')
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
@@ -187,8 +187,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.addAnnex(item1, decisionRelated=True)
         self.do(item1, 'validate')
         # The reviewer cannot add a decision annex on validated item
-        self.assertRaises(Unauthorized, self.addAnnex, item1,
-            decisionRelated=True)
+        self.assertRaises(Unauthorized, self.addAnnex, item1, decisionRelated=True)
         # pmManager inserts item1 into the meeting and freezes it
         self.changeUser('pmManager')
         managerAnnex = self.addAnnex(item1)
@@ -196,8 +195,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.do(item1, 'present')
         self.changeUser('pmCreator1')
         # The creator cannot add any kind of annex on presented item
-        self.assertRaises(Unauthorized, self.addAnnex, item1,
-            decisionRelated=True)
+        self.assertRaises(Unauthorized, self.addAnnex, item1, decisionRelated=True)
         self.assertRaises(Unauthorized, self.addAnnex, item1)
         self.changeUser('pmManager')
         self.do(meeting, 'freeze')
@@ -222,12 +220,10 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # Now reviewers can't add annexes anymore
         self.changeUser('pmReviewer2')
         self.failIf(self.hasPermission('PloneMeeting: Add annex', item2))
-        self.assertRaises(Unauthorized, self.addAnnex, item2,
-            decisionRelated=True)
+        self.assertRaises(Unauthorized, self.addAnnex, item2, decisionRelated=True)
         self.changeUser('pmReviewer1')
         self.assertRaises(Unauthorized, self.addAnnex, item2)
-        self.assertRaises(Unauthorized, self.addAnnex, item2,
-            decisionRelated=True)
+        self.assertRaises(Unauthorized, self.addAnnex, item2, decisionRelated=True)
         # pmManager adds a decision for item2, decides and closes the meeting
         self.changeUser('pmManager')
         item2.setDecision(self.decisionText)
@@ -251,6 +247,21 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.assertEquals(item2.queryState(), 'accepted')
         # An already decided item keep his given decision
         self.assertEquals(item1.queryState(), 'delayed')
+        # XXX added tests regarding ticket #5887
+        # test back transitions
+        self.changeUser('admin')
+        self.do(meeting, 'backToDecided')
+        self.changeUser('pmManager')
+        self.do(meeting, 'backToPublished')
+        # set an item back to published to test the 'freeze' meeting here under
+        self.do(item1, 'backToItemPublished')
+        self.do(meeting, 'backToFrozen')
+        # this also test the 'doBackToCreated' action on the meeting
+        self.do(meeting, 'backToCreated')
+        self.do(meeting, 'freeze')
+        self.do(meeting, 'publish')
+        self.do(meeting, 'decide')
+        self.do(meeting, 'close')
 
     def test_mc_call_WorkflowPermissions(self):
         """
@@ -375,7 +386,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         #when correcting the meeting back to created, the items must be corrected
         #back to "presented"
         self.do(meeting, 'backToCreated')
-        #when a point is in 'itemfrozen' it's must rest in this state 
+        #when a point is in 'itemfrozen' it's must rest in this state
         #because normally we backToCreated for add new point
         self.assertEquals('itemfrozen', wftool.getInfoFor(item1, 'review_state'))
         self.assertEquals('itemfrozen', wftool.getInfoFor(item2, 'review_state'))
@@ -387,24 +398,24 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         """
         # First, define recurring items in the meeting config
         login(self.portal, 'pmManager')
-        #create a meeting (with 7 items)        
+        #create a meeting (with 7 items)
         meetingDate = DateTime().strftime('%y/%m/%d %H:%M:00')
         meeting = self.create('Meeting', date=meetingDate)
-        item1 = self.create('MeetingItem') # id=o2
+        item1 = self.create('MeetingItem')  # id=o2
         item1.setProposingGroup('vendors')
         item1.setAssociatedGroups(('developers',))
-        item2 = self.create('MeetingItem') # id=o3
+        item2 = self.create('MeetingItem')  # id=o3
         item2.setProposingGroup('developers')
-        item3 = self.create('MeetingItem') # id=o4
+        item3 = self.create('MeetingItem')  # id=o4
         item3.setProposingGroup('vendors')
-        item4 = self.create('MeetingItem') # id=o5
+        item4 = self.create('MeetingItem')  # id=o5
         item4.setProposingGroup('developers')
-        item5 = self.create('MeetingItem') # id=o7
+        item5 = self.create('MeetingItem')  # id=o7
         item5.setProposingGroup('vendors')
         item6 = self.create('MeetingItem', title='The sixth item')
         item6.setProposingGroup('vendors')
-        item7 = self.create('MeetingItem') # id=o8
-        item7.setProposingGroup('vendors')        
+        item7 = self.create('MeetingItem')  # id=o8
+        item7.setProposingGroup('vendors')
         for item in (item1, item2, item3, item4, item5, item6, item7):
             self.do(item, 'propose')
             self.do(item, 'validate')
@@ -418,10 +429,10 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.do(meeting, 'decide')
         #change all items in all different state (except first who is in good state)
         self.do(item7, 'backToPresented')
-        self.do(item2,'delay')
-        self.do(item3,'pre_accept')
-        self.do(item4,'accept_but_modify')
-        self.do(item5,'refuse')
+        self.do(item2, 'delay')
+        self.do(item3, 'pre_accept')
+        self.do(item4, 'accept_but_modify')
+        self.do(item5, 'refuse')
         self.do(item6, 'accept')
         #we close the meeting
         self.do(meeting, 'close')
@@ -460,6 +471,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
            sub Plone groups to the '_observers' Plone group'''
         #we do the test for the college config
         pmtw.testDeactivateMeetingGroup(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

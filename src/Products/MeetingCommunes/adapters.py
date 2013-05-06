@@ -718,7 +718,9 @@ class CustomMeetingItem(MeetingItem):
         '''Helper method to have a printable version of advices.'''
         item = self.getSelf()
         itemAdvicesByType = item.getAdvicesByType()
-        res = "<p><u>%s :</u></p>" % translate('PloneMeeting_label_advices', domain='PloneMeeting', context=item.REQUEST)
+        res = "<p><u>%s :</u></p>" % translate('PloneMeeting_label_advices',
+                                               domain='PloneMeeting',
+                                               context=item.REQUEST)
         if itemAdvicesByType:
             res = res + "<p>"
         for adviceType in itemAdvicesByType:
@@ -1170,6 +1172,11 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
     security.declarePrivate('doBackToDecisionsPublished')
     def doBackToDecisionsPublished(self, stateChange):
         '''When the wfAdaptation 'add_published_state' is activated.'''
+        pass
+
+    security.declarePrivate('doBackToPublished')
+    def doBackToPublished(self, stateChange):
+        '''We do not impact items while going back from decided.'''
         pass
 
 
