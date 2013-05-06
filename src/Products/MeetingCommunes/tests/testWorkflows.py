@@ -77,7 +77,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
             creation of some items, and ends by closing a meeting.
             This call 2 sub tests for each process : college and council
         """
-        #self._testWholeDecisionProcessCollege()
+        self._testWholeDecisionProcessCollege()
         self._testWholeDecisionProcessCouncil()
 
     def _testWholeDecisionProcessCollege(self):
