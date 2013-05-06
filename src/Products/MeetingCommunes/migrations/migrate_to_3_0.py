@@ -76,14 +76,17 @@ def _adaptCouncilWorkflows(portal):
     """
       By default, make the council workflow behave like the college workflow by
       applying the 'no_publication' and 'no_global_observation' wfAdaptations.
+      This is made for existing council config that where not in use.  If it is in use, do nothing...
     """
     logger.info("Adaptating council workflows")
     council_cfg = getattr(portal.portal_plonemeeting, 'meeting-config-council', None)
     if council_cfg is None:
         logger.info("No MeetingConfig found for council!")
         return
+    activeConfigIds = [cfg.getId() for cfg in portal.portal_plonemeeting.getActiveConfigs()]
     if council_cfg.getItemWorkflow() == 'meetingitemcouncil_workflow' and \
-       council_cfg.getMeetingWorkflow() == 'meetingcouncil_workflow':
+       council_cfg.getMeetingWorkflow() == 'meetingcouncil_workflow' and not \
+       council_cfg.getId() in activeConfigIds:
         wfAdaptations = list(council_cfg.getWorkflowAdaptations())
         if not 'no_global_observation' in wfAdaptations:
             wfAdaptations.append('no_global_observation')

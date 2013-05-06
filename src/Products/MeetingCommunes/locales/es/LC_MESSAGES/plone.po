@@ -66,14 +66,6 @@ msgstr ""
 msgid "accept_but_modify"
 msgstr ""
 
-#. Default: "accept_but_modify_done_descr"
-msgid "accept_but_modify_done_descr"
-msgstr ""
-
-#. Default: "accept_done_descr"
-msgid "accept_done_descr"
-msgstr ""
-
 #. Default: "accepted but modified"
 msgid "accepted_but_modified"
 msgstr ""
@@ -82,33 +74,17 @@ msgstr ""
 msgid "backToCreated"
 msgstr ""
 
-#. Default: "backToCreated_done_descr"
-msgid "backToCreated_done_descr"
-msgstr "Usted acaba de cancelar el congelamiento de la agenda"
-
 #. Default: "Back to decided"
 msgid "backToDecided"
 msgstr ""
-
-#. Default: "backToDecided_done_descr"
-msgid "backToDecided_done_descr"
-msgstr "Usted puede editar nuevamente las actas."
 
 #. Default: "Back to decisions published"
 msgid "backToDecisionsPublished"
 msgstr ""
 
-#. Default: "backToDecisionsPublished_done_descr"
-msgid "backToDecisionsPublished_done_descr"
-msgstr ""
-
 #. Default: "Back to frozen"
 msgid "backToFrozen"
 msgstr ""
-
-#. Default: "backToFrozen_done_descr"
-msgid "backToFrozen_done_descr"
-msgstr "Usted no puede más editar las Actas por el momento"
 
 #. Default: "Back to item created"
 msgid "backToItemCreated"
@@ -120,10 +96,6 @@ msgstr ""
 
 #. Default: "Back to presented"
 msgid "backToPresented"
-msgstr ""
-
-#. Default: "backToPresented_done_descr."
-msgid "backToPresented_done_descr"
 msgstr ""
 
 #. Default: "Back to pre-validated"
@@ -142,18 +114,10 @@ msgstr ""
 msgid "backToValidated"
 msgstr ""
 
-#. Default: "close_done_descr"
-msgid "close_done_descr"
-msgstr "El acta ha sido cerrada, todos los temas para el cual no tiene decisiones tomadas fueron automáticamente aceptadas."
-
 # College meeting workflow transitions specific vocabulary
 #. Default: ""
 msgid "decide"
 msgstr "escribir el Acta"
-
-#. Default: "decide_done_descr"
-msgid "decide_done_descr"
-msgstr "Usted ahora puede escribir el acta de esta reunión"
 
 # College meeting workflow states specific vocabulary
 #. Default: "decided"
@@ -164,22 +128,9 @@ msgstr "redacción de Acta"
 msgid "decisions_published"
 msgstr ""
 
-#. Default: "delay_done_descr"
-msgid "delay_done_descr"
-msgstr ""
-
-# transitions descriptions
-#. Default: "freeze_done_descr"
-msgid "freeze_done_descr"
-msgstr "La agenda se ha congelada."
-
 #. Default: "frozen"
 msgid "frozen"
 msgstr "congelado"
-
-#. Default: "itemfreeze_done_descr"
-msgid "itemfreeze_done_descr"
-msgstr ""
 
 #. Default: "itemfrozen"
 msgid "itemfrozen"
@@ -189,24 +140,12 @@ msgstr "congelado"
 msgid "pre_accept"
 msgstr ""
 
-#. Default: "pre_accept_done_descr"
-msgid "pre_accept_done_descr"
-msgstr ""
-
 #. Default: "pre accepted"
 msgid "pre_accepted"
 msgstr ""
 
 #. Default: "Publish decisions"
 msgid "publish_decisions"
-msgstr ""
-
-#. Default: "publish_decisions_done_descr"
-msgid "publish_decisions_done_descr"
-msgstr ""
-
-#. Default: "refuse_done_descr"
-msgid "refuse_done_descr"
 msgstr ""
 
 #. Default: "The item has been successfully transfered to the bp."
