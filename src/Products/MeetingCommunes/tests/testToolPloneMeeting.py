@@ -42,7 +42,7 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
             if not key2 in tmc:
                 missing.append(key)
         if len(missing):
-            self.fail("missing test methods %s from PloneMeeting test class '%s'" % (missing, 'testMeeting'))
+            self.fail("missing test methods %s from PloneMeeting test class '%s'" % (missing, 'testToolPloneMeeting'))
 
     def test_mc_call_GetMeetingGroup(self):
         '''Run the testGetMeetingGroup from PloneMeeting.'''
@@ -75,8 +75,6 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
     def test_mc_call_SetupProcessForCreationFlag(self):
         '''Run the testSetupProcessForCreationFlag from PloneMeeting.'''
         self.testSetupProcessForCreationFlag()
-
-
 
 
 def test_suite():
