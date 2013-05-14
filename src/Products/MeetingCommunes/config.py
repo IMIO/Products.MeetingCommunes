@@ -60,6 +60,47 @@ setDefaultRoles(WriteDecision, ('Manager',))
 STYLESHEETS = [{'id': 'meetingcommunes.css',
                 'title': 'MeetingCommunes CSS styles'}]
 
+# define some more value in MeetingConfig.topicsInfo so extra topics are created for each MeetingConfig
+from Products.PloneMeeting.MeetingConfig import MeetingConfig
+topicsInfo = (
+    # Items in state 'proposed'
+    ('searchproposeditems',
+    (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
+     'created',
+     '',
+     "python: not here.portal_plonemeeting.userIsAmong('reviewers')",
+     ('proposed', ),
+     ),
+    # Items that need to be validated
+    ('searchitemstovalidate',
+    (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
+     'created',
+     'searchItemsToValidate',
+     "python: here.portal_plonemeeting.userIsAmong('reviewers')",
+     ('proposed', ),
+     ),
+    # Items in state 'validated'
+    ('searchvalidateditems',
+    (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
+     'created',
+     '',
+     '',
+     ('validated', ),
+     ),
+    # All 'decided' items
+    ('searchdecideditems',
+    (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
+     'created',
+     '',
+     '',
+     ('accepted', 'refused', 'delayed', 'accepted_but_modified',),
+     ),
+)
+existingTopicsInfo = MeetingConfig.topicsInfo
+existingTopicsInfo = list(existingTopicsInfo)
+existingTopicsInfo.extend(topicsInfo)
+MeetingConfig.topicsInfo = tuple(existingTopicsInfo)
+
 ##/code-section config-bottom
 
 
