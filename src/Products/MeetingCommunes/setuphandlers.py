@@ -66,6 +66,10 @@ def isMeetingCommunesConfigureProfile(context):
         context.readDataFile("MeetingCommunes_testing_marker.txt")
 
 
+def isMeetingCommunesTestingProfile(context):
+    return context.readDataFile("MeetingCommunes_testing_marker.txt")
+
+
 def isMeetingCommunesMigrationProfile(context):
     return context.readDataFile("MeetingCommunes_migrations_marker.txt")
 

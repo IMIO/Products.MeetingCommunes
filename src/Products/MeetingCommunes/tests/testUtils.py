@@ -60,7 +60,10 @@ class testUtils(MeetingCommunesTestCase):
           Check that calling this method returns the right content
         """
         login(self.portal, 'admin')
-        expected = {'vendors': ('Vendors', '', 'Devil', "python: item.id == 'recurringagenda1'"), 'developers': ('Developers', '', 'Devel', 'python:False')}
+        expected = {
+            'vendors': ('Vendors', '', 'Devil', "python: item.id == 'recurringagenda1'"),
+            'endUsers': ('End users', '', 'EndUsers', 'python:False'),
+            'developers': ('Developers', '', 'Devel', 'python:False')}
         res = self._exportMeetingGroups()
         self.assertEquals(expected, res)
 
@@ -72,12 +75,17 @@ class testUtils(MeetingCommunesTestCase):
         #if we pass a dict containing the existing groups, it does nothing but
         #returning that the groups already exist
         dict = self._exportMeetingGroups()
-        expected = 'MeetingGroup vendors already exists\nMeetingGroup developers already exists'
+        expected = 'MeetingGroup endUsers already exists\n' \
+                   'MeetingGroup vendors already exists\n' \
+                   'MeetingGroup developers already exists'
         res = self._importMeetingGroups(dict)
         self.assertEquals(expected, res)
         #but it can also add a MeetingGroup if it does not exist
         dict['newGroup'] = ('New group title', 'New group description', 'NGAcronym', 'python:False')
-        expected = 'MeetingGroup vendors already exists\nMeetingGroup newGroup added\nMeetingGroup developers already exists'
+        expected = 'MeetingGroup endUsers already exists\n' \
+                   'MeetingGroup vendors already exists\n' \
+                   'MeetingGroup newGroup added\n' \
+                   'MeetingGroup developers already exists'
         res = self._importMeetingGroups(dict)
         self.assertEquals(expected, res)
 
