@@ -41,6 +41,9 @@ voter2 = UserDescriptor('voter2', [], fullname='M. Voter Two')
 powerobserver1 = UserDescriptor('powerobserver1', [], fullname='M. Power Observer1')
 powerobserver2 = UserDescriptor('powerobserver2', [], fullname='M. Power Observer2')
 
+# Add a vintage group
+endUsers = GroupDescriptor('endUsers', 'End users', 'EndUsers', active=False)
+
 developers = GroupDescriptor('developers', 'Developers', 'Devel', givesMandatoryAdviceOn="python:False")
 developers.creators.append(pmCreator1)
 developers.creators.append(pmCreator1b)
@@ -264,7 +267,7 @@ councilMeeting.recurringItems = [
 data = PloneMeetingConfiguration(
     meetingFolderTitle='Mes seances',
     meetingConfigs=(collegeMeeting, councilMeeting),
-    groups=(developers, vendors))
+    groups=(developers, vendors, endUsers))
 data.unoEnabledPython = '/usr/bin/python'
 data.usersOutsideGroups = [voter1, voter2, powerobserver1, powerobserver2]
 # ------------------------------------------------------------------------------
