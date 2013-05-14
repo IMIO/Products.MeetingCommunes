@@ -11,11 +11,5 @@
   <dependency step="installMeetingCommunes"/>
   Initialize portal_plonemeeting folders.
  </import-step>
- <import-step id="finalizeExampleInstanceMeetingCommunes" version="20120315-01"
-              handler="Products.MeetingCommunes.setuphandlers.finalizeExampleInstance"
-              title="Finalize example instance.">
-  <dependency step="initializetool-MeetingCommunes"/>
-  Finalize example instance.
- </import-step>
 
 </import-steps>
