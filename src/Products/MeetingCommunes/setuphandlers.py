@@ -66,6 +66,10 @@ def isMeetingCommunesConfigureProfile(context):
         context.readDataFile("MeetingCommunes_testing_marker.txt")
 
 
+def isMeetingCommunesTestingProfile(context):
+    return context.readDataFile("MeetingCommunes_testing_marker.txt")
+
+
 def isMeetingCommunesMigrationProfile(context):
     return context.readDataFile("MeetingCommunes_migrations_marker.txt")
 
@@ -91,65 +95,6 @@ def initializeTool(context):
     #so install it manually
     _installPloneMeeting(context)
     return ToolInitializer(context, PROJECTNAME).run()
-
-
-def _addTopics(context, site):
-    '''
-       Add searches to the added meetingConfigs
-       Proposed items, validated items and decided items
-    '''
-    logStep("_addTopics", context)
-    topicsInfo = (
-        # Items in state 'proposed'
-        ('searchproposeditems',
-        (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
-        ('proposed', ), "python: not here.portal_plonemeeting.userIsAmong('reviewers')", '',
-         ),
-        # Items that need to be validated
-        ('searchitemstovalidate',
-        (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
-        ('proposed', ), "python: here.portal_plonemeeting.userIsAmong('reviewers')", 'searchItemsToValidate',
-         ),
-        # Items in state 'validated'
-        ('searchvalidateditems',
-        (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
-        ('validated', ), '', '',
-         ),
-        # All 'decided' items
-        ('searchdecideditems',
-        (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
-        ('accepted', 'refused', 'delayed', 'accepted_but_modified',), '', '',
-         ),
-    )
-
-    #Add these searches by meeting config
-    for meetingConfig in site.portal_plonemeeting.objectValues("MeetingConfig"):
-        for topicId, topicCriteria, stateValues, topicCondition, topicScript in topicsInfo:
-            #if reinstalling, we need to check if the topic does not already exist
-            if hasattr(meetingConfig.topics, topicId):
-                continue
-            meetingConfig.topics.invokeFactory('Topic', topicId)
-            topic = getattr(meetingConfig.topics, topicId)
-            topic.setExcludeFromNav(True)
-            topic.setTitle(topicId)
-            for criterionName, criterionType, criterionValue in topicCriteria:
-                criterion = topic.addCriterion(field=criterionName,
-                                               criterion_type=criterionType)
-                topic.manage_addProperty(TOPIC_TYPE, criterionValue, 'string')
-                criterionValue = '%s%s' % (criterionValue, meetingConfig.getShortName())
-                criterion.setValue([criterionValue])
-            topic.manage_addProperty(TOPIC_TAL_EXPRESSION, topicCondition, 'string')
-            topic.manage_addProperty(TOPIC_SEARCH_SCRIPT, topicScript, 'string')
-
-            stateCriterion = topic.addCriterion(field='review_state', criterion_type='ATListCriterion')
-            stateCriterion.setValue(stateValues)
-            topic.setLimitNumber(True)
-            topic.setItemCount(20)
-            topic.setSortCriterion('created', True)
-            topic.setCustomView(True)
-            topic.setCustomViewFields(['Title', 'CreationDate', 'Creator', 'review_state'])
-            topic.reindexObject()
-
 
 def reinstallPloneMeeting(context, site):
     '''Reinstall PloneMeeting so after install methods are called and applied,
@@ -232,9 +177,6 @@ def finalizeExampleInstance(context):
     member = site.portal_membership.getMemberById('conseiller')
     if member:
         site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
-
-    # add some topics
-    _addTopics(context, site)
 
     # define some parameters for 'meeting-config-college'
     # items are sendable to the 'meeting-config-council'

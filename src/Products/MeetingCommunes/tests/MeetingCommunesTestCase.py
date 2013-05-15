@@ -60,6 +60,10 @@ class MeetingCommunesTestCase(PloneMeetingTestCase):
         """
         originalLoggedInUser = self.portal.portal_membership.getAuthenticatedMember().getId()
         login(self.portal, 'admin')
+        # change the category of recurring items so categories can be removed
+        # as a category can not be used to be removed
+        for item in meetingConfig.recurringitems.objectValues('MeetingItem'):
+            item.setCategory('deployment')
         # Remove existing categories
         idsToRemove = []
         for cat in meetingConfig.categories.objectValues('MeetingCategory'):
@@ -76,9 +80,6 @@ class MeetingCommunesTestCase(PloneMeetingTestCase):
                       ('subproducts', 'Subproducts'), ]
         for cat in categories:
             meetingConfig.categories.invokeFactory('MeetingCategory', id=cat[0], title=cat[1])
-        #change the category of recurring items
-        for item in meetingConfig.recurringitems.objectValues('MeetingItem'):
-            item.setCategory('deployment')
         # subproducts is a usingGroups category
         meetingConfig.categories.subproducts.setUsingGroups(('vendors',))
         if originalLoggedInUser:
