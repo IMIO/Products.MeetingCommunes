@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# File: testMeetingCategory.py
+# File: testMeetingGroup.py
 #
 # Copyright (c) 2007-2013 by Imio.be
 #
@@ -22,41 +22,35 @@
 # 02110-1301, USA.
 #
 
-from plone.app.testing import logout
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
-from Products.PloneMeeting.tests.testMeetingCategory import testMeetingCategory as pmmc
+from Products.PloneMeeting.tests.testMeetingGroup import testMeetingGroup as pmmg
 
 
-class testMeetingCategory(MeetingCommunesTestCase, pmmc):
-    '''Tests the MeetingCategory class methods.'''
+class testMeetingGroup(MeetingCommunesTestCase, pmmg):
+    '''Tests the testMeetingGroup class methods.'''
 
     def test_mc_VerifyTestNumbers(self):
         """
             We verify that there are the same test methods in original product and this sub-product
         """
-        tpm = self.getTestMethods(pmmc, 'test')
-        tmc = self.getTestMethods(testMeetingCategory, 'test_mc_call_')
+        tpm = self.getTestMethods(pmmg, 'test')
+        tmc = self.getTestMethods(testMeetingGroup, 'test_mc_call_')
         missing = []
         for key in tpm:
             key2 = key.replace('test', 'test_mc_call_')
             if not key2 in tmc:
                 missing.append(key)
         if len(missing):
-            self.fail("missing test methods %s from PloneMeeting test class '%s'" % (missing, 'testMeetingCategory'))
+            self.fail("missing test methods %s from PloneMeeting test class '%s'" % (missing, 'testMeetingGroup'))
 
-    def test_mc_call_CanNotRemoveLinkedMeetingCategory(self):
-        '''Run the testCanNotRemoveLinkedMeetingCategory from PloneMeeting.'''
-        # remove every recurring items that are using the 'developers' group
-        self.changeUser('admin')
-        self.meetingConfig.recurringitems.manage_delObjects([item.getId() for item in self.meetingConfig.getItems()
-                                                             if item.getProposingGroup() == 'developers'])
-        logout()
-        self.testCanNotRemoveLinkedMeetingCategory()
+    def test_mc_call_CanNotRemoveUsedMeetingGroup(self):
+        '''Run the testCanNotRemoveUsedMeetingCategory from PloneMeeting.'''
+        self.testCanNotRemoveUsedMeetingGroup()
 
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testMeetingCategory, prefix='test_mc_'))
+    suite.addTest(makeSuite(testMeetingGroup, prefix='test_mc_'))
     return suite
