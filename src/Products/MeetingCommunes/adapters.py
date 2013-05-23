@@ -356,7 +356,8 @@ class CustomMeeting(Meeting):
     security.declarePublic('getPrintableItemsByCategory')
     def getPrintableItemsByCategory(self, itemUids=[], late=False,
                                     ignore_review_states=[], by_proposing_group=False, group_prefixes={},
-                                    oralQuestion='both', toDiscuss='both',
+                                    privacy='*', oralQuestion='both', toDiscuss='both', categories=[],
+                                    excludedCategories=[], firstNumber=1, renumber=False,
                                     includeEmptyCategories=False, includeEmptyGroups=False):
         '''Returns a list of (late-)items (depending on p_late) ordered by
            category. Items being in a state whose name is in
@@ -366,18 +367,22 @@ class CustomMeeting(Meeting):
            allow to consider all groups whose acronym starts with a prefix from
            this param prefix as a unique group. p_group_prefixes is a dict whose
            keys are prefixes and whose values are names of the logical big
-           groups. A toDiscuss and oralQuestion can also be given, the item is a
+           groups. A privacy,A toDiscuss and oralQuestion can also be given, the item is a
            toDiscuss (oralQuestion) or not (or both) item.
            If p_includeEmptyCategories is True, categories for which no
            item is defined are included nevertheless. If p_includeEmptyGroups
            is True, proposing groups for which no item is defined are included
-           nevertheless.'''
+           nevertheless.Some specific categories can be given or some categories to exclude.
+           These 2 parameters are exclusive.  If renumber is True, a list of tuple
+           will be return with first element the number and second element, the item.
+           In this case, the firstNumber value can be used.'''
         # The result is a list of lists, where every inner list contains:
         # - at position 0: the category object (MeetingCategory or MeetingGroup)
         # - at position 1 to n: the items in this category
         # If by_proposing_group is True, the structure is more complex.
         # oralQuestion can be 'both' or False or True
         # toDiscuss can be 'both' or 'False' or 'True'
+        # privacy can be '*' or 'public' or 'secret'
         # Every inner list contains:
         # - at position 0: the category object
         # - at positions 1 to n: inner lists that contain:
@@ -400,9 +405,15 @@ class CustomMeeting(Meeting):
                 # Check if the review_state has to be taken into account
                 if item.queryState() in ignore_review_states:
                     continue
+                elif not (privacy == '*' or item.getPrivacy() == privacy):
+                    continue
                 elif not (oralQuestion == 'both' or item.getOralQuestion() == oralQuestion):
                     continue
                 elif not (toDiscuss == 'both' or item.getToDiscuss() == toDiscuss):
+                    continue
+                elif categories and not item.getCategory() in categories:
+                    continue
+                elif excludedCategories and item.getCategory() in excludedCategories:
                     continue
                 currentCat = item.getCategory(theObject=True)
                 currentCatId = currentCat.getId()
@@ -469,6 +480,15 @@ class CustomMeeting(Meeting):
                                                 groups)
                     # The method does nothing if the group (or another from the
                     # same macro-group) is already there.
+        if renumber:
+            #return a list of tuple with first element the number and second
+            #element the item itself
+            i = firstNumber
+            res = []
+            for item in items:
+                res.append((i, item))
+                i = i + 1
+            items = res
         return res
 
     security.declarePublic('getPrintableItemsByNumCategory')
