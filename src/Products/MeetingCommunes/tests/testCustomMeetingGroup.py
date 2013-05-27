@@ -26,18 +26,20 @@ from plone.app.testing import login
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
 
-class testMeetingGroup(MeetingCommunesTestCase):
+
+class testCustomMeetingGroup(MeetingCommunesTestCase):
     '''Tests the MeetingGroup adapted methods.'''
 
     def testListEchevinServices(self):
         login(self.portal, 'admin')
         from Products.Archetypes.atapi import DisplayList
         les = DisplayList([('developers', u'Developers'), ('vendors', u'Vendors')])
-        meetingGroups = self.tool.objectValues('MeetingGroup')   
-        self.assertEquals(meetingGroups[0].listEchevinServices(),les)
+        meetingGroups = self.tool.objectValues('MeetingGroup')
+        self.assertEquals(meetingGroups[0].listEchevinServices(), les)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testMeetingGroup))
+    suite.addTest(makeSuite(testCustomMeetingGroup))
     return suite

@@ -6,6 +6,7 @@ from Products.PloneMeeting.profiles import *
 annexe = MeetingFileTypeDescriptor('annexe', 'Annexe', 'attach.png', '')
 annexeBudget = MeetingFileTypeDescriptor('annexeBudget', 'Article Budgetaire', 'budget.png', '')
 annexeCahier = MeetingFileTypeDescriptor('annexeCahier', 'Cahier des Charges', 'cahier.gif', '')
+itemAnnex = MeetingFileTypeDescriptor('item-annex', 'Other annex(es)', 'attach.png', '')
 annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe a la decision', 'attach.png', '', True)
 # Some type of annexes taken from the default PloneMeeting test profile
 marketingAnalysis = MeetingFileTypeDescriptor(
@@ -96,8 +97,8 @@ collegeMeeting.signatures = 'Pierre Dupont, Bourgmestre - Charles Exemple, Secr�
 collegeMeeting.certifiedSignatures = 'Mr Présent Actuellement, Bourgmestre ff - Charles Exemple, Secrétaire communal'
 collegeMeeting.categories = categories
 collegeMeeting.shortName = 'College'
-collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision,
-                                   overheadAnalysis, marketingAnalysis]
+collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, itemAnnex,
+                                   annexeDecision, overheadAnalysis, marketingAnalysis]
 collegeMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
 collegeMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.detailedDescription',
@@ -206,7 +207,7 @@ councilMeeting.signatures = 'Default signatures'
 councilMeeting.certifiedSignatures = 'Mr Présent Actuellement, Bourgmestre ff - Charles Exemple, Secrétaire communal'
 councilMeeting.categories = categories
 councilMeeting.shortName = 'Council'
-councilMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision]
+councilMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, itemAnnex, annexeDecision]
 councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.detailedDescription',
                                        'MeetingItem.decision',
