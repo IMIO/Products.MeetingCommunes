@@ -35,8 +35,9 @@ from Products.PloneMeeting.MeetingGroup import MeetingGroup
 from Products.PloneMeeting.Meeting import MeetingWorkflowActions, \
     MeetingWorkflowConditions, Meeting
 from Products.PloneMeeting.MeetingConfig import MeetingConfig
+from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
 from Products.PloneMeeting.interfaces import IMeetingCustom, IMeetingItemCustom, \
-    IMeetingGroupCustom, IMeetingConfigCustom
+    IMeetingGroupCustom, IMeetingConfigCustom, IToolPloneMeetingCustom
 from Products.MeetingCommunes.interfaces import \
     IMeetingItemCollegeWorkflowConditions, IMeetingItemCollegeWorkflowActions,\
     IMeetingCollegeWorkflowConditions, IMeetingCollegeWorkflowActions, \
@@ -204,7 +205,6 @@ def validate_workflowAdaptations(self, v):
     if ('add_published_state' in v) and ('no_publication' in v):
         return msg
 MeetingConfig.validate_workflowAdaptations = validate_workflowAdaptations
-
 
 class CustomMeeting(Meeting):
     '''Adapter that adapts a meeting implementing IMeeting to the
@@ -639,7 +639,6 @@ class CustomMeeting(Meeting):
             return False
     Meeting.showAllItemsAtOnce = showAllItemsAtOnce
 
-
 class CustomMeetingItem(MeetingItem):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
        interface IMeetingItemCustom.'''
@@ -779,7 +778,6 @@ class CustomMeetingItem(MeetingItem):
         return res
     MeetingItem.getDecision = getDecision
     MeetingItem.getRawDecision = getDecision
-
 
 class CustomMeetingGroup(MeetingGroup):
     '''Adapter that adapts a meeting group implementing IMeetingGroup to the
@@ -1358,6 +1356,59 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
             res = True
         return res
 
+class CustomToolPloneMeeting(ToolPloneMeeting):
+    '''Adapter that adapts a tool implementing ToolPloneMeeting to the
+       interface IToolPloneMeetingCustom'''
+
+    implements(IToolPloneMeetingCustom)
+    security = ClassSecurityInfo()
+
+    security.declarePublic('getSpecificAssemblyFor')
+    def getSpecificAssemblyFor(self, assembly, startTxt=''):
+        ''' Return the Assembly between two tag.
+            This method is use in template
+        '''
+        #Pierre Dupont - Bourgmestre,
+        #Charles Exemple - 1er Echevin,
+        #Echevin Un, Echevin Deux excusé, Echevin Trois - Echevins,
+        #Jacqueline Exemple, Responsable du CPAS
+        #Absentes:
+        #Mademoiselle x
+        #Excusés:
+        #Monsieur Y, Madame Z
+        res = []
+        tmp = ['<p class="mltAssembly">']
+        splitted_assembly = assembly.replace('<p>','').replace('</p>','').split('<br />')
+        start_text = startTxt == ''
+        for assembly_line in splitted_assembly:
+            assembly_line = assembly_line.strip()
+            #check if this line correspond to startTxt (in this cas, we can begin treatment) 
+            if not start_text:
+                start_text = assembly_line.startswith(startTxt)
+                if start_text:
+                    #when starting treatment, add tag (not use if startTxt=='')
+                    res.append(assembly_line)
+                continue
+            #check if we must stop treatment...
+            if assembly_line.endswith(':'):
+                break
+            lines = assembly_line.split(',')
+            cpt = 1
+            my_line = ''
+            for line in lines:
+               if cpt == len(lines):
+                   my_line = "%s%s<br />"%(my_line,line)
+                   tmp.append(my_line)
+               else:
+                   my_line = "%s%s,"%(my_line,line)
+               cpt = cpt + 1
+        if len(tmp) > 1:
+            tmp[-1] = tmp[-1].replace('<br />','')
+            tmp.append('</p>')
+        else:
+            return ''
+        res.append(''.join(tmp))
+        return res
 
 # ------------------------------------------------------------------------------
 InitializeClass(CustomMeeting)
@@ -1371,4 +1422,5 @@ InitializeClass(MeetingItemCouncilWorkflowActions)
 InitializeClass(MeetingItemCouncilWorkflowConditions)
 InitializeClass(MeetingCouncilWorkflowActions)
 InitializeClass(MeetingCouncilWorkflowConditions)
+InitializeClass(CustomToolPloneMeeting)
 # ------------------------------------------------------------------------------

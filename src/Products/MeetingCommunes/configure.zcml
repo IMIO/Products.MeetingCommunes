@@ -60,6 +60,10 @@
   <adapter for="Products.PloneMeeting.interfaces.IMeetingGroup"
            factory="Products.MeetingCommunes.adapters.CustomMeetingGroup"
            provides="Products.PloneMeeting.interfaces.IMeetingGroupCustom"/>
+           
+  <adapter for="Products.PloneMeeting.interfaces.IToolPloneMeeting"
+           factory="Products.MeetingCommunes.adapters.CustomToolPloneMeeting"
+           provides="Products.PloneMeeting.interfaces.IToolPloneMeetingCustom"/>
 
   <!-- ##/code-section configure.zcml.header -->
 
