@@ -2,7 +2,7 @@
 #
 # File: testCustomMeeting.py
 #
-# Copyright (c) 2007-2012 by CommunesPlone.org
+# Copyright (c) 2007-2013 by Imio.be
 #
 # GNU General Public License (GPL)
 #
@@ -25,9 +25,9 @@
 from plone.app.testing import login
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
-from Products.PloneMeeting.tests.testMeeting import testMeeting as pmtm
 
-class testCustomMeeting(MeetingCommunesTestCase, pmtm):
+
+class testCustomMeeting(MeetingCommunesTestCase):
     """
         Tests the Meeting adapted methods
     """

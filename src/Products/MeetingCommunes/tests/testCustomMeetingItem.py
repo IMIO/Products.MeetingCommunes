@@ -2,7 +2,7 @@
 #
 # File: testCustomMeetingItem.py
 #
-# Copyright (c) 2007-2012 by CommunesPlone.org
+# Copyright (c) 2007-2013 by Imio.be
 #
 # GNU General Public License (GPL)
 #
@@ -26,9 +26,9 @@ from DateTime import DateTime
 from plone.app.testing import login
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
-from Products.PloneMeeting.tests.testMeetingItem import testMeetingItem as pmtmi
 
-class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
+
+class testCustomMeetingItem(MeetingCommunesTestCase):
     """
         Tests the MeetingItem adapted methods
     """
@@ -55,10 +55,10 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.do(m4, 'decide')
         self.do(m4, 'close')
         item = self.create('MeetingItem')
-        #getMeetingsAcceptingItems should only return meetings 
+        #getMeetingsAcceptingItems should only return meetings
         #that are 'created', 'frozen' or 'decided' for the meetingManager
         self.assertEquals([m.id for m in item.adapted().getMeetingsAcceptingItems()], [m1.id, m2.id, m3.id])
-        #getMeetingsAcceptingItems should only return meetings 
+        #getMeetingsAcceptingItems should only return meetings
         #that are 'created' or 'frozen' for the meetingMember
         login(self.portal, 'pmCreator1')
         item = self.create('MeetingItem')
@@ -76,8 +76,8 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         i1.setProposingGroup('vendors')
         #before present in meeting, certfiedSignatures must be empty
         res, isGrpSign = i1.adapted().getCertifiedSignatures()
-        self.assertEquals(res,'')
-        self.assertEquals(isGrpSign,False)
+        self.assertEquals(res, '')
+        self.assertEquals(isGrpSign, False)
         self.do(i1, 'propose')
         login(self.portal, 'pmReviewer1')
         self.do(i1, 'validate')
@@ -85,15 +85,17 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.do(i1, 'present')
         # no signatures defined for vendors group, the MeetingConfig.certifiedSignatures are used
         res, isGrpSign = i1.adapted().getCertifiedSignatures()
-        self.assertEquals(res,'Mr Pr\xc3\xa9sent Actuellement, Bourgmestre ff - Charles Exemple, Secr\xc3\xa9taire communal')
-        self.assertEquals(isGrpSign,False)
+        self.assertEquals(
+            res,
+            'Mr Pr\xc3\xa9sent Actuellement, Bourgmestre ff - Charles Exemple, Secr\xc3\xa9taire communal')
+        self.assertEquals(isGrpSign, False)
         login(self.portal, 'pmCreator1')
         i2 = self.create('MeetingItem')
         i2.setProposingGroup('developers')
         #before present in meeting, certfiedSignatures must be empty
         res, isGrpSign = i2.adapted().getCertifiedSignatures()
-        self.assertEquals(res,'')
-        self.assertEquals(isGrpSign,False)
+        self.assertEquals(res, '')
+        self.assertEquals(isGrpSign, False)
         self.do(i2, 'propose')
         login(self.portal, 'pmReviewer1')
         self.do(i2, 'validate')
@@ -101,8 +103,8 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.do(i2, 'present')
         #signatures defined for developers group, get it
         res, isGrpSign = i2.adapted().getCertifiedSignatures()
-        self.assertEquals(res,'developers signatures')
-        self.assertEquals(isGrpSign,True)
+        self.assertEquals(res, 'developers signatures')
+        self.assertEquals(isGrpSign, True)
 
     def test_mc_GetEchevinsForProposingGroup(self):
         '''Check a meetingItem for developers group return an echevin (the Same group in our case)
@@ -117,13 +119,13 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         i1.setProposingGroup('vendors')
         #before present in meeting, certfiedSignatures must be empty
         res = i1.adapted().getEchevinsForProposingGroup()
-        self.assertEquals(res,[])
+        self.assertEquals(res, [])
         login(self.portal, 'pmCreator1')
         i2 = self.create('MeetingItem')
         i2.setProposingGroup('developers')
         #before present in meeting, certfiedSignatures must be empty
         res = i2.adapted().getEchevinsForProposingGroup()
-        self.assertEquals(res,['developers'])
+        self.assertEquals(res, ['developers'])
 
     def test_mc_getDelayedDecision(self):
         '''If item is reported, the decision can be changed'''
@@ -136,9 +138,9 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         item = m1.getItems()[0]
         item.setDecision('<p>Testing decision field</p>')
         #field itemDecisionReportText in configuration is empty
-        self.assertEquals(item.getDecision(),'<p>Testing decision field</p>')
+        self.assertEquals(item.getDecision(), '<p>Testing decision field</p>')
         self.do(item, 'delay')
-        self.assertEquals(item.getDecision(),'<p>Testing decision field</p>')
+        self.assertEquals(item.getDecision(), '<p>Testing decision field</p>')
         #change field itemDecisionReportText in configuration by python:'item is delay'
         item = m1.getItems()[1]
         meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
@@ -147,9 +149,9 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         login(self.portal, 'pmManager')
         item.setDecision('<p>Testing decision field</p>')
         #field itemDecisionReportText in configuration is empty
-        self.assertEquals(item.getDecision(),'<p>Testing decision field</p>')
+        self.assertEquals(item.getDecision(), '<p>Testing decision field</p>')
         self.do(item, 'delay')
-        self.assertEquals(item.getDecision(),'<p>Item is delayed</p>')
+        self.assertEquals(item.getDecision(), '<p>Item is delayed</p>')
         #change field itemDecisionReportText in configuration by python:'%s delay this item'%here.getDecision()'
         item = m1.getItems()[2]
         meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
@@ -157,8 +159,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase, pmtmi):
         item.setDecision('<p>Testing decision field</p>')
         #field itemDecisionReportText in configuration is empty
         self.do(item, 'delay')
-        self.assertEquals(item.getDecision(),'<p>Testing decision field</p><p>Delay this item</p>')
-
+        self.assertEquals(item.getDecision(), '<p>Testing decision field</p><p>Delay this item</p>')
 
 
 def test_suite():
