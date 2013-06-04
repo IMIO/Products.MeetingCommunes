@@ -104,7 +104,13 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
     def _getNecessaryMeetingTransitionsToAcceptItem(self):
         '''Returns the necessary transitions to trigger on the Meeting before being
            able to accept an item.'''
-        return ['freeze', 'decide', ]
+        # add the 'publish' transition if it exists in the currently used wf for Meeting
+        currentMeetingWf = self.meetingConfig.getMeetingWorkflow()
+        wf = getattr(self.portal.portal_workflow, currentMeetingWf)
+        res = ['freeze', 'decide', ]
+        if 'publish' in wf.transitions:
+            res.insert(1, 'publish')
+        return res
 
     def test_mc_call_AddAutoCopyGroups(self):
         '''Test the functionnality of automatically adding some copyGroups depending on
@@ -184,6 +190,12 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.assertEquals(item.maySignItem(authMember()), False)
         self.assertRaises(Unauthorized, item.setItemIsSigned, False)
         self.assertRaises(Unauthorized, item.restrictedTraverse('@@toggle_item_is_signed'), item.UID())
+
+    def test_mc_call_IsPrivacyViewable(self):
+        '''See doc string in PloneMeeting.'''
+        # use self.meetingConfig2 that has a 'published' state
+        self.meetingConfig = self.meetingConfig2
+        pmtmi.testIsPrivacyViewable(self)
 
 
 def test_suite():
