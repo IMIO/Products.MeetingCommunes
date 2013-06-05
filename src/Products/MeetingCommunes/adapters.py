@@ -769,7 +769,8 @@ class CustomMeetingItem(MeetingItem):
         res = self.getField('decision').get(self, **kwargs)
         if keepWithNext:
             res = self.signatureNotAlone(res)
-        meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
+        tool = getToolByName(item, 'portal_plonemeeting')
+        meetingConfig = tool.getMeetingConfig(item)
         adaptations = meetingConfig.getWorkflowAdaptations()
         if 'add_published_state' in adaptations and item.getMeeting() and \
            item.getMeeting().queryState() == 'decided' and not item.portal_plonemeeting.isManager():
