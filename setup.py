@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '3.0dev'
+version = '3.0.2dev'
 
 setup(name='Products.MeetingCommunes',
       version=version,
@@ -39,4 +39,3 @@ setup(name='Products.MeetingCommunes',
           'plonetheme.imioapps'],
       entry_points={},
       )
-
