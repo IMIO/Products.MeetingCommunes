@@ -4,8 +4,15 @@ Products.MeetingCommunes Changelog
 Older versions than 3.0 can be found at http://svn.communesplone.org/svn/communesplone/PloneMeeting/tags/
 Version 1.x are for Plone2.5, 2.x are for Plone3.x and 3+ are for Plone4.x
 
-3.0 (unreleased-plone4)
------------------------
+3.0.1 (unreleased)
+------------------
+- Added sample of document template with printed annexes
+- Added method to ease pritning of assembly with 'category' of assembly members
+- Make printing by category as functionnal as printing without category
+- Corrected bug while going back to published that could raise a WorkflowException sometimes
+
+3.0 (2013-04-03)
+----------------
 - Migrated to Plone 4 (use PloneMeeting 3.x, see PloneMeeting's HISTORY.txt for full changes list)
 
 2.1.3 (2012-09-19)
