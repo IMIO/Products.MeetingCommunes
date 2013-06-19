@@ -15,8 +15,6 @@
   <include package="collective.ckeditor"/>
   <include package="Products.PloneMeeting"/>
 
-  <include package=".browser" />
-
   <adapter for="Products.PloneMeeting.interfaces.IMeetingItem"
            factory="Products.MeetingCommunes.adapters.MeetingItemCollegeWorkflowActions"
            provides="Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions"/>
@@ -60,7 +58,7 @@
   <adapter for="Products.PloneMeeting.interfaces.IMeetingGroup"
            factory="Products.MeetingCommunes.adapters.CustomMeetingGroup"
            provides="Products.PloneMeeting.interfaces.IMeetingGroupCustom"/>
-           
+
   <adapter for="Products.PloneMeeting.interfaces.IToolPloneMeeting"
            factory="Products.MeetingCommunes.adapters.CustomToolPloneMeeting"
            provides="Products.PloneMeeting.interfaces.IToolPloneMeetingCustom"/>
