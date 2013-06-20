@@ -36,10 +36,3 @@ class testCustomMeetingGroup(MeetingCommunesTestCase):
         les = DisplayList([('developers', u'Developers'), ('vendors', u'Vendors')])
         meetingGroups = self.tool.objectValues('MeetingGroup')
         self.assertEquals(meetingGroups[0].listEchevinServices(), les)
-
-
-def test_suite():
-    from unittest import TestSuite, makeSuite
-    suite = TestSuite()
-    suite.addTest(makeSuite(testCustomMeetingGroup))
-    return suite

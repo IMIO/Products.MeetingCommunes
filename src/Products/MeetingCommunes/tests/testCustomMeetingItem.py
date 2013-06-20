@@ -33,7 +33,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         Tests the MeetingItem adapted methods
     """
 
-    def test_mc_GetMeetingsAcceptingItems(self):
+    def test_GetMeetingsAcceptingItems(self):
         """
            We have to test this adapted method.
            It should only return meetings that are "created" or "frozen"
@@ -64,7 +64,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         item = self.create('MeetingItem')
         self.assertEquals([m.id for m in item.adapted().getMeetingsAcceptingItems()], [m1.id, m2.id])
 
-    def test_mc_GetCertifiedSignatures(self):
+    def test_GetCertifiedSignatures(self):
         '''Check that the certified signature is defined on developers group but not defined on vendors.'''
         #create an item for test
         login(self.portal, 'pmManager')
@@ -106,7 +106,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.assertEquals(res, 'developers signatures')
         self.assertEquals(isGrpSign, True)
 
-    def test_mc_GetEchevinsForProposingGroup(self):
+    def test_GetEchevinsForProposingGroup(self):
         '''Check a meetingItem for developers group return an echevin (the Same group in our case)
            and a meetingItem for vendors return no echevin.'''
         #create an item for test
@@ -127,7 +127,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         res = i2.adapted().getEchevinsForProposingGroup()
         self.assertEquals(res, ['developers'])
 
-    def test_mc_getDelayedDecision(self):
+    def test_getDelayedDecision(self):
         '''If item is reported, the decision can be changed'''
         login(self.portal, 'pmManager')
         #create a meeting with items so we can play the workflow
@@ -160,11 +160,3 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         #field itemDecisionReportText in configuration is empty
         self.do(item, 'delay')
         self.assertEquals(item.getDecision(), '<p>Testing decision field</p><p>Delay this item</p>')
-
-
-def test_suite():
-    from unittest import TestSuite, makeSuite
-    suite = TestSuite()
-    # launch only tests prefixed by 'test_mc_' to avoid launching the tests coming from pmtmi
-    suite.addTest(makeSuite(testCustomMeetingItem, prefix='test_mc_'))
-    return suite

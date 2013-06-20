@@ -22,24 +22,21 @@
 # 02110-1301, USA.
 #
 
-from zope.component import getUtility, getMultiAdapter
-from plone.app.testing import login
-from plone.portlets.interfaces import IPortletManager, IPortletRenderer
-from Products.PloneMeeting.browser import portlet_plonemeeting as pm
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testPortlets import testPortlets as pmtp
 
+
 class testPortlets(MeetingCommunesTestCase, pmtp):
     '''Tests the portlets methods.'''
 
-    def test_mc_call_PortletPMAvailableTemplates(self):
+    def test_subproduct_call_PortletPMAvailableTemplates(self):
         '''Run the testPortletPMAvailableTemplates from PloneMeeting.'''
-        pmtp.testPortletPMAvailableTemplates(self)
+        pmtp.test_pm_PortletPMAvailableTemplates(self)
 
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testPortlets, prefix='test_mc_'))
+    suite.addTest(makeSuite(testPortlets, prefix='test_subproduct_'))
     return suite

@@ -16,6 +16,20 @@ overheadAnalysis = MeetingFileTypeDescriptor(
     'overhead-analysis', 'Administrative overhead analysis',
     'attach.png', '')
 
+# Pod templates ----------------------------------------------------------------
+agendaTemplate = PodTemplateDescriptor('agendaTemplate', 'Meeting agenda')
+agendaTemplate.podTemplate = 'Agenda.odt'
+agendaTemplate.podCondition = 'python:here.meta_type=="Meeting"'
+
+decisionsTemplate = PodTemplateDescriptor('decisionsTemplate',
+                                          'Meeting decisions')
+decisionsTemplate.podTemplate = 'Decisions.odt'
+decisionsTemplate.podCondition = 'python:here.meta_type=="Meeting" and ' \
+                                 'here.adapted().isDecided()'
+
+itemTemplate = PodTemplateDescriptor('itemTemplate', 'Meeting item')
+itemTemplate.podTemplate = 'Item.odt'
+itemTemplate.podCondition = 'python:here.meta_type=="MeetingItem"'
 
 # Categories -------------------------------------------------------------------
 recurring = CategoryDescriptor('recurrents', 'Recurrents')
@@ -132,6 +146,7 @@ collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_
 collegeMeeting.meetingPowerObserversStates = ('frozen', 'published', 'decided', 'closed')
 collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'), ]
+collegeMeeting.podTemplates = [agendaTemplate, decisionsTemplate, itemTemplate]
 
 collegeMeeting.recurringItems = [
     RecurringItemDescriptor(

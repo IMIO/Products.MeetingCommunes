@@ -46,13 +46,6 @@ class MeetingCommunesTestCase(PloneMeetingTestCase):
         self.annexFileTypeDecision = 'annexeDecision'
         self.transitionsToCloseAMeeting = ('freeze', 'publish', 'decide', 'close')
 
-    def getTestMethods(self, module, prefix):
-        methods = {}
-        for name in dir(module):
-            if name.startswith(prefix) and name != 'test_mc_VerifyTestNumbers':
-                methods[name] = 0
-        return methods
-
     def _adaptCategoriesForTest(self, meetingConfig):
         """
           This test depends on existing categories, so, define the same categories
@@ -86,3 +79,19 @@ class MeetingCommunesTestCase(PloneMeetingTestCase):
             login(self.portal, originalLoggedInUser)
         else:
             logout()
+
+    def getTestMethods(self, module, prefix):
+        methods = {}
+        for name in dir(module):
+            if name.startswith(prefix) and name != 'test_mc_VerifyTestNumbers':
+                methods[name] = 0
+        return methods
+
+
+# this is necessary to execute base test
+# test_tescasesubproduct_VerifyTestFiles from PloneMeeting
+def test_suite():
+    from unittest import TestSuite, makeSuite
+    suite = TestSuite()
+    suite.addTest(makeSuite(MeetingCommunesTestCase, prefix='test_testcasesubproduct_'))
+    return suite

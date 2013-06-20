@@ -31,33 +31,19 @@ from Products.PloneMeeting.tests.testMeetingCategory import testMeetingCategory 
 class testMeetingCategory(MeetingCommunesTestCase, pmmc):
     '''Tests the MeetingCategory class methods.'''
 
-    def test_mc_VerifyTestNumbers(self):
-        """
-            We verify that there are the same test methods in original product and this sub-product
-        """
-        tpm = self.getTestMethods(pmmc, 'test')
-        tmc = self.getTestMethods(testMeetingCategory, 'test_mc_call_')
-        missing = []
-        for key in tpm:
-            key2 = key.replace('test', 'test_mc_call_')
-            if not key2 in tmc:
-                missing.append(key)
-        if len(missing):
-            self.fail("missing test methods %s from PloneMeeting test class '%s'" % (missing, 'testMeetingCategory'))
-
-    def test_mc_call_CanNotRemoveLinkedMeetingCategory(self):
-        '''Run the testCanNotRemoveLinkedMeetingCategory from PloneMeeting.'''
+    def test_subproduct_call_CanNotRemoveLinkedMeetingCategory(self):
+        '''Run the test_pm_CanNotRemoveLinkedMeetingCategory from PloneMeeting.'''
         # remove every items in the metingConfig that are using the 'developers' group
         self.changeUser('admin')
         self.meetingConfig.recurringitems.manage_delObjects(
             [item.getId() for item in (self.meetingConfig.getItems() + self.meetingConfig.getItems('as_template_item'))
              if item.getProposingGroup() == 'developers'])
         logout()
-        self.testCanNotRemoveLinkedMeetingCategory()
+        self.test_pm_CanNotRemoveLinkedMeetingCategory()
 
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testMeetingCategory, prefix='test_mc_'))
+    suite.addTest(makeSuite(testMeetingCategory, prefix='test_subproduct_'))
     return suite

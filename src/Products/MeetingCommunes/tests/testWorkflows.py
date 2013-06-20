@@ -25,7 +25,6 @@
 from DateTime import DateTime
 from AccessControl import Unauthorized
 from plone.app.testing import login
-from Products.MeetingCommunes.config import *
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testWorkflows import testWorkflows as pmtw
@@ -34,44 +33,30 @@ from Products.PloneMeeting.tests.testWorkflows import testWorkflows as pmtw
 class testWorkflows(MeetingCommunesTestCase, pmtw):
     """Tests the default workflows implemented in MeetingCommunes."""
 
-    def test_mc_VerifyTestNumbers(self):
-        """
-            We verify that there are the same test methods in original product and this sub-product
-        """
-        tpm = self.getTestMethods(pmtw, 'test')
-        tmc = self.getTestMethods(testWorkflows, 'test_mc_call_')
-        missing = []
-        for key in tpm:
-            key2 = key.replace('test', 'test_mc_call_')
-            if not key2 in tmc:
-                missing.append(key)
-        if len(missing):
-            self.fail("missing test methods %s from PloneMeeting test class '%s'" % (missing, 'testWorkflows'))
-
-    def test_mc_call_CreateItem(self):
+    def test_subproduct_call_CreateItem(self):
         """
             Creates an item (in "created" state) and checks that only
             allowed persons may see this item.
         """
         #we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
-        pmtw.testCreateItem(self)
+        pmtw.test_pm_CreateItem(self)
         #we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        pmtw.testCreateItem(self)
+        pmtw.test_pm_CreateItem(self)
 
-    def test_mc_call_RemoveObjects(self):
+    def test_subproduct_call_RemoveObjects(self):
         """
             Tests objects removal (items, meetings, annexes...).
         """
         #we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
-        pmtw.testRemoveObjects(self)
+        pmtw.test_pm_RemoveObjects(self)
         #we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        pmtw.testRemoveObjects(self)
+        pmtw.test_pm_RemoveObjects(self)
 
-    def test_mc_call_WholeDecisionProcess(self):
+    def test_subproduct_call_WholeDecisionProcess(self):
         """
             This test covers the whole decision workflow. It begins with the
             creation of some items, and ends by closing a meeting.
@@ -158,7 +143,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
             This test covers the whole decision workflow. It begins with the
             creation of some items, and ends by closing a meeting.
         """
-        #meeting-config-college is tested in test_mc_WholeDecisionProcessCollege
+        #meeting-config-college is tested in test_subproduct_WholeDecisionProcessCollege
         #we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
         # pmCreator1 creates an item with 1 annex and proposes it
@@ -263,7 +248,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.do(meeting, 'decide')
         self.do(meeting, 'close')
 
-    def test_mc_call_WorkflowPermissions(self):
+    def test_subproduct_call_WorkflowPermissions(self):
         """
             This test checks whether workflow permissions are correct while
             creating and changing state of items and meetings. During the test,
@@ -278,7 +263,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         #pmtw.testWorkflowPermissions(self)
         #we do the test for the council config => in a separate method : a rollback is needed
 
-    def test_mc_WorkflowPermissionsCouncil(self):
+    def test_subproduct_WorkflowPermissionsCouncil(self):
         """
             This test checks whether workflow permissions are correct while
             creating and changing state of items and meetings. During the test,
@@ -292,14 +277,14 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # XXX test to set back on when using PloneMeeting 3
         #pmtw.testWorkflowPermissions(self)
 
-    def test_mc_call_RecurringItems(self):
+    def test_subproduct_call_RecurringItems(self):
         """
             Tests the recurring items system.
         """
         #we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
         #pmtw.testRecurringItems(self) workflow is different
-        self.test_mc_RecurringItemsCollege()
+        self.test_subproduct_RecurringItemsCollege()
         #we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
         #if not recurring item is defined, none is added
@@ -310,7 +295,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
         self.assertEquals(len(meeting.getItems()), 0)
 
-    def test_mc_RecurringItemsCollege(self):
+    def test_subproduct_RecurringItemsCollege(self):
         '''Tests the recurring items system.'''
         # First, define recurring items in the meeting config
         login(self.portal, 'admin')
@@ -355,7 +340,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.failUnless(len(meeting.getItems()) == 4)
         self.failUnless(len(meeting.getLateItems()) == 3)
 
-    def test_mc_FreezeMeeting(self):
+    def test_subproduct_FreezeMeeting(self):
         """
            When we freeze a meeting, every presented items will be frozen
            too and their state will be set to 'itemfrozen'.  When the meeting
@@ -391,7 +376,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.assertEquals('itemfrozen', wftool.getInfoFor(item1, 'review_state'))
         self.assertEquals('itemfrozen', wftool.getInfoFor(item2, 'review_state'))
 
-    def test_mc_CloseMeeting(self):
+    def test_subproduct_CloseMeeting(self):
         """
            When we close a meeting, every items are set to accepted if they are still
            not decided...
@@ -453,7 +438,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         #presented change into accepted
         self.assertEquals('accepted', wftool.getInfoFor(item7, 'review_state'))
 
-    def test_mc_call_RemoveContainer(self):
+    def test_subproduct_call_RemoveContainer(self):
         """
           We avoid a strange behaviour of Plone.  Removal of a container
           does not check inner objects security...
@@ -461,20 +446,20 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         """
         #we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
-        pmtw.testRemoveContainer(self)
+        pmtw.test_pm_RemoveContainer(self)
         #we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        pmtw.testRemoveContainer(self)
+        pmtw.test_pm_RemoveContainer(self)
 
-    def test_mc_call_DeactivateMeetingGroup(self):
+    def test_subproduct_call_DeactivateMeetingGroup(self):
         '''Deactivating a MeetingGroup will transfer every users of every
            sub Plone groups to the '_observers' Plone group'''
         #we do the test for the college config
-        pmtw.testDeactivateMeetingGroup(self)
+        pmtw.test_pm_DeactivateMeetingGroup(self)
 
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testWorkflows, prefix='test_mc_'))
+    suite.addTest(makeSuite(testWorkflows, prefix='test_subproduct_'))
     return suite

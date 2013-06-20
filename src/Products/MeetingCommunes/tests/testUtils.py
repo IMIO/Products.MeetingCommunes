@@ -25,7 +25,6 @@
 from AccessControl import Unauthorized
 from plone.app.testing import login
 from Products.ExternalMethod.ExternalMethod import manage_addExternalMethod
-from Products.MeetingCommunes.config import *
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
 
@@ -38,9 +37,17 @@ class testUtils(MeetingCommunesTestCase):
     def setUp(self):
         MeetingCommunesTestCase.setUp(self)
         #add the ExternalMethod export_meetinggroups in Zope
-        manage_addExternalMethod(self.portal.aq_inner.aq_parent, 'export_meetinggroups', '', 'Products.MeetingCommunes.utils', 'export_meetinggroups')
+        manage_addExternalMethod(self.portal.aq_inner.aq_parent,
+                                 'export_meetinggroups',
+                                 '',
+                                 'Products.MeetingCommunes.utils',
+                                 'export_meetinggroups')
         #add the ExternalMethod import_meetinggroups in Zope
-        manage_addExternalMethod(self.portal.aq_inner.aq_parent, 'import_meetinggroups', '', 'Products.MeetingCommunes.utils', 'import_meetinggroups')
+        manage_addExternalMethod(self.portal.aq_inner.aq_parent,
+                                 'import_meetinggroups',
+                                 '',
+                                 'Products.MeetingCommunes.utils',
+                                 'import_meetinggroups')
 
     def _exportMeetingGroups(self):
         return self.portal.export_meetinggroups()
@@ -88,10 +95,3 @@ class testUtils(MeetingCommunesTestCase):
                    'MeetingGroup developers already exists'
         res = self._importMeetingGroups(dict)
         self.assertEquals(expected, res)
-
-
-def test_suite():
-    from unittest import TestSuite, makeSuite
-    suite = TestSuite()
-    suite.addTest(makeSuite(testUtils))
-    return suite

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-# File: testMeetingFileType.py
+# File: testPodTemplates.py
 #
-# Copyright (c) 2007-2013 by Imio.be
+# Copyright (c) 2013 by Imio.be
 #
 # GNU General Public License (GPL)
 #
@@ -24,20 +24,19 @@
 
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
-from Products.PloneMeeting.tests.testMeetingFileType import testMeetingFileType as pmmft
+from Products.PloneMeeting.tests.testPodTemplates import testPodTemplates as pmtpt
 
 
-class testMeetingFileType(MeetingCommunesTestCase, pmmft):
-    '''Tests the MeetingFileType class methods.'''
+class testPodTemplates(MeetingCommunesTestCase, pmtpt):
+    '''Tests various aspects of document generation through POD templates.'''
 
-    def test_subproduct_call_CanNotRemoveLinkedMeetingFileType(self):
-        '''Run the testCanNotRemoveLinkedMeetingFileType from PloneMeeting.'''
-        # remove every recurring items that are using the 'developers' group
-        self.test_pm_CanNotRemoveLinkedMeetingFileType()
+    def test_subproduct_call_Conditions(self):
+        '''Run the testConditions from PloneMeeting.'''
+        pmtpt.test_pm_Conditions(self)
 
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testMeetingFileType, prefix='test_subproduct_'))
+    suite.addTest(makeSuite(testPodTemplates, prefix='test_subproduct_'))
     return suite

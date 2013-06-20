@@ -31,21 +31,7 @@ from Products.PloneMeeting.tests.testMeetingGroup import testMeetingGroup as pmm
 class testMeetingGroup(MeetingCommunesTestCase, pmmg):
     '''Tests the testMeetingGroup class methods.'''
 
-    def test_mc_VerifyTestNumbers(self):
-        """
-            We verify that there are the same test methods in original product and this sub-product
-        """
-        tpm = self.getTestMethods(pmmg, 'test')
-        tmc = self.getTestMethods(testMeetingGroup, 'test_mc_call_')
-        missing = []
-        for key in tpm:
-            key2 = key.replace('test', 'test_mc_call_')
-            if not key2 in tmc:
-                missing.append(key)
-        if len(missing):
-            self.fail("missing test methods %s from PloneMeeting test class '%s'" % (missing, 'testMeetingGroup'))
-
-    def test_mc_call_CanNotRemoveUsedMeetingGroup(self):
+    def test_subproduct_call_CanNotRemoveUsedMeetingGroup(self):
         '''Run the testCanNotRemoveUsedMeetingCategory from PloneMeeting.'''
         # remove every recurring items in existing meetingConfigs except template2 in self.meetingConfig
         self.changeUser('admin')
@@ -55,11 +41,11 @@ class testMeetingGroup(MeetingCommunesTestCase, pmmg):
         self.meetingConfig2.recurringitems.manage_delObjects(
             [item.getId() for item in (self.meetingConfig2.recurringitems.objectValues('MeetingItem'))])
         logout()
-        self.testCanNotRemoveUsedMeetingGroup()
+        self.test_pm_CanNotRemoveUsedMeetingGroup()
 
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testMeetingGroup, prefix='test_mc_'))
+    suite.addTest(makeSuite(testMeetingGroup, prefix='test_subproduct_'))
     return suite

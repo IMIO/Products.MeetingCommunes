@@ -30,55 +30,41 @@ from Products.PloneMeeting.tests.testToolPloneMeeting import testToolPloneMeetin
 class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
     '''Tests the ToolPloneMeeting class methods.'''
 
-    def test_mc_VerifyTestNumbers(self):
-        """
-            We verify that there are the same test methods in original product and this sub-product
-        """
-        tpm = self.getTestMethods(pmtt, 'test')
-        tmc = self.getTestMethods(testToolPloneMeeting, 'test_mc_call_')
-        missing = []
-        for key in tpm:
-            key2 = key.replace('test', 'test_mc_call_')
-            if not key2 in tmc:
-                missing.append(key)
-        if len(missing):
-            self.fail("missing test methods %s from PloneMeeting test class '%s'" % (missing, 'testToolPloneMeeting'))
-
-    def test_mc_call_GetMeetingGroup(self):
+    def test_subproduct_call_GetMeetingGroup(self):
         '''Run the testGetMeetingGroup from PloneMeeting.'''
-        self.testGetMeetingGroup()
+        self.test_pm_GetMeetingGroup()
 
-    def test_mc_call_MoveMeetingGroups(self):
+    def test_subproduct_call_MoveMeetingGroups(self):
         '''Run the testMoveMeetingGroups from PloneMeeting.'''
-        self.testMoveMeetingGroups()
+        self.test_pm_MoveMeetingGroups()
 
-    def test_mc_call_CloneItem(self):
+    def test_subproduct_call_CloneItem(self):
         '''Run the testCloneItem from PloneMeeting.'''
-        self.testCloneItem()
+        self.test_pm_CloneItem()
 
-    def test_mc_call_CloneItemWithContent(self):
+    def test_subproduct_call_CloneItemWithContent(self):
         '''Run the testCloneItemWithContent from PloneMeeting.'''
-        self.testCloneItemWithContent()
+        self.test_pm_CloneItemWithContent()
 
-    def test_mc_call_CloneItemWithContentNotRemovableByPermission(self):
+    def test_subproduct_call_CloneItemWithContentNotRemovableByPermission(self):
         '''Run the testCloneItemWithContentNotRemovableByPermission from PloneMeeting.'''
-        self.testCloneItemWithContentNotRemovableByPermission()
+        self.test_pm_CloneItemWithContentNotRemovableByPermission()
 
-    def test_mc_call_PasteItems(self):
+    def test_subproduct_call_PasteItems(self):
         '''Run the testPasteItems from PloneMeeting.'''
-        self.testPasteItems()
+        self.test_pm_PasteItems()
 
-    def test_mc_call_ShowPloneMeetingTab(self):
+    def test_subproduct_call_ShowPloneMeetingTab(self):
         '''Run the testShowPloneMeetingTab from PloneMeeting.'''
-        self.testShowPloneMeetingTab()
+        self.test_pm_ShowPloneMeetingTab()
 
-    def test_mc_call_SetupProcessForCreationFlag(self):
+    def test_subproduct_call_SetupProcessForCreationFlag(self):
         '''Run the testSetupProcessForCreationFlag from PloneMeeting.'''
-        self.testSetupProcessForCreationFlag()
+        self.test_pm_SetupProcessForCreationFlag()
 
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testToolPloneMeeting, prefix='test_mc_'))
+    suite.addTest(makeSuite(testToolPloneMeeting, prefix='test_subproduct_'))
     return suite

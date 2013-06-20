@@ -42,56 +42,41 @@ class testVotes(MeetingCommunesTestCase, pmtv):
         login(self.portal, 'admin')
         self.meetingConfig.recurringitems.manage_delObjects([self.meetingConfig.recurringitems.objectValues()[0].getId(),])
 
-    def test_mc_VerifyTestNumbers(self):
-        """
-            We verify that there are the same test methods in original product and this sub-product
-        """
-        tpm = self.getTestMethods(pmtv, 'test')
-        tmc = self.getTestMethods(testVotes, 'test_mc_call_')
-        missing = []
-        for key in tpm:
-            key2 = key.replace('test', 'test_mc_call_')
-            if not tmc.has_key(key2):
-                missing.append(key)
-        if len(missing):
-            self.fail("missing test methods %s from PloneMeeting test class '%s'" % (missing, 'testVotes'))
-
-    def test_mc_call_MayConsultVotes(self):
+    def test_subproduct_call_MayConsultVotes(self):
         """
            Run the testMayConsultVotes from PloneMeeting
         """
         # votes are only enabled for the meeting-config-council
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        pmtv.testMayConsultVotes(self)
+        pmtv.test_pm_MayConsultVotes(self)
 
-    def test_mc_call_MayEditVotes(self):
+    def test_subproduct_call_MayEditVotes(self):
         """
            Run the testMayEditVotes from PloneMeeting
         """
         # votes are only enabled for the meeting-config-council
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        pmtv.testMayEditVotes(self)
+        pmtv.test_pm_MayEditVotes(self)
 
-    def test_mc_call_OnSaveItemPeopleInfos(self):
+    def test_subproduct_call_OnSaveItemPeopleInfos(self):
         """
            Run the testOnSaveItemPeopleInfos from PloneMeeting
         """
         # votes are only enabled for the meeting-config-council
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        pmtv.testOnSaveItemPeopleInfos(self)
+        pmtv.test_pm_OnSaveItemPeopleInfos(self)
 
-    def test_mc_call_SecretVotes(self):
+    def test_subproduct_call_SecretVotes(self):
         """
            Run the testSecretVotes from PloneMeeting
         """
         # votes are only enabled for the meeting-config-council
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        pmtv.testSecretVotes(self)
-
+        pmtv.test_pm_SecretVotes(self)
 
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testVotes, prefix='test_mc_'))
+    suite.addTest(makeSuite(testVotes, prefix='test_subproduct_'))
     return suite
