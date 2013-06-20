@@ -945,16 +945,6 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
             res = True
         return res
 
-    security.declarePublic('mayChangeItemsOrder')
-    def mayChangeItemsOrder(self):
-        '''We can change the order if :
-           - the meeting state is in ('created', 'frozen', 'decided', )'''
-        res = False
-        if checkPermission(ModifyPortalContent, self.context) and \
-           self.context.queryState() in ('created', 'frozen', 'decided'):
-            res = True
-        return res
-
     def mayCorrect(self):
         '''Take the default behaviour except if the meeting is frozen
            we still have the permission to correct it.'''
@@ -1382,7 +1372,7 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
         start_text = startTxt == ''
         for assembly_line in splitted_assembly:
             assembly_line = assembly_line.strip()
-            #check if this line correspond to startTxt (in this cas, we can begin treatment) 
+            #check if this line correspond to startTxt (in this cas, we can begin treatment)
             if not start_text:
                 start_text = assembly_line.startswith(startTxt)
                 if start_text:
