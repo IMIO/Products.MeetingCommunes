@@ -33,6 +33,10 @@ class MeetingCommunesTestCase(PloneMeetingTestCase):
     # Some default content
     descriptionText = '<p>Some description</p>'
     decisionText = '<p>Some decision.</p>'
+    # by default, PloneMeeting's test file testPerformances.py and
+    # testConversionWithDocumentViewer.py' are ignored, override the subproductIgnoredTestFiles
+    # attribute to take these files into account
+    #subproductIgnoredTestFiles = ['testPerformances.py', ]
 
     layer = MC_TEST_PROFILE_FUNCTIONAL
 
