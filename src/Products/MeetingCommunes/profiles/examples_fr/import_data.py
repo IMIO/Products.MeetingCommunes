@@ -274,6 +274,7 @@ collegeMeeting.itemAdviceInvalidateStates = []
 collegeMeeting.itemPowerObserversStates = ('itemfrozen', 'accepted', 'delayed', 'refused', 'accepted_but_modified', 'pre_accepted')
 collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 collegeMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
+collegeMeeting.itemDecisionReportText = "python:'Le collège décide de reporter le point.'"
 collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                        groups[1].getIdSuffixed('reviewers'),
@@ -492,8 +493,9 @@ councilMeeting.itemPowerObserversStates = ('itemfrozen',
                                            'itempublished',
                                            'accepted', 'delayed',
                                            'refused',
-                                           'accepted_but_modified')
-councilMeeting.meetingPowerObserversStates = ('created', 'frozen', 'published', 'decided', 'closed')
+                                           'accepted_but_modified', 'pre_accepted')
+councilMeeting.meetingPowerObserversStates = ('frozen', 'published', 'decided', 'closed')
+councilMeeting.itemDecisionReportText = "python:'Le collège décide de reporter le point.'"
 councilMeeting.useCopies = True
 councilMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                        groups[1].getIdSuffixed('reviewers'),
