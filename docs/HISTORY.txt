@@ -14,6 +14,7 @@ Version 1.x are for Plone2.5, 2.x are for Plone3.x and 3+ are for Plone4.x
 - Removed override of meeting_changeitemsorder
 - Removed override of browser.async.Discuss.isAsynchToggleEnabled, now enabled by default
 - Added missing tests from PloneMeeting
+- Corrected bug in printAdvicesInfos leading to UnicodeDecodeError when no advice was asked on an item
 
 3.0.1 (2013-06-07)
 ------------------
