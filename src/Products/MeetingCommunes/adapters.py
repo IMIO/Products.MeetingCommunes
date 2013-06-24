@@ -744,15 +744,17 @@ class CustomMeetingItem(MeetingItem):
             res = res + "<p>"
         for adviceType in itemAdvicesByType:
             for advice in itemAdvicesByType[adviceType]:
-                res = res + "<u>%s :</u> %s<br />" % (advice['name'], translate([advice['type']][0],
-                                                                                domain='PloneMeeting',
-                                                                                context=item.REQUEST))
-                if 'comment' in advice:
-                    res = res + "%s<br />" % advice['comment']
+                res = res + u"<u>%s :</u> %s<br />" % (advice['name'], translate([advice['type']][0],
+                                                                                 domain='PloneMeeting',
+                                                                                 context=item.REQUEST))
+                if 'comment' in advice and advice['comment'].strip():
+                    res = res + (u"%s<br />" % unicode(advice['comment'].strip(), 'utf-8'))
         if itemAdvicesByType:
-            res = res + "</p>"
+            res = res + u"</p>"
         if not itemAdvicesByType:
-            return "<p><u>%s : -</u></p>" % translate('advices', domain='PloneMeeting', context=item.REQUEST)
+            return u"<p><u>%s : -</u></p>" % \
+                translate('PloneMeeting_label_advices', domain='PloneMeeting', context=item.REQUEST).encode('utf-8')
+
         return res.encode('utf-8')
 
     security.declarePublic('getDecision')
