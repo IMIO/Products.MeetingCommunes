@@ -21,7 +21,7 @@ import os
 from Products.CMFCore.utils import getToolByName
 import transaction
 ##code-section HEAD
-from Products.PloneMeeting.config import TOPIC_TYPE, TOPIC_SEARCH_SCRIPT, TOPIC_TAL_EXPRESSION
+from DateTime import DateTime
 from Products.PloneMeeting.exportimport.content import ToolInitializer
 from Products.PloneMeeting.model.adaptations import performWorkflowAdaptations
 ##/code-section HEAD
@@ -65,6 +65,8 @@ def isMeetingCommunesConfigureProfile(context):
         context.readDataFile("MeetingCommunes_cpas_marker.txt") or \
         context.readDataFile("MeetingCommunes_testing_marker.txt")
 
+def isNotMeetingCommunesDemoProfile(context):
+    return context.readDataFile("MeetingCommunes_demo_marker.txt") is None
 
 def isMeetingCommunesTestingProfile(context):
     return context.readDataFile("MeetingCommunes_testing_marker.txt")
@@ -236,5 +238,120 @@ def reorderCss(context):
            'ploneCustom.css']
     for resource in css:
         portal_css.moveResourceToBottom(resource)
+
+
+def addDemoData(context):
+    ''' '''
+    if isNotMeetingCommunesDemoProfile(context):
+        return
+
+    site = context.getSite()
+    tool = getToolByName(site, 'portal_plonemeeting')
+    wfTool = getToolByName(site, 'portal_workflow')
+    pTool = getToolByName(site, 'plone_utils')
+    # we will create elements for some users, make sure their personal
+    # area is correctly configured
+    site.portal_membership.createMemberArea('agentPers')
+    site.portal_membership.createMemberArea('agentInfo')
+    site.portal_membership.createMemberArea('agentCompta')
+    # create 5 meetings : 2 passed, 1 current and 2 future
+    today = DateTime()
+    dates = [today-13, today-6, today+1, today+8, today+15]
+    # login as 'secretaire'
+    site.portal_membership.createMemberArea('secretaire')
+    secrFolder = tool.getPloneMeetingFolder('meeting-config-college', 'secretaire')
+    for date in dates:
+        meetingId = secrFolder.invokeFactory('MeetingCollege', id=date.strftime('%Y%m%d'))
+        meeting = getattr(secrFolder, meetingId)
+        meeting.setDate(date)
+        pTool.changeOwnershipOf(meeting, 'secretaire')
+        meeting.processForm()
+        # -13 meeting is closed
+        if date == today-13:
+            wfTool.doActionFor(meeting, 'freeze')
+            wfTool.doActionFor(meeting, 'decide')
+            wfTool.doActionFor(meeting, 'close')
+        # -6 meeting is frozen
+        if date == today-6:
+            wfTool.doActionFor(meeting, 'freeze')
+            wfTool.doActionFor(meeting, 'decide')
+        meeting.reindexObject()
+
+    # items dict here : the key is the user we will create the item for
+    # we use item templates so content is created for the demo
+    items = {'agentPers': ({'templateId': 'template3',
+                            'title': u'Engagement temporaire d\'un informaticien',
+                            'budgetRelated': False,
+                            'review_state': 'validated', },
+                           {'templateId': 'template2',
+                            'title': u'Contrôle médical de Mr Antonio',
+                            'budgetRelated': False,
+                            'review_state': 'proposed', },
+                           {'templateId': 'template2',
+                            'title': u'Contrôle médical de Mlle Debbeus',
+                            'budgetRelated': False,
+                            'review_state': 'proposed', },
+                           {'templateId': 'template2',
+                            'title': u'Contrôle médical de Mme Hanck',
+                            'budgetRelated': False,
+                            'review_state': 'validated', },
+                           {'templateId': 'template4',
+                            'title': u'Prestation réduite Mme Untelle, instritutrice maternelle',
+                            'budgetRelated': False,
+                            'review_state': 'validated', },),
+             'agentInfo': ({'templateId': 'template5',
+                            'title': u'Achat nouveaux serveurs',
+                            'budgetRelated': True,
+                            'review_state': 'validated',
+                            },
+                           {'templateId': 'template5',
+                            'title': u'Marché public, contestation entreprise Untelle SA',
+                            'budgetRelated': False,
+                            'review_state': 'validated',
+                            },),
+             'agentCompta': ({'templateId': 'template5',
+                              'title': u'Présentation budget 2014',
+                              'budgetRelated': True,
+                              'review_state': 'validated',
+                              },
+                             {'templateId': 'template5',
+                              'title': u'Plainte de Mme Daise, taxe immondice',
+                              'budgetRelated': False,
+                              'review_state': 'validated',
+                              },
+                             {'templateId': 'template5',
+                              'title': u'Plainte de Mme Uneautre, taxe piscine',
+                              'budgetRelated': False,
+                              'review_state': 'proposed',
+                              },),
+             'secretaire': ({'templateId': 'template1',
+                             'title': u'Tutelle CPAS : point 1 BP du 15 juin',
+                             'budgetRelated': False,
+                             'review_state': 'created',
+                             },
+                            {'templateId': 'template5',
+                             'title': u'Tutelle CPAS : point 2 BP du 15 juin',
+                             'budgetRelated': False,
+                             'review_state': 'proposed',
+                             },
+                            {'templateId': 'template5',
+                             'title': u'Tutelle CPAS : point 16 BP du 15 juin',
+                             'budgetRelated': True,
+                             'review_state': 'validated',
+                             },),
+             }
+    for userId in items:
+        userFolder = tool.getPloneMeetingFolder('meeting-config-college', userId)
+        for item in items[userId]:
+            # get the template then clone it
+            template = getattr(tool.getMeetingConfig(userFolder).recurringitems, item['templateId'])
+            newItem = template.clone(newOwnerId=userId)
+            newItem.setTitle(item['title'])
+            newItem.setBudgetRelated(item['budgetRelated'])
+            if item['review_state'] in ['proposed', 'validated', ]:
+                wfTool.doActionFor(newItem, 'propose')
+            if item['review_state'] == 'validated':
+                wfTool.doActionFor(newItem, 'validate')
+            newItem.reindexObject()
 
 ##/code-section FOOT

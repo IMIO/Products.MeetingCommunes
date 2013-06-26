@@ -139,7 +139,7 @@ emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", 
 groups = [GroupDescriptor('secretariat', 'Secretariat communal', 'Secr'),
           GroupDescriptor('informatique', 'Service informatique', 'Info'),
           GroupDescriptor('personnel', 'Service du personnel', 'Pers'),
-          GroupDescriptor('comptabilite', 'Service comptabilité', 'Compt', givesMandatoryAdviceOn='python:True'),
+          GroupDescriptor('comptabilite', 'Service comptabilité', 'Compt', givesMandatoryAdviceOn='python: item.getBudgetRelated()'),
           GroupDescriptor('travaux', 'Service travaux', 'Trav'), ]
 
 # MeetingManager
