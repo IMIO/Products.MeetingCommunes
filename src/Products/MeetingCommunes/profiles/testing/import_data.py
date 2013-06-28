@@ -139,10 +139,11 @@ collegeMeeting.itemDocFormats = ('odt', 'pdf')
 collegeMeeting.meetingDocFormats = ('odt', 'pdf')
 collegeMeeting.useAdvices = True
 collegeMeeting.itemAdviceStates = ['proposed', 'validated']
-collegeMeeting.itemAdviceEditStates = ['proposed',]
-collegeMeeting.itemAdviceViewStates = ['presented',]
+collegeMeeting.itemAdviceEditStates = ['proposed', ]
+collegeMeeting.itemAdviceViewStates = ['presented', ]
+collegeMeeting.enforceAdviceMandatoriness = False
 collegeMeeting.itemPowerObserversStates = ('itemcreated', 'presented', 'accepted', 'delayed', 'refused')
-collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified','pre_accepted']
+collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 collegeMeeting.meetingPowerObserversStates = ('frozen', 'published', 'decided', 'closed')
 collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'), ]
@@ -177,7 +178,7 @@ collegeMeeting.recurringItems = [
         category='',
         proposingGroup='developers',
         templateUsingGroups=['developers', 'vendors'],
-        usages=['as_template_item',],
+        usages=['as_template_item', ],
         decision="""<p>Vu la loi du 8 juillet 1976 organique des centres publics d'action sociale et plus particulièrement son article 111;</p>
 <p>Vu l'Arrêté du Gouvernement Wallon du 22 avril 2004 portant codification de la législation relative aux pouvoirs locaux tel que confirmé par le décret du 27 mai 2004 du Conseil régional wallon;</p>
 <p>Attendu que les décisions suivantes du Bureau permanent/du Conseil de l'Action sociale du XXX ont été reçues le XXX dans le cadre de la tutelle générale sur les centres publics d'action sociale :</p>
@@ -196,8 +197,8 @@ collegeMeeting.recurringItems = [
         description='Contrôle médical systématique agent contractuel',
         category='',
         proposingGroup='vendors',
-        templateUsingGroups=['vendors',],
-        usages=['as_template_item',],
+        templateUsingGroups=['vendors', ],
+        usages=['as_template_item', ],
         decision="""
             <p>Vu la loi du 26 mai 2002 instituant le droit à l’intégration sociale;</p>
 <p>Vu la délibération du Conseil communal du 29 juin 2009 concernant le cahier spécial des charges relatif au marché de services portant sur le contrôle des agents communaux absents pour raisons médicales;</p>
@@ -259,15 +260,16 @@ councilMeeting.sortingMethodOnAddItem = 'on_categories'
 councilMeeting.useGroupsAsCategories = True
 councilMeeting.useAdvices = True
 councilMeeting.itemAdviceStates = ['proposed', 'validated']
-councilMeeting.itemAdviceEditStates = ['proposed',]
-councilMeeting.itemAdviceViewStates = ['presented',]
-councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified','pre_accepted']
+councilMeeting.itemAdviceEditStates = ['proposed', ]
+councilMeeting.itemAdviceViewStates = ['presented', ]
+councilMeeting.enforceAdviceMandatoriness = False
+councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 councilMeeting.itemPowerObserversStates = collegeMeeting.itemPowerObserversStates
 councilMeeting.meetingPowerObserversStates = collegeMeeting.meetingPowerObserversStates
 councilMeeting.useCopies = True
 councilMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'), ]
 councilMeeting.useVotes = True
-councilMeeting.meetingUsers = [muser_voter1, muser_voter2,]
+councilMeeting.meetingUsers = [muser_voter1, muser_voter2, ]
 councilMeeting.recurringItems = [
     RecurringItemDescriptor('recItem1',
                             'Recurring item #1',

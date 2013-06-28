@@ -253,6 +253,12 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         self.assertEquals(m2.getMeetingNumber(), 2)
         self.assertEquals(self.meetingConfig.getLastMeetingNumber(), 2)
 
+    def test_subproduct_call_PresentSeveralItems(self):
+        """
+          Run the testPresentSeveralItems from PloneMeeting
+        """
+        self.test_pm_PresentSeveralItems()
+
     def test_subproduct_call_DecideSeveralItems(self):
         """
           Run the testDecideSeveralItems from PloneMeeting
