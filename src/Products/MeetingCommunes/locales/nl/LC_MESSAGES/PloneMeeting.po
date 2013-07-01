@@ -63,7 +63,7 @@ msgstr ""
 
 #. Default: "PloneMeeting"
 msgid "app_name"
-msgstr ""
+msgstr "PloneMeeting"
 
 #. Default: "Add [[ ]] around absent people (like [[Mister Sample Peter]])"
 msgid "assembly_meeting_descr"
@@ -91,7 +91,7 @@ msgstr ""
 
 #. Default: "close_done_descr"
 msgid "close_done_descr"
-msgstr ""
+msgstr "Sluit klaar scherm"
 
 #. Default: "Create an item council from an item college"
 msgid "create_to_meeting-config-council_from_meeting-config-college"
@@ -251,4 +251,3 @@ msgstr "Gevalideerde items"
 #. Default: "add_published_state"
 msgid "wa_add_published_state"
 msgstr ""
-

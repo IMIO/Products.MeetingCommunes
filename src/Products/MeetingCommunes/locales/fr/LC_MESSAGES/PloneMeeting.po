@@ -254,3 +254,4 @@ msgstr "points validés"
 #. Default: "add_published_state"
 msgid "wa_add_published_state"
 msgstr "Cacher les décisions au service pendant la rédaction du PV"
+

@@ -110,6 +110,10 @@ msgstr "Remettre en \"Proposé\""
 msgid "backToPublished"
 msgstr "Remettre en \"Publié\""
 
+#. Default: "Remove"
+msgid "backToValidated"
+msgstr ""
+
 # College meeting workflow transitions specific vocabulary
 #. Default: ""
 msgid "decide"
