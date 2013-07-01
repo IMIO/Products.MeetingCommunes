@@ -2,19 +2,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-08-29 07:12-100\n"
-"PO-Revision-Date: 5009-04-06 13:00+0100\n"
-"Last-Translator: ???\n"
+"PO-Revision-Date: 2013-07-01 08:19+0100\n"
+"Last-Translator: Jan <jan.vangrinsven@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Language-Code: nl\n"
 "Language-Name: Nederlands\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
 "Preferred-encodings: utf-8 latin1\n"
 "X-is-fallback-for: nl-be\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #. Default: "MeetingCollege"
 msgid "MeetingCollege"
@@ -58,30 +59,58 @@ msgstr "Comitevergadering"
 
 #. Default: "UID not found!"
 msgid "UID not found!"
-msgstr ""
+msgstr "UID niet gevonden"
 
 #. Default: "accept but modify"
 msgid "accept_but_modify"
+msgstr "Aanvaard maar pas aan"
+
+#. Default: "accept_but_modify_done_descr"
+msgid "accept_but_modify_done_descr"
+msgstr ""
+
+#. Default: "accept_done_descr"
+msgid "accept_done_descr"
 msgstr ""
 
 #. Default: "accepted but modified"
 msgid "accepted_but_modified"
 msgstr ""
 
+#. Default: "Advices and copies"
+msgid "advices"
+msgstr "Adviezen"
+
 #. Default: "Back to created"
 msgid "backToCreated"
+msgstr "Terug naar aangemaakt"
+
+#. Default: "backToCreated_done_descr"
+msgid "backToCreated_done_descr"
 msgstr ""
 
 #. Default: "Back to decided"
 msgid "backToDecided"
+msgstr "Terug naar beslist"
+
+#. Default: "backToDecided_done_descr"
+msgid "backToDecided_done_descr"
 msgstr ""
 
 #. Default: "Back to decisions published"
 msgid "backToDecisionsPublished"
 msgstr ""
 
+#. Default: "backToDecisionsPublished_done_descr"
+msgid "backToDecisionsPublished_done_descr"
+msgstr ""
+
 #. Default: "Back to frozen"
 msgid "backToFrozen"
+msgstr ""
+
+#. Default: "backToFrozen_done_descr"
+msgid "backToFrozen_done_descr"
 msgstr ""
 
 #. Default: "Back to item created"
@@ -96,20 +125,32 @@ msgstr ""
 msgid "backToPresented"
 msgstr ""
 
+#. Default: "backToPresented_done_descr."
+msgid "backToPresented_done_descr"
+msgstr ""
+
 #. Default: "Back to pre-validated"
 msgid "backToPrevalidated"
 msgstr ""
 
 #. Default: "Back to proposed"
 msgid "backToProposed"
-msgstr ""
+msgstr "terug naar voorgesteld"
 
 #. Default: "Back to published"
 msgid "backToPublished"
-msgstr ""
+msgstr "terug naar gepubliceerd"
 
 #. Default: "Remove"
 msgid "backToValidated"
+msgstr "Terug naar gevalideerd"
+
+#. Default: "close_done_descr"
+msgid "close_done_descr"
+msgstr "Sluit klaar scherm"
+
+#. Default: "Create a plonmeeting item from a plonegov item"
+msgid "create_to_meeting-config-council_from_meeting-config-college"
 msgstr ""
 
 # College meeting workflow transitions specific vocabulary
@@ -117,18 +158,35 @@ msgstr ""
 msgid "decide"
 msgstr "rédiger le PV"
 
+#. Default: "decide_done_descr"
+msgid "decide_done_descr"
+msgstr ""
+
 # College meeting workflow states specific vocabulary
 #. Default: "decided"
 msgid "decided"
-msgstr ""
+msgstr "Beslist"
 
 #. Default: "Decisions published"
 msgid "decisions_published"
+msgstr "Gepubliceerde besluiten"
+
+#. Default: "delay_done_descr"
+msgid "delay_done_descr"
+msgstr ""
+
+# transitions descriptions
+#. Default: "freeze_done_descr"
+msgid "freeze_done_descr"
 msgstr ""
 
 #. Default: "frozen"
 msgid "frozen"
 msgstr "Bevroren"
+
+#. Default: "itemfreeze_done_descr"
+msgid "itemfreeze_done_descr"
+msgstr ""
 
 #. Default: "itemfrozen"
 msgid "itemfrozen"
@@ -138,31 +196,26 @@ msgstr "Item bevroren"
 msgid "pre_accept"
 msgstr ""
 
+#. Default: "pre_accept_done_descr"
+msgid "pre_accept_done_descr"
+msgstr ""
+
 #. Default: "pre accepted"
 msgid "pre_accepted"
 msgstr ""
 
 #. Default: "Publish decisions"
 msgid "publish_decisions"
+msgstr "Publiceer beslissingen"
+
+#. Default: "publish_decisions_done_descr"
+msgid "publish_decisions_done_descr"
 msgstr ""
 
-#. Default: "The item has been successfully transfered to the bp."
-msgid "sendto_meeting-config-bp_success"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the cas."
-msgid "sendto_meeting-config-cas_success"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the college."
-msgid "sendto_meeting-config-college_success"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the comitee."
-msgid "sendto_meeting-config-comitee_success"
+#. Default: "refuse_done_descr"
+msgid "refuse_done_descr"
 msgstr ""
 
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
 msgstr ""
-
