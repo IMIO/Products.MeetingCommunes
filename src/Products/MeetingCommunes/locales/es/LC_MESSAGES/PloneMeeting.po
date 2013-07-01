@@ -31,15 +31,15 @@ msgstr ""
 msgid "MeetingCommune_descr_echevinServices"
 msgstr ""
 
-#. Default: "Alderman of the following services(departments)"
+#. Default: "Alderman of the following services (departments)"
 msgid "MeetingCommune_label_echevinServices"
 msgstr ""
 
-#. Default: "msgstr "If you specify sigantures here, it will be used while generating documents of this proposing group.  Either, signatures defined on the meeting will be used."
+#. Default: "If you specify signatures here, it will be used while generating documents of this proposing group.  Either, signatures defined on the meeting will be used."
 msgid "MeetingCommunes_descr_signatures"
 msgstr ""
 
-#. Default: "Signatures Delegation"
+#. Default: "Signatures delegation"
 msgid "MeetingCommunes_label_signatures"
 msgstr ""
 
@@ -52,15 +52,15 @@ msgstr "Extracto de Acta"
 msgid "PloneMeeting_label_givesMandatoryAdviceOn"
 msgstr ""
 
-#. Default: "Décision used when the item is reported"
+#. Default: "Decision used when the item is delayed"
 msgid "PloneMeeting_label_itemDecisionReportText"
 msgstr ""
 
-#. Default: "accept_but_modify_done_descr"
+#. Default: "The item has been accepted with modifications."
 msgid "accept_but_modify_done_descr"
 msgstr ""
 
-#. Default: "accept_done_descr"
+#. Default: "The item has been accepted."
 msgid "accept_done_descr"
 msgstr ""
 
@@ -72,27 +72,27 @@ msgstr ""
 msgid "assembly_meeting_descr"
 msgstr ""
 
-#. Default: "backToCreated_done_descr"
+#. Default: "The meeting has been set back to 'created'."
 msgid "backToCreated_done_descr"
 msgstr ""
 
-#. Default: "backToDecided_done_descr"
+#. Default: "The meeting has been set back to 'decided', it can be edited again."
 msgid "backToDecided_done_descr"
 msgstr ""
 
-#. Default: "backToDecisionsPublished_done_descr"
+#. Default: "The meeting has been set back to 'decisions published'."
 msgid "backToDecisionsPublished_done_descr"
 msgstr ""
 
-#. Default: "backToFrozen_done_descr"
+#. Default: "The meeting has been set back to 'frozen'."
 msgid "backToFrozen_done_descr"
 msgstr ""
 
-#. Default: "backToPresented_done_descr."
+#. Default: "The item has been set back to 'presented'.."
 msgid "backToPresented_done_descr"
 msgstr ""
 
-#. Default: "close_done_descr"
+#. Default: "The meeting is now closed, every items for wich no decisions had been taken, have been automatically accepted."
 msgid "close_done_descr"
 msgstr ""
 
@@ -104,7 +104,7 @@ msgstr ""
 msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
 msgstr ""
 
-#. Default: "decide_done_descr"
+#. Default: "You can now decide the items and write reports."
 msgid "decide_done_descr"
 msgstr ""
 
@@ -120,7 +120,7 @@ msgstr ""
 msgid "decisions"
 msgstr "Actas"
 
-#. Default: "delay_done_descr"
+#. Default: "The item has been delayed.  It has been duplicated for the corresponding proposing group so it can propose it again easily."
 msgid "delay_done_descr"
 msgstr ""
 
@@ -129,7 +129,7 @@ msgid "enforce_advice_mandatoriness_descr"
 msgstr ""
 
 # transitions descriptions
-#. Default: "freeze_done_descr"
+#. Default: "The meeting has been frozen."
 msgid "freeze_done_descr"
 msgstr ""
 
@@ -153,11 +153,11 @@ msgstr ""
 msgid "hs_welcome_title"
 msgstr ""
 
-#. Default: "accepted but modified"
+#. Default: "Accepted but modified"
 msgid "icon_help_accepted_but_modified"
 msgstr ""
 
-#. Default: "pre accepted"
+#. Default: "Pre accepted"
 msgid "icon_help_pre_accepted"
 msgstr ""
 
@@ -177,7 +177,7 @@ msgstr ""
 msgid "item_decision_report_text_descr"
 msgstr ""
 
-#. Default: "itemfreeze_done_descr"
+#. Default: "The item has been frozen."
 msgid "itemfreeze_done_descr"
 msgstr ""
 
@@ -206,7 +206,7 @@ msgstr "Agenda"
 msgid "positive_with_remarks"
 msgstr ""
 
-#. Default: "pre_accept_done_descr"
+#. Default: "The item has been pre accepted."
 msgid "pre_accept_done_descr"
 msgstr ""
 
@@ -214,23 +214,20 @@ msgstr ""
 msgid "present_several_items"
 msgstr "Presentar todos los temas seleccionados"
 
-#. Default: "publish_decisions_done_descr"
+#. Default: "Decisions have been published and are now visible to relevant proposing groups."
 msgid "publish_decisions_done_descr"
 msgstr ""
 
-#. Default: "refuse_done_descr"
+#. Default: "The item has been refused."
 msgid "refuse_done_descr"
-msgstr ""
-
-#. Default: "Configure PloneMeeting"
-msgid "search_advanced"
 msgstr ""
 
 #. Default: "Every decisions"
 msgid "searchalldecisions"
 msgstr "Todas las Actas"
 
-#. Default: "decided items"
+#. Default: "Decided items"
+#, fuzzy
 msgid "searchdecideditems"
 msgstr "los temas decididos"
 
@@ -238,20 +235,22 @@ msgstr "los temas decididos"
 msgid "searchgroupitems"
 msgstr "temas de mi departamento"
 
-#. Default: "items to validate"
+#. Default: "Items to validate"
 msgid "searchitemstovalidate"
 msgstr ""
 
 # searches
-#. Default: "proposed items"
+#. Default: "Proposed items"
+#, fuzzy
 msgid "searchproposeditems"
 msgstr "los temas propuestos"
 
-#. Default: "validated items"
+#. Default: "Validated items"
+#, fuzzy
 msgid "searchvalidateditems"
 msgstr "los temas validados"
 
-#. Default: "add_published_state"
+#. Default: "Hide the decision to the proposing group when it is under writing."
 msgid "wa_add_published_state"
 msgstr ""
 

@@ -61,11 +61,12 @@ msgstr "Comitevergadering"
 msgid "UID not found!"
 msgstr "UID niet gevonden"
 
-#. Default: "accept but modify"
+#. Default: "Accept with modifications"
+#, fuzzy
 msgid "accept_but_modify"
 msgstr "Aanvaard maar pas aan"
 
-#. Default: "accepted but modified"
+#. Default: "Accepted with modifications"
 msgid "accepted_but_modified"
 msgstr ""
 
@@ -109,12 +110,9 @@ msgstr "terug naar voorgesteld"
 msgid "backToPublished"
 msgstr "terug naar gepubliceerd"
 
-#. Default: "Remove"
-msgid "backToValidated"
-msgstr "Terug naar gevalideerd"
-
 # College meeting workflow transitions specific vocabulary
-#. Default: ""
+#. Default: "Decide"
+#, fuzzy
 msgid "decide"
 msgstr "rédiger le PV"
 
@@ -127,19 +125,21 @@ msgstr "Beslist"
 msgid "decisions_published"
 msgstr "Gepubliceerde besluiten"
 
-#. Default: "frozen"
+#. Default: "Frozen"
+#, fuzzy
 msgid "frozen"
 msgstr "Bevroren"
 
-#. Default: "itemfrozen"
+#. Default: "Itemfrozen"
+#, fuzzy
 msgid "itemfrozen"
 msgstr "Item bevroren"
 
-#. Default: "pre accept"
+#. Default: "Pre accept"
 msgid "pre_accept"
 msgstr ""
 
-#. Default: "pre accepted"
+#. Default: "Pre accepted"
 msgid "pre_accepted"
 msgstr ""
 

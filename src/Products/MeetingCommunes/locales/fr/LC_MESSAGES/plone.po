@@ -62,11 +62,11 @@ msgstr "Séance du Comité de Concertation"
 msgid "UID not found!"
 msgstr "L'élément à déplacer n'a pas été trouvé!"
 
-#. Default: "accept but modify"
+#. Default: "Accept with modifications"
 msgid "accept_but_modify"
 msgstr "Accepter avec modifications"
 
-#. Default: "accepted but modified"
+#. Default: "Accepted with modifications"
 msgid "accepted_but_modified"
 msgstr "Accepté avec modifications"
 
@@ -110,12 +110,8 @@ msgstr "Remettre en \"Proposé\""
 msgid "backToPublished"
 msgstr "Remettre en \"Publié\""
 
-#. Default: "Remove"
-msgid "backToValidated"
-msgstr ""
-
 # College meeting workflow transitions specific vocabulary
-#. Default: ""
+#. Default: "Decide"
 msgid "decide"
 msgstr "Rédiger le PV"
 
@@ -128,19 +124,19 @@ msgstr "Rédaction du PV"
 msgid "decisions_published"
 msgstr "Décisions publiées"
 
-#. Default: "frozen"
+#. Default: "Frozen"
 msgid "frozen"
 msgstr "Gelé"
 
-#. Default: "itemfrozen"
+#. Default: "Itemfrozen"
 msgid "itemfrozen"
 msgstr "Gelé"
 
-#. Default: "pre accept"
+#. Default: "Pre accept"
 msgid "pre_accept"
 msgstr "Accepter provisoirement"
 
-#. Default: "pre accepted"
+#. Default: "Pre accepted"
 msgid "pre_accepted"
 msgstr "Accepté provisoirement"
 
@@ -167,4 +163,3 @@ msgstr "Le point a été envoyé au Comité de concertation."
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
 msgstr "Le point a été envoyé au Conseil communal."
-

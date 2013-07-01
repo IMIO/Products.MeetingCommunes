@@ -54,28 +54,24 @@ msgid "present_several_items"
 msgstr ""
 
 #searches
-#. Default: "proposed items"
+#. Default: "Proposed items"
 msgid "searchproposeditems"
 msgstr ""
 
-#. Default: "items to validate"
+#. Default: "Items to validate"
 msgid "searchitemstovalidate"
 msgstr ""
 
-#. Default: "validated items"
+#. Default: "Validated items"
 msgid "searchvalidateditems"
 msgstr ""
 
-#. Default: "decided items"
+#. Default: "Decided items"
 msgid "searchdecideditems"
 msgstr ""
 
 #. Default: "PloneMeeting"
 msgid "app_name"
-msgstr ""
-
-#. Default: "Configure PloneMeeting"
-msgid "search_advanced"
 msgstr ""
 
 #. Default: "Choose advisers that will have to issue an optional advice for this item"
@@ -106,7 +102,7 @@ msgstr ""
 msgid "ip_secret"
 msgstr ""
 
-#. Default: "Alderman of the following services(departments)"
+#. Default: "Alderman of the following services (departments)"
 msgid "MeetingCommune_label_echevinServices"
 msgstr ""
 
@@ -114,11 +110,11 @@ msgstr ""
 msgid "MeetingCommune_descr_echevinServices"
 msgstr ""
 
-#. Default: "msgstr "If you specify sigantures here, it will be used while generating documents of this proposing group.  Either, signatures defined on the meeting will be used."
+#. Default: "If you specify signatures here, it will be used while generating documents of this proposing group.  Either, signatures defined on the meeting will be used."
 msgid "MeetingCommunes_descr_signatures"
 msgstr ""
 
-#. Default: "Signatures Delegation"
+#. Default: "Signatures delegation"
 msgid "MeetingCommunes_label_signatures"
 msgstr ""
 
@@ -163,11 +159,11 @@ msgstr ""
 msgid "Meeting config Council"
 msgstr ""
 
-#. Default: "add_published_state"
+#. Default: "Hide the decision to the proposing group when it is under writing."
 msgid "wa_add_published_state"
 msgstr ""
 
-#. Default: "Décision used when the item is reported"
+#. Default: "Decision used when the item is delayed"
 msgid "PloneMeeting_label_itemDecisionReportText"
 msgstr ""
 
@@ -179,72 +175,71 @@ msgstr ""
 msgid "decision_under_edit"
 msgstr ""
 
-
 #transitions descriptions
-#. Default: "freeze_done_descr"
+#. Default: "The meeting has been frozen."
 msgid "freeze_done_descr"
 msgstr ""
 
-#. Default: "backToCreated_done_descr"
+#. Default: "The meeting has been set back to 'created'."
 msgid "backToCreated_done_descr"
 msgstr ""
 
-#. Default: "decide_done_descr"
+#. Default: "You can now decide the items and write reports."
 msgid "decide_done_descr"
 msgstr ""
 
-#. Default: "backToDecided_done_descr"
+#. Default: "The meeting has been set back to 'decided', it can be edited again."
 msgid "backToDecided_done_descr"
 msgstr ""
 
-#. Default: "backToFrozen_done_descr"
+#. Default: "The meeting has been set back to 'frozen'."
 msgid "backToFrozen_done_descr"
 msgstr ""
 
-#. Default: "backToPresented_done_descr."
+#. Default: "The item has been set back to 'presented'.."
 msgid "backToPresented_done_descr"
 msgstr ""
 
-#. Default: "itemfreeze_done_descr"
+#. Default: "The item has been frozen."
 msgid "itemfreeze_done_descr"
 msgstr ""
 
-#. Default: "refuse_done_descr"
+#. Default: "The item has been refused."
 msgid "refuse_done_descr"
 msgstr ""
 
-#. Default: "delay_done_descr"
+#. Default: "The item has been delayed.  It has been duplicated for the corresponding proposing group so it can propose it again easily."
 msgid "delay_done_descr"
 msgstr ""
 
-#. Default: "pre_accept_done_descr"
+#. Default: "The item has been pre accepted."
 msgid "pre_accept_done_descr"
 msgstr ""
 
-#. Default: "accept_done_descr"
+#. Default: "The item has been accepted."
 msgid "accept_done_descr"
 msgstr ""
 
-#. Default: "accept_but_modify_done_descr"
+#. Default: "The item has been accepted with modifications."
 msgid "accept_but_modify_done_descr"
 msgstr ""
 
-#. Default: "close_done_descr"
+#. Default: "The meeting is now closed, every items for wich no decisions had been taken, have been automatically accepted."
 msgid "close_done_descr"
 msgstr ""
 
-#. Default: "backToDecisionsPublished_done_descr"
+#. Default: "The meeting has been set back to 'decisions published'."
 msgid "backToDecisionsPublished_done_descr"
 msgstr ""
 
-#. Default: "publish_decisions_done_descr"
+#. Default: "Decisions have been published and are now visible to relevant proposing groups."
 msgid "publish_decisions_done_descr"
 msgstr ""
 
-#. Default: "accepted but modified"
+#. Default: "Accepted but modified"
 msgid "icon_help_accepted_but_modified"
 msgstr ""
 
-#. Default: "pre accepted"
+#. Default: "Pre accepted"
 msgid "icon_help_pre_accepted"
 msgstr ""

@@ -59,11 +59,13 @@ msgstr "Sitzung Konzertierungsausschuss"
 msgid "UID not found!"
 msgstr ""
 
-#. Default: "accept but modify"
+#. Default: "Accept with modifications"
+#, fuzzy
 msgid "accept_but_modify"
 msgstr "Angenommen aber ändern"
 
-#. Default: "accepted but modified"
+#. Default: "Accepted with modifications"
+#, fuzzy
 msgid "accepted_but_modified"
 msgstr "Angenommen aber geändert"
 
@@ -107,12 +109,9 @@ msgstr ""
 msgid "backToPublished"
 msgstr ""
 
-#. Default: "Remove"
-msgid "backToValidated"
-msgstr ""
-
 # College meeting workflow transitions specific vocabulary
-#. Default: ""
+#. Default: "Decide"
+#, fuzzy
 msgid "decide"
 msgstr "Protokoll verfassen"
 
@@ -125,19 +124,23 @@ msgstr "Verfassung des Protokolls"
 msgid "decisions_published"
 msgstr ""
 
-#. Default: "frozen"
+#. Default: "Frozen"
+#, fuzzy
 msgid "frozen"
 msgstr "Gesperrt"
 
-#. Default: "itemfrozen"
+#. Default: "Itemfrozen"
+#, fuzzy
 msgid "itemfrozen"
 msgstr "TOP gesperrt"
 
-#. Default: "pre accept"
+#. Default: "Pre accept"
+#, fuzzy
 msgid "pre_accept"
 msgstr "Provisiorisch aktzeptieren"
 
-#. Default: "pre accepted"
+#. Default: "Pre accepted"
+#, fuzzy
 msgid "pre_accepted"
 msgstr "Provisorisch akzeptiert"
 

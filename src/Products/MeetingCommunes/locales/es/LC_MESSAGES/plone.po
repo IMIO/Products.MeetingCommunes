@@ -62,11 +62,11 @@ msgstr "Reunión de Comité de Concertación"
 msgid "UID not found!"
 msgstr ""
 
-#. Default: "accept but modify"
+#. Default: "Accept with modifications"
 msgid "accept_but_modify"
 msgstr ""
 
-#. Default: "accepted but modified"
+#. Default: "Accepted with modifications"
 msgid "accepted_but_modified"
 msgstr ""
 
@@ -110,12 +110,9 @@ msgstr ""
 msgid "backToPublished"
 msgstr ""
 
-#. Default: "Remove"
-msgid "backToValidated"
-msgstr ""
-
 # College meeting workflow transitions specific vocabulary
-#. Default: ""
+#. Default: "Decide"
+#, fuzzy
 msgid "decide"
 msgstr "escribir el Acta"
 
@@ -128,19 +125,21 @@ msgstr "redacción de Acta"
 msgid "decisions_published"
 msgstr ""
 
-#. Default: "frozen"
+#. Default: "Frozen"
+#, fuzzy
 msgid "frozen"
 msgstr "congelado"
 
-#. Default: "itemfrozen"
+#. Default: "Itemfrozen"
+#, fuzzy
 msgid "itemfrozen"
 msgstr "congelado"
 
-#. Default: "pre accept"
+#. Default: "Pre accept"
 msgid "pre_accept"
 msgstr ""
 
-#. Default: "pre accepted"
+#. Default: "Pre accepted"
 msgid "pre_accepted"
 msgstr ""
 
