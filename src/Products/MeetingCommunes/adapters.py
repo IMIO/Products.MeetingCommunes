@@ -65,6 +65,12 @@ if 'archiving' in customwfAdaptations:
 MeetingConfig.wfAdaptations = customwfAdaptations
 originalPerformWorkflowAdaptations = adaptations.performWorkflowAdaptations
 
+# states taken into account by the 'no_global_observation' wfAdaptation
+from Products.PloneMeeting.model import adaptations
+noGlobalObsStates = ('itempublished', 'itemfrozen', 'accepted', 'refused',
+                     'delayed', 'accepted_but_modified', 'pre_accepted')
+adaptations.noGlobalObsStates = noGlobalObsStates
+
 
 def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdaptation=None):
     '''This function applies workflow changes as specified by the

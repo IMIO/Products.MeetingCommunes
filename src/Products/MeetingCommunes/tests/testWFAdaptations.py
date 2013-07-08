@@ -102,7 +102,7 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         # we have global observations in the meetingcouncil_workflow
         # once item is 'itempublished'
         self.meetingConfig = self.meetingConfig2
-        pmtwfa.test_pm_WFA_no_global_observation(self)
+        pmtwfa.test_pm_WFA_everyone_reads_all(self)
 
     def test_subproduct_call_WFA_creator_edits_unless_closed(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
