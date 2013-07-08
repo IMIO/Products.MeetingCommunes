@@ -54,6 +54,11 @@ pmAdviser1 = UserDescriptor('pmAdviser1', [])
 voter1 = UserDescriptor('voter1', [], fullname='M. Voter One')
 voter2 = UserDescriptor('voter2', [], fullname='M. Voter Two')
 powerobserver1 = UserDescriptor('powerobserver1', [], fullname='M. Power Observer1')
+# powerobserver1 is MeetingPowerObserverLocal because in the meetingPma '_powerobservers' group
+plonemeeting_assembly_powerobservers = PloneGroupDescriptor('meeting-config-council_powerobservers',
+                                                            'meeting-config-council_powerobservers',
+                                                            [])
+powerobserver1.ploneGroups = [plonemeeting_assembly_powerobservers, ]
 powerobserver2 = UserDescriptor('powerobserver2', [], fullname='M. Power Observer2')
 
 # Add a vintage group
