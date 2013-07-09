@@ -497,6 +497,30 @@ class CustomMeeting(Meeting):
             items = res
         return res
 
+    security.declarePublic('getNumberOfItems')
+    def getNumberOfItems(self, itemUids, privacy='*', categories=[], late=False):
+        '''Returns the number of items depending on parameters.
+           This is used in templates to know how many items of a particular kind exist and
+           often used to determine the 'firstNumber' parameter of getPrintableItems/getPrintableItemsByCategory.'''
+        # sometimes, some empty elements are inserted in itemUids, remove them...
+        itemUids = [itemUid for itemUid in itemUids if itemUid != '']
+        #no filtering, return the items ordered
+        if not categories and privacy == '*':
+            return len(self.context.getItemsInOrder(late=late, uids=itemUids))
+        # Either, we will have to filter (privacy, categories, late)
+        filteredItemUids = []
+        uid_catalog = getToolByName(self.context, 'uid_catalog')
+        for itemUid in itemUids:
+            obj = uid_catalog(UID=itemUid)[0].getObject()
+            if not (privacy == '*' or obj.getPrivacy() == privacy):
+                continue
+            elif not (categories == [] or obj.getCategory() in categories):
+                continue
+            elif not obj.isLate() == late:
+                continue
+            filteredItemUids.append(itemUid)
+        return len(filteredItemUids)
+
     security.declarePublic('getPrintableItemsByNumCategory')
     def getPrintableItemsByNumCategory(self, late=False, uids=[],
                                        catstoexclude=[], exclude=True, allItems=False):
