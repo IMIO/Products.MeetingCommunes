@@ -84,13 +84,6 @@ class MeetingCommunesTestCase(PloneMeetingTestCase):
         else:
             logout()
 
-    def getTestMethods(self, module, prefix):
-        methods = {}
-        for name in dir(module):
-            if name.startswith(prefix) and name != 'test_mc_VerifyTestNumbers':
-                methods[name] = 0
-        return methods
-
 
 # this is necessary to execute base test
 # test_tescasesubproduct_VerifyTestFiles from PloneMeeting
