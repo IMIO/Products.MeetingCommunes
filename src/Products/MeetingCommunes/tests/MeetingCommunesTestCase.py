@@ -20,14 +20,13 @@
 # 02110-1301, USA.
 #
 
-from plone.app.testing import login, logout
-
 from Products.PloneMeeting.tests.PloneMeetingTestCase import PloneMeetingTestCase
 
 from Products.MeetingCommunes.testing import MC_TEST_PROFILE_FUNCTIONAL
+from Products.MeetingCommunes.tests.helpers import MeetingCommunesTestingHelpers
 
 
-class MeetingCommunesTestCase(PloneMeetingTestCase):
+class MeetingCommunesTestCase(PloneMeetingTestCase, MeetingCommunesTestingHelpers):
     """Base class for defining MeetingCommunes test cases."""
 
     # Some default content
@@ -49,40 +48,6 @@ class MeetingCommunesTestCase(PloneMeetingTestCase):
         self.annexFileType = 'annexeBudget'
         self.annexFileTypeDecision = 'annexeDecision'
         self.transitionsToCloseAMeeting = ('freeze', 'publish', 'decide', 'close')
-
-    def _adaptCategoriesForTest(self, meetingConfig):
-        """
-          This test depends on existing categories, so, define the same categories
-          as in PloneMeeting
-        """
-        originalLoggedInUser = self.portal.portal_membership.getAuthenticatedMember().getId()
-        login(self.portal, 'admin')
-        # change the category of recurring items so categories can be removed
-        # as a category can not be used to be removed
-        for item in meetingConfig.recurringitems.objectValues('MeetingItem'):
-            item.setCategory('deployment')
-        # Remove existing categories
-        idsToRemove = []
-        for cat in meetingConfig.categories.objectValues('MeetingCategory'):
-            idsToRemove.append(cat.getId())
-        meetingConfig.categories.manage_delObjects(idsToRemove)
-        # Add new catgories
-        # These are categories defined in PloneMeeting/profiles/test/import_data.py
-        categories = [('deployment', 'Deployment topics'),
-                      ('maintenance', 'Maintenance topics'),
-                      ('development', 'Development topics'),
-                      ('events', 'Events'),
-                      ('research', 'Research topics'),
-                      ('projects', 'Projects'),
-                      ('subproducts', 'Subproducts'), ]
-        for cat in categories:
-            meetingConfig.categories.invokeFactory('MeetingCategory', id=cat[0], title=cat[1])
-        # subproducts is a usingGroups category
-        meetingConfig.categories.subproducts.setUsingGroups(('vendors',))
-        if originalLoggedInUser:
-            login(self.portal, originalLoggedInUser)
-        else:
-            logout()
 
 
 # this is necessary to execute base test

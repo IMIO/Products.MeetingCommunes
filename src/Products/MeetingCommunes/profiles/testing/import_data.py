@@ -32,16 +32,18 @@ itemTemplate.podTemplate = 'Item.odt'
 itemTemplate.podCondition = 'python:here.meta_type=="MeetingItem"'
 
 # Categories -------------------------------------------------------------------
-recurring = CategoryDescriptor('recurrents', 'Recurrents')
-categories = [recurring,
-              CategoryDescriptor('recurrents2', 'Recurrents2'),
-              CategoryDescriptor('travaux', 'Travaux'),
-              CategoryDescriptor('urbanisme', 'Urbanisme'),
-              CategoryDescriptor('comptabilite', 'Comptabilite/Recettes'),
-              CategoryDescriptor('personnel', 'Personnel'),
-              CategoryDescriptor('population', 'Population/Etat-civil'),
-              CategoryDescriptor('locations', 'Locations'),
-              CategoryDescriptor('divers', 'Divers'), ]
+categories = [
+    CategoryDescriptor('deployment', 'Deployment topics'),
+    CategoryDescriptor('maintenance', 'Maintenance topics'),
+    CategoryDescriptor('development', 'Development topics'),
+    CategoryDescriptor('events', 'Events'),
+    CategoryDescriptor('research', 'Research topics'),
+    CategoryDescriptor('projects', 'Projects'),
+    # A vintage category
+    CategoryDescriptor('marketing', 'Marketing', active=False),
+    # usingGroups category
+    CategoryDescriptor('subproducts', 'Subproducts wishes', usingGroups=('vendors',)),
+]
 
 # Users and groups -------------------------------------------------------------
 pmManager = UserDescriptor('pmManager', ['MeetingManager'])
@@ -60,9 +62,6 @@ plonemeeting_assembly_powerobservers = PloneGroupDescriptor('meeting-config-coun
                                                             [])
 powerobserver1.ploneGroups = [plonemeeting_assembly_powerobservers, ]
 powerobserver2 = UserDescriptor('powerobserver2', [], fullname='M. Power Observer2')
-
-# Add a vintage group
-endUsers = GroupDescriptor('endUsers', 'End users', 'EndUsers', active=False)
 
 developers = GroupDescriptor('developers', 'Developers', 'Devel', givesMandatoryAdviceOn="python:False")
 developers.creators.append(pmCreator1)
@@ -89,6 +88,8 @@ developers.observers.append(voter1)
 developers.observers.append(voter2)
 vendors.observers.append(voter1)
 vendors.observers.append(voter2)
+# Add a vintage group
+endUsers = GroupDescriptor('endUsers', 'End users', 'EndUsers', active=False)
 
 pmManager_observer = MeetingUserDescriptor('pmManager',
                                            duty='Secrétaire de la Chancellerie',
@@ -149,6 +150,8 @@ collegeMeeting.itemAdviceViewStates = ['presented', ]
 collegeMeeting.enforceAdviceMandatoriness = False
 collegeMeeting.itemPowerObserversStates = ('itemcreated', 'presented', 'accepted', 'delayed', 'refused')
 collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
+collegeMeeting.sortingMethodOnAddItem = 'on_proposing_groups'
+collegeMeeting.useGroupsAsCategories = True
 collegeMeeting.meetingPowerObserversStates = ('frozen', 'published', 'decided', 'closed')
 collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'), ]
@@ -156,26 +159,21 @@ collegeMeeting.podTemplates = [agendaTemplate, decisionsTemplate, itemTemplate]
 
 collegeMeeting.recurringItems = [
     RecurringItemDescriptor(
-        id='recurringagenda1',
-        title='Approuve le procès-verbal de la séance antérieure',
-        description='Approuve le procès-verbal de la séance antérieure',
-        category='recurrents',
-        proposingGroup='developers',
-        decision='Procès-verbal approuvé'),
+        id='recItem1',
+        description='<p>This is the first recurring item.</p>',
+        title='Recurring item #1',
+        proposingGroup='',
+        category='developers',
+        decision='First recurring item approved'),
+
     RecurringItemDescriptor(
-        id='recurringofficialreport1',
-        title='Autorise et signe les bons de commande de la semaine',
-        description='Autorise et signe les bons de commande de la semaine',
-        category='recurrents',
-        proposingGroup='developers',
-        decision='Bons de commande signés'),
-    RecurringItemDescriptor(
-        id='recurringofficialreport2',
-        title='Ordonnance et signe les mandats de paiement de la semaine',
-        description='Ordonnance et signe les mandats de paiement de la semaine',
-        category='recurrents',
-        proposingGroup='developers',
-        decision='Mandats de paiement de la semaine approuvés'),
+        id='recItem2',
+        title='Recurring item #2',
+        description='<p>This is the second recurring item.</p>',
+        proposingGroup='',
+        category='developers',
+        decision='Second recurring item approved'),
+
     RecurringItemDescriptor(
         id='template1',
         title='Tutelle CPAS',
@@ -262,7 +260,7 @@ councilMeeting.meetingAppDefaultView = 'topic_searchmyitems'
 councilMeeting.itemDocFormats = ('odt', 'pdf')
 councilMeeting.meetingDocFormats = ('odt', 'pdf')
 councilMeeting.sortingMethodOnAddItem = 'on_categories'
-councilMeeting.useGroupsAsCategories = True
+councilMeeting.useGroupsAsCategories = False
 councilMeeting.useAdvices = True
 councilMeeting.itemAdviceStates = ['proposed', 'validated']
 councilMeeting.itemAdviceEditStates = ['proposed', ]
@@ -275,14 +273,7 @@ councilMeeting.useCopies = True
 councilMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'), ]
 councilMeeting.useVotes = True
 councilMeeting.meetingUsers = [muser_voter1, muser_voter2, ]
-councilMeeting.recurringItems = [
-    RecurringItemDescriptor('recItem1',
-                            'Recurring item #1',
-                            'vendors',
-                            category='developers',
-                            description='<p>This is the first recurring item.</p>',
-                            decision='Recurring Item approved')
-]
+councilMeeting.recurringItems = []
 
 #no recurring items for this meetingConfig, only for tests !!!
 #so we can test a meetingConfig with recurring items (college) and without (council)
