@@ -32,7 +32,7 @@ class testPodTemplates(MeetingCommunesTestCase, pmtpt):
 
     def test_subproduct_call_Conditions(self):
         '''Run the testConditions from PloneMeeting.'''
-        pmtpt.test_pm_Conditions(self)
+        self.test_pm_Conditions()
 
 
 def test_suite():

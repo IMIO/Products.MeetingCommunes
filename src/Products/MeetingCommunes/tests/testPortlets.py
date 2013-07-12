@@ -32,7 +32,7 @@ class testPortlets(MeetingCommunesTestCase, pmtp):
 
     def test_subproduct_call_PortletPMAvailableTemplates(self):
         '''Run the testPortletPMAvailableTemplates from PloneMeeting.'''
-        pmtp.test_pm_PortletPMAvailableTemplates(self)
+        self.test_pm_PortletPMAvailableTemplates()
 
 
 def test_suite():

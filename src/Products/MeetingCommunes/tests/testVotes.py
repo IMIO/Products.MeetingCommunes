@@ -22,9 +22,6 @@
 # 02110-1301, USA.
 #
 
-
-from plone.app.testing import login
-
 from Products.PloneMeeting.tests.testVotes import testVotes as pmtv
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
     MeetingCommunesTestCase
@@ -35,44 +32,37 @@ class testVotes(MeetingCommunesTestCase, pmtv):
        Advices are enabled for PloneMeeting Assembly, not for PloneGov Assembly.
        By default, vote are encoded by 'theVoterHimself'.'''
 
-    def setUp(self):
-        # call parent setUp
-        MeetingCommunesTestCase.setUp(self)
-        # avoid recurring items
-        login(self.portal, 'admin')
-        self.meetingConfig.recurringitems.manage_delObjects([self.meetingConfig.recurringitems.objectValues()[0].getId(),])
-
     def test_subproduct_call_MayConsultVotes(self):
         """
            Run the testMayConsultVotes from PloneMeeting
         """
         # votes are only enabled for the meeting-config-council
-        self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        pmtv.test_pm_MayConsultVotes(self)
+        self.setMeetingConfig(self.meetingConfig2.getId())
+        self.test_pm_MayConsultVotes()
 
     def test_subproduct_call_MayEditVotes(self):
         """
            Run the testMayEditVotes from PloneMeeting
         """
         # votes are only enabled for the meeting-config-council
-        self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        pmtv.test_pm_MayEditVotes(self)
+        self.setMeetingConfig(self.meetingConfig2.getId())
+        self.test_pm_MayEditVotes()
 
     def test_subproduct_call_OnSaveItemPeopleInfos(self):
         """
            Run the testOnSaveItemPeopleInfos from PloneMeeting
         """
         # votes are only enabled for the meeting-config-council
-        self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        pmtv.test_pm_OnSaveItemPeopleInfos(self)
+        self.setMeetingConfig(self.meetingConfig2.getId())
+        self.test_pm_OnSaveItemPeopleInfos()
 
     def test_subproduct_call_SecretVotes(self):
         """
            Run the testSecretVotes from PloneMeeting
         """
         # votes are only enabled for the meeting-config-council
-        self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        pmtv.test_pm_SecretVotes(self)
+        self.setMeetingConfig(self.meetingConfig2.getId())
+        self.test_pm_SecretVotes()
 
 
 def test_suite():
