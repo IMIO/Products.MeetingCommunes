@@ -259,6 +259,7 @@ councilMeeting.maxDaysDecisions = 60
 councilMeeting.meetingAppDefaultView = 'topic_searchmyitems'
 councilMeeting.itemDocFormats = ('odt', 'pdf')
 councilMeeting.meetingDocFormats = ('odt', 'pdf')
+councilMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
 councilMeeting.sortingMethodOnAddItem = 'on_categories'
 councilMeeting.useGroupsAsCategories = False
 councilMeeting.useAdvices = True

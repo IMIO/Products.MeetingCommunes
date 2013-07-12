@@ -30,3 +30,14 @@ class MeetingCommunesTestingHelpers(PloneMeetingTestingHelpers):
     TRANSITIONS_FOR_FREEZING_MEETING_1 = TRANSITIONS_FOR_FREEZING_MEETING_2 = ('freeze', )
     TRANSITIONS_FOR_DECIDING_MEETING_1 = ('freeze', 'decide', )
     TRANSITIONS_FOR_DECIDING_MEETING_2 = ('freeze', 'publish', 'decide', )
+
+    def _getNecessaryMeetingTransitionsToAcceptItem(self):
+        '''Returns the necessary transitions to trigger on the Meeting before being
+           able to accept an item.'''
+        # add the 'publish' transition if it exists in the currently used wf for Meeting
+        currentMeetingWf = self.meetingConfig.getMeetingWorkflow()
+        wf = getattr(self.portal.portal_workflow, currentMeetingWf)
+        res = ['freeze', 'decide', ]
+        if 'publish' in wf.transitions:
+            res.insert(1, 'publish')
+        return res
