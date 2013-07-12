@@ -48,10 +48,6 @@ msgstr "Délégation de signatures"
 msgid "PloneMeeting_label_decision"
 msgstr "Extrait du Procès-verbal"
 
-#. Default: "Gives mandatory advice on"
-msgid "PloneMeeting_label_givesMandatoryAdviceOn"
-msgstr "L'avis sera automatiquement demandé si"
-
 #. Default: "Decision used when the item is delayed"
 msgid "PloneMeeting_label_itemDecisionReportText"
 msgstr "Décision du point lors d'un report"
@@ -59,18 +55,6 @@ msgstr "Décision du point lors d'un report"
 #. Default: "The item has been accepted with modifications."
 msgid "accept_but_modify_done_descr"
 msgstr "Le point a été accepté avec modifications."
-
-#. Default: "The item has been accepted."
-msgid "accept_done_descr"
-msgstr "Le point a été accepté."
-
-#. Default: "PloneMeeting"
-msgid "app_name"
-msgstr "PloneMeeting"
-
-#. Default: "Add [[ ]] around absent people (like [[Mister Sample Peter]])"
-msgid "assembly_meeting_descr"
-msgstr "Ajoutez des double crochets [[ ]] autour des personnes absentes, par exemple : [[Mr. Untel Didier]]"
 
 #. Default: "The meeting has been set back to 'created'."
 msgid "backToCreated_done_descr"
@@ -87,10 +71,6 @@ msgstr "La séance a été remise en \"Décisions publiées\""
 #. Default: "The meeting has been set back to 'frozen'."
 msgid "backToFrozen_done_descr"
 msgstr "Vous ne pouvez plus rédiger le Procès-verbal pour l'instant."
-
-#. Default: "The item has been set back to 'presented'.."
-msgid "backToPresented_done_descr"
-msgstr "Le point a été remis dans l'état 'présenté'."
 
 #. Default: "The meeting is now closed, every items for wich no decisions had been taken, have been automatically accepted."
 msgid "close_done_descr"
@@ -120,39 +100,6 @@ msgstr "<p>La décision est actuellement en cours de rédaction</p>"
 msgid "decisions"
 msgstr "Procès-verbal"
 
-#. Default: "The item has been delayed.  It has been duplicated for the corresponding proposing group so it can propose it again easily."
-msgid "delay_done_descr"
-msgstr "Le point a été reporté. Il a été dupliqué chez le service proposant afin qu'il puisse facilement le proposer à nouveau."
-
-#. Default: "When advice mandatoriness is enforced, an item can't be inserted into a meeting unless all mandatory advices are given and positive."
-msgid "enforce_advice_mandatoriness_descr"
-msgstr "Quand le caractère obligatoire des avis est d'application, un point ne peut être inséré dans une séance à moins que tous les avis obligatoires (avis automatiques définis au niveau des groupes) n'aient été rendus et soient positifs."
-
-# transitions descriptions
-#. Default: "The meeting has been frozen."
-msgid "freeze_done_descr"
-msgstr "L'ordre du jour vient d'être gelé."
-
-#. Default: "Specify here a TAL expression that will return True if the group must give a mandatory advice on an item.  We receive 'item' as the meeting item to give an advice on.  WARNING if the group of advisers linked to this PloneMeeting group os empty, it will no be considered, despite the result of the TAL expression"
-msgid "gives_mandatory_advice_on_descr"
-msgstr "Spécifiez une expression TAL qui retourne 'True' si le groupe doit automatiquement donner son avis sur le point donné. L'élément 'item' (point) est utilisable dans l'expression. ATTENTION si le groupe de donneurs d'avis lié à ce groupe PloneMeeting est vide, ce groupe ne sera pas pris en compte, quel que soit le résultat de l'expression TAL. De plus, si dans votre configuration de séance, l'option 'Appliquer le caractère obligatoire des avis' est activé, cet avis automatique deviendra obligatoire (et devra nécessairement être positif pour que le point puisse être présenté)."
-
-#. Default: "For every field you select here, PloneMeeting will keep track of any change on any item, if it is in one of the 'historizable' states as defined below."
-msgid "historized_item_attrs_descr"
-msgstr "Pour chaque champ que vous sélectionnez ici, PloneMeeting conservera la trace de tout changement sur chaque point qui est dans un des états listés ci-dessous."
-
-#. Default: "For every field you select here, PloneMeeting will keep track of any change on any meeting, if it is in one of the 'historizable' states as defined below."
-msgid "historized_meeting_attrs_descr"
-msgstr "Pour chaque champ que vous sélectionnez ici, PloneMeeting conservera la trace de tout changement sur chaque séance qui est dans un des états listés ci-dessous."
-
-#. Default: "Configure PloneMeeting"
-msgid "hs_configuration"
-msgstr "Configurer PloneMeeting"
-
-#. Default: "Welcome to PloneMeeting!"
-msgid "hs_welcome_title"
-msgstr "Bienvenue sur PloneMeeting"
-
 #. Default: "Accepted but modified"
 msgid "icon_help_accepted_but_modified"
 msgstr "Accepté avec modifications"
@@ -169,30 +116,14 @@ msgstr "Séance publique"
 msgid "ip_secret"
 msgstr "Huis clos"
 
-#. Default: "If you don't fill this field, meeting assembly will be used for this item.  Add [[ ]] around absent people (like [[Mister Sample Peter]])"
-msgid "item_assembly_descr"
-msgstr "Si vous ne remplissez pas ce champ, l'assemblée définie sur la séance sera utilisée.  Ajoutez des double crochets [[ ]] autour des personnes absentes, par exemple : [[Mr. Untel Didier]]"
-
 #. Default: "When an item is delay, the decision will be replace by the text defined here, as a TAL (Tag Attribute Language) expression whose context includes the name 'here' that represents the impacted item. If you don't know TAL, you may learn it <a href=\"http://zope.org/Documentation/Books/ZopeBook/2_6Edition/ZPT.stx\">here</a>."
 msgid "item_decision_report_text_descr"
 msgstr "Lorsque le point est reporté, la décision sera remplacée par le texte défini ici, sous la forme d'une expression TAL (Tag Attribute Language) dans laquelle le nom 'here', représentant le point courant, peut être utilisé. Voici un exemple (sans les guillemets) : \"python:'&lt;p&gt;%s&lt;/p&gt;&lt;p&gt;Le collège décide de reporter le point&lt;/p&gt;' % here.getDecision()\""
-
-#. Default: "The item has been frozen."
-msgid "itemfreeze_done_descr"
-msgstr "Le point a été gelé."
 
 # Other
 #. Default: "Late items"
 msgid "late_presented_items"
 msgstr "Points ajoutés à la séance après gel de celle-ci"
-
-#. Default: "Description"
-msgid "meeting_item_description"
-msgstr "Description dans l'Ordre du jour"
-
-#. Default: "Choose advisers that will have to issue an optional advice for this item"
-msgid "optional_advisers_item_descr"
-msgstr "Sélectionnez les groupes qui pourront remettre un avis sur ce point. Sélectionnez plusieurs groupes à l'aide de CTRL+clic"
 
 #. Default: "Decision"
 msgid "portletdecisions_title"
@@ -202,25 +133,13 @@ msgstr "Procès-verbaux"
 msgid "portletmeetings_title"
 msgstr "Ordres du jour"
 
-#. Default: "Commented"
-msgid "positive_with_remarks"
-msgstr "Commenté"
-
 #. Default: "The item has been pre accepted."
 msgid "pre_accept_done_descr"
 msgstr "Le point a été accepté provisoirement."
 
-#. Default: "Present every selected items"
-msgid "present_several_items"
-msgstr "Présenter tous les points sélectionnés"
-
 #. Default: "Decisions have been published and are now visible to relevant proposing groups."
 msgid "publish_decisions_done_descr"
 msgstr "Les décisions ont été publiées et sont maintenant visibles par les personnes pouvant voir le point."
-
-#. Default: "The item has been refused."
-msgid "refuse_done_descr"
-msgstr "Le point a été refusé."
 
 #. Default: "Every decisions"
 msgid "searchalldecisions"
@@ -229,10 +148,6 @@ msgstr "Tous les PVs"
 #. Default: "Decided items"
 msgid "searchdecideditems"
 msgstr "Points décidés"
-
-#. Default: "Items of my group"
-msgid "searchgroupitems"
-msgstr "Points de mon service"
 
 #. Default: "Items to validate"
 msgid "searchitemstovalidate"

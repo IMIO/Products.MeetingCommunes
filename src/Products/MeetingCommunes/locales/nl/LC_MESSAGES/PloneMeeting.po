@@ -45,28 +45,12 @@ msgstr ""
 msgid "PloneMeeting_label_decision"
 msgstr "Beslissing"
 
-#. Default: "Gives mandatory advice on"
-msgid "PloneMeeting_label_givesMandatoryAdviceOn"
-msgstr ""
-
 #. Default: "Decision used when the item is delayed"
 msgid "PloneMeeting_label_itemDecisionReportText"
 msgstr ""
 
 #. Default: "The item has been accepted with modifications."
 msgid "accept_but_modify_done_descr"
-msgstr ""
-
-#. Default: "The item has been accepted."
-msgid "accept_done_descr"
-msgstr ""
-
-#. Default: "PloneMeeting"
-msgid "app_name"
-msgstr "PloneMeeting"
-
-#. Default: "Add [[ ]] around absent people (like [[Mister Sample Peter]])"
-msgid "assembly_meeting_descr"
 msgstr ""
 
 #. Default: "The meeting has been set back to 'created'."
@@ -83,10 +67,6 @@ msgstr ""
 
 #. Default: "The meeting has been set back to 'frozen'."
 msgid "backToFrozen_done_descr"
-msgstr ""
-
-#. Default: "The item has been set back to 'presented'.."
-msgid "backToPresented_done_descr"
 msgstr ""
 
 #. Default: "The meeting is now closed, every items for wich no decisions had been taken, have been automatically accepted."
@@ -118,39 +98,6 @@ msgstr ""
 msgid "decisions"
 msgstr "Beslissingen"
 
-#. Default: "The item has been delayed.  It has been duplicated for the corresponding proposing group so it can propose it again easily."
-msgid "delay_done_descr"
-msgstr ""
-
-#. Default: "When advice mandatoriness is enforced, an item can't be inserted into a meeting unless all mandatory advices are given and positive."
-msgid "enforce_advice_mandatoriness_descr"
-msgstr ""
-
-# transitions descriptions
-#. Default: "The meeting has been frozen."
-msgid "freeze_done_descr"
-msgstr ""
-
-#. Default: "Specify here a TAL expression that will return True if the group must give a mandatory advice on an item.  We receive 'item' as the meeting item to give an advice on.  WARNING if the group of advisers linked to this PloneMeeting group os empty, it will no be considered, despite the result of the TAL expression"
-msgid "gives_mandatory_advice_on_descr"
-msgstr ""
-
-#. Default: "For every field you select here, PloneMeeting will keep track of any change on any item, if it is in one of the 'historizable' states as defined below."
-msgid "historized_item_attrs_descr"
-msgstr ""
-
-#. Default: "For every field you select here, PloneMeeting will keep track of any change on any meeting, if it is in one of the 'historizable' states as defined below."
-msgid "historized_meeting_attrs_descr"
-msgstr ""
-
-#. Default: "Configure PloneMeeting"
-msgid "hs_configuration"
-msgstr ""
-
-#. Default: "Welcome to PloneMeeting!"
-msgid "hs_welcome_title"
-msgstr ""
-
 #. Default: "Accepted but modified"
 msgid "icon_help_accepted_but_modified"
 msgstr ""
@@ -167,30 +114,14 @@ msgstr ""
 msgid "ip_secret"
 msgstr ""
 
-#. Default: "If you don't fill this field, meeting assembly will be used for this item.  Add [[ ]] around absent people (like [[Mister Sample Peter]])"
-msgid "item_assembly_descr"
-msgstr ""
-
 #. Default: "When an item is delay, the decision will be replace by the text defined here, as a TAL (Tag Attribute Language) expression whose context includes the name 'here' that represents the impacted item. If you don't know TAL, you may learn it <a href=\"http://zope.org/Documentation/Books/ZopeBook/2_6Edition/ZPT.stx\">here</a>."
 msgid "item_decision_report_text_descr"
-msgstr ""
-
-#. Default: "The item has been frozen."
-msgid "itemfreeze_done_descr"
 msgstr ""
 
 # Other
 #. Default: "Late items"
 msgid "late_presented_items"
 msgstr "Late agendapunten"
-
-#. Default: "Description"
-msgid "meeting_item_description"
-msgstr "Omschrijving"
-
-#. Default: "Choose advisers that will have to issue an optional advice for this item"
-msgid "optional_advisers_item_descr"
-msgstr ""
 
 #. Default: "Decision"
 msgid "portletdecisions_title"
@@ -200,24 +131,12 @@ msgstr "Beslissing"
 msgid "portletmeetings_title"
 msgstr "Vergadering"
 
-#. Default: "Commented"
-msgid "positive_with_remarks"
-msgstr ""
-
 #. Default: "The item has been pre accepted."
 msgid "pre_accept_done_descr"
 msgstr ""
 
-#. Default: "Present every selected items"
-msgid "present_several_items"
-msgstr "Presenteer alle geselekteerde items"
-
 #. Default: "Decisions have been published and are now visible to relevant proposing groups."
 msgid "publish_decisions_done_descr"
-msgstr ""
-
-#. Default: "The item has been refused."
-msgid "refuse_done_descr"
 msgstr ""
 
 #. Default: "Every decisions"
@@ -228,10 +147,6 @@ msgstr "Elke beslissing"
 #, fuzzy
 msgid "searchdecideditems"
 msgstr "Besliste items"
-
-#. Default: "Items of my group"
-msgid "searchgroupitems"
-msgstr "Items uit mijn groep"
 
 #. Default: "Items to validate"
 msgid "searchitemstovalidate"

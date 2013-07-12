@@ -1,23 +1,9 @@
 from Products.Archetypes.atapi import *
-from Products.PloneMeeting.Meeting import Meeting
 from Products.PloneMeeting.MeetingGroup import MeetingGroup
 from Products.PloneMeeting.MeetingConfig import MeetingConfig
 
 
-def update_meeting_schema(baseSchema):
-   
-    specificSchema = Schema((
-    ),)
-
-    baseSchema['assembly'].widget.description_msgid = "assembly_meeting_descr"
-
-    completeSchema = baseSchema + specificSchema.copy()
-    return completeSchema
-Meeting.schema = update_meeting_schema(Meeting.schema)
-
-
 def update_group_schema(baseSchema):
-   
     specificSchema = Schema((
 
         # field used to define list of services for echevin for a MeetingGroup
@@ -35,7 +21,6 @@ def update_group_schema(baseSchema):
             multiValued=1,
             vocabulary='listEchevinServices',
         ),
-        
         # field used to define specific signatures for a MeetingGroup
         TextField(
             name='signatures',
@@ -58,7 +43,6 @@ MeetingGroup.schema = update_group_schema(MeetingGroup.schema)
 
 def update_config_schema(baseSchema):
     specificSchema = Schema((
-    
         TextField(
             name='itemDecisionReportText',
             widget=TextAreaWidget(
@@ -68,13 +52,12 @@ def update_config_schema(baseSchema):
                 label_msgid='PloneMeeting_label_itemDecisionReportText',
                 i18n_domain='PloneMeeting',
             ),
-        allowable_content_types=('text/plain',),
-        default_output_type="text/plain",
+            allowable_content_types=('text/plain',),
+            default_output_type="text/plain",
         )
     ),)
-    
     completeConfigSchema = baseSchema + specificSchema.copy()
-    completeConfigSchema.moveField('itemDecisionReportText', after='budgetDefault')    
+    completeConfigSchema.moveField('itemDecisionReportText', after='budgetDefault')
     return completeConfigSchema
 MeetingConfig.schema = update_config_schema(MeetingConfig.schema)
 
