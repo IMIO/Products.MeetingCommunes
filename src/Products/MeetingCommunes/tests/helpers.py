@@ -30,6 +30,10 @@ class MeetingCommunesTestingHelpers(PloneMeetingTestingHelpers):
     TRANSITIONS_FOR_FREEZING_MEETING_1 = TRANSITIONS_FOR_FREEZING_MEETING_2 = ('freeze', )
     TRANSITIONS_FOR_DECIDING_MEETING_1 = ('freeze', 'decide', )
     TRANSITIONS_FOR_DECIDING_MEETING_2 = ('freeze', 'publish', 'decide', )
+    TRANSITIONS_FOR_CLOSING_MEETING_1 = TRANSITIONS_FOR_CLOSING_MEETING_2 = ('freeze',
+                                                                             'publish',
+                                                                             'decide',
+                                                                             'close', )
 
     def _getNecessaryMeetingTransitionsToAcceptItem(self):
         '''Returns the necessary transitions to trigger on the Meeting before being

@@ -99,23 +99,17 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
 
     def test_subproduct_call_WFA_everyone_reads_all(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
-        # we have global observations in the meetingcouncil_workflow
-        # once item is 'itempublished'
         self.meetingConfig = self.meetingConfig2
         pmtwfa.test_pm_WFA_everyone_reads_all(self)
 
     def test_subproduct_call_WFA_creator_edits_unless_closed(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
-        # we have global observations in the meetingcouncil_workflow
-        # once item is 'itempublished'
         pmtwfa.test_pm_WFA_creator_edits_unless_closed(self)
         self.meetingConfig = self.meetingConfig2
         pmtwfa.test_pm_WFA_creator_edits_unless_closed(self)
 
     def test_subproduct_call_WFA_local_meeting_managers(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
-        # we have global observations in the meetingcouncil_workflow
-        # once item is 'itempublished'
         pmtwfa.test_pm_WFA_local_meeting_managers(self)
         self.meetingConfig = self.meetingConfig2
         pmtwfa.test_pm_WFA_local_meeting_managers(self)
