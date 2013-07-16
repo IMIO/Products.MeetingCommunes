@@ -53,6 +53,14 @@
       handler="Products.MeetingCommunes.migrations.migrate_to_3_0.migrate"
       profile="Products.MeetingCommunes:default" />
 
+  <genericsetup:upgradeStep
+      title="Go to MeetingCommunes 3.0.3"
+      description=""
+      source="3.0"
+      destination="3.0.3"
+      handler="Products.MeetingCommunes.migrations.migrate_to_3_0_3.migrate"
+      profile="Products.MeetingCommunes:default" />
+
   <!-- ##/code-section profiles.zcml-bottom -->
 
 </configure>
