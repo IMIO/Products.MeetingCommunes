@@ -108,8 +108,6 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
 
     def test_subproduct_call_IsPrivacyViewable(self):
         '''See doc string in PloneMeeting.'''
-        # use self.meetingConfig2 that has a 'published' state
-        self.setMeetingConfig(self.meetingConfig2.getId())
         self.test_pm_IsPrivacyViewable()
 
 
