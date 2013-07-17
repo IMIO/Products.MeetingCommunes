@@ -2,7 +2,7 @@
 #
 # File: testMeetingItem.py
 #
-# Copyright (c) 2007-2012 by CommunesPlone.org
+# Copyright (c) 2013 by Imio.be
 #
 # GNU General Public License (GPL)
 #
@@ -37,10 +37,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
            Run the testListProposingGroup from PloneMeeting
         """
         #we do the test for the college config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-college')
+        self.setMeetingConfig(self.meetingConfig.getId())
         self.test_pm_ListProposingGroup()
         #we do the test for the council config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-council')
+        self.setMeetingConfig(self.meetingConfig2.getId())
         self.test_pm_ListProposingGroup()
 
     def test_subproduct_call_UsedColorSystemGetColoredLink(self):
@@ -48,10 +48,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
            Test the selected system of color while getting a colored link
         """
         #we do the test for the college config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-college')
+        self.setMeetingConfig(self.meetingConfig.getId())
         self.test_pm_UsedColorSystemGetColoredLink()
         #we do the test for the council config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-council')
+        self.setMeetingConfig(self.meetingConfig2.getId())
         self.test_pm_UsedColorSystemGetColoredLink()
 
     def test_subproduct_call_UsedColorSystemShowColors(self):
@@ -59,16 +59,16 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
            Test the selected system of color
         """
         #we do the test for the college config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-college')
+        self.setMeetingConfig(self.meetingConfig.getId())
         self.test_pm_UsedColorSystemShowColors()
         #we do the test for the council config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-council')
+        self.setMeetingConfig(self.meetingConfig2.getId())
         self.test_pm_UsedColorSystemShowColors()
 
     def test_subproduct_call_SendItemToOtherMC(self):
         '''Test the send an item to another meetingConfig functionnality'''
         #we do the test for the college config, to send an item to the council
-        self.meetingConfig = getattr(self.tool, 'meeting-config-college')
+        self.setMeetingConfig(self.meetingConfig.getId())
         self.test_pm_SendItemToOtherMC()
 
     def test_subproduct_call_SelectableCategories(self):
@@ -77,7 +77,7 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
            between MeetingCategory.usingGroups and current member
            proposingGroups is not empty.'''
         #we do the test for the council config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-council')
+        self.setMeetingConfig(self.meetingConfig2.getId())
         self.meetingConfig.useGroupsAsCategories = False
         self.test_pm_SelectableCategories()
 
@@ -109,7 +109,7 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
     def test_subproduct_call_IsPrivacyViewable(self):
         '''See doc string in PloneMeeting.'''
         # use self.meetingConfig2 that has a 'published' state
-        self.meetingConfig = self.meetingConfig2
+        self.setMeetingConfig(self.meetingConfig2.getId())
         self.test_pm_IsPrivacyViewable()
 
 
