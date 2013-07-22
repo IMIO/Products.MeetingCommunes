@@ -40,10 +40,10 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         """
         #we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
-        pmtw.test_pm_CreateItem(self)
+        self.test_pm_CreateItem()
         #we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        pmtw.test_pm_CreateItem(self)
+        self.test_pm_CreateItem()
 
     def test_subproduct_call_RemoveObjects(self):
         """
@@ -51,10 +51,10 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         """
         #we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
-        pmtw.test_pm_RemoveObjects(self)
+        self.test_pm_RemoveObjects()
         #we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        pmtw.test_pm_RemoveObjects(self)
+        self.test_pm_RemoveObjects()
 
     def test_subproduct_call_WholeDecisionProcess(self):
         """
@@ -295,12 +295,13 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         '''Tests the recurring items system.'''
         # First, define recurring items in the meeting config
         login(self.portal, 'admin')
-        #no recurring items are existing in the college config, so add one
+        # 2 recurring items already exist in the college config, add one supplementary for _init_
         self.create('RecurringMeetingItem', title='Rec item 1',
                     proposingGroup='developers',
                     meetingTransitionInsertingMe='_init_')
-        #backToCreated is not in MeetingItem.meetingTransitionsAcceptingRecurringItems
-        #so it will not be added...
+        # add 3 other recurring items that will be inserted at other moments in the WF
+        # backToCreated is not in MeetingItem.meetingTransitionsAcceptingRecurringItems
+        # so it will not be added...
         self.create('RecurringMeetingItem', title='Rec item 2',
                     proposingGroup='developers',
                     meetingTransitionInsertingMe='backToCreated')
@@ -311,7 +312,8 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
                     proposingGroup='developers',
                     meetingTransitionInsertingMe='decide')
         self.changeUser('pmManager')
-        meeting = self.create('Meeting', date='2007/12/11 09:00:00')
+        # create a meeting without supplementary items, only the recurring items
+        meeting = self._createMeetingWithItems(withItems=False)
         # The recurring items must have as owner the meeting creator
         for item in meeting.getItems():
             self.assertEquals(item.getOwner().getId(), 'pmManager')
@@ -319,19 +321,21 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.failUnless(len(meeting.getItems()) == 3)
         self.failUnless(len(meeting.getLateItems()) == 0)
         # After freeze, the meeting must have one recurring item more
-        self.do(meeting, 'freeze')
+        self.freezeMeeting(meeting)
         self.failUnless(len(meeting.getItems()) == 3)
         self.failUnless(len(meeting.getLateItems()) == 1)
         # Back to created: rec item 2 is not inserted because
         # only some transitions can add a recurring item (see MeetingItem).
-        self.do(meeting, 'backToCreated')
+        self.backToState(meeting, 'created')
         self.failUnless(len(meeting.getItems()) == 3)
         self.failUnless(len(meeting.getLateItems()) == 1)
         # Recurring items can be added twice...
-        self.do(meeting, 'freeze')
+        self.freezeMeeting(meeting)
         self.failUnless(len(meeting.getItems()) == 3)
         self.failUnless(len(meeting.getLateItems()) == 2)
-        self.do(meeting, 'decide')
+        # Decide the meeting, a third late item is added
+        self.decideMeeting(meeting)
+        import ipdb; ipdb.set_trace()
         self.failUnless(len(meeting.getItems()) == 3)
         self.failUnless(len(meeting.getLateItems()) == 3)
 
@@ -441,16 +445,16 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         """
         #we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
-        pmtw.test_pm_RemoveContainer(self)
+        self.test_pm_RemoveContainer()
         #we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        pmtw.test_pm_RemoveContainer(self)
+        self.test_pm_RemoveContainer()
 
     def test_subproduct_call_DeactivateMeetingGroup(self):
         '''Deactivating a MeetingGroup will transfer every users of every
            sub Plone groups to the '_observers' Plone group'''
         #we do the test for the college config
-        pmtw.test_pm_DeactivateMeetingGroup(self)
+        self.test_pm_DeactivateMeetingGroup()
 
 
 def test_suite():
