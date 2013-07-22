@@ -335,7 +335,6 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.failUnless(len(meeting.getLateItems()) == 2)
         # Decide the meeting, a third late item is added
         self.decideMeeting(meeting)
-        import ipdb; ipdb.set_trace()
         self.failUnless(len(meeting.getItems()) == 3)
         self.failUnless(len(meeting.getLateItems()) == 3)
 
