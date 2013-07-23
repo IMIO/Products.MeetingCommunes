@@ -3,7 +3,6 @@
   <version>3.0.3dev</version>
   <!-- ##code-section METADATA -->
   <dependencies>
-    <dependency>profile-collective.ckeditor:default</dependency>
     <dependency>profile-plonetheme.imioapps:plonemeetingskin</dependency>
     <dependency>profile-communesplone.iconified_document_actions:default</dependency>
   </dependencies>
