@@ -39,6 +39,10 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         '''Run the testAddEditDeleteAdvices from PloneMeeting.'''
         pmta.test_pm_AddEditDeleteAdvices(self)
 
+    def test_subproduct_call_CanNotGiveAdviceIfNotAsked(self):
+        '''Run the testCanNotGiveAdviceIfNotAsked from PloneMeeting.'''
+        pmta.test_pm_CanNotGiveAdviceIfNotAsked(self)
+
     def test_subproduct_call_GiveAdviceOnCreatedItem(self):
         '''Run the testGiveAdviceOnCreatedItem from PloneMeeting.'''
         pmta.test_pm_GiveAdviceOnCreatedItem(self)

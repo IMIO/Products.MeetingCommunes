@@ -29,6 +29,22 @@ from Products.PloneMeeting.tests.testMeetingConfig import testMeetingConfig as p
 class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
     '''Tests the MeetingConfig class methods.'''
 
+    def test_subproduct_call_searchItemsToAdvice(self):
+        '''Run the test_pm_searchItemsToAdvice from PloneMeeting.'''
+        pmtmc.test_pm_searchItemsToAdvice(self)
+
+    def test_subproduct_call_searchAdvisedItems(self):
+        '''Run the test_pm_searchAdvisedItems from PloneMeeting.'''
+        pmtmc.test_pm_searchAdvisedItems(self)
+
+    def test_subproduct_call_searchItemsInCopy(self):
+        '''Run the test_pm_searchItemsInCopy from PloneMeeting.'''
+        pmtmc.test_pm_searchItemsInCopy(self)
+
+    def test_subproduct_call_searchItemsWithFilters(self):
+        '''Run the test_pm_searchItemsWithFilters from PloneMeeting.'''
+        pmtmc.test_pm_searchItemsWithFilters(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
