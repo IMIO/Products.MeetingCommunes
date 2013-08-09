@@ -82,6 +82,7 @@ vendors.creators.append(pmCreator2)
 vendors.reviewers.append(pmReviewer2)
 vendors.observers.append(pmReviewer2)
 vendors.advisers.append(pmReviewer2)
+vendors.advisers.append(pmManager)
 setattr(vendors, 'signatures', '')
 
 # Do voters able to see items to vote for
