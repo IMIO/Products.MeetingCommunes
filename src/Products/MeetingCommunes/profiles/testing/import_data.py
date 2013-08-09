@@ -72,6 +72,7 @@ developers.reviewers.append(pmManager)
 developers.observers.append(pmReviewer1)
 developers.observers.append(pmManager)
 developers.advisers.append(pmAdviser1)
+developers.advisers.append(pmManager)
 setattr(developers, 'signatures', 'developers signatures')
 setattr(developers, 'echevinServices', 'developers')
 
