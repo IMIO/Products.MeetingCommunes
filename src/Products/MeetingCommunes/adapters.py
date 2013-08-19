@@ -21,7 +21,6 @@
 #
 # ------------------------------------------------------------------------------
 from appy.gen import No
-from appy.gen.utils import Keywords
 from zope.interface import implements
 from zope.i18n import translate
 from AccessControl import ClassSecurityInfo
@@ -46,6 +45,7 @@ from Products.MeetingCommunes.interfaces import \
 from Products.PloneMeeting.utils import checkPermission
 from Products.CMFCore.permissions import ReviewPortalContent, ModifyPortalContent
 from Products.PloneMeeting.utils import getCurrentMeetingObject
+from Products.PloneMeeting.utils import prepareSearchValue
 from Products.PloneMeeting import PloneMeetingError
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import *
@@ -872,7 +872,7 @@ class CustomMeetingConfig(MeetingConfig):
                   }
         # Manage filter
         if filterKey:
-            params[filterKey] = Keywords(filterValue).get()
+            params[filterKey] = prepareSearchValue(filterValue)
         # update params with kwargs
         params.update(kwargs)
         # Perform the query in portal_catalog
