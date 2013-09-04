@@ -45,7 +45,7 @@
 }
 
 #plone-contentmenu-workflow .state-itemfrozen,
-#plone-contentmenu-workflow .state-returned_to_service {
+#plone-contentmenu-workflow .state-returned_to_proposing_group {
     border-radius: 0.5em 0.5em 0.5em 0.5em;
     background-color: cornflowerBlue;
     padding: 0 0.5em;
