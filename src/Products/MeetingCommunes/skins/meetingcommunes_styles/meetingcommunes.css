@@ -44,8 +44,7 @@
     border: 2px solid brown;
 }
 
-#plone-contentmenu-workflow .state-itemfrozen,
-#plone-contentmenu-workflow .state-returned_to_proposing_group {
+#plone-contentmenu-workflow .state-itemfrozen {
     border-radius: 0.5em 0.5em 0.5em 0.5em;
     background-color: cornflowerBlue;
     padding: 0 0.5em;
@@ -100,7 +99,8 @@
 .state-delayed, .label-state-delayed {
     color: grey !important;
 }
-#plone-contentmenu-workflow .state-delayed {
+#plone-contentmenu-workflow .state-delayed,
+#plone-contentmenu-workflow .state-returned_to_proposing_group {
     border-radius: 0.5em 0.5em 0.5em 0.5em;
     background-color: grey;
     padding: 0 0.5em;
