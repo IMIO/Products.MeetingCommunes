@@ -44,7 +44,8 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
                                'no_publication', 'no_proposal', 'everyone_reads_all',
                                'creator_edits_unless_closed', 'local_meeting_managers',
                                # our wfAdaptations
-                               'add_published_state',)))
+                               'add_published_state',
+                               'return_to_proposing_group', )))
 
     def test_subproduct_call_WFA_no_publication(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
@@ -114,7 +115,7 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         self.meetingConfig = self.meetingConfig2
         pmtwfa.test_pm_WFA_local_meeting_managers(self)
 
-    def test_subproduct_WFA_return_to_proposing_group(self):
+    def test_subproduct_call_WFA_return_to_proposing_group(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
         self.meetingConfig = self.meetingConfig2
         pmtwfa.test_pm_WFA_return_to_proposing_group(self)
