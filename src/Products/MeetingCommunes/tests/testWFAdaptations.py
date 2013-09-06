@@ -114,6 +114,11 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         self.meetingConfig = self.meetingConfig2
         pmtwfa.test_pm_WFA_local_meeting_managers(self)
 
+    def test_subproduct_WFA_return_to_proposing_group(self):
+        '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
+        self.meetingConfig = self.meetingConfig2
+        pmtwfa.test_pm_WFA_return_to_proposing_group(self)
+
     def test_subproduct_WFA_add_published_state(self):
         '''Test the workflowAdaptation 'add_published_state'.
            If meeting is in decided state, only the MeetingManagers can

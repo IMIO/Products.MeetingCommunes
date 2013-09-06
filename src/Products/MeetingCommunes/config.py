@@ -46,7 +46,7 @@ PRODUCT_DEPENDENCIES = []
 ##code-section config-bottom #fill in your manual code here
 # Define PloneMeeting-specific permissions
 AddAnnex = 'PloneMeeting: Add annex'
-setDefaultRoles(AddAnnex, ('Manager','Owner'))
+setDefaultRoles(AddAnnex, ('Manager', 'Owner'))
 # We need 'AddAnnex', which is a more specific permission than
 # 'PloneMeeting: Add MeetingFile', because decision-related annexes, which are
 # also MeetingFile instances, must be secured differently.
@@ -110,8 +110,7 @@ MC_RETURN_TO_PROPOSING_GROUP_MAPPINGS = {'backTo_presented_from_returned_to_prop
                                          ['published', ],
                                          'backTo_itemfrozen_from_returned_to_proposing_group':
                                          ['frozen', 'decided', 'decisions_published', ],
-                                         'NO_MORE_RETURNABLE_STATES': ['closed', 'archived', ]
-                                        }
+                                         'NO_MORE_RETURNABLE_STATES': ['closed', 'archived', ], }
 PMconfig.RETURN_TO_PROPOSING_GROUP_MAPPINGS.update(MC_RETURN_TO_PROPOSING_GROUP_MAPPINGS)
 ##/code-section config-bottom
 
