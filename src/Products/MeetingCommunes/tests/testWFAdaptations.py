@@ -123,20 +123,21 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
     def test_subproduct_WFA_add_published_state(self):
         '''Test the workflowAdaptation 'add_published_state'.
            If meeting is in decided state, only the MeetingManagers can
-           view the real decision. The other people view a standard message taken from the MeetingConfig.'''
+           view the real decision. The other people view a standard
+           message taken from the MeetingConfig.'''
         login(self.portal, 'pmManager')
         # check while the wfAdaptation is not activated
         self._add_published_state_inactive()
         # activate the wfAdaptation and check
         self.meetingConfig.setWorkflowAdaptations('add_published_state')
-        logger = logging.getLogger('MeetingCommunes: tests')
+        logger = logging.getLogger('MeetingCommunes: testing')
         performWorkflowAdaptations(self.portal, self.meetingConfig, logger)
         self._add_published_state_active()
         # test also for the meetingcouncil_workflow
         self.meetingConfig = self.meetingConfig2
         self._add_published_state_inactive()
         self.meetingConfig.setWorkflowAdaptations('add_published_state')
-        logger = logging.getLogger('MeetingCommunes: tests')
+        logger = logging.getLogger('MeetingCommunes: testing')
         performWorkflowAdaptations(self.portal, self.meetingConfig, logger)
         # check while the wfAdaptation is not activated
         self._add_published_state_active()

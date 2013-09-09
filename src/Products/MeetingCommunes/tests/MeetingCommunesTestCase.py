@@ -22,7 +22,7 @@
 
 from Products.PloneMeeting.tests.PloneMeetingTestCase import PloneMeetingTestCase
 
-from Products.MeetingCommunes.testing import MC_TEST_PROFILE_FUNCTIONAL
+from Products.MeetingCommunes.testing import MC_TESTING_PROFILE_FUNCTIONAL
 from Products.MeetingCommunes.tests.helpers import MeetingCommunesTestingHelpers
 
 
@@ -37,7 +37,7 @@ class MeetingCommunesTestCase(PloneMeetingTestCase, MeetingCommunesTestingHelper
     # attribute to take these files into account
     #subproductIgnoredTestFiles = ['testPerformances.py', ]
 
-    layer = MC_TEST_PROFILE_FUNCTIONAL
+    layer = MC_TESTING_PROFILE_FUNCTIONAL
 
     def setUp(self):
         PloneMeetingTestCase.setUp(self)

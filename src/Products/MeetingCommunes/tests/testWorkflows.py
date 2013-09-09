@@ -25,8 +25,7 @@
 from DateTime import DateTime
 from AccessControl import Unauthorized
 from plone.app.testing import login
-from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
-    MeetingCommunesTestCase
+from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testWorkflows import testWorkflows as pmtw
 
 
