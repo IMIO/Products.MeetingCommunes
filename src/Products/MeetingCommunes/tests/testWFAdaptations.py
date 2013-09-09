@@ -44,7 +44,8 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
                                'no_publication', 'no_proposal', 'everyone_reads_all',
                                'creator_edits_unless_closed', 'local_meeting_managers',
                                # our wfAdaptations
-                               'add_published_state',)))
+                               'add_published_state',
+                               'return_to_proposing_group', )))
 
     def test_subproduct_call_WFA_no_publication(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
@@ -114,23 +115,29 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         self.meetingConfig = self.meetingConfig2
         pmtwfa.test_pm_WFA_local_meeting_managers(self)
 
+    def test_subproduct_call_WFA_return_to_proposing_group(self):
+        '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
+        self.meetingConfig = self.meetingConfig2
+        pmtwfa.test_pm_WFA_return_to_proposing_group(self)
+
     def test_subproduct_WFA_add_published_state(self):
         '''Test the workflowAdaptation 'add_published_state'.
            If meeting is in decided state, only the MeetingManagers can
-           view the real decision. The other people view a standard message taken from the MeetingConfig.'''
+           view the real decision. The other people view a standard
+           message taken from the MeetingConfig.'''
         login(self.portal, 'pmManager')
         # check while the wfAdaptation is not activated
         self._add_published_state_inactive()
         # activate the wfAdaptation and check
         self.meetingConfig.setWorkflowAdaptations('add_published_state')
-        logger = logging.getLogger('MeetingCommunes: tests')
+        logger = logging.getLogger('MeetingCommunes: testing')
         performWorkflowAdaptations(self.portal, self.meetingConfig, logger)
         self._add_published_state_active()
         # test also for the meetingcouncil_workflow
         self.meetingConfig = self.meetingConfig2
         self._add_published_state_inactive()
         self.meetingConfig.setWorkflowAdaptations('add_published_state')
-        logger = logging.getLogger('MeetingCommunes: tests')
+        logger = logging.getLogger('MeetingCommunes: testing')
         performWorkflowAdaptations(self.portal, self.meetingConfig, logger)
         # check while the wfAdaptation is not activated
         self._add_published_state_active()

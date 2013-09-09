@@ -102,7 +102,8 @@
 .state-delayed, .label-state-delayed {
     color: grey !important;
 }
-#plone-contentmenu-workflow .state-delayed {
+#plone-contentmenu-workflow .state-delayed,
+#plone-contentmenu-workflow .state-returned_to_proposing_group {
     border-radius: 0.5em 0.5em 0.5em 0.5em;
     background-color: grey;
     padding: 0 0.5em;

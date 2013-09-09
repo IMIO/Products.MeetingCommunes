@@ -22,8 +22,7 @@
 # 02110-1301, USA.
 #
 
-from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
-    MeetingCommunesTestCase
+from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testChangeItemOrderView import testChangeItemOrderView as pmciov
 
 
