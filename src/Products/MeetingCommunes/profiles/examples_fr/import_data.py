@@ -239,16 +239,6 @@ collegeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeet
 collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
 collegeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions'
 collegeMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
-collegeMeeting.itemTopicStates = ('itemcreated',
-                                  'proposed',
-                                  'validated',
-                                  'presented',
-                                  'itemfrozen',
-                                  'pre_accepted',
-                                  'accepted',
-                                  'refused',
-                                  'delayed',
-                                  'accepted_but_modified', )
 collegeMeeting.meetingTopicStates = ('created', 'frozen')
 collegeMeeting.decisionTopicStates = ('decided', 'closed')
 collegeMeeting.enforceAdviceMandatoriness = False
@@ -463,18 +453,6 @@ councilMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeet
 councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowConditions'
 councilMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowActions'
 councilMeeting.transitionsToConfirm = []
-#show every items states
-councilMeeting.itemTopicStates = ('itemcreated',
-                                  'proposed',
-                                  'validated',
-                                  'presented',
-                                  'itemfrozen',
-                                  'itempublished',
-                                  'accepted',
-                                  'pre_accepted',
-                                  'accepted_but_modified',
-                                  'refused',
-                                  'delayed')
 councilMeeting.meetingTopicStates = ('created', 'frozen', 'published')
 councilMeeting.decisionTopicStates = ('decided', 'closed')
 councilMeeting.itemAdviceStates = ('validated',)
