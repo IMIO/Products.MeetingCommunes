@@ -1008,19 +1008,6 @@ class MeetingItemCollegeWorkflowActions(MeetingItemWorkflowActions):
     implements(IMeetingItemCollegeWorkflowActions)
     security = ClassSecurityInfo()
 
-    security.declarePrivate('doPresent')
-    def doPresent(self, stateChange):
-        '''Manage what to do when we present an item in a meeting.'''
-        meeting = getCurrentMeetingObject(self.context)
-        meeting.insertItem(self.context)
-        meetingState = meeting.queryState()
-        wTool = self.context.portal_workflow
-        if meetingState in ['frozen', 'decided', ]:
-            # We are inserting an item in a frozen or decided meeting (probably
-            # a late item ;-))
-            # We need to freeze the item too...
-            wTool.doActionFor(self.context, 'itemfreeze')
-
     security.declarePrivate('doAccept_but_modify')
     def doAccept_but_modify(self, stateChange):
         pass

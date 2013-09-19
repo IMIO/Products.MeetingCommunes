@@ -65,35 +65,39 @@ from Products.PloneMeeting.MeetingConfig import MeetingConfig
 topicsInfo = (
     # Items in state 'proposed'
     ('searchproposeditems',
-    (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
+     (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
+      ('review_state', 'ATListCriterion', ('proposed',),)
+      ),
      'created',
      '',
      "python: not here.portal_plonemeeting.userIsAmong('reviewers')",
-     ('proposed', ),
      ),
     # Items that need to be validated
     ('searchitemstovalidate',
-    (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
+     (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
+      ('review_state', 'ATListCriterion', ('proposed',),)
+      ),
      'created',
      'searchItemsToValidate',
      "python: here.portal_plonemeeting.userIsAmong('reviewers')",
-     ('proposed', ),
      ),
     # Items in state 'validated'
     ('searchvalidateditems',
-    (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
+     (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
+     ('review_state', 'ATListCriterion', ('validated',),)
+      ),
      'created',
      '',
      '',
-     ('validated', ),
      ),
     # All 'decided' items
     ('searchdecideditems',
-    (('Type', 'ATPortalTypeCriterion', 'MeetingItem'),),
+     (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
+     ('review_state', 'ATListCriterion', ('accepted', 'refused', 'delayed', 'accepted_but_modified',),)
+      ),
      'created',
      '',
      '',
-     ('accepted', 'refused', 'delayed', 'accepted_but_modified',),
      ),
 )
 existingTopicsInfo = MeetingConfig.topicsInfo
