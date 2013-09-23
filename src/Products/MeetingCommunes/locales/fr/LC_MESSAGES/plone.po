@@ -100,7 +100,7 @@ msgstr "Remettre en \"Présenté\""
 
 #. Default: "Back to pre-validated"
 msgid "backToPrevalidated"
-msgstr "Remettre en \"Accepté provisoirement\""
+msgstr "Remettre en \"Pré-validé\""
 
 #. Default: "Back to proposed"
 msgid "backToProposed"
@@ -163,4 +163,3 @@ msgstr "Le point a été envoyé au Comité de concertation."
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
 msgstr "Le point a été envoyé au Conseil communal."
-
