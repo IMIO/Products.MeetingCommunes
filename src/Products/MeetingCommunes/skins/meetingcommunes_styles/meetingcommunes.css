@@ -11,10 +11,12 @@
     border: 2px solid red;
 }
 
-.state-proposed, .label-state-proposed {
+.state-proposed, .label-state-proposed,
+.state-prevalidated, .label-state-prevalidated {
     color: #FFA500 !important;
 }
-#plone-contentmenu-workflow .state-proposed {
+#plone-contentmenu-workflow .state-proposed,
+#plone-contentmenu-workflow .state-prevalidated {
     border-radius: 0.5em 0.5em 0.5em 0.5em;
     background-color: #FFA500;
     padding: 0 0.5em;
