@@ -1069,18 +1069,6 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
             res = True
         return res
 
-    security.declarePublic('isLateFor')
-    def isLateFor(self, meeting):
-        res = False
-        if meeting and (meeting.queryState() in ['frozen', 'decided']) and \
-           (meeting.UID() == self.context.getPreferredMeeting()):
-            itemValidationDate = self._getDateOfAction(self.context, 'validate')
-            meetingFreezingDate = self._getDateOfAction(meeting, 'freeze')
-            if itemValidationDate and meetingFreezingDate:
-                if itemValidationDate > meetingFreezingDate:
-                    res = True
-        return res
-
     security.declarePublic('mayFreeze')
     def mayFreeze(self):
         res = False
@@ -1279,18 +1267,6 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
 
     implements(IMeetingItemCouncilWorkflowConditions)
     security = ClassSecurityInfo()
-
-    security.declarePublic('isLateFor')
-    def isLateFor(self, meeting):
-        res = False
-        if meeting and (meeting.queryState() in ['frozen', 'published', 'decided']) and \
-           (meeting.UID() == self.context.getPreferredMeeting()):
-            itemValidationDate = self._getDateOfAction(self.context, 'validate')
-            meetingFreezingDate = self._getDateOfAction(meeting, 'freeze')
-            if itemValidationDate and meetingFreezingDate:
-                if itemValidationDate > meetingFreezingDate:
-                    res = True
-        return res
 
     security.declarePublic('mayDelete')
     def mayDelete(self):

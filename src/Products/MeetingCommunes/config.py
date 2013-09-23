@@ -106,7 +106,6 @@ existingTopicsInfo.extend(topicsInfo)
 MeetingConfig.topicsInfo = tuple(existingTopicsInfo)
 
 # override states mappings for the 'return_to_proposing_group' wfAdaptation
-##code-section config-bottom #fill in your manual code here
 from Products.PloneMeeting import config as PMconfig
 MC_RETURN_TO_PROPOSING_GROUP_MAPPINGS = {'backTo_presented_from_returned_to_proposing_group':
                                          ['created', ],

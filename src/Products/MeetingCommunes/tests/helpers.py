@@ -36,3 +36,28 @@ class MeetingCommunesTestingHelpers(PloneMeetingTestingHelpers):
                                                                              'close', )
     TRANSITIONS_FOR_ACCEPTING_ITEMS_1 = ('freeze', 'decide', )
     TRANSITIONS_FOR_ACCEPTING_ITEMS_2 = ('freeze', 'publish', 'decide', )
+    BACK_TO_WF_PATH_1 = BACK_TO_WF_PATH_2 = {
+        # Meeting
+        'created': ('backToDecisionsPublished',
+                    'backToDecided',
+                    'backToPublished',
+                    'backToFrozen',
+                    'backToCreated',),
+        # MeetingItem
+        'itemcreated': ('backToItemPublished',
+                        'backToItemFrozen',
+                        'backToPresented',
+                        'backToValidated',
+                        'backToPreValidated',
+                        'backToProposed',
+                        'backToItemCreated', ),
+        'proposed': ('backToItemPublished',
+                     'backToItemFrozen',
+                     'backToPresented',
+                     'backToValidated',
+                     'backToPreValidated',
+                     'backToProposed', ),
+        'validated': ('backToItemPublished',
+                      'backToItemFrozen',
+                      'backToPresented',
+                      'backToValidated', )}

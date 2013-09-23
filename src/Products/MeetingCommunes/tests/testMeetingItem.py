@@ -110,6 +110,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_IsPrivacyViewable()
 
+    def test_subproduct_call_IsLateFor(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_IsLateFor()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

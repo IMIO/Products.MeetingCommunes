@@ -916,7 +916,7 @@
  <state state_id="proposed"
         title="proposed"
         i18n:attributes="title">
-  <exit-transition transition_id="backToCreated"/>
+  <exit-transition transition_id="backToItemCreated"/>
   <exit-transition transition_id="validate"/>
   <permission-map name="Access contents information"
                   acquired="False">
@@ -1267,14 +1267,14 @@
     <guard-expression>python:here.wfConditions().mayDecide()</guard-expression>
   </guard>
  </transition>
- <transition transition_id="backToCreated"
-             title="backToCreated"
+ <transition transition_id="backToItemCreated"
+             title="backToItemCreated"
              new_state="itemcreated"
              trigger="USER"
              before_script=""
              after_script=""
              i18n:attributes="title">
-  <action url="" category="workflow" i18n:translate="">backToCreated</action>
+  <action url="" category="workflow" i18n:translate="">backToItemCreated</action>
   <guard>
     <guard-expression>python:here.wfConditions().mayCorrect()</guard-expression>
   </guard>
