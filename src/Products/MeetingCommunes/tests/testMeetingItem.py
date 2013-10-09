@@ -114,6 +114,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_IsLateFor()
 
+    def test_subproduct_call_manageItemAssembly(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_manageItemAssembly()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
