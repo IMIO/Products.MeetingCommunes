@@ -62,11 +62,11 @@
       profile="Products.MeetingCommunes:default" />
 
   <genericsetup:upgradeStep
-      title="Go to MeetingCommunes 3.0.4"
+      title="Go to MeetingCommunes 3.1.0"
       description=""
       source="3.0.3"
-      destination="3.0.4"
-      handler="Products.MeetingCommunes.migrations.migrate_to_3_0_4.migrate"
+      destination="3.1.0"
+      handler="Products.MeetingCommunes.migrations.migrate_to_3_1_0.migrate"
       profile="Products.MeetingCommunes:default" />
 
   <!-- ##/code-section profiles.zcml-bottom -->
