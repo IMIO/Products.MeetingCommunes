@@ -72,15 +72,6 @@ topicsInfo = (
      '',
      "python: not here.portal_plonemeeting.userIsAmong('reviewers')",
      ),
-    # Items that need to be validated
-    ('searchitemstovalidate',
-     (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
-      ('review_state', 'ATListCriterion', ('proposed',),)
-      ),
-     'created',
-     'searchItemsToValidate',
-     "python: here.portal_plonemeeting.userIsAmong('reviewers')",
-     ),
     # Items in state 'validated'
     ('searchvalidateditems',
      (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),

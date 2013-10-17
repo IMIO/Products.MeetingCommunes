@@ -189,7 +189,6 @@ def finalizeExampleInstance(context):
     # add some topcis to the portlet_todo
     mc_college_or_bp.setToDoListTopics(
         [getattr(mc_college_or_bp.topics, 'searchdecideditems'),
-         getattr(mc_college_or_bp.topics, 'searchitemstovalidate'),
          getattr(mc_college_or_bp.topics, 'searchallitemsincopy'),
          getattr(mc_college_or_bp.topics, 'searchallitemstoadvice'),
          ])
@@ -201,7 +200,6 @@ def finalizeExampleInstance(context):
     # add some topcis to the portlet_todo
     mc_council_or_cas.setToDoListTopics(
         [getattr(mc_council_or_cas.topics, 'searchdecideditems'),
-         getattr(mc_council_or_cas.topics, 'searchitemstovalidate'),
          getattr(mc_council_or_cas.topics, 'searchallitemsincopy'),
          ])
 

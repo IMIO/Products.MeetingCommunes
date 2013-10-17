@@ -149,10 +149,6 @@ msgstr "Tous les PVs"
 msgid "searchdecideditems"
 msgstr "Points décidés"
 
-#. Default: "Items to validate"
-msgid "searchitemstovalidate"
-msgstr "Points à valider"
-
 # searches
 #. Default: "Proposed items"
 msgid "searchproposeditems"
@@ -161,8 +157,4 @@ msgstr "Points proposés"
 #. Default: "Validated items"
 msgid "searchvalidateditems"
 msgstr "Points validés"
-
-#. Default: "Hide the decision to the proposing group when it is under writing."
-msgid "wa_add_published_state"
-msgstr "Cacher les décisions au service pendant la rédaction du PV"
 

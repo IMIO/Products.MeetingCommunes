@@ -148,10 +148,6 @@ msgstr "Elke beslissing"
 msgid "searchdecideditems"
 msgstr "Besliste items"
 
-#. Default: "Items to validate"
-msgid "searchitemstovalidate"
-msgstr ""
-
 # searches
 #. Default: "Proposed items"
 #, fuzzy
@@ -162,8 +158,4 @@ msgstr "Voorgestelde items"
 #, fuzzy
 msgid "searchvalidateditems"
 msgstr "Gevalideerde items"
-
-#. Default: "Hide the decision to the proposing group when it is under writing."
-msgid "wa_add_published_state"
-msgstr ""
 

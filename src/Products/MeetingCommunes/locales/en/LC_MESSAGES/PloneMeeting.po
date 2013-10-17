@@ -154,10 +154,6 @@ msgstr "see every decisions"
 msgid "searchdecideditems"
 msgstr "Decided items"
 
-#. Default: "Items to validate"
-msgid "searchitemstovalidate"
-msgstr ""
-
 # searches
 #. Default: "Proposed items"
 #, fuzzy
@@ -168,8 +164,4 @@ msgstr "Items to validate"
 #, fuzzy
 msgid "searchvalidateditems"
 msgstr "Validated items"
-
-#. Default: "Hide the decision to the proposing group when it is under writing."
-msgid "wa_add_published_state"
-msgstr ""
 
