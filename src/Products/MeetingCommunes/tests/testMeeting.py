@@ -76,6 +76,12 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         """
         self.test_pm_DecideSeveralItems()
 
+    def test_subproduct_call_validate_date(self):
+        """
+          Run the test_pm_validate_date from PloneMeeting
+        """
+        self.test_pm_validate_date()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
