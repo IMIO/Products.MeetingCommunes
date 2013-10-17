@@ -118,7 +118,7 @@ msgstr "Rédiger le PV"
 # College meeting workflow states specific vocabulary
 #. Default: "decided"
 msgid "decided"
-msgstr "Rédaction du PV"
+msgstr "En rédaction du PV"
 
 #. Default: "Decisions published"
 msgid "decisions_published"
@@ -126,7 +126,7 @@ msgstr "Décisions publiées"
 
 #. Default: "Frozen"
 msgid "frozen"
-msgstr "Gelé"
+msgstr "Gelée"
 
 #. Default: "Itemfrozen"
 msgid "itemfrozen"
