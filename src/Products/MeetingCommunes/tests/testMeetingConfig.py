@@ -29,6 +29,14 @@ from Products.PloneMeeting.tests.testMeetingConfig import testMeetingConfig as p
 class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
     '''Tests the MeetingConfig class methods.'''
 
+    def test_subproduct_call_searchItemsToPrevalidate(self):
+        '''Run the test_pm_searchItemsToPrevalidate from PloneMeeting.'''
+        pmtmc.test_pm_searchItemsToPrevalidate(self)
+
+    def test_subproduct_call_searchItemsToValidate(self):
+        '''Run the test_pm_searchItemsToValidate from PloneMeeting.'''
+        pmtmc.test_pm_searchItemsToValidate(self)
+
     def test_subproduct_call_searchItemsToAdvice(self):
         '''Run the test_pm_searchItemsToAdvice from PloneMeeting.'''
         pmtmc.test_pm_searchItemsToAdvice(self)
