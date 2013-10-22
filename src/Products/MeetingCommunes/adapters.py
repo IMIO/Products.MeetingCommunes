@@ -321,7 +321,7 @@ class CustomMeeting(Meeting):
                 itemUids.remove(elt)
         items = self.context.getItemsInOrder(late=late, uids=itemUids)
         if by_proposing_group:
-            groups = self.context.portal_plonemeeting.getActiveGroups()
+            groups = self.context.portal_plonemeeting.getMeetingGroups()
         else:
             groups = None
         if items:
@@ -660,8 +660,8 @@ class CustomMeetingItem(MeetingItem):
     def getEchevinsForProposingGroup(self):
         '''Returns all echevins defined for the proposing group'''
         res = []
-        pmtool = getToolByName(self.context, "portal_plonemeeting")
-        for group in pmtool.getActiveGroups():
+        tool = getToolByName(self.context, 'portal_plonemeeting')
+        for group in tool.getMeetingGroups():
             if self.context.getProposingGroup() in group.getEchevinServices():
                 res.append(group.id)
         return res
@@ -720,9 +720,9 @@ class CustomMeetingGroup(MeetingGroup):
     def listEchevinServices(self):
         '''Returns a list of groups that can be selected on an group (without isEchevin).'''
         res = []
-        pmtool = getToolByName(self, "portal_plonemeeting")
+        tool = getToolByName(self, 'portal_plonemeeting')
         # Get every Plone group related to a MeetingGroup
-        for group in pmtool.getActiveGroups():
+        for group in tool.getMeetingGroups():
             res.append((group.id, group.getProperty('title')))
 
         return DisplayList(tuple(res))
@@ -738,8 +738,6 @@ class CustomMeetingConfig(MeetingConfig):
 
     def __init__(self, item):
         self.context = item
-
-
 
 
 class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
