@@ -249,6 +249,11 @@ def addDemoData(context):
     tool = getToolByName(site, 'portal_plonemeeting')
     wfTool = getToolByName(site, 'portal_workflow')
     pTool = getToolByName(site, 'plone_utils')
+    # first we need to be sure that our IPoneMeetingLayer is set correctly
+    # https://dev.plone.org/ticket/11673
+    from zope.event import notify
+    from zope.traversing.interfaces import BeforeTraverseEvent
+    notify(BeforeTraverseEvent(site, site.REQUEST))
     # we will create elements for some users, make sure their personal
     # area is correctly configured
     site.portal_membership.createMemberArea('agentPers')
