@@ -22,8 +22,7 @@
 # 02110-1301, USA.
 #
 
-from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
-    MeetingCommunesTestCase
+from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testMeetingItem import testMeetingItem as pmtmi
 
 
@@ -33,9 +32,7 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
     """
 
     def test_subproduct_call_ListProposingGroup(self):
-        """
-           Run the testListProposingGroup from PloneMeeting
-        """
+        '''See doc string in PloneMeeting.'''
         #we do the test for the college config
         self.setMeetingConfig(self.meetingConfig.getId())
         self.test_pm_ListProposingGroup()
@@ -44,9 +41,7 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.test_pm_ListProposingGroup()
 
     def test_subproduct_call_UsedColorSystemGetColoredLink(self):
-        """
-           Test the selected system of color while getting a colored link
-        """
+        '''See doc string in PloneMeeting.'''
         #we do the test for the college config
         self.setMeetingConfig(self.meetingConfig.getId())
         self.test_pm_UsedColorSystemGetColoredLink()
@@ -55,9 +50,7 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.test_pm_UsedColorSystemGetColoredLink()
 
     def test_subproduct_call_UsedColorSystemShowColors(self):
-        """
-           Test the selected system of color
-        """
+        '''See doc string in PloneMeeting.'''
         #we do the test for the college config
         self.setMeetingConfig(self.meetingConfig.getId())
         self.test_pm_UsedColorSystemShowColors()
@@ -66,24 +59,20 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.test_pm_UsedColorSystemShowColors()
 
     def test_subproduct_call_SendItemToOtherMC(self):
-        '''Test the send an item to another meetingConfig functionnality'''
+        '''See doc string in PloneMeeting.'''
         #we do the test for the college config, to send an item to the council
         self.setMeetingConfig(self.meetingConfig.getId())
         self.test_pm_SendItemToOtherMC()
 
     def test_subproduct_call_SelectableCategories(self):
-        '''Categories are available if isSelectable returns True.  By default,
-           isSelectable will return active categories for wich intersection
-           between MeetingCategory.usingGroups and current member
-           proposingGroups is not empty.'''
+        '''See doc string in PloneMeeting.'''
         #we do the test for the council config
         self.setMeetingConfig(self.meetingConfig2.getId())
         self.meetingConfig.useGroupsAsCategories = False
         self.test_pm_SelectableCategories()
 
     def test_subproduct_call_AddAutoCopyGroups(self):
-        '''Test the functionnality of automatically adding some copyGroups depending on
-           the TAL expression defined on every MeetingGroup.asCopyGroupOn.'''
+        '''See doc string in PloneMeeting.'''
         self.test_pm_AddAutoCopyGroups()
 
     def test_subproduct_call_UpdateAdvices(self):
@@ -117,6 +106,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
     def test_subproduct_call_manageItemAssembly(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_manageItemAssembly()
+
+    def test_subproduct_call_getItemNumber(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_getItemNumber()
 
 
 def test_suite():
