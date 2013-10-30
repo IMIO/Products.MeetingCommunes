@@ -100,6 +100,9 @@ msgstr ""
 msgid "decisions"
 msgstr "Actas"
 
+msgid "front_page_body"
+msgstr ""
+
 #. Default: "Accepted but modified"
 msgid "icon_help_accepted_but_modified"
 msgstr ""
@@ -160,4 +163,3 @@ msgstr "los temas propuestos"
 #, fuzzy
 msgid "searchvalidateditems"
 msgstr "los temas validados"
-

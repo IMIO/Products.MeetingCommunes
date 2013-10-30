@@ -99,6 +99,9 @@ msgstr ""
 msgid "decisions"
 msgstr "Protokolle"
 
+msgid "front_page_body"
+msgstr ""
+
 #. Default: "Accepted but modified"
 #, fuzzy
 msgid "icon_help_accepted_but_modified"
@@ -161,4 +164,3 @@ msgstr "vorgeschlageneTOP"
 #, fuzzy
 msgid "searchvalidateditems"
 msgstr "validierte TOP"
-

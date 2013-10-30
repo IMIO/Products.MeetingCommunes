@@ -150,3 +150,6 @@ msgstr ""
 #. Default: "Pre accepted"
 msgid "icon_help_pre_accepted"
 msgstr ""
+
+msgid "front_page_body"
+msgstr ""

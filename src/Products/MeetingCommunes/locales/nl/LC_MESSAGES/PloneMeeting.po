@@ -98,6 +98,9 @@ msgstr ""
 msgid "decisions"
 msgstr "Beslissingen"
 
+msgid "front_page_body"
+msgstr ""
+
 #. Default: "Accepted but modified"
 msgid "icon_help_accepted_but_modified"
 msgstr ""
@@ -158,4 +161,3 @@ msgstr "Voorgestelde items"
 #, fuzzy
 msgid "searchvalidateditems"
 msgstr "Gevalideerde items"
-
