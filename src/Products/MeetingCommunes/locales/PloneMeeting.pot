@@ -12,10 +12,6 @@ msgstr ""
 "Domain: PloneMeeting\n"
 
 # MeetingItem
-#. Default: "Decision"
-msgid "PloneMeeting_label_decision"
-msgstr ""
-
 # Other
 #. Default: "Late items"
 msgid "late_presented_items"
