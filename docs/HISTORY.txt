@@ -1,13 +1,10 @@
 Products.MeetingCommunes Changelog
-=================================
+==================================
 
-Older versions than 3.0 can be found at http://svn.communesplone.org/svn/communesplone/PloneMeeting/tags/
-- Versions 1.x are for Plone2.5
-- Versions 2.x are for Plone3.x
-- Versions 3.0.x are for Plone < 4.3
-- Versions 3.1.+ are for Plone 4.3+
+Older versions than 3.0 can be found at http://svn.communesplone.org/svn/communesplone/MeetingCommunes/tags/
+The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-3.1.0 (unreleased)
+3.1.0 (2013-11-04)
 ------------------
 - Simplified overrides now that PloneMeeting manage this correctly
 - Moved 'add_published_state' to PloneMeeting and renamed to 'hide_decisions_when_under_writing'
