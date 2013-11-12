@@ -32,23 +32,23 @@ class testAdvices(MeetingCommunesTestCase, pmta):
        Advices are enabled for PloneGov Assembly, not for PloneMeeting Assembly.'''
 
     def test_subproduct_call_ViewItemToAdvice(self):
-        '''Run the testViewItemToAdvice from PloneMeeting.'''
+        '''Run the test_pm_ViewItemToAdvice from PloneMeeting.'''
         pmta.test_pm_ViewItemToAdvice(self)
 
     def test_subproduct_call_AddEditDeleteAdvices(self):
-        '''Run the testAddEditDeleteAdvices from PloneMeeting.'''
+        '''Run the test_pm_AddEditDeleteAdvices from PloneMeeting.'''
         pmta.test_pm_AddEditDeleteAdvices(self)
 
     def test_subproduct_call_CanNotGiveAdviceIfNotAsked(self):
-        '''Run the testCanNotGiveAdviceIfNotAsked from PloneMeeting.'''
+        '''Run the test_pm_CanNotGiveAdviceIfNotAsked from PloneMeeting.'''
         pmta.test_pm_CanNotGiveAdviceIfNotAsked(self)
 
     def test_subproduct_call_GiveAdviceOnCreatedItem(self):
-        '''Run the testGiveAdviceOnCreatedItem from PloneMeeting.'''
+        '''Run the test_pm_GiveAdviceOnCreatedItem from PloneMeeting.'''
         pmta.test_pm_GiveAdviceOnCreatedItem(self)
 
     def test_subproduct_call_AdvicesInvalidation(self):
-        '''Run the testAdvicesInvalidation from PloneMeeting.'''
+        '''Run the test_pm_AdvicesInvalidation from PloneMeeting.'''
         pmta.test_pm_AdvicesInvalidation(self)
 
 
