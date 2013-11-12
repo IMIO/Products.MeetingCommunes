@@ -43,6 +43,10 @@ class testMeetingGroup(MeetingCommunesTestCase, pmmg):
         logout()
         self.test_pm_CanNotRemoveUsedMeetingGroup()
 
+    def test_subproduct_call_deactivatedGroupCanNoMoreBeUsed(self):
+        '''Run the test_pm_deactivatedGroupCanNoMoreBeUsed from PloneMeeting.'''
+        self.test_pm_deactivatedGroupCanNoMoreBeUsed()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
