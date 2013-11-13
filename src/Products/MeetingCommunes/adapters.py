@@ -611,6 +611,7 @@ class CustomMeetingItem(MeetingItem):
         review_state = ['created', 'frozen', ]
         if self.context.portal_plonemeeting.isManager():
             review_state.append('decided')
+            review_state.append('published')
         res = catalogtool.unrestrictedSearchResults(
             portal_type=meetingPortalType,
             review_state=review_state,
