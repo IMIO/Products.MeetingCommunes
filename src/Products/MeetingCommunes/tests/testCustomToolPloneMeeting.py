@@ -32,7 +32,7 @@ class testCustomToolPloneMeeting(MeetingCommunesTestCase):
         Tests the ToolPloneMeeting adapted methods
     """
 
-    def test_mc_GetSpecificAssemblyFor(self):
+    def test_getSpecificAssemblyFor(self):
         """
             This method aimed to ease printings should return formated assembly
         """

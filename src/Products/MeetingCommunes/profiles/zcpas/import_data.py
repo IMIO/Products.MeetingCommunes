@@ -180,6 +180,7 @@ bpMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_m
 bpMeeting.useCopies = True
 bpMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'), groups[1].getIdSuffixed('reviewers'), groups[2].getIdSuffixed('reviewers'), groups[4].getIdSuffixed('reviewers')]
 bpMeeting.podTemplates = allTemplates
+bpMeeting.meetingConfigsToCloneTo = ['meeting-config-cas', ]
 
 bpMeeting.recurringItems = [
     # Agenda items

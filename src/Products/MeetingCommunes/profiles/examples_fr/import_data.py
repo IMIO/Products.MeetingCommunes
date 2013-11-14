@@ -273,6 +273,7 @@ collegeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                        groups[2].getIdSuffixed('reviewers'),
                                        groups[4].getIdSuffixed('reviewers')]
 collegeMeeting.podTemplates = collegeTemplates
+collegeMeeting.meetingConfigsToCloneTo = ['meeting-config-council', ]
 
 collegeMeeting.recurringItems = [
     RecurringItemDescriptor(

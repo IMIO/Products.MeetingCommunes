@@ -157,6 +157,7 @@ collegeMeeting.meetingPowerObserversStates = ('frozen', 'published', 'decided', 
 collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'), ]
 collegeMeeting.podTemplates = [agendaTemplate, decisionsTemplate, itemTemplate]
+collegeMeeting.meetingConfigsToCloneTo = ['meeting-config-council', ]
 
 collegeMeeting.recurringItems = [
     RecurringItemDescriptor(

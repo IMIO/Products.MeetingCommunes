@@ -95,3 +95,4 @@ class testUtils(MeetingCommunesTestCase):
                    'MeetingGroup developers already exists'
         res = self._importMeetingGroups(dict)
         self.assertEquals(expected, res)
+

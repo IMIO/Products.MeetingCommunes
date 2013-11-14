@@ -610,8 +610,7 @@ class CustomMeetingItem(MeetingItem):
         # he is able to add a meetingitem to a 'decided' meeting.
         review_state = ['created', 'frozen', ]
         if self.context.portal_plonemeeting.isManager():
-            review_state.append('decided')
-            review_state.append('published')
+            review_state += ['decided', 'published', ]
         res = catalogtool.unrestrictedSearchResults(
             portal_type=meetingPortalType,
             review_state=review_state,
