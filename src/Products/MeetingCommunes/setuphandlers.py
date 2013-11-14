@@ -183,9 +183,7 @@ def finalizeExampleInstance(context):
         site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
 
     # define some parameters for 'meeting-config-college'
-    # items are sendable to the 'meeting-config-council'
     mc_college_or_bp = getattr(site.portal_plonemeeting, meetingConfig1Id)
-    mc_college_or_bp.setMeetingConfigsToCloneTo([meetingConfig2Id, ])
     # add some topcis to the portlet_todo
     mc_college_or_bp.setToDoListTopics(
         [getattr(mc_college_or_bp.topics, 'searchdecideditems'),

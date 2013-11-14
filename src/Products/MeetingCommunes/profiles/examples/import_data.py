@@ -230,6 +230,7 @@ collegeMeeting.meetingPowerObserversStates = ('created', 'frozen', 'decided', 'c
 collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = ['secretariat_reviewers', 'computing_reviewers', 'personnel_reviewers', 'accountancy_reviewers', 'work_reviewers']
 collegeMeeting.podTemplates = collegeTemplates
+collegeMeeting.meetingConfigsToCloneTo = ['meeting-config-council', ]
 
 collegeMeeting.recurringItems = [
     RecurringItemDescriptor(
