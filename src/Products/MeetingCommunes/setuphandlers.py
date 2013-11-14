@@ -190,8 +190,6 @@ def finalizeExampleInstance(context):
          getattr(mc_college_or_bp.topics, 'searchallitemsincopy'),
          getattr(mc_college_or_bp.topics, 'searchallitemstoadvice'),
          ])
-    # call updateCloneToOtherMCActions inter alia
-    mc_college_or_bp.at_post_edit_script()
 
     # define some parameters for 'meeting-config-council'
     mc_council_or_cas = getattr(site.portal_plonemeeting, meetingConfig2Id)
