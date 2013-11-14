@@ -30,7 +30,7 @@ from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
 class testCustomMeetingGroup(MeetingCommunesTestCase):
     '''Tests the MeetingGroup adapted methods.'''
 
-    def testListEchevinServices(self):
+    def test_listEchevinServices(self):
         login(self.portal, 'admin')
         from Products.Archetypes.atapi import DisplayList
         les = DisplayList([('developers', u'Developers'), ('vendors', u'Vendors')])
