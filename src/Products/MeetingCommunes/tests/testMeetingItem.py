@@ -103,9 +103,9 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_IsLateFor()
 
-    def test_subproduct_call_manageItemAssembly(self):
+    def test_subproduct_call_manageItemAssemblyAndSignatures(self):
         '''See doc string in PloneMeeting.'''
-        self.test_pm_manageItemAssembly()
+        self.test_pm_manageItemAssemblyAndSignatures()
 
     def test_subproduct_call_getItemNumber(self):
         '''See doc string in PloneMeeting.'''
