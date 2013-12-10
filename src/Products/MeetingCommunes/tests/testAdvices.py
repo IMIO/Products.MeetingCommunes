@@ -22,14 +22,19 @@
 # 02110-1301, USA.
 #
 
-from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
-    MeetingCommunesTestCase
+from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testAdvices import testAdvices as pmta
 
 
 class testAdvices(MeetingCommunesTestCase, pmta):
     '''Tests various aspects of advices management.
        Advices are enabled for PloneGov Assembly, not for PloneMeeting Assembly.'''
+
+    def setUp(self):
+        """
+        """
+        super(testAdvices, self).setUp()
+        self.setMeetingConfig(self.meetingConfig2.getId())
 
     def test_subproduct_call_ViewItemToAdvice(self):
         '''Run the test_pm_ViewItemToAdvice from PloneMeeting.'''
@@ -50,6 +55,10 @@ class testAdvices(MeetingCommunesTestCase, pmta):
     def test_subproduct_call_AdvicesInvalidation(self):
         '''Run the test_pm_AdvicesInvalidation from PloneMeeting.'''
         pmta.test_pm_AdvicesInvalidation(self)
+
+    def test_subproduct_call_IndexAdvisers(self):
+        '''Run the test_pm_IndexAdvisers from PloneMeeting.'''
+        pmta.test_pm_IndexAdvisers(self)
 
 
 def test_suite():
