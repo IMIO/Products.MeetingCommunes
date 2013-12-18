@@ -5,7 +5,12 @@ from Products.PloneMeeting.profiles import *
 annexe = MeetingFileTypeDescriptor('annexe', 'Annexe', 'attach.png', '')
 annexeBudget = MeetingFileTypeDescriptor('annexeBudget', 'Article Budgétaire', 'budget.png', '')
 annexeCahier = MeetingFileTypeDescriptor('annexeCahier', 'Cahier des Charges', 'cahier.gif', '')
-annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe à la décision', 'attach.png', '', True)
+annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe à la décision', 'attach.png', '', 'item_decision')
+annexeAvis = MeetingFileTypeDescriptor('adviceAnnexe', 'Annexe à un avis',
+                                       'attach.png', '', 'advice')
+annexeAvisLegal = MeetingFileTypeDescriptor('adviceLegalAnnexe', 'Annexe article de loi',
+                                            'legalAdvice.png', '', 'advice')
+
 # Categories -------------------------------------------------------------------
 recurring = CategoryDescriptor('recurrents', 'Récurrents')
 categories = [recurring,
@@ -200,7 +205,8 @@ Place2\r
 Place3\r"""
 collegeMeeting.categories = categories
 collegeMeeting.shortName = 'College'
-collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision]
+collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
+                                   annexeDecision, annexeAvis, annexeAvisLegal]
 collegeMeeting.usedItemAttributes = ['detailedDescription',
                                      'budgetInfos',
                                      'observations',
@@ -417,7 +423,8 @@ Place2\n\r
 Place3\n\r"""
 councilMeeting.categories = categories
 councilMeeting.shortName = 'Council'
-councilMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision]
+councilMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
+                                   annexeDecision, annexeAvis, annexeAvisLegal]
 councilMeeting.usedItemAttributes = ['detailedDescription',
                                      'oralQuestion',
                                      'itemInitiator',

@@ -7,14 +7,20 @@ annexe = MeetingFileTypeDescriptor('annexe', 'Annexe', 'attach.png', '')
 annexeBudget = MeetingFileTypeDescriptor('annexeBudget', 'Article Budgetaire', 'budget.png', '')
 annexeCahier = MeetingFileTypeDescriptor('annexeCahier', 'Cahier des Charges', 'cahier.gif', '')
 itemAnnex = MeetingFileTypeDescriptor('item-annex', 'Other annex(es)', 'attach.png', '')
-annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe a la decision', 'attach.png', '', True)
+annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe a la decision', 'attach.png', '', 'item_decision')
 # Some type of annexes taken from the default PloneMeeting test profile
 marketingAnalysis = MeetingFileTypeDescriptor(
-    'marketing-annex', 'Marketing annex(es)', 'attach.png', '', True,
+    'marketing-annex', 'Marketing annex(es)', 'attach.png', '', 'item_decision',
     active=False)
 overheadAnalysis = MeetingFileTypeDescriptor(
     'overhead-analysis', 'Administrative overhead analysis',
     'attach.png', '')
+# Advice annexes types
+adviceAnnex = MeetingFileTypeDescriptor(
+    'advice-annex', 'Advice annex(es)', 'attach.png', '', 'advice')
+adviceLegalAnalysis = MeetingFileTypeDescriptor(
+    'advice-legal-analysis', 'Advice legal analysis', 'attach.png', '', 'advice')
+
 
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('agendaTemplate', 'Meeting agenda')
@@ -120,7 +126,8 @@ collegeMeeting.certifiedSignatures = 'Mr Présent Actuellement, Bourgmestre ff -
 collegeMeeting.categories = categories
 collegeMeeting.shortName = 'College'
 collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, itemAnnex,
-                                   annexeDecision, overheadAnalysis, marketingAnalysis]
+                                   annexeDecision, overheadAnalysis, marketingAnalysis,
+                                   adviceAnnex, adviceLegalAnalysis]
 collegeMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
 collegeMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.detailedDescription',
@@ -227,7 +234,8 @@ councilMeeting.signatures = 'Default signatures'
 councilMeeting.certifiedSignatures = 'Mr Présent Actuellement, Bourgmestre ff - Charles Exemple, Secrétaire communal'
 councilMeeting.categories = categories
 councilMeeting.shortName = 'Council'
-councilMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, itemAnnex, annexeDecision]
+councilMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
+                                   itemAnnex, annexeDecision, adviceAnnex, adviceLegalAnalysis]
 councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.detailedDescription',
                                        'MeetingItem.decision',
