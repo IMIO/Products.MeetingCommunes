@@ -3,6 +3,8 @@
 import logging
 logger = logging.getLogger('PloneMeeting')
 
+from Acquisition import aq_base
+
 from Products.PloneMeeting.profiles import MeetingFileTypeDescriptor
 from Products.PloneMeeting.migrations import Migrator
 
@@ -34,7 +36,8 @@ class Migrate_To_3_1_1(Migrator):
         mcProfilePath = mcProfilePath.replace('profiles/default', 'profiles/examples_fr')
         for cfg in self.portal.portal_plonemeeting.objectValues('MeetingConfig'):
             for mft in mfts:
-                cfg.addFileType(mft, source=mcProfilePath)
+                if not hasattr(aq_base(cfg.meetingfiletypes), mft.id):
+                    cfg.addFileType(mft, source=mcProfilePath)
         logger.info('Done.')
 
     def run(self):
