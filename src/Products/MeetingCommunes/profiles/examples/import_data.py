@@ -6,6 +6,10 @@ simpleAnnex = MeetingFileTypeDescriptor('annex', 'Annex', 'attach.png', '')
 budgetAnnex = MeetingFileTypeDescriptor('budgetAnnex', 'Budget annex', 'budget.png', '')
 requirementsAnnex = MeetingFileTypeDescriptor('requirementsAnnex', 'Requirements annex', 'cahier.gif', '')
 decisionAnnex = MeetingFileTypeDescriptor('decisionAnnex', 'Decision annex', 'attach.png', '', True)
+adviceAnnex = MeetingFileTypeDescriptor('adviceAnnex', 'Advice annex',
+                                        'attach.png', '', 'advice')
+AdviceLegalAnnex = MeetingFileTypeDescriptor('AdviceLegalAnnex', 'Advice annex ',
+                                             'legalAdvice.png', '', 'advice')
 # Categories -------------------------------------------------------------------
 recurring = CategoryDescriptor('recurring', 'Recurring')
 categories = [recurring,
@@ -183,22 +187,27 @@ collegeMeeting = MeetingConfigDescriptor(
     'meeting-config-college', 'Administration college',
     'Administration college', isDefault=True)
 collegeMeeting.assembly = 'Pierre Dupont - Burgomaster,\n' \
-                           'Charles Example - 1st municipal councillor,\n' \
-                           'Councillor one, councillor two, councillor three - Councillors,\n' \
-                           'Jacqueline Example, SA leader'
+                          'Charles Example - 1st municipal councillor,\n' \
+                          'Councillor one, councillor two, councillor three - Councillors,\n' \
+                          'Jacqueline Example, SA leader'
 collegeMeeting.signatures = '1st municipal councillor\nPierre Dupont\nThe Burgmester\nCharles Example'
 collegeMeeting.places = """Place1\n\r
 Place2\n\r
 Place3\n\r"""
 collegeMeeting.categories = categories
 collegeMeeting.shortName = 'College'
-collegeMeeting.meetingFileTypes = [simpleAnnex, budgetAnnex, requirementsAnnex, decisionAnnex]
-collegeMeeting.usedItemAttributes = ['detailedDescription', 'budgetInfos', 'observations', 'toDiscuss', 'itemAssembly', 'itemIsSigned',]
+collegeMeeting.meetingFileTypes = [simpleAnnex, budgetAnnex, requirementsAnnex,
+                                   decisionAnnex, adviceAnnex, adviceLegalAnnex]
+collegeMeeting.usedItemAttributes = ['detailedDescription', 'budgetInfos', 'observations',
+                                     'toDiscuss', 'itemAssembly', 'itemIsSigned', ]
 collegeMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 collegeMeeting.recordMeetingHistoryStates = []
-collegeMeeting.itemsListVisibleColumns = ['toDiscuss', 'state', 'proposingGroup', 'annexes', 'annexesDecision', 'advices', 'actions', 'itemIsSigned',]
-collegeMeeting.itemColumns = ['creator', 'state', 'proposingGroup', 'annexes', 'annexesDecision', 'advices', 'actions', 'meeting', 'itemIsSigned', ]
-collegeMeeting.xhtmlTransformFields = ('MeetingItem.description', 'MeetingItem.detailedDescription', 'MeetingItem.decision', 'MeetingItem.observations', 'Meeting.observations', )
+collegeMeeting.itemsListVisibleColumns = ['toDiscuss', 'state', 'proposingGroup', 'annexes',
+                                          'annexesDecision', 'advices', 'actions', 'itemIsSigned',]
+collegeMeeting.itemColumns = ['creator', 'state', 'proposingGroup', 'annexes', 'annexesDecision',
+                              'advices', 'actions', 'meeting', 'itemIsSigned', ]
+collegeMeeting.xhtmlTransformFields = ('MeetingItem.description', 'MeetingItem.detailedDescription',
+                                       'MeetingItem.decision', 'MeetingItem.observations', 'Meeting.observations', )
 collegeMeeting.xhtmlTransformTypes = ('removeBlanks',)
 collegeMeeting.itemWorkflow = 'meetingitemcollege_workflow'
 collegeMeeting.meetingWorkflow = 'meetingcollege_workflow'
@@ -220,15 +229,19 @@ collegeMeeting.meetingDocFormats = ('odt', 'pdf')
 collegeMeeting.useAdvices = True
 collegeMeeting.itemAdviceStates = ('validated',)
 collegeMeeting.itemAdviceEditStates = ('validated',)
-collegeMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted', 'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
+collegeMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',
+                                       'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
 collegeMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 collegeMeeting.enableAdviceInvalidation = False
 collegeMeeting.itemAdviceInvalidateStates = []
-collegeMeeting.itemPowerObserversStates = ('itemfrozen', 'accepted', 'delayed', 'refused', 'accepted_but_modified')
-collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified','pre_accepted']
+collegeMeeting.itemPowerObserversStates = ('itemfrozen', 'accepted', 'delayed',
+                                           'refused', 'accepted_but_modified')
+collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed',
+                                    'accepted_but_modified', 'pre_accepted']
 collegeMeeting.meetingPowerObserversStates = ('created', 'frozen', 'decided', 'closed')
 collegeMeeting.useCopies = True
-collegeMeeting.selectableCopyGroups = ['secretariat_reviewers', 'computing_reviewers', 'personnel_reviewers', 'accountancy_reviewers', 'work_reviewers']
+collegeMeeting.selectableCopyGroups = ['secretariat_reviewers', 'computing_reviewers',
+                                       'personnel_reviewers', 'accountancy_reviewers', 'work_reviewers']
 collegeMeeting.podTemplates = collegeTemplates
 collegeMeeting.meetingConfigsToCloneTo = ['meeting-config-council', ]
 
@@ -261,21 +274,26 @@ councilMeeting = MeetingConfigDescriptor(
     'meeting-config-council', 'Administration council',
     'Administration Council')
 councilMeeting.assembly = 'Pierre Dupont - Burgmester,\n' \
-                           'Charles Exemple - 1er Echevin,\n' \
-                           'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
-                           'Jacqueline Exemple, Responsable du CPAS'
+                          'Charles Exemple - 1er Echevin,\n' \
+                          'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
+                          'Jacqueline Exemple, Responsable du CPAS'
 councilMeeting.signatures = '1st municipal councillor\nPierre Dupont\nThe Burgmester\nCharles Example'
 councilMeeting.places = """Place1\n\r
 Place2\n\r
 Place3\n\r"""
 councilMeeting.categories = categories
 councilMeeting.shortName = 'Council'
-councilMeeting.meetingFileTypes = [simpleAnnex, budgetAnnex, requirementsAnnex, decisionAnnex]
-councilMeeting.usedItemAttributes = ['detailedDescription', 'oralQuestion', 'itemInitiator', 'observations', 'privacy', 'itemAssembly', ]
-councilMeeting.usedMeetingAttributes = ['startDate', 'midDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
+councilMeeting.meetingFileTypes = [simpleAnnex, budgetAnnex, requirementsAnnex,
+                                   decisionAnnex, adviceAnnex, adviceLegalAnnex]
+councilMeeting.usedItemAttributes = ['detailedDescription', 'oralQuestion', 'itemInitiator',
+                                     'observations', 'privacy', 'itemAssembly', ]
+councilMeeting.usedMeetingAttributes = ['startDate', 'midDate', 'endDate', 'signatures',
+                                        'assembly', 'place', 'observations', ]
 councilMeeting.recordMeetingHistoryStates = []
-councilMeeting.itemsListVisibleColumns = ['state', 'proposingGroup', 'annexes', 'annexesDecision', 'actions', ]
-councilMeeting.itemColumns = ['creator', 'state', 'proposingGroup', 'annexes', 'annexesDecision', 'advices', 'actions', 'meeting', ]
+councilMeeting.itemsListVisibleColumns = ['state', 'proposingGroup', 'annexes',
+                                          'annexesDecision', 'actions', ]
+councilMeeting.itemColumns = ['creator', 'state', 'proposingGroup', 'annexes', 'annexesDecision',
+                              'advices', 'actions', 'meeting', ]
 councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.detailedDescription',
                                        'MeetingItem.decision',

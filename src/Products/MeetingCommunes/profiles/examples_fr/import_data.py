@@ -6,9 +6,9 @@ annexe = MeetingFileTypeDescriptor('annexe', 'Annexe', 'attach.png', '')
 annexeBudget = MeetingFileTypeDescriptor('annexeBudget', 'Article Budgétaire', 'budget.png', '')
 annexeCahier = MeetingFileTypeDescriptor('annexeCahier', 'Cahier des Charges', 'cahier.gif', '')
 annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe à la décision', 'attach.png', '', 'item_decision')
-annexeAvis = MeetingFileTypeDescriptor('adviceAnnexe', 'Annexe à un avis',
+annexeAvis = MeetingFileTypeDescriptor('annexeAvis', 'Annexe à un avis',
                                        'attach.png', '', 'advice')
-annexeAvisLegal = MeetingFileTypeDescriptor('adviceLegalAnnexe', 'Annexe article de loi',
+annexeAvisLegal = MeetingFileTypeDescriptor('annexeAvisLegal', 'Extrait article de loi',
                                             'legalAdvice.png', '', 'advice')
 
 # Categories -------------------------------------------------------------------

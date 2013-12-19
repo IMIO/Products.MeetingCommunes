@@ -69,6 +69,14 @@
       handler="Products.MeetingCommunes.migrations.migrate_to_3_1_0.migrate"
       profile="Products.MeetingCommunes:default" />
 
+  <genericsetup:upgradeStep
+      title="Go to MeetingCommunes 3.1.1"
+      description=""
+      source="3.1.0"
+      destination="3.1.1"
+      handler="Products.MeetingCommunes.migrations.migrate_to_3_1_1.migrate"
+      profile="Products.MeetingCommunes:default" />
+
   <!-- ##/code-section profiles.zcml-bottom -->
 
 </configure>
