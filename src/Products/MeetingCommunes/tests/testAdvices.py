@@ -60,6 +60,10 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         '''Run the test_pm_IndexAdvisers from PloneMeeting.'''
         pmta.test_pm_IndexAdvisers(self)
 
+    def test_subproduct_call_CanNotEditAnotherGroupAdvice(self):
+        '''Run the test_pm_CanNotEditAnotherGroupAdvice from PloneMeeting.'''
+        pmta.test_pm_CanNotEditAnotherGroupAdvice(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
