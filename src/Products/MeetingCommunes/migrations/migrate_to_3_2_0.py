@@ -10,7 +10,7 @@ from Products.PloneMeeting.migrations import Migrator
 
 
 # The migration class ----------------------------------------------------------
-class Migrate_To_3_1_1(Migrator):
+class Migrate_To_3_2_0(Migrator):
 
     def _addDefaultAdviceAnnexesFileTypes(self):
         '''Add some default MeetingFileType relatedTo 'advice' so we can add
@@ -41,7 +41,7 @@ class Migrate_To_3_1_1(Migrator):
         logger.info('Done.')
 
     def run(self):
-        logger.info('Migrating to MeetingCommunes 3.1.1...')
+        logger.info('Migrating to MeetingCommunes 3.2.0...')
         self._addDefaultAdviceAnnexesFileTypes()
         # reinstall so skins and so on are correct
         self.reinstall(profiles=[u'profile-Products.MeetingCommunes:default', ])
@@ -54,5 +54,5 @@ def migrate(context):
 
        1) Add some default MeetingFileType relatedTo 'advice' so we can add annexes on advices.
     '''
-    Migrate_To_3_1_1(context).run()
+    Migrate_To_3_2_0(context).run()
 # ------------------------------------------------------------------------------
