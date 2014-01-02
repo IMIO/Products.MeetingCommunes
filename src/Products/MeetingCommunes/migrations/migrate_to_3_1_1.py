@@ -43,6 +43,8 @@ class Migrate_To_3_1_1(Migrator):
     def run(self):
         logger.info('Migrating to MeetingCommunes 3.1.1...')
         self._addDefaultAdviceAnnexesFileTypes()
+        # reinstall so skins and so on are correct
+        self.reinstall(profiles=[u'profile-Products.MeetingCommunes:default', ])
         self.finish()
 
 
