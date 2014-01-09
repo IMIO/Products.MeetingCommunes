@@ -140,7 +140,7 @@ counselor = UserDescriptor('counselor', [], email="test@test.be")
 groups = [GroupDescriptor('secretariat', 'Secretariat', 'Secr'),
           GroupDescriptor('computing', 'Computing department', 'Comp'),
           GroupDescriptor('personnel', 'Personnel department', 'Pers'),
-          GroupDescriptor('accountancy', 'Accountancy department', 'Acc', givesMandatoryAdviceOn='python:True'),
+          GroupDescriptor('accountancy', 'Accountancy department', 'Acc'),
           GroupDescriptor('work', 'Work department', 'Work'), ]
 
 # MeetingManager
@@ -234,6 +234,7 @@ collegeMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', '
 collegeMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 collegeMeeting.enableAdviceInvalidation = False
 collegeMeeting.itemAdviceInvalidateStates = []
+collegeMeeting.customAdvisers = [{'group': 'accountancy', 'gives_auto_advice_on': 'item/getBudgetRelated'}, ]
 collegeMeeting.itemPowerObserversStates = ('itemfrozen', 'accepted', 'delayed',
                                            'refused', 'accepted_but_modified')
 collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed',

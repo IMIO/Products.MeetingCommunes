@@ -1,22 +1,24 @@
 from AccessControl import Unauthorized
 
+
 def export_meetinggroups(self):
     """
       Export the existing MeetingGroups informations as a dictionnary
     """
     member = self.portal_membership.getAuthenticatedMember()
     if not member.has_role('Manager'):
-        raise Unauthorized, 'You must be a Manager to access this script !'
-    
+        raise Unauthorized('You must be a Manager to access this script !')
+
     if not hasattr(self, 'portal_plonemeeting'):
-        return "PloneMeeting must be installed to run this script !"        
-    
+        return "PloneMeeting must be installed to run this script !"
+
     pm = self.portal_plonemeeting
-    
+
     dict = {}
     for mgr in pm.objectValues('MeetingGroup'):
-        dict[mgr.getId()] = (mgr.Title(), mgr.Description(), mgr.getAcronym(), mgr.getGivesMandatoryAdviceOn())
+        dict[mgr.getId()] = (mgr.Title(), mgr.Description(), mgr.getAcronym())
     return dict
+
 
 def import_meetinggroups(self, dict=None):
     """
@@ -24,19 +26,23 @@ def import_meetinggroups(self, dict=None):
     """
     member = self.portal_membership.getAuthenticatedMember()
     if not member.has_role('Manager'):
-        raise Unauthorized, 'You must be a Manager to access this script !'
+        raise Unauthorized('You must be a Manager to access this script !')
 
     if not dict:
         return "This script needs a 'dict' parameter"
     if not hasattr(self, 'portal_plonemeeting'):
-        return "PloneMeeting must be installed to run this script !"        
-    
+        return "PloneMeeting must be installed to run this script !"
+
     pm = self.portal_plonemeeting
     out = []
     data = eval(dict)
     for elt in data:
         if not hasattr(pm, elt):
-            groupId = pm.invokeFactory(type_name="MeetingGroup", id=elt, title=data[elt][0], description=data[elt][2], acronym=data[elt][1], givesMandatoryAdviceOn=data[elt][3])
+            groupId = pm.invokeFactory(type_name="MeetingGroup",
+                                       id=elt,
+                                       title=data[elt][0],
+                                       description=data[elt][2],
+                                       acronym=data[elt][1])
             group = getattr(pm, groupId)
             group.processForm()
             out.append("MeetingGroup %s added" % elt)
@@ -66,7 +72,7 @@ def import_meetingsGroups_from_csv(self, fname=None):
         return "Error with file : %s"%msg.value
 
     out = []
- 
+
     pm = self.portal_plonemeeting
     from Products.CMFPlone.utils import normalizeString
 
@@ -108,7 +114,7 @@ def import_meetingsUsersAndRoles_from_csv(self, fname=None):
         return "Error with file : %s"%msg.value
 
     out = []
- 
+
     from Products.CMFPlone.utils import normalizeString
 
     acl = self.acl_users
@@ -120,7 +126,7 @@ def import_meetingsUsersAndRoles_from_csv(self, fname=None):
         if row_id not in [ud['userid'] for ud in acl.searchUsers()]:
             newuser = pms.addMember(row_id, row['password'], ('Member',), [])
             member = pms.getMemberById(row_id)
-            member.setMemberProperties({'fullname': row['fullname'], 'email': row['email']}) 
+            member.setMemberProperties({'fullname': row['fullname'], 'email': row['email']})
             out.append("User '%s' is added"%row_id)
         else:
             out.append("User %s already exists" % row_id)
@@ -134,7 +140,7 @@ def import_meetingsUsersAndRoles_from_csv(self, fname=None):
         if row['reviewers']:
             groups.append(grouptitle + '_reviewers')
         if row['advisers']:
-            groups.append(grouptitle + '_advisers')                        
+            groups.append(grouptitle + '_advisers')
         for groupid in groups:
             pgr.addPrincipalToGroup(row_id, groupid)
             out.append("    -> Added in group '%s'"%groupid)
@@ -165,7 +171,7 @@ def import_meetingsCategories_from_csv(self, meeting_config = '', isClassifier=F
         return "Error with file : %s"%msg.value
 
     out = []
- 
+
     pm = self.portal_plonemeeting
     from Products.CMFPlone.utils import normalizeString
     from Products.PloneMeeting.profiles import CategoryDescriptor
@@ -174,12 +180,12 @@ def import_meetingsCategories_from_csv(self, meeting_config = '', isClassifier=F
     if isClassifier:
         catFolder = meetingConfig.classifiers
     else:
-        catFolder = meetingConfig.categories  
+        catFolder = meetingConfig.categories
 
     for row in reader:
         row_id = normalizeString(row['title'],self)
         if row_id == '':
-            continue      
+            continue
         if not hasattr(catFolder, row_id):
             try:
                 catDescr  = CategoryDescriptor(row_id, title=row['title'], description=row['description'], active=row['actif'])
@@ -196,4 +202,4 @@ def import_meetingsCategories_from_csv(self, meeting_config = '', isClassifier=F
 
     file.close()
 
-    return '\n'.join(out)    
+    return '\n'.join(out)

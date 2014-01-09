@@ -144,7 +144,7 @@ emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", 
 groups = [GroupDescriptor('secretariat', 'Secretariat communal', 'Secr'),
           GroupDescriptor('informatique', 'Service informatique', 'Info'),
           GroupDescriptor('personnel', 'Service du personnel', 'Pers'),
-          GroupDescriptor('comptabilite', 'Service comptabilité', 'Compt', givesMandatoryAdviceOn='python: item.getBudgetRelated()'),
+          GroupDescriptor('comptabilite', 'Service comptabilité', 'Compt'),
           GroupDescriptor('travaux', 'Service travaux', 'Trav'), ]
 
 # MeetingManager
@@ -269,7 +269,13 @@ collegeMeeting.itemAdviceViewStates = ('validated',
 collegeMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 collegeMeeting.enableAdviceInvalidation = False
 collegeMeeting.itemAdviceInvalidateStates = []
-collegeMeeting.itemPowerObserversStates = ('itemfrozen', 'accepted', 'delayed', 'refused', 'accepted_but_modified', 'pre_accepted')
+collegeMeeting.customAdvisers = [{'group': 'comptabilite', 'gives_auto_advice_on': 'item/getBudgetRelated'}, ]
+collegeMeeting.itemPowerObserversStates = ('itemfrozen',
+                                           'accepted',
+                                           'delayed',
+                                           'refused',
+                                           'accepted_but_modified',
+                                           'pre_accepted')
 collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 collegeMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 collegeMeeting.itemDecisionReportText = "python:'Le collège décide de reporter le point.'"

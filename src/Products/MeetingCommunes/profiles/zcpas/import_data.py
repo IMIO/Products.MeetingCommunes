@@ -99,7 +99,7 @@ groups = [
           GroupDescriptor('informatique', 'Informatique', 'Info'),
           GroupDescriptor('isp', 'Insertion socio-professionnelle', 'ISP'),
           GroupDescriptor('dettes', 'Médiation de dettes', 'Dettes'),
-          GroupDescriptor('personnel', 'Personnel', 'Pers', givesMandatoryAdviceOn='python:True'),
+          GroupDescriptor('personnel', 'Personnel', 'Pers'),
           GroupDescriptor('social', 'Social', 'Soc'),
           GroupDescriptor('divers', 'Divers', 'Divers'),
          ]

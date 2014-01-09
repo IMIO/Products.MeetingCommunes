@@ -68,9 +68,9 @@ class testUtils(MeetingCommunesTestCase):
         """
         login(self.portal, 'admin')
         expected = {
-            'vendors': ('Vendors', '', 'Devil', "python: item.id == 'recurringagenda1'"),
-            'endUsers': ('End users', '', 'EndUsers', 'python:False'),
-            'developers': ('Developers', '', 'Devel', 'python:False')}
+            'vendors': ('Vendors', '', 'Devil'),
+            'endUsers': ('End users', '', 'EndUsers'),
+            'developers': ('Developers', '', 'Devel')}
         res = self._exportMeetingGroups()
         self.assertEquals(expected, res)
 
@@ -95,4 +95,3 @@ class testUtils(MeetingCommunesTestCase):
                    'MeetingGroup developers already exists'
         res = self._importMeetingGroups(dict)
         self.assertEquals(expected, res)
-
