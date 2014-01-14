@@ -127,6 +127,14 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_listOptionalAdvisers()
 
+    def test_subproduct_call_SendItemToOtherMCRespectWFInitialState(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_SendItemToOtherMCRespectWFInitialState()
+
+    def test_subproduct_call_sendItemToOtherMCActions(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_sendItemToOtherMCActions()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

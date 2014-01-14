@@ -28,11 +28,11 @@ msgstr "Séance du Conseil Communal"
 
 #. Default: "MeetingItemCollege"
 msgid "MeetingItemCollege"
-msgstr "Point collège"
+msgstr "Point Collège Communal"
 
 #. Default: "MeetingItemCouncil"
 msgid "MeetingItemCouncil"
-msgstr "Point Conseil"
+msgstr "Point Conseil Communal"
 
 #. Default: "Meeting item BP"
 msgid "MeetingItembp"
@@ -163,4 +163,3 @@ msgstr "Le point a été envoyé au Comité de concertation."
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
 msgstr "Le point a été envoyé au Conseil communal."
-

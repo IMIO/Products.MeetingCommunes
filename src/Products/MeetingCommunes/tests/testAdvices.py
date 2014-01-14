@@ -68,6 +68,10 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         '''Run the test_pm_AutomaticAdvices from PloneMeeting.'''
         pmta.test_pm_AutomaticAdvices(self)
 
+    def test_subproduct_call_getAutomaticAdvisers(self):
+        '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
+        pmta.test_pm_getAutomaticAdvisers(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
