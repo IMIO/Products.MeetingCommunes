@@ -13,15 +13,15 @@
 
 .state-proposed, .label-state-proposed,
 .state-prevalidated, .label-state-prevalidated {
-    color: #FFA500 !important;
+    color: DarkOrange !important;
 }
 #plone-contentmenu-workflow .state-proposed,
 #plone-contentmenu-workflow .state-prevalidated {
     border-radius: 0.5em 0.5em 0.5em 0.5em;
-    background-color: #FFA500;
+    background-color: DarkOrange;
     padding: 0 0.5em;
     color: white !important;
-    border: 2px solid #FFA500;
+    border: 2px solid DarkOrange;
 }
 
 .state-validated, .label-state-validated {
