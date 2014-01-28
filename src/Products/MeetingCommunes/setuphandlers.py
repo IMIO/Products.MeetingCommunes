@@ -2,7 +2,7 @@
 #
 # File: setuphandlers.py
 #
-# Copyright (c) 2013 by CommunesPlone
+# Copyright (c) 2014 by CommunesPlone
 # Generator: ArchGenXML Version 2.7
 #            http://plone.org/products/archgenxml
 #
@@ -25,7 +25,6 @@ from DateTime import DateTime
 from Products.PloneMeeting.exportimport.content import ToolInitializer
 from Products.PloneMeeting.model.adaptations import performWorkflowAdaptations
 ##/code-section HEAD
-
 
 def isNotMeetingCommunesProfile(context):
     return context.readDataFile("MeetingCommunes_marker.txt") is None
