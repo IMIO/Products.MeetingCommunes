@@ -680,31 +680,6 @@ class CustomMeetingItem(MeetingItem):
             res.append(('pre_accepted.png', 'icon_help_pre_accepted'))
         return res
 
-    security.declarePublic('printAdvicesInfos')
-    def printAdvicesInfos(self):
-        '''Helper method to have a printable version of advices.'''
-        item = self.getSelf()
-        itemAdvicesByType = item.getAdvicesByType()
-        res = "<p><u>%s :</u></p>" % translate('PloneMeeting_label_advices',
-                                               domain='PloneMeeting',
-                                               context=item.REQUEST)
-        if itemAdvicesByType:
-            res = res + "<p>"
-        for adviceType in itemAdvicesByType:
-            for advice in itemAdvicesByType[adviceType]:
-                res = res + u"<u>%s :</u> %s<br />" % (advice['name'], translate([advice['type']][0],
-                                                                                 domain='PloneMeeting',
-                                                                                 context=item.REQUEST))
-                if 'comment' in advice and advice['comment'].strip():
-                    res = res + (u"%s<br />" % unicode(advice['comment'].strip(), 'utf-8'))
-        if itemAdvicesByType:
-            res = res + u"</p>"
-        if not itemAdvicesByType:
-            return u"<p><u>%s : -</u></p>" % \
-                translate('PloneMeeting_label_advices', domain='PloneMeeting', context=item.REQUEST).encode('utf-8')
-
-        return res.encode('utf-8')
-
 
 class CustomMeetingGroup(MeetingGroup):
     '''Adapter that adapts a meeting group implementing IMeetingGroup to the
