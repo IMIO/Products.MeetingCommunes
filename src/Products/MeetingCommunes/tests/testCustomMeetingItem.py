@@ -33,11 +33,9 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         Tests the MeetingItem adapted methods
     """
 
-    def test_getMeetingsAcceptingItems(self):
-        """
-           We have to test this adapted method.
-           It should only return meetings that are "created" or "frozen"
-        """
+    def test_GetMeetingsAcceptingItems(self):
+        """We have to test this adapted method.
+           It should only return meetings that are "created" or "frozen"."""
         login(self.portal, 'pmManager')
         #create 4 meetings with items so we can play the workflow
         #will stay 'created'
@@ -64,7 +62,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         item = self.create('MeetingItem')
         self.assertEquals([m.id for m in item.adapted().getMeetingsAcceptingItems()], [m1.id, m2.id])
 
-    def test_getCertifiedSignatures(self):
+    def test_GetCertifiedSignatures(self):
         '''Check that the certified signature is defined on developers group but not defined on vendors.'''
         #create an item for test
         login(self.portal, 'pmManager')
@@ -106,7 +104,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.assertEquals(res, 'developers signatures')
         self.assertEquals(isGrpSign, True)
 
-    def test_getEchevinsForProposingGroup(self):
+    def test_GetEchevinsForProposingGroup(self):
         '''Check a meetingItem for developers group return an echevin (the Same group in our case)
            and a meetingItem for vendors return no echevin.'''
         #create an item for test
@@ -127,7 +125,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         res = i2.adapted().getEchevinsForProposingGroup()
         self.assertEquals(res, ['developers'])
 
-    def test_getDelayedDecision(self):
+    def test_GetDelayedDecision(self):
         '''If item is reported, the decision can be changed'''
         login(self.portal, 'pmManager')
         #create a meeting with items so we can play the workflow

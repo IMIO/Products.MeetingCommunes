@@ -55,14 +55,14 @@ class testUtils(MeetingCommunesTestCase):
     def _importMeetingGroups(self, dict):
         return self.portal.import_meetinggroups(dict=str(dict))
 
-    def test_accessToMethods(self):
+    def test_AccessToMethods(self):
         """
           Check that only Managers can access the methods
         """
         self.assertRaises(Unauthorized, self._exportMeetingGroups)
         self.assertRaises(Unauthorized, self._importMeetingGroups, {})
 
-    def test_exportMeetingGroups(self):
+    def test_ExportMeetingGroups(self):
         """
           Check that calling this method returns the right content
         """
@@ -74,7 +74,7 @@ class testUtils(MeetingCommunesTestCase):
         res = self._exportMeetingGroups()
         self.assertEquals(expected, res)
 
-    def test_importMeetingGroups(self):
+    def test_ImportMeetingGroups(self):
         """
           Check that calling this method creates the MeetingGroups if not exist
         """

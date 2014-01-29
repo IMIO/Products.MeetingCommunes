@@ -28,11 +28,9 @@ from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
 
 
 class testCustomToolPloneMeeting(MeetingCommunesTestCase):
-    """
-        Tests the ToolPloneMeeting adapted methods
-    """
+    """Tests the ToolPloneMeeting adapted methods."""
 
-    def test_getSpecificAssemblyFor(self):
+    def test_GetSpecificAssemblyFor(self):
         """
             This method aimed to ease printings should return formated assembly
         """

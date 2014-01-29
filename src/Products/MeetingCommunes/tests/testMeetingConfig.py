@@ -29,29 +29,41 @@ from Products.PloneMeeting.tests.testMeetingConfig import testMeetingConfig as p
 class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
     '''Tests the MeetingConfig class methods.'''
 
-    def test_subproduct_call_searchItemsToPrevalidate(self):
+    def test_subproduct_call_SearchItemsToPrevalidate(self):
         '''Run the test_pm_searchItemsToPrevalidate from PloneMeeting.'''
-        pmtmc.test_pm_searchItemsToPrevalidate(self)
+        pmtmc.test_pm_SearchItemsToPrevalidate(self)
 
-    def test_subproduct_call_searchItemsToValidate(self):
+    def test_subproduct_call_SearchItemsToValidate(self):
         '''Run the test_pm_searchItemsToValidate from PloneMeeting.'''
-        pmtmc.test_pm_searchItemsToValidate(self)
+        pmtmc.test_pm_SearchItemsToValidate(self)
 
-    def test_subproduct_call_searchItemsToAdvice(self):
+    def test_subproduct_call_SearchItemsToAdvice(self):
         '''Run the test_pm_searchItemsToAdvice from PloneMeeting.'''
-        pmtmc.test_pm_searchItemsToAdvice(self)
+        pmtmc.test_pm_SearchItemsToAdvice(self)
 
-    def test_subproduct_call_searchAdvisedItems(self):
+    def test_subproduct_call_SearchAdvisedItems(self):
         '''Run the test_pm_searchAdvisedItems from PloneMeeting.'''
-        pmtmc.test_pm_searchAdvisedItems(self)
+        pmtmc.test_pm_SearchAdvisedItems(self)
 
-    def test_subproduct_call_searchItemsInCopy(self):
+    def test_subproduct_call_SearchItemsInCopy(self):
         '''Run the test_pm_searchItemsInCopy from PloneMeeting.'''
-        pmtmc.test_pm_searchItemsInCopy(self)
+        pmtmc.test_pm_SearchItemsInCopy(self)
 
-    def test_subproduct_call_searchItemsWithFilters(self):
+    def test_subproduct_call_SearchItemsWithFilters(self):
         '''Run the test_pm_searchItemsWithFilters from PloneMeeting.'''
-        pmtmc.test_pm_searchItemsWithFilters(self)
+        pmtmc.test_pm_SearchItemsWithFilters(self)
+
+    def test_subproduct_call_Validate_customAdvisersCanNotChangeUsedConfig(self):
+        '''Run the test_pm_searchItemsWithFilters from PloneMeeting.'''
+        pmtmc.test_pm_Validate_customAdvisersCanNotChangeUsedConfig(self)
+
+    def test_subproduct_call_Validate_customAdvisersDateColumns(self):
+        '''Run the test_pm_searchItemsWithFilters from PloneMeeting.'''
+        pmtmc.test_pm_Validate_customAdvisersDateColumns(self)
+
+    def test_subproduct_call_Validate_customAdvisersDelayColumn(self):
+        '''Run the test_pm_searchItemsWithFilters from PloneMeeting.'''
+        pmtmc.test_pm_Validate_customAdvisersDelayColumn(self)
 
 
 def test_suite():

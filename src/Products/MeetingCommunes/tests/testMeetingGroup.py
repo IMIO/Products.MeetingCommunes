@@ -43,9 +43,9 @@ class testMeetingGroup(MeetingCommunesTestCase, pmmg):
         logout()
         self.test_pm_CanNotRemoveUsedMeetingGroup()
 
-    def test_subproduct_call_deactivatedGroupCanNoMoreBeUsed(self):
+    def test_subproduct_call_DeactivatedGroupCanNoMoreBeUsed(self):
         '''Run the test_pm_deactivatedGroupCanNoMoreBeUsed from PloneMeeting.'''
-        self.test_pm_deactivatedGroupCanNoMoreBeUsed()
+        self.test_pm_DeactivatedGroupCanNoMoreBeUsed()
 
 
 def test_suite():

@@ -284,14 +284,22 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
         #pmtw.testRecurringItems(self) workflow is different
-        self.test_subproduct_RecurringItemsCollege()
+        self._checkRecurringItemsCollege()
         # we do the test for the council config
         # no recurring items defined...
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
         self.assertEquals(len(meeting.getItems()), 0)
 
-    def test_subproduct_RecurringItemsCollege(self):
+    def test_subproduct_call_RecurringItemsRespectSortingMethodOnAddItemPrivacy(self):
+        '''Run the test_pm_RecurringItemsRespectSortingMethodOnAddItemPrivacy from PloneMeeting.'''
+        self.test_pm_RecurringItemsRespectSortingMethodOnAddItemPrivacy()
+
+    def test_subproduct_call_RecurringItemsWithHardcodedTransitions(self):
+        '''Run the test_pm_RecurringItemsRespectSortingMethodOnAddItemPrivacy from PloneMeeting.'''
+        self.test_pm_RecurringItemsWithHardcodedTransitions()
+
+    def _checkRecurringItemsCollege(self):
         '''Tests the recurring items system.'''
         # First, define recurring items in the meeting config
         login(self.portal, 'admin')

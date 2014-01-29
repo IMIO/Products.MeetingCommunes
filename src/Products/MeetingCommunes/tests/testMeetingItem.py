@@ -103,37 +103,53 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_IsLateFor()
 
-    def test_subproduct_call_manageItemAssemblyAndSignatures(self):
+    def test_subproduct_call_ManageItemAssemblyAndSignatures(self):
         '''See doc string in PloneMeeting.'''
-        self.test_pm_manageItemAssemblyAndSignatures()
+        self.test_pm_ManageItemAssemblyAndSignatures()
 
-    def test_subproduct_call_getItemNumber(self):
+    def test_subproduct_call_GetItemNumber(self):
         '''See doc string in PloneMeeting.'''
-        self.test_pm_getItemNumber()
+        self.test_pm_GetItemNumber()
 
-    def test_subproduct_call_listMeetingsAcceptingItems(self):
+    def test_subproduct_call_ListMeetingsAcceptingItems(self):
         '''See doc string in PloneMeeting.'''
-        self.test_pm_listMeetingsAcceptingItems()
+        self.test_pm_ListMeetingsAcceptingItems()
 
-    def test_subproduct_call_listCopyGroups(self):
+    def test_subproduct_call_ListCopyGroups(self):
         '''See doc string in PloneMeeting.'''
-        self.test_pm_listCopyGroups()
+        self.test_pm_ListCopyGroups()
 
-    def test_subproduct_call_listAssociatedGroups(self):
+    def test_subproduct_call_ListAssociatedGroups(self):
         '''See doc string in PloneMeeting.'''
-        self.test_pm_listAssociatedGroups()
+        self.test_pm_ListAssociatedGroups()
 
-    def test_subproduct_call_listOptionalAdvisers(self):
+    def test_subproduct_call_ListOptionalAdvisersVocabulary(self):
         '''See doc string in PloneMeeting.'''
-        self.test_pm_listOptionalAdvisers()
+        self.test_pm_ListOptionalAdvisersVocabulary()
+
+    def test_subproduct_call_ListOptionalAdvisersDelayAwareAdvisers(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ListOptionalAdvisersDelayAwareAdvisers()
 
     def test_subproduct_call_SendItemToOtherMCRespectWFInitialState(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_SendItemToOtherMCRespectWFInitialState()
 
-    def test_subproduct_call_sendItemToOtherMCActions(self):
+    def test_subproduct_call_SendItemToOtherMCActions(self):
         '''See doc string in PloneMeeting.'''
-        self.test_pm_sendItemToOtherMCActions()
+        self.test_pm_SendItemToOtherMCActions()
+
+    def test_subproduct_call_Validate_optionalAdvisersCanNotUnselectAlreadyGivenAdvice(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_Validate_optionalAdvisersCanNotUnselectAlreadyGivenAdvice()
+
+    def test_subproduct_call_Validate_optionalAdvisersCanNotSelectSameGroupAdvisers(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_Validate_optionalAdvisersCanNotSelectSameGroupAdvisers()
+
+    def test_subproduct_call_BudgetImpactReviewersGroups(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_BudgetImpactReviewersGroups()
 
 
 def test_suite():

@@ -68,9 +68,25 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         '''Run the test_pm_AutomaticAdvices from PloneMeeting.'''
         pmta.test_pm_AutomaticAdvices(self)
 
-    def test_subproduct_call_getAutomaticAdvisers(self):
+    def test_subproduct_call_GetAutomaticAdvisers(self):
         '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
-        pmta.test_pm_getAutomaticAdvisers(self)
+        pmta.test_pm_GetAutomaticAdvisers(self)
+
+    def test_subproduct_call_MayNotAddAdviceEditIfDelayExceeded(self):
+        '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
+        pmta.test_pm_MayNotAddAdviceEditIfDelayExceeded(self)
+
+    def test_subproduct_call_UpdateDelayAwareAdvicesView(self):
+        '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
+        pmta.test_pm_UpdateDelayAwareAdvicesView(self)
+
+    def test_subproduct_call_DelayStartedStoppedOn(self):
+        '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
+        pmta.test_pm_DelayStartedStoppedOn(self)
+
+    def test_subproduct_call_RowIdSetOnAdvices(self):
+        '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
+        pmta.test_pm_RowIdSetOnAdvices(self)
 
 
 def test_suite():

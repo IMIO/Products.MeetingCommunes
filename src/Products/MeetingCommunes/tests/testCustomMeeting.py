@@ -32,7 +32,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         Tests the Meeting adapted methods
     """
 
-    def test_getPrintableItemsByCategoryWithMeetingCategory(self):
+    def test_GetPrintableItemsByCategoryWithMeetingCategory(self):
         """
             This method aimed to ease printings should return a list of items ordered by category
         """
@@ -66,7 +66,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids)[1][2].meta_type, 'MeetingItem')
         self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids)[2][1].meta_type, 'MeetingItem')
 
-    def test_getPrintableItemsByCategoryWithMeetingGroup(self):
+    def test_GetPrintableItemsByCategoryWithMeetingGroup(self):
         """
             This method aimed to ease printings should return a list of items ordered by category
         """
@@ -123,7 +123,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.assertEquals(m.adapted().getPrintableItemsByCategory(itemUids)[1][3].meta_type, 'MeetingItem')
         self.assertEquals(m.adapted().getPrintableItemsByCategory(itemUids)[1][4].meta_type, 'MeetingItem')
 
-    def test_initializeDecisionField(self):
+    def test_InitializeDecisionField(self):
         """
             In the doDecide method, we initialize the Decision field to a default value made of
             Title+Description if the field is empty...
@@ -166,7 +166,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         #i3 is initlaized because the decision field contained an empty_value
         self.assertEquals(i3.getDecision(), "<p>Item3</p><p>Description Item3</p>")
 
-    def test_showAllItemsAtOnce(self):
+    def test_ShowAllItemsAtOnce(self):
         """
           The allItemsAtOnce field is only shown for not decided meetings
         """
@@ -189,7 +189,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.do(m, 'close')
         self.failIf(m.showAllItemsAtOnce())
 
-    def test_getNumberOfItems(self):
+    def test_GetNumberOfItems(self):
         """
           This method will return a certain number of items depending on passed paramaters.
         """
