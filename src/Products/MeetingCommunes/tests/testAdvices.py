@@ -88,6 +88,14 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
         pmta.test_pm_RowIdSetOnAdvices(self)
 
+    def test_subproduct_call_MeetingGroupDefinedItemAdviceStatesValuesOverridesMeetingConfigValues(self):
+        '''Run the test_pm_MeetingGroupDefinedItemAdviceStatesValuesOverridesMeetingConfigValues from PloneMeeting.'''
+        pmta.test_pm_MeetingGroupDefinedItemAdviceStatesValuesOverridesMeetingConfigValues(self)
+
+    def test_subproduct_call_PowerAdvisers(self):
+        '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
+        pmta.test_pm_PowerAdvisers(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

@@ -147,9 +147,9 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_Validate_optionalAdvisersCanNotSelectSameGroupAdvisers()
 
-    def test_subproduct_call_BudgetImpactReviewersGroups(self):
+    def test_subproduct_call_BudgetImpactEditorsGroups(self):
         '''See doc string in PloneMeeting.'''
-        self.test_pm_BudgetImpactReviewersGroups()
+        self.test_pm_BudgetImpactEditorsGroups()
 
 
 def test_suite():
