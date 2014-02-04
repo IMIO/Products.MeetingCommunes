@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+from DateTime import DateTime
 from Products.PloneMeeting.profiles import *
+
+today = DateTime().strftime('%Y/%m/%d')
 
 # File types -------------------------------------------------------------------
 annexe = MeetingFileTypeDescriptor('annexe', 'Annexe', 'attach.png', '')
@@ -126,9 +129,9 @@ councilTemplates = [agendaCouncilTemplate, agendaCouncilTemplatePDF,
                     itemCouncilProjectTemplate, itemCouncilProjectTemplatePDF, ]
 
 # Users and groups -------------------------------------------------------------
-secretaire = UserDescriptor('secretaire', ['MeetingManager'], email="test@test.be", fullname="Henry Secrétaire")
+dgen = UserDescriptor('dgen', ['MeetingManager'], email="test@test.be", fullname="Henry Directeur")
 bourgmestre = UserDescriptor('bourgmestre', [], email="test@test.be", fullname="Pierre Bourgmestre")
-receveur = UserDescriptor('receveur', [], email="test@test.be", fullname="Receveur communal")
+dfin = UserDescriptor('dfin', [], email="test@test.be", fullname="Directeur Financier")
 agentInfo = UserDescriptor('agentInfo', [], email="test@test.be", fullname="Agent Service Informatique")
 agentCompta = UserDescriptor('agentCompta', [], email="test@test.be", fullname="Agent Service Comptabilité")
 agentPers = UserDescriptor('agentPers', [], email="test@test.be", fullname="Agent Service du Personnel")
@@ -141,53 +144,65 @@ conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Co
 
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel")
 
-groups = [GroupDescriptor('secretariat', 'Secretariat communal', 'Secr'),
+groups = [GroupDescriptor('dirgen', 'Directeur Général', 'DG'),
+          GroupDescriptor('secretariat', 'Secrétariat communal', 'Secr'),
           GroupDescriptor('informatique', 'Service informatique', 'Info'),
           GroupDescriptor('personnel', 'Service du personnel', 'Pers'),
+          GroupDescriptor('dirfin', 'Directeur Financier', 'DF'),
           GroupDescriptor('comptabilite', 'Service comptabilité', 'Compt'),
           GroupDescriptor('travaux', 'Service travaux', 'Trav'), ]
 
 # MeetingManager
-groups[0].creators.append(secretaire)
-groups[0].reviewers.append(secretaire)
-groups[0].observers.append(secretaire)
-groups[0].advisers.append(secretaire)
+groups[0].creators.append(dgen)
+groups[0].reviewers.append(dgen)
+groups[0].observers.append(dgen)
+groups[0].advisers.append(dgen)
 
-groups[1].creators.append(agentInfo)
-groups[1].creators.append(secretaire)
-groups[1].reviewers.append(agentInfo)
-groups[1].reviewers.append(secretaire)
-groups[1].observers.append(agentInfo)
-groups[1].advisers.append(agentInfo)
+groups[1].creators.append(dgen)
+groups[1].reviewers.append(dgen)
+groups[1].observers.append(dgen)
+groups[1].advisers.append(dgen)
 
-groups[2].creators.append(agentPers)
-groups[2].observers.append(agentPers)
-groups[2].creators.append(secretaire)
-groups[2].reviewers.append(secretaire)
-groups[2].creators.append(chefPers)
-groups[2].reviewers.append(chefPers)
-groups[2].observers.append(chefPers)
-groups[2].observers.append(echevinPers)
-groups[2].advisers.append(emetteuravisPers)
+groups[2].creators.append(agentInfo)
+groups[2].creators.append(dgen)
+groups[2].reviewers.append(agentInfo)
+groups[2].reviewers.append(dgen)
+groups[2].observers.append(agentInfo)
+groups[2].advisers.append(agentInfo)
 
-groups[3].creators.append(agentCompta)
-groups[3].creators.append(chefCompta)
-groups[3].creators.append(receveur)
-groups[3].creators.append(secretaire)
-groups[3].reviewers.append(chefCompta)
-groups[3].reviewers.append(receveur)
-groups[3].reviewers.append(secretaire)
-groups[3].observers.append(agentCompta)
-groups[3].advisers.append(chefCompta)
-groups[3].advisers.append(receveur)
+groups[3].creators.append(agentPers)
+groups[3].observers.append(agentPers)
+groups[3].creators.append(dgen)
+groups[3].reviewers.append(dgen)
+groups[3].creators.append(chefPers)
+groups[3].reviewers.append(chefPers)
+groups[3].observers.append(chefPers)
+groups[3].observers.append(echevinPers)
+groups[3].advisers.append(emetteuravisPers)
 
-groups[4].creators.append(agentTrav)
-groups[4].creators.append(secretaire)
-groups[4].reviewers.append(agentTrav)
-groups[4].reviewers.append(secretaire)
-groups[4].observers.append(agentTrav)
-groups[4].observers.append(echevinTrav)
-groups[4].advisers.append(agentTrav)
+groups[4].creators.append(dfin)
+groups[4].reviewers.append(dfin)
+groups[4].observers.append(dfin)
+groups[4].advisers.append(dfin)
+
+groups[5].creators.append(agentCompta)
+groups[5].creators.append(chefCompta)
+groups[5].creators.append(dfin)
+groups[5].creators.append(dgen)
+groups[5].reviewers.append(chefCompta)
+groups[5].reviewers.append(dfin)
+groups[5].reviewers.append(dgen)
+groups[5].observers.append(agentCompta)
+groups[5].advisers.append(chefCompta)
+groups[5].advisers.append(dfin)
+
+groups[6].creators.append(agentTrav)
+groups[6].creators.append(dgen)
+groups[6].reviewers.append(agentTrav)
+groups[6].reviewers.append(dgen)
+groups[6].observers.append(agentTrav)
+groups[6].observers.append(echevinTrav)
+groups[6].advisers.append(agentTrav)
 
 # Meeting configurations -------------------------------------------------------
 # college
@@ -269,7 +284,29 @@ collegeMeeting.itemAdviceViewStates = ('validated',
 collegeMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 collegeMeeting.enableAdviceInvalidation = False
 collegeMeeting.itemAdviceInvalidateStates = []
-collegeMeeting.customAdvisers = [{'group': 'comptabilite', 'gives_auto_advice_on': 'item/getBudgetRelated'}, ]
+collegeMeeting.customAdvisers = [
+    {'row_id': 'unique_id_001',
+     'group': 'comptabilite',
+     'gives_auto_advice_on': 'item/getBudgetRelated',
+     'for_item_created_from': today, },
+    {'row_id': 'unique_id_002',
+     'group': 'dirfin',
+     'for_item_created_from': today,
+     'delay': '5',
+     'delay_left_alert': '2',
+     'delay_label': 'Incidence financière >= 22.000€', },
+    {'row_id': 'unique_id_003',
+     'group': 'dirfin',
+     'for_item_created_from': today,
+     'delay': '10',
+     'delay_left_alert': '4',
+     'delay_label': 'Incidence financière >= 22.000€', },
+    {'row_id': 'unique_id_004',
+     'group': 'dirfin',
+     'for_item_created_from': today,
+     'delay': '20',
+     'delay_left_alert': '4',
+     'delay_label': 'Incidence financière >= 22.000€', }, ]
 collegeMeeting.itemPowerObserversStates = ('itemfrozen',
                                            'accepted',
                                            'delayed',
@@ -279,6 +316,7 @@ collegeMeeting.itemPowerObserversStates = ('itemfrozen',
 collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 collegeMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 collegeMeeting.itemDecisionReportText = "python:'Le collège décide de reporter le point.'"
+collegeMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
 collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                        groups[1].getIdSuffixed('reviewers'),
@@ -315,7 +353,7 @@ collegeMeeting.recurringItems = [
         description='Tutelle CPAS',
         category='personnel',
         proposingGroup='secretariat',
-        templateUsingGroups=['secretariat', ],
+        templateUsingGroups=['secretariat', 'dirgen', ],
         usages=['as_template_item', ],
         decision="""<p>Vu la loi du 8 juillet 1976 organique des centres publics d'action sociale et plus particulièrement son article 111;</p>
 <p>Vu l'Arrêté du Gouvernement Wallon du 22 avril 2004 portant codification de la législation relative aux pouvoirs locaux tel que confirmé par le décret du 27 mai 2004 du Conseil régional wallon;</p>
@@ -490,6 +528,7 @@ councilMeeting.itemPowerObserversStates = ('itemfrozen',
                                            'accepted_but_modified', 'pre_accepted')
 councilMeeting.meetingPowerObserversStates = ('frozen', 'published', 'decided', 'closed')
 councilMeeting.itemDecisionReportText = "python:'Le collège décide de reporter le point.'"
+collegeMeeting.powerAdvisersGroups = ()
 councilMeeting.useCopies = True
 councilMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                        groups[1].getIdSuffixed('reviewers'),
@@ -510,12 +549,12 @@ echevinPers_mu = MeetingUserDescriptor('echevinPers',
 echevinTrav_mu = MeetingUserDescriptor('echevinTrav',
                                        duty='Echevin Travaux',
                                        usages=['assemblyMember', 'asker', ])
-secretaire_mu = MeetingUserDescriptor('secretaire',
-                                      duty='Secrétaire communal',
-                                      usages=['assemblyMember', 'signer', 'asker', ],
-                                      signatureIsDefault=True)
+dgen_mu = MeetingUserDescriptor('dgen',
+                              duty='Directeur Général',
+                              usages=['assemblyMember', 'signer', 'asker', ],
+                              signatureIsDefault=True)
 
-councilMeeting.meetingUsers = [bourgmestre_mu, receveur_mu, echevinPers_mu, echevinTrav_mu, secretaire_mu]
+councilMeeting.meetingUsers = [bourgmestre_mu, receveur_mu, echevinPers_mu, echevinTrav_mu, dgen_mu]
 
 councilMeeting.recurringItems = [
     RecurringItemDescriptor(

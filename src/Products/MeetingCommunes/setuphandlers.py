@@ -176,10 +176,17 @@ def finalizeExampleInstance(context):
     if member:
         site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig1Id)
         site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
-    # add the test user 'conseiller' to only the every 'meeting-config-council_powerobservers' groups
+    # add the test user 'conseiller' only to the 'meeting-config-council_powerobservers' group
     member = site.portal_membership.getMemberById('conseiller')
     if member:
         site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
+
+    # add the test user 'dfin' and 'chefCompta' to the 'meeting-config-xxx_budgetimpacteditors' groups
+    for memberId in ('dfin', 'chefCompta', ):
+        member = site.portal_membership.getMemberById(memberId)
+        if member:
+            site.portal_groups.addPrincipalToGroup(memberId, '%s_budgetimpacteditors' % meetingConfig1Id)
+            site.portal_groups.addPrincipalToGroup(memberId, '%s_budgetimpacteditors' % meetingConfig2Id)
 
     # define some parameters for 'meeting-config-college'
     mc_college_or_bp = getattr(site.portal_plonemeeting, meetingConfig1Id)
@@ -187,6 +194,7 @@ def finalizeExampleInstance(context):
     mc_college_or_bp.setToDoListTopics(
         [getattr(mc_college_or_bp.topics, 'searchdecideditems'),
          getattr(mc_college_or_bp.topics, 'searchallitemsincopy'),
+         getattr(mc_college_or_bp.topics, 'searchitemstoadvicewithdelay'),
          getattr(mc_college_or_bp.topics, 'searchallitemstoadvice'),
          ])
 
@@ -257,14 +265,14 @@ def addDemoData(context):
     # create 5 meetings : 2 passed, 1 current and 2 future
     today = DateTime()
     dates = [today-13, today-6, today+1, today+8, today+15]
-    # login as 'secretaire'
-    site.portal_membership.createMemberArea('secretaire')
-    secrFolder = tool.getPloneMeetingFolder('meeting-config-college', 'secretaire')
+    # login as 'dgen'
+    site.portal_membership.createMemberArea('dgen')
+    secrFolder = tool.getPloneMeetingFolder('meeting-config-college', 'dgen')
     for date in dates:
         meetingId = secrFolder.invokeFactory('MeetingCollege', id=date.strftime('%Y%m%d'))
         meeting = getattr(secrFolder, meetingId)
         meeting.setDate(date)
-        pTool.changeOwnershipOf(meeting, 'secretaire')
+        pTool.changeOwnershipOf(meeting, 'dgen')
         meeting.processForm()
         # -13 meeting is closed
         if date == today-13:
@@ -324,21 +332,20 @@ def addDemoData(context):
                               'budgetRelated': False,
                               'review_state': 'proposed',
                               },),
-             'secretaire': ({'templateId': 'template1',
-                             'title': u'Tutelle CPAS : point 1 BP du 15 juin',
-                             'budgetRelated': False,
-                             'review_state': 'created',
-                             },
-                            {'templateId': 'template5',
-                             'title': u'Tutelle CPAS : point 2 BP du 15 juin',
-                             'budgetRelated': False,
-                             'review_state': 'proposed',
-                             },
-                            {'templateId': 'template5',
-                             'title': u'Tutelle CPAS : point 16 BP du 15 juin',
-                             'budgetRelated': True,
-                             'review_state': 'validated',
-                             },),
+             'dgen': ({'templateId': 'template1',
+                                     'title': u'Tutelle CPAS : point 1 BP du 15 juin',
+                                     'budgetRelated': False,
+                                     'review_state': 'created', },
+                      {'templateId': 'template5',
+                       'title': u'Tutelle CPAS : point 2 BP du 15 juin',
+                       'budgetRelated': False,
+                       'review_state': 'proposed',
+                       },
+                      {'templateId': 'template5',
+                       'title': u'Tutelle CPAS : point 16 BP du 15 juin',
+                       'budgetRelated': True,
+                       'review_state': 'validated',
+                       },),
              }
     for userId in items:
         userFolder = tool.getPloneMeetingFolder('meeting-config-college', userId)
