@@ -317,6 +317,7 @@ collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_
 collegeMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 collegeMeeting.itemDecisionReportText = "python:'Le collège décide de reporter le point.'"
 collegeMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
+collegeMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                        groups[1].getIdSuffixed('reviewers'),
@@ -529,6 +530,7 @@ councilMeeting.itemPowerObserversStates = ('itemfrozen',
 councilMeeting.meetingPowerObserversStates = ('frozen', 'published', 'decided', 'closed')
 councilMeeting.itemDecisionReportText = "python:'Le collège décide de reporter le point.'"
 councilMeeting.powerAdvisersGroups = ()
+councilMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 councilMeeting.useCopies = True
 councilMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                        groups[1].getIdSuffixed('reviewers'),
