@@ -171,11 +171,13 @@ def finalizeExampleInstance(context):
     site = context.getSite()
 
     logStep("finalizeExampleInstance", context)
-    # add the test user 'bourgmestre' to every '_powerobservers' groups
+    # add the test users 'dfin' and 'bourgmestre' to every '_powerobservers' groups
     member = site.portal_membership.getMemberById(specialUserId)
-    if member:
-        site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig1Id)
-        site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
+    for memberId in ('dfin', 'bourgmestre', ):
+        member = site.portal_membership.getMemberById(memberId)
+        if member:
+            site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig1Id)
+            site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
     # add the test user 'conseiller' only to the 'meeting-config-council_powerobservers' group
     member = site.portal_membership.getMemberById('conseiller')
     if member:
