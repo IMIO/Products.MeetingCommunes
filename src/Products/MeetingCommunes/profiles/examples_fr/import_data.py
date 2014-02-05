@@ -528,7 +528,7 @@ councilMeeting.itemPowerObserversStates = ('itemfrozen',
                                            'accepted_but_modified', 'pre_accepted')
 councilMeeting.meetingPowerObserversStates = ('frozen', 'published', 'decided', 'closed')
 councilMeeting.itemDecisionReportText = "python:'Le collège décide de reporter le point.'"
-collegeMeeting.powerAdvisersGroups = ()
+councilMeeting.powerAdvisersGroups = ()
 councilMeeting.useCopies = True
 councilMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                        groups[1].getIdSuffixed('reviewers'),
