@@ -42,11 +42,6 @@ msgstr ""
 msgid "MeetingCommunes_label_signatures"
 msgstr ""
 
-# MeetingItem
-#. Default: "Decision"
-msgid "PloneMeeting_label_decision"
-msgstr "Auszug aus dem Protokoll"
-
 #. Default: "Decision used when the item is delayed"
 msgid "PloneMeeting_label_itemDecisionReportText"
 msgstr ""
@@ -164,3 +159,4 @@ msgstr "vorgeschlageneTOP"
 #, fuzzy
 msgid "searchvalidateditems"
 msgstr "validierte TOP"
+

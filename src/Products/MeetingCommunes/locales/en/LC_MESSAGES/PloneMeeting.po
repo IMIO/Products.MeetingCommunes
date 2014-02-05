@@ -45,11 +45,6 @@ msgstr ""
 msgid "MeetingCommunes_label_signatures"
 msgstr "Signatures Delegation"
 
-# MeetingItem
-#. Default: "Decision"
-msgid "PloneMeeting_label_decision"
-msgstr "Decision"
-
 #. Default: "Decision used when the item is delayed"
 msgid "PloneMeeting_label_itemDecisionReportText"
 msgstr ""
@@ -167,3 +162,4 @@ msgstr "Items to validate"
 #, fuzzy
 msgid "searchvalidateditems"
 msgstr "Validated items"
+
