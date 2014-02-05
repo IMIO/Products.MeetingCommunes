@@ -83,6 +83,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_SendItemToOtherMCWithAnnexes()
 
+    def test_subproduct_call_SendItemToOtherMCWithAdvices(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_SendItemToOtherMCWithAdvices()
+
     def test_subproduct_call_CopyGroups(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_CopyGroups()

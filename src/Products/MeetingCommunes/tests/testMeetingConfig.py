@@ -45,6 +45,10 @@ class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
         '''Run the test_pm_searchAdvisedItems from PloneMeeting.'''
         pmtmc.test_pm_SearchAdvisedItems(self)
 
+    def test_subproduct_call_SearchAdvisedItemsWithDelay(self):
+        '''Run the test_pm_SearchAdvisedItemsWithDelay from PloneMeeting.'''
+        pmtmc.test_pm_SearchAdvisedItemsWithDelay(self)
+
     def test_subproduct_call_SearchItemsInCopy(self):
         '''Run the test_pm_searchItemsInCopy from PloneMeeting.'''
         pmtmc.test_pm_SearchItemsInCopy(self)
