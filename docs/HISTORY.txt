@@ -6,7 +6,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 3.2.0 (unreleased)
 ------------------
-- Nothing yet
+- Updated regarding changes in PloneMeeting
 
 3.1.0 (2013-11-04)
 ------------------
