@@ -4,9 +4,14 @@ Products.MeetingCommunes Changelog
 Older versions than 3.0 can be found at http://svn.communesplone.org/svn/communesplone/MeetingCommunes/tags/
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
+3.2.1 (unreleased)
+------------------
+- Nothing yet
+
 3.2.0 (unreleased)
 ------------------
 - Updated regarding changes in PloneMeeting
+- Use getToolByName where necessary
 
 3.1.0 (2013-11-04)
 ------------------
