@@ -77,10 +77,6 @@ msgstr ""
 msgid "backToDecided"
 msgstr ""
 
-#. Default: "Back to decisions published"
-msgid "backToDecisionsPublished"
-msgstr ""
-
 #. Default: "Back to frozen"
 msgid "backToFrozen"
 msgstr ""
@@ -109,10 +105,6 @@ msgstr ""
 msgid "backToPublished"
 msgstr ""
 
-#. Default: "Decisions published"
-msgid "decisions_published"
-msgstr ""
-
 #. Default: "Frozen"
 #, fuzzy
 msgid "frozen"
@@ -132,10 +124,6 @@ msgstr "Provisiorisch aktzeptieren"
 #, fuzzy
 msgid "pre_accepted"
 msgstr "Provisorisch akzeptiert"
-
-#. Default: "Publish decisions"
-msgid "publish_decisions"
-msgstr ""
 
 #. Default: "The item has been successfully transfered to the bp."
 msgid "sendto_meeting-config-bp_success"

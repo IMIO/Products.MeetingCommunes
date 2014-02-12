@@ -78,10 +78,6 @@ msgstr "Terug naar aangemaakt"
 msgid "backToDecided"
 msgstr "Terug naar beslist"
 
-#. Default: "Back to decisions published"
-msgid "backToDecisionsPublished"
-msgstr ""
-
 #. Default: "Back to frozen"
 msgid "backToFrozen"
 msgstr ""
@@ -110,10 +106,6 @@ msgstr "terug naar voorgesteld"
 msgid "backToPublished"
 msgstr "terug naar gepubliceerd"
 
-#. Default: "Decisions published"
-msgid "decisions_published"
-msgstr "Gepubliceerde besluiten"
-
 #. Default: "Frozen"
 #, fuzzy
 msgid "frozen"
@@ -131,10 +123,6 @@ msgstr ""
 #. Default: "Pre accepted"
 msgid "pre_accepted"
 msgstr ""
-
-#. Default: "Publish decisions"
-msgid "publish_decisions"
-msgstr "Publiceer beslissingen"
 
 #. Default: "The item has been successfully transfered to the bp."
 msgid "sendto_meeting-config-bp_success"

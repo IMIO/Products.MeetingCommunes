@@ -135,15 +135,3 @@ msgstr ""
 #. Default: "Back to published"
 msgid "backToPublished"
 msgstr ""
-
-#. Default: "Back to decisions published"
-msgid "backToDecisionsPublished"
-msgstr ""
-
-#. Default: "Decisions published"
-msgid "decisions_published"
-msgstr ""
-
-#. Default: "Publish decisions"
-msgid "publish_decisions"
-msgstr ""

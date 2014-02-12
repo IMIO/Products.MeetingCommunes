@@ -78,10 +78,6 @@ msgstr "Remettre \"En création\""
 msgid "backToDecided"
 msgstr "Remettre en \"Rédaction du PV\""
 
-#. Default: "Back to decisions published"
-msgid "backToDecisionsPublished"
-msgstr "Remettre en \"Décisions publiées\""
-
 #. Default: "Back to frozen"
 msgid "backToFrozen"
 msgstr "Remettre en \"Gelée\""
@@ -110,10 +106,6 @@ msgstr "Remettre en \"Proposé\""
 msgid "backToPublished"
 msgstr "Remettre en \"Publié\""
 
-#. Default: "Decisions published"
-msgid "decisions_published"
-msgstr "Décisions publiées"
-
 #. Default: "Frozen"
 msgid "frozen"
 msgstr "Gelée"
@@ -129,10 +121,6 @@ msgstr "Accepter provisoirement"
 #. Default: "Pre accepted"
 msgid "pre_accepted"
 msgstr "Accepté provisoirement"
-
-#. Default: "Publish decisions"
-msgid "publish_decisions"
-msgstr "Publier les décisions"
 
 #. Default: "The item has been successfully transfered to the bp."
 msgid "sendto_meeting-config-bp_success"
