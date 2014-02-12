@@ -45,7 +45,6 @@ from Products.MeetingCommunes.interfaces import \
 from Products.PloneMeeting.utils import checkPermission
 from Products.CMFCore.permissions import ReviewPortalContent, ModifyPortalContent
 from Products.PloneMeeting.utils import getCurrentMeetingObject
-from Products.PloneMeeting.utils import prepareSearchValue
 from Products.PloneMeeting import PloneMeetingError
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import *
@@ -76,11 +75,12 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
     wfAdaptations = specificAdaptation and [specificAdaptation, ] or meetingConfig.getWorkflowAdaptations()
 
     #while reinstalling a separate profile, the workflow could not exist
-    meetingWorkflow = getattr(site.portal_workflow, meetingConfig.getMeetingWorkflow(), None)
+    wfTool = getToolByName(site, 'portal_workflow')
+    meetingWorkflow = getattr(wfTool, meetingConfig.getMeetingWorkflow(), None)
     if not meetingWorkflow:
         logger.warning(WF_DOES_NOT_EXIST_WARNING % meetingConfig.getMeetingWorkflow())
         return
-    itemWorkflow = getattr(site.portal_workflow, meetingConfig.getItemWorkflow(), None)
+    itemWorkflow = getattr(wfTool, meetingConfig.getItemWorkflow(), None)
     if not itemWorkflow:
         logger.warning(WF_DOES_NOT_EXIST_WARNING % meetingConfig.getItemWorkflow())
         return
@@ -315,13 +315,14 @@ class CustomMeeting(Meeting):
         res = []
         items = []
         previousCatId = None
+        tool = getToolByName(self.context, 'portal_plonemeeting')
         # Retrieve the list of items
         for elt in itemUids:
             if elt == '':
                 itemUids.remove(elt)
         items = self.context.getItemsInOrder(late=late, uids=itemUids)
         if by_proposing_group:
-            groups = self.context.portal_plonemeeting.getMeetingGroups()
+            groups = tool.getMeetingGroups()
         else:
             groups = None
         if items:
@@ -362,7 +363,7 @@ class CustomMeeting(Meeting):
                     self._insertItemInCategory(res[-1], item,
                                                by_proposing_group, group_prefixes, groups)
         if includeEmptyCategories:
-            meetingConfig = self.context.portal_plonemeeting.getMeetingConfig(
+            meetingConfig = tool.getMeetingConfig(
                 self.context)
             allCategories = meetingConfig.getCategories()
             usedCategories = [elem[0] for elem in res]
@@ -542,10 +543,12 @@ class CustomMeeting(Meeting):
            meetings in the previous p_searchMeetingsInterval, which is a number
            of days. If no meeting is found, the method returns None.'''
         meetingDate = self.context.getDate()
-        meetingConfig = self.context.portal_plonemeeting.getMeetingConfig(
+        tool = getToolByName(self.context, 'portal_plonemeeting')
+        meetingConfig = tool.getMeetingConfig(
             self.context)
         meetingTypeName = meetingConfig.getMeetingTypeName()
-        allMeetings = self.context.portal_catalog(
+        catalog = getToolByName(self.context, 'portal_catalog')
+        allMeetings = catalog(
             portal_type=meetingTypeName,
             getDate={'query': self.context.getDate()-searchMeetingsInterval,
                      'range': 'min'},
@@ -577,7 +580,8 @@ class CustomMeeting(Meeting):
                 return False
             else:
                 writePerms = (ModifyPortalContent,)
-            currentUser = self.portal_membership.getAuthenticatedMember()
+            membershipTool = getToolByName(self.context, 'portal_membership')
+            currentUser = membershipTool.getAuthenticatedMember()
             for item in self.getAllItems():
                 for perm in writePerms:
                     if not currentUser.has_permission(perm, item):
@@ -586,6 +590,7 @@ class CustomMeeting(Meeting):
         else:
             return False
     Meeting.showAllItemsAtOnce = showAllItemsAtOnce
+
 
 class CustomMeetingItem(MeetingItem):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
@@ -603,15 +608,15 @@ class CustomMeetingItem(MeetingItem):
     def getMeetingsAcceptingItems(self):
         '''Overrides the default method so we only display meetings that are
            in the 'created' or 'frozen' state.'''
-        pmtool = getToolByName(self.context, "portal_plonemeeting")
-        catalogtool = getToolByName(self.context, "portal_catalog")
-        meetingPortalType = pmtool.getMeetingConfig(self.context).getMeetingTypeName()
+        tool = getToolByName(self.context, 'portal_plonemeeting')
+        catalog = getToolByName(self.context, 'portal_catalog')
+        meetingPortalType = tool.getMeetingConfig(self.context).getMeetingTypeName()
         # If the current user is a meetingManager (or a Manager),
         # he is able to add a meetingitem to a 'decided' meeting.
         review_state = ['created', 'frozen', ]
-        if self.context.portal_plonemeeting.isManager():
+        if tool.isManager():
             review_state += ['decided', 'published', ]
-        res = catalogtool.unrestrictedSearchResults(
+        res = catalog.unrestrictedSearchResults(
             portal_type=meetingPortalType,
             review_state=review_state,
             sort_on='getDate')
@@ -633,12 +638,13 @@ class CustomMeetingItem(MeetingItem):
            Either use signatures defined on the proposing MeetingGroup if exists,
            or use the meetingConfig certified signatures.'''
         item = self.getSelf()
+        tool = getToolByName(self.context, 'portal_plonemeeting')
         if not item.hasMeeting():
             return '', False
         signature = item.getProposingGroup(theObject=True).getSignatures()
         hasGroupSignature = True
         if not signature:
-            meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
+            meetingConfig = tool.getMeetingConfig(item)
             # either use the certifiedSignatures or check for certified signatories
             # from MeetingUsers having the usage 'voter' and being 'default signatories'
             # first check if we use MeetingUsers
@@ -725,11 +731,12 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
     def _adaptEveryItemsOnMeetingClosure(self):
         """Helper method for accepting every items."""
         # Every item that is not decided will be automatically set to "accepted"
+        wfTool = getToolByName(self.context, 'portal_workflow')
         for item in self.context.getAllItems():
             if item.queryState() == 'presented':
-                self.context.portal_workflow.doActionFor(item, 'itemfreeze')
+                wfTool.doActionFor(item, 'itemfreeze')
             if item.queryState() in ['itemfrozen', 'pre_accepted', ]:
-                self.context.portal_workflow.doActionFor(item, 'accept')
+                wfTool.doActionFor(item, 'accept')
 
     security.declarePrivate('doDecide')
     def doDecide(self, stateChange):
@@ -740,9 +747,10 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
         empty_values = ('<p></p>', '<p> </p>', '<p><br></p>', '<p><br ></p>',
                         '<p><br /></p>', '<p><br/></p>', '<br>', '<br/>',
                         '<br />', '<br >')
+        wfTool = getToolByName(self.context, 'portal_workflow')
         for item in self.context.getAllItems(ordered=True):
             if item.queryState() == 'presented':
-                self.context.portal_workflow.doActionFor(item, 'itemfreeze')
+                wfTool.doActionFor(item, 'itemfreeze')
             # If the decision field is empty, initialize it
             if not item.getDecision().strip() or \
                (item.getDecision().strip() in empty_values):
@@ -817,11 +825,13 @@ class MeetingItemCollegeWorkflowActions(MeetingItemWorkflowActions):
         # call PloneMeeting's doDelay then make our additional things
         MeetingItemWorkflowActions.doDelay(self, stateChange)
         # manage itemDecisionReportText
-        meetingConfig = self.context.portal_plonemeeting.getMeetingConfig(self.context)
+        tool = getToolByName(self.context, 'portal_plonemeeting')
+        meetingConfig = tool.getMeetingConfig(self.context)
         itemDecisionReportText = meetingConfig.getRawItemDecisionReportText()
         if itemDecisionReportText.strip():
             from Products.CMFCore.Expression import Expression, createExprContext
-            portal = self.context.portal_url.getPortalObject()
+            portal_url = getToolByName(self.context, 'portal_url')
+            portal = portal_url.getPortalObject()
             ctx = createExprContext(self.context.getParentNode(), portal, self.context)
             try:
                 res = Expression(itemDecisionReportText)(ctx)
@@ -891,18 +901,19 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
         """Helper method for accepting every items."""
         # Every item that is not decided will be automatically set to "accepted"
         # Every item that is "presented" will be automatically set to "accepted"
+        wfTool = getToolByName(self.context, 'portal_workflow')
         for item in self.context.getAllItems():
             if item.queryState() == 'presented':
-                self.context.portal_workflow.doActionFor(item, 'itemfreeze')
+                wfTool.doActionFor(item, 'itemfreeze')
             if item.queryState() == 'itemfrozen':
                 try:
-                    self.context.portal_workflow.doActionFor(item, 'itempublish')
+                    wfTool.doActionFor(item, 'itempublish')
                 except WorkflowException:
                     # in the case we selected the 'no_publication' wfAdaptation
                     # the itempublish transition does not exist anymore...
                     pass
             if item.queryState() in ('itemfrozen', 'itempublished', 'pre_accepted',):
-                self.context.portal_workflow.doActionFor(item, 'accept')
+                wfTool.doActionFor(item, 'accept')
 
     security.declarePrivate('doDecide')
     def doDecide(self, stateChange):
@@ -913,12 +924,13 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
         empty_values = ('<p></p>', '<p> </p>', '<p><br></p>', '<p><br ></p>',
                         '<p><br /></p>', '<p><br/></p>', '<br>', '<br/>',
                         '<br />', '<br >')
+        wfTool = getToolByName(self.context, 'portal_workflow')
         for item in self.context.getAllItems(ordered=True):
             if item.queryState() == 'presented':
-                self.context.portal_workflow.doActionFor(item, 'itemfreeze')
+                wfTool.doActionFor(item, 'itemfreeze')
             if item.queryState() == 'itemfrozen':
                 try:
-                    self.context.portal_workflow.doActionFor(item, 'itempublish')
+                    wfTool.doActionFor(item, 'itempublish')
                 except WorkflowException:
                     # in the case we selected the 'no_publication' wfAdaptation
                     # the itempublish transition does not exist anymore...
@@ -934,11 +946,12 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
     def doPublish(self, stateChange):
         '''When publishing the meeting, every items must be automatically set to
            "itempublished".'''
+        wfTool = getToolByName(self.context, 'portal_workflow')
         for item in self.context.getAllItems(ordered=True):
             if item.queryState() == 'presented':
-                self.context.portal_workflow.doActionFor(item, 'itemfreeze')
+                wfTool.doActionFor(item, 'itemfreeze')
             if item.queryState() == 'itemfrozen':
-                self.context.portal_workflow.doActionFor(item, 'itempublish')
+                wfTool.doActionFor(item, 'itempublish')
 
     security.declarePrivate('doBackToPublished')
     def doBackToPublished(self, stateChange):
@@ -989,16 +1002,16 @@ class MeetingItemCouncilWorkflowActions(MeetingItemCollegeWorkflowActions):
         meeting = getCurrentMeetingObject(self.context)
         meeting.insertItem(self.context)
         meetingState = meeting.queryState()
-        wTool = self.context.portal_workflow
+        wfTool = getToolByName(self.context, 'portal_workflow')
         if meetingState == 'frozen':
             # We are inserting an item in a frozen meeting
             # We need to freeze the item too...
-            wTool.doActionFor(self.context, 'itemfreeze')
+            wfTool.doActionFor(self.context, 'itemfreeze')
         elif meetingState in ['published', 'decided']:
             # We are inserting an item in a published or decided meeting
             # We need to freeze and publish the item...
-            wTool.doActionFor(self.context, 'itemfreeze')
-            wTool.doActionFor(self.context, 'itempublish')
+            wfTool.doActionFor(self.context, 'itemfreeze')
+            wfTool.doActionFor(self.context, 'itempublish')
 
 
 class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions):
@@ -1114,14 +1127,14 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
             cpt = 1
             my_line = ''
             for line in lines:
-               if cpt == len(lines):
-                   my_line = "%s%s<br />"%(my_line,line)
-                   tmp.append(my_line)
-               else:
-                   my_line = "%s%s,"%(my_line,line)
-               cpt = cpt + 1
+                if cpt == len(lines):
+                    my_line = "%s%s<br />" % (my_line, line)
+                    tmp.append(my_line)
+                else:
+                    my_line = "%s%s," % (my_line, line)
+                cpt = cpt + 1
         if len(tmp) > 1:
-            tmp[-1] = tmp[-1].replace('<br />','')
+            tmp[-1] = tmp[-1].replace('<br />', '')
             tmp.append('</p>')
         else:
             return ''
