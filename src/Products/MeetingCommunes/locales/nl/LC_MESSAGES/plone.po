@@ -110,17 +110,6 @@ msgstr "terug naar voorgesteld"
 msgid "backToPublished"
 msgstr "terug naar gepubliceerd"
 
-# College meeting workflow transitions specific vocabulary
-#. Default: "Decide"
-#, fuzzy
-msgid "decide"
-msgstr "rédiger le PV"
-
-# College meeting workflow states specific vocabulary
-#. Default: "decided"
-msgid "decided"
-msgstr "Beslist"
-
 #. Default: "Decisions published"
 msgid "decisions_published"
 msgstr "Gepubliceerde besluiten"

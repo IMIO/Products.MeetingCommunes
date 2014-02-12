@@ -110,17 +110,6 @@ msgstr ""
 msgid "backToPublished"
 msgstr ""
 
-# College meeting workflow transitions specific vocabulary
-#. Default: "Decide"
-#, fuzzy
-msgid "decide"
-msgstr "escribir el Acta"
-
-# College meeting workflow states specific vocabulary
-#. Default: "decided"
-msgid "decided"
-msgstr "redacción de Acta"
-
 #. Default: "Decisions published"
 msgid "decisions_published"
 msgstr ""

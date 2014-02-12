@@ -109,17 +109,6 @@ msgstr ""
 msgid "backToPublished"
 msgstr ""
 
-# College meeting workflow transitions specific vocabulary
-#. Default: "Decide"
-#, fuzzy
-msgid "decide"
-msgstr "Protokoll verfassen"
-
-# College meeting workflow states specific vocabulary
-#. Default: "decided"
-msgid "decided"
-msgstr "Verfassung des Protokolls"
-
 #. Default: "Decisions published"
 msgid "decisions_published"
 msgstr ""

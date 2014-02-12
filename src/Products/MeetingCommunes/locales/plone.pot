@@ -36,18 +36,8 @@ msgstr ""
 msgid "pre_accepted"
 msgstr ""
 
-# College meeting workflow states specific vocabulary
-#. Default: "decided"
-msgid "decided"
-msgstr ""
-
 #. Default: "Frozen"
 msgid "frozen"
-msgstr ""
-
-# College meeting workflow transitions specific vocabulary
-#. Default: "Decide"
-msgid "decide"
 msgstr ""
 
 #. Default: "Itemfrozen"

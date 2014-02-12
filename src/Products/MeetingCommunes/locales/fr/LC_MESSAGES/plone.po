@@ -110,16 +110,6 @@ msgstr "Remettre en \"Proposé\""
 msgid "backToPublished"
 msgstr "Remettre en \"Publié\""
 
-# College meeting workflow transitions specific vocabulary
-#. Default: "Decide"
-msgid "decide"
-msgstr "Rédiger le PV"
-
-# College meeting workflow states specific vocabulary
-#. Default: "decided"
-msgid "decided"
-msgstr "En rédaction du PV"
-
 #. Default: "Decisions published"
 msgid "decisions_published"
 msgstr "Décisions publiées"
