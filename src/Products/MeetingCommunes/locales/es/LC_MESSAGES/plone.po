@@ -58,10 +58,6 @@ msgstr "Reunión de Consejo Social"
 msgid "Meetingcomitee"
 msgstr "Reunión de Comité de Concertación"
 
-#. Default: "UID not found!"
-msgid "UID not found!"
-msgstr ""
-
 #. Default: "Accept with modifications"
 msgid "accept_but_modify"
 msgstr ""
@@ -122,25 +118,5 @@ msgstr ""
 
 #. Default: "Pre accepted"
 msgid "pre_accepted"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the bp."
-msgid "sendto_meeting-config-bp_success"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the cas."
-msgid "sendto_meeting-config-cas_success"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the college."
-msgid "sendto_meeting-config-college_success"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the comitee."
-msgid "sendto_meeting-config-comitee_success"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the council."
-msgid "sendto_meeting-config-council_success"
 msgstr ""
 
