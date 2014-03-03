@@ -142,6 +142,7 @@ collegeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeet
 collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
 collegeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions'
 collegeMeeting.transitionsToConfirm = []
+collegeMeeting.transitionsForPresentingAnItem = ['propose', 'validate', 'present', ]
 collegeMeeting.meetingTopicStates = ('created', 'frozen')
 collegeMeeting.decisionTopicStates = ('decided', 'closed')
 collegeMeeting.recordItemHistoryStates = []
@@ -163,7 +164,8 @@ collegeMeeting.meetingPowerObserversStates = ('frozen', 'published', 'decided', 
 collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'), ]
 collegeMeeting.podTemplates = [agendaTemplate, decisionsTemplate, itemTemplate]
-collegeMeeting.meetingConfigsToCloneTo = ['meeting-config-council', ]
+collegeMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-council',
+                                           'trigger_workflow_transitions_until': '__nothing__'}, ]
 
 collegeMeeting.recurringItems = [
     RecurringItemDescriptor(
@@ -249,6 +251,7 @@ councilMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeet
 councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowConditions'
 councilMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowActions'
 councilMeeting.transitionsToConfirm = []
+councilMeeting.transitionsForPresentingAnItem = ['propose', 'validate', 'present', ]
 councilMeeting.meetingTopicStates = ('created', 'frozen', 'published')
 councilMeeting.decisionTopicStates = ('decided', 'closed')
 councilMeeting.itemAdviceStates = ('validated',)

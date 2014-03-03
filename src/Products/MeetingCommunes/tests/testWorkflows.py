@@ -295,9 +295,9 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         '''Run the test_pm_RecurringItemsRespectSortingMethodOnAddItemPrivacy from PloneMeeting.'''
         self.test_pm_RecurringItemsRespectSortingMethodOnAddItemPrivacy()
 
-    def test_subproduct_call_RecurringItemsWithHardcodedTransitions(self):
-        '''Run the test_pm_RecurringItemsRespectSortingMethodOnAddItemPrivacy from PloneMeeting.'''
-        self.test_pm_RecurringItemsWithHardcodedTransitions()
+    def test_subproduct_call_RecurringItemsWithWrongTransitionsForPresentingAnItem(self):
+        '''Run the test_pm_RecurringItemsWithWrongTransitionsForPresentingAnItem from PloneMeeting.'''
+        self.test_pm_RecurringItemsWithWrongTransitionsForPresentingAnItem()
 
     def _checkRecurringItemsCollege(self):
         '''Tests the recurring items system.'''

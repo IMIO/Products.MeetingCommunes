@@ -69,6 +69,10 @@ class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
         '''Run the test_pm_searchItemsWithFilters from PloneMeeting.'''
         pmtmc.test_pm_Validate_customAdvisersDelayColumn(self)
 
+    def test_subproduct_call_Validate_transitionsForPresentingAnItem(self):
+        '''Run the test_pm_validateTransitionsForPresentingAnItem from PloneMeeting.'''
+        pmtmc.test_pm_Validate_transitionsForPresentingAnItem(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
