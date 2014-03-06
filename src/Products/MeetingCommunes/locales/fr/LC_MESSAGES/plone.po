@@ -58,10 +58,6 @@ msgstr "Séance du Conseil de l'Action Sociale"
 msgid "Meetingcomitee"
 msgstr "Séance du Comité de Concertation"
 
-#. Default: "UID not found!"
-msgid "UID not found!"
-msgstr "L'élément à déplacer n'a pas été trouvé!"
-
 #. Default: "Accept with modifications"
 msgid "accept_but_modify"
 msgstr "Accepter avec modifications"
@@ -121,24 +117,4 @@ msgstr "Accepter provisoirement"
 #. Default: "Pre accepted"
 msgid "pre_accepted"
 msgstr "Accepté provisoirement"
-
-#. Default: "The item has been successfully transfered to the bp."
-msgid "sendto_meeting-config-bp_success"
-msgstr "Le point a été envoyé au Bureau permanent."
-
-#. Default: "The item has been successfully transfered to the cas."
-msgid "sendto_meeting-config-cas_success"
-msgstr "Le point a été envoyé au Conseil de l'Action Sociale."
-
-#. Default: "The item has been successfully transfered to the college."
-msgid "sendto_meeting-config-college_success"
-msgstr "Le point a été envoyé au Collège."
-
-#. Default: "The item has been successfully transfered to the comitee."
-msgid "sendto_meeting-config-comitee_success"
-msgstr "Le point a été envoyé au Comité de concertation."
-
-#. Default: "The item has been successfully transfered to the council."
-msgid "sendto_meeting-config-council_success"
-msgstr "Le point a été envoyé au Conseil communal."
 
