@@ -96,6 +96,14 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
         pmta.test_pm_PowerAdvisers(self)
 
+    def test_subproduct_call_ComputeDelaysWorkingDaysAndHolidaysAndUnavailableEndDays(self):
+        '''Run the test_pm_ComputeDelaysWorkingDaysAndHolidaysAndUnavailableEndDays from PloneMeeting.'''
+        pmta.test_pm_ComputeDelaysWorkingDaysAndHolidaysAndUnavailableEndDays(self)
+
+    def test_subproduct_call_ComputeDelaysAsCalendarDays(self):
+        '''Run the test_pm_ComputeDelaysAsCalendarDays from PloneMeeting.'''
+        pmta.test_pm_ComputeDelaysAsCalendarDays(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
