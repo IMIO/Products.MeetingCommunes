@@ -314,6 +314,7 @@ collegeMeeting.itemPowerObserversStates = ('itemfrozen',
                                            'accepted_but_modified',
                                            'pre_accepted')
 collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
+collegeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 collegeMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 collegeMeeting.itemDecisionReportText = "python:'Le collège décide de reporter le point.'"
 collegeMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
@@ -522,6 +523,7 @@ councilMeeting.itemAdviceStates = ()
 councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
 councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
+councilMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 councilMeeting.itemPowerObserversStates = ('itemfrozen',
                                            'itempublished',
                                            'accepted', 'delayed',
