@@ -244,8 +244,8 @@ collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = ['secretariat_reviewers', 'computing_reviewers',
                                        'personnel_reviewers', 'accountancy_reviewers', 'work_reviewers']
 collegeMeeting.podTemplates = collegeTemplates
-collegeMeeting.meetingConfigsToCloneTo = ['meeting-config-council', ]
-
+collegeMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-council',
+                                           'trigger_workflow_transitions_until': '__nothing__'}, ]
 collegeMeeting.recurringItems = [
     RecurringItemDescriptor(
         id='recurringagenda1',
