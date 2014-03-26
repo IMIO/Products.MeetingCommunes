@@ -224,7 +224,8 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         duplicatedItem = item1.getBRefs('ItemPredecessor')[0]
         self.assertEquals(duplicatedItem.getPredecessor().UID(), item1.UID())
         # when duplicated on delay, annexes are kept
-        self.assertEquals(len(IAnnexable(duplicatedItem).getAnnexes()), 1)
+        self.assertEquals(len(IAnnexable(duplicatedItem).getAnnexes('item')), 1)
+        self.assertEquals(len(IAnnexable(duplicatedItem).getAnnexes('item_decision')), 3)
         self.addAnnex(item2, decisionRelated=True)
         self.failIf(len(self.transitions(meeting)) != 2)
         # When a meeting is closed, items without a decision are automatically 'accepted'

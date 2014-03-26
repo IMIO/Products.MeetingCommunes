@@ -37,6 +37,10 @@ class testMeetingFileType(MeetingCommunesTestCase, pmmft):
         '''Run the test_pm_CanNotChangeRelatedToOfUsedMeetingFileType from PloneMeeting.'''
         self.test_pm_CanNotChangeRelatedToOfUsedMeetingFileType()
 
+    def test_subproduct_call_validate_subTypes(self):
+        '''Run the test_pm_validate_subTypes from PloneMeeting.'''
+        self.test_pm_validate_subTypes()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

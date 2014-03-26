@@ -59,8 +59,12 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
         self.test_pm_ShowPloneMeetingTab()
 
     def test_subproduct_call_SetupProcessForCreationFlag(self):
-        '''Run the testSetupProcessForCreationFlag from PloneMeeting.'''
+        '''Run the test_pm_SetupProcessForCreationFlag from PloneMeeting.'''
         self.test_pm_SetupProcessForCreationFlag()
+
+    def test_subproduct_call_UpdateMeetingFileTypesAfterSentToOtherMeetingConfig(self):
+        '''Run the test_pm_UpdateMeetingFileTypesAfterSentToOtherMeetingConfig from PloneMeeting.'''
+        self.test_pm_UpdateMeetingFileTypesAfterSentToOtherMeetingConfig()
 
 
 def test_suite():
