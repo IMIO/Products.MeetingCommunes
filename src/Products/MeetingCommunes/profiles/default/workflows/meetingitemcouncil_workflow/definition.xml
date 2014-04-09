@@ -22,6 +22,7 @@
  <permission>PloneMeeting: Write item observations</permission>
  <permission>PloneMeeting: Read budget infos</permission>
  <permission>PloneMeeting: Write budget infos</permission>
+ <permission>PloneMeeting: Write completeness</permission>
  <state state_id="accepted"
         title="accepted"
         i18n:attributes="title">
@@ -109,6 +110,10 @@
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>MeetingBudgetImpactEditor</permission-role>
+  </permission-map>
+  <permission-map name="PloneMeeting: Write completeness"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -233,6 +238,10 @@
    <permission-role>Manager</permission-role>
    <permission-role>MeetingBudgetImpactEditor</permission-role>
   </permission-map>
+  <permission-map name="PloneMeeting: Write completeness"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
    <permission-role>Manager</permission-role>
@@ -356,6 +365,10 @@
    <permission-role>Manager</permission-role>
    <permission-role>MeetingBudgetImpactEditor</permission-role>
   </permission-map>
+  <permission-map name="PloneMeeting: Write completeness"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
    <permission-role>Manager</permission-role>
@@ -459,6 +472,10 @@
    <permission-role>Manager</permission-role>
    <permission-role>MeetingMember</permission-role>
    <permission-role>MeetingBudgetImpactEditor</permission-role>
+  </permission-map>
+  <permission-map name="PloneMeeting: Write completeness"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -580,6 +597,10 @@
    <permission-role>Manager</permission-role>
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingBudgetImpactEditor</permission-role>
+  </permission-map>
+  <permission-map name="PloneMeeting: Write completeness"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -711,6 +732,10 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingBudgetImpactEditor</permission-role>
   </permission-map>
+  <permission-map name="PloneMeeting: Write completeness"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
    <permission-role>Manager</permission-role>
@@ -839,6 +864,10 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingBudgetImpactEditor</permission-role>
   </permission-map>
+  <permission-map name="PloneMeeting: Write completeness"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
    <permission-role>Manager</permission-role>
@@ -960,6 +989,10 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingBudgetImpactEditor</permission-role>
   </permission-map>
+  <permission-map name="PloneMeeting: Write completeness"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
    <permission-role>Manager</permission-role>
@@ -1074,6 +1107,12 @@
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingReviewer</permission-role>
    <permission-role>MeetingBudgetImpactEditor</permission-role>
+  </permission-map>
+  <permission-map name="PloneMeeting: Write completeness"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>MeetingReviewer</permission-role>
+   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
@@ -1201,6 +1240,10 @@
    <permission-role>Manager</permission-role>
    <permission-role>MeetingBudgetImpactEditor</permission-role>
   </permission-map>
+  <permission-map name="PloneMeeting: Write completeness"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
    <permission-role>Manager</permission-role>
@@ -1320,6 +1363,11 @@
    <permission-role>Manager</permission-role>
    <permission-role>MeetingManager</permission-role>
    <permission-role>MeetingBudgetImpactEditor</permission-role>
+  </permission-map>
+  <permission-map name="PloneMeeting: Write completeness"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Write decision"
                   acquired="False">
