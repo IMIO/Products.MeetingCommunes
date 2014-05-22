@@ -73,6 +73,22 @@ class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
         '''Run the test_pm_validateTransitionsForPresentingAnItem from PloneMeeting.'''
         pmtmc.test_pm_Validate_transitionsForPresentingAnItem(self)
 
+    def test_subproduct_call_Validate_customAdvisersIsLinkedToPreviousRowDelayAware(self):
+        '''Run the test_pm_Validate_customAdvisersIsLinkedToPreviousRowDelayAware from PloneMeeting.'''
+        pmtmc.test_pm_Validate_customAdvisersIsLinkedToPreviousRowDelayAware(self)
+
+    def test_subproduct_call_Validate_customAdvisersIsLinkedToPreviousRowIsUsed(self):
+        '''Run the test_pm_Validate_customAdvisersIsLinkedToPreviousRowIsUsed from PloneMeeting.'''
+        pmtmc.test_pm_Validate_customAdvisersIsLinkedToPreviousRowIsUsed(self)
+
+    def test_subproduct_call_Validate_customAdvisersEnoughData(self):
+        '''Run the test_pm_Validate_customAdvisersEnoughData from PloneMeeting.'''
+        pmtmc.test_pm_Validate_customAdvisersEnoughData(self)
+
+    def test_subproduct_call_Validate_customAdvisersAvailableOn(self):
+        '''Run the test_pm_Validate_customAdvisersAvailableOn from PloneMeeting.'''
+        pmtmc.test_pm_Validate_customAdvisersAvailableOn(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
