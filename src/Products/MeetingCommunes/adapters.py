@@ -863,30 +863,16 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
 
     security.declarePublic('mayCorrect')
     def mayCorrect(self):
-        # Check with the default PloneMeeting method and our test if res is
-        # False. The diffence here is when we correct an item from itemfrozen to
-        # presented, we have to check if the Meeting is in the "created" state
-        # and not "published".
-        res = MeetingItemWorkflowConditions.mayCorrect(self)
-        # Item state
-        currentState = self.context.queryState()
-        # Manage our own behaviour now when the item is linked to a meeting,
-        # a MeetingManager can correct anything except if the meeting is closed
-        if not res and currentState in ['presented', 'itemfrozen', 'delayed',
-                                        'refused', 'accepted', 'accepted_but_modified',
-                                        'pre_accepted']:
+        '''If the item is not linked to a meeting, the user just need the
+           'Review portal content' permission, if it is linked to a meeting, an item
+           may still be corrected until the meeting is 'closed'.'''
+        res = False
+        meeting = self.context.getMeeting()
+        if not meeting or (meeting and meeting.queryState() != 'closed'):
+            # item is not linked to a meeting, or in a meeting that is not 'closed',
+            # just check for 'Review portal content' permission
             if checkPermission(ReviewPortalContent, self.context):
-                # Get the meeting
-                meeting = self.context.getMeeting()
-                if meeting:
-                    # Meeting can be None if there was a wf problem leading
-                    # an item to be in a "presented" state with no linked
-                    # meeting.
-                    meetingState = meeting.queryState()
-                    # A user having ReviewPortalContent permission can correct
-                    # an item in any case except if the meeting is closed.
-                    if meetingState != 'closed':
-                        res = True
+                res = True
         return res
 
 
