@@ -78,10 +78,6 @@ msgstr ""
 msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
 msgstr ""
 
-#. Default: "Create an item council from an item college"
-msgid "create_to_meeting-config-council_from_meeting-config-college"
-msgstr ""
-
 #portal_tabs
 #. Default: "Meeting config College"
 msgid "Meeting config College"

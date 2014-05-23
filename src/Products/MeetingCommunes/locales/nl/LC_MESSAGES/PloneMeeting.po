@@ -69,10 +69,6 @@ msgstr ""
 msgid "close_done_descr"
 msgstr "Sluit klaar scherm"
 
-#. Default: "Create an item council from an item college"
-msgid "create_to_meeting-config-council_from_meeting-config-college"
-msgstr ""
-
 #. Default: "Item created from a college item"
 msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
 msgstr ""

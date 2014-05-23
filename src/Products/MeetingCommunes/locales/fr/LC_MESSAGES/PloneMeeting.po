@@ -72,10 +72,6 @@ msgstr "Vous ne pouvez plus rédiger le Procès-verbal pour l'instant."
 msgid "close_done_descr"
 msgstr "Le procès-verbal est maintenant clôturé, tous les points pour lesquels aucune décision n'avait été prise ont été automatiquement acceptés."
 
-#. Default: "Create an item council from an item college"
-msgid "create_to_meeting-config-council_from_meeting-config-college"
-msgstr "Envoyer vers Conseil Communal"
-
 #. Default: "Item created from a college item"
 msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
 msgstr "Point Conseil Communal créé depuis un point Collège Communal"

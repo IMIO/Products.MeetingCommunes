@@ -101,6 +101,10 @@ msgstr ""
 msgid "backToPublished"
 msgstr ""
 
+#. Default: "Create an item council from an item college"
+msgid "create_to_meeting-config-council_from_meeting-config-college"
+msgstr ""
+
 #. Default: "Frozen"
 #, fuzzy
 msgid "frozen"

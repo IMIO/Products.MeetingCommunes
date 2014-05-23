@@ -102,6 +102,10 @@ msgstr "Remettre en \"Proposé\""
 msgid "backToPublished"
 msgstr "Remettre en \"Publié\""
 
+#. Default: "Create an item council from an item college"
+msgid "create_to_meeting-config-council_from_meeting-config-college"
+msgstr "Envoyer vers Conseil Communal"
+
 #. Default: "Frozen"
 msgid "frozen"
 msgstr "Gelée"
