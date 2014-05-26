@@ -50,14 +50,6 @@ msgstr ""
 msgid "searchdecideditems"
 msgstr ""
 
-#. Default: "Public"
-msgid "ip_public"
-msgstr ""
-
-#. Default: "Secret"
-msgid "ip_secret"
-msgstr ""
-
 #. Default: "Alderman of the following services (departments)"
 msgid "MeetingCommune_label_echevinServices"
 msgstr ""

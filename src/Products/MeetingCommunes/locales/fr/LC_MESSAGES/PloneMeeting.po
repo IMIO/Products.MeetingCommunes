@@ -103,14 +103,6 @@ msgstr "Accepté avec modifications"
 msgid "icon_help_pre_accepted"
 msgstr "Accepté provisoirement"
 
-#. Default: "Public"
-msgid "ip_public"
-msgstr "Séance publique"
-
-#. Default: "Secret"
-msgid "ip_secret"
-msgstr "Huis clos"
-
 #. Default: "When an item is delay, the decision will be replace by the text defined here, as a TAL (Tag Attribute Language) expression whose context includes the name 'here' that represents the impacted item. If you don't know TAL, you may learn it <a href=\"http://zope.org/Documentation/Books/ZopeBook/2_6Edition/ZPT.stx\">here</a>."
 msgid "item_decision_report_text_descr"
 msgstr "Lorsque le point est reporté, la décision sera remplacée par le texte défini ici, sous la forme d'une expression TAL (Tag Attribute Language) dans laquelle le nom 'here', représentant le point courant, peut être utilisé. Voici un exemple (sans les guillemets) : \"python:'&lt;p&gt;%s&lt;/p&gt;&lt;p&gt;Le collège décide de reporter le point&lt;/p&gt;' % here.getDecision()\""
