@@ -30,12 +30,6 @@ class testAdvices(MeetingCommunesTestCase, pmta):
     '''Tests various aspects of advices management.
        Advices are enabled for PloneGov Assembly, not for PloneMeeting Assembly.'''
 
-    def setUp(self):
-        """
-        """
-        super(testAdvices, self).setUp()
-        self.setMeetingConfig(self.meetingConfig2.getId())
-
     def test_subproduct_call_ViewItemToAdvice(self):
         '''Run the test_pm_ViewItemToAdvice from PloneMeeting.'''
         pmta.test_pm_ViewItemToAdvice(self)
