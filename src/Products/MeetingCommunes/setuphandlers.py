@@ -136,7 +136,7 @@ def reorderSkinsLayers(context, site):
        Reinstall Products.plonemeetingskin and re-apply MeetingCommunes skins.xml step
        as the reinstallation of MeetingCommunes and PloneMeeting changes the portal_skins layers order
     """
-    if isNotMeetingCommunesProfile(context) and not isMeetingCommunesConfigureProfile:
+    if isNotMeetingCommunesProfile(context) and not isMeetingCommunesConfigureProfile(context):
         return
 
     logStep("reorderSkinsLayers", context)
