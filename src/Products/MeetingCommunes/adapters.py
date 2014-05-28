@@ -320,7 +320,11 @@ class CustomMeeting(Meeting):
         for elt in itemUids:
             if elt == '':
                 itemUids.remove(elt)
-        items = self.context.getItemsInOrder(late=late, uids=itemUids)
+        if late == 'both':
+            items = self.context.getItemsInOrder(late=False, uids=itemUids)
+            items += self.context.getItemsInOrder(late=True, uids=itemUids)
+        else:
+            items = self.context.getItemsInOrder(late=late, uids=itemUids)
         if by_proposing_group:
             groups = tool.getMeetingGroups()
         else:
