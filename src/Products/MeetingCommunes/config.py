@@ -60,42 +60,6 @@ setDefaultRoles(WriteDecision, ('Manager',))
 STYLESHEETS = [{'id': 'meetingcommunes.css',
                 'title': 'MeetingCommunes CSS styles'}]
 
-# define some more value in MeetingConfig.topicsInfo so extra topics are created for each MeetingConfig
-from Products.PloneMeeting.MeetingConfig import MeetingConfig
-topicsInfo = (
-    # Items in state 'proposed'
-    ('searchproposeditems',
-     (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
-      ('review_state', 'ATListCriterion', ('proposed',),)
-      ),
-     'created',
-     '',
-     "python: not here.portal_plonemeeting.userIsAmong('reviewers')",
-     ),
-    # Items in state 'validated'
-    ('searchvalidateditems',
-     (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
-     ('review_state', 'ATListCriterion', ('validated',),)
-      ),
-     'created',
-     '',
-     '',
-     ),
-    # All 'decided' items
-    ('searchdecideditems',
-     (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
-     ('review_state', 'ATListCriterion', ('accepted', 'refused', 'delayed', 'accepted_but_modified',),)
-      ),
-     'created',
-     '',
-     '',
-     ),
-)
-existingTopicsInfo = MeetingConfig.topicsInfo
-existingTopicsInfo = list(existingTopicsInfo)
-existingTopicsInfo.extend(topicsInfo)
-MeetingConfig.topicsInfo = tuple(existingTopicsInfo)
-
 # override states mappings for the 'return_to_proposing_group' wfAdaptation
 from Products.PloneMeeting import config as PMconfig
 MC_RETURN_TO_PROPOSING_GROUP_MAPPINGS = {'backTo_presented_from_returned_to_proposing_group':

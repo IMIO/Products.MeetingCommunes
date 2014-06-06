@@ -219,6 +219,39 @@ def finalizeExampleInstance(context):
     mc_council_or_cas.setWorkflowAdaptations(['no_global_observation', 'no_publication'])
     performWorkflowAdaptations(site, mc_council_or_cas, logger)
 
+    # add some extra topics to each MeetingConfig
+    topicsInfo = (
+        # Items in state 'proposed'
+        ('searchproposeditems',
+         (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
+          ('review_state', 'ATListCriterion', ('proposed',),)
+          ),
+         'created',
+         '',
+         "python: not here.portal_plonemeeting.userIsAmong('reviewers')",
+         ),
+        # Items in state 'validated'
+        ('searchvalidateditems',
+         (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
+         ('review_state', 'ATListCriterion', ('validated',),)
+          ),
+         'created',
+         '',
+         '',
+         ),
+        # All 'decided' items
+        ('searchdecideditems',
+         (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
+         ('review_state', 'ATListCriterion', ('accepted', 'refused', 'delayed', 'accepted_but_modified',),)
+          ),
+         'created',
+         '',
+         '',
+         ),
+    )
+    mc_college_or_bp.createTopics(topicsInfo)
+    mc_council_or_cas.createTopics(topicsInfo)
+
 
 def reorderCss(context):
     """
