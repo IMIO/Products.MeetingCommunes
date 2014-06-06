@@ -34,10 +34,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
     """Tests the default workflows implemented in MeetingCommunes."""
 
     def test_subproduct_call_CreateItem(self):
-        """
-            Creates an item (in "created" state) and checks that only
-            allowed persons may see this item.
-        """
+        '''Run the test_pm_CreateItem from PloneMeeting.'''
         #we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
         self.test_pm_CreateItem()
@@ -46,9 +43,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.test_pm_CreateItem()
 
     def test_subproduct_call_RemoveObjects(self):
-        """
-            Tests objects removal (items, meetings, annexes...).
-        """
+        '''Run the test_pm_RemoveObjects from PloneMeeting.'''
         #we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
         self.test_pm_RemoveObjects()
@@ -446,11 +441,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.assertEquals('accepted', wftool.getInfoFor(item7, 'review_state'))
 
     def test_subproduct_call_RemoveContainer(self):
-        """
-          We avoid a strange behaviour of Plone.  Removal of a container
-          does not check inner objects security...
-          Check that removing an item or a meeting by is container fails.
-        """
+        '''Run the test_pm_RemoveContainer from PloneMeeting.'''
         #we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
         self.test_pm_RemoveContainer()
@@ -459,10 +450,12 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.test_pm_RemoveContainer()
 
     def test_subproduct_call_DeactivateMeetingGroup(self):
-        '''Deactivating a MeetingGroup will transfer every users of every
-           sub Plone groups to the '_observers' Plone group'''
-        #we do the test for the college config
+        '''Run the test_pm_DeactivateMeetingGroup from PloneMeeting.'''
         self.test_pm_DeactivateMeetingGroup()
+
+    def test_subproduct_call_RecurringItemsBypassSecutiry(self):
+        '''Run the test_pm_RecurringItemsBypassSecutiry from PloneMeeting.'''
+        self.test_pm_RecurringItemsBypassSecutiry()
 
 
 def test_suite():
