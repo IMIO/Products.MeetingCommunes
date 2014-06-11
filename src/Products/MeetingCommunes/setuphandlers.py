@@ -190,35 +190,6 @@ def finalizeExampleInstance(context):
             site.portal_groups.addPrincipalToGroup(memberId, '%s_budgetimpacteditors' % meetingConfig1Id)
             site.portal_groups.addPrincipalToGroup(memberId, '%s_budgetimpacteditors' % meetingConfig2Id)
 
-    # define some parameters for 'meeting-config-college'
-    mc_college_or_bp = getattr(site.portal_plonemeeting, meetingConfig1Id)
-    # add some topcis to the portlet_todo
-    mc_college_or_bp.setToDoListTopics(
-        [getattr(mc_college_or_bp.topics, 'searchdecideditems'),
-         getattr(mc_college_or_bp.topics, 'searchallitemsincopy'),
-         getattr(mc_college_or_bp.topics, 'searchitemstoadvicewithdelay'),
-         getattr(mc_college_or_bp.topics, 'searchallitemstoadvice'),
-         ])
-
-    # define some parameters for 'meeting-config-council'
-    mc_council_or_cas = getattr(site.portal_plonemeeting, meetingConfig2Id)
-    # add some topcis to the portlet_todo
-    mc_council_or_cas.setToDoListTopics(
-        [getattr(mc_council_or_cas.topics, 'searchdecideditems'),
-         getattr(mc_council_or_cas.topics, 'searchallitemsincopy'),
-         ])
-
-    # finally, re-launch plonemeetingskin and MeetingCommunes skins step
-    # because PM has been installed before the import_data profile and messed up skins layers
-    site.portal_setup.runImportStepFromProfile(u'profile-Products.MeetingCommunes:default', 'skins')
-    site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:default', 'skins')
-    site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:plonemeetingskin', 'skins')
-    # define default workflowAdaptations for council
-    # due to some weird problems, the wfAdaptations can not be defined
-    # thru the import_data...
-    mc_council_or_cas.setWorkflowAdaptations(['no_global_observation', 'no_publication'])
-    performWorkflowAdaptations(site, mc_council_or_cas, logger)
-
     # add some extra topics to each MeetingConfig
     topicsInfo = (
         # Items in state 'proposed'
@@ -249,8 +220,36 @@ def finalizeExampleInstance(context):
          '',
          ),
     )
+    mc_college_or_bp = getattr(site.portal_plonemeeting, meetingConfig1Id)
     mc_college_or_bp.createTopics(topicsInfo)
+    mc_council_or_cas = getattr(site.portal_plonemeeting, meetingConfig2Id)
     mc_council_or_cas.createTopics(topicsInfo)
+
+    # add some topics to the portlet_todo
+    mc_college_or_bp.setToDoListTopics(
+        [getattr(mc_college_or_bp.topics, 'searchdecideditems'),
+         getattr(mc_college_or_bp.topics, 'searchallitemsincopy'),
+         getattr(mc_college_or_bp.topics, 'searchitemstoadvicewithdelay'),
+         getattr(mc_college_or_bp.topics, 'searchallitemstoadvice'),
+         ])
+
+    # add some topics to the portlet_todo
+    mc_council_or_cas.setToDoListTopics(
+        [getattr(mc_council_or_cas.topics, 'searchdecideditems'),
+         getattr(mc_council_or_cas.topics, 'searchallitemsincopy'),
+         ])
+
+    # finally, re-launch plonemeetingskin and MeetingCommunes skins step
+    # because PM has been installed before the import_data profile and messed up skins layers
+    site.portal_setup.runImportStepFromProfile(u'profile-Products.MeetingCommunes:default', 'skins')
+    site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:default', 'skins')
+    site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:plonemeetingskin', 'skins')
+    # define default workflowAdaptations for council
+    # due to some weird problems, the wfAdaptations can not be defined
+    # thru the import_data...
+    mc_council_or_cas.setWorkflowAdaptations(['no_global_observation', 'no_publication'])
+    performWorkflowAdaptations(site, mc_council_or_cas, logger)
+
 
 
 def reorderCss(context):
