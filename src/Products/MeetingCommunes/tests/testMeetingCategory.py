@@ -41,6 +41,14 @@ class testMeetingCategory(MeetingCommunesTestCase, pmmc):
         logout()
         self.test_pm_CanNotRemoveLinkedMeetingCategory()
 
+    def test_subproduct_call_ListCategoriesOfOtherMCs(self):
+        '''Run the test_pm_ListCategoriesOfOtherMCs from PloneMeeting.'''
+        self.test_pm_ListCategoriesOfOtherMCs()
+
+    def test_subproduct_call_Validate_categoryMappingsWhenCloningToOtherMC(self):
+        '''Run the test_pm_Validate_categoryMappingsWhenCloningToOtherMC from PloneMeeting.'''
+        self.test_pm_Validate_categoryMappingsWhenCloningToOtherMC()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

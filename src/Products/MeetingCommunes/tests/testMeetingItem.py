@@ -71,6 +71,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.meetingConfig.useGroupsAsCategories = False
         self.test_pm_SelectableCategories()
 
+    def test_subproduct_call_SendItemToOtherMCWithMappedCategories(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_SendItemToOtherMCWithMappedCategories()
+
     def test_subproduct_call_AddAutoCopyGroups(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_AddAutoCopyGroups()
