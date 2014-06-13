@@ -755,9 +755,10 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
         for item in self.context.getAllItems(ordered=True):
             if item.queryState() == 'presented':
                 wfTool.doActionFor(item, 'itemfreeze')
-            # If the decision field is empty, initialize it
-            if not item.getDecision().strip() or \
-               (item.getDecision().strip() in empty_values):
+            # If deliberation (motivation+decision) is empty,
+            # initialize it the decision field
+            itemDeliberation = item.getDeliberation().strip()
+            if not itemDeliberation or itemDeliberation in empty_values:
                 item.setDecision("<p>%s</p>%s" % (item.Title(),
                                                   item.Description()))
                 item.reindexObject()
@@ -925,9 +926,10 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
                     # in the case we selected the 'no_publication' wfAdaptation
                     # the itempublish transition does not exist anymore...
                     pass
-            # If the decision field is empty, initialize it
-            if not item.getDecision().strip() or \
-               (item.getDecision().strip() in empty_values):
+            # If deliberation (motivation+decision) is empty,
+            # initialize it the decision field
+            itemDeliberation = item.getDeliberation().strip()
+            if not itemDeliberation or itemDeliberation in empty_values:
                 item.setDecision("<p>%s</p>%s" % (item.Title(),
                                                   item.Description()))
                 item.reindexObject()
