@@ -25,13 +25,6 @@
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:registerProfile
-   name="examples"
-   title="PloneMeeting / Communes with english examples"
-   description="PloneMeeting for City College and Council (Belgium)"
-   provides="Products.GenericSetup.interfaces.EXTENSION"
-   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
-
-  <genericsetup:registerProfile
    name="examples_fr"
    title="PloneMeeting / Communes with french examples"
    description="PloneMeeting for City College and Council (Belgium)"

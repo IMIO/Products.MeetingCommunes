@@ -98,6 +98,14 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         '''Run the test_pm_ComputeDelaysAsCalendarDays from PloneMeeting.'''
         pmta.test_pm_ComputeDelaysAsCalendarDays(self)
 
+    def test_subproduct_call_ChangeDelayView(self):
+        '''Run the test_pm_ChangeDelayView from PloneMeeting.'''
+        pmta.test_pm_ChangeDelayView(self)
+
+    def test_subproduct_call_AvailableDelaysView(self):
+        '''Run the test_pm_AvailableDelaysView from PloneMeeting.'''
+        pmta.test_pm_AvailableDelaysView(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

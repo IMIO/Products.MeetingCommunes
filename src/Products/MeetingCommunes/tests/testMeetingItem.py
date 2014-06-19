@@ -163,6 +163,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_BudgetImpactEditorsGroups()
 
+    def test_subproduct_call_AddAutoCopyGroupsIsCreated(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_AddAutoCopyGroupsIsCreated()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

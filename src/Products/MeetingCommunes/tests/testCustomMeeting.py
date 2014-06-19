@@ -77,7 +77,8 @@ class testCustomMeeting(MeetingCommunesTestCase):
         #test if the category is a MeetingCategory
         #insert items in the meeting depending on the category
         login(self.portal, 'admin')
-        self.meetingConfig.setSortingMethodOnAddItem('on_proposing_groups')
+        self.meetingConfig.setInsertingMethodsOnAddItem(({'insertingMethod': 'on_proposing_groups',
+                                                         'reverse': '0'}, ))
 
         #add a Meeting and present several items in different categories
         login(self.portal, 'pmManager')

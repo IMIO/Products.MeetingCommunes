@@ -263,7 +263,8 @@ collegeMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 collegeMeeting.meetingTopicStates = ('created', 'frozen')
 collegeMeeting.decisionTopicStates = ('decided', 'closed')
 collegeMeeting.enforceAdviceMandatoriness = False
-collegeMeeting.sortingMethodOnAddItem = 'on_proposing_groups'
+collegeMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
+                                             'reverse': '0'}, )
 collegeMeeting.recordItemHistoryStates = []
 collegeMeeting.maxShownMeetings = 5
 collegeMeeting.maxDaysDecisions = 60
@@ -511,7 +512,8 @@ councilMeeting.meetingTopicStates = ('created', 'frozen', 'published')
 councilMeeting.decisionTopicStates = ('decided', 'closed')
 councilMeeting.itemAdviceStates = ('validated',)
 councilMeeting.enforceAdviceMandatoriness = False
-councilMeeting.sortingMethodOnAddItem = 'on_proposing_groups'
+councilMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
+                                             'reverse': '0'}, )
 councilMeeting.recordItemHistoryStates = []
 councilMeeting.maxShownMeetings = 5
 councilMeeting.maxDaysDecisions = 60

@@ -6,7 +6,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 3.2.1 (unreleased)
 ------------------
-- Nothing yet
+- Updated regarding changes in PloneMeeting
+- Removed profile 'examples' that loaded examples in english
 
 3.2.0 (unreleased)
 ------------------

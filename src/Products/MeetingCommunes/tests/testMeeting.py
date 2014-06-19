@@ -110,6 +110,22 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         """Run the test_pm_validate_date from PloneMeeting."""
         self.test_pm_Validate_date()
 
+    def test_subproduct_call_InsertItemOnCategoriesThenOnToOtherMCToCloneTo(self):
+        """Run the test_pm_InsertItemOnCategoriesThenOnToOtherMCToCloneTo from PloneMeeting."""
+        self.test_pm_InsertItemOnCategoriesThenOnToOtherMCToCloneTo()
+
+    def test_subproduct_call_InsertItemOnToDiscuss(self):
+        """Run the test_pm_InsertItemOnToDiscuss from PloneMeeting."""
+        self.test_pm_InsertItemOnToDiscuss()
+
+    def test_subproduct_call_InsertItemByCategoriesThenProposingGroups(self):
+        """Run the test_pm_InsertItemByCategoriesThenProposingGroups from PloneMeeting."""
+        self.test_pm_InsertItemByCategoriesThenProposingGroups()
+
+    def test_subproduct_call_InsertItemOnToOtherMCToCloneTo(self):
+        """Run the test_pm_InsertItemOnToOtherMCToCloneTo from PloneMeeting."""
+        self.test_pm_InsertItemOnToOtherMCToCloneTo()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

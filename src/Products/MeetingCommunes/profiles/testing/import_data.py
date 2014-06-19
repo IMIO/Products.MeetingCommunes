@@ -181,7 +181,8 @@ collegeMeeting.transitionReinitializingDelays = 'backToItemCreated'
 collegeMeeting.enforceAdviceMandatoriness = False
 collegeMeeting.itemPowerObserversStates = ('itemcreated', 'presented', 'accepted', 'delayed', 'refused')
 collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-collegeMeeting.sortingMethodOnAddItem = 'on_proposing_groups'
+collegeMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
+                                             'reverse': '0'}, )
 collegeMeeting.useGroupsAsCategories = True
 collegeMeeting.meetingPowerObserversStates = ('frozen', 'published', 'decided', 'closed')
 collegeMeeting.useCopies = True
@@ -284,7 +285,8 @@ councilMeeting.meetingAppDefaultView = 'topic_searchmyitems'
 councilMeeting.itemDocFormats = ('odt', 'pdf')
 councilMeeting.meetingDocFormats = ('odt', 'pdf')
 councilMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
-councilMeeting.sortingMethodOnAddItem = 'on_categories'
+councilMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_categories',
+                                             'reverse': '0'}, )
 councilMeeting.useGroupsAsCategories = False
 councilMeeting.useAdvices = False
 councilMeeting.itemAdviceStates = ['proposed', ]
