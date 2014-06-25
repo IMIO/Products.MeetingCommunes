@@ -35,7 +35,7 @@ class testMeetingCategory(MeetingCommunesTestCase, pmmc):
         '''Run the test_pm_CanNotRemoveLinkedMeetingCategory from PloneMeeting.'''
         # remove every items in the metingConfig that are using the 'developers' group
         self.changeUser('admin')
-        self.meetingConfig.recurringitems.manage_delObjects(
+        self.meetingConfig.itemtemplates.manage_delObjects(
             [item.getId() for item in (self.meetingConfig.getItems() + self.meetingConfig.getItems('as_template_item'))
              if item.getProposingGroup() == 'developers'])
         logout()
