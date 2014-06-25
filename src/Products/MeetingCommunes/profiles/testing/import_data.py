@@ -206,15 +206,15 @@ collegeMeeting.recurringItems = [
         proposingGroup='',
         category='developers',
         decision='Second recurring item approved'),
-
-    RecurringItemDescriptor(
+]
+collegeMeeting.itemTemplates = [
+    ItemTemplateDescriptor(
         id='template1',
         title='Tutelle CPAS',
         description='Tutelle CPAS',
         category='',
         proposingGroup='developers',
         templateUsingGroups=['developers', 'vendors'],
-        usages=['as_template_item', ],
         decision="""<p>Vu la loi du 8 juillet 1976 organique des centres publics d'action sociale et plus particulièrement son article 111;</p>
 <p>Vu l'Arrêté du Gouvernement Wallon du 22 avril 2004 portant codification de la législation relative aux pouvoirs locaux tel que confirmé par le décret du 27 mai 2004 du Conseil régional wallon;</p>
 <p>Attendu que les décisions suivantes du Bureau permanent/du Conseil de l'Action sociale du XXX ont été reçues le XXX dans le cadre de la tutelle générale sur les centres publics d'action sociale :</p>
@@ -227,14 +227,13 @@ collegeMeeting.recurringItems = [
 <p>Les décisions du Bureau permanent/Conseil de l'Action sociale visées ci-dessus sont conformes à la loi et à l'intérêt général et qu'il n'y a, dès lors, pas lieu de les annuler.</p>
 <p><strong>Article 2 :</strong></p>
 <p>Copie de la présente délibération sera transmise au Bureau permanent/Conseil de l'Action sociale.</p>"""),
-    RecurringItemDescriptor(
+    ItemTemplateDescriptor(
         id='template2',
         title='Contrôle médical systématique agent contractuel',
         description='Contrôle médical systématique agent contractuel',
         category='',
         proposingGroup='vendors',
         templateUsingGroups=['vendors', ],
-        usages=['as_template_item', ],
         decision="""
             <p>Vu la loi du 26 mai 2002 instituant le droit à l’intégration sociale;</p>
 <p>Vu la délibération du Conseil communal du 29 juin 2009 concernant le cahier spécial des charges relatif au marché de services portant sur le contrôle des agents communaux absents pour raisons médicales;</p>

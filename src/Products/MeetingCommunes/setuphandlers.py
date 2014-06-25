@@ -384,7 +384,7 @@ def addDemoData(context):
         userFolder = tool.getPloneMeetingFolder('meeting-config-college', userId)
         for item in items[userId]:
             # get the template then clone it
-            template = getattr(tool.getMeetingConfig(userFolder).recurringitems, item['templateId'])
+            template = getattr(tool.getMeetingConfig(userFolder).itemtemplates, item['templateId'])
             newItem = template.clone(newOwnerId=userId)
             newItem.setTitle(item['title'])
             newItem.setBudgetRelated(item['budgetRelated'])

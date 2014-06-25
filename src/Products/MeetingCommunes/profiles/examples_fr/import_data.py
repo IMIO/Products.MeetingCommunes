@@ -349,15 +349,15 @@ collegeMeeting.recurringItems = [
         description='Ordonnance et signe les mandats de paiement de la semaine',
         category='recurrents',
         proposingGroup='secretariat',
-        decision='Mandats de paiement de la semaine approuvés'),
-    RecurringItemDescriptor(
+        decision='Mandats de paiement de la semaine approuvés'), ]
+collegeMeeting.itemTemplates = [
+    ItemTemplateDescriptor(
         id='template1',
         title='Tutelle CPAS',
         description='Tutelle CPAS',
         category='personnel',
         proposingGroup='secretariat',
         templateUsingGroups=['secretariat', 'dirgen', ],
-        usages=['as_template_item', ],
         decision="""<p>Vu la loi du 8 juillet 1976 organique des centres publics d'action sociale et plus particulièrement son article 111;</p>
 <p>Vu l'Arrêté du Gouvernement Wallon du 22 avril 2004 portant codification de la législation relative aux pouvoirs locaux tel que confirmé par le décret du 27 mai 2004 du Conseil régional wallon;</p>
 <p>Attendu que les décisions suivantes du Bureau permanent/du Conseil de l'Action sociale du XXX ont été reçues le XXX dans le cadre de la tutelle générale sur les centres publics d'action sociale :</p>
@@ -370,14 +370,13 @@ collegeMeeting.recurringItems = [
 <p>Les décisions du Bureau permanent/Conseil de l'Action sociale visées ci-dessus sont conformes à la loi et à l'intérêt général et qu'il n'y a, dès lors, pas lieu de les annuler.</p>
 <p><strong>Article 2 :</strong></p>
 <p>Copie de la présente délibération sera transmise au Bureau permanent/Conseil de l'Action sociale.</p>"""),
-    RecurringItemDescriptor(
+    ItemTemplateDescriptor(
         id='template2',
         title='Contrôle médical systématique agent contractuel',
         description='Contrôle médical systématique agent contractuel',
         category='personnel',
         proposingGroup='personnel',
         templateUsingGroups=['personnel', ],
-        usages=['as_template_item', ],
         decision="""
             <p>Vu la loi du 26 mai 2002 instituant le droit à l’intégration sociale;</p>
 <p>Vu la délibération du Conseil communal du 29 juin 2009 concernant le cahier spécial des charges relatif au marché de services portant sur le contrôle des agents communaux absents pour raisons médicales;</p>
@@ -391,14 +390,13 @@ collegeMeeting.recurringItems = [
 <p><strong>Article 1</strong> : De convoquer XXX devant  Monsieur le Secrétaire communal f.f. afin de lui rappeler ses obligations en la matière.</p>
 <p><strong>Article 2</strong> :  De prévenir XXX, qu’en cas de récidive, il sera proposé par le Secrétaire communal au Collège de transformer les jours de congés de maladie en absence injustifiée (retenue sur traitement avec application de la loi du 26 mai 2002 citée ci-dessus).</p>
 <p><strong>Article 3</strong> : De charger le service du personnel du suivi de ce dossier.</p>"""),
-    RecurringItemDescriptor(
+    ItemTemplateDescriptor(
         id='template3',
         title='Engagement temporaire',
         description='Engagement temporaire',
         category='personnel',
         proposingGroup='personnel',
         templateUsingGroups=['personnel', ],
-        usages=['as_template_item', ],
         decision="""<p>Considérant qu’il y a lieu de pourvoir au remplacement de Madame XXX, XXX bénéficiant d’une interruption de carrière pour convenances personnelles pour l’année scolaire 2009/2010. &nbsp;</p>
 <p>Attendu qu’un appel public a été lancé au mois de mai dernier;</p>
 <p>Vu la circulaire N° 2772 de la Communauté Française&nbsp;du 29 juin 2009 concernant &nbsp;la gestion des carrières administrative et pécuniaire dans l’enseignement fondamental ordinaire et principalement le chapitre 3 relatif aux engagements temporaires pendant l’année scolaire 2009/2010;</p>
@@ -413,14 +411,13 @@ collegeMeeting.recurringItems = [
 <p>L’horaire hebdomadaire de l’intéressé est fixé à 13 périodes.</p>
 <p><b>Article 3&nbsp;:</b></p>
 <p>La présente délibération sera soumise à la ratification du Conseil Communal. Elle sera transmise au Bureau Régional de l’Enseignement primaire et maternel, à l’Inspectrice Cantonale et à la direction concernée.</p>"""),
-    RecurringItemDescriptor(
+    ItemTemplateDescriptor(
         id='template4',
         title='Prestation réduite',
         description='Prestation réduite',
         category='personnel',
         proposingGroup='personnel',
         templateUsingGroups=['personnel', ],
-        usages=['as_template_item', ],
         decision="""<p>Vu la loi de redressement du 22 janvier 1985 (article 99 et suivants) et de l’Arrêté Royal du 12 août 1991 (tel que modifié) relatifs à l’interruption de carrière professionnelle dans l’enseignement;</p>
 <p>Vu la lettre du XXX par laquelle Madame XXX, institutrice maternelle, sollicite le renouvellement pendant l’année scolaire 2009/2010 de son congé pour prestations réduites mi-temps pour convenances personnelles dont elle bénéficie depuis le 01 septembre 2006;</p>
 <p>Attendu que le remplacement de l’intéressée&nbsp;est assuré pour la prochaine rentrée scolaire;</p>
@@ -433,14 +430,13 @@ collegeMeeting.recurringItems = [
 <p>Une activité lucrative est autorisée durant ce congé qui est assimilé à une période d’activité de service, dans le respect de la réglementation relative au cumul.</p>
 <p><b>Article 3&nbsp;:</b></p>
 <p>La présente délibération sera soumise pour accord au prochain Conseil, transmise au Bureau Régional de l’Enseignement primaire et maternel, à&nbsp;l’Inspectrice Cantonale, à la direction concernée et à l’intéressée.</p>"""),
-    RecurringItemDescriptor(
+    ItemTemplateDescriptor(
         id='template5',
         title='Exemple modèle disponible pour tous',
         description='Exemple modèle disponible pour tous',
         category='personnel',
         proposingGroup='',
         templateUsingGroups=[],
-        usages=['as_template_item', ],
         decision="""<p>Vu la loi du XXX;</p>
 <p>Vu ...;</p>
 <p>Attendu que ...;</p>
@@ -556,9 +552,9 @@ echevinTrav_mu = MeetingUserDescriptor('echevinTrav',
                                        duty='Echevin Travaux',
                                        usages=['assemblyMember', 'asker', ])
 dgen_mu = MeetingUserDescriptor('dgen',
-                              duty='Directeur Général',
-                              usages=['assemblyMember', 'signer', 'asker', ],
-                              signatureIsDefault=True)
+                                duty='Directeur Général',
+                                usages=['assemblyMember', 'signer', 'asker', ],
+                                signatureIsDefault=True)
 
 councilMeeting.meetingUsers = [bourgmestre_mu, receveur_mu, echevinPers_mu, echevinTrav_mu, dgen_mu]
 
