@@ -68,7 +68,7 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
 
     def test_subproduct_call_UpdateDelayAwareAdvices(self):
         '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
-        self.test_pm_UpdateDelayAwareAdvices(self)
+        self.test_pm_UpdateDelayAwareAdvices()
 
 
 def test_suite():
