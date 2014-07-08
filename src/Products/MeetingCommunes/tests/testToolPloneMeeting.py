@@ -66,6 +66,10 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
         '''Run the test_pm_UpdateMeetingFileTypesAfterSentToOtherMeetingConfig from PloneMeeting.'''
         self.test_pm_UpdateMeetingFileTypesAfterSentToOtherMeetingConfig()
 
+    def test_subproduct_call_UpdateDelayAwareAdvices(self):
+        '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
+        self.test_pm_UpdateDelayAwareAdvices(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

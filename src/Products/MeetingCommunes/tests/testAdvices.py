@@ -70,10 +70,6 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
         pmta.test_pm_MayNotAddAdviceEditIfDelayExceeded(self)
 
-    def test_subproduct_call_UpdateDelayAwareAdvicesView(self):
-        '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
-        pmta.test_pm_UpdateDelayAwareAdvicesView(self)
-
     def test_subproduct_call_DelayStartedStoppedOn(self):
         '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
         pmta.test_pm_DelayStartedStoppedOn(self)
