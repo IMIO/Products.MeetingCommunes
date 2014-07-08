@@ -167,29 +167,6 @@ class testCustomMeeting(MeetingCommunesTestCase):
         #i3 is initlaized because the decision field contained an empty_value
         self.assertEquals(i3.getDecision(), "<p>Item3</p><p>Description Item3</p>")
 
-    def test_ShowAllItemsAtOnce(self):
-        """
-          The allItemsAtOnce field is only shown for not decided meetings
-        """
-        login(self.portal, 'pmManager')
-        item = self.create('MeetingItem', title='Item1', description="<p>Description Item1</p>")
-        item.setProposingGroup('developers')
-        m = self.create('Meeting', date='2009/11/26 09:00:00')
-        #present the item
-        self.do(item, 'propose')
-        self.do(item, 'validate')
-        self.do(item, 'present')
-        #the field is never shown anymore now...
-        self.failIf(m.showAllItemsAtOnce())
-        self.do(m, 'freeze')
-        #the meeting is frozen and still not decided
-        self.failIf(m.showAllItemsAtOnce())
-        self.do(m, 'decide')
-        #now the field is no more editable
-        self.failIf(m.showAllItemsAtOnce())
-        self.do(m, 'close')
-        self.failIf(m.showAllItemsAtOnce())
-
     def test_GetNumberOfItems(self):
         """
           This method will return a certain number of items depending on passed paramaters.

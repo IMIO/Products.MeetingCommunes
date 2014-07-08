@@ -125,11 +125,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.changeUser('pmManager')
         item2.setDecision(self.decisionText)
         self.addAnnex(item2, decisionRelated=True)
-        # Meeting.showItemAdvices returns True in any case (the meeting is not decided here)
-        self.assertEquals(meeting.adapted().showItemAdvices(), True)
         self.do(meeting, 'decide')
-        # Meeting.showItemAdvices returns True in any case (the meeting is decided here)
-        self.assertEquals(meeting.adapted().showItemAdvices(), True)
         self.failIf(len(self.transitions(meeting)) != 2)
         self.do(meeting, 'close')
 
@@ -207,11 +203,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # pmManager adds a decision for item2, decides and closes the meeting
         self.changeUser('pmManager')
         item2.setDecision(self.decisionText)
-        # Meeting.showItemAdvices returns True in any case (the meeting is not decided here)
-        self.assertEquals(meeting.adapted().showItemAdvices(), True)
         self.do(meeting, 'decide')
-        # Meeting.showItemAdvices returns True in any case (the meeting is decided here)
-        self.assertEquals(meeting.adapted().showItemAdvices(), True)
         # check that a delayed item is duplicated
         self.assertEquals(len(item1.getBRefs('ItemPredecessor')), 0)
         self.do(item1, 'delay')
