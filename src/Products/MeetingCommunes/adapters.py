@@ -566,35 +566,6 @@ class CustomMeeting(Meeting):
             res = res.getObject()
         return res
 
-    security.declarePublic('showItemAdvices')
-    def showItemAdvices(self):
-        '''See doc in interfaces.py.'''
-        return True
-
-    security.declarePublic('showAllItemsAtOnce')
-    def showAllItemsAtOnce(self):
-        '''Must I show the Kupu field that allows to edit all "normal" and
-           "late" items at once ?'''
-        # I must have 'write' permissions on every item in order to do this.
-        # and the meeting must not be decided
-        # deactivate this field as it does not work anymore...
-        return False
-        if self.getItems():
-            if self.adapted().isDecided():
-                return False
-            else:
-                writePerms = (ModifyPortalContent,)
-            membershipTool = getToolByName(self.context, 'portal_membership')
-            currentUser = membershipTool.getAuthenticatedMember()
-            for item in self.getAllItems():
-                for perm in writePerms:
-                    if not currentUser.has_permission(perm, item):
-                        return False
-            return True
-        else:
-            return False
-    Meeting.showAllItemsAtOnce = showAllItemsAtOnce
-
 
 class CustomMeetingItem(MeetingItem):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
