@@ -154,18 +154,18 @@ class testCustomMeeting(MeetingCommunesTestCase):
             self.do(item, 'present')
         #check the decision field of every item
         self.assertEquals(i1.getDecision(), "")
-        self.assertEquals(i2.getDecision(), "<p>Decision Item2</p>")
-        self.assertEquals(i3.getDecision(), "<p><br /></p>")
+        self.assertEquals(i2.getDecision(), '<p class="pmParaKeepWithNext" >Decision Item2</p>')
+        self.assertEquals(i3.getDecision(), '<p class="pmParaKeepWithNext" ><br /></p>')
         #decide the meeting (freez it before ;-))
         self.do(m, 'freeze')
         self.do(m, 'decide')
         #now that the meeting is decided, the decision field initialization has occured...
         #i1 should be initialized
-        self.assertEquals(i1.getDecision(), "<p>Item1</p><p>Description Item1</p>")
+        self.assertEquals(i1.getDecision(), '<p>Item1</p><p class="pmParaKeepWithNext" >Description Item1</p>')
         #i2 sould not have changed
-        self.assertEquals(i2.getDecision(), "<p>Decision Item2</p>")
+        self.assertEquals(i2.getDecision(), '<p class="pmParaKeepWithNext" >Decision Item2</p>')
         #i3 is initlaized because the decision field contained an empty_value
-        self.assertEquals(i3.getDecision(), "<p>Item3</p><p>Description Item3</p>")
+        self.assertEquals(i3.getDecision(), '<p>Item3</p><p class="pmParaKeepWithNext" >Description Item3</p>')
 
     def test_GetNumberOfItems(self):
         """

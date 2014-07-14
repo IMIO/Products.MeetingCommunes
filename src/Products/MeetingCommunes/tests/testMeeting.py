@@ -126,6 +126,30 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         """Run the test_pm_InsertItemOnToOtherMCToCloneTo from PloneMeeting."""
         self.test_pm_InsertItemOnToOtherMCToCloneTo()
 
+    def test_subproduct_call_InsertItemInToDiscussThenProposingGroup(self):
+        """Run the test_pm_InsertItemInToDiscussThenProposingGroup from PloneMeeting."""
+        self.test_pm_InsertItemInToDiscussThenProposingGroup()
+
+    def test_subproduct_call_TitleAndPlaceCorrectlyUpdatedOnEdit(self):
+        """Run the test_pm_TitleAndPlaceCorrectlyUpdatedOnEdit from PloneMeeting."""
+        self.test_pm_TitleAndPlaceCorrectlyUpdatedOnEdit()
+
+    def test_subproduct_call_NumberOfItems(self):
+        """Run the test_pm_NumberOfItems from PloneMeeting."""
+        self.test_pm_NumberOfItems()
+
+    def test_subproduct_call_Validate_place(self):
+        """Run the test_pm_Validate_place from PloneMeeting."""
+        self.test_pm_Validate_place()
+
+    def test_subproduct_call_GetItemByNumber(self):
+        """Run the test_pm_GetItemByNumber from PloneMeeting."""
+        self.test_pm_GetItemByNumber()
+
+    def test_subproduct_call_GetItemsInOrder(self):
+        """Run the test_pm_GetItemsInOrder from PloneMeeting."""
+        self.test_pm_GetItemsInOrder()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

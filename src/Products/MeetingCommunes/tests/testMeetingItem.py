@@ -167,6 +167,14 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_AddAutoCopyGroupsIsCreated()
 
+    def test_subproduct_call_Validate_proposingGroup(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_Validate_proposingGroup()
+
+    def test_subproduct_call_Validate_category(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_Validate_category()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

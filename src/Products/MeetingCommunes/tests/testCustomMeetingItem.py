@@ -136,9 +136,9 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         item = m1.getItems()[0]
         item.setDecision('<p>Testing decision field</p>')
         #field itemDecisionReportText in configuration is empty
-        self.assertEquals(item.getDecision(), '<p>Testing decision field</p>')
+        self.assertEquals(item.getDecision(), '<p class="pmParaKeepWithNext" >Testing decision field</p>')
         self.do(item, 'delay')
-        self.assertEquals(item.getDecision(), '<p>Testing decision field</p>')
+        self.assertEquals(item.getDecision(), '<p class="pmParaKeepWithNext" >Testing decision field</p>')
         #change field itemDecisionReportText in configuration by python:'item is delay'
         item = m1.getItems()[1]
         meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
@@ -147,14 +147,14 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         login(self.portal, 'pmManager')
         item.setDecision('<p>Testing decision field</p>')
         #field itemDecisionReportText in configuration is empty
-        self.assertEquals(item.getDecision(), '<p>Testing decision field</p>')
+        self.assertEquals(item.getDecision(), '<p class="pmParaKeepWithNext" >Testing decision field</p>')
         self.do(item, 'delay')
-        self.assertEquals(item.getDecision(), '<p>Item is delayed</p>')
+        self.assertEquals(item.getDecision(), '<p class="pmParaKeepWithNext" >Item is delayed</p>')
         #change field itemDecisionReportText in configuration by python:'%s delay this item'%here.getDecision()'
         item = m1.getItems()[2]
         meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
-        meetingConfig.setItemDecisionReportText("python:'%s<p>Delay this item</p>' % here.getDecision()")
+        meetingConfig.setItemDecisionReportText("python:'%s<p>Delay this item</p>' % here.getDecision(keepWithNext=False)")
         item.setDecision('<p>Testing decision field</p>')
         #field itemDecisionReportText in configuration is empty
         self.do(item, 'delay')
-        self.assertEquals(item.getDecision(), '<p>Testing decision field</p><p>Delay this item</p>')
+        self.assertEquals(item.getDecision(), '<p>Testing decision field</p><p class="pmParaKeepWithNext" >Delay this item</p>')

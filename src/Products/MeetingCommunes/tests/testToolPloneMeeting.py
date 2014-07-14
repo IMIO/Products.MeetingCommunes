@@ -70,6 +70,14 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
         '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
         self.test_pm_UpdateDelayAwareAdvices()
 
+    def test_subproduct_call_GetDefaultMeetingConfig(self):
+        '''Run the test_pm_GetDefaultMeetingConfig from PloneMeeting.'''
+        self.test_pm_GetDefaultMeetingConfig()
+
+    def test_subproduct_call_GetMeetingConfig(self):
+        '''Run the test_pm_GetMeetingConfig from PloneMeeting.'''
+        self.test_pm_GetMeetingConfig()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

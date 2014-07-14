@@ -67,15 +67,15 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         login(self.portal, 'pmCreator1')
         item1 = self.create('MeetingItem', title='The first item')
         self.addAnnex(item1)
-        self.addAnnex(item1, decisionRelated=True)
+        self.addAnnex(item1, relatedTo='item_decision')
         self.do(item1, 'propose')
-        self.assertRaises(Unauthorized, self.addAnnex, item1, decisionRelated=True)
+        self.assertRaises(Unauthorized, self.addAnnex, item1, relatedTo='item_decision')
         self.failIf(self.transitions(item1))  # He may trigger no more action
         self.failIf(self.hasPermission('PloneMeeting: Add annex', item1))
         # pmManager creates a meeting
         self.changeUser('pmManager')
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
-        self.addAnnex(item1, decisionRelated=True)
+        self.addAnnex(item1, relatedTo='item_decision')
         # pmCreator2 creates and proposes an item
         self.changeUser('pmCreator2')
         item2 = self.create('MeetingItem', title='The second item',
@@ -83,9 +83,9 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.do(item2, 'propose')
         # pmReviewer1 validates item1 and adds an annex to it
         self.changeUser('pmReviewer1')
-        self.addAnnex(item1, decisionRelated=True)
+        self.addAnnex(item1, relatedTo='item_decision')
         self.do(item1, 'validate')
-        self.assertRaises(Unauthorized, self.addAnnex, item1, decisionRelated=True)
+        self.assertRaises(Unauthorized, self.addAnnex, item1, relatedTo='item_decision')
         self.failIf(self.hasPermission('PloneMeeting: Add annex', item1))
         # pmManager inserts item1 into the meeting and publishes it
         self.changeUser('pmManager')
@@ -124,7 +124,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # pmManager adds a decision for item2, decides and closes the meeting
         self.changeUser('pmManager')
         item2.setDecision(self.decisionText)
-        self.addAnnex(item2, decisionRelated=True)
+        self.addAnnex(item2, relatedTo='item_decision')
         self.do(meeting, 'decide')
         self.failIf(len(self.transitions(meeting)) != 2)
         self.do(meeting, 'close')
@@ -142,16 +142,16 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         item1 = self.create('MeetingItem', title='The first item')
         self.addAnnex(item1)
         # The creator can add a decision annex on created item
-        self.addAnnex(item1, decisionRelated=True)
+        self.addAnnex(item1, relatedTo='item_decision')
         self.do(item1, 'propose')
         # The creator cannot add a decision annex on proposed item
-        self.assertRaises(Unauthorized, self.addAnnex, item1, decisionRelated=True)
+        self.assertRaises(Unauthorized, self.addAnnex, item1, relatedTo='item_decision')
         self.failIf(self.transitions(item1))  # He may trigger no more action
         # pmManager creates a meeting
         self.changeUser('pmManager')
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
         # The meetingManager can add a decision annex
-        self.addAnnex(item1, decisionRelated=True)
+        self.addAnnex(item1, relatedTo='item_decision')
         # pmCreator2 creates and proposes an item
         self.changeUser('pmCreator2')
         item2 = self.create('MeetingItem', title='The second item',
@@ -160,10 +160,10 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # pmReviewer1 validates item1 and adds an annex to it
         self.changeUser('pmReviewer1')
         # The reviewer can add a decision annex on proposed item
-        self.addAnnex(item1, decisionRelated=True)
+        self.addAnnex(item1, relatedTo='item_decision')
         self.do(item1, 'validate')
         # The reviewer cannot add a decision annex on validated item
-        self.assertRaises(Unauthorized, self.addAnnex, item1, decisionRelated=True)
+        self.assertRaises(Unauthorized, self.addAnnex, item1, relatedTo='item_decision')
         # pmManager inserts item1 into the meeting and freezes it
         self.changeUser('pmManager')
         managerAnnex = self.addAnnex(item1)
@@ -171,7 +171,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.do(item1, 'present')
         self.changeUser('pmCreator1')
         # The creator cannot add any kind of annex on presented item
-        self.assertRaises(Unauthorized, self.addAnnex, item1, decisionRelated=True)
+        self.assertRaises(Unauthorized, self.addAnnex, item1, relatedTo='item_decision')
         self.assertRaises(Unauthorized, self.addAnnex, item1)
         self.changeUser('pmManager')
         self.do(meeting, 'freeze')
@@ -196,10 +196,10 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # Now reviewers can't add annexes anymore
         self.changeUser('pmReviewer2')
         self.failIf(self.hasPermission('PloneMeeting: Add annex', item2))
-        self.assertRaises(Unauthorized, self.addAnnex, item2, decisionRelated=True)
+        self.assertRaises(Unauthorized, self.addAnnex, item2, relatedTo='item_decision')
         self.changeUser('pmReviewer1')
         self.assertRaises(Unauthorized, self.addAnnex, item2)
-        self.assertRaises(Unauthorized, self.addAnnex, item2, decisionRelated=True)
+        self.assertRaises(Unauthorized, self.addAnnex, item2, relatedTo='item_decision')
         # pmManager adds a decision for item2, decides and closes the meeting
         self.changeUser('pmManager')
         item2.setDecision(self.decisionText)
@@ -213,7 +213,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # when duplicated on delay, annexes are kept
         self.assertEquals(len(IAnnexable(duplicatedItem).getAnnexes('item')), 1)
         self.assertEquals(len(IAnnexable(duplicatedItem).getAnnexes('item_decision')), 3)
-        self.addAnnex(item2, decisionRelated=True)
+        self.addAnnex(item2, relatedTo='item_decision')
         self.failIf(len(self.transitions(meeting)) != 2)
         # When a meeting is closed, items without a decision are automatically 'accepted'
         self.do(meeting, 'close')
@@ -442,6 +442,10 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
     def test_subproduct_call_RecurringItemsBypassSecutiry(self):
         '''Run the test_pm_RecurringItemsBypassSecutiry from PloneMeeting.'''
         self.test_pm_RecurringItemsBypassSecutiry()
+
+    def test_subproduct_call_NoDefinedRecurringItems(self):
+        '''Run the test_pm_NoDefinedRecurringItems from PloneMeeting.'''
+        self.test_pm_NoDefinedRecurringItems()
 
 
 def test_suite():

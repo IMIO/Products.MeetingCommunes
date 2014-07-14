@@ -93,6 +93,18 @@ class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
         '''Run the test_pm_Validate_insertingMethodsOnAddItem from PloneMeeting.'''
         pmtmc.test_pm_Validate_insertingMethodsOnAddItem(self)
 
+    def test_subproduct_call_Validate_meetingConfigsToCloneTo(self):
+        '''Run the test_pm_Validate_meetingConfigsToCloneTo from PloneMeeting.'''
+        pmtmc.test_pm_Validate_meetingConfigsToCloneTo(self)
+
+    def test_subproduct_call_GetAvailablePodTemplates(self):
+        '''Run the test_pm_GetAvailablePodTemplates from PloneMeeting.'''
+        pmtmc.test_pm_GetAvailablePodTemplates(self)
+
+    def test_subproduct_call_AddingExistingTopicDoesNotBreak(self):
+        '''Run the test_pm_AddingExistingTopicDoesNotBreak from PloneMeeting.'''
+        pmtmc.test_pm_AddingExistingTopicDoesNotBreak(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

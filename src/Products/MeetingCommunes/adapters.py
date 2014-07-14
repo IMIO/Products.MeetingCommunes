@@ -43,11 +43,21 @@ from Products.MeetingCommunes.interfaces import \
     IMeetingItemCouncilWorkflowConditions, IMeetingItemCouncilWorkflowActions,\
     IMeetingCouncilWorkflowConditions, IMeetingCouncilWorkflowActions
 from Products.PloneMeeting.utils import checkPermission
-from Products.CMFCore.permissions import ReviewPortalContent, ModifyPortalContent
+from Products.CMFCore.permissions import ReviewPortalContent
 from Products.PloneMeeting.utils import getCurrentMeetingObject
 from Products.PloneMeeting import PloneMeetingError
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import *
+
+# values considered as empty
+EMTPY_VALUES = ('<p class="pmParaKeepWithNext" ></p>',
+                '<p class="pmParaKeepWithNext" > </p>',
+                '<p class="pmParaKeepWithNext" ><br></p>',
+                '<p class="pmParaKeepWithNext" ><br ></p>',
+                '<p class="pmParaKeepWithNext" ><br /></p>',
+                '<p class="pmParaKeepWithNext" ><br/></p>',
+                '<br>', '<br/>',
+                '<br />', '<br >')
 
 # Names of available workflow adaptations.
 customwfAdaptations = list(MeetingConfig.wfAdaptations)
@@ -719,9 +729,6 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
            state.  It is the case for late items. We initialize the decision
            field with content of Title+Description if no decision has already
            been written.'''
-        empty_values = ('<p></p>', '<p> </p>', '<p><br></p>', '<p><br ></p>',
-                        '<p><br /></p>', '<p><br/></p>', '<br>', '<br/>',
-                        '<br />', '<br >')
         wfTool = getToolByName(self.context, 'portal_workflow')
         for item in self.context.getAllItems(ordered=True):
             if item.queryState() == 'presented':
@@ -729,7 +736,7 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
             # If deliberation (motivation+decision) is empty,
             # initialize it the decision field
             itemDeliberation = item.getDeliberation().strip()
-            if not itemDeliberation or itemDeliberation in empty_values:
+            if not itemDeliberation or itemDeliberation in EMTPY_VALUES:
                 item.setDecision("<p>%s</p>%s" % (item.Title(),
                                                   item.Description()))
                 item.reindexObject()
@@ -882,9 +889,6 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
            state.  It is the case for late items. We initialize the decision
            field with content of Title+Description if no decision has already
            been written.'''
-        empty_values = ('<p></p>', '<p> </p>', '<p><br></p>', '<p><br ></p>',
-                        '<p><br /></p>', '<p><br/></p>', '<br>', '<br/>',
-                        '<br />', '<br >')
         wfTool = getToolByName(self.context, 'portal_workflow')
         for item in self.context.getAllItems(ordered=True):
             if item.queryState() == 'presented':
@@ -899,7 +903,7 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
             # If deliberation (motivation+decision) is empty,
             # initialize it the decision field
             itemDeliberation = item.getDeliberation().strip()
-            if not itemDeliberation or itemDeliberation in empty_values:
+            if not itemDeliberation or itemDeliberation in EMTPY_VALUES:
                 item.setDecision("<p>%s</p>%s" % (item.Title(),
                                                   item.Description()))
                 item.reindexObject()

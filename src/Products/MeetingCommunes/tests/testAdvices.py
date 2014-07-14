@@ -106,6 +106,14 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         '''Run the test_pm_ConfigAdviceStates from PloneMeeting.'''
         pmta.test_pm_ConfigAdviceStates(self)
 
+    def test_subproduct_call_GivenDelayAwareAutomaticAdviceLeftEvenIfItemConditionChanged(self):
+        '''Run the test_pm_GivenDelayAwareAutomaticAdviceLeftEvenIfItemConditionChanged from PloneMeeting.'''
+        pmta.test_pm_GivenDelayAwareAutomaticAdviceLeftEvenIfItemConditionChanged(self)
+
+    def test_subproduct_call_AddAnnexToAdvice(self):
+        '''Run the test_pm_AddAnnexToAdvice from PloneMeeting.'''
+        pmta.test_pm_AddAnnexToAdvice(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
