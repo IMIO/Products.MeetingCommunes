@@ -24,7 +24,6 @@
 
 from DateTime import DateTime
 from AccessControl import Unauthorized
-from plone.app.testing import login
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.interfaces import IAnnexable
 from Products.PloneMeeting.tests.testWorkflows import testWorkflows as pmtw
@@ -64,7 +63,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         '''This test covers the whole decision workflow. It begins with the
            creation of some items, and ends by closing a meeting.'''
         # pmCreator1 creates an item with 1 annex and proposes it
-        login(self.portal, 'pmCreator1')
+        self.changeUser('pmCreator1')
         item1 = self.create('MeetingItem', title='The first item')
         self.addAnnex(item1)
         self.addAnnex(item1, relatedTo='item_decision')
@@ -138,7 +137,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         #we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
         # pmCreator1 creates an item with 1 annex and proposes it
-        login(self.portal, 'pmCreator1')
+        self.changeUser('pmCreator1')
         item1 = self.create('MeetingItem', title='The first item')
         self.addAnnex(item1)
         # The creator can add a decision annex on created item
@@ -290,7 +289,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
     def _checkRecurringItemsCollege(self):
         '''Tests the recurring items system.'''
         # First, define recurring items in the meeting config
-        login(self.portal, 'admin')
+        self.changeUser('admin')
         # 2 recurring items already exist in the college config, add one supplementary for _init_
         self.create('RecurringMeetingItem', title='Rec item 1',
                     proposingGroup='developers',
@@ -342,7 +341,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
            'presented' state
         """
         # First, define recurring items in the meeting config
-        login(self.portal, 'pmManager')
+        self.changeUser('pmManager')
         #create a meeting
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
         #create 2 items and present them to the meeting
@@ -372,7 +371,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
            not decided...
         """
         # First, define recurring items in the meeting config
-        login(self.portal, 'pmManager')
+        self.changeUser('pmManager')
         # create a meeting (with 7 items)
         meetingDate = DateTime().strftime('%y/%m/%d %H:%M:00')
         meeting = self.create('Meeting', date=meetingDate)
