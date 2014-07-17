@@ -22,9 +22,7 @@
 # 02110-1301, USA.
 #
 
-from plone.app.testing import login
-from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
-    MeetingCommunesTestCase
+from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 
 
 class testCustomToolPloneMeeting(MeetingCommunesTestCase):
@@ -34,7 +32,7 @@ class testCustomToolPloneMeeting(MeetingCommunesTestCase):
         """
             This method aimed to ease printings should return formated assembly
         """
-        login(self.portal, 'pmManager')
+        self.changeUser('pmManager')
         m1 = self._createMeetingWithItems()
         m1.setAssembly('Pierre Dupont - Bourgmestre,\n'
                        'Charles Exemple - 1er Echevin,\n'

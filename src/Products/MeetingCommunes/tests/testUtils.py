@@ -23,10 +23,8 @@
 #
 
 from AccessControl import Unauthorized
-from plone.app.testing import login
 from Products.ExternalMethod.ExternalMethod import manage_addExternalMethod
-from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
-    MeetingCommunesTestCase
+from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 
 
 class testUtils(MeetingCommunesTestCase):
@@ -66,7 +64,7 @@ class testUtils(MeetingCommunesTestCase):
         """
           Check that calling this method returns the right content
         """
-        login(self.portal, 'admin')
+        self.changeUser('admin')
         expected = {
             'vendors': ('Vendors', '', 'Devil'),
             'endUsers': ('End users', '', 'EndUsers'),
@@ -78,7 +76,7 @@ class testUtils(MeetingCommunesTestCase):
         """
           Check that calling this method creates the MeetingGroups if not exist
         """
-        login(self.portal, 'admin')
+        self.changeUser('admin')
         #if we pass a dict containing the existing groups, it does nothing but
         #returning that the groups already exist
         dict = self._exportMeetingGroups()

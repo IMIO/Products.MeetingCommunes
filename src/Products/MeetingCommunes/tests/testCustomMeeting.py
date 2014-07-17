@@ -22,9 +22,7 @@
 # 02110-1301, USA.
 #
 
-from plone.app.testing import login
-from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
-    MeetingCommunesTestCase
+from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 
 
 class testCustomMeeting(MeetingCommunesTestCase):
@@ -42,7 +40,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         #configure PloneMeeting
         #test if the category is a MeetingCategory
         #insert items in the meeting depending on the category
-        login(self.portal, 'admin')
+        self.changeUser('admin')
         self.setMeetingConfig(self.meetingConfig2.getId())
         meeting = self._createMeetingWithItems()
         #build the list of uids
@@ -76,12 +74,12 @@ class testCustomMeeting(MeetingCommunesTestCase):
         #configure PloneMeeting
         #test if the category is a MeetingCategory
         #insert items in the meeting depending on the category
-        login(self.portal, 'admin')
+        self.changeUser('admin')
         self.meetingConfig.setInsertingMethodsOnAddItem(({'insertingMethod': 'on_proposing_groups',
                                                          'reverse': '0'}, ))
 
         #add a Meeting and present several items in different categories
-        login(self.portal, 'pmManager')
+        self.changeUser('pmManager')
         i1 = self.create('MeetingItem', title='Item1')
         i1.setProposingGroup('developers')
         i2 = self.create('MeetingItem', title='Item2')
@@ -131,7 +129,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         """
         #check that it works
         #check that if the field contains something, it is not intialized again
-        login(self.portal, 'pmManager')
+        self.changeUser('pmManager')
         #create some items
         #empty decision
         i1 = self.create('MeetingItem', title='Item1', description="<p>Description Item1</p>")
@@ -171,10 +169,10 @@ class testCustomMeeting(MeetingCommunesTestCase):
         """
           This method will return a certain number of items depending on passed paramaters.
         """
-        login(self.portal, 'admin')
+        self.changeUser('admin')
         # make categories available
         self.setMeetingConfig(self.meetingConfig2.getId())
-        login(self.portal, 'pmManager')
+        self.changeUser('pmManager')
         meeting = self._createMeetingWithItems()
         orderedItems = meeting.getAllItems(ordered=True)
         # the meeting is created with 5 items
