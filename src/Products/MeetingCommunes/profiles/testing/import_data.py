@@ -246,7 +246,7 @@ collegeMeeting.recurringItems = [
         description='<p>This is the first recurring item.</p>',
         title='Recurring item #1',
         proposingGroup='',
-        category='developers',
+        category='development',
         decision='First recurring item approved'),
 
     RecurringItemDescriptor(
@@ -254,7 +254,7 @@ collegeMeeting.recurringItems = [
         title='Recurring item #2',
         description='<p>This is the second recurring item.</p>',
         proposingGroup='',
-        category='developers',
+        category='development',
         decision='Second recurring item approved'),
 ]
 collegeMeeting.itemTemplates = (template1, template2)
