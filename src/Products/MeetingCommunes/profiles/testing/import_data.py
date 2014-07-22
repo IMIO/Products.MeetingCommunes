@@ -251,7 +251,6 @@ councilMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IM
 councilMeeting.transitionsToConfirm = []
 councilMeeting.meetingTopicStates = ('created', 'frozen', 'published')
 councilMeeting.decisionTopicStates = ('decided', 'closed')
-councilMeeting.itemAdviceStates = ('validated',)
 councilMeeting.recordItemHistoryStates = []
 councilMeeting.maxShownMeetings = 5
 councilMeeting.maxDaysDecisions = 60
