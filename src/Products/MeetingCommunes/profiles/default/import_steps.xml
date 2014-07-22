@@ -8,7 +8,7 @@
     id="MeetingCommunes-Update-RoleMappings" 
     handler="Products.MeetingCommunes.setuphandlers.updateRoleMappings"
     title="Update Workflow role mappings for MeetingCommunes"
-    version="2014-04-15T14:06:24.746103">
+    version="2014-07-22T11:17:46.563324">
    <dependency step="MeetingCommunes-QI-dependencies"/>
    updates the workflow role mappings for MeetingCommunes
  </import-step>
@@ -17,7 +17,7 @@
     id="MeetingCommunes-postInstall" 
     handler="Products.MeetingCommunes.setuphandlers.postInstall"
     title="manual coded post-install for MeetingCommunes"
-    version="2014-04-15T14:06:24.746103">
+    version="2014-07-22T11:17:46.563324">
    <dependency step="MeetingCommunes-QI-dependencies"/>
    manual coded post-install for MeetingCommunes
  </import-step>
