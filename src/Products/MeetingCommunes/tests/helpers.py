@@ -63,4 +63,6 @@ class MeetingCommunesTestingHelpers(PloneMeetingTestingHelpers):
                       'backToValidated', )}
     # in which state an item must be after an particular meeting transition?
     ITEM_WF_STATE_AFTER_MEETING_TRANSITION = {'publish_decisions': 'accepted',
-                                              'close': 'accepted', }
+                                              'close': 'accepted'}
+
+    TRANSITIONS_FOR_ACCEPTING_ITEMS_MEETING_1 = TRANSITIONS_FOR_ACCEPTING_ITEMS_MEETING_2 = ('freeze', 'decide', )
