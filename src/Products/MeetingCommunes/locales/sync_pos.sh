@@ -1,4 +1,4 @@
-files="PloneMeeting plone"
+files="PloneMeeting plone imio.actionspanel"
 languages="de en es fr nl"
 
 for file in $files; do

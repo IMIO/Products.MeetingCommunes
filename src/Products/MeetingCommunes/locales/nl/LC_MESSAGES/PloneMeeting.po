@@ -36,58 +36,17 @@ msgstr ""
 msgid "MeetingCommunes_descr_signatures"
 msgstr ""
 
+#. Default: "Decision used when the item is delayed"
+msgid "MeetingCommunes_label_itemDecisionReportText"
+msgstr ""
+
 #. Default: "Signatures delegation"
 msgid "MeetingCommunes_label_signatures"
 msgstr ""
 
-#. Default: "Decision used when the item is delayed"
-msgid "PloneMeeting_label_itemDecisionReportText"
-msgstr ""
-
-#. Default: "The item has been accepted with modifications."
-msgid "accept_but_modify_done_descr"
-msgstr ""
-
-#. Default: "The meeting has been set back to 'created'."
-msgid "backToCreated_done_descr"
-msgstr ""
-
-#. Default: "The meeting has been set back to 'decided', it can be edited again."
-msgid "backToDecided_done_descr"
-msgstr ""
-
-#. Default: "The meeting has been set back to 'decisions published'."
-msgid "backToDecisionsPublished_done_descr"
-msgstr ""
-
-#. Default: "The meeting has been set back to 'frozen'."
-msgid "backToFrozen_done_descr"
-msgstr ""
-
-#. Default: "The meeting is now closed, every items for wich no decisions had been taken, have been automatically accepted."
-#, fuzzy
-msgid "close_done_descr"
-msgstr "Sluit klaar scherm"
-
 #. Default: "Item created from a college item"
 msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
 msgstr ""
-
-#. Default: "You can now decide the items and write reports."
-msgid "decide_done_descr"
-msgstr ""
-
-#. Default: "Decision"
-msgid "decision"
-msgstr "Beslissing"
-
-#. Default: "<p>The decision is currently under edit by managers, you can not access it</p>"
-msgid "decision_under_edit"
-msgstr ""
-
-#. Default: "Decisions"
-msgid "decisions"
-msgstr "Beslissingen"
 
 msgid "front_page_body"
 msgstr ""
@@ -103,31 +62,6 @@ msgstr ""
 #. Default: "When an item is delay, the decision will be replace by the text defined here, as a TAL (Tag Attribute Language) expression whose context includes the name 'here' that represents the impacted item. If you don't know TAL, you may learn it <a href=\"http://zope.org/Documentation/Books/ZopeBook/2_6Edition/ZPT.stx\">here</a>."
 msgid "item_decision_report_text_descr"
 msgstr ""
-
-# Other
-#. Default: "Late items"
-msgid "late_presented_items"
-msgstr "Late agendapunten"
-
-#. Default: "Decision"
-msgid "portletdecisions_title"
-msgstr "Beslissing"
-
-#. Default: "Meeting"
-msgid "portletmeetings_title"
-msgstr "Vergadering"
-
-#. Default: "The item has been pre accepted."
-msgid "pre_accept_done_descr"
-msgstr ""
-
-#. Default: "Decisions have been published and are now visible to relevant proposing groups."
-msgid "publish_decisions_done_descr"
-msgstr ""
-
-#. Default: "Every decisions"
-msgid "searchalldecisions"
-msgstr "Elke beslissing"
 
 #. Default: "Decided items"
 #, fuzzy
