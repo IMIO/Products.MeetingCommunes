@@ -59,17 +59,6 @@ setDefaultRoles(WriteDecision, ('Manager',))
 
 STYLESHEETS = [{'id': 'meetingcommunes.css',
                 'title': 'MeetingCommunes CSS styles'}]
-
-# override states mappings for the 'return_to_proposing_group' wfAdaptation
-from Products.PloneMeeting import config as PMconfig
-MC_RETURN_TO_PROPOSING_GROUP_MAPPINGS = {'backTo_presented_from_returned_to_proposing_group':
-                                         ['created', ],
-                                         'backTo_itempublished_from_returned_to_proposing_group':
-                                         ['published', ],
-                                         'backTo_itemfrozen_from_returned_to_proposing_group':
-                                         ['frozen', 'decided', 'decisions_published', ],
-                                         'NO_MORE_RETURNABLE_STATES': ['closed', 'archived', ], }
-PMconfig.RETURN_TO_PROPOSING_GROUP_MAPPINGS.update(MC_RETURN_TO_PROPOSING_GROUP_MAPPINGS)
 ##/code-section config-bottom
 
 
