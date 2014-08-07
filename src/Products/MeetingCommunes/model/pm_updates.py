@@ -49,7 +49,7 @@ def update_config_schema(baseSchema):
                 description="ItemDecisionReportText",
                 description_msgid="item_decision_report_text_descr",
                 label='ItemDecisionReportText',
-                label_msgid='PloneMeeting_label_itemDecisionReportText',
+                label_msgid='MeetingCommunes_label_itemDecisionReportText',
                 i18n_domain='PloneMeeting',
             ),
             allowable_content_types=('text/plain', 'text/html', ),
