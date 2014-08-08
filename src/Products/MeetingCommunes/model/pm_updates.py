@@ -12,9 +12,9 @@ def update_group_schema(baseSchema):
             widget=MultiSelectionWidget(
                 size=10,
                 label='EchevinServices',
-                label_msgid='MeetingCommune_label_echevinServices',
+                label_msgid='MeetingCommunes_label_echevinServices',
                 description='Leave empty if he is not an echevin',
-                description_msgid='MeetingCommune_descr_echevinServices',
+                description_msgid='MeetingCommunes_descr_echevinServices',
                 i18n_domain='PloneMeeting',
             ),
             enforceVocabulary=True,

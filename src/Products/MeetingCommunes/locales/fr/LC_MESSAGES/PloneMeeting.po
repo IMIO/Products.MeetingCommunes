@@ -28,11 +28,11 @@ msgid "Meeting config Council"
 msgstr "Conseil Communal"
 
 #. Default: "If the group is responsible of other groups, select them here above, either do not select any elements of the list."
-msgid "MeetingCommune_descr_echevinServices"
+msgid "MeetingCommunes_descr_echevinServices"
 msgstr "Si ce groupe est responsable d'autres groupes, selectionnez les ci-dessous."
 
 #. Default: "Alderman of the following services (departments)"
-msgid "MeetingCommune_label_echevinServices"
+msgid "MeetingCommunes_label_echevinServices"
 msgstr "Echevin des services suivants"
 
 #. Default: "If you specify signatures here, it will be used while generating documents of this proposing group.  Either, signatures defined on the meeting will be used."
@@ -99,4 +99,3 @@ msgstr "Le point a été envoyé au Comité de concertation."
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
 msgstr "Le point a été envoyé au Conseil communal."
-

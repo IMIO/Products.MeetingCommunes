@@ -28,13 +28,12 @@ msgid "Meeting config Council"
 msgstr "Meeting config Council"
 
 #. Default: "If the group is responsible of other groups, select them here above, either do not select any elements of the list."
-msgid "MeetingCommune_descr_echevinServices"
+msgid "MeetingCommunes_descr_echevinServices"
 msgstr "If the group is responsible of other groups, select them here above, either do not select any elements of the list."
 
 #. Default: "Alderman of the following services (departments)"
-#, fuzzy
-msgid "MeetingCommune_label_echevinServices"
-msgstr "Alderman of the following services(departments)"
+msgid "MeetingCommunes_label_echevinServices"
+msgstr "Alderman of the following services (departments)"
 
 #. Default: "If you specify signatures here, it will be used while generating documents of this proposing group.  Either, signatures defined on the meeting will be used."
 msgid "MeetingCommunes_descr_signatures"
@@ -45,9 +44,8 @@ msgid "MeetingCommunes_label_itemDecisionReportText"
 msgstr ""
 
 #. Default: "Signatures delegation"
-#, fuzzy
 msgid "MeetingCommunes_label_signatures"
-msgstr "Signatures Delegation"
+msgstr "Signatures delegation"
 
 #. Default: "Item created from a college item"
 msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
@@ -69,18 +67,15 @@ msgid "item_decision_report_text_descr"
 msgstr "When an item is delay, the decision will be replace by the text defined here, as a TAL (Tag Attribute Language) expression whose context includes the name 'here' that represents the impacted item. If you don't know TAL, you may learn it <a href=\"http://zope.org/Documentation/Books/ZopeBook/2_6Edition/ZPT.stx\">here</a>."
 
 #. Default: "Decided items"
-#, fuzzy
 msgid "searchdecideditems"
 msgstr "Decided items"
 
 # searches
 #. Default: "Proposed items"
-#, fuzzy
 msgid "searchproposeditems"
-msgstr "Items to validate"
+msgstr "Proposed items"
 
 #. Default: "Validated items"
-#, fuzzy
 msgid "searchvalidateditems"
 msgstr "Validated items"
 
