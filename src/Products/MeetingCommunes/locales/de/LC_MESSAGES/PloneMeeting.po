@@ -27,15 +27,15 @@ msgid "Meeting config Council"
 msgstr ""
 
 #. Default: "If the group is responsible of other groups, select them here above, either do not select any elements of the list."
-msgid "MeetingCommune_descr_echevinServices"
-msgstr ""
-
-#. Default: "Alderman of the following services (departments)"
-msgid "MeetingCommune_label_echevinServices"
+msgid "MeetingCommunes_descr_echevinServices"
 msgstr ""
 
 #. Default: "If you specify signatures here, it will be used while generating documents of this proposing group.  Either, signatures defined on the meeting will be used."
 msgid "MeetingCommunes_descr_signatures"
+msgstr ""
+
+#. Default: "Alderman of the following services (departments)"
+msgid "MeetingCommunes_label_echevinServices"
 msgstr ""
 
 #. Default: "Decision used when the item is delayed"

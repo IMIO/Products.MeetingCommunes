@@ -31,13 +31,13 @@ msgstr "Conseil Communal"
 msgid "MeetingCommunes_descr_echevinServices"
 msgstr "Si ce groupe est responsable d'autres groupes, selectionnez les ci-dessous."
 
-#. Default: "Alderman of the following services (departments)"
-msgid "MeetingCommunes_label_echevinServices"
-msgstr "Echevin des services suivants"
-
 #. Default: "If you specify signatures here, it will be used while generating documents of this proposing group.  Either, signatures defined on the meeting will be used."
 msgid "MeetingCommunes_descr_signatures"
 msgstr "Si vous spécifiez des signatures dans ce champ, elle seront utilisées pour les points proposés par ce groupe, si le champ est vide, les signatures définies sur la séance seront utilisées."
+
+#. Default: "Alderman of the following services (departments)"
+msgid "MeetingCommunes_label_echevinServices"
+msgstr "Echevin des services suivants"
 
 # MeetingItem
 #. Default: "Decision used when the item is delayed"
@@ -99,3 +99,4 @@ msgstr "Le point a été envoyé au Comité de concertation."
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
 msgstr "Le point a été envoyé au Conseil communal."
+
