@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '3.2.1dev'
+version = '3.3dev'
 
 setup(name='Products.MeetingCommunes',
       version=version,
@@ -14,7 +14,7 @@ setup(name='Products.MeetingCommunes',
       keywords='',
       author='',
       author_email='',
-      url='http://www.communesplone.org/les-outils/applications-metier/gestion-des-deliberations',
+      url='http://www.imio.be/produits/gestion-des-deliberations',
       license='GPL',
       packages=find_packages('src'),
       package_dir={'': 'src'},
@@ -27,22 +27,15 @@ setup(name='Products.MeetingCommunes',
                   'plone.testing',
                   'plone.app.testing',
                   'plone.app.robotframework',
-                  'communesplone.iconified_document_actions',
                   'Products.CMFPlacefulWorkflow',
                   'zope.testing',
-                  'Products.PloneTestCase',
-                  'collective.ckeditor',
-                  'plonetheme.imioapps'],
+                  'Products.PloneTestCase'],
             templates=['Genshi',
                   ]),
       install_requires=[
           'setuptools',
-          'appy',
           'Products.CMFPlone',
           'Pillow',
-          'communesplone.iconified_document_actions',
-          'Products.PloneMeeting',
-          'collective.ckeditor',
-          'plonetheme.imioapps'],
+          'Products.PloneMeeting'],
       entry_points={},
       )
