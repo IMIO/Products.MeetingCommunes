@@ -132,21 +132,14 @@ def showHomeTab(context, site):
 
 def reorderSkinsLayers(context, site):
     """
-       Reinstall Products.plonemeetingskin and re-apply MeetingCommunes skins.xml step
-       as the reinstallation of MeetingCommunes and PloneMeeting changes the portal_skins layers order
+       Re-apply MeetingCommunes skins.xml step as the reinstallation of
+       MeetingCommunes and PloneMeeting changes the portal_skins layers order
     """
     if isNotMeetingCommunesProfile(context) and not isMeetingCommunesConfigureProfile(context):
         return
 
     logStep("reorderSkinsLayers", context)
-    try:
-        site.portal_setup.runImportStepFromProfile(u'profile-Products.MeetingCommunes:default', 'skins')
-        site.portal_setup.runAllImportStepsFromProfile(u'profile-plonetheme.imioapps:default')
-        site.portal_setup.runAllImportStepsFromProfile(u'profile-plonetheme.imioapps:plonemeetingskin')
-    except KeyError:
-        # if the Products.plonemeetingskin profile is not available
-        # (not using plonemeetingskin or in testing?) we pass...
-        pass
+    site.portal_setup.runImportStepFromProfile(u'profile-Products.MeetingCommunes:default', 'skins')
 
 
 def finalizeExampleInstance(context):
@@ -241,8 +234,6 @@ def finalizeExampleInstance(context):
     # finally, re-launch plonemeetingskin and MeetingCommunes skins step
     # because PM has been installed before the import_data profile and messed up skins layers
     site.portal_setup.runImportStepFromProfile(u'profile-Products.MeetingCommunes:default', 'skins')
-    site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:default', 'skins')
-    site.portal_setup.runImportStepFromProfile(u'profile-plonetheme.imioapps:plonemeetingskin', 'skins')
     # define default workflowAdaptations for council
     # due to some weird problems, the wfAdaptations can not be defined
     # thru the import_data...
