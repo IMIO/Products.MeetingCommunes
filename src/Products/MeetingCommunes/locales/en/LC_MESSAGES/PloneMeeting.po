@@ -33,7 +33,7 @@ msgstr "If the group is responsible of other groups, select them here above, eit
 
 #. Default: "If you specify signatures here, it will be used while generating documents of this proposing group.  Either, signatures defined on the meeting will be used."
 msgid "MeetingCommunes_descr_signatures"
-msgstr ""
+msgstr "If you specify signatures here, it will be used while generating documents of this proposing group.  Either, signatures defined on the meeting will be used."
 
 #. Default: "Alderman of the following services (departments)"
 msgid "MeetingCommunes_label_echevinServices"
@@ -41,11 +41,11 @@ msgstr "Alderman of the following services (departments)"
 
 #. Default: "Initialize the item decision when deciding meeting"
 msgid "MeetingCommunes_label_initItemDecisionIfEmptyOnDecide"
-msgstr ""
+msgstr "Initialize the item decision when deciding meeting"
 
 #. Default: "Decision used when the item is delayed"
 msgid "MeetingCommunes_label_itemDecisionReportText"
-msgstr ""
+msgstr "Decision used when the item is delayed"
 
 #. Default: "Signatures delegation"
 msgid "MeetingCommunes_label_signatures"
@@ -53,7 +53,7 @@ msgstr "Signatures delegation"
 
 #. Default: "Item created from a college item"
 msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
-msgstr ""
+msgstr "Item created from a college item"
 
 msgid "front_page_body"
 msgstr ""
@@ -68,7 +68,7 @@ msgstr "pre accepted"
 
 #. Default: "If you check this box, when a meeting will be decided, if an item does not have a decision defined, this decision will be automatically filled with title and description of the item"
 msgid "init_item_decision_if_empty_on_decide"
-msgstr ""
+msgstr "If you check this box, when a meeting will be decided, if an item does not have a decision defined, this decision will be automatically filled with title and description of the item"
 
 #. Default: "When an item is delay, the decision will be replace by the text defined here, as a TAL (Tag Attribute Language) expression whose context includes the name 'here' that represents the impacted item. If you don't know TAL, you may learn it <a href=\"http://zope.org/Documentation/Books/ZopeBook/2_6Edition/ZPT.stx\">here</a>."
 msgid "item_decision_report_text_descr"
@@ -89,21 +89,20 @@ msgstr "Validated items"
 
 #. Default: "The item has been successfully transfered to the bp."
 msgid "sendto_meeting-config-bp_success"
-msgstr ""
+msgstr "The item has been successfully transfered to the bp."
 
 #. Default: "The item has been successfully transfered to the cas."
 msgid "sendto_meeting-config-cas_success"
-msgstr ""
+msgstr "The item has been successfully transfered to the cas."
 
 #. Default: "The item has been successfully transfered to the college."
 msgid "sendto_meeting-config-college_success"
-msgstr ""
+msgstr "The item has been successfully transfered to the college."
 
 #. Default: "The item has been successfully transfered to the comitee."
 msgid "sendto_meeting-config-comitee_success"
-msgstr ""
+msgstr "The item has been successfully transfered to the comitee."
 
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
-msgstr ""
-
+msgstr "The item has been successfully transfered to the council."
