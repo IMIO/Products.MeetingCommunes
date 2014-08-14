@@ -39,6 +39,10 @@ msgstr "Si vous spécifiez des signatures dans ce champ, elle seront utilisées 
 msgid "MeetingCommunes_label_echevinServices"
 msgstr "Echevin des services suivants"
 
+#. Default: "Initialize the item decision when deciding meeting"
+msgid "MeetingCommunes_label_initItemDecisionIfEmptyOnDecide"
+msgstr "Initialiser le champ décision des points lorsque la séance passe ' En rédaction du PV'?"
+
 # MeetingItem
 #. Default: "Decision used when the item is delayed"
 msgid "MeetingCommunes_label_itemDecisionReportText"
@@ -62,6 +66,10 @@ msgstr "Accepté avec modifications"
 #. Default: "Pre accepted"
 msgid "icon_help_pre_accepted"
 msgstr "Accepté provisoirement"
+
+#. Default: "If you check this box, when a meeting will be decided, if an item does not have a decision defined, this decision will be automatically filled with title and description of the item"
+msgid "init_item_decision_if_empty_on_decide"
+msgstr "Si cette case est cochée, lorsqu'une séance passera 'En rédaction du PV', pour tous les points dont le champ 'Décision' est vide, ce champ sera automatiquement rempli avec une concaténation de ce qui est défini dans le titre et la description du point"
 
 #. Default: "When an item is delay, the decision will be replace by the text defined here, as a TAL (Tag Attribute Language) expression whose context includes the name 'here' that represents the impacted item. If you don't know TAL, you may learn it <a href=\"http://zope.org/Documentation/Books/ZopeBook/2_6Edition/ZPT.stx\">here</a>."
 msgid "item_decision_report_text_descr"
@@ -99,4 +107,3 @@ msgstr "Le point a été envoyé au Comité de concertation."
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
 msgstr "Le point a été envoyé au Conseil communal."
-

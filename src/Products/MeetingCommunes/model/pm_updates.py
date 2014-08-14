@@ -1,4 +1,9 @@
-from Products.Archetypes.atapi import *
+from Products.Archetypes.atapi import BooleanField
+from Products.Archetypes.atapi import LinesField
+from Products.Archetypes.atapi import TextField
+from Products.Archetypes.atapi import MultiSelectionWidget
+from Products.Archetypes.atapi import TextAreaWidget
+from Products.Archetypes.atapi import Schema
 from Products.PloneMeeting.MeetingGroup import MeetingGroup
 from Products.PloneMeeting.MeetingConfig import MeetingConfig
 
@@ -54,7 +59,17 @@ def update_config_schema(baseSchema):
             ),
             allowable_content_types=('text/plain', 'text/html', ),
             default_output_type="text/plain",
-        )
+        ),
+        BooleanField(
+            name='initItemDecisionIfEmptyOnDecide',
+            default=True,
+            widget=BooleanField._properties['widget'](
+                description="InitItemDecisionIfEmptyOnDecide",
+                description_msgid="init_item_decision_if_empty_on_decide",
+                label='Inititemdecisionifemptyondecide',
+                label_msgid='MeetingCommunes_label_initItemDecisionIfEmptyOnDecide',
+                i18n_domain='PloneMeeting'),
+        ),
     ),)
     completeConfigSchema = baseSchema + specificSchema.copy()
     completeConfigSchema.moveField('itemDecisionReportText', after='budgetDefault')

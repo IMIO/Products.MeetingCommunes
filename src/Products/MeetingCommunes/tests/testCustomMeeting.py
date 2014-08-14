@@ -127,43 +127,51 @@ class testCustomMeeting(MeetingCommunesTestCase):
             In the doDecide method, we initialize the Decision field to a default value made of
             Title+Description if the field is empty...
         """
-        #check that it works
-        #check that if the field contains something, it is not intialized again
+        # check that it works
+        # check that if the field contains something, it is not intialized again
         self.changeUser('pmManager')
         #create some items
-        #empty decision
+        # empty decision
         i1 = self.create('MeetingItem', title='Item1', description="<p>Description Item1</p>")
         i1.setDecision("")
         i1.setProposingGroup('developers')
-        #decision field is already filled
+        # decision field is already filled
         i2 = self.create('MeetingItem', title='Item2', description="<p>Description Item2</p>")
         i2.setDecision("<p>Decision Item2</p>")
         i2.setProposingGroup('developers')
-        #create an item with the default Kupu empty value
+        # create an item with the default Kupu empty value
         i3 = self.create('MeetingItem', title='Item3', description="<p>Description Item3</p>")
         i3.setDecision("<p><br /></p>")
         i3.setProposingGroup('developers')
-        m = self.create('Meeting', date='2007/12/11 09:00:00')
-        #present every items in the meeting
+        meeting = self.create('Meeting', date='2007/12/11 09:00:00')
+        # present every items in the meeting
         items = (i1, i2, i3)
         for item in items:
             self.do(item, 'propose')
             self.do(item, 'validate')
             self.do(item, 'present')
-        #check the decision field of every item
-        self.assertEquals(i1.getDecision(), "")
-        self.assertEquals(i2.getDecision(), '<p class="pmParaKeepWithNext" >Decision Item2</p>')
-        self.assertEquals(i3.getDecision(), '<p class="pmParaKeepWithNext" ><br /></p>')
-        #decide the meeting (freez it before ;-))
-        self.do(m, 'freeze')
-        self.do(m, 'decide')
-        #now that the meeting is decided, the decision field initialization has occured...
-        #i1 should be initialized
-        self.assertEquals(i1.getDecision(), '<p>Item1</p><p class="pmParaKeepWithNext" >Description Item1</p>')
-        #i2 sould not have changed
-        self.assertEquals(i2.getDecision(), '<p class="pmParaKeepWithNext" >Decision Item2</p>')
-        #i3 is initlaized because the decision field contained an empty_value
-        self.assertEquals(i3.getDecision(), '<p>Item3</p><p class="pmParaKeepWithNext" >Description Item3</p>')
+        # check the decision field of every item
+        self.assertTrue(i1.getDecision(keepWithNext=False) == "")
+        self.assertTrue(i2.getDecision(keepWithNext=False) == '<p>Decision Item2</p>')
+        self.assertTrue(i3.getDecision(keepWithNext=False) == '<p><br /></p>')
+        # if cfg.initItemDecisionIfEmptyOnDecide is False, the decision field is not initialized
+        self.meetingConfig.setInitItemDecisionIfEmptyOnDecide(False)
+        self.decideMeeting(meeting)
+        self.assertTrue(i1.getDecision(keepWithNext=False) == "")
+        self.assertTrue(i2.getDecision(keepWithNext=False), '<p>Decision Item2</p>')
+        self.assertTrue(i3.getDecision(keepWithNext=False), '<p><br /></p>')
+        # now if cfg.initItemDecisionIfEmptyOnDecide is True
+        # fields will be initialized
+        self.meetingConfig.setInitItemDecisionIfEmptyOnDecide(True)
+        # decide the meeting again
+        self.backToState(meeting, 'created')
+        self.decideMeeting(meeting)
+        # i1 should contains now the concatenation of title and description
+        self.assertEquals(i1.getDecision(keepWithNext=False), '<p>Item1</p><p>Description Item1</p>')
+        # i2 sould not have changed
+        self.assertEquals(i2.getDecision(keepWithNext=False), '<p>Decision Item2</p>')
+        # i3 is initlaized because the decision field contained an empty_value
+        self.assertEquals(i3.getDecision(keepWithNext=False), '<p>Item3</p><p>Description Item3</p>')
 
     def test_GetNumberOfItems(self):
         """

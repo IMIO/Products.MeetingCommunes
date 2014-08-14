@@ -39,6 +39,10 @@ msgstr ""
 msgid "MeetingCommunes_label_echevinServices"
 msgstr "Alderman of the following services (departments)"
 
+#. Default: "Initialize the item decision when deciding meeting"
+msgid "MeetingCommunes_label_initItemDecisionIfEmptyOnDecide"
+msgstr ""
+
 #. Default: "Decision used when the item is delayed"
 msgid "MeetingCommunes_label_itemDecisionReportText"
 msgstr ""
@@ -61,6 +65,10 @@ msgstr "accepted but modified"
 #. Default: "Pre accepted"
 msgid "icon_help_pre_accepted"
 msgstr "pre accepted"
+
+#. Default: "If you check this box, when a meeting will be decided, if an item does not have a decision defined, this decision will be automatically filled with title and description of the item"
+msgid "init_item_decision_if_empty_on_decide"
+msgstr ""
 
 #. Default: "When an item is delay, the decision will be replace by the text defined here, as a TAL (Tag Attribute Language) expression whose context includes the name 'here' that represents the impacted item. If you don't know TAL, you may learn it <a href=\"http://zope.org/Documentation/Books/ZopeBook/2_6Edition/ZPT.stx\">here</a>."
 msgid "item_decision_report_text_descr"

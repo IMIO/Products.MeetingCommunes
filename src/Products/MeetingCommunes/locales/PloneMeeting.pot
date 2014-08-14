@@ -92,3 +92,11 @@ msgstr ""
 #. Default: "The item has been successfully transfered to the comitee."
 msgid "sendto_meeting-config-comitee_success"
 msgstr ""
+
+#. Default: "Initialize the item decision when deciding meeting"
+msgid "MeetingCommunes_label_initItemDecisionIfEmptyOnDecide"
+msgstr ""
+
+#. Default: "If you check this box, when a meeting will be decided, if an item does not have a decision defined, this decision will be automatically filled with title and description of the item"
+msgid "init_item_decision_if_empty_on_decide"
+msgstr ""

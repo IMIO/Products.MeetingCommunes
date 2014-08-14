@@ -726,20 +726,25 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
     security.declarePrivate('doDecide')
     def doDecide(self, stateChange):
         '''We pass every item that is 'presented' in the 'itemfrozen'
-           state.  It is the case for late items. We initialize the decision
-           field with content of Title+Description if no decision has already
-           been written.'''
+           state.  It is the case for late items. Moreover, if
+           MeetingConfig.initItemDecisionIfEmptyOnDecide is True, we
+           initialize the decision field with content of Title+Description
+           if decision field is empty.'''
         wfTool = getToolByName(self.context, 'portal_workflow')
+        tool = getToolByName(self.context, 'portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+        initializeDecision = cfg.getInitItemDecisionIfEmptyOnDecide()
         for item in self.context.getAllItems(ordered=True):
             if item.queryState() == 'presented':
                 wfTool.doActionFor(item, 'itemfreeze')
-            # If deliberation (motivation+decision) is empty,
-            # initialize it the decision field
-            itemDeliberation = item.getDeliberation().strip()
-            if not itemDeliberation or itemDeliberation in EMTPY_VALUES:
-                item.setDecision("<p>%s</p>%s" % (item.Title(),
-                                                  item.Description()))
-                item.reindexObject()
+            if initializeDecision:
+                # If deliberation (motivation+decision) is empty,
+                # initialize it the decision field
+                itemDeliberation = item.getDeliberation().strip()
+                if not itemDeliberation or itemDeliberation in EMTPY_VALUES:
+                    item.setDecision("<p>%s</p>%s" % (item.Title(),
+                                                      item.Description()))
+                    item.reindexObject()
 
     security.declarePrivate('doBackToCreated')
     def doBackToCreated(self, stateChange):
