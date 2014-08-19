@@ -551,31 +551,6 @@ class CustomMeeting(Meeting):
                 ressort.append(ressorti)
         return ressort
 
-    security.declarePublic('getPreviousMeeting')
-    def getPreviousMeeting(self, searchMeetingsInterval=60):
-        '''Gets the previous meeting based on meeting date. We only search among
-           meetings in the previous p_searchMeetingsInterval, which is a number
-           of days. If no meeting is found, the method returns None.'''
-        meetingDate = self.context.getDate()
-        tool = getToolByName(self.context, 'portal_plonemeeting')
-        meetingConfig = tool.getMeetingConfig(
-            self.context)
-        meetingTypeName = meetingConfig.getMeetingTypeName()
-        catalog = getToolByName(self.context, 'portal_catalog')
-        allMeetings = catalog(
-            portal_type=meetingTypeName,
-            getDate={'query': self.context.getDate()-searchMeetingsInterval,
-                     'range': 'min'},
-            sort_on='getDate', sort_order='reverse')
-        res = None
-        for meeting in allMeetings:
-            if (meeting.getObject().getDate() < meetingDate):
-                res = meeting
-                break
-        if res:
-            res = res.getObject()
-        return res
-
 
 class CustomMeetingItem(MeetingItem):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
