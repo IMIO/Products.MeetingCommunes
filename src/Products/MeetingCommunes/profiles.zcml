@@ -15,7 +15,7 @@
       description="Extension profile for MeetingCommunes."
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
-  
+
   <!-- ##code-section profiles.zcml-bottom #fill in your manual code here -->
   <genericsetup:registerProfile
    name="demo"
@@ -47,11 +47,11 @@
       profile="Products.MeetingCommunes:default" />
 
   <genericsetup:upgradeStep
-      title="Go to MeetingCommunes 3.2.1"
+      title="Go to MeetingCommunes 3.3"
       description=""
       source="3.2.0"
-      destination="3.2.1"
-      handler="Products.MeetingCommunes.migrations.migrate_to_3_2_1.migrate"
+      destination="3.3"
+      handler="Products.MeetingCommunes.migrations.migrate_to_3_3.migrate"
       profile="Products.MeetingCommunes:default" />
 
   <!-- ##/code-section profiles.zcml-bottom -->
