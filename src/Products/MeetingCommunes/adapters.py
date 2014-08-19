@@ -77,6 +77,9 @@ noGlobalObsStates = ('itempublished', 'itemfrozen', 'accepted', 'refused',
                      'delayed', 'accepted_but_modified', 'pre_accepted')
 adaptations.noGlobalObsStates = noGlobalObsStates
 
+adaptations.WF_NOT_CREATOR_EDITS_UNLESS_CLOSED = ('delayed', 'refused', 'accepted',
+                                                  'pre_accepted', 'accepted_but_modified')
+
 
 def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdaptation=None):
     '''This function applies workflow changes as specified by the
