@@ -63,8 +63,10 @@ def isMeetingCommunesConfigureProfile(context):
         context.readDataFile("MeetingCommunes_cpas_marker.txt") or \
         context.readDataFile("MeetingCommunes_testing_marker.txt")
 
+
 def isNotMeetingCommunesDemoProfile(context):
     return context.readDataFile("MeetingCommunes_demo_marker.txt") is None
+
 
 def isMeetingCommunesTestingProfile(context):
     return context.readDataFile("MeetingCommunes_testing_marker.txt")
@@ -239,7 +241,6 @@ def finalizeExampleInstance(context):
     # thru the import_data...
     mc_council_or_cas.setWorkflowAdaptations(['no_global_observation', 'no_publication'])
     performWorkflowAdaptations(site, mc_council_or_cas, logger)
-
 
 
 def reorderCss(context):

@@ -28,6 +28,7 @@ from Products.PloneMeeting.interfaces import \
     IMeetingItemWorkflowConditions, IMeetingItemWorkflowActions, \
     IMeetingWorkflowActions, IMeetingWorkflowConditions
 
+
 # ------------------------------------------------------------------------------
 class IMeetingItemCollegeWorkflowActions(IMeetingItemWorkflowActions):
     '''This interface represents a meeting item as viewed by the specific
@@ -44,6 +45,8 @@ class IMeetingItemCollegeWorkflowActions(IMeetingItemWorkflowActions):
         """
           Triggered while doing the 'pre_accept' transition
         """
+
+
 class IMeetingItemCollegeWorkflowConditions(IMeetingItemWorkflowConditions):
     '''This interface represents a meeting item as viewed by the specific
        item workflow that is defined in this MeetingCommunes product.'''
@@ -63,6 +66,8 @@ class IMeetingItemCollegeWorkflowConditions(IMeetingItemWorkflowConditions):
         """
           Guard for the 'backToXXX' transitions
         """
+
+
 class IMeetingCollegeWorkflowActions(IMeetingWorkflowActions):
     '''This interface represents a meeting as viewed by the specific meeting
        workflow that is defined in this MeetingCommunes product.'''
@@ -82,6 +87,8 @@ class IMeetingCollegeWorkflowActions(IMeetingWorkflowActions):
         """
           Triggered while doing the 'doBackToCreated' transition
         """
+
+
 class IMeetingCollegeWorkflowConditions(IMeetingWorkflowConditions):
     '''This interface represents a meeting as viewed by the specific meeting
        workflow that is defined in this MeetingCommunes product.'''
@@ -105,6 +112,8 @@ class IMeetingCollegeWorkflowConditions(IMeetingWorkflowConditions):
         """
           Guard for the 'backToXXX' transitions
         """
+
+
 class IMeetingItemCouncilWorkflowActions(IMeetingItemWorkflowActions):
     '''This interface represents a meeting item as viewed by the specific
        item workflow that is defined in this MeetingCommunes product.'''
@@ -120,6 +129,8 @@ class IMeetingItemCouncilWorkflowActions(IMeetingItemWorkflowActions):
         """
           Triggered while doing the 'pre_accept' transition
         """
+
+
 class IMeetingItemCouncilWorkflowConditions(IMeetingItemWorkflowConditions):
     '''This interface represents a meeting item as viewed by the specific
        meeting item workflow that is defined in this MeetingCommunes product.'''
@@ -139,6 +150,8 @@ class IMeetingItemCouncilWorkflowConditions(IMeetingItemWorkflowConditions):
         """
           Guard for the 'backToXXX' transitions
         """
+
+
 class IMeetingCouncilWorkflowActions(IMeetingWorkflowActions):
     '''This interface represents a meeting as viewed by the specific meeting
        workflow that is defined in this MeetingCommunes product.'''
@@ -158,6 +171,8 @@ class IMeetingCouncilWorkflowActions(IMeetingWorkflowActions):
         """
           Triggered while doing the 'doBackToCreated' transition
         """
+
+
 class IMeetingCouncilWorkflowConditions(IMeetingWorkflowConditions):
     '''This interface represents a meeting as viewed by the specific meeting
        workflow that is defined in this MeetingCommunes product.'''

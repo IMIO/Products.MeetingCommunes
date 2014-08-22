@@ -48,7 +48,7 @@ from Products.CMFCore.permissions import ReviewPortalContent
 from Products.PloneMeeting.utils import getCurrentMeetingObject
 from Products.PloneMeeting import PloneMeetingError
 from Products.PloneMeeting.model import adaptations
-from Products.PloneMeeting.model.adaptations import *
+from Products.PloneMeeting.model.adaptations import WF_DOES_NOT_EXIST_WARNING, WF_APPLIED
 
 # Names of available workflow adaptations.
 customwfAdaptations = list(MeetingConfig.wfAdaptations)
@@ -151,6 +151,7 @@ class CustomMeeting(Meeting):
 
     # Implements here methods that will be used by templates
     security.declarePublic('getPrintableItems')
+
     def getPrintableItems(self, itemUids, late=False, ignore_review_states=[],
                           privacy='*', oralQuestion='both', toDiscuss='both', categories=[],
                           excludedCategories=[], firstNumber=1, renumber=False):
@@ -282,6 +283,7 @@ class CustomMeeting(Meeting):
             self._insertGroupInCategory(categoryList, group, groupPrefixes, groups, item)
 
     security.declarePublic('getPrintableItemsByCategory')
+
     def getPrintableItemsByCategory(self, itemUids=[], late=False,
                                     ignore_review_states=[], by_proposing_group=False, group_prefixes={},
                                     privacy='*', oralQuestion='both', toDiscuss='both', categories=[],
@@ -425,6 +427,7 @@ class CustomMeeting(Meeting):
         return res
 
     security.declarePublic('getNumberOfItems')
+
     def getNumberOfItems(self, itemUids, privacy='*', categories=[], late=False):
         '''Returns the number of items depending on parameters.
            This is used in templates to know how many items of a particular kind exist and
@@ -449,6 +452,7 @@ class CustomMeeting(Meeting):
         return len(filteredItemUids)
 
     security.declarePublic('getPrintableItemsByNumCategory')
+
     def getPrintableItemsByNumCategory(self, late=False, uids=[],
                                        catstoexclude=[], exclude=True, allItems=False):
         '''Returns a list of items ordered by category number. If there are many
@@ -559,6 +563,7 @@ class CustomMeetingItem(MeetingItem):
         self.context = item
 
     security.declarePublic('getMeetingsAcceptingItems')
+
     def getMeetingsAcceptingItems(self):
         '''Overrides the default method so we only display meetings that are
            in the 'created' or 'frozen' state.'''
@@ -578,6 +583,7 @@ class CustomMeetingItem(MeetingItem):
         return res
 
     security.declarePublic('mayBeLinkedToTasks')
+
     def mayBeLinkedToTasks(self):
         '''See doc in interfaces.py.'''
         item = self.getSelf()
@@ -587,6 +593,7 @@ class CustomMeetingItem(MeetingItem):
         return res
 
     security.declarePublic('getCertifiedSignatures')
+
     def getCertifiedSignatures(self, forceUseCertifiedSignaturesField=False):
         '''Gets the certified signatures for this item.
            Either use signatures defined on the proposing MeetingGroup if exists,
@@ -627,6 +634,7 @@ class CustomMeetingItem(MeetingItem):
         return res
 
     security.declarePublic('getIcons')
+
     def getIcons(self, inMeeting, meeting):
         '''Check docstring in PloneMeeting interfaces.py.'''
         item = self.getSelf()
@@ -663,6 +671,7 @@ class CustomMeetingGroup(MeetingGroup):
         self.context = item
 
     security.declarePublic('listEchevinServices')
+
     def listEchevinServices(self):
         '''Returns a list of groups that can be selected on an group (without isEchevin).'''
         res = []
@@ -704,6 +713,7 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
                 wfTool.doActionFor(item, 'accept')
 
     security.declarePrivate('doDecide')
+
     def doDecide(self, stateChange):
         '''We pass every item that is 'presented' in the 'itemfrozen'
            state.  It is the case for late items. Moreover, if
@@ -723,6 +733,7 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
                 item._initDecisionFieldIfEmpty()
 
     security.declarePrivate('doBackToCreated')
+
     def doBackToCreated(self, stateChange):
         '''When a meeting go back to the "created" state, for example the
            meeting manager wants to add an item, we do not do anything.'''
@@ -737,6 +748,7 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
     security = ClassSecurityInfo()
 
     security.declarePublic('mayFreeze')
+
     def mayFreeze(self):
         res = False
         if checkPermission(ReviewPortalContent, self.context):
@@ -746,6 +758,7 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
         return res
 
     security.declarePublic('mayClose')
+
     def mayClose(self):
         res = False
         # The user just needs the "Review portal content" permission on the
@@ -755,6 +768,7 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
         return res
 
     security.declarePublic('mayDecide')
+
     def mayDecide(self):
         res = False
         if checkPermission(ReviewPortalContent, self.context):
@@ -770,14 +784,17 @@ class MeetingItemCollegeWorkflowActions(MeetingItemWorkflowActions):
     security = ClassSecurityInfo()
 
     security.declarePrivate('doAccept_but_modify')
+
     def doAccept_but_modify(self, stateChange):
         pass
 
     security.declarePrivate('doPre_accept')
+
     def doPre_accept(self, stateChange):
         pass
 
     security.declarePrivate('doDelay')
+
     def doDelay(self, stateChange):
         '''When an item is delayed, we will duplicate it: the copy is back to
            the initial state and will be linked to this one.
@@ -815,6 +832,7 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
         self.context = item  # Implements IMeetingItem
 
     security.declarePublic('mayDecide')
+
     def mayDecide(self):
         '''We may decide an item if the linked meeting is in relevant state.'''
         res = False
@@ -825,6 +843,7 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
         return res
 
     security.declarePublic('mayCorrect')
+
     def mayCorrect(self):
         '''If the item is not linked to a meeting, the user just need the
            'Review portal content' permission, if it is linked to a meeting, an item
@@ -865,6 +884,7 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
                 wfTool.doActionFor(item, 'accept')
 
     security.declarePrivate('doDecide')
+
     def doDecide(self, stateChange):
         '''We pass every item that is 'presented' in the 'itemfrozen'
            state.  It is the case for late items. We initialize the decision
@@ -890,6 +910,7 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
                 item._initDecisionFieldIfEmpty()
 
     security.declarePrivate('doPublish')
+
     def doPublish(self, stateChange):
         '''When publishing the meeting, every items must be automatically set to
            "itempublished".'''
@@ -901,6 +922,7 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
                 wfTool.doActionFor(item, 'itempublish')
 
     security.declarePrivate('doBackToPublished')
+
     def doBackToPublished(self, stateChange):
         '''We do not impact items while going back from decided.'''
         pass
@@ -914,6 +936,7 @@ class MeetingCouncilWorkflowConditions(MeetingCollegeWorkflowConditions):
     security = ClassSecurityInfo()
 
     security.declarePublic('mayClose')
+
     def mayClose(self):
         res = False
         # The user just needs the "Review portal content" permission on the
@@ -944,6 +967,7 @@ class MeetingItemCouncilWorkflowActions(MeetingItemCollegeWorkflowActions):
     security = ClassSecurityInfo()
 
     security.declarePrivate('doPresent')
+
     def doPresent(self, stateChange):
         '''Manage what to do when we present an item in a meeting.'''
         meeting = getCurrentMeetingObject(self.context)
@@ -969,6 +993,7 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
     security = ClassSecurityInfo()
 
     security.declarePublic('mayFreeze')
+
     def mayFreeze(self):
         """
           A MeetingManager may freeze an item if the meeting is at least frozen
@@ -985,6 +1010,7 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
         return res
 
     security.declarePublic('mayPublish')
+
     def mayPublish(self):
         """
           A MeetingManager may publish (itempublish) an item if the meeting is at least published
@@ -997,6 +1023,7 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
         return res
 
     security.declarePublic('mayCorrect')
+
     def mayCorrect(self):
         # Check with the default PloneMeeting method and our test if res is
         # False. The diffence here is when we correct an item from itemfrozen to
@@ -1024,6 +1051,7 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
         return res
 
     security.declarePublic('mayDecide')
+
     def mayDecide(self):
         '''We may decide an item if the linked meeting is in relevant state.'''
         res = False
@@ -1042,6 +1070,7 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
     security = ClassSecurityInfo()
 
     security.declarePublic('getSpecificAssemblyFor')
+
     def getSpecificAssemblyFor(self, assembly, startTxt=''):
         ''' Return the Assembly between two tag.
             This method is used in templates.
