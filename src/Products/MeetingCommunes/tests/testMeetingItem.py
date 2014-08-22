@@ -79,6 +79,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_AddAutoCopyGroups()
 
+    def test_subproduct_call_AddAutoCopyGroupsWrongExpressionDoesNotBreak(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_AddAutoCopyGroupsWrongExpressionDoesNotBreak()
+
     def test_subproduct_call_UpdateAdvices(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_UpdateAdvices()
