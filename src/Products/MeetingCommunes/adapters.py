@@ -28,6 +28,7 @@ from Products.Archetypes.atapi import DisplayList
 from Globals import InitializeClass
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
+from imio.helpers.xhtml import xhtmlContentIsEmpty
 from Products.PloneMeeting.MeetingItem import MeetingItem, \
     MeetingItemWorkflowConditions, MeetingItemWorkflowActions
 from Products.PloneMeeting.MeetingGroup import MeetingGroup
@@ -48,16 +49,6 @@ from Products.PloneMeeting.utils import getCurrentMeetingObject
 from Products.PloneMeeting import PloneMeetingError
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import *
-
-# values considered as empty
-EMTPY_VALUES = ('<p class="pmParaKeepWithNext" ></p>',
-                '<p class="pmParaKeepWithNext" > </p>',
-                '<p class="pmParaKeepWithNext" ><br></p>',
-                '<p class="pmParaKeepWithNext" ><br ></p>',
-                '<p class="pmParaKeepWithNext" ><br /></p>',
-                '<p class="pmParaKeepWithNext" ><br/></p>',
-                '<br>', '<br/>',
-                '<br />', '<br >')
 
 # Names of available workflow adaptations.
 customwfAdaptations = list(MeetingConfig.wfAdaptations)
@@ -649,6 +640,17 @@ class CustomMeetingItem(MeetingItem):
             res.append(('pre_accepted.png', 'icon_help_pre_accepted'))
         return res
 
+    def _initDecisionFieldIfEmpty(self):
+        '''
+          If decision field is empty, it will be initialized
+          with data coming from title and description.
+        '''
+        if xhtmlContentIsEmpty(self.getDeliberation()):
+            self.setDecision("<p>%s</p>%s" % (self.Title(),
+                                              self.Description()))
+            self.reindexObject()
+    MeetingItem._initDecisionFieldIfEmpty = _initDecisionFieldIfEmpty
+
 
 class CustomMeetingGroup(MeetingGroup):
     '''Adapter that adapts a meeting group implementing IMeetingGroup to the
@@ -718,11 +720,7 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
             if initializeDecision:
                 # If deliberation (motivation+decision) is empty,
                 # initialize it the decision field
-                itemDeliberation = item.getDeliberation().strip()
-                if not itemDeliberation or itemDeliberation in EMTPY_VALUES:
-                    item.setDecision("<p>%s</p>%s" % (item.Title(),
-                                                      item.Description()))
-                    item.reindexObject()
+                item._initDecisionFieldIfEmpty()
 
     security.declarePrivate('doBackToCreated')
     def doBackToCreated(self, stateChange):
@@ -873,6 +871,9 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
            field with content of Title+Description if no decision has already
            been written.'''
         wfTool = getToolByName(self.context, 'portal_workflow')
+        tool = getToolByName(self.context, 'portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+        initializeDecision = cfg.getInitItemDecisionIfEmptyOnDecide()
         for item in self.context.getAllItems(ordered=True):
             if item.queryState() == 'presented':
                 wfTool.doActionFor(item, 'itemfreeze')
@@ -883,13 +884,10 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
                     # in the case we selected the 'no_publication' wfAdaptation
                     # the itempublish transition does not exist anymore...
                     pass
-            # If deliberation (motivation+decision) is empty,
-            # initialize it the decision field
-            itemDeliberation = item.getDeliberation().strip()
-            if not itemDeliberation or itemDeliberation in EMTPY_VALUES:
-                item.setDecision("<p>%s</p>%s" % (item.Title(),
-                                                  item.Description()))
-                item.reindexObject()
+            if initializeDecision:
+                # If deliberation (motivation+decision) is empty,
+                # initialize it the decision field
+                item._initDecisionFieldIfEmpty()
 
     security.declarePrivate('doPublish')
     def doPublish(self, stateChange):
