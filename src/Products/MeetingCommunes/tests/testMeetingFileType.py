@@ -33,6 +33,10 @@ class testMeetingFileType(MeetingCommunesTestCase, pmmft):
         '''Run the testCanNotRemoveLinkedMeetingFileType from PloneMeeting.'''
         self.test_pm_CanNotRemoveLinkedMeetingFileType()
 
+    def test_subproduct_call_CanNotRemoveLinkedSubMeetingFileType(self):
+        '''Run the testCanNotRemoveLinkedSubMeetingFileType from PloneMeeting.'''
+        self.test_pm_CanNotRemoveLinkedSubMeetingFileType()
+
     def test_subproduct_call_CanNotChangeRelatedToOfUsedMeetingFileType(self):
         '''Run the test_pm_CanNotChangeRelatedToOfUsedMeetingFileType from PloneMeeting.'''
         self.test_pm_CanNotChangeRelatedToOfUsedMeetingFileType()
