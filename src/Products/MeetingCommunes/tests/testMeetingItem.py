@@ -31,14 +31,14 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         Tests the MeetingItem class methods.
     """
 
-    def test_subproduct_call_ListProposingGroup(self):
+    def test_subproduct_call_ListProposingGroups(self):
         '''See doc string in PloneMeeting.'''
         #we do the test for the college config
         self.setMeetingConfig(self.meetingConfig.getId())
-        self.test_pm_ListProposingGroup()
+        self.test_pm_ListProposingGroups()
         #we do the test for the council config
         self.setMeetingConfig(self.meetingConfig2.getId())
-        self.test_pm_ListProposingGroup()
+        self.test_pm_ListProposingGroups()
 
     def test_subproduct_call_UsedColorSystemGetColoredLink(self):
         '''See doc string in PloneMeeting.'''
