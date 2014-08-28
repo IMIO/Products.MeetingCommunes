@@ -20,7 +20,7 @@
 # 02110-1301, USA.
 #
 # ------------------------------------------------------------------------------
-from DateTime import DateTime
+
 from appy.gen import No
 from zope.interface import implements
 from zope.i18n import translate
