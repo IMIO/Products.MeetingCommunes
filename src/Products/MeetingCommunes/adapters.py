@@ -20,6 +20,7 @@
 # 02110-1301, USA.
 #
 # ------------------------------------------------------------------------------
+from DateTime import DateTime
 from appy.gen import No
 from zope.interface import implements
 from zope.i18n import translate
@@ -564,26 +565,6 @@ class CustomMeetingItem(MeetingItem):
     def itemPositiveDecidedStates(self):
         '''See doc in interfaces.py.'''
         return ('accepted', 'accepted_but_modified', )
-
-    security.declarePublic('getMeetingsAcceptingItems')
-
-    def getMeetingsAcceptingItems(self):
-        '''Overrides the default method so we only display meetings that are
-           in the 'created' or 'frozen' state.'''
-        tool = getToolByName(self.context, 'portal_plonemeeting')
-        catalog = getToolByName(self.context, 'portal_catalog')
-        meetingPortalType = tool.getMeetingConfig(self.context).getMeetingTypeName()
-        # If the current user is a meetingManager (or a Manager),
-        # he is able to add a meetingitem to a 'decided' meeting.
-        review_state = ['created', 'frozen', ]
-        if tool.isManager():
-            review_state += ['decided', 'published', ]
-        res = catalog.unrestrictedSearchResults(
-            portal_type=meetingPortalType,
-            review_state=review_state,
-            sort_on='getDate')
-        # Frozen meetings may still accept "late" items.
-        return res
 
     security.declarePublic('mayBeLinkedToTasks')
 

@@ -183,6 +183,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_GetDeliberation()
 
+    def test_subproduct_call_GetMeetingsAcceptingItems(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_GetMeetingsAcceptingItems()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

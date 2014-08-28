@@ -138,6 +138,10 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         """Run the test_pm_NumberOfItems from PloneMeeting."""
         self.test_pm_NumberOfItems()
 
+    def test_subproduct_call_PresentItemToMeeting(self):
+        """Run the test_pm_PresentItemToMeeting from PloneMeeting."""
+        self.test_pm_PresentItemToMeeting()
+
     def test_subproduct_call_Validate_place(self):
         """Run the test_pm_Validate_place from PloneMeeting."""
         self.test_pm_Validate_place()

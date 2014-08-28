@@ -30,36 +30,6 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
     """
         Tests the MeetingItem adapted methods
     """
-
-    def test_GetMeetingsAcceptingItems(self):
-        """We have to test this adapted method.
-           It should only return meetings that are "created" or "frozen"."""
-        self.changeUser('pmManager')
-        #create 4 meetings with items so we can play the workflow
-        #will stay 'created'
-        m1 = self.create('Meeting', date=DateTime('2013/02/01 08:00:00'))
-        #go to state 'frozen'
-        m2 = self.create('Meeting', date=DateTime('2013/02/08 08:00:00'))
-        self.do(m2, 'freeze')
-        #go to state 'decided'
-        m3 = self.create('Meeting', date=DateTime('2013/02/15 08:00:00'))
-        self.do(m3, 'freeze')
-        self.do(m3, 'decide')
-        #go to state 'closed'
-        m4 = self.create('Meeting', date=DateTime('2013/02/22 08:00:00'))
-        self.do(m4, 'freeze')
-        self.do(m4, 'decide')
-        self.do(m4, 'close')
-        item = self.create('MeetingItem')
-        #getMeetingsAcceptingItems should only return meetings
-        #that are 'created', 'frozen' or 'decided' for the meetingManager
-        self.assertEquals([m.id for m in item.adapted().getMeetingsAcceptingItems()], [m1.id, m2.id, m3.id])
-        #getMeetingsAcceptingItems should only return meetings
-        #that are 'created' or 'frozen' for the meetingMember
-        self.changeUser('pmCreator1')
-        item = self.create('MeetingItem')
-        self.assertEquals([m.id for m in item.adapted().getMeetingsAcceptingItems()], [m1.id, m2.id])
-
     def test_GetCertifiedSignatures(self):
         '''Check that the certified signature is defined on developers group but not defined on vendors.'''
         #create an item for test
