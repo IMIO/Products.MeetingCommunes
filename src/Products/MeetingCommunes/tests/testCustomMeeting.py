@@ -127,6 +127,8 @@ class testCustomMeeting(MeetingCommunesTestCase):
             In the doDecide method, we initialize the Decision field to a default value made of
             Title+Description if the field is empty...
         """
+        # make sure we are not hit by any other xhtmlTransformations
+        self.meetingConfig.setXhtmlTransformTypes(())
         # check that it works
         # check that if the field contains something, it is not intialized again
         self.changeUser('pmManager')
