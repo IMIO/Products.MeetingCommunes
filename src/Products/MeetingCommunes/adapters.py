@@ -637,7 +637,9 @@ class CustomMeetingItem(MeetingItem):
           If decision field is empty, it will be initialized
           with data coming from title and description.
         '''
-        if xhtmlContentIsEmpty(self.getDeliberation()):
+        # set keepWithNext to False as it will add a 'class' and so
+        # xhtmlContentIsEmpty will never consider it empty...
+        if xhtmlContentIsEmpty(self.getDeliberation(keepWithNext=False)):
             self.setDecision("<p>%s</p>%s" % (self.Title(),
                                               self.Description()))
             self.reindexObject()

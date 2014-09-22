@@ -143,7 +143,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         i2.setProposingGroup('developers')
         # create an item with the default Kupu empty value
         i3 = self.create('MeetingItem', title='Item3', description="<p>Description Item3</p>")
-        i3.setDecision("<p><br /></p>")
+        i3.setDecision("<p>&nbsp;</p>")
         i3.setProposingGroup('developers')
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
         # present every items in the meeting
@@ -155,13 +155,14 @@ class testCustomMeeting(MeetingCommunesTestCase):
         # check the decision field of every item
         self.assertTrue(i1.getDecision(keepWithNext=False) == "")
         self.assertTrue(i2.getDecision(keepWithNext=False) == '<p>Decision Item2</p>')
-        self.assertTrue(i3.getDecision(keepWithNext=False) == '<p><br /></p>')
+        self.assertTrue(i3.getDecision(keepWithNext=False) == '<p>&nbsp;</p>')
         # if cfg.initItemDecisionIfEmptyOnDecide is False, the decision field is not initialized
         self.meetingConfig.setInitItemDecisionIfEmptyOnDecide(False)
         self.decideMeeting(meeting)
         self.assertTrue(i1.getDecision(keepWithNext=False) == "")
         self.assertTrue(i2.getDecision(keepWithNext=False), '<p>Decision Item2</p>')
-        self.assertTrue(i3.getDecision(keepWithNext=False), '<p><br /></p>')
+        # a complex HTML is not 'touched'
+        self.assertTrue(i3.getDecision(keepWithNext=False), '<p>&nbsp;</p>')
         # now if cfg.initItemDecisionIfEmptyOnDecide is True
         # fields will be initialized
         self.meetingConfig.setInitItemDecisionIfEmptyOnDecide(True)
