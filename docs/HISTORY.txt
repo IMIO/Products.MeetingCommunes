@@ -11,6 +11,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Removed dependencies already defined in PloneMeeting's setup.py
 - Added parameter MeetingConfig.initItemDecisionIfEmptyOnDecide that let enable/disable
   items decision field initialization when meeting 'decide' transition is triggered
+- Added MeetingConfig 'CoDir'
 
 3.2.0.1 (2014-03-06)
 --------------------
