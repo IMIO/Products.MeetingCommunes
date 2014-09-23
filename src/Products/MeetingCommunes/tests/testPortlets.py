@@ -31,8 +31,12 @@ class testPortlets(MeetingCommunesTestCase, pmtp):
     '''Tests the portlets methods.'''
 
     def test_subproduct_call_PortletPMAvailableTemplates(self):
-        '''Run the testPortletPMAvailableTemplates from PloneMeeting.'''
+        '''Run the test_pm_PortletPMAvailableTemplates from PloneMeeting.'''
         self.test_pm_PortletPMAvailableTemplates()
+
+    def test_subproduct_call_CreateItemFromTemplate(self):
+        '''Run the test_pm_CreateItemFromTemplate from PloneMeeting.'''
+        self.test_pm_CreateItemFromTemplate()
 
 
 def test_suite():

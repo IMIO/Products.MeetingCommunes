@@ -51,7 +51,7 @@ itemTemplate.podCondition = 'python:here.meta_type=="MeetingItem"'
 # item templates
 template1 = ItemTemplateDescriptor(id='template1',
                                    title='Tutelle CPAS',
-                                   description='Tutelle CPAS',
+                                   description='<p>Tutelle CPAS</p>',
                                    category='',
                                    proposingGroup='developers',
                                    templateUsingGroups=['developers', 'vendors'],
@@ -69,7 +69,7 @@ template1 = ItemTemplateDescriptor(id='template1',
 <p>Copie de la présente délibération sera transmise au Bureau permanent/Conseil de l'Action sociale.</p>""")
 template2 = ItemTemplateDescriptor(id='template2',
                                    title='Contrôle médical systématique agent contractuel',
-                                   description='Contrôle médical systématique agent contractuel',
+                                   description='<p>Contrôle médical systématique agent contractuel</p>',
                                    category='',
                                    proposingGroup='vendors',
                                    templateUsingGroups=['vendors', ],
@@ -201,12 +201,6 @@ collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, itemAnnex
                                    annexeDecision, overheadAnalysis, marketingAnalysis,
                                    adviceAnnex, adviceLegalAnalysis]
 collegeMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
-collegeMeeting.xhtmlTransformFields = ('MeetingItem.description',
-                                       'MeetingItem.detailedDescription',
-                                       'MeetingItem.decision',
-                                       'MeetingItem.observations',
-                                       'Meeting.observations', )
-collegeMeeting.xhtmlTransformTypes = ('removeBlanks',)
 collegeMeeting.itemWorkflow = 'meetingitemcollege_workflow'
 collegeMeeting.meetingWorkflow = 'meetingcollege_workflow'
 collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
@@ -270,12 +264,6 @@ councilMeeting.categories = categories
 councilMeeting.shortName = 'Council'
 councilMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
                                    itemAnnex, annexeDecision, adviceAnnex, adviceLegalAnalysis]
-councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
-                                       'MeetingItem.detailedDescription',
-                                       'MeetingItem.decision',
-                                       'MeetingItem.observations',
-                                       'Meeting.observations', )
-councilMeeting.xhtmlTransformTypes = ('removeBlanks',)
 councilMeeting.itemWorkflow = 'meetingitemcouncil_workflow'
 councilMeeting.meetingWorkflow = 'meetingcouncil_workflow'
 councilMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCouncilWorkflowConditions'
