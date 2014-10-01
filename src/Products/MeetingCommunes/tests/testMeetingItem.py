@@ -187,6 +187,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_GetMeetingsAcceptingItems()
 
+    def test_subproduct_call_OnTransitionFieldTransforms(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_OnTransitionFieldTransforms()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
