@@ -212,8 +212,11 @@ codirMeeting.itemPowerObserversStates = ('itemfrozen',
                                          'pre_accepted')
 codirMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 codirMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
+codirMeeting.onTransitionFieldTransforms = (
+    ({'transition': 'delay',
+      'field_name': 'MeetingItem.decision',
+      'tal_expression': "string:Le Comité décide de reporter le point."},))
 codirMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
-codirMeeting.itemDecisionReportText = "python:'Le collège décide de reporter le point.'"
 codirMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
 codirMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 codirMeeting.useCopies = True

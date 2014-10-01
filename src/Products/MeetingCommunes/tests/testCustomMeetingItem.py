@@ -92,39 +92,3 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         #before present in meeting, certfiedSignatures must be empty
         res = i2.adapted().getEchevinsForProposingGroup()
         self.assertEquals(res, ['developers'])
-
-    def test_GetDelayedDecision(self):
-        '''If item is reported, the decision can be changed'''
-        self.changeUser('pmManager')
-        #create a meeting with items so we can play the workflow
-        #will stay 'created'
-        m1 = self._createMeetingWithItems()
-        self.do(m1, 'freeze')
-        self.do(m1, 'decide')
-        item = m1.getItems()[0]
-        item.setDecision('<p>Testing decision field</p>')
-        #field itemDecisionReportText in configuration is empty
-        self.assertEquals(item.getDecision(), '<p class="pmParaKeepWithNext" >Testing decision field</p>')
-        self.do(item, 'delay')
-        self.assertEquals(item.getDecision(), '<p class="pmParaKeepWithNext" >Testing decision field</p>')
-        #change field itemDecisionReportText in configuration by python:'item is delay'
-        item = m1.getItems()[1]
-        meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
-        self.changeUser('admin')
-        meetingConfig.setItemDecisionReportText("python:'<p>Item is delayed</p>'")
-        self.changeUser('pmManager')
-        item.setDecision('<p>Testing decision field</p>')
-        #field itemDecisionReportText in configuration is empty
-        self.assertEquals(item.getDecision(), '<p class="pmParaKeepWithNext" >Testing decision field</p>')
-        self.do(item, 'delay')
-        self.assertEquals(item.getDecision(), '<p class="pmParaKeepWithNext" >Item is delayed</p>')
-        #change field itemDecisionReportText in configuration by python:'%s delay this item'%here.getDecision()'
-        item = m1.getItems()[2]
-        meetingConfig = item.portal_plonemeeting.getMeetingConfig(item)
-        meetingConfig.setItemDecisionReportText("python:'%s<p>Delay this item</p>'"
-                                                "% here.getDecision(keepWithNext=False)")
-        item.setDecision('<p>Testing decision field</p>')
-        #field itemDecisionReportText in configuration is empty
-        self.do(item, 'delay')
-        self.assertEquals(item.getDecision(), '<p>Testing decision field</p>'
-                                              '<p class="pmParaKeepWithNext" >Delay this item</p>')

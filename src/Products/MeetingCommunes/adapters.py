@@ -47,7 +47,6 @@ from Products.MeetingCommunes.interfaces import \
 from Products.PloneMeeting.utils import checkPermission
 from Products.CMFCore.permissions import ReviewPortalContent
 from Products.PloneMeeting.utils import getCurrentMeetingObject
-from Products.PloneMeeting import PloneMeetingError
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import WF_DOES_NOT_EXIST_WARNING, WF_APPLIED
 
@@ -778,33 +777,6 @@ class MeetingItemCollegeWorkflowActions(MeetingItemWorkflowActions):
 
     def doPre_accept(self, stateChange):
         pass
-
-    security.declarePrivate('doDelay')
-
-    def doDelay(self, stateChange):
-        '''When an item is delayed, we will duplicate it: the copy is back to
-           the initial state and will be linked to this one.
-           After, we replace decision for initial items if needed'''
-        DECISION_ERROR = 'There was an error in the TAL expression for defining the ' \
-            'decision when an item is reported. Please check this in your meeting config. ' \
-            'Original exception: %s'
-        # call PloneMeeting's doDelay then make our additional things
-        MeetingItemWorkflowActions.doDelay(self, stateChange)
-        # manage itemDecisionReportText
-        tool = getToolByName(self.context, 'portal_plonemeeting')
-        meetingConfig = tool.getMeetingConfig(self.context)
-        itemDecisionReportText = meetingConfig.getRawItemDecisionReportText()
-        if itemDecisionReportText.strip():
-            from Products.CMFCore.Expression import Expression, createExprContext
-            portal_url = getToolByName(self.context, 'portal_url')
-            portal = portal_url.getPortalObject()
-            ctx = createExprContext(self.context.getParentNode(), portal, self.context)
-            try:
-                res = Expression(itemDecisionReportText)(ctx)
-            except Exception, e:
-                self.context.plone_utils.addPortalMessage(PloneMeetingError(DECISION_ERROR % str(e)))
-                return
-            self.context.setDecision(res)
 
 
 class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):

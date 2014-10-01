@@ -48,18 +48,6 @@ MeetingGroup.schema = update_group_schema(MeetingGroup.schema)
 
 def update_config_schema(baseSchema):
     specificSchema = Schema((
-        TextField(
-            name='itemDecisionReportText',
-            widget=TextAreaWidget(
-                description="ItemDecisionReportText",
-                description_msgid="item_decision_report_text_descr",
-                label='ItemDecisionReportText',
-                label_msgid='MeetingCommunes_label_itemDecisionReportText',
-                i18n_domain='PloneMeeting',
-            ),
-            allowable_content_types=('text/plain', 'text/html', ),
-            default_output_type="text/plain",
-        ),
         BooleanField(
             name='initItemDecisionIfEmptyOnDecide',
             default=True,
@@ -72,7 +60,6 @@ def update_config_schema(baseSchema):
         ),
     ),)
     completeConfigSchema = baseSchema + specificSchema.copy()
-    completeConfigSchema.moveField('itemDecisionReportText', after='budgetDefault')
     return completeConfigSchema
 MeetingConfig.schema = update_config_schema(MeetingConfig.schema)
 

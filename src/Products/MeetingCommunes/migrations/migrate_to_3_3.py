@@ -9,8 +9,26 @@ from Products.PloneMeeting.migrations import Migrator
 # The migration class ----------------------------------------------------------
 class Migrate_To_3_3(Migrator):
 
+    def _migrateItemDecisionReportTextAttributeOnConfigs(self):
+        '''
+          The attribute is now managed by the MeetingConfig.onTransitionFieldTransforms functionnality, so :
+          - if it was used, migrate it to MeetingConfig.onTransitionFieldTransforms;
+          - removes the obsolete 'itemDecisionReportText' attribute.'''
+        logger.info('Removing obsolete attribute \'itemDecisionReportText\' of every MeetingConfigs...')
+        for cfg in self.portal.portal_plonemeeting.objectValues('MeetingConfig'):
+            if hasattr(cfg, 'itemDecisionReportText'):
+                if cfg.itemDecisionReportText.raw.strip():
+                    # attribute was used, migrate to MeetingConfig.onTransitionFieldTransforms
+                    cfg.setOnTransitionFieldTransforms(
+                        ({'transition': 'delay',
+                          'field_name': 'MeetingItem.decision',
+                          'tal_expression': cfg.itemDecisionReportText.raw.strip()},))
+                delattr(cfg, 'itemDecisionReportText')
+        logger.info('Done.')
+
     def run(self):
         logger.info('Migrating to MeetingCommunes 3.3...')
+        self._migrateItemDecisionReportTextAttributeOnConfigs()
         # reinstall so skins and so on are correct
         self.reinstall(profiles=[u'profile-Products.MeetingCommunes:default', ])
         self.finish()
@@ -20,7 +38,8 @@ class Migrate_To_3_3(Migrator):
 def migrate(context):
     '''This migration function:
 
-       1) Reinstall Products.MeetingCommunes so skin and so on are correct.
+       1) Remove obsolete attribut 'itemDecisionReportText' from every meetingConfigs;
+       2) Reinstall Products.MeetingCommunes so skin and so on are correct.
     '''
     Migrate_To_3_3(context).run()
 # ------------------------------------------------------------------------------

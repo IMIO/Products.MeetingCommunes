@@ -54,14 +54,6 @@ msgstr ""
 msgid "Meeting config Council"
 msgstr ""
 
-#. Default: "Decision used when the item is delayed"
-msgid "MeetingCommunes_label_itemDecisionReportText"
-msgstr ""
-
-#. Default: "When an item is delay, the decision will be replace by the text defined here, as a TAL (Tag Attribute Language) expression whose context includes the name 'here' that represents the impacted item. If you don't know TAL, you may learn it <a href=\"http://zope.org/Documentation/Books/ZopeBook/2_6Edition/ZPT.stx\">here</a>."
-msgid "item_decision_report_text_descr"
-msgstr ""
-
 #. Default: "Accepted but modified"
 msgid "icon_help_accepted_but_modified"
 msgstr ""
