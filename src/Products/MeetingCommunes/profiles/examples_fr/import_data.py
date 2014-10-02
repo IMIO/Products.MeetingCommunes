@@ -1,6 +1,15 @@
 # -*- coding: utf-8 -*-
 from DateTime import DateTime
-from Products.PloneMeeting.profiles import *
+from Products.PloneMeeting.profiles import CategoryDescriptor
+from Products.PloneMeeting.profiles import GroupDescriptor
+from Products.PloneMeeting.profiles import ItemTemplateDescriptor
+from Products.PloneMeeting.profiles import MeetingConfigDescriptor
+from Products.PloneMeeting.profiles import MeetingFileTypeDescriptor
+from Products.PloneMeeting.profiles import MeetingUserDescriptor
+from Products.PloneMeeting.profiles import PloneMeetingConfiguration
+from Products.PloneMeeting.profiles import PodTemplateDescriptor
+from Products.PloneMeeting.profiles import RecurringItemDescriptor
+from Products.PloneMeeting.profiles import UserDescriptor
 
 today = DateTime().strftime('%Y/%m/%d')
 

@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
-from Products.PloneMeeting.profiles import *
+from Products.PloneMeeting.profiles import CategoryDescriptor
+from Products.PloneMeeting.profiles import GroupDescriptor
+from Products.PloneMeeting.profiles import MeetingConfigDescriptor
+from Products.PloneMeeting.profiles import MeetingFileTypeDescriptor
+from Products.PloneMeeting.profiles import PloneMeetingConfiguration
+from Products.PloneMeeting.profiles import PodTemplateDescriptor
+from Products.PloneMeeting.profiles import RecurringItemDescriptor
+from Products.PloneMeeting.profiles import UserDescriptor
 
 # File types -------------------------------------------------------------------
 annexe = MeetingFileTypeDescriptor('annexe', 'Annexe', 'attach.png', '')
@@ -30,9 +37,9 @@ agendaTemplatePDF = PodTemplateDescriptor('agendapdf', 'Ordre du jour')
 agendaTemplatePDF.podTemplate = 'Agenda.odt'
 agendaTemplatePDF.podFormat = 'pdf'
 agendaTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                  'here.portal_membership.' \
-                                  'getAuthenticatedMember().has_role("' \
-                                  'MeetingManager")'
+                                 'here.portal_membership.' \
+                                 'getAuthenticatedMember().has_role("' \
+                                 'MeetingManager")'
 
 decisionsTemplate = PodTemplateDescriptor('decisions', 'Procès-verbal')
 decisionsTemplate.podTemplate = 'Decisions.odt'
@@ -51,17 +58,17 @@ decisionsTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
 decisionsByCatTemplate = PodTemplateDescriptor('decisionsbycat', 'PV avec catégories')
 decisionsByCatTemplate.podTemplate = 'DecisionsWithItemsByCategory.odt'
 decisionsByCatTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                 'here.portal_membership.' \
-                                 'getAuthenticatedMember().has_role("' \
-                                 'MeetingManager")'
+                                      'here.portal_membership.' \
+                                      'getAuthenticatedMember().has_role("' \
+                                      'MeetingManager")'
 
 decisionsByCatTemplatePDF = PodTemplateDescriptor('decisionsbycatpdf', 'PV avec catégories')
 decisionsByCatTemplatePDF.podTemplate = 'DecisionsWithItemsByCategory.odt'
 decisionsByCatTemplatePDF.podFormat = 'pdf'
 decisionsByCatTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                    'here.portal_membership.' \
-                                    'getAuthenticatedMember().has_role("' \
-                                    'MeetingManager")'
+                                         'here.portal_membership.' \
+                                         'getAuthenticatedMember().has_role("' \
+                                         'MeetingManager")'
 
 itemTemplate = PodTemplateDescriptor('item', 'Délibération')
 itemTemplate.podTemplate = 'MeetingItem.odt'
@@ -90,8 +97,7 @@ echevinPers = UserDescriptor('echevinPers', [], email="test@test.be")
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be")
 conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Conseiller")
 
-groups = [
-          GroupDescriptor('admingen', 'Administration générale', 'AdminGen'),
+groups = [GroupDescriptor('admingen', 'Administration générale', 'AdminGen'),
           GroupDescriptor('aidefamilles', 'Aide aux familles', 'Aide'),
           GroupDescriptor('comptabilite', 'Comptabilité', 'Compta'),
           GroupDescriptor('informatique', 'Informatique', 'Info'),
@@ -99,8 +105,7 @@ groups = [
           GroupDescriptor('dettes', 'Médiation de dettes', 'Dettes'),
           GroupDescriptor('personnel', 'Personnel', 'Pers'),
           GroupDescriptor('social', 'Social', 'Soc'),
-          GroupDescriptor('divers', 'Divers', 'Divers'),
-         ]
+          GroupDescriptor('divers', 'Divers', 'Divers'), ]
 # MeetingManager
 groups[0].creators.append(secretaire)
 groups[0].reviewers.append(secretaire)
@@ -171,10 +176,14 @@ bpMeeting.meetingAppDefaultView = 'topic_searchmyitems'
 bpMeeting.useAdvices = True
 bpMeeting.itemAdviceStates = ('validated',)
 bpMeeting.itemAdviceEditStates = ('validated',)
-bpMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted', 'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
-bpMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified','pre_accepted']
+bpMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',
+                                  'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
+bpMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 bpMeeting.useCopies = True
-bpMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'), groups[1].getIdSuffixed('reviewers'), groups[2].getIdSuffixed('reviewers'), groups[4].getIdSuffixed('reviewers')]
+bpMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
+                                  groups[1].getIdSuffixed('reviewers'),
+                                  groups[2].getIdSuffixed('reviewers'),
+                                  groups[4].getIdSuffixed('reviewers')]
 bpMeeting.podTemplates = allTemplates
 bpMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-cas',
                                       'trigger_workflow_transitions_until': '__nothing__'}, ]
@@ -187,8 +196,7 @@ bpMeeting.recurringItems = [
         description='Approuve le procès-verbal de la séance antérieure',
         category='recurrents',
         proposingGroup='admingen',
-        decision='Procès-verbal approuvé'),
-    ]
+        decision='Procès-verbal approuvé'), ]
 
 # CAS
 casMeeting = MeetingConfigDescriptor(
@@ -223,10 +231,14 @@ casMeeting.meetingAppDefaultView = 'topic_searchmyitems'
 casMeeting.useAdvices = True
 casMeeting.itemAdviceStates = ('validated',)
 casMeeting.itemAdviceEditStates = ('validated',)
-casMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted', 'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
+casMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',
+                                   'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
 casMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 casMeeting.useCopies = True
-casMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'), groups[1].getIdSuffixed('reviewers'), groups[2].getIdSuffixed('reviewers'), groups[4].getIdSuffixed('reviewers')]
+casMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
+                                   groups[1].getIdSuffixed('reviewers'),
+                                   groups[2].getIdSuffixed('reviewers'),
+                                   groups[4].getIdSuffixed('reviewers')]
 casMeeting.podTemplates = allTemplates
 
 casMeeting.recurringItems = [
@@ -237,8 +249,7 @@ casMeeting.recurringItems = [
         description='Approuve le procès-verbal de la séance antérieure',
         category='recurrents',
         proposingGroup='admingen',
-        decision='Procès-verbal approuvé'),
-    ]
+        decision='Procès-verbal approuvé'), ]
 
 # Comitee
 comiteeMeeting = MeetingConfigDescriptor(
@@ -276,9 +287,13 @@ comiteeMeeting.meetingDocFormats = ('odt', 'pdf')
 comiteeMeeting.useAdvices = True
 comiteeMeeting.itemAdviceStates = ('validated',)
 comiteeMeeting.itemAdviceEditStates = ('validated',)
-comiteeMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted', 'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
+comiteeMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',
+                                       'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
 comiteeMeeting.useCopies = True
-comiteeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'), groups[1].getIdSuffixed('reviewers'), groups[2].getIdSuffixed('reviewers'), groups[4].getIdSuffixed('reviewers')]
+comiteeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
+                                       groups[1].getIdSuffixed('reviewers'),
+                                       groups[2].getIdSuffixed('reviewers'),
+                                       groups[4].getIdSuffixed('reviewers')]
 comiteeMeeting.podTemplates = allTemplates
 
 comiteeMeeting.recurringItems = [
@@ -289,15 +304,14 @@ comiteeMeeting.recurringItems = [
         description='Approuve le procès-verbal de la séance antérieure',
         category='recurrents',
         proposingGroup='admingen',
-        decision='Procès-verbal approuvé'),
-    ]
+        decision='Procès-verbal approuvé'), ]
 
 # global data
 data = PloneMeetingConfiguration(
-           meetingFolderTitle='Mes séances',
-           meetingConfigs=(bpMeeting, casMeeting, comiteeMeeting,),
-           groups=groups)
-data.unoEnabledPython='/usr/bin/python'
+    meetingFolderTitle='Mes séances',
+    meetingConfigs=(bpMeeting, casMeeting, comiteeMeeting,),
+    groups=groups)
+data.unoEnabledPython = '/usr/bin/python'
 data.usedColorSystem = 'state_color'
 data.enableUserPreferences = False
 data.usersOutsideGroups = [president, conseiller]
