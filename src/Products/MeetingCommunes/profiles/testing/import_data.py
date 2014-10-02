@@ -279,8 +279,6 @@ councilMeeting.recordItemHistoryStates = []
 councilMeeting.maxShownMeetings = 5
 councilMeeting.maxDaysDecisions = 60
 councilMeeting.meetingAppDefaultView = 'topic_searchmyitems'
-councilMeeting.itemDocFormats = ('odt', 'pdf')
-councilMeeting.meetingDocFormats = ('odt', 'pdf')
 councilMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
 councilMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_categories',
                                              'reverse': '0'}, )
