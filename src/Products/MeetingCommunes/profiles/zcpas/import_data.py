@@ -7,8 +7,7 @@ annexeBudget = MeetingFileTypeDescriptor('annexeBudget', 'Article Budgétaire', 
 annexeCahier = MeetingFileTypeDescriptor('annexeCahier', 'Cahier des Charges', 'cahier.gif', '')
 annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe à la décision', 'attach.png', '', True)
 # Categories -------------------------------------------------------------------
-categories = [
-              CategoryDescriptor('recurrents', 'Récurrents'),
+categories = [CategoryDescriptor('recurrents', 'Récurrents'),
               CategoryDescriptor('demissions', 'Démission(s)'),
               CategoryDescriptor('designations', 'Désignation(s)'),
               CategoryDescriptor('compte', 'Compte'),
@@ -17,8 +16,7 @@ categories = [
               CategoryDescriptor('eco-sociale', 'Economie sociale'),
               CategoryDescriptor('aide-familles', "Service d'aide aux familles"),
               CategoryDescriptor('marches-publics', 'Marchés publics'),
-              CategoryDescriptor('divers', 'Divers'),
-             ]
+              CategoryDescriptor('divers', 'Divers'), ]
 
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
@@ -178,7 +176,8 @@ bpMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_m
 bpMeeting.useCopies = True
 bpMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'), groups[1].getIdSuffixed('reviewers'), groups[2].getIdSuffixed('reviewers'), groups[4].getIdSuffixed('reviewers')]
 bpMeeting.podTemplates = allTemplates
-bpMeeting.meetingConfigsToCloneTo = ['meeting-config-cas', ]
+bpMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-cas',
+                                      'trigger_workflow_transitions_until': '__nothing__'}, ]
 
 bpMeeting.recurringItems = [
     # Agenda items
@@ -221,8 +220,6 @@ casMeeting.recordItemHistoryStates = []
 casMeeting.maxShownMeetings = 5
 casMeeting.maxDaysDecisions = 60
 casMeeting.meetingAppDefaultView = 'topic_searchmyitems'
-casMeeting.itemDocFormats = ('odt', 'pdf')
-casMeeting.meetingDocFormats = ('odt', 'pdf')
 casMeeting.useAdvices = True
 casMeeting.itemAdviceStates = ('validated',)
 casMeeting.itemAdviceEditStates = ('validated',)
