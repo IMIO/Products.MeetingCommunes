@@ -3,6 +3,7 @@
 import logging
 logger = logging.getLogger('PloneMeeting')
 
+from Products.CMFCore.utils import getToolByName
 from Products.PloneMeeting.migrations import Migrator
 
 
@@ -26,9 +27,53 @@ class Migrate_To_3_3(Migrator):
                 delattr(cfg, 'itemDecisionReportText')
         logger.info('Done.')
 
+    def _updateOnMeetingTransitionItemTransitionToTrigger(self):
+        '''Set a value for each MeetingConfig.onMeetingTransitionItemTransitionToTrigger
+           attribute so it behaves like before.'''
+        logger.info('Updating attribute \'onMeetingTransitionItemTransitionToTrigger\' of every MeetingConfigs...')
+        wfTool = getToolByName(self.portal, 'portal_workflow')
+        for cfg in self.portal.portal_plonemeeting.objectValues('MeetingConfig'):
+            onMeetingTransitionItemTransitionToTrigger = cfg.getOnMeetingTransitionItemTransitionToTrigger()
+            if not onMeetingTransitionItemTransitionToTrigger:
+                meetingWFTransitions = wfTool.getWorkflowsFor(cfg.getMeetingTypeName())[0].transitions
+                newValue = [{'meeting_transition': 'freeze',
+                             'item_transition': 'itemfreeze'},]
+                # if we have a 'publish' transition in the meeting workflow
+                # we take it into account
+                if 'publish' in meetingWFTransitions:
+                    newValue.append({'meeting_transition': 'publish',
+                                     'item_transition': 'itemfreeze'})
+                    newValue.append({'meeting_transition': 'publish',
+                                     'item_transition': 'itempublish'})
+                # manage the 'decide' meeting transition
+                newValue.append({'meeting_transition': 'decide',
+                                 'item_transition': 'itemfreeze'})
+                if 'publish' in meetingWFTransitions:
+                    newValue.append({'meeting_transition': 'decide',
+                                     'item_transition': 'itempublish'})
+                if 'publish_decisions' in meetingWFTransitions:
+                    newValue.append({'meeting_transition': 'publish_decisions',
+                                     'item_transition': 'itemfreeze'})
+                    if 'publish' in meetingWFTransitions:
+                        newValue.append({'meeting_transition': 'publish_decisions',
+                                         'item_transition': 'itempublish'})
+                    newValue.append({'meeting_transition': 'publish_decisions',
+                                     'item_transition': 'accept'})
+                # manage the 'close' meeting transition
+                newValue.append({'meeting_transition': 'close',
+                                 'item_transition': 'itemfreeze'})
+                if 'publish' in meetingWFTransitions:
+                    newValue.append({'meeting_transition': 'close',
+                                     'item_transition': 'itempublish'})
+                newValue.append({'meeting_transition': 'close',
+                                 'item_transition': 'accept'})
+                cfg.setOnMeetingTransitionItemTransitionToTrigger(newValue)
+        logger.info('Done.')
+
     def run(self):
         logger.info('Migrating to MeetingCommunes 3.3...')
         self._migrateItemDecisionReportTextAttributeOnConfigs()
+        self._updateOnMeetingTransitionItemTransitionToTrigger()
         # reinstall so skins and so on are correct
         self.reinstall(profiles=[u'profile-Products.MeetingCommunes:default', ])
         self.finish()

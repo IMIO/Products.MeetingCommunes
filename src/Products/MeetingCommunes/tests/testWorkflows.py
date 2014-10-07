@@ -24,6 +24,7 @@
 
 from DateTime import DateTime
 from AccessControl import Unauthorized
+from zope.annotation import IAnnotations
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.interfaces import IAnnexable
 from Products.PloneMeeting.tests.testWorkflows import testWorkflows as pmtw
@@ -427,11 +428,15 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
 
     def test_subproduct_call_RemoveContainer(self):
         '''Run the test_pm_RemoveContainer from PloneMeeting.'''
-        #we do the test for the college config
+        # we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
         self.test_pm_RemoveContainer()
-        #we do the test for the council config
+        # we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
+        # clean memoize because we test for status messages
+        annotations = IAnnotations(self.portal.REQUEST)
+        if 'statusmessages' in annotations:
+            annotations['statusmessages'] = ''
         self.test_pm_RemoveContainer()
 
     def test_subproduct_call_DeactivateMeetingGroup(self):
@@ -445,6 +450,10 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
     def test_subproduct_call_NoDefinedRecurringItems(self):
         '''Run the test_pm_NoDefinedRecurringItems from PloneMeeting.'''
         self.test_pm_NoDefinedRecurringItems()
+
+    def test_subproduct_call_meetingTransitionTriggerLinkedItemsTransitions(self):
+        '''Run the test_pm_meetingTransitionTriggerLinkedItemsTransitions from PloneMeeting.'''
+        self.test_pm_meetingTransitionTriggerLinkedItemsTransitions()
 
 
 def test_suite():
