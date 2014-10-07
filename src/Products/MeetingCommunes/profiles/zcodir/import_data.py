@@ -214,6 +214,21 @@ codirMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:Le Comité décide de reporter le point."},))
+codirMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
+                                                            'item_transition': 'itemfreeze'},
+
+                                                           {'meeting_transition': 'decide',
+                                                            'item_transition': 'itemfreeze'},
+
+                                                           {'meeting_transition': 'publish_decisions',
+                                                            'item_transition': 'itemfreeze'},
+                                                           {'meeting_transition': 'publish_decisions',
+                                                            'item_transition': 'accept'},
+
+                                                           {'meeting_transition': 'close',
+                                                            'item_transition': 'itemfreeze'},
+                                                           {'meeting_transition': 'close',
+                                                            'item_transition': 'accept'},)
 codirMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 codirMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
 codirMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')

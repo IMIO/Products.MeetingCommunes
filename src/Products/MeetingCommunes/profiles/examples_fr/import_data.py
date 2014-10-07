@@ -327,6 +327,21 @@ collegeMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:Le Collège décide de reporter le point."},))
+collegeMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
+                                                              'item_transition': 'itemfreeze'},
+
+                                                             {'meeting_transition': 'decide',
+                                                              'item_transition': 'itemfreeze'},
+
+                                                             {'meeting_transition': 'publish_decisions',
+                                                              'item_transition': 'itemfreeze'},
+                                                             {'meeting_transition': 'publish_decisions',
+                                                              'item_transition': 'accept'},
+
+                                                             {'meeting_transition': 'close',
+                                                              'item_transition': 'itemfreeze'},
+                                                             {'meeting_transition': 'close',
+                                                              'item_transition': 'accept'},)
 collegeMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 collegeMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
 collegeMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
@@ -532,6 +547,32 @@ councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
 councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 councilMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
+councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
+                                                              'item_transition': 'itemfreeze'},
+
+                                                             {'meeting_transition': 'publish',
+                                                              'item_transition': 'itemfreeze'},
+                                                             {'meeting_transition': 'publish',
+                                                              'item_transition': 'itempublish'},
+
+                                                             {'meeting_transition': 'decide',
+                                                              'item_transition': 'itemfreeze'},
+                                                             {'meeting_transition': 'decide',
+                                                              'item_transition': 'itempublish'},
+
+                                                             {'meeting_transition': 'publish_decisions',
+                                                              'item_transition': 'itemfreeze'},
+                                                             {'meeting_transition': 'publish_decisions',
+                                                              'item_transition': 'itempublish'},
+                                                             {'meeting_transition': 'publish_decisions',
+                                                              'item_transition': 'accept'},
+
+                                                             {'meeting_transition': 'close',
+                                                              'item_transition': 'itemfreeze'},
+                                                             {'meeting_transition': 'close',
+                                                              'item_transition': 'itempublish'},
+                                                             {'meeting_transition': 'close',
+                                                              'item_transition': 'accept'},)
 councilMeeting.itemPowerObserversStates = ('itemfrozen',
                                            'itempublished',
                                            'accepted', 'delayed',

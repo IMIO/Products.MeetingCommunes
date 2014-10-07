@@ -28,7 +28,6 @@ from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import DisplayList
 from Globals import InitializeClass
 from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.WorkflowCore import WorkflowException
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from Products.PloneMeeting.MeetingItem import MeetingItem, \
     MeetingItemWorkflowConditions, MeetingItemWorkflowActions
@@ -46,7 +45,6 @@ from Products.MeetingCommunes.interfaces import \
     IMeetingCouncilWorkflowConditions, IMeetingCouncilWorkflowActions
 from Products.PloneMeeting.utils import checkPermission
 from Products.CMFCore.permissions import ReviewPortalContent
-from Products.PloneMeeting.utils import getCurrentMeetingObject
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import WF_DOES_NOT_EXIST_WARNING, WF_APPLIED
 
@@ -687,16 +685,6 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
     implements(IMeetingCollegeWorkflowActions)
     security = ClassSecurityInfo()
 
-    def _adaptEveryItemsOnMeetingClosure(self):
-        """Helper method for accepting every items."""
-        # Every item that is not decided will be automatically set to "accepted"
-        wfTool = getToolByName(self.context, 'portal_workflow')
-        for item in self.context.getAllItems():
-            if item.queryState() == 'presented':
-                wfTool.doActionFor(item, 'itemfreeze')
-            if item.queryState() in ['itemfrozen', 'pre_accepted', ]:
-                wfTool.doActionFor(item, 'accept')
-
     security.declarePrivate('doDecide')
 
     def doDecide(self, stateChange):
@@ -705,24 +693,14 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
            MeetingConfig.initItemDecisionIfEmptyOnDecide is True, we
            initialize the decision field with content of Title+Description
            if decision field is empty.'''
-        wfTool = getToolByName(self.context, 'portal_workflow')
         tool = getToolByName(self.context, 'portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
         initializeDecision = cfg.getInitItemDecisionIfEmptyOnDecide()
         for item in self.context.getAllItems(ordered=True):
-            if item.queryState() == 'presented':
-                wfTool.doActionFor(item, 'itemfreeze')
             if initializeDecision:
                 # If deliberation (motivation+decision) is empty,
                 # initialize it the decision field
                 item._initDecisionFieldIfEmpty()
-
-    security.declarePrivate('doBackToCreated')
-
-    def doBackToCreated(self, stateChange):
-        '''When a meeting go back to the "created" state, for example the
-           meeting manager wants to add an item, we do not do anything.'''
-        pass
 
 
 class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
@@ -823,24 +801,6 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
     implements(IMeetingCouncilWorkflowActions)
     security = ClassSecurityInfo()
 
-    def _adaptEveryItemsOnMeetingClosure(self):
-        """Helper method for accepting every items."""
-        # Every item that is not decided will be automatically set to "accepted"
-        # Every item that is "presented" will be automatically set to "accepted"
-        wfTool = getToolByName(self.context, 'portal_workflow')
-        for item in self.context.getAllItems():
-            if item.queryState() == 'presented':
-                wfTool.doActionFor(item, 'itemfreeze')
-            if item.queryState() == 'itemfrozen':
-                try:
-                    wfTool.doActionFor(item, 'itempublish')
-                except WorkflowException:
-                    # in the case we selected the 'no_publication' wfAdaptation
-                    # the itempublish transition does not exist anymore...
-                    pass
-            if item.queryState() in ('itemfrozen', 'itempublished', 'pre_accepted',):
-                wfTool.doActionFor(item, 'accept')
-
     security.declarePrivate('doDecide')
 
     def doDecide(self, stateChange):
@@ -848,36 +808,14 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
            state.  It is the case for late items. We initialize the decision
            field with content of Title+Description if no decision has already
            been written.'''
-        wfTool = getToolByName(self.context, 'portal_workflow')
         tool = getToolByName(self.context, 'portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
         initializeDecision = cfg.getInitItemDecisionIfEmptyOnDecide()
         for item in self.context.getAllItems(ordered=True):
-            if item.queryState() == 'presented':
-                wfTool.doActionFor(item, 'itemfreeze')
-            if item.queryState() == 'itemfrozen':
-                try:
-                    wfTool.doActionFor(item, 'itempublish')
-                except WorkflowException:
-                    # in the case we selected the 'no_publication' wfAdaptation
-                    # the itempublish transition does not exist anymore...
-                    pass
             if initializeDecision:
                 # If deliberation (motivation+decision) is empty,
                 # initialize it the decision field
                 item._initDecisionFieldIfEmpty()
-
-    security.declarePrivate('doPublish')
-
-    def doPublish(self, stateChange):
-        '''When publishing the meeting, every items must be automatically set to
-           "itempublished".'''
-        wfTool = getToolByName(self.context, 'portal_workflow')
-        for item in self.context.getAllItems(ordered=True):
-            if item.queryState() == 'presented':
-                wfTool.doActionFor(item, 'itemfreeze')
-            if item.queryState() == 'itemfrozen':
-                wfTool.doActionFor(item, 'itempublish')
 
     security.declarePrivate('doBackToPublished')
 
@@ -923,24 +861,6 @@ class MeetingItemCouncilWorkflowActions(MeetingItemCollegeWorkflowActions):
 
     implements(IMeetingItemCouncilWorkflowActions)
     security = ClassSecurityInfo()
-
-    security.declarePrivate('doPresent')
-
-    def doPresent(self, stateChange):
-        '''Manage what to do when we present an item in a meeting.'''
-        meeting = getCurrentMeetingObject(self.context)
-        meeting.insertItem(self.context)
-        meetingState = meeting.queryState()
-        wfTool = getToolByName(self.context, 'portal_workflow')
-        if meetingState == 'frozen':
-            # We are inserting an item in a frozen meeting
-            # We need to freeze the item too...
-            wfTool.doActionFor(self.context, 'itemfreeze')
-        elif meetingState in ['published', 'decided']:
-            # We are inserting an item in a published or decided meeting
-            # We need to freeze and publish the item...
-            wfTool.doActionFor(self.context, 'itemfreeze')
-            wfTool.doActionFor(self.context, 'itempublish')
 
 
 class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions):
