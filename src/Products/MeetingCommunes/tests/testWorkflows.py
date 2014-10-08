@@ -343,26 +343,25 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         """
         # First, define recurring items in the meeting config
         self.changeUser('pmManager')
-        #create a meeting
+        # create a meeting
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
-        #create 2 items and present them to the meeting
+        # create 2 items and present it to the meeting
         item1 = self.create('MeetingItem', title='The first item')
         self.presentItem(item1)
         item2 = self.create('MeetingItem', title='The second item')
         self.presentItem(item2)
         wftool = self.portal.portal_workflow
-        #every presented items are in the 'presented' state
+        # every presented items are in the 'presented' state
         self.assertEquals('presented', wftool.getInfoFor(item1, 'review_state'))
         self.assertEquals('presented', wftool.getInfoFor(item2, 'review_state'))
-        #every items must be in the 'itemfrozen' state if we freeze the meeting
+        # every items must be in the 'itemfrozen' state if we freeze the meeting
         self.freezeMeeting(meeting)
         self.assertEquals('itemfrozen', wftool.getInfoFor(item1, 'review_state'))
         self.assertEquals('itemfrozen', wftool.getInfoFor(item2, 'review_state'))
-        #when correcting the meeting back to created, the items must be corrected
-        #back to "presented"
+        # when an item is 'itemfrozen' it will stay itemfrozen if nothing
+        # is defined in the meetingConfig.onMeetingTransitionItemTransitionToTrigger
+        self.meetingConfig.setOnMeetingTransitionItemTransitionToTrigger([])
         self.backToState(meeting, 'created')
-        #when a point is in 'itemfrozen' it's must rest in this state
-        #because normally we backToCreated for add new point
         self.assertEquals('itemfrozen', wftool.getInfoFor(item1, 'review_state'))
         self.assertEquals('itemfrozen', wftool.getInfoFor(item2, 'review_state'))
 

@@ -223,7 +223,11 @@ collegeMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transitio
                                                              {'meeting_transition': 'close',
                                                               'item_transition': 'itemfreeze'},
                                                              {'meeting_transition': 'close',
-                                                              'item_transition': 'accept'},)
+                                                              'item_transition': 'accept'},
+
+                                                             {'meeting_transition': 'backToCreated',
+                                                              'item_transition': 'backToPresented'},)
+
 collegeMeeting.meetingTopicStates = ('created', 'frozen')
 collegeMeeting.decisionTopicStates = ('decided', 'closed')
 collegeMeeting.recordItemHistoryStates = []
@@ -312,7 +316,11 @@ councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transitio
                                                              {'meeting_transition': 'close',
                                                               'item_transition': 'itempublish'},
                                                              {'meeting_transition': 'close',
-                                                              'item_transition': 'accept'},)
+                                                              'item_transition': 'accept'},
+
+                                                             {'meeting_transition': 'backToCreated',
+                                                              'item_transition': 'backToPresented'},)
+
 councilMeeting.meetingTopicStates = ('created', 'frozen', 'published')
 councilMeeting.decisionTopicStates = ('decided', 'closed')
 councilMeeting.itemAdviceStates = ('validated',)
