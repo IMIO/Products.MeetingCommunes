@@ -154,6 +154,10 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         """Run the test_pm_GetItemsInOrder from PloneMeeting."""
         self.test_pm_GetItemsInOrder()
 
+    def test_subproduct_call_RemoveSeveralItems(self):
+        """Run the test_pm_RemoveSeveralItems from PloneMeeting."""
+        self.test_pm_RemoveSeveralItems()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
