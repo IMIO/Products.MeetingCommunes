@@ -451,8 +451,8 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.test_pm_NoDefinedRecurringItems()
 
     def test_subproduct_call_MeetingTransitionTriggerLinkedItemsTransitions(self):
-        '''Run the test_pm_meetingTransitionTriggerLinkedItemsTransitions from PloneMeeting.'''
-        self.test_pm_meetingTransitionTriggerLinkedItemsTransitions()
+        '''Run the test_pm_MeetingTransitionTriggerLinkedItemsTransitions from PloneMeeting.'''
+        self.test_pm_MeetingTransitionTriggerLinkedItemsTransitions()
 
 
 def test_suite():
