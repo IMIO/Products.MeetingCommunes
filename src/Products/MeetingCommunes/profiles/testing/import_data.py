@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from Products.PloneMeeting.config import MEETINGREVIEWERS
 from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import GroupDescriptor
 from Products.PloneMeeting.profiles import ItemTemplateDescriptor
@@ -106,8 +107,12 @@ pmManager = UserDescriptor('pmManager', ['MeetingManager'])
 pmCreator1 = UserDescriptor('pmCreator1', [])
 pmCreator1b = UserDescriptor('pmCreator1b', [])
 pmReviewer1 = UserDescriptor('pmReviewer1', [])
+pmReviewerLevel1 = UserDescriptor('pmReviewerLevel1', [],
+                                  email="pmreviewerlevel1@plonemeeting.org", fullname='M. PMReviewer Level One')
 pmCreator2 = UserDescriptor('pmCreator2', [])
 pmReviewer2 = UserDescriptor('pmReviewer2', [])
+pmReviewerLevel2 = UserDescriptor('pmReviewerLevel2', [],
+                                  email="pmreviewerlevel2@plonemeeting.org", fullname='M. PMReviewer Level Two')
 pmAdviser1 = UserDescriptor('pmAdviser1', [])
 voter1 = UserDescriptor('voter1', [], fullname='M. Voter One')
 voter2 = UserDescriptor('voter2', [], fullname='M. Voter Two')
@@ -153,6 +158,10 @@ developers.advisers.append(pmAdviser1)
 developers.advisers.append(pmManager)
 setattr(developers, 'signatures', 'developers signatures')
 setattr(developers, 'echevinServices', 'developers')
+# put pmReviewerLevel1 in first level of reviewers from what is in MEETINGREVIEWERS
+getattr(developers, MEETINGREVIEWERS.keys()[0]).append(pmReviewerLevel1)
+# put pmReviewerLevel2 in second level of reviewers from what is in MEETINGREVIEWERS
+getattr(developers, MEETINGREVIEWERS.keys()[-1]).append(pmReviewerLevel2)
 
 #give an advice on recurring items
 vendors = GroupDescriptor('vendors', 'Vendors', 'Devil')
