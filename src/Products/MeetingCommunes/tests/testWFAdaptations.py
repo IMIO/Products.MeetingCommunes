@@ -43,6 +43,7 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
                                'no_publication',
                                'only_creator_may_delete',
                                'pre_validation',
+                               'pre_validation_keep_reviewer_permissions',
                                'return_to_proposing_group',
                                )))
 
@@ -63,6 +64,12 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         pmtwfa.test_pm_WFA_pre_validation(self)
         self.meetingConfig = self.meetingConfig2
         pmtwfa.test_pm_WFA_pre_validation(self)
+
+    def test_subproduct_call_WFA_pre_validation_keep_reviewer_permissions(self):
+        '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
+        pmtwfa.test_pm_WFA_pre_validation_keep_reviewer_permissions(self)
+        self.meetingConfig = self.meetingConfig2
+        pmtwfa.test_pm_WFA_pre_validation_keep_reviewer_permissions(self)
 
     def test_subproduct_call_WFA_creator_initiated_decisions(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py

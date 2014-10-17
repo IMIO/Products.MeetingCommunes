@@ -29,13 +29,17 @@ from Products.PloneMeeting.tests.testMeetingConfig import testMeetingConfig as p
 class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
     '''Tests the MeetingConfig class methods.'''
 
-    def test_subproduct_call_SearchValidableItems(self):
-        '''Run the test_pm_SearchValidableItems from PloneMeeting.'''
-        pmtmc.test_pm_SearchValidableItems(self)
+    def test_subproduct_call_SearchItemsToValidateOfHighestHierarchicLevel(self):
+        '''Run the test_pm_SearchItemsToValidateOfHighestHierarchicLevel from PloneMeeting.'''
+        pmtmc.test_pm_SearchItemsToValidateOfHighestHierarchicLevel(self)
 
-    def test_subproduct_call_SearchItemsToValidate(self):
-        '''Run the test_pm_searchItemsToValidate from PloneMeeting.'''
-        pmtmc.test_pm_SearchItemsToValidate(self)
+    def test_subproduct_call_SearchItemsToValidateOfMyReviewerGroups(self):
+        '''Run the test_pm_SearchItemsToValidateOfMyReviewerGroups from PloneMeeting.'''
+        pmtmc.test_pm_SearchItemsToValidateOfMyReviewerGroups(self)
+
+    def test_subproduct_call_SearchItemsToValidateOfEveryReviewerLevelsAndLowerLevels(self):
+        '''Run the test_pm_SearchItemsToValidateOfEveryReviewerLevelsAndLowerLevels from PloneMeeting.'''
+        pmtmc.test_pm_SearchItemsToValidateOfEveryReviewerLevelsAndLowerLevels(self)
 
     def test_subproduct_call_SearchItemsToAdvice(self):
         '''Run the test_pm_searchItemsToAdvice from PloneMeeting.'''
