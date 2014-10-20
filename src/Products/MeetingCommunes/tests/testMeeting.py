@@ -22,8 +22,7 @@
 # 02110-1301, USA.
 #
 
-from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
-    MeetingCommunesTestCase
+from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testMeeting import testMeeting as pmtm
 
 
@@ -157,6 +156,14 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
     def test_subproduct_call_RemoveSeveralItems(self):
         """Run the test_pm_RemoveSeveralItems from PloneMeeting."""
         self.test_pm_RemoveSeveralItems()
+
+    def test_subproduct_call_RemoveWholeMeeting(self):
+        """Run the test_pm_RemoveWholeMeeting from PloneMeeting."""
+        self.test_pm_RemoveWholeMeeting()
+
+    def test_subproduct_call_RemovingMeetingUpdateItemsPreferredMeeting(self):
+        """Run the test_pm_RemovingMeetingUpdateItemsPreferredMeeting from PloneMeeting."""
+        self.test_pm_RemovingMeetingUpdateItemsPreferredMeeting()
 
 
 def test_suite():
