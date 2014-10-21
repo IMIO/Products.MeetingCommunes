@@ -109,6 +109,10 @@ class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
         '''Run the test_pm_AddingExistingTopicDoesNotBreak from PloneMeeting.'''
         pmtmc.test_pm_AddingExistingTopicDoesNotBreak(self)
 
+    def test_subproduct_call_GetTopics(self):
+        '''Run the test_pm_GetTopics from PloneMeeting.'''
+        pmtmc.test_pm_GetTopics(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
