@@ -12,7 +12,12 @@ from Products.PloneMeeting.profiles import UserDescriptor
 annexe = MeetingFileTypeDescriptor('annexe', 'Annexe', 'attach.png', '')
 annexeBudget = MeetingFileTypeDescriptor('annexeBudget', 'Article Budgétaire', 'budget.png', '')
 annexeCahier = MeetingFileTypeDescriptor('annexeCahier', 'Cahier des Charges', 'cahier.gif', '')
-annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe à la décision', 'attach.png', '', True)
+annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe à la décision', 'attach.png', '', 'item_decision')
+annexeAvis = MeetingFileTypeDescriptor('annexeAvis', 'Annexe à un avis',
+                                       'attach.png', '', 'advice')
+annexeAvisLegal = MeetingFileTypeDescriptor('annexeAvisLegal', 'Extrait article de loi',
+                                            'legalAdvice.png', '', 'advice')
+
 # Categories -------------------------------------------------------------------
 categories = [CategoryDescriptor('recurrents', 'Récurrents'),
               CategoryDescriptor('demissions', 'Démission(s)'),
@@ -154,7 +159,8 @@ bpMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
 bpMeeting.signatures = 'Pierre Dupont, Bourgmestre - Charles Exemple, 1er Echevin'
 bpMeeting.categories = categories
 bpMeeting.shortName = 'bp'
-bpMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision]
+bpMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
+                              annexeDecision, annexeAvis, annexeAvisLegal]
 bpMeeting.usedItemAttributes = ['budgetInfos', 'observations', ]
 bpMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
 bpMeeting.itemWorkflow = 'meetingitemcollege_workflow'
@@ -168,7 +174,8 @@ bpMeeting.meetingTopicStates = ('created', 'frozen')
 bpMeeting.decisionTopicStates = ('decided', 'closed')
 bpMeeting.itemAdviceStates = ('validated',)
 bpMeeting.enforceAdviceMandatoriness = False
-bpMeeting.sortingMethodOnAddItem = 'on_proposing_groups'
+bpMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
+                                        'reverse': '0'}, )
 bpMeeting.recordItemHistoryStates = []
 bpMeeting.maxShownMeetings = 5
 bpMeeting.maxDaysDecisions = 60
@@ -179,6 +186,7 @@ bpMeeting.itemAdviceEditStates = ('validated',)
 bpMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',
                                   'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
 bpMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
+bpMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 bpMeeting.useCopies = True
 bpMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                   groups[1].getIdSuffixed('reviewers'),
@@ -209,7 +217,8 @@ casMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
 casMeeting.signatures = 'Pierre Dupont, Bourgmestre - Charles Exemple, 1er Echevin'
 casMeeting.categories = categories
 casMeeting.shortName = 'cas'
-casMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision]
+casMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
+                               annexeDecision, annexeAvis, annexeAvisLegal]
 casMeeting.usedItemAttributes = ['budgetInfos', 'observations', ]
 casMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
 casMeeting.itemWorkflow = 'meetingitemcollege_workflow'
@@ -223,7 +232,8 @@ casMeeting.meetingTopicStates = ('created', 'frozen')
 casMeeting.decisionTopicStates = ('decided', 'closed')
 casMeeting.itemAdviceStates = ('validated',)
 casMeeting.enforceAdviceMandatoriness = False
-casMeeting.sortingMethodOnAddItem = 'on_proposing_groups'
+casMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
+                                         'reverse': '0'}, )
 casMeeting.recordItemHistoryStates = []
 casMeeting.maxShownMeetings = 5
 casMeeting.maxDaysDecisions = 60
@@ -234,6 +244,7 @@ casMeeting.itemAdviceEditStates = ('validated',)
 casMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',
                                    'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
 casMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
+casMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 casMeeting.useCopies = True
 casMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                    groups[1].getIdSuffixed('reviewers'),
@@ -262,7 +273,8 @@ comiteeMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
 comiteeMeeting.signatures = 'Pierre Dupont, Bourgmestre - Charles Exemple, 1er Echevin'
 comiteeMeeting.categories = categories
 comiteeMeeting.shortName = 'comitee'
-comiteeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, annexeDecision]
+comiteeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
+                                   annexeDecision, annexeAvis, annexeAvisLegal]
 comiteeMeeting.usedItemAttributes = ['budgetInfos', 'observations', ]
 comiteeMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
 comiteeMeeting.itemWorkflow = 'meetingitemcollege_workflow'
@@ -276,8 +288,10 @@ comiteeMeeting.meetingTopicStates = ('created', 'frozen')
 comiteeMeeting.decisionTopicStates = ('decided', 'closed')
 comiteeMeeting.itemAdviceStates = ('validated',)
 comiteeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
+comiteeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 comiteeMeeting.enforceAdviceMandatoriness = False
-comiteeMeeting.sortingMethodOnAddItem = 'on_proposing_groups'
+comiteeMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
+                                             'reverse': '0'}, )
 comiteeMeeting.recordItemHistoryStates = []
 comiteeMeeting.maxShownMeetings = 5
 comiteeMeeting.maxDaysDecisions = 60
