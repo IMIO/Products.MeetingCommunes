@@ -57,6 +57,10 @@ class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
         '''Run the test_pm_searchItemsInCopy from PloneMeeting.'''
         pmtmc.test_pm_SearchItemsInCopy(self)
 
+    def test_subproduct_call_SearchMyItemsTakenOver(self):
+        '''Run the test_pm_SearchMyItemsTakenOver from PloneMeeting.'''
+        pmtmc.test_pm_SearchMyItemsTakenOver(self)
+
     def test_subproduct_call_SearchItemsWithFilters(self):
         '''Run the test_pm_searchItemsWithFilters from PloneMeeting.'''
         pmtmc.test_pm_SearchItemsWithFilters(self)
