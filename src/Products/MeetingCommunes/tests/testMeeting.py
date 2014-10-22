@@ -161,9 +161,9 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         """Run the test_pm_RemoveWholeMeeting from PloneMeeting."""
         self.test_pm_RemoveWholeMeeting()
 
-    def test_subproduct_call_RemovingMeetingUpdateItemsPreferredMeeting(self):
-        """Run the test_pm_RemovingMeetingUpdateItemsPreferredMeeting from PloneMeeting."""
-        self.test_pm_RemovingMeetingUpdateItemsPreferredMeeting()
+    def test_subproduct_call_DeletingMeetingUpdateItemsPreferredMeeting(self):
+        """Run the test_pm_DeletingMeetingUpdateItemsPreferredMeeting from PloneMeeting."""
+        self.test_pm_DeletingMeetingUpdateItemsPreferredMeeting()
 
 
 def test_suite():
