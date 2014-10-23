@@ -31,31 +31,35 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
     '''Tests the ToolPloneMeeting class methods.'''
 
     def test_subproduct_call_GetMeetingGroup(self):
-        '''Run the testGetMeetingGroup from PloneMeeting.'''
+        '''Run the test_pm_GetMeetingGroup from PloneMeeting.'''
         self.test_pm_GetMeetingGroup()
 
     def test_subproduct_call_MoveMeetingGroups(self):
-        '''Run the testMoveMeetingGroups from PloneMeeting.'''
+        '''Run the test_pm_MoveMeetingGroups from PloneMeeting.'''
         self.test_pm_MoveMeetingGroups()
 
     def test_subproduct_call_CloneItem(self):
-        '''Run the testCloneItem from PloneMeeting.'''
+        '''Run the test_pm_CloneItem from PloneMeeting.'''
         self.test_pm_CloneItem()
 
     def test_subproduct_call_CloneItemWithContent(self):
-        '''Run the testCloneItemWithContent from PloneMeeting.'''
+        '''Run the test_pm_CloneItemWithContent from PloneMeeting.'''
         self.test_pm_CloneItemWithContent()
 
     def test_subproduct_call_CloneItemWithContentNotRemovableByPermission(self):
-        '''Run the testCloneItemWithContentNotRemovableByPermission from PloneMeeting.'''
+        '''Run the test_pm_CloneItemWithContentNotRemovableByPermission from PloneMeeting.'''
         self.test_pm_CloneItemWithContentNotRemovableByPermission()
 
+    def test_subproduct_call_CloneItemWithUnexistingNewOwnerId(self):
+        '''Run the test_pm_CloneItemWithUnexistingNewOwnerId from PloneMeeting.'''
+        self.test_pm_CloneItemWithUnexistingNewOwnerId()
+
     def test_subproduct_call_PasteItems(self):
-        '''Run the testPasteItems from PloneMeeting.'''
+        '''Run the test_pm_PasteItems from PloneMeeting.'''
         self.test_pm_PasteItems()
 
     def test_subproduct_call_ShowPloneMeetingTab(self):
-        '''Run the testShowPloneMeetingTab from PloneMeeting.'''
+        '''Run the test_pm_ShowPloneMeetingTab from PloneMeeting.'''
         self.test_pm_ShowPloneMeetingTab()
 
     def test_subproduct_call_SetupProcessForCreationFlag(self):
@@ -67,7 +71,7 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
         self.test_pm_UpdateMeetingFileTypesAfterSentToOtherMeetingConfig()
 
     def test_subproduct_call_UpdateDelayAwareAdvices(self):
-        '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
+        '''Run the test_pm_UpdateDelayAwareAdvices from PloneMeeting.'''
         self.test_pm_UpdateDelayAwareAdvices()
 
     def test_subproduct_call_GetDefaultMeetingConfig(self):
