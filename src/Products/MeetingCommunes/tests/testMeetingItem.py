@@ -191,6 +191,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_OnTransitionFieldTransforms()
 
+    def test_subproduct_call_TakenOverBy(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_TakenOverBy()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
