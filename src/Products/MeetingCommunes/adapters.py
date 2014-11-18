@@ -149,12 +149,13 @@ class CustomMeeting(Meeting):
     security.declarePublic('getPrintableItems')
     def getPrintableItems(self, itemUids, late=False, ignore_review_states=[],
                           privacy='*', oralQuestion='both', toDiscuss='both', categories=[],
-                          excludedCategories=[], firstNumber=1, renumber=False):
+                          excludedCategories=[], groupIds=[], firstNumber=1, renumber=False):
         '''Returns a list of items.
            An extra list of review states to ignore can be defined.
            A privacy can also be given, and the fact that the item is an
            oralQuestion or not (or both). Idem with toDiscuss.
-           Some specific categories can be given or some categories to exchude.
+           Some specific categories can be given or some categories to exclude.
+           We can also receive in p_groupIds MeetingGroup ids to take into account.
            These 2 parameters are exclusive.  If renumber is True, a list of tuple
            will be return with first element the number and second element, the item.
            In this case, the firstNumber value can be used.'''
@@ -185,6 +186,8 @@ class CustomMeeting(Meeting):
             elif not (toDiscuss == 'both' or obj.getToDiscuss() == toDiscuss):
                 continue
             elif categories and not obj.getCategory() in categories:
+                continue
+            elif groupIds and not obj.getProposingGroup() in groupIds:
                 continue
             elif excludedCategories and obj.getCategory() in excludedCategories:
                 continue
@@ -281,7 +284,7 @@ class CustomMeeting(Meeting):
     def getPrintableItemsByCategory(self, itemUids=[], late=False,
                                     ignore_review_states=[], by_proposing_group=False, group_prefixes={},
                                     privacy='*', oralQuestion='both', toDiscuss='both', categories=[],
-                                    excludedCategories=[], firstNumber=1, renumber=False,
+                                    excludedCategories=[], groupIds=[], firstNumber=1, renumber=False,
                                     includeEmptyCategories=False, includeEmptyGroups=False):
         '''Returns a list of (late-)items (depending on p_late) ordered by
            category. Items being in a state whose name is in
@@ -293,6 +296,7 @@ class CustomMeeting(Meeting):
            keys are prefixes and whose values are names of the logical big
            groups. A privacy,A toDiscuss and oralQuestion can also be given, the item is a
            toDiscuss (oralQuestion) or not (or both) item.
+           If p_groupIds are given, we will only consider these proposingGroups.
            If p_includeEmptyCategories is True, categories for which no
            item is defined are included nevertheless. If p_includeEmptyGroups
            is True, proposing groups for which no item is defined are included
@@ -339,6 +343,8 @@ class CustomMeeting(Meeting):
                 elif not (oralQuestion == 'both' or item.getOralQuestion() == oralQuestion):
                     continue
                 elif not (toDiscuss == 'both' or item.getToDiscuss() == toDiscuss):
+                    continue
+                elif groupIds and not item.getProposingGroup() in groupIds:
                     continue
                 elif categories and not item.getCategory() in categories:
                     continue
