@@ -774,7 +774,7 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
         res = False
         meeting = self.context.getMeeting()
         if checkPermission(ReviewPortalContent, self.context) and \
-           meeting and (meeting.queryState() in ['decided', 'closed', 'decisions_published', ]):
+           meeting and meeting.adapted().isDecided():
             res = True
         return res
 
@@ -852,6 +852,12 @@ class MeetingCouncilWorkflowConditions(MeetingCollegeWorkflowConditions):
             # back to created.
             if checkPermission(ReviewPortalContent, self.context):
                 return True
+        return res
+
+    def mayDecide(self):
+        res = False
+        if checkPermission(ReviewPortalContent, self.context):
+            res = True
         return res
 
 
@@ -935,7 +941,7 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
         res = False
         meeting = self.context.getMeeting()
         if checkPermission(ReviewPortalContent, self.context) and \
-           meeting and (meeting.queryState() in ('decided', 'closed', 'decisions_published',)):
+           meeting and meeting.adapted().isDecided():
             res = True
         return res
 
