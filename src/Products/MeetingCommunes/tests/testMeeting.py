@@ -165,6 +165,10 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         """Run the test_pm_DeletingMeetingUpdateItemsPreferredMeeting from PloneMeeting."""
         self.test_pm_DeletingMeetingUpdateItemsPreferredMeeting()
 
+    def test_subproduct_call_MeetingActionsPanelCaching(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_MeetingActionsPanelCaching()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
