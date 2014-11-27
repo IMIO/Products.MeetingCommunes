@@ -54,6 +54,10 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
         '''Run the test_pm_CloneItemWithUnexistingNewOwnerId from PloneMeeting.'''
         self.test_pm_CloneItemWithUnexistingNewOwnerId()
 
+    def test_subproduct_call_CloneItemKeepingProposingGroup(self):
+        '''Run the test_pm_CloneItemKeepingProposingGroup from PloneMeeting.'''
+        self.test_pm_CloneItemKeepingProposingGroup()
+
     def test_subproduct_call_PasteItems(self):
         '''Run the test_pm_PasteItems from PloneMeeting.'''
         self.test_pm_PasteItems()
