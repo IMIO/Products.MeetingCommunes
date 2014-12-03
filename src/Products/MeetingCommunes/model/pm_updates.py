@@ -4,6 +4,7 @@ from Products.Archetypes.atapi import TextField
 from Products.Archetypes.atapi import MultiSelectionWidget
 from Products.Archetypes.atapi import TextAreaWidget
 from Products.Archetypes.atapi import Schema
+from Products.PloneMeeting.config import WriteRiskyConfig
 from Products.PloneMeeting.MeetingGroup import MeetingGroup
 from Products.PloneMeeting.MeetingConfig import MeetingConfig
 
@@ -57,6 +58,7 @@ def update_config_schema(baseSchema):
                 label='Inititemdecisionifemptyondecide',
                 label_msgid='MeetingCommunes_label_initItemDecisionIfEmptyOnDecide',
                 i18n_domain='PloneMeeting'),
+            write_permission=WriteRiskyConfig,
         ),
     ),)
     completeConfigSchema = baseSchema + specificSchema.copy()
