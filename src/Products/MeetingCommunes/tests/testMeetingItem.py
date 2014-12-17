@@ -207,6 +207,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_ItemActionsPanelCaching()
 
+    def test_subproduct_call_HistoryCommentViewability(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_HistoryCommentViewability()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
