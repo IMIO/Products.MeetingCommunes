@@ -1,8 +1,6 @@
 from Products.Archetypes.atapi import BooleanField
 from Products.Archetypes.atapi import LinesField
-from Products.Archetypes.atapi import TextField
 from Products.Archetypes.atapi import MultiSelectionWidget
-from Products.Archetypes.atapi import TextAreaWidget
 from Products.Archetypes.atapi import Schema
 from Products.PloneMeeting.config import WriteRiskyConfig
 from Products.PloneMeeting.MeetingGroup import MeetingGroup
@@ -26,19 +24,6 @@ def update_group_schema(baseSchema):
             enforceVocabulary=True,
             multiValued=1,
             vocabulary='listEchevinServices',
-        ),
-        # field used to define specific signatures for a MeetingGroup
-        TextField(
-            name='signatures',
-            allowable_content_types=('text/plain',),
-            widget=TextAreaWidget(
-                label='Signatures',
-                label_msgid='MeetingCommunes_label_signatures',
-                description='Leave empty to use the signatures defined on the meeting',
-                description_msgid='MeetingCommunes_descr_signatures',
-                i18n_domain='PloneMeeting',
-            ),
-            default_content_type='text/plain',
         ),
     ),)
 

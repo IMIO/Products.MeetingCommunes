@@ -563,48 +563,6 @@ class CustomMeetingItem(MeetingItem):
         '''See doc in interfaces.py.'''
         return ('accepted', 'accepted_but_modified', )
 
-    security.declarePublic('mayBeLinkedToTasks')
-
-    def mayBeLinkedToTasks(self):
-        '''See doc in interfaces.py.'''
-        item = self.getSelf()
-        res = False
-        if (item.queryState() in ('accepted', 'refused', 'delayed')):
-            res = True
-        return res
-
-    security.declarePublic('getCertifiedSignatures')
-
-    def getCertifiedSignatures(self, forceUseCertifiedSignaturesField=False):
-        '''Gets the certified signatures for this item.
-           Either use signatures defined on the proposing MeetingGroup if exists,
-           or use the meetingConfig certified signatures.'''
-        item = self.getSelf()
-        tool = getToolByName(self.context, 'portal_plonemeeting')
-        if not item.hasMeeting():
-            return '', False
-        signature = item.getProposingGroup(theObject=True).getSignatures()
-        hasGroupSignature = True
-        if not signature:
-            meetingConfig = tool.getMeetingConfig(item)
-            # either use the certifiedSignatures or check for certified signatories
-            # from MeetingUsers having the usage 'voter' and being 'default signatories'
-            # first check if we use MeetingUsers
-            if not meetingConfig.isUsingMeetingUsers() or forceUseCertifiedSignaturesField:
-                signature = meetingConfig.getCertifiedSignatures()
-                hasGroupSignature = False
-            else:
-                # we use MeetingUsers
-                signatories = meetingConfig.getMeetingUsers(usages=('signer',))
-                res = []
-                for signatory in signatories:
-                    if signatory.getSignatureIsDefault():
-                        particule = signatory.getGender() == 'm' and 'Le' or 'La'
-                        res.append("%s %s" % (particule, signatory.getDuty()))
-                        res.append("%s" % signatory.Title())
-                signature = '\n'.join(res)
-        return signature, hasGroupSignature
-
     def getEchevinsForProposingGroup(self):
         '''Returns all echevins defined for the proposing group'''
         res = []
