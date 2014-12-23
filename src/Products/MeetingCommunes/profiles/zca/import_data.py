@@ -25,7 +25,7 @@ categories = [CategoryDescriptor('category1', 'Catégorie 1'),
 
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
-agendaTemplate.podTemplate = 'ca-oj.odt'
+agendaTemplate.podTemplate = '../../examples_fr/templates/college-oj.odt'
 agendaTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                               'here.portal_plonemeeting.isManager()'
 

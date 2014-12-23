@@ -32,14 +32,14 @@ categories = [CategoryDescriptor('recurrents', 'Récurrents'),
 
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
-agendaTemplate.podTemplate = 'Agenda.odt'
+agendaTemplate.podTemplate = 'cpas-oj.odt'
 agendaTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                               'here.portal_membership.' \
                               'getAuthenticatedMember().has_role("' \
                               'MeetingManager")'
 
 agendaTemplatePDF = PodTemplateDescriptor('agendapdf', 'Ordre du jour')
-agendaTemplatePDF.podTemplate = 'Agenda.odt'
+agendaTemplatePDF.podTemplate = 'cpas-oj.odt'
 agendaTemplatePDF.podFormat = 'pdf'
 agendaTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                  'here.portal_membership.' \
@@ -47,46 +47,31 @@ agendaTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                  'MeetingManager")'
 
 decisionsTemplate = PodTemplateDescriptor('decisions', 'Procès-verbal')
-decisionsTemplate.podTemplate = 'Decisions.odt'
+decisionsTemplate.podTemplate = 'cpas-pv.odt'
 decisionsTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                  'here.portal_membership.' \
                                  'getAuthenticatedMember().has_role("' \
                                  'MeetingManager")'
 
 decisionsTemplatePDF = PodTemplateDescriptor('decisionspdf', 'Procès-verbal')
-decisionsTemplatePDF.podTemplate = 'Decisions.odt'
+decisionsTemplatePDF.podTemplate = 'cpas-pv.odt'
 decisionsTemplatePDF.podFormat = 'pdf'
 decisionsTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                     'here.portal_membership.' \
                                     'getAuthenticatedMember().has_role("' \
                                     'MeetingManager")'
-decisionsByCatTemplate = PodTemplateDescriptor('decisionsbycat', 'PV avec catégories')
-decisionsByCatTemplate.podTemplate = 'DecisionsWithItemsByCategory.odt'
-decisionsByCatTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                      'here.portal_membership.' \
-                                      'getAuthenticatedMember().has_role("' \
-                                      'MeetingManager")'
-
-decisionsByCatTemplatePDF = PodTemplateDescriptor('decisionsbycatpdf', 'PV avec catégories')
-decisionsByCatTemplatePDF.podTemplate = 'DecisionsWithItemsByCategory.odt'
-decisionsByCatTemplatePDF.podFormat = 'pdf'
-decisionsByCatTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                         'here.portal_membership.' \
-                                         'getAuthenticatedMember().has_role("' \
-                                         'MeetingManager")'
 
 itemTemplate = PodTemplateDescriptor('item', 'Délibération')
-itemTemplate.podTemplate = 'MeetingItem.odt'
+itemTemplate.podTemplate = 'deliberation.odt'
 itemTemplate.podCondition = 'python:here.meta_type=="MeetingItem"'
 
 itemTemplatePDF = PodTemplateDescriptor('itempdf', 'Délibération')
-itemTemplatePDF.podTemplate = 'MeetingItem.odt'
+itemTemplatePDF.podTemplate = 'deliberation.odt'
 itemTemplatePDF.podFormat = 'pdf'
 itemTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem"'
 
 allTemplates = [agendaTemplate, agendaTemplatePDF,
                 decisionsTemplate, decisionsTemplatePDF,
-                decisionsByCatTemplate, decisionsByCatTemplatePDF,
                 itemTemplate, itemTemplatePDF]
 
 # Users and groups -------------------------------------------------------------
