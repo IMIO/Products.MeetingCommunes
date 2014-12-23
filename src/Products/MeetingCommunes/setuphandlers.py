@@ -62,6 +62,7 @@ def isMeetingCommunesConfigureProfile(context):
     return context.readDataFile("MeetingCommunes_examples_fr_marker.txt") or \
         context.readDataFile("MeetingCommunes_cpas_marker.txt") or \
         context.readDataFile("MeetingCommunes_codir_marker.txt") or \
+        context.readDataFile("MeetingCommunes_ca_marker.txt") or \
         context.readDataFile("MeetingCommunes_testing_marker.txt")
 
 
