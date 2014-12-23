@@ -32,14 +32,14 @@ categories = [CategoryDescriptor('recurrents', 'Récurrents'),
 
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
-agendaTemplate.podTemplate = 'cpas-oj.odt'
+agendaTemplate.podTemplate = '../../examples_fr/templates/oj.odt'
 agendaTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                               'here.portal_membership.' \
                               'getAuthenticatedMember().has_role("' \
                               'MeetingManager")'
 
 agendaTemplatePDF = PodTemplateDescriptor('agendapdf', 'Ordre du jour')
-agendaTemplatePDF.podTemplate = 'cpas-oj.odt'
+agendaTemplatePDF.podTemplate = '../../examples_fr/templates/oj.odt'
 agendaTemplatePDF.podFormat = 'pdf'
 agendaTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                  'here.portal_membership.' \
@@ -47,14 +47,14 @@ agendaTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                  'MeetingManager")'
 
 decisionsTemplate = PodTemplateDescriptor('decisions', 'Procès-verbal')
-decisionsTemplate.podTemplate = 'cpas-pv.odt'
+decisionsTemplate.podTemplate = '../../examples_fr/templates/pv.odt'
 decisionsTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                  'here.portal_membership.' \
                                  'getAuthenticatedMember().has_role("' \
                                  'MeetingManager")'
 
 decisionsTemplatePDF = PodTemplateDescriptor('decisionspdf', 'Procès-verbal')
-decisionsTemplatePDF.podTemplate = 'cpas-pv.odt'
+decisionsTemplatePDF.podTemplate = '../../examples_fr/templates/pv.odt'
 decisionsTemplatePDF.podFormat = 'pdf'
 decisionsTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                     'here.portal_membership.' \
@@ -62,11 +62,11 @@ decisionsTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                     'MeetingManager")'
 
 itemTemplate = PodTemplateDescriptor('item', 'Délibération')
-itemTemplate.podTemplate = 'deliberation.odt'
+itemTemplate.podTemplate = '../../examples_fr/templates/deliberation.odt'
 itemTemplate.podCondition = 'python:here.meta_type=="MeetingItem"'
 
 itemTemplatePDF = PodTemplateDescriptor('itempdf', 'Délibération')
-itemTemplatePDF.podTemplate = 'deliberation.odt'
+itemTemplatePDF.podTemplate = '../../examples_fr/templates/deliberation.odt'
 itemTemplatePDF.podFormat = 'pdf'
 itemTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem"'
 
@@ -141,7 +141,7 @@ bpMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
                      'Charles Exemple - 1er Echevin,\n' \
                      'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
                      'Jacqueline Exemple, Responsable du CPAS'
-bpMeeting.signatures = 'Pierre Dupont, Bourgmestre - Charles Exemple, 1er Echevin'
+bpMeeting.signatures = 'Pierre Dupont,\nBourgmestre\nCharles Exemple,\n1er Echevin'
 bpMeeting.categories = categories
 bpMeeting.shortName = 'bp'
 bpMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
@@ -199,7 +199,7 @@ casMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
                       'Charles Exemple - 1er Echevin,\n' \
                       'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
                       'Jacqueline Exemple, Responsable du CPAS'
-casMeeting.signatures = 'Pierre Dupont, Bourgmestre - Charles Exemple, 1er Echevin'
+casMeeting.signatures = 'Pierre Dupont,\nBourgmestre\nCharles Exemple,\n1er Echevin'
 casMeeting.categories = categories
 casMeeting.shortName = 'cas'
 casMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
@@ -255,7 +255,7 @@ comiteeMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
                           'Charles Exemple - 1er Echevin,\n' \
                           'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
                           'Jacqueline Exemple, Responsable du CPAS'
-comiteeMeeting.signatures = 'Pierre Dupont, Bourgmestre - Charles Exemple, 1er Echevin'
+comiteeMeeting.signatures = 'Pierre Dupont,\nBourgmestre\nCharles Exemple,\n1er Echevin'
 comiteeMeeting.categories = categories
 comiteeMeeting.shortName = 'comitee'
 comiteeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,

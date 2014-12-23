@@ -37,23 +37,23 @@ categories = [recurring,
 
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
-agendaTemplate.podTemplate = 'college-oj.odt'
+agendaTemplate.podTemplate = 'oj.odt'
 agendaTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                               'here.portal_plonemeeting.isManager()'
 
 agendaTemplatePDF = PodTemplateDescriptor('oj-pdf', 'Ordre du jour')
-agendaTemplatePDF.podTemplate = 'college-oj.odt'
+agendaTemplatePDF.podTemplate = 'oj.odt'
 agendaTemplatePDF.podFormat = 'pdf'
 agendaTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                  'here.portal_plonemeeting.isManager()'
 
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
-decisionsTemplate.podTemplate = 'college-pv.odt'
+decisionsTemplate.podTemplate = 'pv.odt'
 decisionsTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                  'here.portal_plonemeeting.isManager()'
 
 decisionsTemplatePDF = PodTemplateDescriptor('pv-pdf', 'Procès-verbal')
-decisionsTemplatePDF.podTemplate = 'college-pv.odt'
+decisionsTemplatePDF.podTemplate = 'pv.odt'
 decisionsTemplatePDF.podFormat = 'pdf'
 decisionsTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                     'here.portal_plonemeeting.isManager()'
