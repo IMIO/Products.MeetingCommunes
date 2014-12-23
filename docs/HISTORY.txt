@@ -12,6 +12,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Added parameter MeetingConfig.initItemDecisionIfEmptyOnDecide that let enable/disable
   items decision field initialization when meeting 'decide' transition is triggered
 - Added MeetingConfig 'CoDir'
+- Added MeetingConfig 'CA'
 - Field 'MeetingGroup.signatures' was moved to PloneMeeting
 
 3.2.0.1 (2014-03-06)
