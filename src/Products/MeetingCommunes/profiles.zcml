@@ -32,9 +32,9 @@
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:registerProfile
-   name="zcpas"
-   title="PloneMeeting / CPAS"
-   description="PloneMeeting for CPAS (Belgium)"
+   name="zca"
+   title="PloneMeeting / CA"
+   description="PloneMeeting for CA (Belgium)"
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
@@ -42,6 +42,13 @@
    name="zcodir"
    title="PloneMeeting / CoDir"
    description="PloneMeeting for CoDir (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
+   name="zcpas"
+   title="PloneMeeting / CPAS"
+   description="PloneMeeting for CPAS (Belgium)"
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
