@@ -215,6 +215,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_GetCertifiedSignatures()
 
+    def test_subproduct_call_ItemCreatedOnlyUsingTemplate(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ItemCreatedOnlyUsingTemplate()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
