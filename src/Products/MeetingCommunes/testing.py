@@ -18,7 +18,8 @@ MC_TESTING_PROFILE = PloneMeetingLayer(
     zcml_package=Products.MeetingCommunes,
     additional_z2_products=('Products.MeetingCommunes',
                             'Products.PloneMeeting',
-                            'Products.CMFPlacefulWorkflow'),
+                            'Products.CMFPlacefulWorkflow',
+                            'Products.PasswordStrength'),
     gs_profile_id='Products.MeetingCommunes:testing',
     name="MC_TESTING_PROFILE")
 
