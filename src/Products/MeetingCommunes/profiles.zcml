@@ -46,6 +46,13 @@
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:registerProfile
+   name="zcoges"
+   title="PloneMeeting / CoGes"
+   description="PloneMeeting for CoGes (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
    name="zcpas"
    title="PloneMeeting / CPAS"
    description="PloneMeeting for CPAS (Belgium)"
