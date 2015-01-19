@@ -25,42 +25,42 @@ categories = [CategoryDescriptor('category1', 'Catégorie 1'),
 
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
-agendaTemplate.podTemplate = '../../examples_fr/templates/oj.odt'
+agendaTemplate.podTemplate = 'coges-oj.odt'
 agendaTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                               'here.portal_plonemeeting.isManager()'
 
 agendaTemplatePDF = PodTemplateDescriptor('oj-pdf', 'Ordre du jour')
-agendaTemplatePDF.podTemplate = '../../examples_fr/templates/oj.odt'
+agendaTemplatePDF.podTemplate = 'coges-oj.odt'
 agendaTemplatePDF.podFormat = 'pdf'
 agendaTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                  'here.portal_plonemeeting.isManager()'
 
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
-decisionsTemplate.podTemplate = '../../examples_fr/templates/pv.odt'
+decisionsTemplate.podTemplate = 'coges-pv.odt'
 decisionsTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                  'here.portal_plonemeeting.isManager()'
 
 decisionsTemplatePDF = PodTemplateDescriptor('pv-pdf', 'Procès-verbal')
-decisionsTemplatePDF.podTemplate = '../../examples_fr/templates/pv.odt'
+decisionsTemplatePDF.podTemplate = 'coges-pv.odt'
 decisionsTemplatePDF.podFormat = 'pdf'
 decisionsTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
                                     'here.portal_plonemeeting.isManager()'
 
 itemProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
-itemProjectTemplate.podTemplate = '../../examples_fr/templates/projet-deliberation.odt'
+itemProjectTemplate.podTemplate = 'projet-deliberation.odt'
 itemProjectTemplate.podCondition = 'python:here.meta_type=="MeetingItem" and not here.hasMeeting()'
 
 itemProjectTemplatePDF = PodTemplateDescriptor('projet-deliberation-pdf', 'Projet délibération')
-itemProjectTemplatePDF.podTemplate = '../../examples_fr/templates/projet-deliberation.odt'
+itemProjectTemplatePDF.podTemplate = 'projet-deliberation.odt'
 itemProjectTemplatePDF.podFormat = 'pdf'
 itemProjectTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem" and not here.hasMeeting()'
 
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
-itemTemplate.podTemplate = '../../examples_fr/templates/deliberation.odt'
+itemTemplate.podTemplate = 'deliberation.odt'
 itemTemplate.podCondition = 'python:here.meta_type=="MeetingItem" and here.hasMeeting()'
 
 itemTemplatePDF = PodTemplateDescriptor('deliberation-pdf', 'Délibération')
-itemTemplatePDF.podTemplate = '../../examples_fr/templates/deliberation.odt'
+itemTemplatePDF.podTemplate = 'deliberation.odt'
 itemTemplatePDF.podFormat = 'pdf'
 itemTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem" and here.hasMeeting()'
 
@@ -182,8 +182,7 @@ coGestMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 coGestMeeting.meetingTopicStates = ('created', 'frozen')
 coGestMeeting.decisionTopicStates = ('decided', 'closed')
 coGestMeeting.enforceAdviceMandatoriness = False
-coGestMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
-                                        'reverse': '0'}, )
+coGestMeeting.sortingMethodOnAddItem = 'on_proposing_groups' 
 coGestMeeting.recordItemHistoryStates = []
 coGestMeeting.maxShownMeetings = 5
 coGestMeeting.maxDaysDecisions = 60
@@ -210,26 +209,6 @@ coGestMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 coGestMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-coGestMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
-coGestMeeting.onTransitionFieldTransforms = (
-    ({'transition': 'delay',
-      'field_name': 'MeetingItem.decision',
-      'tal_expression': "string:Le Comité décide de reporter le point."},))
-coGestMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                         'item_transition': 'itemfreeze'},
-
-                                                        {'meeting_transition': 'decide',
-                                                         'item_transition': 'itemfreeze'},
-
-                                                        {'meeting_transition': 'publish_decisions',
-                                                         'item_transition': 'itemfreeze'},
-                                                        {'meeting_transition': 'publish_decisions',
-                                                         'item_transition': 'accept'},
-
-                                                        {'meeting_transition': 'close',
-                                                         'item_transition': 'itemfreeze'},
-                                                        {'meeting_transition': 'close',
-                                                         'item_transition': 'accept'},)
 coGestMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 coGestMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
 coGestMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
