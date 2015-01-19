@@ -99,3 +99,11 @@ msgstr "Le point a été envoyé au Comité de concertation."
 msgid "sendto_meeting-config-council_success"
 msgstr "Le point a été envoyé au Conseil communal."
 
+#searches
+#. Default: "cdld synthesis"
+msgid "searchcdlditems"
+msgstr "Synthèse CDLD"
+
+#. Default: "Proposing group to keep for CDLD synthesis"
+msgid "CdldProposingGroup"
+msgstr "Groups proposants à garder pour la synthèse des avis pour le DF"
