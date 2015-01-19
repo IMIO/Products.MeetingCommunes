@@ -75,6 +75,14 @@
       handler="Products.MeetingCommunes.migrations.migrate_to_3_3.migrate"
       profile="Products.MeetingCommunes:default" />
 
+  <genericsetup:upgradeStep
+      title="Go to MeetingCommunes 3.x with cdld synthesis"
+      description=""
+      source="3.2.0"
+      destination="3.3"
+      handler="Products.MeetingCommunes.migrations.migrate_to_cdld.migrate"
+      profile="Products.MeetingCommunes:default" />
+
   <!-- ##/code-section profiles.zcml-bottom -->
 
 </configure>

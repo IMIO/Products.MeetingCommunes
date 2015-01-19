@@ -45,7 +45,25 @@ def update_config_schema(baseSchema):
                 i18n_domain='PloneMeeting'),
             write_permission=WriteRiskyConfig,
         ),
+
+        # field used to define list of services for synthesis document for DF (legality advice)
+        LinesField(
+            name='cdldProposingGroup',
+            widget=MultiSelectionWidget(
+                size=10,
+                label='CdldProposingGroup',
+                label_msgid='MeetingCommunes_label_cdldProposingGroup',
+                description='Leave empty if you want all proposing group',
+                description_msgid='MeetingCommunes_descr_cdldProposingGroup',
+                i18n_domain='PloneMeeting',
+            ),
+            enforceVocabulary=True,
+            multiValued=1,
+            vocabulary='listCdldProposingGroup',
+            write_permission=WriteRiskyConfig,
+        ),
     ),)
+
     completeConfigSchema = baseSchema + specificSchema.copy()
     return completeConfigSchema
 MeetingConfig.schema = update_config_schema(MeetingConfig.schema)
