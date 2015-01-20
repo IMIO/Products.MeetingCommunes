@@ -86,6 +86,10 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
         '''Run the test_pm_GetMeetingConfig from PloneMeeting.'''
         self.test_pm_GetMeetingConfig()
 
+    def test_subproduct_call_GetGroupsForUser(self):
+        '''Run the test_pm_GetGroupsForUser from PloneMeeting.'''
+        self.test_pm_GetGroupsForUser()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
