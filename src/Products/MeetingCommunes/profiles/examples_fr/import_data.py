@@ -225,13 +225,13 @@ collegeMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
 collegeMeeting.signatures = 'Le Secrétaire communal\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
 collegeMeeting.certifiedSignatures = [
     {'signatureNumber': '1',
-     'name': u'Vraiment Présent',
+     'name': u'Mr Vraiment Présent',
      'function': u'Le Secrétaire communal',
      'date_from': '',
      'date_to': '',
      },
     {'signatureNumber': '2',
-     'name': u'Charles Exemple',
+     'name': u'Mr Charles Exemple',
      'function': u'Le Bourgmestre',
      'date_from': '',
      'date_to': '',
@@ -500,13 +500,13 @@ councilMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
 councilMeeting.signatures = 'Le Secrétaire communal\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
 councilMeeting.certifiedSignatures = [
     {'signatureNumber': '1',
-     'name': u'Vraiment Présent',
+     'name': u'Mr Vraiment Présent',
      'function': u'Le Secrétaire communal',
      'date_from': '',
      'date_to': '',
      },
     {'signatureNumber': '2',
-     'name': u'Charles Exemple',
+     'name': u'Mr Charles Exemple',
      'function': u'Le Bourgmestre',
      'date_from': '',
      'date_to': '',
