@@ -223,7 +223,20 @@ collegeMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
                           'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
                           'Jacqueline Exemple, Responsable du CPAS'
 collegeMeeting.signatures = 'Le Secrétaire communal\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
-collegeMeeting.certifiedSignatures = 'Le Secrétaire communal\nVraiment Présent\nLe Bourgmestre\nCharles Exemple'
+collegeMeeting.certifiedSignatures = [
+    {'signatureNumber': '1',
+     'name': u'Vraiment Présent',
+     'function': u'Le Secrétaire communal',
+     'date_from': '',
+     'date_to': '',
+     },
+    {'signatureNumber': '2',
+     'name': u'Charles Exemple',
+     'function': u'Le Bourgmestre',
+     'date_from': '',
+     'date_to': '',
+     },
+]
 collegeMeeting.places = """Place1\r
 Place2\r
 Place3\r"""
@@ -485,7 +498,20 @@ councilMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
                           'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
                           'Jacqueline Exemple, Responsable du CPAS'
 councilMeeting.signatures = 'Le Secrétaire communal\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
-councilMeeting.certifiedSignatures = 'Le Secrétaire communal\nVraiment Présent\nLe Bourgmestre\nCharles Exemple'
+councilMeeting.certifiedSignatures = [
+    {'signatureNumber': '1',
+     'name': u'Vraiment Présent',
+     'function': u'Le Secrétaire communal',
+     'date_from': '',
+     'date_to': '',
+     },
+    {'signatureNumber': '2',
+     'name': u'Charles Exemple',
+     'function': u'Le Bourgmestre',
+     'date_from': '',
+     'date_to': '',
+     },
+]
 councilMeeting.places = """Place1\n\r
 Place2\n\r
 Place3\n\r"""

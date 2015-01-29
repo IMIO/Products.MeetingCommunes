@@ -137,7 +137,20 @@ caMeeting.assembly = 'Pierre Dupont - Président,\n' \
                      'Luc Un, Luc Deux, Luc Trois - Membres,\n' \
                      'Jacqueline Exemple, Observateur'
 caMeeting.signatures = 'Le Secrétaire communal\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
-caMeeting.certifiedSignatures = 'Le Secrétaire communal\nVraiment Présent\nLe Bourgmestre\nCharles Exemple'
+caMeeting.certifiedSignatures = [
+    {'signatureNumber': '1',
+     'name': u'Vraiment Présent',
+     'function': u'Le Secrétaire communal',
+     'date_from': '',
+     'date_to': '',
+     },
+    {'signatureNumber': '2',
+     'name': u'Charles Exemple',
+     'function': u'Le Bourgmestre',
+     'date_from': '',
+     'date_to': '',
+     },
+]
 caMeeting.places = """Place1\r
 Place2\r
 Place3\r"""

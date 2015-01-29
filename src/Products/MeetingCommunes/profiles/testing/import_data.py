@@ -203,7 +203,7 @@ collegeMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
                           'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
                           'Jacqueline Exemple, Responsable du CPAS'
 collegeMeeting.signatures = 'Pierre Dupont, Bourgmestre - Charles Exemple, Secrétaire communal'
-collegeMeeting.certifiedSignatures = 'Mr Présent Actuellement, Bourgmestre ff - Charles Exemple, Secrétaire communal'
+collegeMeeting.certifiedSignatures = []
 collegeMeeting.categories = categories
 collegeMeeting.shortName = 'College'
 collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, itemAnnex,
@@ -287,7 +287,7 @@ councilMeeting = MeetingConfigDescriptor(
     'Conseil Communal')
 councilMeeting.assembly = 'Default assembly'
 councilMeeting.signatures = 'Default signatures'
-councilMeeting.certifiedSignatures = 'Mr Présent Actuellement, Bourgmestre ff - Charles Exemple, Secrétaire communal'
+councilMeeting.certifiedSignatures = []
 councilMeeting.categories = categories
 councilMeeting.shortName = 'Council'
 councilMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,

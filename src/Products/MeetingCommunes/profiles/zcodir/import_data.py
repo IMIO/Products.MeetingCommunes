@@ -136,8 +136,20 @@ codirMeeting.assembly = 'Pierre Dupont - Président,\n' \
                         'Charles Exemple - Premier membre assemblée,\n' \
                         'Luc Un, Luc Deux, Luc Trois - Membres,\n' \
                         'Jacqueline Exemple, Observateur'
-codirMeeting.signatures = 'Le Secrétaire communal\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
-codirMeeting.certifiedSignatures = 'Le Secrétaire communal\nVraiment Présent\nLe Bourgmestre\nCharles Exemple'
+codirMeeting.certifiedSignatures = [
+    {'signatureNumber': '1',
+     'name': u'Vraiment Présent',
+     'function': u'Le Secrétaire communal',
+     'date_from': '',
+     'date_to': '',
+     },
+    {'signatureNumber': '2',
+     'name': u'Charles Exemple',
+     'function': u'Le Bourgmestre',
+     'date_from': '',
+     'date_to': '',
+     },
+]
 codirMeeting.places = """Place1\r
 Place2\r
 Place3\r"""

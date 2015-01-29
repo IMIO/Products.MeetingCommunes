@@ -133,12 +133,25 @@ coGestMeeting = MeetingConfigDescriptor(
     'cogest', 'Comité de gestion',
     'Comité de gestion')
 coGestMeeting.assembly = 'Pierre Dupont - Secrétaire,\n' \
-                     'Charles Exemple - Premier membre assemblée,\n' \
-                     'Luc Un, Luc Deux, Luc Trois - Membres,\n' \
-                     'Charles Exemple - Président,\n' \
-                     'Jacqueline Exemple, Observateur'
+                         'Charles Exemple - Premier membre assemblée,\n' \
+                         'Luc Un, Luc Deux, Luc Trois - Membres,\n' \
+                         'Charles Exemple - Président,\n' \
+                         'Jacqueline Exemple, Observateur'
 coGestMeeting.signatures = 'Le Secrétaire communal\nPierre Dupont\nLe Président\nCharles Exemple'
-coGestMeeting.certifiedSignatures = 'Le Secrétaire communal\nVraiment Présent\nLe Président\nCharles Exemple'
+coGestMeeting.certifiedSignatures = [
+    {'signatureNumber': '1',
+     'name': u'Vraiment Présent',
+     'function': u'Le Secrétaire communal',
+     'date_from': '',
+     'date_to': '',
+     },
+    {'signatureNumber': '2',
+     'name': u'Charles Exemple',
+     'function': u'Le Bourgmestre',
+     'date_from': '',
+     'date_to': '',
+     },
+]
 coGestMeeting.places = """Place1\r
 Place2\r
 Place3\r"""
