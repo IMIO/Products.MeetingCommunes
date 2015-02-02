@@ -23,8 +23,7 @@
 #
 
 from plone.app.testing import logout
-from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
-    MeetingCommunesTestCase
+from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testMeetingGroup import testMeetingGroup as pmmg
 
 
@@ -47,6 +46,10 @@ class testMeetingGroup(MeetingCommunesTestCase, pmmg):
     def test_subproduct_call_DeactivatedGroupCanNoMoreBeUsed(self):
         '''Run the test_pm_deactivatedGroupCanNoMoreBeUsed from PloneMeeting.'''
         self.test_pm_DeactivatedGroupCanNoMoreBeUsed()
+
+    def test_subproduct_call_UpdatePloneGroupTitle(self):
+        '''Run the test_pm_UpdatePloneGroupTitle from PloneMeeting.'''
+        self.test_pm_UpdatePloneGroupTitle()
 
 
 def test_suite():
