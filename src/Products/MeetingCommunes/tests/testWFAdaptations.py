@@ -37,7 +37,6 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
                                'everyone_reads_all',
                                'hide_decisions_when_under_writing',
                                'items_come_validated',
-                               'local_meeting_managers',
                                'no_global_observation',
                                'no_proposal',
                                'no_publication',
@@ -114,12 +113,6 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         pmtwfa.test_pm_WFA_creator_edits_unless_closed(self)
         self.meetingConfig = self.meetingConfig2
         pmtwfa.test_pm_WFA_creator_edits_unless_closed(self)
-
-    def test_subproduct_call_WFA_local_meeting_managers(self):
-        '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
-        pmtwfa.test_pm_WFA_local_meeting_managers(self)
-        self.meetingConfig = self.meetingConfig2
-        pmtwfa.test_pm_WFA_local_meeting_managers(self)
 
     def test_subproduct_call_WFA_return_to_proposing_group(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
