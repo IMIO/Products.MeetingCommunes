@@ -27,24 +27,24 @@ categories = [CategoryDescriptor('category1', 'Catégorie 1'),
 agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaTemplate.podTemplate = '../../examples_fr/templates/oj.odt'
 agendaTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                              'here.portal_plonemeeting.isManager(here)'
 
 agendaTemplatePDF = PodTemplateDescriptor('oj-pdf', 'Ordre du jour')
 agendaTemplatePDF.podTemplate = '../../examples_fr/templates/oj.odt'
 agendaTemplatePDF.podFormat = 'pdf'
 agendaTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                 'here.portal_plonemeeting.isManager()'
+                                 'here.portal_plonemeeting.isManager(here)'
 
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsTemplate.podTemplate = '../../examples_fr/templates/pv.odt'
 decisionsTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                 'here.portal_plonemeeting.isManager()'
+                                 'here.portal_plonemeeting.isManager(here)'
 
 decisionsTemplatePDF = PodTemplateDescriptor('pv-pdf', 'Procès-verbal')
 decisionsTemplatePDF.podTemplate = '../../examples_fr/templates/pv.odt'
 decisionsTemplatePDF.podFormat = 'pdf'
 decisionsTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                    'here.portal_plonemeeting.isManager()'
+                                    'here.portal_plonemeeting.isManager(here)'
 
 itemProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
 itemProjectTemplate.podTemplate = '../../examples_fr/templates/projet-deliberation.odt'
@@ -70,7 +70,7 @@ caTemplates = [agendaTemplate, agendaTemplatePDF,
                itemTemplate, itemTemplatePDF]
 
 # Users and groups -------------------------------------------------------------
-dgen = UserDescriptor('dgen', ['MeetingManager'], email="test@test.be", fullname="Henry Directeur")
+dgen = UserDescriptor('dgen', [], email="test@test.be", fullname="Henry Directeur")
 dfin = UserDescriptor('dfin', [], email="test@test.be", fullname="Directeur Financier")
 agentInfo = UserDescriptor('agentInfo', [], email="test@test.be", fullname="Agent Service Informatique")
 agentCompta = UserDescriptor('agentCompta', [], email="test@test.be", fullname="Agent Service Comptabilité")

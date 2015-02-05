@@ -22,7 +22,7 @@ class Migrate_To_cdld(Migrator):
             'created',
             'searchCDLDItems',
             "python: '%s_budgetimpacteditors' % here.portal_plonemeeting.getMeetingConfig(here)"
-            ".getId() in member.getGroups() or here.portal_plonemeeting.isManager()", ),
+            ".getId() in member.getGroups() or here.portal_plonemeeting.isManager(here)", ),
         )
 
         site = self.portal

@@ -125,6 +125,10 @@ class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
         '''Run the test_pm_Validate_certifiedSignatures from PloneMeeting.'''
         pmtmc.test_pm_Validate_certifiedSignatures(self)
 
+    def test_subproduct_call_MeetingConfigGroupsCreatedCorrectly(self):
+        '''Run the test_pm_MeetingConfigGroupsCreatedCorrectly from PloneMeeting.'''
+        pmtmc.test_pm_MeetingConfigGroupsCreatedCorrectly(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

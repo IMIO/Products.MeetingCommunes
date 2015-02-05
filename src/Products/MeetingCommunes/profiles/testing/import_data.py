@@ -103,7 +103,7 @@ categories = [
 ]
 
 # Users and groups -------------------------------------------------------------
-pmManager = UserDescriptor('pmManager', ['MeetingManager'])
+pmManager = UserDescriptor('pmManager', [])
 pmCreator1 = UserDescriptor('pmCreator1', [])
 pmCreator1b = UserDescriptor('pmCreator1b', [])
 pmReviewer1 = UserDescriptor('pmReviewer1', [])

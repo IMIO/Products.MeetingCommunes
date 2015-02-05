@@ -39,24 +39,24 @@ categories = [recurring,
 agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaTemplate.podTemplate = 'oj.odt'
 agendaTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_plonemeeting.isManager()'
+                              'here.portal_plonemeeting.isManager(here)'
 
 agendaTemplatePDF = PodTemplateDescriptor('oj-pdf', 'Ordre du jour')
 agendaTemplatePDF.podTemplate = 'oj.odt'
 agendaTemplatePDF.podFormat = 'pdf'
 agendaTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                 'here.portal_plonemeeting.isManager()'
+                                 'here.portal_plonemeeting.isManager(here)'
 
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsTemplate.podTemplate = 'pv.odt'
 decisionsTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                 'here.portal_plonemeeting.isManager()'
+                                 'here.portal_plonemeeting.isManager(here)'
 
 decisionsTemplatePDF = PodTemplateDescriptor('pv-pdf', 'Procès-verbal')
 decisionsTemplatePDF.podTemplate = 'pv.odt'
 decisionsTemplatePDF.podFormat = 'pdf'
 decisionsTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                    'here.portal_plonemeeting.isManager()'
+                                    'here.portal_plonemeeting.isManager(here)'
 
 itemProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
 itemProjectTemplate.podTemplate = 'projet-deliberation.odt'
@@ -85,24 +85,24 @@ collegeTemplates = [agendaTemplate, agendaTemplatePDF,
 agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaCouncilTemplate.podTemplate = 'council-oj.odt'
 agendaCouncilTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                     'here.portal_plonemeeting.isManager()'
+                                     'here.portal_plonemeeting.isManager(here)'
 
 agendaCouncilTemplatePDF = PodTemplateDescriptor('oj-pdf', 'Ordre du jour')
 agendaCouncilTemplatePDF.podTemplate = 'council-oj.odt'
 agendaCouncilTemplatePDF.podFormat = 'pdf'
 agendaCouncilTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                        'here.portal_plonemeeting.isManager()'
+                                        'here.portal_plonemeeting.isManager(here)'
 
 decisionsCouncilTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsCouncilTemplate.podTemplate = 'council-pv.odt'
 decisionsCouncilTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                        'here.portal_plonemeeting.isManager()'
+                                        'here.portal_plonemeeting.isManager(here)'
 
 decisionsCouncilTemplatePDF = PodTemplateDescriptor('pv-pdf', 'Procès-verbal')
 decisionsCouncilTemplatePDF.podTemplate = 'council-pv.odt'
 decisionsCouncilTemplatePDF.podFormat = 'pdf'
 decisionsCouncilTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                           'here.portal_plonemeeting.isManager()'
+                                           'here.portal_plonemeeting.isManager(here)'
 
 itemCouncilRapportTemplate = PodTemplateDescriptor('rapport', 'Rapport')
 itemCouncilRapportTemplate.podTemplate = 'council-rapport.odt'
@@ -138,7 +138,7 @@ councilTemplates = [agendaCouncilTemplate, agendaCouncilTemplatePDF,
                     itemCouncilProjectTemplate, itemCouncilProjectTemplatePDF, ]
 
 # Users and groups -------------------------------------------------------------
-dgen = UserDescriptor('dgen', ['MeetingManager'], email="test@test.be", fullname="Henry Directeur")
+dgen = UserDescriptor('dgen', [], email="test@test.be", fullname="Henry Directeur")
 bourgmestre = UserDescriptor('bourgmestre', [], email="test@test.be", fullname="Pierre Bourgmestre")
 dfin = UserDescriptor('dfin', [], email="test@test.be", fullname="Directeur Financier")
 agentInfo = UserDescriptor('agentInfo', [], email="test@test.be", fullname="Agent Service Informatique")

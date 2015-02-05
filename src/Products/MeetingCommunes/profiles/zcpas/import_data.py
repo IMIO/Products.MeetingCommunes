@@ -33,33 +33,22 @@ categories = [CategoryDescriptor('recurrents', 'Récurrents'),
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
 agendaTemplate.podTemplate = '../../examples_fr/templates/oj.odt'
-agendaTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                              'here.portal_membership.' \
-                              'getAuthenticatedMember().has_role("' \
-                              'MeetingManager")'
+agendaTemplate.podCondition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager()'
+
 
 agendaTemplatePDF = PodTemplateDescriptor('agendapdf', 'Ordre du jour')
 agendaTemplatePDF.podTemplate = '../../examples_fr/templates/oj.odt'
 agendaTemplatePDF.podFormat = 'pdf'
-agendaTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                 'here.portal_membership.' \
-                                 'getAuthenticatedMember().has_role("' \
-                                 'MeetingManager")'
+agendaTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager()'
 
 decisionsTemplate = PodTemplateDescriptor('decisions', 'Procès-verbal')
 decisionsTemplate.podTemplate = '../../examples_fr/templates/pv.odt'
-decisionsTemplate.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                 'here.portal_membership.' \
-                                 'getAuthenticatedMember().has_role("' \
-                                 'MeetingManager")'
+decisionsTemplate.podCondition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager()'
 
 decisionsTemplatePDF = PodTemplateDescriptor('decisionspdf', 'Procès-verbal')
 decisionsTemplatePDF.podTemplate = '../../examples_fr/templates/pv.odt'
 decisionsTemplatePDF.podFormat = 'pdf'
-decisionsTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and ' \
-                                    'here.portal_membership.' \
-                                    'getAuthenticatedMember().has_role("' \
-                                    'MeetingManager")'
+decisionsTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager()'
 
 itemTemplate = PodTemplateDescriptor('item', 'Délibération')
 itemTemplate.podTemplate = '../../examples_fr/templates/deliberation.odt'
@@ -76,7 +65,7 @@ allTemplates = [agendaTemplate, agendaTemplatePDF,
 
 # Users and groups -------------------------------------------------------------
 president = UserDescriptor('president', [], email="test@test.be", fullname="Président")
-secretaire = UserDescriptor('secretaire', ['MeetingManager'], email="test@test.be")
+secretaire = UserDescriptor('secretaire', [], email="test@test.be")
 agentInfo = UserDescriptor('agentInfo', [], email="test@test.be")
 agentCompta = UserDescriptor('agentCompta', [], email="test@test.be")
 agentPers = UserDescriptor('agentPers', [], email="test@test.be")
