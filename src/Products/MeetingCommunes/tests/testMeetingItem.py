@@ -223,6 +223,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_GetAdviceDataFor()
 
+    def test_subproduct_call_CopiedFieldsWhenDuplicated(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_CopiedFieldsWhenDuplicated()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
