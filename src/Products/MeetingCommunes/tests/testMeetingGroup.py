@@ -34,12 +34,10 @@ class testMeetingGroup(MeetingCommunesTestCase, pmmg):
         '''Run the testCanNotRemoveUsedMeetingCategory from PloneMeeting.'''
         # remove every recurring items in existing meetingConfigs except template2 in self.meetingConfig
         self.changeUser('admin')
-        self.meetingConfig.recurringitems.manage_delObjects(
-            [item.getId() for item in self.meetingConfig.getItems()])
+        self._removeConfigObjectsFor(self.meetingConfig, folders=['recurringitems', ])
         self.meetingConfig.itemtemplates.manage_delObjects(
             [item.getId() for item in self.meetingConfig.getItems(recurring=False) if not item.getId() == 'template2'])
-        self.meetingConfig2.recurringitems.manage_delObjects(
-            [item.getId() for item in (self.meetingConfig2.recurringitems.objectValues('MeetingItem'))])
+        self._removeConfigObjectsFor(self.meetingConfig2, folders=['recurringitems', ])
         logout()
         self.test_pm_CanNotRemoveUsedMeetingGroup()
 

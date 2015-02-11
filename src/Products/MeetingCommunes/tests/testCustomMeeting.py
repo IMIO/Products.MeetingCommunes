@@ -40,7 +40,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         #configure PloneMeeting
         #test if the category is a MeetingCategory
         #insert items in the meeting depending on the category
-        self.changeUser('admin')
+        self.changeUser('pmManager')
         self.setMeetingConfig(self.meetingConfig2.getId())
         meeting = self._createMeetingWithItems()
         #build the list of uids
@@ -74,7 +74,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         #configure PloneMeeting
         #test if the category is a MeetingCategory
         #insert items in the meeting depending on the category
-        self.changeUser('admin')
+        self.changeUser('pmManager')
         self.meetingConfig.setInsertingMethodsOnAddItem(({'insertingMethod': 'on_proposing_groups',
                                                          'reverse': '0'}, ))
 
