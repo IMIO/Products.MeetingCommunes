@@ -356,27 +356,20 @@ class CustomMeeting(Meeting):
                 elif excludedCategories and item.getCategory() in excludedCategories:
                     continue
                 currentCat = item.getCategory(theObject=True)
-                currentCatId = currentCat.getId()
-                if currentCatId != previousCatId:
-                    # Add the item to a new category, excepted if the
-                    # category already exists.
-                    catExists = False
-                    for catList in res:
-                        if catList[0] == currentCat:
-                            catExists = True
-                            break
-                    if catExists:
-                        self._insertItemInCategory(catList, item,
-                                                   by_proposing_group, group_prefixes, groups)
-                    else:
-                        res.append([currentCat])
-                        self._insertItemInCategory(res[-1], item,
-                                                   by_proposing_group, group_prefixes, groups)
-                    previousCatId = currentCatId
+                # Add the item to a new category, excepted if the
+                # category already exists.
+                catExists = False
+                for catList in res:
+                    if catList[0] == currentCat:
+                        catExists = True
+                        break
+                if catExists:
+                    self._insertItemInCategory(catList, item,
+                                                by_proposing_group, group_prefixes, groups)
                 else:
-                    # Append the item to the same category
+                    res.append([currentCat])
                     self._insertItemInCategory(res[-1], item,
-                                               by_proposing_group, group_prefixes, groups)
+                                                by_proposing_group, group_prefixes, groups)
         if includeEmptyCategories:
             meetingConfig = tool.getMeetingConfig(
                 self.context)
