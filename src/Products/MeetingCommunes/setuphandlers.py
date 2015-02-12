@@ -191,7 +191,7 @@ def finalizeExampleInstance(context):
     topicsInfo = (
         # Items in state 'proposed'
         ('searchproposeditems',
-         (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
+         (('portal_type', 'ATPortalTypeCriterion', ('MeetingItem',)),
           ('review_state', 'ATListCriterion', ('proposed',),)
           ),
          'created',
@@ -200,17 +200,8 @@ def finalizeExampleInstance(context):
          ),
         # Items in state 'validated'
         ('searchvalidateditems',
-         (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
+         (('portal_type', 'ATPortalTypeCriterion', ('MeetingItem',)),
          ('review_state', 'ATListCriterion', ('validated',),)
-          ),
-         'created',
-         '',
-         '',
-         ),
-        # All 'decided' items
-        ('searchdecideditems',
-         (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
-         ('review_state', 'ATListCriterion', ('accepted', 'refused', 'delayed', 'accepted_but_modified',),)
           ),
          'created',
          '',
