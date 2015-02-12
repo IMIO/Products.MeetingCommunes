@@ -126,6 +126,7 @@ groups[6].observers.append(echevinPers)
 bpMeeting = MeetingConfigDescriptor(
     'meeting-config-bp', 'Bureau permanent',
     'Bureau permanent', isDefault=True)
+bpMeeting.meetingManagers = ['dgen', ]
 bpMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
                      'Charles Exemple - 1er Echevin,\n' \
                      'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
@@ -184,6 +185,7 @@ bpMeeting.recurringItems = [
 casMeeting = MeetingConfigDescriptor(
     'meeting-config-cas', "Conseil de l'Action Sociale",
     "Conseil de l'Action Sociale", isDefault=False)
+casMeeting.meetingManagers = ['dgen', ]
 casMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
                       'Charles Exemple - 1er Echevin,\n' \
                       'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \

@@ -132,6 +132,7 @@ groups[5].advisers.append(dfin)
 coGestMeeting = MeetingConfigDescriptor(
     'cogest', 'Comité de gestion',
     'Comité de gestion')
+coGestMeeting.meetingManagers = ['dgen', ]
 coGestMeeting.assembly = 'Pierre Dupont - Secrétaire,\n' \
                          'Charles Exemple - Premier membre assemblée,\n' \
                          'Luc Un, Luc Deux, Luc Trois - Membres,\n' \

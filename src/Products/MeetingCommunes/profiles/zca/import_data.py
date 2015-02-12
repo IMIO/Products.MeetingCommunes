@@ -132,6 +132,7 @@ groups[5].advisers.append(dfin)
 caMeeting = MeetingConfigDescriptor(
     'ca', 'Conseil d\'Administration',
     'Conseil d\'Administration')
+caMeeting.meetingManagers = ['dgen', ]
 caMeeting.assembly = 'Pierre Dupont - Président,\n' \
                      'Charles Exemple - Premier membre assemblée,\n' \
                      'Luc Un, Luc Deux, Luc Trois - Membres,\n' \

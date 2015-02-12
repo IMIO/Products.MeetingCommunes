@@ -132,6 +132,7 @@ groups[5].advisers.append(dfin)
 codirMeeting = MeetingConfigDescriptor(
     'codir', 'Comité de Direction',
     'Comité de Direction')
+codirMeeting.meetingManagers = ['dgen', ]
 codirMeeting.assembly = 'Pierre Dupont - Président,\n' \
                         'Charles Exemple - Premier membre assemblée,\n' \
                         'Luc Un, Luc Deux, Luc Trois - Membres,\n' \
