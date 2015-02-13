@@ -45,10 +45,22 @@ class testCustomMeeting(MeetingCommunesTestCase):
         login(self.portal, 'admin')
         self.setMeetingConfig(self.meetingConfig2.getId())
         meeting = self._createMeetingWithItems()
+        i6 = self.create('MeetingItem', title='Item6')
+        i6.setCategory('development')
+        i7 = self.create('MeetingItem', title='Item7')
+        i7.setCategory('development')
+        self.presentItem(i6)
+        self.presentItem(i7)
         #build the list of uids
         itemUids = []
         for item in meeting.getItemsInOrder():
             itemUids.append(item.UID())
+        #the 2 new development items are moved to the end of the meeting
+        view = i6.restrictedTraverse('@@change_item_order')
+        view('number',7)
+        view('down')
+        view = i7.restrictedTraverse('@@change_item_order')
+        view('number',7)
         #test on the meeting
         #we should have a list containing 3 lists, 1 list by category
         self.assertEquals(len(meeting.adapted().getPrintableItemsByCategory(itemUids)), 3)
@@ -59,9 +71,15 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids)[0][0].meta_type, 'MeetingCategory')
         self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids)[1][0].meta_type, 'MeetingCategory')
         self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids)[2][0].meta_type, 'MeetingCategory')
+        #the first category should have 4 items, the second 2 and the third 1 ( + 1 category element for each one)
+        self.assertEquals(len(meeting.adapted().getPrintableItemsByCategory(itemUids)[0]), 5)
+        self.assertEquals(len(meeting.adapted().getPrintableItemsByCategory(itemUids)[1]), 3)
+        self.assertEquals(len(meeting.adapted().getPrintableItemsByCategory(itemUids)[2]), 2)
         #other element of the list are MeetingItems...
         self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids)[0][1].meta_type, 'MeetingItem')
         self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids)[0][2].meta_type, 'MeetingItem')
+        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids)[0][3].meta_type, 'MeetingItem')
+        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids)[0][4].meta_type, 'MeetingItem')
         self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids)[1][1].meta_type, 'MeetingItem')
         self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids)[1][2].meta_type, 'MeetingItem')
         self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids)[2][1].meta_type, 'MeetingItem')
