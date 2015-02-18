@@ -21,10 +21,6 @@ msgstr ""
 msgid "searchvalidateditems"
 msgstr ""
 
-#. Default: "Decided items"
-msgid "searchdecideditems"
-msgstr ""
-
 #. Default: "Alderman of the following services (departments)"
 msgid "MeetingCommunes_label_echevinServices"
 msgstr ""

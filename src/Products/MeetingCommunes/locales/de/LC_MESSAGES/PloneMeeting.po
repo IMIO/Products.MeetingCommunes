@@ -76,10 +76,6 @@ msgstr ""
 msgid "searchcdlditems"
 msgstr ""
 
-#. Default: "Decided items"
-msgid "searchdecideditems"
-msgstr ""
-
 # searches
 #. Default: "Proposed items"
 #, fuzzy

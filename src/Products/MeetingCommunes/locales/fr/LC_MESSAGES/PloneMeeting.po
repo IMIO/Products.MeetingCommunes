@@ -75,10 +75,6 @@ msgstr "Si cette case est cochée, lorsqu'une séance passera 'En rédaction du 
 msgid "searchcdlditems"
 msgstr "Synthèse CDLD"
 
-#. Default: "Decided items"
-msgid "searchdecideditems"
-msgstr ""
-
 # searches
 #. Default: "Proposed items"
 msgid "searchproposeditems"

@@ -75,10 +75,6 @@ msgstr "If you check this box, when a meeting will be decided, if an item does n
 msgid "searchcdlditems"
 msgstr ""
 
-#. Default: "Decided items"
-msgid "searchdecideditems"
-msgstr ""
-
 # searches
 #. Default: "Proposed items"
 msgid "searchproposeditems"
