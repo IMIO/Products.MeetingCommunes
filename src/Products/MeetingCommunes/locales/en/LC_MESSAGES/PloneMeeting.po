@@ -18,6 +18,10 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "X-is-fallback-for: en-us en-ca\n"
 
+#. Default: "Proposing group to keep for CDLD synthesis"
+msgid "CdldProposingGroup"
+msgstr ""
+
 # portal_tabs
 #. Default: "Meeting config College"
 msgid "Meeting config College"
@@ -66,9 +70,14 @@ msgstr "pre accepted"
 msgid "init_item_decision_if_empty_on_decide"
 msgstr "If you check this box, when a meeting will be decided, if an item does not have a decision defined, this decision will be automatically filled with title and description of the item"
 
+# searches
+#. Default: "cdld synthesis"
+msgid "searchcdlditems"
+msgstr ""
+
 #. Default: "Decided items"
 msgid "searchdecideditems"
-msgstr "Decided items"
+msgstr ""
 
 # searches
 #. Default: "Proposed items"

@@ -18,6 +18,10 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "X-is-fallback-for: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
 
+#. Default: "Proposing group to keep for CDLD synthesis"
+msgid "CdldProposingGroup"
+msgstr "Groups proposants à garder pour la synthèse des avis pour le DF"
+
 # portal_tabs
 #. Default: "Meeting config College"
 msgid "Meeting config College"
@@ -66,9 +70,14 @@ msgstr "Accepté provisoirement"
 msgid "init_item_decision_if_empty_on_decide"
 msgstr "Si cette case est cochée, lorsqu'une séance passera 'En rédaction du PV', pour tous les points dont le champ 'Décision' est vide, ce champ sera automatiquement rempli avec une concaténation de ce qui est défini dans le titre et la description du point"
 
+# searches
+#. Default: "cdld synthesis"
+msgid "searchcdlditems"
+msgstr "Synthèse CDLD"
+
 #. Default: "Decided items"
 msgid "searchdecideditems"
-msgstr "Points décidés"
+msgstr ""
 
 # searches
 #. Default: "Proposed items"
@@ -99,11 +108,3 @@ msgstr "Le point a été envoyé au Comité de concertation."
 msgid "sendto_meeting-config-council_success"
 msgstr "Le point a été envoyé au Conseil communal."
 
-#searches
-#. Default: "cdld synthesis"
-msgid "searchcdlditems"
-msgstr "Synthèse CDLD"
-
-#. Default: "Proposing group to keep for CDLD synthesis"
-msgid "CdldProposingGroup"
-msgstr "Groups proposants à garder pour la synthèse des avis pour le DF"

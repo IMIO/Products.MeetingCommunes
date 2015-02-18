@@ -18,6 +18,10 @@ msgstr ""
 "Domain: PloneMeeting\n"
 "X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
 
+#. Default: "Proposing group to keep for CDLD synthesis"
+msgid "CdldProposingGroup"
+msgstr ""
+
 # portal_tabs
 #. Default: "Meeting config College"
 msgid "Meeting config College"
@@ -66,10 +70,14 @@ msgstr ""
 msgid "init_item_decision_if_empty_on_decide"
 msgstr ""
 
+# searches
+#. Default: "cdld synthesis"
+msgid "searchcdlditems"
+msgstr ""
+
 #. Default: "Decided items"
-#, fuzzy
 msgid "searchdecideditems"
-msgstr "los temas decididos"
+msgstr ""
 
 # searches
 #. Default: "Proposed items"

@@ -17,6 +17,10 @@ msgstr ""
 "Language-name: Deutsch\n"
 "X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
 
+#. Default: "Proposing group to keep for CDLD synthesis"
+msgid "CdldProposingGroup"
+msgstr ""
+
 # portal_tabs
 #. Default: "Meeting config College"
 msgid "Meeting config College"
@@ -67,10 +71,14 @@ msgstr "Provisorisch akzeptiert"
 msgid "init_item_decision_if_empty_on_decide"
 msgstr ""
 
+# searches
+#. Default: "cdld synthesis"
+msgid "searchcdlditems"
+msgstr ""
+
 #. Default: "Decided items"
-#, fuzzy
 msgid "searchdecideditems"
-msgstr "beschlossenen TOP"
+msgstr ""
 
 # searches
 #. Default: "Proposed items"
