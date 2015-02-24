@@ -340,7 +340,7 @@ collegeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present
 collegeMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.decision',
-      'tal_expression': "string:Le Collège décide de reporter le point."},))
+      'tal_expression': "string:<p>Le Collège décide de reporter le point.</p>${here/getDecision}"},))
 collegeMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
                                                               'item_transition': 'itemfreeze'},
 
