@@ -53,7 +53,7 @@ def update_config_schema(baseSchema):
                 size=10,
                 label='CdldProposingGroup',
                 label_msgid='MeetingCommunes_label_cdldProposingGroup',
-                description='Leave empty if you want all proposing group',
+                description='Choose proposing group for cdld advice',
                 description_msgid='MeetingCommunes_descr_cdldProposingGroup',
                 i18n_domain='PloneMeeting',
             ),

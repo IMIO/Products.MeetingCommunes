@@ -738,7 +738,7 @@ class CustomMeetingConfig(MeetingConfig):
                     advice = advicesIndex[groupId]
                     if advice['delay'] and not delay:
                         continue
-                    res.append(advice)
+                    res.append((advice, item))
         return res
 
 

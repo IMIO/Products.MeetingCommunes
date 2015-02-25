@@ -95,5 +95,9 @@ msgid "searchcdlditems"
 msgstr ""
 
 #. Default: "Proposing group to keep for CDLD synthesis"
-msgid "CdldProposingGroup"
+msgid "MeetingCommunes_label_cdldProposingGroup"
+msgstr ""
+
+#. Default: "Choose proposing group for cdld advice"
+msgid "MeetingCommunes_descr_cdldProposingGroup"
 msgstr ""
