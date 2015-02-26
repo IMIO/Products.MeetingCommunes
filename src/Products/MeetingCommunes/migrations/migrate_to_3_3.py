@@ -70,10 +70,32 @@ class Migrate_To_3_3(Migrator):
                 cfg.setOnMeetingTransitionItemTransitionToTrigger(newValue)
         logger.info('Done.')
 
+    def _addCDLDTopics(self):
+        '''
+          Add CDLD topics for synthesis of all advice.'''
+        logger.info('Adding CDLD topics...')
+        # add some extra topics to each MeetingConfig
+        topicsInfo = (
+            # Items for cdld synthesis
+            ('searchcdlditems',
+            (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
+             ),
+            'created',
+            'searchCDLDItems',
+            "python: '%s_budgetimpacteditors' % here.portal_plonemeeting.getMeetingConfig(here)"
+            ".getId() in member.getGroups() or here.portal_plonemeeting.isManager(here)", ),
+        )
+
+        site = self.portal
+        for cfg in site.portal_plonemeeting.objectValues('MeetingConfig'):
+            cfg.createTopics(topicsInfo)
+        logger.info('Done.')
+
     def run(self):
         logger.info('Migrating to MeetingCommunes 3.3...')
         self._migrateItemDecisionReportTextAttributeOnConfigs()
         self._updateOnMeetingTransitionItemTransitionToTrigger()
+        self._addCDLDTopics()
         # reinstall so skins and so on are correct
         self.reinstall(profiles=[u'profile-Products.MeetingCommunes:default', ])
         self.finish()
