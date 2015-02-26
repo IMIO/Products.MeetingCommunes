@@ -15,10 +15,6 @@ msgstr ""
 "Domain: PloneMeeting\n"
 "X-is-fallback-for: nl-be\n"
 
-#. Default: "Proposing group to keep for CDLD synthesis"
-msgid "CdldProposingGroup"
-msgstr ""
-
 # portal_tabs
 #. Default: "Meeting config College"
 msgid "Meeting config College"
@@ -28,12 +24,20 @@ msgstr ""
 msgid "Meeting config Council"
 msgstr ""
 
+#. Default: "Choose proposing group for cdld advice"
+msgid "MeetingCommunes_descr_cdldProposingGroup"
+msgstr ""
+
 #. Default: "If the group is responsible of other groups, select them here above, either do not select any elements of the list."
 msgid "MeetingCommunes_descr_echevinServices"
 msgstr ""
 
 #. Default: "If you specify signatures here, it will be used while generating documents of this proposing group.  Either, signatures defined on the meeting will be used."
 msgid "MeetingCommunes_descr_signatures"
+msgstr ""
+
+#. Default: "Proposing group to keep for CDLD synthesis"
+msgid "MeetingCommunes_label_cdldProposingGroup"
 msgstr ""
 
 #. Default: "Alderman of the following services (departments)"
