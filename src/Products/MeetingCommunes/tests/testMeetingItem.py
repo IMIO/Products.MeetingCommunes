@@ -231,6 +231,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_CustomInsertingMethodRaisesNotImplementedErrorIfNotImplemented()
 
+    def test_subproduct_call_EmptyLinesAreHighlighted(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_EmptyLinesAreHighlighted()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
