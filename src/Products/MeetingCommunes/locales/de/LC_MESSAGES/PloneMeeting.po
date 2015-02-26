@@ -34,10 +34,6 @@ msgstr ""
 msgid "MeetingCommunes_descr_echevinServices"
 msgstr ""
 
-#. Default: "If you specify signatures here, it will be used while generating documents of this proposing group.  Either, signatures defined on the meeting will be used."
-msgid "MeetingCommunes_descr_signatures"
-msgstr ""
-
 #. Default: "Proposing group to keep for CDLD synthesis"
 msgid "MeetingCommunes_label_cdldProposingGroup"
 msgstr ""
@@ -48,10 +44,6 @@ msgstr ""
 
 #. Default: "Initialize the item decision when deciding meeting"
 msgid "MeetingCommunes_label_initItemDecisionIfEmptyOnDecide"
-msgstr ""
-
-#. Default: "Signatures delegation"
-msgid "MeetingCommunes_label_signatures"
 msgstr ""
 
 #. Default: "Item created from a college item"

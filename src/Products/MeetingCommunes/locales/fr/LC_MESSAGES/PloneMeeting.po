@@ -35,10 +35,6 @@ msgstr "Choisir les groupes donneurs d'avis qui seront repris dans la synthèse 
 msgid "MeetingCommunes_descr_echevinServices"
 msgstr "Si ce groupe est responsable d'autres groupes, selectionnez les ci-dessous."
 
-#. Default: "If you specify signatures here, it will be used while generating documents of this proposing group.  Either, signatures defined on the meeting will be used."
-msgid "MeetingCommunes_descr_signatures"
-msgstr "Si vous spécifiez des signatures dans ce champ, elle seront utilisées pour les points proposés par ce groupe, si le champ est vide, les signatures définies sur la séance seront utilisées."
-
 #. Default: "Proposing group to keep for CDLD synthesis"
 msgid "MeetingCommunes_label_cdldProposingGroup"
 msgstr "Groups proposants à garder pour la synthèse des avis pour le CDLD (avis DF)"
@@ -50,10 +46,6 @@ msgstr "Echevin des services suivants"
 #. Default: "Initialize the item decision when deciding meeting"
 msgid "MeetingCommunes_label_initItemDecisionIfEmptyOnDecide"
 msgstr "Initialiser le champ décision des points lorsque la séance passe ' En rédaction du PV'?"
-
-#. Default: "Signatures delegation"
-msgid "MeetingCommunes_label_signatures"
-msgstr "Délégation de signatures"
 
 #. Default: "Item created from a college item"
 msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
