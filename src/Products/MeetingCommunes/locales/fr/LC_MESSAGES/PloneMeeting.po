@@ -69,7 +69,7 @@ msgstr "Si cette case est cochée, lorsqu'une séance passera 'En rédaction du 
 # searches
 #. Default: "cdld synthesis"
 msgid "searchcdlditems"
-msgstr "Synthèse CDLD"
+msgstr "Synthèse Avis DF"
 
 # searches
 #. Default: "Proposed items"
@@ -99,4 +99,3 @@ msgstr "Le point a été envoyé au Comité de concertation."
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
 msgstr "Le point a été envoyé au Conseil communal."
-
