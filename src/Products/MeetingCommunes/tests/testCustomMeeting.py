@@ -141,7 +141,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.assertEquals(m.adapted().getPrintableItemsByCategory(itemUids)[1][4].meta_type, 'MeetingItem')
 
     def test_GetPrintableItemsByCategoryWithBothLateItems(self):
-        login(self.portal, 'admin')
+        self.changeUser('pmManager')
         self.setMeetingConfig(self.meetingConfig2.getId())
         meeting = self._createMeetingWithItems()
         orderedItems = meeting.getAllItems(ordered=True)
@@ -187,7 +187,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[2][1].meta_type, 'MeetingItem')
 
     def test_GetPrintableItemsByCategoryWhenForceCategOrderFromConfig(self):
-        login(self.portal, 'admin')
+        self.changeUser('pmManager')
         self.setMeetingConfig(self.meetingConfig2.getId())
         meeting = self._createMeetingWithItems()
         orderedItems = meeting.getAllItems(ordered=True)
