@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+-*- coding: utf-8 -*-
 #
 # File: testCustomMeeting.py
 #
@@ -141,7 +141,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.assertEquals(m.adapted().getPrintableItemsByCategory(itemUids)[1][4].meta_type, 'MeetingItem')
 
     def test_GetPrintableItemsByCategoryWithBothLateItems(self):
-        login(self.portal, 'admin')
+        self.changeUser('pmManager')
         self.setMeetingConfig(self.meetingConfig2.getId())
         meeting = self._createMeetingWithItems()
         orderedItems = meeting.getAllItems(ordered=True)
@@ -187,7 +187,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[2][1].meta_type, 'MeetingItem')
 
     def test_GetPrintableItemsByCategoryWhenForceCategOrderFromConfig(self):
-        login(self.portal, 'admin')
+        self.changeUser('pmManager')
         self.setMeetingConfig(self.meetingConfig2.getId())
         meeting = self._createMeetingWithItems()
         orderedItems = meeting.getAllItems(ordered=True)
@@ -345,30 +345,3 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, categories=['development', ], late=True), 2)
         # we have so 0 normal item using the 'development' category
         self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, categories=['development', ], late=False), 0)
-
-    def test_GetPrintableItemsByCategoryWithBothLateItems(self):
-        """
-            Tests if the late parameter of getPrintableItemsByCategory works well with the 'both' value.
-        """
-        self.changeUser('pmManager')
-        self.setMeetingConfig(self.meetingConfig2.getId())
-        meeting = self._createMeetingWithItems()
-        i6 = self.create('MeetingItem', title='Item6')
-        i6.setCategory('development')
-        i6.setProposingGroup('vendors')
-        i6.setPrivacy('secret')
-        i7 = self.create('MeetingItem', title='Item7')
-        i7.setCategory('events')
-        i7.setProposingGroup('vendors')
-        i7.setPrivacy('secret')
-        #build the list of uids
-        itemUids = []
-        for item in meeting.getItemsInOrder():
-            itemUids.append(item.UID())
-        self.freezeMeeting(meeting)
-        i6.setPreferredMeeting(meeting.UID())
-        i7.setPreferredMeeting(meeting.UID())
-        self.presentItem(i6)
-        self.presentItem(i7)
-        import ipdb; ipdb.set_trace()  # XXX BREAKPOINT
-
