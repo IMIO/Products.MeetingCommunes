@@ -326,9 +326,9 @@ class CustomMeeting(Meeting):
         #   * at position 0: the proposing group object
         #   * at positions 1 to n: the items belonging to this group.
         def _comp(v1, v2):
-            if v1[0].getOrder()<v2[0].getOrder():
+            if v1[0].getOrder(onlySelectable=False)<v2[0].getOrder(onlySelectable=False):
                 return -1
-            elif v1[0].getOrder>v2[0].getOrder():
+            elif v1[0].getOrder(onlySelectable=False)>v2[0].getOrder(onlySelectable=False):
                 return 1
             else:
                 return 0
