@@ -37,7 +37,7 @@ msgstr "Si ce groupe est responsable d'autres groupes, selectionnez les ci-desso
 
 #. Default: "Proposing group to keep for CDLD synthesis"
 msgid "MeetingCommunes_label_cdldProposingGroup"
-msgstr "Groups proposants à garder pour la synthèse des avis pour le CDLD (avis DF)"
+msgstr "Groupes proposants à garder pour la synthèse des avis pour le CDLD (avis DF)"
 
 #. Default: "Alderman of the following services (departments)"
 msgid "MeetingCommunes_label_echevinServices"
@@ -45,7 +45,7 @@ msgstr "Echevin des services suivants"
 
 #. Default: "Initialize the item decision when deciding meeting"
 msgid "MeetingCommunes_label_initItemDecisionIfEmptyOnDecide"
-msgstr "Initialiser le champ décision des points lorsque la séance passe ' En rédaction du PV'?"
+msgstr "Initialiser le champ décision des points lorsque la séance passe 'En rédaction du PV'?"
 
 #. Default: "Item created from a college item"
 msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
