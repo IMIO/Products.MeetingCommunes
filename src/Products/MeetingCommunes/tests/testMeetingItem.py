@@ -167,6 +167,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_Validate_optionalAdvisersCanNotSelectSameGroupAdvisers()
 
+    def test_subproduct_call_PowerObserversLocalRoles(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_PowerObserversLocalRoles()
+
     def test_subproduct_call_BudgetImpactEditorsGroups(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_BudgetImpactEditorsGroups()
