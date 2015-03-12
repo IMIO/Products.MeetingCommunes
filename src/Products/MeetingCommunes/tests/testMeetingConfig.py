@@ -129,6 +129,10 @@ class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
         '''Run the test_pm_MeetingConfigGroupsCreatedCorrectly from PloneMeeting.'''
         pmtmc.test_pm_MeetingConfigGroupsCreatedCorrectly(self)
 
+    def test_subproduct_call_ItemIconColor(self):
+        '''Run the test_pm_ItemIconColor from PloneMeeting.'''
+        pmtmc.test_pm_ItemIconColor(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
