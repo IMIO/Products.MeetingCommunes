@@ -118,6 +118,10 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         '''Run the test_pm_AdvicesConfidentiality from PloneMeeting.'''
         pmta.test_pm_AdvicesConfidentiality(self)
 
+    def test_subproduct_call_MayTriggerGiveAdviceWhenItemIsBackToANotViewableState(self):
+        '''Run the test_pm_MayTriggerGiveAdviceWhenItemIsBackToANotViewableState from PloneMeeting.'''
+        pmta.test_pm_MayTriggerGiveAdviceWhenItemIsBackToANotViewableState(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
