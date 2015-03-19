@@ -82,6 +82,10 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         '''Run the test_pm_MeetingGroupDefinedItemAdviceStatesValuesOverridesMeetingConfigValues from PloneMeeting.'''
         pmta.test_pm_MeetingGroupDefinedItemAdviceStatesValuesOverridesMeetingConfigValues(self)
 
+    def test_subproduct_call_MeetingGroupDefinedItemAdviceStatesWorksTogetherWithMeetingConfigValues(self):
+        '''Run the test_pm_MeetingGroupDefinedItemAdviceStatesWorksTogetherWithMeetingConfigValues from PloneMeeting.'''
+        pmta.test_pm_MeetingGroupDefinedItemAdviceStatesWorksTogetherWithMeetingConfigValues(self)
+
     def test_subproduct_call_PowerAdvisers(self):
         '''Run the test_pm_getAutomaticAdvisers from PloneMeeting.'''
         pmta.test_pm_PowerAdvisers(self)
