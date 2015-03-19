@@ -243,6 +243,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_ManuallyLinkedItems()
 
+    def test_subproduct_call_ManuallyLinkedItemsCanUpdateEvenWithNotViewableItems(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ManuallyLinkedItemsCanUpdateEvenWithNotViewableItems()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
