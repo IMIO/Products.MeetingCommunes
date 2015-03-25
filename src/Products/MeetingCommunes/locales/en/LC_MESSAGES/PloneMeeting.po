@@ -29,7 +29,7 @@ msgstr "Meeting config Council"
 
 #. Default: "Choose proposing group for cdld advice"
 msgid "MeetingCommunes_descr_cdldProposingGroup"
-msgstr ""
+msgstr "Choose proposing group for cdld advice"
 
 #. Default: "If the group is responsible of other groups, select them here above, either do not select any elements of the list."
 msgid "MeetingCommunes_descr_echevinServices"
@@ -37,7 +37,7 @@ msgstr "If the group is responsible of other groups, select them here above, eit
 
 #. Default: "Proposing group to keep for CDLD synthesis"
 msgid "MeetingCommunes_label_cdldProposingGroup"
-msgstr ""
+msgstr "Proposing group to keep for CDLD synthesis"
 
 #. Default: "Alderman of the following services (departments)"
 msgid "MeetingCommunes_label_echevinServices"
@@ -46,10 +46,6 @@ msgstr "Alderman of the following services (departments)"
 #. Default: "Initialize the item decision when deciding meeting"
 msgid "MeetingCommunes_label_initItemDecisionIfEmptyOnDecide"
 msgstr "Initialize the item decision when deciding meeting"
-
-#. Default: "Item created from a college item"
-msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
-msgstr "Item created from a college item"
 
 msgid "front_page_body"
 msgstr ""
@@ -69,7 +65,7 @@ msgstr "If you check this box, when a meeting will be decided, if an item does n
 # searches
 #. Default: "cdld synthesis"
 msgid "searchcdlditems"
-msgstr ""
+msgstr "cdld synthesis"
 
 # searches
 #. Default: "Proposed items"
@@ -99,4 +95,3 @@ msgstr "The item has been successfully transfered to the comitee."
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
 msgstr "The item has been successfully transfered to the council."
-
