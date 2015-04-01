@@ -742,7 +742,8 @@ class CustomMeetingConfig(MeetingConfig):
             delay = False
             if cdldProposingGroup.split('__')[1]:
                 delay = True
-            groups.append((groupId, delay))
+            if not (groupId, delay) in groups:
+                groups.append((groupId, delay))
         for brain in brains:
             item = brain.getObject()
             advicesIndex = item.adviceIndex
@@ -751,7 +752,8 @@ class CustomMeetingConfig(MeetingConfig):
                     advice = advicesIndex[groupId]
                     if advice['delay'] and not delay:
                         continue
-                    res.append((advice, item))
+                    if not (advice, item) in res:
+                        res.append((advice, item))
         return res
 
 
