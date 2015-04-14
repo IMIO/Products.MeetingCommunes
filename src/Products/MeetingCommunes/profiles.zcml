@@ -27,6 +27,7 @@
   <genericsetup:registerProfile
    name="examples_fr"
    title="PloneMeeting / Communes with french examples"
+   directory="profiles/examples_fr"
    description="PloneMeeting for City College and Council (Belgium)"
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
