@@ -89,6 +89,12 @@ class Migrate_To_3_3(Migrator):
         site = self.portal
         for cfg in site.portal_plonemeeting.objectValues('MeetingConfig'):
             cfg.createTopics(topicsInfo)
+            # add template for cdld
+            cdldTemplate = PodTemplateDescriptor('generate-cdld', 'generate CDLD')
+            cdldTemplate.podTemplate = 'synthese cdld.odt'
+            cdldTemplate.podCondition = 'python:False'
+            cfg.addPodTemplate(cdldTemplate,
+                               site.portal_setup.getProfileInfo(u'profile-Products.MeetingCommunes:examples_fr')['path'])
         logger.info('Done.')
 
     def run(self):

@@ -207,6 +207,14 @@ def finalizeExampleInstance(context):
          '',
          '',
          ),
+        # Items for cdld synthesis
+        ('searchcdlditems',
+        (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
+         ),
+        'created',
+        'searchCDLDItems',
+        "python: '%s_budgetimpacteditors' % here.portal_plonemeeting.getMeetingConfig(here)"
+        ".getId() in member.getGroups() or here.portal_plonemeeting.isManager(here)", ),
     )
     mc_college_or_bp = getattr(site.portal_plonemeeting, meetingConfig1Id)
     mc_college_or_bp.createTopics(topicsInfo)

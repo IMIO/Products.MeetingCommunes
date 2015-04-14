@@ -76,10 +76,15 @@ itemTemplatePDF.podTemplate = 'deliberation.odt'
 itemTemplatePDF.podFormat = 'pdf'
 itemTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem" and here.hasMeeting()'
 
+cdldTemplate = PodTemplateDescriptor('generate-cdld', 'generate CDLD')
+cdldTemplate.podTemplate = 'synthese cdld.odt'
+cdldTemplate.podTemplate = 'oj.odt'
+cdldTemplate.podCondition = 'python:False'
+
 collegeTemplates = [agendaTemplate, agendaTemplatePDF,
                     decisionsTemplate, decisionsTemplatePDF,
                     itemProjectTemplate, itemProjectTemplatePDF,
-                    itemTemplate, itemTemplatePDF]
+                    itemTemplate, itemTemplatePDF, cdldTemplate]
 
 # Pod templates ----------------------------------------------------------------
 agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
