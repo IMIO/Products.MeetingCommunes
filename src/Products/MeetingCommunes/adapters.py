@@ -48,6 +48,7 @@ from Products.CMFCore.permissions import ReviewPortalContent
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import WF_DOES_NOT_EXIST_WARNING, WF_APPLIED
 from DateTime import DateTime
+from Products.PloneMeeting.interfaces import IAnnexable
 
 # Names of available workflow adaptations.
 customwfAdaptations = list(MeetingConfig.wfAdaptations)
@@ -136,6 +137,45 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
             logger.info(WF_APPLIED % ("no_publication", meetingConfig.getId()))
 
 adaptations.performWorkflowAdaptations = customPerformWorkflowAdaptations
+
+
+def formatedAssembly(assembly, focus):
+    is_finish = False
+    absentFind = False
+    excuseFind = False
+    res = []
+    res.append('<p class="mltAssembly">')
+    for ass in assembly:
+        if is_finish:
+            break
+        lines = ass.split(',')
+        cpt = 1
+        my_line = ''
+        for line in lines:
+            if((line.find('Excus') >= 0 or line.find('Absent') >= 0) and focus == 'present') or \
+                    (line.find('Absent') >= 0 and focus == 'excuse'):
+                is_finish = True
+                break
+            if line.find('Excus') >= 0:
+                excuseFind = True
+                continue
+            if line.find('Absent') >= 0:
+                absentFind = True
+                continue
+            if (focus == 'absent' and not absentFind) or (focus == 'excuse' and not excuseFind):
+                continue
+            if cpt == len(lines):
+                my_line = "%s%s<br />" % (my_line, line)
+                res.append(my_line)
+            else:
+                my_line = "%s%s," % (my_line, line)
+            cpt = cpt + 1
+    if len(res) > 1:
+        res[-1] = res[-1].replace('<br />', '')
+    else:
+        return ''
+    res.append('</p>')
+    return ('\n'.join(res))
 
 
 class CustomMeeting(Meeting):
@@ -326,15 +366,14 @@ class CustomMeeting(Meeting):
         #   * at position 0: the proposing group object
         #   * at positions 1 to n: the items belonging to this group.
         def _comp(v1, v2):
-            if v1[0].getOrder(onlySelectable=False)<v2[0].getOrder(onlySelectable=False):
+            if v1[0].getOrder(onlySelectable=False) < v2[0].getOrder(onlySelectable=False):
                 return -1
-            elif v1[0].getOrder(onlySelectable=False)>v2[0].getOrder(onlySelectable=False):
+            elif v1[0].getOrder(onlySelectable=False) > v2[0].getOrder(onlySelectable=False):
                 return 1
             else:
                 return 0
         res = []
         items = []
-        previousCatId = None
         tool = getToolByName(self.context, 'portal_plonemeeting')
         # Retrieve the list of items
         for elt in itemUids:
@@ -376,12 +415,12 @@ class CustomMeeting(Meeting):
                         break
                 if catExists:
                     self._insertItemInCategory(catList, item,
-                                                by_proposing_group, group_prefixes, groups)
+                                               by_proposing_group, group_prefixes, groups)
                 else:
                     res.append([currentCat])
                     self._insertItemInCategory(res[-1], item,
-                                                by_proposing_group, group_prefixes, groups)
-        if forceCategOrderFromConfig or late=='both':
+                                               by_proposing_group, group_prefixes, groups)
+        if forceCategOrderFromConfig or late == 'both':
             res.sort(cmp=_comp)
         if includeEmptyCategories:
             meetingConfig = tool.getMeetingConfig(
@@ -560,6 +599,18 @@ class CustomMeeting(Meeting):
                 ressort.append(ressorti)
         return ressort
 
+    security.declarePublic('printFormatedMeetingAssembly ')
+
+    def printFormatedMeetingAssembly(self, focus=''):
+        ''' Printing Method use in templates :
+            return formated assembly with 'absent', 'excused', ... '''
+        if focus not in ('present', 'excuse', 'absent'):
+            return ''
+        #ass is, ie: Pierre Helson, Bourgmestre, Président
+        #focus is present, excuse or absent
+        assembly = self.context.getAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
+        return formatedAssembly(assembly, focus)
+
 
 class CustomMeetingItem(MeetingItem):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
@@ -612,6 +663,51 @@ class CustomMeetingItem(MeetingItem):
                                               self.Description()))
             self.reindexObject()
     MeetingItem._initDecisionFieldIfEmpty = _initDecisionFieldIfEmpty
+
+    security.declarePublic('getAllAnnexes')
+
+    def printAllAnnexes(self):
+        ''' Printing Method use in templates :
+            return all viewable annexes for item '''
+        res = []
+        annexesByType = IAnnexable(self.context).getAnnexesByType('item')
+        for annexes in annexesByType:
+            for annex in annexes:
+                title = annex['Title'].replace('&', '&amp;')
+                url = getattr(self.context, annex['id']).absolute_url()
+                res.append('<a href="%s">%s</a><br/>' % (url, title))
+        return ('\n'.join(res))
+
+    security.declarePublic('getFormatedAdvice ')
+
+    def printFormatedAdvice(self):
+        ''' Printing Method use in templates :
+            return formated advice'''
+        res = []
+        meetingItem = self.context
+        keys = meetingItem.getAdvicesByType().keys()
+        for key in keys:
+            for advice in meetingItem.getAdvicesByType()[key]:
+                if advice['type'] == 'not_given':
+                    continue
+                comment = ''
+                if advice['comment']:
+                    comment = advice['comment']
+                res.append({'type': meetingItem.i18n(key).encode('utf-8'), 'name': advice['name'].encode('utf-8'),
+                            'comment': comment})
+        return res
+
+    security.declarePublic('printFormatedItemAssembly ')
+
+    def printFormatedItemAssembly(self, focus=''):
+        ''' Printing Method use in templates :
+            return formated assembly with 'absent', 'excused', ... '''
+        if focus not in ('present', 'excuse', 'absent'):
+            return ''
+        #ass is, ie: Pierre Helson, Bourgmestre, Président
+        #focus is present, excuse or absent
+        assembly = self.context.getItemAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
+        return formatedAssembly(assembly, focus)
 
 
 class CustomMeetingGroup(MeetingGroup):
