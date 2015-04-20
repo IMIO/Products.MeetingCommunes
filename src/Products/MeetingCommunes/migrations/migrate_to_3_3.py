@@ -5,6 +5,7 @@ logger = logging.getLogger('PloneMeeting')
 
 from Products.CMFCore.utils import getToolByName
 from Products.PloneMeeting.migrations import Migrator
+from Products.PloneMeeting.profiles import PodTemplateDescriptor
 
 
 # The migration class ----------------------------------------------------------
@@ -37,7 +38,7 @@ class Migrate_To_3_3(Migrator):
             if not onMeetingTransitionItemTransitionToTrigger:
                 meetingWFTransitions = wfTool.getWorkflowsFor(cfg.getMeetingTypeName())[0].transitions
                 newValue = [{'meeting_transition': 'freeze',
-                             'item_transition': 'itemfreeze'},]
+                             'item_transition': 'itemfreeze'}, ]
                 # if we have a 'publish' transition in the meeting workflow
                 # we take it into account
                 if 'publish' in meetingWFTransitions:
