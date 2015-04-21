@@ -118,18 +118,25 @@ def import_meetingsUsersAndRoles_from_csv(self, fname=None):
 
     out = []
 
+    from Products.CMFCore.exceptions import BadRequest
+    from Products.CMFCore.utils import getToolByName
     from Products.CMFPlone.utils import normalizeString
 
     acl = self.acl_users
     pms = self.portal_membership
     pgr = self.portal_groups
+    registration = getToolByName(self, 'portal_registration', None)
     for row in reader:
         row_id = normalizeString(row['username'], self)
         #add users if not exist
         if row_id not in [ud['userid'] for ud in acl.searchUsers()]:
             pms.addMember(row_id, row['password'], ('Member',), [])
             member = pms.getMemberById(row_id)
-            member.setProperties({'fullname': row['fullname'], 'email': row['email']})
+            properties = {'fullname': row['fullname'], 'email': row['email']}
+            failMessage = registration.testPropertiesValidity(properties, member)
+            if failMessage is not None:
+                raise BadRequest(failMessage)
+            member.setMemberProperties(properties)
             out.append("User '%s' is added" % row_id)
         else:
             out.append("User %s already exists" % row_id)
