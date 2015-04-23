@@ -6,7 +6,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 3.4 (unreleased)
 ----------------
-- Nothing yet
+- Adapted workflows to define the icon to use for transitions
 
 3.3 (2015-02-27)
 ----------------
