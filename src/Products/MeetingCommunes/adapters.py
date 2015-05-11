@@ -664,6 +664,17 @@ class CustomMeetingItem(MeetingItem):
             self.reindexObject()
     MeetingItem._initDecisionFieldIfEmpty = _initDecisionFieldIfEmpty
 
+    def getGroupIdFromCdldProposingGroup(self):
+        tool = getToolByName(self.context, 'portal_plonemeeting')
+        meetingConfig=tool.getMeetingConfig(self.context)
+        adviceGroups = meetingConfig.getCdldProposingGroup()
+        adviceGroupIds = []
+        for adviceGroup in adviceGroups:
+            adviceGroupId = adviceGroup.split('_')[0]
+            if adviceGroupId not in adviceGroupIds:
+                adviceGroupIds.append(adviceGroupId)
+        return adviceGroupIds
+
     security.declarePublic('getAllAnnexes')
 
     def printAllAnnexes(self):

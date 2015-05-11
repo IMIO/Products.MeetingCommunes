@@ -91,3 +91,15 @@ class testCustomToolPloneMeeting(MeetingCommunesTestCase):
         self.assertEquals(self.tool.adapted().getSpecificAssemblyFor(m1.getAssembly(),
                                                                      startTxt='Excus')[1],
                           '<p class="mltAssembly">Monsieur x, Mesdames Y et Z</p>')
+
+    def test_GetGroupIdFromCdldProposingGroup(self):
+        self.changeUser('pmManager')
+        self.meetingConfig.setCustomAdvisers(
+            [{'row_id': 'unique_id_123',
+              'group': 'vendors',
+              'delay': '5', }, ])
+        m1 = self._createMeetingWithItems()
+        item = m1.getItemsInOrder()[0]
+        self.meetingConfig.setCdldProposingGroup(('vendors__5__()', 'developers____'))
+        self.assertEquals(item.adapted().getGroupIdFromCdldProposingGroup(),
+                          ['vendors', 'developers'])
