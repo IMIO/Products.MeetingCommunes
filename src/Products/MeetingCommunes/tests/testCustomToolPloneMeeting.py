@@ -99,7 +99,7 @@ class testCustomToolPloneMeeting(MeetingCommunesTestCase):
               'group': 'vendors',
               'delay': '5', }, ])
         m1 = self._createMeetingWithItems()
-        item = m1.getItemsInOrder()[0]
+        item = m1.getItems(ordered=True)[0]
         self.meetingConfig.setCdldProposingGroup(('vendors__5__()', 'developers____'))
         self.assertEquals(item.adapted().getGroupIdFromCdldProposingGroup(),
                           ['vendors', 'developers'])

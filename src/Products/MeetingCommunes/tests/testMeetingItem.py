@@ -40,24 +40,6 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         self.setMeetingConfig(self.meetingConfig2.getId())
         self.test_pm_ListProposingGroups()
 
-    def test_subproduct_call_UsedColorSystemGetColoredLink(self):
-        '''See doc string in PloneMeeting.'''
-        #we do the test for the college config
-        self.setMeetingConfig(self.meetingConfig.getId())
-        self.test_pm_UsedColorSystemGetColoredLink()
-        #we do the test for the council config
-        self.setMeetingConfig(self.meetingConfig2.getId())
-        self.test_pm_UsedColorSystemGetColoredLink()
-
-    def test_subproduct_call_UsedColorSystemShowColors(self):
-        '''See doc string in PloneMeeting.'''
-        #we do the test for the college config
-        self.setMeetingConfig(self.meetingConfig.getId())
-        self.test_pm_UsedColorSystemShowColors()
-        #we do the test for the council config
-        self.setMeetingConfig(self.meetingConfig2.getId())
-        self.test_pm_UsedColorSystemShowColors()
-
     def test_subproduct_call_SendItemToOtherMC(self):
         '''See doc string in PloneMeeting.'''
         #we do the test for the college config, to send an item to the council

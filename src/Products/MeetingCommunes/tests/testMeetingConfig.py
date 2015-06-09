@@ -29,42 +29,6 @@ from Products.PloneMeeting.tests.testMeetingConfig import testMeetingConfig as p
 class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
     '''Tests the MeetingConfig class methods.'''
 
-    def test_subproduct_call_SearchItemsToValidateOfHighestHierarchicLevel(self):
-        '''Run the test_pm_SearchItemsToValidateOfHighestHierarchicLevel from PloneMeeting.'''
-        pmtmc.test_pm_SearchItemsToValidateOfHighestHierarchicLevel(self)
-
-    def test_subproduct_call_SearchItemsToValidateOfMyReviewerGroups(self):
-        '''Run the test_pm_SearchItemsToValidateOfMyReviewerGroups from PloneMeeting.'''
-        pmtmc.test_pm_SearchItemsToValidateOfMyReviewerGroups(self)
-
-    def test_subproduct_call_SearchItemsToValidateOfEveryReviewerLevelsAndLowerLevels(self):
-        '''Run the test_pm_SearchItemsToValidateOfEveryReviewerLevelsAndLowerLevels from PloneMeeting.'''
-        pmtmc.test_pm_SearchItemsToValidateOfEveryReviewerLevelsAndLowerLevels(self)
-
-    def test_subproduct_call_SearchItemsToAdvice(self):
-        '''Run the test_pm_searchItemsToAdvice from PloneMeeting.'''
-        pmtmc.test_pm_SearchItemsToAdvice(self)
-
-    def test_subproduct_call_SearchAdvisedItems(self):
-        '''Run the test_pm_searchAdvisedItems from PloneMeeting.'''
-        pmtmc.test_pm_SearchAdvisedItems(self)
-
-    def test_subproduct_call_SearchAdvisedItemsWithDelay(self):
-        '''Run the test_pm_SearchAdvisedItemsWithDelay from PloneMeeting.'''
-        pmtmc.test_pm_SearchAdvisedItemsWithDelay(self)
-
-    def test_subproduct_call_SearchItemsInCopy(self):
-        '''Run the test_pm_searchItemsInCopy from PloneMeeting.'''
-        pmtmc.test_pm_SearchItemsInCopy(self)
-
-    def test_subproduct_call_SearchMyItemsTakenOver(self):
-        '''Run the test_pm_SearchMyItemsTakenOver from PloneMeeting.'''
-        pmtmc.test_pm_SearchMyItemsTakenOver(self)
-
-    def test_subproduct_call_SearchItemsWithFilters(self):
-        '''Run the test_pm_searchItemsWithFilters from PloneMeeting.'''
-        pmtmc.test_pm_SearchItemsWithFilters(self)
-
     def test_subproduct_call_Validate_customAdvisersCanNotChangeUsedConfig(self):
         '''Run the test_pm_searchItemsWithFilters from PloneMeeting.'''
         pmtmc.test_pm_Validate_customAdvisersCanNotChangeUsedConfig(self)
@@ -109,13 +73,9 @@ class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
         '''Run the test_pm_GetAvailablePodTemplates from PloneMeeting.'''
         pmtmc.test_pm_GetAvailablePodTemplates(self)
 
-    def test_subproduct_call_AddingExistingTopicDoesNotBreak(self):
-        '''Run the test_pm_AddingExistingTopicDoesNotBreak from PloneMeeting.'''
-        pmtmc.test_pm_AddingExistingTopicDoesNotBreak(self)
-
-    def test_subproduct_call_GetTopics(self):
-        '''Run the test_pm_GetTopics from PloneMeeting.'''
-        pmtmc.test_pm_GetTopics(self)
+    def test_subproduct_call_AddingExistingSearchDoesNotBreak(self):
+        '''Run the test_pm_AddingExistingSearchDoesNotBreak from PloneMeeting.'''
+        pmtmc.test_pm_AddingExistingSearchDoesNotBreak(self)
 
     def test_subproduct_call_MeetingManagersMayEditHarmlessConfigFields(self):
         '''Run the test_pm_MeetingManagersMayEditHarmlessConfigFields from PloneMeeting.'''

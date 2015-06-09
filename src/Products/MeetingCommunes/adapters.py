@@ -204,7 +204,7 @@ class CustomMeeting(Meeting):
            will be return with first element the number and second element, the item.
            In this case, the firstNumber value can be used.'''
         # We just filter ignore_review_states here and privacy and call
-        # getItemsInOrder(uids), passing the correct uids and removing empty
+        # getItems(uids), passing the correct uids and removing empty
         # uids.
         # privacy can be '*' or 'public' or 'secret'
         # oralQuestion can be 'both' or False or True
@@ -212,10 +212,12 @@ class CustomMeeting(Meeting):
         for elt in itemUids:
             if elt == '':
                 itemUids.remove(elt)
+        # late means listType='late'
+        listType = late and 'late' or 'normal'
         #no filtering, return the items ordered
         if not categories and not ignore_review_states and privacy == '*' and \
            oralQuestion == 'both' and toDiscuss == 'both':
-            return self.context.getItemsInOrder(late=late, uids=itemUids)
+            return self.context.getItems(uids=itemUids, listType=listType, ordered=True)
         # Either, we will have to filter the state here and check privacy
         filteredItemUids = []
         uid_catalog = self.context.uid_catalog
@@ -240,7 +242,7 @@ class CustomMeeting(Meeting):
         if not filteredItemUids:
             return []
         else:
-            items = self.context.getItemsInOrder(late=late, uids=filteredItemUids)
+            items = self.context.getItems(uids=filteredItemUids, listType=listType, ordered=True)
             if renumber:
                 #return a list of tuple with first element the number and second
                 #element the item itself
@@ -380,10 +382,11 @@ class CustomMeeting(Meeting):
             if elt == '':
                 itemUids.remove(elt)
         if late == 'both':
-            items = self.context.getItemsInOrder(late=False, uids=itemUids)
-            items += self.context.getItemsInOrder(late=True, uids=itemUids)
+            items = self.context.getItems(uids=itemUids, ordered=True)
         else:
-            items = self.context.getItemsInOrder(late=late, uids=itemUids)
+        # late means listType='late'
+            listType = late and 'late' or 'normal'
+            items = self.context.getItems(uids=itemUids, listType=listType, ordered=True)
         if by_proposing_group:
             groups = tool.getMeetingGroups()
         else:
@@ -484,9 +487,9 @@ class CustomMeeting(Meeting):
            often used to determine the 'firstNumber' parameter of getPrintableItems/getPrintableItemsByCategory.'''
         # sometimes, some empty elements are inserted in itemUids, remove them...
         itemUids = [itemUid for itemUid in itemUids if itemUid != '']
-        #no filtering, return the items ordered
         if not categories and privacy == '*':
-            return len(self.context.getItemsInOrder(late=late, uids=itemUids))
+            listType = late and 'late' or 'normal'
+            return len(self.context.getItems(uids=itemUids, listType=listType))
         # Either, we will have to filter (privacy, categories, late)
         filteredItemUids = []
         uid_catalog = getToolByName(self.context, 'uid_catalog')
@@ -529,12 +532,12 @@ class CustomMeeting(Meeting):
                     catNum = current_cat_id
             return catNum
 
-        itemsGetter = self.context.getItems
-        if late:
-            itemsGetter = self.context.getLateItems
-        items = itemsGetter()
-        if allItems:
-            items = self.context.getItems() + self.context.getLateItems()
+        if not allItems and late:
+            items = self.context.getItems(uids=uids, listType='late', ordered=True)
+        elif not allItems and not late:
+            items = self.context.getItems(uids=uids, listType='normal', ordered=True)
+        else:
+            items = self.context.getItems(uids=uids, ordered=True)
         # res contains all items by category, the key of res is the category
         # number. Pay attention that the category number is obtain by extracting
         # the 2 first caracters of the categoryname, thus the categoryname must
@@ -666,8 +669,8 @@ class CustomMeetingItem(MeetingItem):
 
     def getGroupIdFromCdldProposingGroup(self):
         tool = getToolByName(self.context, 'portal_plonemeeting')
-        meetingConfig=tool.getMeetingConfig(self.context)
-        adviceGroups = meetingConfig.getCdldProposingGroup()
+        cfg = tool.getMeetingConfig(self.context)
+        adviceGroups = cfg.getCdldProposingGroup()
         adviceGroupIds = []
         for adviceGroup in adviceGroups:
             adviceGroupId = adviceGroup.split('_')[0]
@@ -882,7 +885,7 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
         tool = getToolByName(self.context, 'portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
         initializeDecision = cfg.getInitItemDecisionIfEmptyOnDecide()
-        for item in self.context.getAllItems(ordered=True):
+        for item in self.context.getItems():
             if initializeDecision:
                 # If deliberation (motivation+decision) is empty,
                 # initialize it the decision field
@@ -982,7 +985,7 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
         tool = getToolByName(self.context, 'portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
         initializeDecision = cfg.getInitItemDecisionIfEmptyOnDecide()
-        for item in self.context.getAllItems(ordered=True):
+        for item in self.context.getItems():
             if initializeDecision:
                 # If deliberation (motivation+decision) is empty,
                 # initialize it the decision field
