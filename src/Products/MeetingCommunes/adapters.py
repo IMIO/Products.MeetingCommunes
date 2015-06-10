@@ -21,6 +21,7 @@
 #
 # ------------------------------------------------------------------------------
 
+from collections import OrderedDict
 from appy.gen import No
 from zope.interface import implements
 from zope.i18n import translate
@@ -866,6 +867,60 @@ class CustomMeetingConfig(MeetingConfig):
                         res.append((advice, item))
         return res
 
+    def _extraSearchesInfo(self, infos):
+        """Add some specific searches."""
+
+        itemType = self.getItemTypeName()
+        extra_infos = OrderedDict(
+            [
+                # Items in state 'proposed'
+                ('searchproposeditems',
+                {
+                    'subFolderId': 'searches_items',
+                    'query':
+                    [
+                        {'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is', 'v': [itemType, ]},
+                        {'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is', 'v': ['proposed']}
+                    ],
+                    'sort_on': u'created',
+                    'sort_reversed': True,
+                    'tal_condition': "python: not here.portal_plonemeeting.userIsAmong('reviewers')",
+                    'roles_bypassing_talcondition': ['Manager', ]
+                }),
+                # Items in state 'validated'
+                ('searchvalidateditems',
+                {
+                    'subFolderId': 'searches_items',
+                    'query':
+                    [
+                        {'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is', 'v': [itemType, ]},
+                        {'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is', 'v': ['validated']}
+                    ],
+                    'sort_on': u'created',
+                    'sort_reversed': True,
+                    'tal_condition': "",
+                    'roles_bypassing_talcondition': ['Manager', ]
+                }),
+                # Items for cdld synthesis
+                ('searchcdlditems',
+                {
+                    'subFolderId': 'searches_items',
+                    'query':
+                    [
+                        {'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is', 'v': [itemType, ]},
+                        {'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is', 'v': ['validated']}
+                    ],
+                    'sort_on': u'created',
+                    'sort_reversed': True,
+                    'tal_condition': "python: '%s_budgetimpacteditors' % here.portal_plonemeeting.getMeetingConfig(here)"
+                                     ".getId() in member.getGroups() or here.portal_plonemeeting.isManager(here)",
+                    'roles_bypassing_talcondition': ['Manager', ]
+                }),
+            ]
+        )
+        infos.update(extra_infos)
+        return infos
+
 
 class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
@@ -1134,9 +1189,11 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
         res.append(''.join(tmp))
         return res
 
+
 # ------------------------------------------------------------------------------
 InitializeClass(CustomMeeting)
 InitializeClass(CustomMeetingItem)
+InitializeClass(CustomMeetingConfig)
 InitializeClass(CustomMeetingGroup)
 InitializeClass(MeetingCollegeWorkflowActions)
 InitializeClass(MeetingCollegeWorkflowConditions)
