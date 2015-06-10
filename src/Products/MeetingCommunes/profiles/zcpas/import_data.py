@@ -302,7 +302,6 @@ data = PloneMeetingConfiguration(
     meetingConfigs=(bpMeeting, casMeeting, comiteeMeeting,),
     groups=groups)
 data.unoEnabledPython = '/usr/bin/python'
-data.usedColorSystem = 'state_color'
 data.enableUserPreferences = False
 data.usersOutsideGroups = [president, conseiller]
 # ------------------------------------------------------------------------------
