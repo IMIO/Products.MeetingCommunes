@@ -869,8 +869,8 @@ class CustomMeetingConfig(MeetingConfig):
 
     def _extraSearchesInfo(self, infos):
         """Add some specific searches."""
-
-        itemType = self.getItemTypeName()
+        cfg = self.getSelf()
+        itemType = cfg.getItemTypeName()
         extra_infos = OrderedDict(
             [
                 # Items in state 'proposed'

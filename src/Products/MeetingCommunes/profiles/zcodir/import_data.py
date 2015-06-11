@@ -165,23 +165,6 @@ codirMeeting.usedItemAttributes = ['detailedDescription',
                                    'itemIsSigned', ]
 codirMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 codirMeeting.recordMeetingHistoryStates = []
-codirMeeting.itemsListVisibleColumns = ['toDiscuss',
-                                        'state',
-                                        'proposingGroup',
-                                        'annexes',
-                                        'annexesDecision',
-                                        'advices',
-                                        'actions',
-                                        'itemIsSigned', ]
-codirMeeting.itemColumns = ['creator',
-                            'state',
-                            'proposingGroup',
-                            'annexes',
-                            'annexesDecision',
-                            'advices',
-                            'actions',
-                            'meeting',
-                            'itemIsSigned', ]
 codirMeeting.xhtmlTransformFields = ()
 codirMeeting.xhtmlTransformTypes = ()
 codirMeeting.itemWorkflow = 'meetingitemcollege_workflow'

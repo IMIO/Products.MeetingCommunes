@@ -166,23 +166,6 @@ caMeeting.usedItemAttributes = ['detailedDescription',
                                 'itemIsSigned', ]
 caMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 caMeeting.recordMeetingHistoryStates = []
-caMeeting.itemsListVisibleColumns = ['toDiscuss',
-                                     'state',
-                                     'proposingGroup',
-                                     'annexes',
-                                     'annexesDecision',
-                                     'advices',
-                                     'actions',
-                                     'itemIsSigned', ]
-caMeeting.itemColumns = ['creator',
-                         'state',
-                         'proposingGroup',
-                         'annexes',
-                         'annexesDecision',
-                         'advices',
-                         'actions',
-                         'meeting',
-                         'itemIsSigned', ]
 caMeeting.xhtmlTransformFields = ()
 caMeeting.xhtmlTransformTypes = ()
 caMeeting.itemWorkflow = 'meetingitemcollege_workflow'

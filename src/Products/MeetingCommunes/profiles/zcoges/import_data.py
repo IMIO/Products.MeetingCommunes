@@ -167,23 +167,6 @@ coGestMeeting.usedItemAttributes = ['detailedDescription',
                                     'itemIsSigned', ]
 coGestMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 coGestMeeting.recordMeetingHistoryStates = []
-coGestMeeting.itemsListVisibleColumns = ['toDiscuss',
-                                         'state',
-                                         'proposingGroup',
-                                         'annexes',
-                                         'annexesDecision',
-                                         'advices',
-                                         'actions',
-                                         'itemIsSigned', ]
-coGestMeeting.itemColumns = ['creator',
-                             'state',
-                             'proposingGroup',
-                             'annexes',
-                             'annexesDecision',
-                             'advices',
-                             'actions',
-                             'meeting',
-                             'itemIsSigned', ]
 coGestMeeting.xhtmlTransformFields = ()
 coGestMeeting.xhtmlTransformTypes = ()
 coGestMeeting.itemWorkflow = 'meetingitemcollege_workflow'

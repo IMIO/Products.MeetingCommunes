@@ -258,23 +258,11 @@ collegeMeeting.usedItemAttributes = ['detailedDescription',
                                      'itemIsSigned', ]
 collegeMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 collegeMeeting.recordMeetingHistoryStates = []
-collegeMeeting.itemsListVisibleColumns = ['toDiscuss',
-                                          'state',
-                                          'proposingGroup',
-                                          'annexes',
-                                          'annexesDecision',
-                                          'advices',
-                                          'actions',
-                                          'itemIsSigned', ]
-collegeMeeting.itemColumns = ['creator',
-                              'state',
-                              'proposingGroup',
-                              'annexes',
-                              'annexesDecision',
-                              'advices',
-                              'actions',
-                              'meeting',
-                              'itemIsSigned', ]
+collegeMeeting.itemsListVisibleColumns = ['Creator', 'CreationDate', 'review_state',
+                                          'getProposingGroup', 'advices', 'actions']
+collegeMeeting.itemColumns = ['Creator', 'CreationDate', 'review_state',
+                              'getProposingGroup', 'advices', 'linkedMeetingDate',
+                              'getItemIsSigned', 'actions']
 collegeMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.detailedDescription',
                                        'MeetingItem.decision',
@@ -540,15 +528,6 @@ councilMeeting.usedMeetingAttributes = ['startDate',
                                         'place',
                                         'observations', ]
 councilMeeting.recordMeetingHistoryStates = []
-councilMeeting.itemsListVisibleColumns = ['state', 'proposingGroup', 'annexes', 'annexesDecision', 'actions', ]
-councilMeeting.itemColumns = ['creator',
-                              'state',
-                              'proposingGroup',
-                              'annexes',
-                              'annexesDecision',
-                              'advices',
-                              'actions',
-                              'meeting', ]
 councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.detailedDescription',
                                        'MeetingItem.decision',
