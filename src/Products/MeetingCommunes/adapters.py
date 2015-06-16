@@ -640,21 +640,6 @@ class CustomMeetingItem(MeetingItem):
                 res.append(group.id)
         return res
 
-    security.declarePublic('getIcons')
-
-    def getIcons(self, inMeeting, meeting):
-        '''Check docstring in PloneMeeting interfaces.py.'''
-        item = self.getSelf()
-        # Default PM item icons
-        res = MeetingItem.getIcons(item, inMeeting, meeting)
-        # Add our icons for accepted_but_modified and pre_accepted
-        itemState = item.queryState()
-        if itemState == 'accepted_but_modified':
-            res.append(('accepted_but_modified.png', 'icon_help_accepted_but_modified'))
-        elif itemState == 'pre_accepted':
-            res.append(('pre_accepted.png', 'icon_help_pre_accepted'))
-        return res
-
     def _initDecisionFieldIfEmpty(self):
         '''
           If decision field is empty, it will be initialized
