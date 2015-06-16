@@ -57,15 +57,6 @@ msgstr ""
 msgid "Meetingcomitee"
 msgstr "Comitevergadering"
 
-#. Default: "Accept with modifications"
-#, fuzzy
-msgid "accept_but_modify"
-msgstr "Aanvaard maar pas aan"
-
-#. Default: "Accepted with modifications"
-msgid "accepted_but_modified"
-msgstr ""
-
 #. Default: "Back to created"
 msgid "backToCreated"
 msgstr "Terug naar aangemaakt"
@@ -115,12 +106,4 @@ msgstr "Bevroren"
 #, fuzzy
 msgid "itemfrozen"
 msgstr "Item bevroren"
-
-#. Default: "Pre accept"
-msgid "pre_accept"
-msgstr ""
-
-#. Default: "Pre accepted"
-msgid "pre_accepted"
-msgstr ""
 

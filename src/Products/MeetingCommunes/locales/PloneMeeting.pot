@@ -38,14 +38,6 @@ msgstr ""
 msgid "Meeting config Council"
 msgstr ""
 
-#. Default: "Accepted but modified"
-msgid "icon_help_accepted_but_modified"
-msgstr ""
-
-#. Default: "Pre accepted"
-msgid "icon_help_pre_accepted"
-msgstr ""
-
 msgid "front_page_body"
 msgstr ""
 
