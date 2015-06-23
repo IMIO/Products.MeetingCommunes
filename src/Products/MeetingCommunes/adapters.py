@@ -44,11 +44,10 @@ from Products.MeetingCommunes.interfaces import \
     IMeetingCollegeWorkflowConditions, IMeetingCollegeWorkflowActions, \
     IMeetingItemCouncilWorkflowConditions, IMeetingItemCouncilWorkflowActions,\
     IMeetingCouncilWorkflowConditions, IMeetingCouncilWorkflowActions
-from Products.PloneMeeting.utils import checkPermission, prepareSearchValue
+from Products.PloneMeeting.utils import checkPermission
 from Products.CMFCore.permissions import ReviewPortalContent
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import WF_DOES_NOT_EXIST_WARNING, WF_APPLIED
-from DateTime import DateTime
 from Products.PloneMeeting.interfaces import IAnnexable
 
 # Names of available workflow adaptations.
@@ -664,7 +663,7 @@ class CustomMeetingItem(MeetingItem):
                 adviceGroupIds.append(adviceGroupId)
         return adviceGroupIds
 
-    security.declarePublic('getAllAnnexes')
+    security.declarePublic('printAllAnnexes')
 
     def printAllAnnexes(self):
         ''' Printing Method use in templates :
@@ -678,7 +677,7 @@ class CustomMeetingItem(MeetingItem):
                 res.append('<a href="%s">%s</a><br/>' % (url, title))
         return ('\n'.join(res))
 
-    security.declarePublic('getFormatedAdvice ')
+    security.declarePublic('printFormatedAdvice ')
 
     def printFormatedAdvice(self):
         ''' Printing Method use in templates :
@@ -770,57 +769,6 @@ class CustomMeetingConfig(MeetingConfig):
         res = DisplayList(res)
         return res
     MeetingConfig.listCdldProposingGroup = listCdldProposingGroup
-
-    security.declarePublic('searchCDLDItems')
-
-    def searchCDLDItems(self, sortKey='', sortOrder='', filterKey='', filterValue='', **kwargs):
-        '''Queries all items for cdld synthesis'''
-        groups = []
-        cdldProposingGroups = self.getSelf().getCdldProposingGroup()
-        for cdldProposingGroup in cdldProposingGroups:
-            groupId = cdldProposingGroup.split('__')[0]
-            delay = ''
-            if cdldProposingGroup.split('__')[1]:
-                delay = 'delay__'
-            groups.append('%s%s' % (delay, groupId))
-        # advised items are items that has an advice in a particular review_state
-        # just append every available meetingadvice state: we want "given" advices.
-        # this search will only return 'delay-aware' advices
-        wfTool = getToolByName(self, 'portal_workflow')
-        adviceWF = wfTool.getWorkflowsFor('meetingadvice')[0]
-        adviceStates = adviceWF.states.keys()
-        groupIds = []
-        advice_index__suffixs = ('advice_delay_exceeded', 'advice_not_given', 'advice_not_giveable')
-        # advice given
-        for adviceState in adviceStates:
-            groupIds += [g + '_%s' % adviceState for g in groups]
-        #advice not given
-        for advice_index__suffix in advice_index__suffixs:
-            groupIds += [g + '_%s' % advice_index__suffix for g in groups]
-        # Create query parameters
-        fromDate = DateTime(2013, 01, 01)
-        toDate = DateTime(2014, 12, 31, 23, 59)
-        params = {'portal_type': self.getItemTypeName(),
-                  # KeywordIndex 'indexAdvisers' use 'OR' by default
-                  'indexAdvisers': groupIds,
-                  'created': {'query': [fromDate, toDate], 'range': 'minmax'},
-                  'sort_on': sortKey,
-                  'sort_order': sortOrder, }
-        # Manage filter
-        if filterKey:
-            params[filterKey] = prepareSearchValue(filterValue)
-        # update params with kwargs
-        params.update(kwargs)
-        # Perform the query in portal_catalog
-        brains = self.portal_catalog(**params)
-        res = []
-        fromDate = DateTime(2014, 01, 01)  # redefine date to get advice in 2014
-        for brain in brains:
-            obj = brain.getObject()
-            if obj.getMeeting() and obj.getMeeting().getDate() >= fromDate and obj.getMeeting().getDate() <= toDate:
-                res.append(brain)
-        return res
-    MeetingConfig.searchCDLDItems = searchCDLDItems
 
     security.declarePublic('printCDLDItems')
 
