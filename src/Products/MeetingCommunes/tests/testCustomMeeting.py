@@ -52,10 +52,10 @@ class testCustomMeeting(MeetingCommunesTestCase):
         # build the list of uids
         itemUids = [anItem.UID() for anItem in meeting.getItems(ordered=True)]
         # the 2 new development items are moved to the end of the meeting
-        view = i6.restrictedTraverse('@@change_item_order')
+        view = i6.restrictedTraverse('@@change-item-order')
         view('number', 7)
         view('down')
-        view = i7.restrictedTraverse('@@change_item_order')
+        view = i7.restrictedTraverse('@@change-item-order')
         view('number', 7)
         # test on the meeting
         # we should have a list containing 3 lists, 1 list by category
@@ -187,10 +187,10 @@ class testCustomMeeting(MeetingCommunesTestCase):
         item1 = orderedItems[0]
         item2 = orderedItems[1]
         itemUids = [anItem.UID() for anItem in meeting.getItems(ordered=True)]
-        view = item1.restrictedTraverse('@@change_item_order')
+        view = item1.restrictedTraverse('@@change-item-order')
         view('number', 5)
         view('down')
-        view = item2.restrictedTraverse('@@change_item_order')
+        view = item2.restrictedTraverse('@@change-item-order')
         view('number', 5)
         # we should have a list containing 3 lists, 1 list by category
         self.assertEquals(len(meeting.adapted().getPrintableItemsByCategory(itemUids, forceCategOrderFromConfig=True)), 3)
