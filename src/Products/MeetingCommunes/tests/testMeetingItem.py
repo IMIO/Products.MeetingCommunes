@@ -237,6 +237,14 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_ToDiscussFieldBehaviourWhenCloned()
 
+    def test_subproduct_call_Completeness(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_Completeness()
+
+    def test_subproduct_call_Emergency(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_Emergency()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
