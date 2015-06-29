@@ -29,6 +29,10 @@ from Products.PloneMeeting.tests.testMeetingConfig import testMeetingConfig as p
 class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
     '''Tests the MeetingConfig class methods.'''
 
+    def test_subproduct_call_Validate_shortName(self):
+        '''Run the test_pm_Validate_shortName from PloneMeeting.'''
+        pmtmc.test_pm_Validate_shortName(self)
+
     def test_subproduct_call_Validate_customAdvisersCanNotChangeUsedConfig(self):
         '''Run the test_pm_searchItemsWithFilters from PloneMeeting.'''
         pmtmc.test_pm_Validate_customAdvisersCanNotChangeUsedConfig(self)
@@ -92,6 +96,10 @@ class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
     def test_subproduct_call_ItemIconColor(self):
         '''Run the test_pm_ItemIconColor from PloneMeeting.'''
         pmtmc.test_pm_ItemIconColor(self)
+
+    def test_subproduct_call_CanNotRemoveUsedMeetingConfig(self):
+        '''Run the test_pm_CanNotRemoveUsedMeetingConfig from PloneMeeting.'''
+        pmtmc.test_pm_CanNotRemoveUsedMeetingConfig(self)
 
 
 def test_suite():
