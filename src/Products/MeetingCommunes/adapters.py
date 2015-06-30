@@ -237,6 +237,8 @@ class CustomMeeting(Meeting):
                 continue
             elif excludedCategories and obj.getCategory() in excludedCategories:
                 continue
+            elif late and not listType == 'late':
+                continue
             filteredItemUids.append(itemUid)
         #in case we do not have anything, we return an empty list
         if not filteredItemUids:
@@ -407,6 +409,8 @@ class CustomMeeting(Meeting):
                 elif categories and not item.getCategory() in categories:
                     continue
                 elif excludedCategories and item.getCategory() in excludedCategories:
+                    continue
+                elif late and not listType == 'late':
                     continue
                 currentCat = item.getCategory(theObject=True)
                 # Add the item to a new category, excepted if the
