@@ -379,6 +379,8 @@ class CustomMeeting(Meeting):
         res = []
         items = []
         tool = getToolByName(self.context, 'portal_plonemeeting')
+        # late means listType='late'
+        listType = late and 'late' or 'normal'
         # Retrieve the list of items
         for elt in itemUids:
             if elt == '':
@@ -386,8 +388,6 @@ class CustomMeeting(Meeting):
         if late == 'both':
             items = self.context.getItems(uids=itemUids, ordered=True)
         else:
-        # late means listType='late'
-            listType = late and 'late' or 'normal'
             items = self.context.getItems(uids=itemUids, listType=listType, ordered=True)
         if by_proposing_group:
             groups = tool.getMeetingGroups()
