@@ -101,6 +101,10 @@ class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
         '''Run the test_pm_CanNotRemoveUsedMeetingConfig from PloneMeeting.'''
         pmtmc.test_pm_CanNotRemoveUsedMeetingConfig(self)
 
+    def test_subproduct_call_SynchSearches(self):
+        '''Run the test_pm_SynchSearches from PloneMeeting.'''
+        pmtmc.test_pm_SynchSearches(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
