@@ -243,7 +243,7 @@ collegeMeeting.decisionTopicStates = ('decided', 'closed')
 collegeMeeting.recordItemHistoryStates = []
 collegeMeeting.maxShownMeetings = 5
 collegeMeeting.maxDaysDecisions = 60
-collegeMeeting.meetingAppDefaultView = 'topic_searchmyitems'
+collegeMeeting.meetingAppDefaultView = 'searchallitems'
 collegeMeeting.itemDocFormats = ('odt', 'pdf')
 collegeMeeting.meetingDocFormats = ('odt', 'pdf')
 collegeMeeting.useAdvices = True
@@ -257,7 +257,7 @@ collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_
 collegeMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
                                              'reverse': '0'}, )
 collegeMeeting.useGroupsAsCategories = True
-collegeMeeting.meetingPowerObserversStates = ('frozen', 'published', 'decided', 'closed')
+collegeMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = [developers.getIdSuffixed('reviewers'), vendors.getIdSuffixed('reviewers'), ]
 collegeMeeting.podTemplates = [agendaTemplate, decisionsTemplate, itemTemplate]
@@ -336,7 +336,7 @@ councilMeeting.itemAdviceStates = ('validated',)
 councilMeeting.recordItemHistoryStates = []
 councilMeeting.maxShownMeetings = 5
 councilMeeting.maxDaysDecisions = 60
-councilMeeting.meetingAppDefaultView = 'topic_searchmyitems'
+councilMeeting.meetingAppDefaultView = 'searchallitems'
 councilMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
 councilMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_categories',
                                              'reverse': '0'}, )

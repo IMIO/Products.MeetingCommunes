@@ -50,14 +50,6 @@ msgstr "Initialize the item decision when deciding meeting"
 msgid "front_page_body"
 msgstr ""
 
-#. Default: "Accepted but modified"
-msgid "icon_help_accepted_but_modified"
-msgstr "accepted but modified"
-
-#. Default: "Pre accepted"
-msgid "icon_help_pre_accepted"
-msgstr "pre accepted"
-
 #. Default: "If you check this box, when a meeting will be decided, if an item does not have a decision defined, this decision will be automatically filled with title and description of the item"
 msgid "init_item_decision_if_empty_on_decide"
 msgstr "If you check this box, when a meeting will be decided, if an item does not have a decision defined, this decision will be automatically filled with title and description of the item"
@@ -95,3 +87,4 @@ msgstr "The item has been successfully transfered to the comitee."
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
 msgstr "The item has been successfully transfered to the council."
+

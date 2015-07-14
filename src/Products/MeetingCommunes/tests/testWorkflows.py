@@ -107,20 +107,10 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.do(item2, 'present')
         self.addAnnex(item2)
         # So now we should have 3 normal item (2 recurring + 1) and one late item in the meeting
-        self.failUnless(len(meeting.getItems()) == 3)
-        self.failUnless(len(meeting.getLateItems()) == 1)
-        # pmReviewer1 now adds an annex to item1
-#        self.changeUser('pmReviewer1')
-#        self.addAnnex(item1)
-        # pmManager adds a decision to item1 and freezes the meeting
+        self.failUnless(len(meeting.getItems()) == 4)
+        self.failUnless(len(meeting.getItems(listType='late')) == 1)
         self.changeUser('pmManager')
         item1.setDecision(self.decisionText)
-#        self.do(meeting, 'freeze')
-        # Now reviewers can't add annexes anymore
-#        self.changeUser('pmReviewer2')
-#        self.failIf(self.hasPermission('PloneMeeting: Add annex', item2))
-#        self.changeUser('pmReviewer1')
-#        self.assertRaises(Unauthorized, self.addAnnex, item2)
         # pmManager adds a decision for item2, decides and closes the meeting
         self.changeUser('pmManager')
         item2.setDecision(self.decisionText)
@@ -184,8 +174,8 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.do(item2, 'present')
         self.addAnnex(item2)
         # So now I should have 1 normal item left and one late item in the meeting
-        self.failIf(len(meeting.getItems()) != 1)
-        self.failIf(len(meeting.getLateItems()) != 1)
+        self.failIf(len(meeting.getItems()) != 2)
+        self.failUnless(len(meeting.getItems(listType='late')) == 1)
         # pmReviewer1 can not add an annex on item1 as it is frozen
         self.changeUser('pmReviewer1')
         self.assertRaises(Unauthorized, self.addAnnex, item1)
@@ -315,24 +305,24 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
             self.assertEquals(item.getOwner().getId(), 'pmManager')
         # The meeting must contain recurring items : 2 defined and one added here above
         self.failUnless(len(meeting.getItems()) == 3)
-        self.failUnless(len(meeting.getLateItems()) == 0)
+        self.failIf(meeting.getItems(listType='late'))
         # After freeze, the meeting must have one recurring item more
         self.freezeMeeting(meeting)
-        self.failUnless(len(meeting.getItems()) == 3)
-        self.failUnless(len(meeting.getLateItems()) == 1)
+        self.failUnless(len(meeting.getItems()) == 4)
+        self.failUnless(len(meeting.getItems(listType='late')) == 1)
         # Back to created: rec item 2 is not inserted because
         # only some transitions can add a recurring item (see MeetingItem).
         self.backToState(meeting, 'created')
-        self.failUnless(len(meeting.getItems()) == 3)
-        self.failUnless(len(meeting.getLateItems()) == 1)
+        self.failUnless(len(meeting.getItems()) == 4)
+        self.failUnless(len(meeting.getItems(listType='late')) == 1)
         # Recurring items can be added twice...
         self.freezeMeeting(meeting)
-        self.failUnless(len(meeting.getItems()) == 3)
-        self.failUnless(len(meeting.getLateItems()) == 2)
+        self.failUnless(len(meeting.getItems()) == 5)
+        self.failUnless(len(meeting.getItems(listType='late')) == 2)
         # Decide the meeting, a third late item is added
         self.decideMeeting(meeting)
-        self.failUnless(len(meeting.getItems()) == 3)
-        self.failUnless(len(meeting.getLateItems()) == 3)
+        self.failUnless(len(meeting.getItems()) == 6)
+        self.failUnless(len(meeting.getItems(listType='late')) == 3)
 
     def test_subproduct_FreezeMeeting(self):
         """

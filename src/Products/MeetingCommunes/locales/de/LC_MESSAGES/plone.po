@@ -55,16 +55,6 @@ msgstr "Sitzung Sozialhilferat"
 msgid "Meetingcomitee"
 msgstr "Sitzung Konzertierungsausschuss"
 
-#. Default: "Accept with modifications"
-#, fuzzy
-msgid "accept_but_modify"
-msgstr "Angenommen aber ändern"
-
-#. Default: "Accepted with modifications"
-#, fuzzy
-msgid "accepted_but_modified"
-msgstr "Angenommen aber geändert"
-
 #. Default: "Back to created"
 msgid "backToCreated"
 msgstr ""
@@ -114,14 +104,4 @@ msgstr "Gesperrt"
 #, fuzzy
 msgid "itemfrozen"
 msgstr "TOP gesperrt"
-
-#. Default: "Pre accept"
-#, fuzzy
-msgid "pre_accept"
-msgstr "Provisiorisch aktzeptieren"
-
-#. Default: "Pre accepted"
-#, fuzzy
-msgid "pre_accepted"
-msgstr "Provisorisch akzeptiert"
 

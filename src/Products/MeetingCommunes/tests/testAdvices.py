@@ -126,6 +126,14 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         '''Run the test_pm_MayTriggerGiveAdviceWhenItemIsBackToANotViewableState from PloneMeeting.'''
         pmta.test_pm_MayTriggerGiveAdviceWhenItemIsBackToANotViewableState(self)
 
+    def test_subproduct_call_ChangeAdviceHiddenDuringRedactionView(self):
+        '''Run the test_pm_ChangeAdviceHiddenDuringRedactionView from PloneMeeting.'''
+        pmta.test_pm_ChangeAdviceHiddenDuringRedactionView(self)
+
+    def test_subproduct_call_ChangeAdviceAskedAgainView(self):
+        '''Run the test_pm_ChangeAdviceHiddenDuringRedactionView from PloneMeeting.'''
+        pmta.test_pm_ChangeAdviceAskedAgainView(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

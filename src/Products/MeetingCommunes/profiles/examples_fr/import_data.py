@@ -258,23 +258,11 @@ collegeMeeting.usedItemAttributes = ['detailedDescription',
                                      'itemIsSigned', ]
 collegeMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 collegeMeeting.recordMeetingHistoryStates = []
-collegeMeeting.itemsListVisibleColumns = ['toDiscuss',
-                                          'state',
-                                          'proposingGroup',
-                                          'annexes',
-                                          'annexesDecision',
-                                          'advices',
-                                          'actions',
-                                          'itemIsSigned', ]
-collegeMeeting.itemColumns = ['creator',
-                              'state',
-                              'proposingGroup',
-                              'annexes',
-                              'annexesDecision',
-                              'advices',
-                              'actions',
-                              'meeting',
-                              'itemIsSigned', ]
+collegeMeeting.itemsListVisibleColumns = ['Creator', 'CreationDate', 'review_state',
+                                          'getProposingGroup', 'advices', 'actions']
+collegeMeeting.itemColumns = ['Creator', 'CreationDate', 'review_state',
+                              'getProposingGroup', 'advices', 'linkedMeetingDate',
+                              'getItemIsSigned', 'actions']
 collegeMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.detailedDescription',
                                        'MeetingItem.decision',
@@ -296,7 +284,7 @@ collegeMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_gr
 collegeMeeting.recordItemHistoryStates = []
 collegeMeeting.maxShownMeetings = 5
 collegeMeeting.maxDaysDecisions = 60
-collegeMeeting.meetingAppDefaultView = 'topic_searchmyitems'
+collegeMeeting.meetingAppDefaultView = 'searchmyitems'
 collegeMeeting.useAdvices = True
 collegeMeeting.itemAdviceStates = ('validated',)
 collegeMeeting.itemAdviceEditStates = ('validated',)
@@ -540,15 +528,6 @@ councilMeeting.usedMeetingAttributes = ['startDate',
                                         'place',
                                         'observations', ]
 councilMeeting.recordMeetingHistoryStates = []
-councilMeeting.itemsListVisibleColumns = ['state', 'proposingGroup', 'annexes', 'annexesDecision', 'actions', ]
-councilMeeting.itemColumns = ['creator',
-                              'state',
-                              'proposingGroup',
-                              'annexes',
-                              'annexesDecision',
-                              'advices',
-                              'actions',
-                              'meeting', ]
 councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.detailedDescription',
                                        'MeetingItem.decision',
@@ -571,7 +550,7 @@ councilMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_gr
 councilMeeting.recordItemHistoryStates = []
 councilMeeting.maxShownMeetings = 5
 councilMeeting.maxDaysDecisions = 60
-councilMeeting.meetingAppDefaultView = 'topic_searchmyitems'
+councilMeeting.meetingAppDefaultView = 'searchmyitems'
 councilMeeting.itemDocFormats = ('odt', 'pdf')
 councilMeeting.meetingDocFormats = ('odt', 'pdf')
 councilMeeting.useAdvices = False
@@ -654,7 +633,6 @@ data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(collegeMeeting, councilMeeting),
                                  groups=groups)
 data.unoEnabledPython = '/usr/bin/python'
-data.usedColorSystem = 'state_color'
 data.enableUserPreferences = False
 data.usersOutsideGroups = [bourgmestre, conseiller]
 # ------------------------------------------------------------------------------

@@ -165,23 +165,6 @@ codirMeeting.usedItemAttributes = ['detailedDescription',
                                    'itemIsSigned', ]
 codirMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 codirMeeting.recordMeetingHistoryStates = []
-codirMeeting.itemsListVisibleColumns = ['toDiscuss',
-                                        'state',
-                                        'proposingGroup',
-                                        'annexes',
-                                        'annexesDecision',
-                                        'advices',
-                                        'actions',
-                                        'itemIsSigned', ]
-codirMeeting.itemColumns = ['creator',
-                            'state',
-                            'proposingGroup',
-                            'annexes',
-                            'annexesDecision',
-                            'advices',
-                            'actions',
-                            'meeting',
-                            'itemIsSigned', ]
 codirMeeting.xhtmlTransformFields = ()
 codirMeeting.xhtmlTransformTypes = ()
 codirMeeting.itemWorkflow = 'meetingitemcollege_workflow'
@@ -199,7 +182,7 @@ codirMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_grou
 codirMeeting.recordItemHistoryStates = []
 codirMeeting.maxShownMeetings = 5
 codirMeeting.maxDaysDecisions = 60
-codirMeeting.meetingAppDefaultView = 'topic_searchmyitems'
+codirMeeting.meetingAppDefaultView = 'searchmyitems'
 codirMeeting.useAdvices = True
 codirMeeting.itemAdviceStates = ('validated',)
 codirMeeting.itemAdviceEditStates = ('validated',)
@@ -259,6 +242,5 @@ data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(codirMeeting, ),
                                  groups=groups)
 data.unoEnabledPython = '/usr/bin/python'
-data.usedColorSystem = 'state_color'
 data.enableUserPreferences = False
 # ------------------------------------------------------------------------------

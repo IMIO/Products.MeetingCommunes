@@ -21,6 +21,7 @@
 #
 # ------------------------------------------------------------------------------
 
+from collections import OrderedDict
 from appy.gen import No
 from zope.interface import implements
 from zope.i18n import translate
@@ -43,11 +44,10 @@ from Products.MeetingCommunes.interfaces import \
     IMeetingCollegeWorkflowConditions, IMeetingCollegeWorkflowActions, \
     IMeetingItemCouncilWorkflowConditions, IMeetingItemCouncilWorkflowActions,\
     IMeetingCouncilWorkflowConditions, IMeetingCouncilWorkflowActions
-from Products.PloneMeeting.utils import checkPermission, prepareSearchValue
+from Products.PloneMeeting.utils import checkPermission
 from Products.CMFCore.permissions import ReviewPortalContent
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import WF_DOES_NOT_EXIST_WARNING, WF_APPLIED
-from DateTime import DateTime
 from Products.PloneMeeting.interfaces import IAnnexable
 
 # Names of available workflow adaptations.
@@ -204,7 +204,7 @@ class CustomMeeting(Meeting):
            will be return with first element the number and second element, the item.
            In this case, the firstNumber value can be used.'''
         # We just filter ignore_review_states here and privacy and call
-        # getItemsInOrder(uids), passing the correct uids and removing empty
+        # getItems(uids), passing the correct uids and removing empty
         # uids.
         # privacy can be '*' or 'public' or 'secret'
         # oralQuestion can be 'both' or False or True
@@ -212,10 +212,12 @@ class CustomMeeting(Meeting):
         for elt in itemUids:
             if elt == '':
                 itemUids.remove(elt)
+        # late means listType='late'
+        listType = late and 'late' or 'normal'
         #no filtering, return the items ordered
         if not categories and not ignore_review_states and privacy == '*' and \
            oralQuestion == 'both' and toDiscuss == 'both':
-            return self.context.getItemsInOrder(late=late, uids=itemUids)
+            return self.context.getItems(uids=itemUids, listType=listType, ordered=True)
         # Either, we will have to filter the state here and check privacy
         filteredItemUids = []
         uid_catalog = self.context.uid_catalog
@@ -235,12 +237,14 @@ class CustomMeeting(Meeting):
                 continue
             elif excludedCategories and obj.getCategory() in excludedCategories:
                 continue
+            elif late and not listType == 'late':
+                continue
             filteredItemUids.append(itemUid)
         #in case we do not have anything, we return an empty list
         if not filteredItemUids:
             return []
         else:
-            items = self.context.getItemsInOrder(late=late, uids=filteredItemUids)
+            items = self.context.getItems(uids=filteredItemUids, listType=listType, ordered=True)
             if renumber:
                 #return a list of tuple with first element the number and second
                 #element the item itself
@@ -375,15 +379,16 @@ class CustomMeeting(Meeting):
         res = []
         items = []
         tool = getToolByName(self.context, 'portal_plonemeeting')
+        # late means listType='late'
+        listType = late and 'late' or 'normal'
         # Retrieve the list of items
         for elt in itemUids:
             if elt == '':
                 itemUids.remove(elt)
         if late == 'both':
-            items = self.context.getItemsInOrder(late=False, uids=itemUids)
-            items += self.context.getItemsInOrder(late=True, uids=itemUids)
+            items = self.context.getItems(uids=itemUids, ordered=True)
         else:
-            items = self.context.getItemsInOrder(late=late, uids=itemUids)
+            items = self.context.getItems(uids=itemUids, listType=listType, ordered=True)
         if by_proposing_group:
             groups = tool.getMeetingGroups()
         else:
@@ -404,6 +409,8 @@ class CustomMeeting(Meeting):
                 elif categories and not item.getCategory() in categories:
                     continue
                 elif excludedCategories and item.getCategory() in excludedCategories:
+                    continue
+                elif late and not listType == 'late':
                     continue
                 currentCat = item.getCategory(theObject=True)
                 # Add the item to a new category, excepted if the
@@ -484,9 +491,9 @@ class CustomMeeting(Meeting):
            often used to determine the 'firstNumber' parameter of getPrintableItems/getPrintableItemsByCategory.'''
         # sometimes, some empty elements are inserted in itemUids, remove them...
         itemUids = [itemUid for itemUid in itemUids if itemUid != '']
-        #no filtering, return the items ordered
         if not categories and privacy == '*':
-            return len(self.context.getItemsInOrder(late=late, uids=itemUids))
+            listType = late and 'late' or 'normal'
+            return len(self.context.getItems(uids=itemUids, listType=listType))
         # Either, we will have to filter (privacy, categories, late)
         filteredItemUids = []
         uid_catalog = getToolByName(self.context, 'uid_catalog')
@@ -529,12 +536,12 @@ class CustomMeeting(Meeting):
                     catNum = current_cat_id
             return catNum
 
-        itemsGetter = self.context.getItems
-        if late:
-            itemsGetter = self.context.getLateItems
-        items = itemsGetter()
-        if allItems:
-            items = self.context.getItems() + self.context.getLateItems()
+        if not allItems and late:
+            items = self.context.getItems(uids=uids, listType='late', ordered=True)
+        elif not allItems and not late:
+            items = self.context.getItems(uids=uids, listType='normal', ordered=True)
+        else:
+            items = self.context.getItems(uids=uids, ordered=True)
         # res contains all items by category, the key of res is the category
         # number. Pay attention that the category number is obtain by extracting
         # the 2 first caracters of the categoryname, thus the categoryname must
@@ -636,21 +643,6 @@ class CustomMeetingItem(MeetingItem):
                 res.append(group.id)
         return res
 
-    security.declarePublic('getIcons')
-
-    def getIcons(self, inMeeting, meeting):
-        '''Check docstring in PloneMeeting interfaces.py.'''
-        item = self.getSelf()
-        # Default PM item icons
-        res = MeetingItem.getIcons(item, inMeeting, meeting)
-        # Add our icons for accepted_but_modified and pre_accepted
-        itemState = item.queryState()
-        if itemState == 'accepted_but_modified':
-            res.append(('accepted_but_modified.png', 'icon_help_accepted_but_modified'))
-        elif itemState == 'pre_accepted':
-            res.append(('pre_accepted.png', 'icon_help_pre_accepted'))
-        return res
-
     def _initDecisionFieldIfEmpty(self):
         '''
           If decision field is empty, it will be initialized
@@ -666,8 +658,8 @@ class CustomMeetingItem(MeetingItem):
 
     def getGroupIdFromCdldProposingGroup(self):
         tool = getToolByName(self.context, 'portal_plonemeeting')
-        meetingConfig=tool.getMeetingConfig(self.context)
-        adviceGroups = meetingConfig.getCdldProposingGroup()
+        cfg = tool.getMeetingConfig(self.context)
+        adviceGroups = cfg.getCdldProposingGroup()
         adviceGroupIds = []
         for adviceGroup in adviceGroups:
             adviceGroupId = adviceGroup.split('_')[0]
@@ -675,7 +667,7 @@ class CustomMeetingItem(MeetingItem):
                 adviceGroupIds.append(adviceGroupId)
         return adviceGroupIds
 
-    security.declarePublic('getAllAnnexes')
+    security.declarePublic('printAllAnnexes')
 
     def printAllAnnexes(self):
         ''' Printing Method use in templates :
@@ -689,7 +681,7 @@ class CustomMeetingItem(MeetingItem):
                 res.append('<a href="%s">%s</a><br/>' % (url, title))
         return ('\n'.join(res))
 
-    security.declarePublic('getFormatedAdvice ')
+    security.declarePublic('printFormatedAdvice ')
 
     def printFormatedAdvice(self):
         ''' Printing Method use in templates :
@@ -782,57 +774,6 @@ class CustomMeetingConfig(MeetingConfig):
         return res
     MeetingConfig.listCdldProposingGroup = listCdldProposingGroup
 
-    security.declarePublic('searchCDLDItems')
-
-    def searchCDLDItems(self, sortKey='', sortOrder='', filterKey='', filterValue='', **kwargs):
-        '''Queries all items for cdld synthesis'''
-        groups = []
-        cdldProposingGroups = self.getSelf().getCdldProposingGroup()
-        for cdldProposingGroup in cdldProposingGroups:
-            groupId = cdldProposingGroup.split('__')[0]
-            delay = ''
-            if cdldProposingGroup.split('__')[1]:
-                delay = 'delay__'
-            groups.append('%s%s' % (delay, groupId))
-        # advised items are items that has an advice in a particular review_state
-        # just append every available meetingadvice state: we want "given" advices.
-        # this search will only return 'delay-aware' advices
-        wfTool = getToolByName(self, 'portal_workflow')
-        adviceWF = wfTool.getWorkflowsFor('meetingadvice')[0]
-        adviceStates = adviceWF.states.keys()
-        groupIds = []
-        advice_index__suffixs = ('advice_delay_exceeded', 'advice_not_given', 'advice_not_giveable')
-        # advice given
-        for adviceState in adviceStates:
-            groupIds += [g + '_%s' % adviceState for g in groups]
-        #advice not given
-        for advice_index__suffix in advice_index__suffixs:
-            groupIds += [g + '_%s' % advice_index__suffix for g in groups]
-        # Create query parameters
-        fromDate = DateTime(2013, 01, 01)
-        toDate = DateTime(2014, 12, 31, 23, 59)
-        params = {'portal_type': self.getItemTypeName(),
-                  # KeywordIndex 'indexAdvisers' use 'OR' by default
-                  'indexAdvisers': groupIds,
-                  'created': {'query': [fromDate, toDate], 'range': 'minmax'},
-                  'sort_on': sortKey,
-                  'sort_order': sortOrder, }
-        # Manage filter
-        if filterKey:
-            params[filterKey] = prepareSearchValue(filterValue)
-        # update params with kwargs
-        params.update(kwargs)
-        # Perform the query in portal_catalog
-        brains = self.portal_catalog(**params)
-        res = []
-        fromDate = DateTime(2014, 01, 01)  # redefine date to get advice in 2014
-        for brain in brains:
-            obj = brain.getObject()
-            if obj.getMeeting() and obj.getMeeting().getDate() >= fromDate and obj.getMeeting().getDate() <= toDate:
-                res.append(brain)
-        return res
-    MeetingConfig.searchCDLDItems = searchCDLDItems
-
     security.declarePublic('printCDLDItems')
 
     def printCDLDItems(self):
@@ -863,6 +804,60 @@ class CustomMeetingConfig(MeetingConfig):
                         res.append((advice, item))
         return res
 
+    def _extraSearchesInfo(self, infos):
+        """Add some specific searches."""
+        cfg = self.getSelf()
+        itemType = cfg.getItemTypeName()
+        extra_infos = OrderedDict(
+            [
+                # Items in state 'proposed'
+                ('searchproposeditems',
+                {
+                    'subFolderId': 'searches_items',
+                    'query':
+                    [
+                        {'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is', 'v': [itemType, ]},
+                        {'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is', 'v': ['proposed']}
+                    ],
+                    'sort_on': u'created',
+                    'sort_reversed': True,
+                    'tal_condition': "python: not here.portal_plonemeeting.userIsAmong('reviewers')",
+                    'roles_bypassing_talcondition': ['Manager', ]
+                }),
+                # Items in state 'validated'
+                ('searchvalidateditems',
+                {
+                    'subFolderId': 'searches_items',
+                    'query':
+                    [
+                        {'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is', 'v': [itemType, ]},
+                        {'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is', 'v': ['validated']}
+                    ],
+                    'sort_on': u'created',
+                    'sort_reversed': True,
+                    'tal_condition': "",
+                    'roles_bypassing_talcondition': ['Manager', ]
+                }),
+                # Items for cdld synthesis
+                ('searchcdlditems',
+                {
+                    'subFolderId': 'searches_items',
+                    'query':
+                    [
+                        {'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is', 'v': [itemType, ]},
+                        {'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is', 'v': ['validated']}
+                    ],
+                    'sort_on': u'created',
+                    'sort_reversed': True,
+                    'tal_condition': "python: '%s_budgetimpacteditors' % here.portal_plonemeeting.getMeetingConfig(here)"
+                                     ".getId() in member.getGroups() or here.portal_plonemeeting.isManager(here)",
+                    'roles_bypassing_talcondition': ['Manager', ]
+                }),
+            ]
+        )
+        infos.update(extra_infos)
+        return infos
+
 
 class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
@@ -882,7 +877,7 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
         tool = getToolByName(self.context, 'portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
         initializeDecision = cfg.getInitItemDecisionIfEmptyOnDecide()
-        for item in self.context.getAllItems(ordered=True):
+        for item in self.context.getItems():
             if initializeDecision:
                 # If deliberation (motivation+decision) is empty,
                 # initialize it the decision field
@@ -982,7 +977,7 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
         tool = getToolByName(self.context, 'portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
         initializeDecision = cfg.getInitItemDecisionIfEmptyOnDecide()
-        for item in self.context.getAllItems(ordered=True):
+        for item in self.context.getItems():
             if initializeDecision:
                 # If deliberation (motivation+decision) is empty,
                 # initialize it the decision field
@@ -1131,9 +1126,11 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
         res.append(''.join(tmp))
         return res
 
+
 # ------------------------------------------------------------------------------
 InitializeClass(CustomMeeting)
 InitializeClass(CustomMeetingItem)
+InitializeClass(CustomMeetingConfig)
 InitializeClass(CustomMeetingGroup)
 InitializeClass(MeetingCollegeWorkflowActions)
 InitializeClass(MeetingCollegeWorkflowConditions)

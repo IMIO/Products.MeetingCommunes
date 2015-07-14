@@ -58,14 +58,6 @@ msgstr ""
 msgid "Meetingcomitee"
 msgstr ""
 
-#. Default: "Accept with modifications"
-msgid "accept_but_modify"
-msgstr ""
-
-#. Default: "Accepted with modifications"
-msgid "accepted_but_modified"
-msgstr ""
-
 #. Default: "Back to created"
 msgid "backToCreated"
 msgstr ""
@@ -115,12 +107,4 @@ msgstr "Frozen"
 #, fuzzy
 msgid "itemfrozen"
 msgstr "frozen"
-
-#. Default: "Pre accept"
-msgid "pre_accept"
-msgstr ""
-
-#. Default: "Pre accepted"
-msgid "pre_accepted"
-msgstr ""
 

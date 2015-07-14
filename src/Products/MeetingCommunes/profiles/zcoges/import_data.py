@@ -160,30 +160,13 @@ coGestMeeting.categories = categories
 coGestMeeting.shortName = 'COGES'
 coGestMeeting.meetingFileTypes = [annexe, annexeDecision, annexeAvis]
 coGestMeeting.usedItemAttributes = ['detailedDescription',
-                                'budgetInfos',
-                                'observations',
-                                'toDiscuss',
-                                'itemAssembly',
-                                'itemIsSigned', ]
+                                    'budgetInfos',
+                                    'observations',
+                                    'toDiscuss',
+                                    'itemAssembly',
+                                    'itemIsSigned', ]
 coGestMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 coGestMeeting.recordMeetingHistoryStates = []
-coGestMeeting.itemsListVisibleColumns = ['toDiscuss',
-                                     'state',
-                                     'proposingGroup',
-                                     'annexes',
-                                     'annexesDecision',
-                                     'advices',
-                                     'actions',
-                                     'itemIsSigned', ]
-coGestMeeting.itemColumns = ['creator',
-                         'state',
-                         'proposingGroup',
-                         'annexes',
-                         'annexesDecision',
-                         'advices',
-                         'actions',
-                         'meeting',
-                         'itemIsSigned', ]
 coGestMeeting.xhtmlTransformFields = ()
 coGestMeeting.xhtmlTransformTypes = ()
 coGestMeeting.itemWorkflow = 'meetingitemcollege_workflow'
@@ -197,32 +180,32 @@ coGestMeeting.meetingTopicStates = ('created', 'frozen')
 coGestMeeting.decisionTopicStates = ('decided', 'closed')
 coGestMeeting.enforceAdviceMandatoriness = False
 coGestMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
-                                        'reverse': '0'}, )
+                                            'reverse': '0'}, )
 coGestMeeting.recordItemHistoryStates = []
 coGestMeeting.maxShownMeetings = 5
 coGestMeeting.maxDaysDecisions = 60
-coGestMeeting.meetingAppDefaultView = 'topic_searchmyitems'
+coGestMeeting.meetingAppDefaultView = 'searchmyitems'
 coGestMeeting.useAdvices = True
 coGestMeeting.itemAdviceStates = ('validated',)
 coGestMeeting.itemAdviceEditStates = ('validated',)
 coGestMeeting.itemAdviceViewStates = ('validated',
-                                  'presented',
-                                  'itemfrozen',
-                                  'accepted',
-                                  'refused',
-                                  'accepted_but_modified',
-                                  'delayed',
-                                  'pre_accepted',)
+                                      'presented',
+                                      'itemfrozen',
+                                      'accepted',
+                                      'refused',
+                                      'accepted_but_modified',
+                                      'delayed',
+                                      'pre_accepted',)
 coGestMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 coGestMeeting.enableAdviceInvalidation = False
 coGestMeeting.itemAdviceInvalidateStates = []
 coGestMeeting.customAdvisers = []
 coGestMeeting.itemPowerObserversStates = ('itemfrozen',
-                                      'accepted',
-                                      'delayed',
-                                      'refused',
-                                      'accepted_but_modified',
-                                      'pre_accepted')
+                                          'accepted',
+                                          'delayed',
+                                          'refused',
+                                          'accepted_but_modified',
+                                          'pre_accepted')
 coGestMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 coGestMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 coGestMeeting.onTransitionFieldTransforms = (
@@ -230,28 +213,28 @@ coGestMeeting.onTransitionFieldTransforms = (
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:Le Comité décide de reporter le point."},))
 coGestMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                         'item_transition': 'itemfreeze'},
+                                                             'item_transition': 'itemfreeze'},
 
-                                                        {'meeting_transition': 'decide',
-                                                         'item_transition': 'itemfreeze'},
+                                                            {'meeting_transition': 'decide',
+                                                             'item_transition': 'itemfreeze'},
 
-                                                        {'meeting_transition': 'publish_decisions',
-                                                         'item_transition': 'itemfreeze'},
-                                                        {'meeting_transition': 'publish_decisions',
-                                                         'item_transition': 'accept'},
+                                                            {'meeting_transition': 'publish_decisions',
+                                                             'item_transition': 'itemfreeze'},
+                                                            {'meeting_transition': 'publish_decisions',
+                                                             'item_transition': 'accept'},
 
-                                                        {'meeting_transition': 'close',
-                                                         'item_transition': 'itemfreeze'},
-                                                        {'meeting_transition': 'close',
-                                                         'item_transition': 'accept'},)
+                                                            {'meeting_transition': 'close',
+                                                             'item_transition': 'itemfreeze'},
+                                                            {'meeting_transition': 'close',
+                                                             'item_transition': 'accept'},)
 coGestMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 coGestMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
 coGestMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 coGestMeeting.useCopies = True
 coGestMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
-                                  groups[1].getIdSuffixed('reviewers'),
-                                  groups[2].getIdSuffixed('reviewers'),
-                                  groups[4].getIdSuffixed('reviewers')]
+                                      groups[1].getIdSuffixed('reviewers'),
+                                      groups[2].getIdSuffixed('reviewers'),
+                                      groups[4].getIdSuffixed('reviewers')]
 coGestMeeting.podTemplates = coGesTemplates
 coGestMeeting.meetingConfigsToCloneTo = []
 coGestMeeting.recurringItems = []
@@ -261,6 +244,5 @@ data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(coGestMeeting, ),
                                  groups=groups)
 data.unoEnabledPython = '/usr/bin/python'
-data.usedColorSystem = 'state_color'
 data.enableUserPreferences = False
 # ------------------------------------------------------------------------------

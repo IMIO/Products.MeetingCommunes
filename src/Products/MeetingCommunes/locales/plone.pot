@@ -27,29 +27,12 @@ msgstr ""
 msgid "MeetingItemCouncil"
 msgstr ""
 
-# College item workflow states specific vocabulary
-#. Default: "Accepted with modifications"
-msgid "accepted_but_modified"
-msgstr ""
-
-#. Default: "Pre accepted"
-msgid "pre_accepted"
-msgstr ""
-
 #. Default: "Frozen"
 msgid "frozen"
 msgstr ""
 
 #. Default: "Itemfrozen"
 msgid "itemfrozen"
-msgstr ""
-
-#. Default: "Accept with modifications"
-msgid "accept_but_modify"
-msgstr ""
-
-#. Default: "Pre accept"
-msgid "pre_accept"
 msgstr ""
 
 #. Default: "Meeting BP"

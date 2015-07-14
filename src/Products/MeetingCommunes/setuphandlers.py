@@ -187,52 +187,20 @@ def finalizeExampleInstance(context):
             site.portal_groups.addPrincipalToGroup(memberId, '%s_budgetimpacteditors' % meetingConfig1Id)
             site.portal_groups.addPrincipalToGroup(memberId, '%s_budgetimpacteditors' % meetingConfig2Id)
 
-    # add some extra topics to each MeetingConfig
-    topicsInfo = (
-        # Items in state 'proposed'
-        ('searchproposeditems',
-         (('portal_type', 'ATPortalTypeCriterion', ('MeetingItem',)),
-          ('review_state', 'ATListCriterion', ('proposed',),)
-          ),
-         'created',
-         '',
-         "python: not here.portal_plonemeeting.userIsAmong('reviewers')",
-         ),
-        # Items in state 'validated'
-        ('searchvalidateditems',
-         (('portal_type', 'ATPortalTypeCriterion', ('MeetingItem',)),
-         ('review_state', 'ATListCriterion', ('validated',),)
-          ),
-         'created',
-         '',
-         '',
-         ),
-        # Items for cdld synthesis
-        ('searchcdlditems',
-        (('Type', 'ATPortalTypeCriterion', ('MeetingItem',)),
-         ),
-        'created',
-        'searchCDLDItems',
-        "python: '%s_budgetimpacteditors' % here.portal_plonemeeting.getMeetingConfig(here)"
-        ".getId() in member.getGroups() or here.portal_plonemeeting.isManager(here)", ),
-    )
-    mc_college_or_bp = getattr(site.portal_plonemeeting, meetingConfig1Id)
-    mc_college_or_bp.createTopics(topicsInfo)
-    mc_council_or_cas = getattr(site.portal_plonemeeting, meetingConfig2Id)
-    mc_council_or_cas.createTopics(topicsInfo)
-
     # add some topics to the portlet_todo
-    mc_college_or_bp.setToDoListTopics(
-        [getattr(mc_college_or_bp.topics, 'searchdecideditems'),
-         getattr(mc_college_or_bp.topics, 'searchallitemsincopy'),
-         getattr(mc_college_or_bp.topics, 'searchitemstoadvicewithdelay'),
-         getattr(mc_college_or_bp.topics, 'searchallitemstoadvice'),
+    mc_college_or_bp = getattr(site.portal_plonemeeting, meetingConfig1Id)
+    mc_college_or_bp.setToDoListSearches(
+        [getattr(mc_college_or_bp.searches.searches_items, 'searchdecideditems'),
+         getattr(mc_college_or_bp.searches.searches_items, 'searchallitemsincopy'),
+         getattr(mc_college_or_bp.searches.searches_items, 'searchitemstoadvicewithdelay'),
+         getattr(mc_college_or_bp.searches.searches_items, 'searchallitemstoadvice'),
          ])
 
     # add some topics to the portlet_todo
-    mc_council_or_cas.setToDoListTopics(
-        [getattr(mc_council_or_cas.topics, 'searchdecideditems'),
-         getattr(mc_council_or_cas.topics, 'searchallitemsincopy'),
+    mc_council_or_cas = getattr(site.portal_plonemeeting, meetingConfig2Id)
+    mc_council_or_cas.setToDoListSearches(
+        [getattr(mc_council_or_cas.searches.searches_items, 'searchdecideditems'),
+         getattr(mc_council_or_cas.searches.searches_items, 'searchallitemsincopy'),
          ])
 
     # finally, re-launch plonemeetingskin and MeetingCommunes skins step

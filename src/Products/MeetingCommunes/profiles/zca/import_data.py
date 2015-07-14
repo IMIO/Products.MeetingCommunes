@@ -166,23 +166,6 @@ caMeeting.usedItemAttributes = ['detailedDescription',
                                 'itemIsSigned', ]
 caMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 caMeeting.recordMeetingHistoryStates = []
-caMeeting.itemsListVisibleColumns = ['toDiscuss',
-                                     'state',
-                                     'proposingGroup',
-                                     'annexes',
-                                     'annexesDecision',
-                                     'advices',
-                                     'actions',
-                                     'itemIsSigned', ]
-caMeeting.itemColumns = ['creator',
-                         'state',
-                         'proposingGroup',
-                         'annexes',
-                         'annexesDecision',
-                         'advices',
-                         'actions',
-                         'meeting',
-                         'itemIsSigned', ]
 caMeeting.xhtmlTransformFields = ()
 caMeeting.xhtmlTransformTypes = ()
 caMeeting.itemWorkflow = 'meetingitemcollege_workflow'
@@ -200,7 +183,7 @@ caMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups'
 caMeeting.recordItemHistoryStates = []
 caMeeting.maxShownMeetings = 5
 caMeeting.maxDaysDecisions = 60
-caMeeting.meetingAppDefaultView = 'topic_searchmyitems'
+caMeeting.meetingAppDefaultView = 'searchmyitems'
 caMeeting.useAdvices = True
 caMeeting.itemAdviceStates = ('validated',)
 caMeeting.itemAdviceEditStates = ('validated',)
@@ -260,6 +243,5 @@ data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(caMeeting, ),
                                  groups=groups)
 data.unoEnabledPython = '/usr/bin/python'
-data.usedColorSystem = 'state_color'
 data.enableUserPreferences = False
 # ------------------------------------------------------------------------------

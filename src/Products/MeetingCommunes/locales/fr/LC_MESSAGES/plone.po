@@ -58,14 +58,6 @@ msgstr "Séance du Conseil de l'Action Sociale"
 msgid "Meetingcomitee"
 msgstr "Séance du Comité de Concertation"
 
-#. Default: "Accept with modifications"
-msgid "accept_but_modify"
-msgstr "Accepter avec modifications"
-
-#. Default: "Accepted with modifications"
-msgid "accepted_but_modified"
-msgstr "Accepté avec modifications"
-
 #. Default: "Back to created"
 msgid "backToCreated"
 msgstr "Remettre \"En création\""
@@ -113,12 +105,4 @@ msgstr "Gelée"
 #. Default: "Itemfrozen"
 msgid "itemfrozen"
 msgstr "Gelé"
-
-#. Default: "Pre accept"
-msgid "pre_accept"
-msgstr "Accepter provisoirement"
-
-#. Default: "Pre accepted"
-msgid "pre_accepted"
-msgstr "Accepté provisoirement"
 
