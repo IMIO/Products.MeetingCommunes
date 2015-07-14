@@ -245,6 +245,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_Emergency()
 
+    def test_subproduct_call_ItemStrikedAssembly(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ItemStrikedAssembly()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
