@@ -105,6 +105,10 @@ class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
         '''Run the test_pm_SynchSearches from PloneMeeting.'''
         pmtmc.test_pm_SynchSearches(self)
 
+    def test_subproduct_call_GetRecurringItems(self):
+        '''Run the test_pm_GetRecurringItems from PloneMeeting.'''
+        pmtmc.test_pm_GetRecurringItems(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

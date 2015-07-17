@@ -36,7 +36,7 @@ class testMeetingGroup(MeetingCommunesTestCase, pmmg):
         self.changeUser('admin')
         self._removeConfigObjectsFor(self.meetingConfig, folders=['recurringitems', ])
         self.meetingConfig.itemtemplates.manage_delObjects(
-            [item.getId() for item in self.meetingConfig.getItems(recurring=False) if not item.getId() == 'template2'])
+            [item.getId for item in self.meetingConfig.getItemTemplates() if not item.getId == 'template2'])
         self._removeConfigObjectsFor(self.meetingConfig2, folders=['recurringitems', ])
         logout()
         self.test_pm_CanNotRemoveUsedMeetingGroup()

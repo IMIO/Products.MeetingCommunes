@@ -282,19 +282,19 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # First, define recurring items in the meeting config
         self.changeUser('admin')
         # 2 recurring items already exist in the college config, add one supplementary for _init_
-        self.create('RecurringMeetingItem', title='Rec item 1',
+        self.create('MeetingItemRecurring', title='Rec item 1',
                     proposingGroup='developers',
                     meetingTransitionInsertingMe='_init_')
         # add 3 other recurring items that will be inserted at other moments in the WF
         # backToCreated is not in MeetingItem.meetingTransitionsAcceptingRecurringItems
         # so it will not be added...
-        self.create('RecurringMeetingItem', title='Rec item 2',
+        self.create('MeetingItemRecurring', title='Rec item 2',
                     proposingGroup='developers',
                     meetingTransitionInsertingMe='backToCreated')
-        self.create('RecurringMeetingItem', title='Rec item 3',
+        self.create('MeetingItemRecurring', title='Rec item 3',
                     proposingGroup='developers',
                     meetingTransitionInsertingMe='freeze')
-        self.create('RecurringMeetingItem', title='Rec item 4',
+        self.create('MeetingItemRecurring', title='Rec item 4',
                     proposingGroup='developers',
                     meetingTransitionInsertingMe='decide')
         self.changeUser('pmManager')
@@ -443,6 +443,10 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
     def test_subproduct_call_MeetingTransitionTriggerLinkedItemsTransitions(self):
         '''Run the test_pm_MeetingTransitionTriggerLinkedItemsTransitions from PloneMeeting.'''
         self.test_pm_MeetingTransitionTriggerLinkedItemsTransitions()
+
+    def test_subproduct_call_InactiveRecurringItemsAreNotInserted(self):
+        '''Run the test_pm_InactiveRecurringItemsAreNotInserted from PloneMeeting.'''
+        self.test_pm_InactiveRecurringItemsAreNotInserted()
 
 
 def test_suite():
