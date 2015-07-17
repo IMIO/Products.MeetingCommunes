@@ -34,6 +34,46 @@ msgstr "Point Collège Communal"
 msgid "MeetingItemCouncil"
 msgstr "Point Conseil Communal"
 
+#. Default: "MeetingItemRecurringCollege"
+msgid "MeetingItemRecurringCollege"
+msgstr "Point récurrent Collège Communal"
+
+#. Default: "MeetingItemRecurringCouncil"
+msgid "MeetingItemRecurringCouncil"
+msgstr "Point récurrent Conseil Communal"
+
+#. Default: "Meeting item recurring BP"
+msgid "MeetingItemRecurringbp"
+msgstr "Point récurrent Bureau Permanent"
+
+#. Default: "Meeting item recurring CAS"
+msgid "MeetingItemRecurringcas"
+msgstr "Point récurrent Conseil de l'Action Sociale"
+
+#. Default: "Meeting item recurring Comitee"
+msgid "MeetingItemRecurringcomitee"
+msgstr "Point récurrent Comité de Concertation"
+
+#. Default: "MeetingItemTemplateCollege"
+msgid "MeetingItemTemplateCollege"
+msgstr "Modèle de point Collège Communal"
+
+#. Default: "MeetingItemTemplateCouncil"
+msgid "MeetingItemTemplateCouncil"
+msgstr "Modèle de point Conseil Communal"
+
+#. Default: "Meeting item template BP"
+msgid "MeetingItemTemplatebp"
+msgstr "Modèle de point Bureau Permanent"
+
+#. Default: "Meeting item template CAS"
+msgid "MeetingItemTemplatecas"
+msgstr "Modèle de point Conseil de l'Action Sociale"
+
+#. Default: "Meeting item template Comitee"
+msgid "MeetingItemTemplatecomitee"
+msgstr "Modèle de point Comité de Concertation"
+
 #. Default: "Meeting item BP"
 msgid "MeetingItembp"
 msgstr "Point Bureau Permanent"
@@ -105,4 +145,3 @@ msgstr "Gelée"
 #. Default: "Itemfrozen"
 msgid "itemfrozen"
 msgstr "Gelé"
-

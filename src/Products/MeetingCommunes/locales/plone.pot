@@ -19,12 +19,28 @@ msgstr ""
 msgid "MeetingItemCollege"
 msgstr ""
 
+#. Default: "MeetingItemTemplateCollege"
+msgid "MeetingItemTemplateCollege"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCollege"
+msgid "MeetingItemRecurringCollege"
+msgstr ""
+
 #. Default: "MeetincCouncil"
 msgid "MeetingCouncil"
 msgstr ""
 
 #. Default: "MeetingItemCouncil"
 msgid "MeetingItemCouncil"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCouncil"
+msgid "MeetingItemTemplateCouncil"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCouncil"
+msgid "MeetingItemRecurringCouncil"
 msgstr ""
 
 #. Default: "Frozen"
@@ -43,6 +59,14 @@ msgstr ""
 msgid "MeetingItembp"
 msgstr ""
 
+#. Default: "Meeting item template BP"
+msgid "MeetingItemTemplatebp"
+msgstr ""
+
+#. Default: "Meeting item recurring BP"
+msgid "MeetingItemRecurringbp"
+msgstr ""
+
 #. Default: "Meeting CAS"
 msgid "Meetingcas"
 msgstr ""
@@ -51,12 +75,28 @@ msgstr ""
 msgid "MeetingItemcas"
 msgstr ""
 
+#. Default: "Meeting item template CAS"
+msgid "MeetingItemTemplatecas"
+msgstr ""
+
+#. Default: "Meeting item recurring CAS"
+msgid "MeetingItemRecurringcas"
+msgstr ""
+
 #. Default: "Meeting Comitee"
 msgid "Meetingcomitee"
 msgstr ""
 
 #. Default: "Meeting item Comitee"
 msgid "MeetingItemcomitee"
+msgstr ""
+
+#. Default: "Meeting item template Comitee"
+msgid "MeetingItemTemplatecomitee"
+msgstr ""
+
+#. Default: "Meeting item recurring Comitee"
+msgid "MeetingItemRecurringcomitee"
 msgstr ""
 
 #. Default: "Back to created"

@@ -33,6 +33,46 @@ msgstr "Item collegevergadering"
 msgid "MeetingItemCouncil"
 msgstr "Item gemeenteraadsvergadering"
 
+#. Default: "MeetingItemRecurringCollege"
+msgid "MeetingItemRecurringCollege"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCouncil"
+msgid "MeetingItemRecurringCouncil"
+msgstr ""
+
+#. Default: "Meeting item recurring BP"
+msgid "MeetingItemRecurringbp"
+msgstr ""
+
+#. Default: "Meeting item recurring CAS"
+msgid "MeetingItemRecurringcas"
+msgstr ""
+
+#. Default: "Meeting item recurring Comitee"
+msgid "MeetingItemRecurringcomitee"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCollege"
+msgid "MeetingItemTemplateCollege"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCouncil"
+msgid "MeetingItemTemplateCouncil"
+msgstr ""
+
+#. Default: "Meeting item template BP"
+msgid "MeetingItemTemplatebp"
+msgstr ""
+
+#. Default: "Meeting item template CAS"
+msgid "MeetingItemTemplatecas"
+msgstr ""
+
+#. Default: "Meeting item template Comitee"
+msgid "MeetingItemTemplatecomitee"
+msgstr ""
+
 #. Default: "Meeting item BP"
 msgid "MeetingItembp"
 msgstr ""
