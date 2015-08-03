@@ -33,6 +33,18 @@ class testFaceted(MeetingCommunesTestCase, pmtf):
         '''See doc string in PloneMeeting.'''
         self.test_pm_RedirectedToOwnPMFolderIfOnAnotherUserPMFolder()
 
+    def test_subproduct_call_ItemCategoriesVocabulary(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ItemCategoriesVocabulary()
+
+    def test_subproduct_call_MeetingDatesVocabulary(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_MeetingDatesVocabulary()
+
+    def test_subproduct_call_ProposingGroupsVocabularies(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ProposingGroupsVocabularies()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
