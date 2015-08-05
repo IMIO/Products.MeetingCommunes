@@ -90,6 +90,30 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
         '''Run the test_pm_GetGroupsForUser from PloneMeeting.'''
         self.test_pm_GetGroupsForUser()
 
+    def test_subproduct_call_UpdateAllAdvicesAction(self):
+        '''Run the test_pm_UpdateAllAdvicesAction from PloneMeeting.'''
+        self.test_pm_UpdateAllAdvicesAction()
+
+    def test_subproduct_call_UpdateCopyGroups(self):
+        '''Run the test_pm_UpdateCopyGroups from PloneMeeting.'''
+        self.test_pm_UpdateCopyGroups()
+
+    def test_subproduct_call_UpdateBudgetImpactEditors(self):
+        '''Run the test_pm_UpdateBudgetImpactEditors from PloneMeeting.'''
+        self.test_pm_UpdateBudgetImpactEditors()
+
+    def test_subproduct_call_UpdatePowerObservers(self):
+        '''Run the test_pm_UpdatePowerObservers from PloneMeeting.'''
+        self.test_pm_UpdatePowerObservers()
+
+    def test_subproduct_call_ReindexAnnexes(self):
+        '''Run the test_pm_ReindexAnnexes from PloneMeeting.'''
+        self.test_pm_ReindexAnnexes()
+
+    def test_subproduct_call_FormatMeetingDate(self):
+        '''Run the test_pm_FormatMeetingDate from PloneMeeting.'''
+        self.test_pm_FormatMeetingDate()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
