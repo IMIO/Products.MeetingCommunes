@@ -33,6 +33,10 @@ class testViews(MeetingCommunesTestCase, pmtv):
         '''Run the test_pm_ItemTemplates from PloneMeeting.'''
         pmtv.test_pm_ItemTemplates(self)
 
+    def test_subproduct_call_ItemTemplatesWithSubFolders(self):
+        '''Run the test_pm_ItemTemplatesWithSubFolders from PloneMeeting.'''
+        pmtv.test_pm_ItemTemplatesWithSubFolders(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
