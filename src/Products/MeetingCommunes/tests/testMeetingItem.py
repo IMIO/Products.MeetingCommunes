@@ -213,6 +213,18 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_CopiedFieldsWhenDuplicated()
 
+    def test_subproduct_call_CopiedFieldsWhenDuplicatedAsItemTemplate(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_CopiedFieldsWhenDuplicatedAsItemTemplate()
+
+    def test_subproduct_call_CopiedFieldsWhenDuplicatedAsRecurringItem(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_CopiedFieldsWhenDuplicatedAsRecurringItem()
+
+    def test_subproduct_call_CopiedFieldsWhenSentToOtherMC(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_CopiedFieldsWhenSentToOtherMC()
+
     def test_subproduct_call_CustomInsertingMethodRaisesNotImplementedErrorIfNotImplemented(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_CustomInsertingMethodRaisesNotImplementedErrorIfNotImplemented()
