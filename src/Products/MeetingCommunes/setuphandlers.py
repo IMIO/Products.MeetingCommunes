@@ -245,6 +245,7 @@ def addDemoData(context):
 
     site = context.getSite()
     tool = getToolByName(site, 'portal_plonemeeting')
+    cfg = getattr(tool, 'meeting-config-college')
     wfTool = getToolByName(site, 'portal_workflow')
     pTool = getToolByName(site, 'plone_utils')
     # first we need to be sure that our IPoneMeetingLayer is set correctly
@@ -262,7 +263,7 @@ def addDemoData(context):
     dates = [today-13, today-6, today+1, today+8, today+15]
     # login as 'dgen'
     site.portal_membership.createMemberArea('dgen')
-    secrFolder = tool.getPloneMeetingFolder('meeting-config-college', 'dgen')
+    secrFolder = tool.getPloneMeetingFolder(cfg.getId(), 'dgen')
     for date in dates:
         meetingId = secrFolder.invokeFactory('MeetingCollege', id=date.strftime('%Y%m%d'))
         meeting = getattr(secrFolder, meetingId)
@@ -343,11 +344,13 @@ def addDemoData(context):
                        },),
              }
     for userId in items:
-        userFolder = tool.getPloneMeetingFolder('meeting-config-college', userId)
+        userFolder = tool.getPloneMeetingFolder(cfg.getId(), userId)
         for item in items[userId]:
             # get the template then clone it
             template = getattr(tool.getMeetingConfig(userFolder).itemtemplates, item['templateId'])
-            newItem = template.clone(newOwnerId=userId)
+            newItem = template.clone(newOwnerId=userId,
+                                     destFolder=userFolder,
+                                     newPortalType=cfg.getItemTypeName())
             newItem.setTitle(item['title'])
             newItem.setBudgetRelated(item['budgetRelated'])
             if item['review_state'] in ['proposed', 'validated', ]:
