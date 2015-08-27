@@ -53,6 +53,10 @@ class testFaceted(MeetingCommunesTestCase, pmtf):
         '''See doc string in PloneMeeting.'''
         self.test_pm_RedirectedToDefaultSearchPMFolderOnlyIfNecessary()
 
+    def test_subproduct_call_DisabledCollectionsAreIgnored(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_DisabledCollectionsAreIgnored()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
