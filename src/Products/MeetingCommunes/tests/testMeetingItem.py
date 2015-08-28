@@ -261,6 +261,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_ItemStrikedAssembly()
 
+    def test_subproduct_call_DownOrUpWorkflowAgain(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_DownOrUpWorkflowAgain()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
