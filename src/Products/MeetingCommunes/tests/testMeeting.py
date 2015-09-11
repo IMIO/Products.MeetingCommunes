@@ -171,6 +171,10 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         '''See doc string in PloneMeeting.'''
         self.test_pm_MeetingStrikedAssembly()
 
+    def test_subproduct_call_ChaningMeetingDateUpdateLinkedItemsMeetingDateMetadata(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ChaningMeetingDateUpdateLinkedItemsMeetingDateMetadata()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
