@@ -134,6 +134,14 @@ msgstr "Remettre en \"Proposé\""
 msgid "backToPublished"
 msgstr "Remettre en \"Publié\""
 
+#. Default: "Create an item CAS from an item BP"
+msgid "create_to_meeting-config-cas_from_meeting-config-bp"
+msgstr "Envoyer vers CAS"
+
+#. Default: "Create an item college from an item council"
+msgid "create_to_meeting-config-college_from_meeting-config-council"
+msgstr "Envoyer vers Collège Communal"
+
 #. Default: "Create an item council from an item college"
 msgid "create_to_meeting-config-council_from_meeting-config-college"
 msgstr "Envoyer vers Conseil Communal"
@@ -145,3 +153,4 @@ msgstr "Gelée"
 #. Default: "Itemfrozen"
 msgid "itemfrozen"
 msgstr "Gelé"
+
