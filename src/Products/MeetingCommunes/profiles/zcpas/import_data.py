@@ -65,9 +65,14 @@ itemTemplatePDF.pod_formats = ['pdf', ]
 itemTemplatePDF.pod_portal_types = ['MeetingItembp']
 itemTemplatePDF.tal_condition = ''
 
+dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif')
+dashboardTemplate.odt_file = '../../examples_fr/templates/recapitulatif-tb.odt'
+dashboardTemplate.pod_portal_types = ['Folder']
+dashboardTemplate.tal_condition = 'python: context.absolute_url().endswith("/searches_items")'
+
 bpTemplates = [agendaTemplate, agendaTemplatePDF,
                decisionsTemplate, decisionsTemplatePDF,
-               itemTemplate, itemTemplatePDF]
+               itemTemplate, itemTemplatePDF, dashboardTemplate]
 
 # CAS
 agendaCASTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
@@ -105,7 +110,7 @@ itemCASTemplatePDF.tal_condition = ''
 
 casTemplates = [agendaCASTemplate, agendaCASTemplatePDF,
                 decisionsCASTemplate, decisionsCASTemplatePDF,
-                itemCASTemplate, itemCASTemplatePDF]
+                itemCASTemplate, itemCASTemplatePDF, dashboardTemplate]
 
 # Comitee
 agendaComiteeTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
@@ -143,7 +148,7 @@ itemComiteeTemplatePDF.tal_condition = ''
 
 comiteeTemplates = [agendaComiteeTemplate, agendaComiteeTemplatePDF,
                     decisionsComiteeTemplate, decisionsComiteeTemplatePDF,
-                    itemComiteeTemplate, itemComiteeTemplatePDF]
+                    itemComiteeTemplate, itemComiteeTemplatePDF, dashboardTemplate]
 
 # Users and groups -------------------------------------------------------------
 president = UserDescriptor('president', [], email="test@test.be", fullname="Président")

@@ -85,10 +85,15 @@ itemTemplatePDF.tal_condition = 'python:here.hasMeeting()'
 #dfAdviceTemplate.pod_portal_types = ['Folder']
 #dfAdviceTemplate.tal_condition = 'python:"Members" in context.absolute_url() and context.absolute_url().endswith("searches_items")'
 
+dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif')
+dashboardTemplate.odt_file = 'recapitulatif-tb.odt'
+dashboardTemplate.pod_portal_types = ['Folder']
+dashboardTemplate.tal_condition = 'python: context.absolute_url().endswith("/searches_items")'
+
 collegeTemplates = [agendaTemplate, agendaTemplatePDF,
                     decisionsTemplate, decisionsTemplatePDF,
                     itemProjectTemplate, itemProjectTemplatePDF,
-                    itemTemplate, itemTemplatePDF]
+                    itemTemplate, itemTemplatePDF, dashboardTemplate]
 
 # Pod templates ----------------------------------------------------------------
 agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
@@ -150,7 +155,7 @@ councilTemplates = [agendaCouncilTemplate, agendaCouncilTemplatePDF,
                     decisionsCouncilTemplate, decisionsCouncilTemplatePDF,
                     itemCouncilRapportTemplate, itemCouncilRapportTemplatePDF,
                     itemCouncilTemplate, itemCouncilTemplatePDF,
-                    itemCouncilProjectTemplate, itemCouncilProjectTemplatePDF, ]
+                    itemCouncilProjectTemplate, itemCouncilProjectTemplatePDF, dashboardTemplate]
 
 # Users and groups -------------------------------------------------------------
 dgen = UserDescriptor('dgen', [], email="test@test.be", fullname="Henry Directeur")
