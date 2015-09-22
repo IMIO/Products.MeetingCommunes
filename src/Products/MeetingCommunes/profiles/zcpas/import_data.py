@@ -32,32 +32,31 @@ categories = [CategoryDescriptor('recurrents', 'Récurrents'),
 
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
-agendaTemplate.podTemplate = '../../examples_fr/templates/oj.odt'
-agendaTemplate.podCondition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager()'
-
+agendaTemplate.odt_file = '../../examples_fr/templates/oj.odt'
+agendaTemplate.tal_condition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager(here)'
 
 agendaTemplatePDF = PodTemplateDescriptor('agendapdf', 'Ordre du jour')
-agendaTemplatePDF.podTemplate = '../../examples_fr/templates/oj.odt'
-agendaTemplatePDF.podFormat = 'pdf'
-agendaTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager()'
+agendaTemplatePDF.odt_file = '../../examples_fr/templates/oj.odt'
+agendaTemplatePDF.pod_formats = ['pdf', ]
+agendaTemplatePDF.tal_condition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager(here)'
 
 decisionsTemplate = PodTemplateDescriptor('decisions', 'Procès-verbal')
-decisionsTemplate.podTemplate = '../../examples_fr/templates/pv.odt'
-decisionsTemplate.podCondition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager()'
+decisionsTemplate.odt_file = '../../examples_fr/templates/pv.odt'
+decisionsTemplate.tal_condition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager(here)'
 
 decisionsTemplatePDF = PodTemplateDescriptor('decisionspdf', 'Procès-verbal')
-decisionsTemplatePDF.podTemplate = '../../examples_fr/templates/pv.odt'
-decisionsTemplatePDF.podFormat = 'pdf'
-decisionsTemplatePDF.podCondition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager()'
+decisionsTemplatePDF.odt_file = '../../examples_fr/templates/pv.odt'
+decisionsTemplatePDF.pod_formats = ['pdf', ]
+decisionsTemplatePDF.tal_condition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager(here)'
 
 itemTemplate = PodTemplateDescriptor('item', 'Délibération')
-itemTemplate.podTemplate = '../../examples_fr/templates/deliberation.odt'
-itemTemplate.podCondition = 'python:here.meta_type=="MeetingItem"'
+itemTemplate.odt_file = '../../examples_fr/templates/deliberation.odt'
+itemTemplate.tal_condition = 'python:here.meta_type=="MeetingItem"'
 
 itemTemplatePDF = PodTemplateDescriptor('itempdf', 'Délibération')
-itemTemplatePDF.podTemplate = '../../examples_fr/templates/deliberation.odt'
-itemTemplatePDF.podFormat = 'pdf'
-itemTemplatePDF.podCondition = 'python:here.meta_type=="MeetingItem"'
+itemTemplatePDF.odt_file = '../../examples_fr/templates/deliberation.odt'
+itemTemplatePDF.pod_formats = ['pdf', ]
+itemTemplatePDF.tal_condition = 'python:here.meta_type=="MeetingItem"'
 
 allTemplates = [agendaTemplate, agendaTemplatePDF,
                 decisionsTemplate, decisionsTemplatePDF,
