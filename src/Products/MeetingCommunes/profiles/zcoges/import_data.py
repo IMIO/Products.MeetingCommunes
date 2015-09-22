@@ -26,43 +26,47 @@ categories = [CategoryDescriptor('category1', 'Catégorie 1'),
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaTemplate.odt_file = '../../examples_fr/templates/oj.odt'
-agendaTemplate.tal_condition = 'python:(here.meta_type=="Meeting") and ' \
-                               'here.portal_plonemeeting.isManager(here)'
+agendaTemplate.pod_portal_types = ['MeetingCOGES']
+agendaTemplate.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
 
 agendaTemplatePDF = PodTemplateDescriptor('oj-pdf', 'Ordre du jour')
 agendaTemplatePDF.odt_file = '../../examples_fr/templates/oj.odt'
 agendaTemplatePDF.pod_formats = ['pdf', ]
-agendaTemplatePDF.tal_condition = 'python:(here.meta_type=="Meeting") and ' \
-                                  'here.portal_plonemeeting.isManager(here)'
+agendaTemplatePDF.pod_portal_types = ['MeetingCOGES']
+agendaTemplatePDF.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
 
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsTemplate.odt_file = '../../examples_fr/templates/pv.odt'
-decisionsTemplate.tal_condition = 'python:(here.meta_type=="Meeting") and ' \
-                                  'here.portal_plonemeeting.isManager(here)'
+decisionsTemplate.pod_portal_types = ['MeetingCOGES']
+decisionsTemplate.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
 
 decisionsTemplatePDF = PodTemplateDescriptor('pv-pdf', 'Procès-verbal')
 decisionsTemplatePDF.odt_file = '../../examples_fr/templates/pv.odt'
 decisionsTemplatePDF.pod_formats = ['pdf', ]
-decisionsTemplatePDF.tal_condition = 'python:(here.meta_type=="Meeting") and ' \
-                                     'here.portal_plonemeeting.isManager(here)'
+decisionsTemplatePDF.pod_portal_types = ['MeetingCOGES']
+decisionsTemplatePDF.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
 
 itemProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
 itemProjectTemplate.odt_file = '../../examples_fr/templates/projet-deliberation.odt'
-itemProjectTemplate.tal_condition = 'python:here.meta_type=="MeetingItem" and not here.hasMeeting()'
+itemProjectTemplate.pod_portal_types = ['MeetingItemCOGES']
+itemProjectTemplate.tal_condition = 'python:not here.hasMeeting()'
 
 itemProjectTemplatePDF = PodTemplateDescriptor('projet-deliberation-pdf', 'Projet délibération')
 itemProjectTemplatePDF.odt_file = '../../examples_fr/templates/projet-deliberation.odt'
 itemProjectTemplatePDF.pod_formats = ['pdf', ]
-itemProjectTemplatePDF.tal_condition = 'python:here.meta_type=="MeetingItem" and not here.hasMeeting()'
+itemProjectTemplatePDF.pod_portal_types = ['MeetingItemCOGES']
+itemProjectTemplatePDF.tal_condition = 'python:not here.hasMeeting()'
 
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemTemplate.odt_file = '../../examples_fr/templates/deliberation.odt'
-itemTemplate.tal_condition = 'python:here.meta_type=="MeetingItem" and here.hasMeeting()'
+itemTemplate.pod_portal_types = ['MeetingItemCOGES']
+itemTemplate.tal_condition = 'python:here.hasMeeting()'
 
 itemTemplatePDF = PodTemplateDescriptor('deliberation-pdf', 'Délibération')
 itemTemplatePDF.odt_file = '../../examples_fr/templates/deliberation.odt'
 itemTemplatePDF.pod_formats = ['pdf', ]
-itemTemplatePDF.tal_condition = 'python:here.meta_type=="MeetingItem" and here.hasMeeting()'
+itemTemplatePDF.pod_portal_types = ['MeetingItemCOGES']
+itemTemplatePDF.tal_condition = 'python:here.hasMeeting()'
 
 coGesTemplates = [agendaTemplate, agendaTemplatePDF,
                   decisionsTemplate, decisionsTemplatePDF,

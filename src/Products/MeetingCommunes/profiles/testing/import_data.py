@@ -37,17 +37,19 @@ adviceLegalAnalysis = MeetingFileTypeDescriptor(
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('agendaTemplate', 'Meeting agenda')
 agendaTemplate.odt_file = 'Agenda.odt'
-agendaTemplate.tal_condition = 'python:here.meta_type=="Meeting"'
+agendaTemplate.pod_portal_types = ['MeetingCollege']
+agendaTemplate.tal_condition = ''
 
 decisionsTemplate = PodTemplateDescriptor('decisionsTemplate',
                                           'Meeting decisions')
 decisionsTemplate.odt_file = 'Decisions.odt'
-decisionsTemplate.tal_condition = 'python:here.meta_type=="Meeting" and ' \
-                                  'here.adapted().isDecided()'
+decisionsTemplate.pod_portal_types = ['MeetingCollege']
+decisionsTemplate.tal_condition = 'python:here.adapted().isDecided()'
 
 itemTemplate = PodTemplateDescriptor('itemTemplate', 'Meeting item')
 itemTemplate.odt_file = 'Item.odt'
-itemTemplate.tal_condition = 'python:here.meta_type=="MeetingItem"'
+itemTemplate.pod_portal_types = ['MeetingItemCollege']
+itemTemplate.tal_condition = ''
 
 # item templates
 template1 = ItemTemplateDescriptor(id='template1',

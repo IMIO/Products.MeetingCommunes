@@ -31,36 +31,119 @@ categories = [CategoryDescriptor('recurrents', 'Récurrents'),
               CategoryDescriptor('divers', 'Divers'), ]
 
 # Pod templates ----------------------------------------------------------------
+# BP
 agendaTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
 agendaTemplate.odt_file = '../../examples_fr/templates/oj.odt'
-agendaTemplate.tal_condition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager(here)'
+agendaTemplate.pod_portal_types = ['Meetingbp']
+agendaTemplate.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
 
 agendaTemplatePDF = PodTemplateDescriptor('agendapdf', 'Ordre du jour')
 agendaTemplatePDF.odt_file = '../../examples_fr/templates/oj.odt'
 agendaTemplatePDF.pod_formats = ['pdf', ]
-agendaTemplatePDF.tal_condition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager(here)'
+agendaTemplatePDF.pod_portal_types = ['Meetingbp']
+agendaTemplatePDF.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
 
 decisionsTemplate = PodTemplateDescriptor('decisions', 'Procès-verbal')
 decisionsTemplate.odt_file = '../../examples_fr/templates/pv.odt'
-decisionsTemplate.tal_condition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager(here)'
+decisionsTemplate.pod_portal_types = ['Meetingbp']
+decisionsTemplate.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
 
 decisionsTemplatePDF = PodTemplateDescriptor('decisionspdf', 'Procès-verbal')
 decisionsTemplatePDF.odt_file = '../../examples_fr/templates/pv.odt'
 decisionsTemplatePDF.pod_formats = ['pdf', ]
-decisionsTemplatePDF.tal_condition = 'python:(here.meta_type=="Meeting") and here.portal_plonemeeting.isManager(here)'
+decisionsTemplatePDF.pod_portal_types = ['Meetingbp']
+decisionsTemplatePDF.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
 
 itemTemplate = PodTemplateDescriptor('item', 'Délibération')
 itemTemplate.odt_file = '../../examples_fr/templates/deliberation.odt'
-itemTemplate.tal_condition = 'python:here.meta_type=="MeetingItem"'
+itemTemplate.pod_portal_types = ['MeetingItembp']
+itemTemplate.tal_condition = ''
 
 itemTemplatePDF = PodTemplateDescriptor('itempdf', 'Délibération')
 itemTemplatePDF.odt_file = '../../examples_fr/templates/deliberation.odt'
 itemTemplatePDF.pod_formats = ['pdf', ]
-itemTemplatePDF.tal_condition = 'python:here.meta_type=="MeetingItem"'
+itemTemplatePDF.pod_portal_types = ['MeetingItembp']
+itemTemplatePDF.tal_condition = ''
 
-allTemplates = [agendaTemplate, agendaTemplatePDF,
-                decisionsTemplate, decisionsTemplatePDF,
-                itemTemplate, itemTemplatePDF]
+bpTemplates = [agendaTemplate, agendaTemplatePDF,
+               decisionsTemplate, decisionsTemplatePDF,
+               itemTemplate, itemTemplatePDF]
+
+# CAS
+agendaCASTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
+agendaCASTemplate.odt_file = '../../examples_fr/templates/oj.odt'
+agendaCASTemplate.pod_portal_types = ['Meetingcas']
+agendaCASTemplate.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
+
+agendaCASTemplatePDF = PodTemplateDescriptor('agendapdf', 'Ordre du jour')
+agendaCASTemplatePDF.odt_file = '../../examples_fr/templates/oj.odt'
+agendaCASTemplatePDF.pod_formats = ['pdf', ]
+agendaCASTemplatePDF.pod_portal_types = ['Meetingcas']
+agendaCASTemplatePDF.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
+
+decisionsCASTemplate = PodTemplateDescriptor('decisions', 'Procès-verbal')
+decisionsCASTemplate.odt_file = '../../examples_fr/templates/pv.odt'
+decisionsCASTemplate.pod_portal_types = ['Meetingcas']
+decisionsCASTemplate.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
+
+decisionsCASTemplatePDF = PodTemplateDescriptor('decisionspdf', 'Procès-verbal')
+decisionsCASTemplatePDF.odt_file = '../../examples_fr/templates/pv.odt'
+decisionsCASTemplatePDF.pod_formats = ['pdf', ]
+decisionsCASTemplatePDF.pod_portal_types = ['Meetingcas']
+decisionsCASTemplatePDF.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
+
+itemCASTemplate = PodTemplateDescriptor('item', 'Délibération')
+itemCASTemplate.odt_file = '../../examples_fr/templates/deliberation.odt'
+itemCASTemplate.pod_portal_types = ['MeetingItemcas']
+itemCASTemplate.tal_condition = ''
+
+itemCASTemplatePDF = PodTemplateDescriptor('itempdf', 'Délibération')
+itemCASTemplatePDF.odt_file = '../../examples_fr/templates/deliberation.odt'
+itemCASTemplatePDF.pod_formats = ['pdf', ]
+itemCASTemplatePDF.pod_portal_types = ['MeetingItemcas']
+itemCASTemplatePDF.tal_condition = ''
+
+casTemplates = [agendaCASTemplate, agendaCASTemplatePDF,
+                decisionsCASTemplate, decisionsCASTemplatePDF,
+                itemCASTemplate, itemCASTemplatePDF]
+
+# Comitee
+agendaComiteeTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
+agendaComiteeTemplate.odt_file = '../../examples_fr/templates/oj.odt'
+agendaComiteeTemplate.pod_portal_types = ['Meetingcomitee']
+agendaComiteeTemplate.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
+
+agendaComiteeTemplatePDF = PodTemplateDescriptor('agendapdf', 'Ordre du jour')
+agendaComiteeTemplatePDF.odt_file = '../../examples_fr/templates/oj.odt'
+agendaComiteeTemplatePDF.pod_formats = ['pdf', ]
+agendaComiteeTemplatePDF.pod_portal_types = ['Meetingcomitee']
+agendaComiteeTemplatePDF.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
+
+decisionsComiteeTemplate = PodTemplateDescriptor('decisions', 'Procès-verbal')
+decisionsComiteeTemplate.odt_file = '../../examples_fr/templates/pv.odt'
+decisionsComiteeTemplate.pod_portal_types = ['Meetingcomitee']
+decisionsComiteeTemplate.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
+
+decisionsComiteeTemplatePDF = PodTemplateDescriptor('decisionspdf', 'Procès-verbal')
+decisionsComiteeTemplatePDF.odt_file = '../../examples_fr/templates/pv.odt'
+decisionsComiteeTemplatePDF.pod_formats = ['pdf', ]
+decisionsComiteeTemplatePDF.pod_portal_types = ['Meetingcomitee']
+decisionsComiteeTemplatePDF.tal_condition = 'python:here.portal_plonemeeting.isManager(here)'
+
+itemComiteeTemplate = PodTemplateDescriptor('item', 'Délibération')
+itemComiteeTemplate.odt_file = '../../examples_fr/templates/deliberation.odt'
+itemComiteeTemplate.pod_portal_types = ['MeetingItemcomitee']
+itemComiteeTemplate.tal_condition = ''
+
+itemComiteeTemplatePDF = PodTemplateDescriptor('itempdf', 'Délibération')
+itemComiteeTemplatePDF.odt_file = '../../examples_fr/templates/deliberation.odt'
+itemComiteeTemplatePDF.pod_formats = ['pdf', ]
+itemComiteeTemplatePDF.pod_portal_types = ['MeetingItemcomitee']
+itemComiteeTemplatePDF.tal_condition = ''
+
+comiteeTemplates = [agendaComiteeTemplate, agendaComiteeTemplatePDF,
+                    decisionsComiteeTemplate, decisionsComiteeTemplatePDF,
+                    itemComiteeTemplate, itemComiteeTemplatePDF]
 
 # Users and groups -------------------------------------------------------------
 president = UserDescriptor('president', [], email="test@test.be", fullname="Président")
@@ -166,7 +249,7 @@ bpMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                   groups[1].getIdSuffixed('reviewers'),
                                   groups[2].getIdSuffixed('reviewers'),
                                   groups[4].getIdSuffixed('reviewers')]
-bpMeeting.podTemplates = allTemplates
+bpMeeting.podTemplates = bpTemplates
 bpMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-cas',
                                       'trigger_workflow_transitions_until': '__nothing__'}, ]
 
@@ -225,7 +308,7 @@ casMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                    groups[1].getIdSuffixed('reviewers'),
                                    groups[2].getIdSuffixed('reviewers'),
                                    groups[4].getIdSuffixed('reviewers')]
-casMeeting.podTemplates = allTemplates
+casMeeting.podTemplates = casTemplates
 
 casMeeting.recurringItems = [
     # Agenda items
@@ -283,7 +366,7 @@ comiteeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                        groups[1].getIdSuffixed('reviewers'),
                                        groups[2].getIdSuffixed('reviewers'),
                                        groups[4].getIdSuffixed('reviewers')]
-comiteeMeeting.podTemplates = allTemplates
+comiteeMeeting.podTemplates = comiteeTemplates
 
 comiteeMeeting.recurringItems = [
     # Agenda items
