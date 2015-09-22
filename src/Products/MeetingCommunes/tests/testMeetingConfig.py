@@ -73,10 +73,6 @@ class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
         '''Run the test_pm_Validate_meetingConfigsToCloneTo from PloneMeeting.'''
         pmtmc.test_pm_Validate_meetingConfigsToCloneTo(self)
 
-    def test_subproduct_call_GetAvailablePodTemplates(self):
-        '''Run the test_pm_GetAvailablePodTemplates from PloneMeeting.'''
-        pmtmc.test_pm_GetAvailablePodTemplates(self)
-
     def test_subproduct_call_AddingExistingSearchDoesNotBreak(self):
         '''Run the test_pm_AddingExistingSearchDoesNotBreak from PloneMeeting.'''
         pmtmc.test_pm_AddingExistingSearchDoesNotBreak(self)
