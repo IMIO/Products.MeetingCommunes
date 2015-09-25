@@ -53,9 +53,8 @@ msgstr ""
 msgid "init_item_decision_if_empty_on_decide"
 msgstr ""
 
-# searches
-#. Default: "cdld synthesis"
-msgid "searchcdlditems"
+#. Default: "Synthesis finance advices"
+msgid "searchitemswithfinanceadvice"
 msgstr ""
 
 # searches

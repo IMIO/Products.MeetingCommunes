@@ -80,10 +80,10 @@ itemTemplatePDF.pod_formats = ['pdf', ]
 itemTemplatePDF.pod_portal_types = ['MeetingItemCollege']
 itemTemplatePDF.tal_condition = 'python:here.hasMeeting()'
 
-#dfAdviceTemplate = PodTemplateDescriptor('synthese-finance-advice', 'Synthèse Avis DF')
-#dfAdviceTemplate.odt_file = 'synthese_avis_df.odt'
-#dfAdviceTemplate.pod_portal_types = ['Folder']
-#dfAdviceTemplate.tal_condition = 'python:"Members" in context.absolute_url() and context.absolute_url().endswith("searches_items")'
+dfAdviceTemplate = PodTemplateDescriptor('synthese-finance-advice', 'Synthèse Avis DF')
+dfAdviceTemplate.odt_file = 'synthese_avis_df.odt'
+dfAdviceTemplate.pod_portal_types = ['Folder']
+dfAdviceTemplate.tal_condition = 'python: context.portal_plonemeeting.adapted().displayDFAdviceTemplate(context)'
 
 dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif')
 dashboardTemplate.odt_file = 'recapitulatif-tb.odt'

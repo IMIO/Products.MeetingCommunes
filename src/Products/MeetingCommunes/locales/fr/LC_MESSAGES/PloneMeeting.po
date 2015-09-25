@@ -55,8 +55,8 @@ msgid "init_item_decision_if_empty_on_decide"
 msgstr "Si cette case est cochée, lorsqu'une séance passera 'En rédaction du PV', pour tous les points dont le champ 'Décision' est vide, ce champ sera automatiquement rempli avec une concaténation de ce qui est défini dans le titre et la description du point"
 
 # searches
-#. Default: "cdld synthesis"
-msgid "searchcdlditems"
+#. Default: "Synthesis finance advices"
+msgid "searchitemswithfinanceadvice"
 msgstr "Synthèse Avis DF"
 
 # searches

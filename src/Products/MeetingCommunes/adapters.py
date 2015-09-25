@@ -29,6 +29,7 @@ from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import DisplayList
 from Globals import InitializeClass
 from Products.CMFCore.utils import getToolByName
+from imio.dashboard.utils import getCurrentCollection
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from Products.PloneMeeting.MeetingItem import MeetingItem, \
     MeetingItemWorkflowConditions, MeetingItemWorkflowActions
@@ -838,24 +839,37 @@ class CustomMeetingConfig(MeetingConfig):
                     'tal_condition': "",
                     'roles_bypassing_talcondition': ['Manager', ]
                 }),
-                # Items for cdld synthesis
-                ('searchcdlditems',
-                {
-                    'subFolderId': 'searches_items',
-                    'query':
-                    [
-                        {'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is', 'v': [itemType, ]},
-                        {'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is', 'v': ['validated']}
-                    ],
-                    'sort_on': u'created',
-                    'sort_reversed': True,
-                    'tal_condition': "python: '%s_budgetimpacteditors' % here.portal_plonemeeting.getMeetingConfig(here)"
-                                     ".getId() in member.getGroups() or here.portal_plonemeeting.isManager(here)",
-                    'roles_bypassing_talcondition': ['Manager', ]
-                }),
             ]
         )
         infos.update(extra_infos)
+        # add the 'searchitemswithfinanceadvice' for 'meeting-config-college' and 'meeting-config-bp'
+        if cfg.getId() in ('meeting-config-college', 'meeting-config-bp'):
+            finance_infos = OrderedDict(
+                [
+                    # Items for finance advices synthesis
+                    ('searchitemswithfinanceadvice',
+                    {
+                        'subFolderId': 'searches_items',
+                        'query':
+                        [
+                            {'i': 'portal_type',
+                             'o': 'plone.app.querystring.operation.selection.is',
+                             'v': [itemType, ]},
+                            {'i': 'indexAdvisers',
+                             'o': 'plone.app.querystring.operation.selection.is',
+                             'v': ['delay_real_group_id__unique_id_002',
+                                   'delay_real_group_id__unique_id_003',
+                                   'delay_real_group_id__unique_id_004']}
+                        ],
+                        'sort_on': u'created',
+                        'sort_reversed': True,
+                        'tal_condition': "python: '%s_budgetimpacteditors' % here.portal_plonemeeting.getMeetingConfig(here)"
+                                         ".getId() in member.getGroups() or here.portal_plonemeeting.isManager(here)",
+                        'roles_bypassing_talcondition': ['Manager', ]
+                    }),
+                ]
+            )
+            infos.update(finance_infos)
         return infos
 
 
@@ -1125,6 +1139,11 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
             return ''
         res.append(''.join(tmp))
         return res
+
+    def displayDFAdviceTemplate(self, context):
+        """Display it if on the 'searchitemswithfinanceadvice' dashboard."""
+        currentCollection = getCurrentCollection(context)
+        return currentCollection and currentCollection.getId() == 'searchitemswithfinanceadvice'
 
 
 # ------------------------------------------------------------------------------

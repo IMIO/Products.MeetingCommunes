@@ -54,10 +54,9 @@ msgstr ""
 msgid "init_item_decision_if_empty_on_decide"
 msgstr "If you check this box, when a meeting will be decided, if an item does not have a decision defined, this decision will be automatically filled with title and description of the item"
 
-# searches
-#. Default: "cdld synthesis"
-msgid "searchcdlditems"
-msgstr "cdld synthesis"
+#. Default: "Synthesis finance advices"
+msgid "searchitemswithfinanceadvice"
+msgstr ""
 
 # searches
 #. Default: "Proposed items"
