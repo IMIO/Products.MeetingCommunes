@@ -73,6 +73,10 @@ class testMeetingConfig(MeetingCommunesTestCase, pmtmc):
         '''Run the test_pm_Validate_meetingConfigsToCloneTo from PloneMeeting.'''
         pmtmc.test_pm_Validate_meetingConfigsToCloneTo(self)
 
+    def test_subproduct_call_Validate_listTypes(self):
+        '''Run the test_pm_Validate_listTypes from PloneMeeting.'''
+        pmtmc.test_pm_Validate_listTypes(self)
+
     def test_subproduct_call_AddingExistingSearchDoesNotBreak(self):
         '''Run the test_pm_AddingExistingSearchDoesNotBreak from PloneMeeting.'''
         pmtmc.test_pm_AddingExistingSearchDoesNotBreak(self)
