@@ -45,6 +45,34 @@ class testChangeItemOrderView(MeetingCommunesTestCase, pmciov):
         '''Check docstring in PloneMeeting.'''
         self.test_pm_MayChangeItemOrder()
 
+    def test_subproduct_call_ChangeItemOrderMoveIntegerToInteger(self):
+        '''Check docstring in PloneMeeting.'''
+        self.test_pm_ChangeItemOrderMoveIntegerToInteger()
+
+    def test_subproduct_call_ChangeItemOrderMoveSubnumberToInteger(self):
+        '''Check docstring in PloneMeeting.'''
+        self.test_pm_ChangeItemOrderMoveSubnumberToInteger()
+
+    def test_subproduct_call_ChangeItemOrderMoveSubnumberToSubnumber(self):
+        '''Check docstring in PloneMeeting.'''
+        self.test_pm_ChangeItemOrderMoveSubnumberToSubnumber()
+
+    def test_subproduct_call_ChangeItemOrderMoveUpToFirstPositionWithSubnumbers(self):
+        '''Check docstring in PloneMeeting.'''
+        self.test_pm_ChangeItemOrderMoveUpToFirstPositionWithSubnumbers()
+
+    def test_subproduct_call_ChangeItemOrderMoveOutFromSubnumber(self):
+        '''Check docstring in PloneMeeting.'''
+        self.test_pm_ChangeItemOrderMoveOutFromSubnumber()
+
+    def test_subproduct_call_ChangeItemOrderMoveIntegerToSubnumber(self):
+        '''Check docstring in PloneMeeting.'''
+        self.test_pm_ChangeItemOrderMoveIntegerToSubnumber()
+
+    def test_subproduct_call_ChanteItemOrderSetup(self):
+        '''Check docstring in PloneMeeting.'''
+        self.test_pm_ChanteItemOrderSetup()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

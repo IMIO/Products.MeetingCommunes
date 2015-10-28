@@ -55,6 +55,10 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         '''See doc string in PloneMeeting.'''
         self.test_pm_InsertItemOnAllGroupsWithDisabledGroup()
 
+    def test_subproduct_call_InsertItemWithSubNumbers(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_InsertItemWithSubNumbers()
+
     def test_subproduct_call_InsertItemPrivacyThenProposingGroups(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_InsertItemPrivacyThenProposingGroups()
@@ -74,6 +78,10 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
     def test_subproduct_call_RemoveOrDeleteLinkedItem(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_RemoveOrDeleteLinkedItem()
+
+    def test_subproduct_call_RemoveItemWithSubnumbers(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_RemoveItemWithSubnumbers()
 
     def test_subproduct_call_MeetingNumbers(self):
         '''See doc string in PloneMeeting.'''
@@ -174,6 +182,10 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
     def test_subproduct_call_ChaningMeetingDateUpdateLinkedItemsMeetingDateMetadata(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_ChaningMeetingDateUpdateLinkedItemsMeetingDateMetadata()
+
+    def test_subproduct_call_GetFirstItemNumberIgnoresSubnumbers(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_GetFirstItemNumberIgnoresSubnumbers()
 
 
 def test_suite():
