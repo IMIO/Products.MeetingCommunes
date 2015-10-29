@@ -73,6 +73,7 @@
 
 
   <!-- ##code-section configure.zcml.core -->
+  <include package=".browser" />
   <!-- ##/code-section configure.zcml.core -->
 
 </configure>
