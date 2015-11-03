@@ -27,17 +27,9 @@ msgstr "Meeting config College"
 msgid "Meeting config Council"
 msgstr "Meeting config Council"
 
-#. Default: "Choose proposing group for cdld advice"
-msgid "MeetingCommunes_descr_cdldProposingGroup"
-msgstr "Choose proposing group for cdld advice"
-
 #. Default: "If the group is responsible of other groups, select them here above, either do not select any elements of the list."
 msgid "MeetingCommunes_descr_echevinServices"
 msgstr "If the group is responsible of other groups, select them here above, either do not select any elements of the list."
-
-#. Default: "Proposing group to keep for CDLD synthesis"
-msgid "MeetingCommunes_label_cdldProposingGroup"
-msgstr "Proposing group to keep for CDLD synthesis"
 
 #. Default: "Alderman of the following services (departments)"
 msgid "MeetingCommunes_label_echevinServices"

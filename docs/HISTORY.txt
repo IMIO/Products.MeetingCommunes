@@ -7,6 +7,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 3.4 (unreleased)
 ----------------
 - Adapted workflows to define the icon to use for transitions
+- Removed field MeetingConfig.cdldProposingGroup and use the 'indexAdvisers' value
+  defined in the 'searchitemswithfinanceadvice' collection to determinate what are
+  the finance adviser group ids
 
 3.3 (2015-02-27)
 ----------------

@@ -670,18 +670,27 @@ class CustomMeetingItem(MeetingItem):
         # and find the relevant group, indexAdvisers form is :
         # 'delay_real_group_id__2014-04-16.9996934488', 'real_group_id_directeur-financier'
         # it is either a customAdviser row_id or a MeetingGroup id
+        values = [term['v'] for term in collection.getRawQuery()
+                  if term['i'] == 'indexAdvisers'][0]
         res = []
-        for term in collection.getRawQuery():
-            if term['i'] == 'indexAdvisers':
-                for v in term['v']:
-                    rowIdOrGroupId = v.replace('delay_real_group_id__', '').replace('real_group_id__', '')
-                    if hasattr(tool, rowIdOrGroupId):
-                        if not rowIdOrGroupId in res:
-                            res.append(rowIdOrGroupId)
-                    else:
-                        groupId = cfg._dataForCustomAdviserRowId(rowIdOrGroupId)['group']
-                        if not groupId in res:
-                            res.append(groupId)
+        for v in values:
+            rowIdOrGroupId = v.replace('delay_real_group_id__', '').replace('real_group_id__', '')
+            if hasattr(tool, rowIdOrGroupId):
+                groupId = rowIdOrGroupId
+                # append it only if not already into res and if
+                # we have no 'row_id' for this adviser in adviceIndex
+                if not groupId in res and \
+                   (groupId in self.context.adviceIndex and not self.context.adviceIndex[groupId]['row_id']):
+                    res.append(groupId)
+            else:
+                groupId = cfg._dataForCustomAdviserRowId(rowIdOrGroupId)['group']
+                # append it only if not already into res and if
+                # we have a 'row_id' for this adviser in adviceIndex
+                if not groupId in res and \
+                    (groupId in self.context.adviceIndex and
+                     self.context.adviceIndex[groupId]['row_id'] == rowIdOrGroupId):
+                    res.append(groupId)
+
         return res
 
     security.declarePublic('printAllAnnexes')

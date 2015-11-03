@@ -50,3 +50,69 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         #before present in meeting, certfiedSignatures must be empty
         res = i2.adapted().getEchevinsForProposingGroup()
         self.assertEquals(res, ['developers'])
+
+    def test_GetUsedFinanceGroupId(self):
+        '''Test the custom MeetingItem.getUsedFinanceGroupId method
+           that will return adviser ids used on an item from finance
+           adviser ids defined on the 'searchitemswithfinanceadvice' collection.'''
+        cfg = self.meetingConfig
+        collection = cfg.searches.searches_items.searchitemswithfinanceadvice
+        collection.setQuery([
+            {'i': 'portal_type',
+             'o': 'plone.app.querystring.operation.selection.is',
+             'v': [cfg.getItemTypeName(), ]},
+            {'i': 'indexAdvisers',
+             'o': 'plone.app.querystring.operation.selection.is',
+             'v': ['delay_real_group_id__unique_id_001',
+                   'delay_real_group_id__unique_id_002']}
+        ], )
+        today = DateTime().strftime('%Y/%m/%d')
+        self.meetingConfig.setCustomAdvisers([
+            {'row_id': 'unique_id_001',
+             'group': 'developers',
+             'for_item_created_from': today,
+             'delay': '10',
+             'delay_left_alert': '4',
+             'delay_label': 'Finance advice 1',
+             'is_linked_to_previous_row': '0'},
+            {'row_id': 'unique_id_002',
+             'group': 'developers',
+             'for_item_created_from': today,
+             'delay': '20',
+             'delay_left_alert': '4',
+             'delay_label': 'Finance advice 2',
+             'is_linked_to_previous_row': '1'},
+            {'row_id': 'unique_id_003',
+             'group': 'developers',
+             'for_item_created_from': today,
+             'delay': '20',
+             'delay_left_alert': '4',
+             'delay_label': 'Not a finance advice',
+             'is_linked_to_previous_row': '0'}, ]
+        )
+        # create an item without finance advice
+        self.changeUser('pmManager')
+        item = self.create('MeetingItem')
+        self.assertEquals(item.adapted().getUsedFinanceGroupId(), [])
+
+        # ask advice of another group
+        item.setOptionalAdvisers(('vendors', ))
+        item.at_post_edit_script()
+        # no usedFinanceGroupId
+        self.assertEquals(item.adapted().getUsedFinanceGroupId(), [])
+
+        # now ask advice of developers, considered as an non finance
+        # advice as only customAdvisers are considered
+        item.setOptionalAdvisers(('developers', ))
+        item.at_post_edit_script()
+        self.assertEquals(item.adapted().getUsedFinanceGroupId(), [])
+
+        # right ask a custom advice that is not a finance advice this time
+        item.setOptionalAdvisers(('developers__rowid__unique_id_003', ))
+        item.at_post_edit_script()
+        self.assertEquals(item.adapted().getUsedFinanceGroupId(), [])
+
+        # finally ask a real finance advice, this time it will work
+        item.setOptionalAdvisers(('developers__rowid__unique_id_001', ))
+        item.at_post_edit_script()
+        self.assertEquals(item.adapted().getUsedFinanceGroupId(), ['developers', ])
