@@ -29,6 +29,7 @@ from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import DisplayList
 from Globals import InitializeClass
 from Products.CMFCore.utils import getToolByName
+from plone import api
 from imio.dashboard.utils import getCurrentCollection
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from Products.PloneMeeting.MeetingItem import MeetingItem, \
@@ -657,16 +658,31 @@ class CustomMeetingItem(MeetingItem):
             self.reindexObject()
     MeetingItem._initDecisionFieldIfEmpty = _initDecisionFieldIfEmpty
 
-    def getGroupIdFromCdldProposingGroup(self):
-        tool = getToolByName(self.context, 'portal_plonemeeting')
+    security.declarePublic('getUsedFinanceGroupId')
+
+    def getUsedFinanceGroupId(self):
+        """Possible finance advisers group ids are defined on
+           the 'FromSearchitemswithfinanceadvice' collection."""
+        tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
-        adviceGroups = cfg.getCdldProposingGroup()
-        adviceGroupIds = []
-        for adviceGroup in adviceGroups:
-            adviceGroupId = adviceGroup.split('_')[0]
-            if adviceGroupId not in adviceGroupIds:
-                adviceGroupIds.append(adviceGroupId)
-        return adviceGroupIds
+        collection = cfg.searches.searches_items.searchitemswithfinanceadvice
+        # get the indexAdvisers value defined on the collection
+        # and find the relevant group, indexAdvisers form is :
+        # 'delay_real_group_id__2014-04-16.9996934488', 'real_group_id_directeur-financier'
+        # it is either a customAdviser row_id or a MeetingGroup id
+        res = []
+        for term in collection.getRawQuery():
+            if term['i'] == 'indexAdvisers':
+                for v in term['v']:
+                    rowIdOrGroupId = v.replace('delay_real_group_id__', '').replace('real_group_id__', '')
+                    if hasattr(tool, rowIdOrGroupId):
+                        if not rowIdOrGroupId in res:
+                            res.append(rowIdOrGroupId)
+                    else:
+                        groupId = cfg._dataForCustomAdviserRowId(rowIdOrGroupId)['group']
+                        if not groupId in res:
+                            res.append(groupId)
+        return res
 
     security.declarePublic('printAllAnnexes')
 
@@ -748,63 +764,6 @@ class CustomMeetingConfig(MeetingConfig):
     def __init__(self, item):
         self.context = item
 
-    security.declarePublic('listCdldProposingGroup')
-
-    def listCdldProposingGroup(self):
-        '''Returns a list of groups that can be selected for cdld synthesis field
-        '''
-        tool = getToolByName(self, 'portal_plonemeeting')
-        res = []
-        # add delay-aware optionalAdvisers
-        customAdvisers = self.getSelf().getCustomAdvisers()
-        for customAdviser in customAdvisers:
-            groupId = customAdviser['group']
-            groupDelay = customAdviser['delay']
-            groupDelayLabel = customAdviser['delay_label']
-            group = getattr(tool, groupId, None)
-            groupKey = '%s__%s__(%s)' % (groupId, groupDelay, groupDelayLabel)
-            groupValue = '%s - %s (%s)' % (group.Title(), groupDelay, groupDelayLabel)
-            if group:
-                res.append((groupKey, groupValue))
-        # only let select groups for which there is at least one user in
-        nonEmptyMeetingGroups = tool.getMeetingGroups(notEmptySuffix='advisers')
-        if nonEmptyMeetingGroups:
-            for mGroup in nonEmptyMeetingGroups:
-                res.append(('%s____' % mGroup.getId(), mGroup.getName()))
-        res = DisplayList(res)
-        return res
-    MeetingConfig.listCdldProposingGroup = listCdldProposingGroup
-
-    security.declarePublic('printCDLDItems')
-
-    def printCDLDItems(self):
-        '''
-        Returns a list of advice for synthesis document (CDLD)
-        '''
-        meetingConfig = self.getSelf()
-        brains = meetingConfig.context.searchCDLDItems()
-        res = []
-        groups = []
-        cdldProposingGroups = meetingConfig.getCdldProposingGroup()
-        for cdldProposingGroup in cdldProposingGroups:
-            groupId = cdldProposingGroup.split('__')[0]
-            delay = False
-            if cdldProposingGroup.split('__')[1]:
-                delay = True
-            if not (groupId, delay) in groups:
-                groups.append((groupId, delay))
-        for brain in brains:
-            item = brain.getObject()
-            advicesIndex = item.adviceIndex
-            for groupId, delay in groups:
-                if groupId in advicesIndex:
-                    advice = advicesIndex[groupId]
-                    if advice['delay'] and not delay:
-                        continue
-                    if not (advice, item) in res:
-                        res.append((advice, item))
-        return res
-
     def _extraSearchesInfo(self, infos):
         """Add some specific searches."""
         cfg = self.getSelf()
@@ -813,32 +772,42 @@ class CustomMeetingConfig(MeetingConfig):
             [
                 # Items in state 'proposed'
                 ('searchproposeditems',
-                {
-                    'subFolderId': 'searches_items',
-                    'query':
-                    [
-                        {'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is', 'v': [itemType, ]},
-                        {'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is', 'v': ['proposed']}
-                    ],
-                    'sort_on': u'created',
-                    'sort_reversed': True,
-                    'tal_condition': "python: not here.portal_plonemeeting.userIsAmong('reviewers')",
-                    'roles_bypassing_talcondition': ['Manager', ]
-                }),
+                    {
+                        'subFolderId': 'searches_items',
+                        'query':
+                        [
+                            {'i': 'portal_type',
+                             'o': 'plone.app.querystring.operation.selection.is',
+                             'v': [itemType, ]},
+                            {'i': 'review_state',
+                             'o': 'plone.app.querystring.operation.selection.is',
+                             'v': ['proposed']}
+                        ],
+                        'sort_on': u'created',
+                        'sort_reversed': True,
+                        'tal_condition': "python: not here.portal_plonemeeting.userIsAmong('reviewers')",
+                        'roles_bypassing_talcondition': ['Manager', ]
+                    }
+                 ),
                 # Items in state 'validated'
                 ('searchvalidateditems',
-                {
-                    'subFolderId': 'searches_items',
-                    'query':
-                    [
-                        {'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is', 'v': [itemType, ]},
-                        {'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is', 'v': ['validated']}
-                    ],
-                    'sort_on': u'created',
-                    'sort_reversed': True,
-                    'tal_condition': "",
-                    'roles_bypassing_talcondition': ['Manager', ]
-                }),
+                    {
+                        'subFolderId': 'searches_items',
+                        'query':
+                        [
+                            {'i': 'portal_type',
+                             'o': 'plone.app.querystring.operation.selection.is',
+                             'v': [itemType, ]},
+                            {'i': 'review_state',
+                             'o': 'plone.app.querystring.operation.selection.is',
+                             'v': ['validated']}
+                        ],
+                        'sort_on': u'created',
+                        'sort_reversed': True,
+                        'tal_condition': "",
+                        'roles_bypassing_talcondition': ['Manager', ]
+                    }
+                 ),
             ]
         )
         infos.update(extra_infos)
@@ -848,25 +817,27 @@ class CustomMeetingConfig(MeetingConfig):
                 [
                     # Items for finance advices synthesis
                     ('searchitemswithfinanceadvice',
-                    {
-                        'subFolderId': 'searches_items',
-                        'query':
-                        [
-                            {'i': 'portal_type',
-                             'o': 'plone.app.querystring.operation.selection.is',
-                             'v': [itemType, ]},
-                            {'i': 'indexAdvisers',
-                             'o': 'plone.app.querystring.operation.selection.is',
-                             'v': ['delay_real_group_id__unique_id_002',
-                                   'delay_real_group_id__unique_id_003',
-                                   'delay_real_group_id__unique_id_004']}
-                        ],
-                        'sort_on': u'created',
-                        'sort_reversed': True,
-                        'tal_condition': "python: '%s_budgetimpacteditors' % here.portal_plonemeeting.getMeetingConfig(here)"
-                                         ".getId() in member.getGroups() or here.portal_plonemeeting.isManager(here)",
-                        'roles_bypassing_talcondition': ['Manager', ]
-                    }),
+                        {
+                            'subFolderId': 'searches_items',
+                            'query':
+                            [
+                                {'i': 'portal_type',
+                                 'o': 'plone.app.querystring.operation.selection.is',
+                                 'v': [itemType, ]},
+                                {'i': 'indexAdvisers',
+                                 'o': 'plone.app.querystring.operation.selection.is',
+                                 'v': ['delay_real_group_id__unique_id_002',
+                                       'delay_real_group_id__unique_id_003',
+                                       'delay_real_group_id__unique_id_004']}
+                            ],
+                            'sort_on': u'created',
+                            'sort_reversed': True,
+                            'tal_condition':
+                            "python: '%s_budgetimpacteditors' % here.portal_plonemeeting.getMeetingConfig(here)"
+                            ".getId() in member.getGroups() or here.portal_plonemeeting.isManager(here)",
+                            'roles_bypassing_talcondition': ['Manager', ]
+                        }
+                     ),
                 ]
             )
             infos.update(finance_infos)
