@@ -80,20 +80,20 @@ itemTemplatePDF.pod_formats = ['pdf', ]
 itemTemplatePDF.pod_portal_types = ['MeetingItemCollege']
 itemTemplatePDF.tal_condition = 'python:here.hasMeeting()'
 
-dfAdviceTemplate = PodTemplateDescriptor('synthese-finance-advice', 'Synthèse Avis DF')
-dfAdviceTemplate.odt_file = 'synthese_avis_df.odt'
-dfAdviceTemplate.pod_portal_types = ['Folder']
-dfAdviceTemplate.tal_condition = 'python: context.portal_plonemeeting.adapted().displayDFAdviceTemplate(context)'
+dfAdvicesTemplate = PodTemplateDescriptor('synthese-avis-df', 'Synthèse Avis DF', dashboard=True)
+dfAdvicesTemplate.odt_file = 'synthese-avis-df.odt'
+dfAdvicesTemplate.dashboard_collections_ids = ['searchitemswithfinanceadvice']
+dfAdvicesTemplate.tal_condition = 'python: context.portal_plonemeeting.adapted().displayDFAdviceTemplate(context)'
 
-dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif')
+dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif', dashboard=True)
 dashboardTemplate.odt_file = 'recapitulatif-tb.odt'
-dashboardTemplate.pod_portal_types = ['Folder']
 dashboardTemplate.tal_condition = 'python: context.absolute_url().endswith("/searches_items")'
 
 collegeTemplates = [agendaTemplate, agendaTemplatePDF,
                     decisionsTemplate, decisionsTemplatePDF,
                     itemProjectTemplate, itemProjectTemplatePDF,
-                    itemTemplate, itemTemplatePDF, dashboardTemplate]
+                    itemTemplate, itemTemplatePDF,
+                    dfAdvicesTemplate, dashboardTemplate]
 
 # Pod templates ----------------------------------------------------------------
 agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
