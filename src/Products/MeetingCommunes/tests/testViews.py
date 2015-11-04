@@ -45,6 +45,10 @@ class testViews(MeetingCommunesTestCase, pmtv):
         '''Run the test_pm_JSVariables from PloneMeeting.'''
         pmtv.test_pm_JSVariables(self)
 
+    def test_subproduct_call_ChangeListTypeView(self):
+        '''Run the test_pm_ChangeListTypeView from PloneMeeting.'''
+        pmtv.test_pm_ChangeListTypeView(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
