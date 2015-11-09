@@ -133,6 +133,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_SendItemToOtherMCWithTriggeredTransitions()
 
+    def test_subproduct_call_SendItemToOtherMCUsingEmergency(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_SendItemToOtherMCUsingEmergency()
+
     def test_subproduct_call_SendItemToOtherMCActions(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_SendItemToOtherMCActions()
