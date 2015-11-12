@@ -630,12 +630,6 @@ class CustomMeetingItem(MeetingItem):
     def __init__(self, item):
         self.context = item
 
-    security.declarePublic('itemPositiveDecidedStates')
-
-    def itemPositiveDecidedStates(self):
-        '''See doc in interfaces.py.'''
-        return ('accepted', 'accepted_but_modified', )
-
     def getEchevinsForProposingGroup(self):
         '''Returns all echevins defined for the proposing group'''
         res = []

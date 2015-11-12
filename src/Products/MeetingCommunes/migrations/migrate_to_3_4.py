@@ -25,9 +25,19 @@ class Migrate_To_3_4(Migrator):
                 delattr(cfg, 'cdldProposingGroup')
         logger.info('Done.')
 
+    def _migrateItemPositiveDecidedStates(self):
+        """Before, the states in which an item was auto sent to
+           selected other meetingConfig was defined in a method
+           'itemPositiveDecidedStates' now it is stored in MeetingConfig.itemAutoSentToOtherMCStates."""
+        logger.info('Defining values for MeetingConfig.itemAutoSentToOtherMCStates...')
+        for cfg in self.tool.objectValues('MeetingConfig'):
+            cfg.setItemAutoSentToOtherMCStates(('accepted', 'accepted_but_modified', ))
+        logger.info('Done.')
+
     def run(self):
         logger.info('Migrating to MeetingCommunes 3.4...')
         self._cleanCDLD()
+        self._migrateItemPositiveDecidedStates()
         # reinstall so icons defined on workflows are applied
         self.reinstall(profiles=[u'profile-Products.MeetingCommunes:default', ])
         self.finish()
