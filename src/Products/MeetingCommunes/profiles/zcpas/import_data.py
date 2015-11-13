@@ -257,7 +257,7 @@ bpMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
 bpMeeting.podTemplates = bpTemplates
 bpMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-cas',
                                       'trigger_workflow_transitions_until': '__nothing__'}, ]
-
+bpMeeting.itemAutoSentToOtherMCStates = ('accepted', 'accepted_but_modified', )
 bpMeeting.recurringItems = [
     # Agenda items
     RecurringItemDescriptor(
