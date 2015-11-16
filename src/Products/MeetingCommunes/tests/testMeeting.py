@@ -83,6 +83,10 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         '''See doc string in PloneMeeting.'''
         self.test_pm_RemoveItemWithSubnumbers()
 
+    def test_subproduct_call_RemoveItemWithSubnumbersRemovedItemBeforeSubnumbers(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_RemoveItemWithSubnumbersRemovedItemBeforeSubnumbers()
+
     def test_subproduct_call_MeetingNumbers(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_MeetingNumbers()

@@ -33,6 +33,10 @@ class testChangeItemOrderView(MeetingCommunesTestCase, pmciov):
         '''Check docstring in PloneMeeting.'''
         self.test_pm_ChangeItemOrderMoveUpDown()
 
+    def test_subproduct_call_ChangeItemOrderMoveUpDownWithSubnumbers(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ChangeItemOrderMoveUpDownWithSubnumbers()
+
     def test_subproduct_call_ChangeItemOrderMoveAtGivenNumber(self):
         '''Check docstring in PloneMeeting.'''
         self.test_pm_ChangeItemOrderMoveAtGivenNumber()
