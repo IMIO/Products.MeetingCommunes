@@ -273,6 +273,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_DownOrUpWorkflowAgain()
 
+    def test_subproduct_call_groupIsNotEmpty(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_groupIsNotEmpty()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
