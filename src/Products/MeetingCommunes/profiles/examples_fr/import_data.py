@@ -83,7 +83,6 @@ itemTemplatePDF.tal_condition = 'python:here.hasMeeting()'
 dfAdvicesTemplate = PodTemplateDescriptor('synthese-avis-df', 'Synthèse Avis DF', dashboard=True)
 dfAdvicesTemplate.odt_file = 'synthese-avis-df.odt'
 dfAdvicesTemplate.dashboard_collections_ids = ['searchitemswithfinanceadvice']
-dfAdvicesTemplate.tal_condition = 'python: context.portal_plonemeeting.adapted().displayDFAdviceTemplate(context)'
 
 dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif', dashboard=True)
 dashboardTemplate.odt_file = 'recapitulatif-tb.odt'

@@ -30,7 +30,6 @@ from Products.Archetypes.atapi import DisplayList
 from Globals import InitializeClass
 from Products.CMFCore.utils import getToolByName
 from plone import api
-from imio.dashboard.utils import getCurrentCollection
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from Products.PloneMeeting.MeetingItem import MeetingItem, \
     MeetingItemWorkflowConditions, MeetingItemWorkflowActions
@@ -1113,11 +1112,6 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
             return ''
         res.append(''.join(tmp))
         return res
-
-    def displayDFAdviceTemplate(self, context):
-        """Display it if on the 'searchitemswithfinanceadvice' dashboard."""
-        currentCollection = getCurrentCollection(context)
-        return currentCollection and currentCollection.getId() == 'searchitemswithfinanceadvice'
 
 
 # ------------------------------------------------------------------------------
