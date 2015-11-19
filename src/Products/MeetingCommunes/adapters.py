@@ -874,12 +874,12 @@ class CustomMeetingConfig(MeetingConfig):
 
     security.declarePublic('printCDLDItems')
 
-    def printCDLDItems(self):
+    def printCDLDItems(self, sortKey='', sortOrder=''):
         '''
         Returns a list of advice for synthesis document (CDLD)
         '''
         meetingConfig = self.getSelf()
-        brains = meetingConfig.context.searchCDLDItems()
+        brains = meetingConfig.context.searchCDLDItems(sortKey=sortKey, sortOrder=sortOrder)
         res = []
         groups = []
         cdldProposingGroups = meetingConfig.getCdldProposingGroup()
