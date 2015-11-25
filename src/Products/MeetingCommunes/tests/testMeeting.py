@@ -171,6 +171,10 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         '''See doc string in PloneMeeting.'''
         self.test_pm_InsertItemOnListTypeThenProposingGroup()
 
+    def test_subproduct_call_InsertItemOnListTypes(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_InsertItemOnListTypes()
+
     def test_subproduct_call_GetNextMeeting(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_GetNextMeeting()
