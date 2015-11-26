@@ -56,6 +56,8 @@ def import_meetingsGroups_from_csv(self, fname=None):
       Import the MeetingGroups from the 'csv file' (fname received as parameter)
     """
     member = self.portal_membership.getAuthenticatedMember()
+    from Products.CMFPlone.utils import safe_unicode
+
     if not member.has_role('Manager'):
         raise Unauthorized, 'You must be a Manager to access this script !'
 
@@ -78,7 +80,8 @@ def import_meetingsGroups_from_csv(self, fname=None):
     from Products.CMFPlone.utils import normalizeString
 
     for row in reader:
-        row_id = normalizeString(row['title'], self)
+        group_title = safe_unicode(row['title'])
+        row_id = normalizeString(group_title, self)
         if not hasattr(pm, row_id):
             groupId = pm.invokeFactory(type_name="MeetingGroup", id=row_id, title=row['title'],
                                        description=row['description'], acronym=row['acronym'],
@@ -121,6 +124,7 @@ def import_meetingsUsersAndRoles_from_csv(self, fname=None):
     from Products.CMFCore.exceptions import BadRequest
     from Products.CMFCore.utils import getToolByName
     from Products.CMFPlone.utils import normalizeString
+    from Products.CMFPlone.utils import safe_unicode
 
     acl = self.acl_users
     pms = self.portal_membership
@@ -141,7 +145,8 @@ def import_meetingsUsersAndRoles_from_csv(self, fname=None):
         else:
             out.append("User %s already exists" % row_id)
         #attribute roles
-        grouptitle = normalizeString(row['grouptitle'], self)
+        group_title = safe_unicode(row['grouptitle'])
+        grouptitle = normalizeString(group_title, self)
         groups = []
         if row['observers']:
             groups.append(grouptitle + '_observers')
