@@ -18,6 +18,18 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "X-is-fallback-for: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
 
+#. Default: "MeetingCA"
+msgid "MeetingCA"
+msgstr "Séance du CA"
+
+#. Default: "MeetingCOGES"
+msgid "MeetingCOGES"
+msgstr "Séance du Comité de Gestion"
+
+#. Default: "MeetingCoDir"
+msgid "MeetingCoDir"
+msgstr "Séance du Comité de Direction"
+
 #. Default: "MeetingCollege"
 msgid "MeetingCollege"
 msgstr "Séance du Collège Communal"
@@ -26,6 +38,18 @@ msgstr "Séance du Collège Communal"
 msgid "MeetingCouncil"
 msgstr "Séance du Conseil Communal"
 
+#. Default: "MeetingItemCA"
+msgid "MeetingItemCA"
+msgstr "Point CA"
+
+#. Default: "MeetingItemCOGES"
+msgid "MeetingItemCOGES"
+msgstr "Point Comité de Gestion"
+
+#. Default: "MeetingItemCoDir"
+msgid "MeetingItemCoDir"
+msgstr "Point Comité de Direction"
+
 #. Default: "MeetingItemCollege"
 msgid "MeetingItemCollege"
 msgstr "Point Collège Communal"
@@ -33,6 +57,18 @@ msgstr "Point Collège Communal"
 #. Default: "MeetingItemCouncil"
 msgid "MeetingItemCouncil"
 msgstr "Point Conseil Communal"
+
+#. Default: "MeetingItemRecurringCA"
+msgid "MeetingItemRecurringCA"
+msgstr "Point récurrent CA"
+
+#. Default: "MeetingItemRecurringCOGES"
+msgid "MeetingItemRecurringCOGES"
+msgstr "Point récurrent Comité de Gestion"
+
+#. Default: "MeetingItemRecurringCoDir"
+msgid "MeetingItemRecurringCoDir"
+msgstr "Point récurrent Comité de Direction"
 
 #. Default: "MeetingItemRecurringCollege"
 msgid "MeetingItemRecurringCollege"
@@ -53,6 +89,18 @@ msgstr "Point récurrent Conseil de l'Action Sociale"
 #. Default: "Meeting item recurring Comitee"
 msgid "MeetingItemRecurringcomitee"
 msgstr "Point récurrent Comité de Concertation"
+
+#. Default: "MeetingItemTemplateCA"
+msgid "MeetingItemTemplateCA"
+msgstr "Modèle de point CA"
+
+#. Default: "MeetingItemTemplateCOGES"
+msgid "MeetingItemTemplateCOGES"
+msgstr "Modèle de point Comité de Gestion"
+
+#. Default: "MeetingItemTemplateCoDir"
+msgid "MeetingItemTemplateCoDir"
+msgstr "Modèle de point Comité de Direction"
 
 #. Default: "MeetingItemTemplateCollege"
 msgid "MeetingItemTemplateCollege"

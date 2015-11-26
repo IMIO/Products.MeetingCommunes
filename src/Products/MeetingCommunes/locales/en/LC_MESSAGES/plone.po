@@ -18,6 +18,18 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "X-is-fallback-for: en-us en-ca\n"
 
+#. Default: "MeetingCA"
+msgid "MeetingCA"
+msgstr ""
+
+#. Default: "MeetingCOGES"
+msgid "MeetingCOGES"
+msgstr ""
+
+#. Default: "MeetingCoDir"
+msgid "MeetingCoDir"
+msgstr ""
+
 #. Default: "MeetingCollege"
 msgid "MeetingCollege"
 msgstr "City college meeting"
@@ -26,6 +38,18 @@ msgstr "City college meeting"
 msgid "MeetingCouncil"
 msgstr "City council meeting"
 
+#. Default: "MeetingItemCA"
+msgid "MeetingItemCA"
+msgstr ""
+
+#. Default: "MeetingItemCOGES"
+msgid "MeetingItemCOGES"
+msgstr ""
+
+#. Default: "MeetingItemCoDir"
+msgid "MeetingItemCoDir"
+msgstr ""
+
 #. Default: "MeetingItemCollege"
 msgid "MeetingItemCollege"
 msgstr "College item"
@@ -33,6 +57,18 @@ msgstr "College item"
 #. Default: "MeetingItemCouncil"
 msgid "MeetingItemCouncil"
 msgstr "Council item"
+
+#. Default: "MeetingItemRecurringCA"
+msgid "MeetingItemRecurringCA"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCOGES"
+msgid "MeetingItemRecurringCOGES"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCoDir"
+msgid "MeetingItemRecurringCoDir"
+msgstr ""
 
 #. Default: "MeetingItemRecurringCollege"
 msgid "MeetingItemRecurringCollege"
@@ -52,6 +88,18 @@ msgstr ""
 
 #. Default: "Meeting item recurring Comitee"
 msgid "MeetingItemRecurringcomitee"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCA"
+msgid "MeetingItemTemplateCA"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCOGES"
+msgid "MeetingItemTemplateCOGES"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCoDir"
+msgid "MeetingItemTemplateCoDir"
 msgstr ""
 
 #. Default: "MeetingItemTemplateCollege"

@@ -17,6 +17,18 @@ msgstr ""
 "X-is-fallback-for: nl-be\n"
 "X-Generator: Poedit 1.5.5\n"
 
+#. Default: "MeetingCA"
+msgid "MeetingCA"
+msgstr ""
+
+#. Default: "MeetingCOGES"
+msgid "MeetingCOGES"
+msgstr ""
+
+#. Default: "MeetingCoDir"
+msgid "MeetingCoDir"
+msgstr ""
+
 #. Default: "MeetingCollege"
 msgid "MeetingCollege"
 msgstr "Collegevergadering"
@@ -25,6 +37,18 @@ msgstr "Collegevergadering"
 msgid "MeetingCouncil"
 msgstr "Gemeenteraadsvergadering"
 
+#. Default: "MeetingItemCA"
+msgid "MeetingItemCA"
+msgstr ""
+
+#. Default: "MeetingItemCOGES"
+msgid "MeetingItemCOGES"
+msgstr ""
+
+#. Default: "MeetingItemCoDir"
+msgid "MeetingItemCoDir"
+msgstr ""
+
 #. Default: "MeetingItemCollege"
 msgid "MeetingItemCollege"
 msgstr "Item collegevergadering"
@@ -32,6 +56,18 @@ msgstr "Item collegevergadering"
 #. Default: "MeetingItemCouncil"
 msgid "MeetingItemCouncil"
 msgstr "Item gemeenteraadsvergadering"
+
+#. Default: "MeetingItemRecurringCA"
+msgid "MeetingItemRecurringCA"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCOGES"
+msgid "MeetingItemRecurringCOGES"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCoDir"
+msgid "MeetingItemRecurringCoDir"
+msgstr ""
 
 #. Default: "MeetingItemRecurringCollege"
 msgid "MeetingItemRecurringCollege"
@@ -51,6 +87,18 @@ msgstr ""
 
 #. Default: "Meeting item recurring Comitee"
 msgid "MeetingItemRecurringcomitee"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCA"
+msgid "MeetingItemTemplateCA"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCOGES"
+msgid "MeetingItemTemplateCOGES"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCoDir"
+msgid "MeetingItemTemplateCoDir"
 msgstr ""
 
 #. Default: "MeetingItemTemplateCollege"

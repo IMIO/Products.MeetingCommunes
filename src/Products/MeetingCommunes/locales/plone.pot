@@ -43,6 +43,54 @@ msgstr ""
 msgid "MeetingItemRecurringCouncil"
 msgstr ""
 
+#. Default: "MeetingCoDir"
+msgid "MeetingCoDir"
+msgstr ""
+
+#. Default: "MeetingItemCoDir"
+msgid "MeetingItemCoDir"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCoDir"
+msgid "MeetingItemTemplateCoDir"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCoDir"
+msgid "MeetingItemRecurringCoDir"
+msgstr ""
+
+#. Default: "MeetingCA"
+msgid "MeetingCA"
+msgstr ""
+
+#. Default: "MeetingItemCA"
+msgid "MeetingItemCA"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCA"
+msgid "MeetingItemTemplateCA"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCA"
+msgid "MeetingItemRecurringCA"
+msgstr ""
+
+#. Default: "MeetingCOGES"
+msgid "MeetingCOGES"
+msgstr ""
+
+#. Default: "MeetingItemCOGES"
+msgid "MeetingItemCOGES"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCOGES"
+msgid "MeetingItemTemplateCOGES"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCOGES"
+msgid "MeetingItemRecurringCOGES"
+msgstr ""
+
 #. Default: "Frozen"
 msgid "frozen"
 msgstr ""

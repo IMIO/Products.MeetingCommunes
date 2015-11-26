@@ -15,6 +15,18 @@ msgstr ""
 "Domain: plone\n"
 "X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
 
+#. Default: "MeetingCA"
+msgid "MeetingCA"
+msgstr ""
+
+#. Default: "MeetingCOGES"
+msgid "MeetingCOGES"
+msgstr ""
+
+#. Default: "MeetingCoDir"
+msgid "MeetingCoDir"
+msgstr ""
+
 #. Default: "MeetingCollege"
 msgid "MeetingCollege"
 msgstr "Sitzung des Gemeindekollegiums"
@@ -23,6 +35,18 @@ msgstr "Sitzung des Gemeindekollegiums"
 msgid "MeetingCouncil"
 msgstr "Sitzung des Gemeinderats"
 
+#. Default: "MeetingItemCA"
+msgid "MeetingItemCA"
+msgstr ""
+
+#. Default: "MeetingItemCOGES"
+msgid "MeetingItemCOGES"
+msgstr ""
+
+#. Default: "MeetingItemCoDir"
+msgid "MeetingItemCoDir"
+msgstr ""
+
 #. Default: "MeetingItemCollege"
 msgid "MeetingItemCollege"
 msgstr "TOP Kollegium"
@@ -30,6 +54,18 @@ msgstr "TOP Kollegium"
 #. Default: "MeetingItemCouncil"
 msgid "MeetingItemCouncil"
 msgstr "TOP Rat"
+
+#. Default: "MeetingItemRecurringCA"
+msgid "MeetingItemRecurringCA"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCOGES"
+msgid "MeetingItemRecurringCOGES"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCoDir"
+msgid "MeetingItemRecurringCoDir"
+msgstr ""
 
 #. Default: "MeetingItemRecurringCollege"
 msgid "MeetingItemRecurringCollege"
@@ -49,6 +85,18 @@ msgstr ""
 
 #. Default: "Meeting item recurring Comitee"
 msgid "MeetingItemRecurringcomitee"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCA"
+msgid "MeetingItemTemplateCA"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCOGES"
+msgid "MeetingItemTemplateCOGES"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCoDir"
+msgid "MeetingItemTemplateCoDir"
 msgstr ""
 
 #. Default: "MeetingItemTemplateCollege"
