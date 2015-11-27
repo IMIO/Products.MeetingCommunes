@@ -88,11 +88,16 @@ dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif', das
 dashboardTemplate.odt_file = 'recapitulatif-tb.odt'
 dashboardTemplate.tal_condition = 'python: context.absolute_url().endswith("/searches_items")'
 
+historyTemplate = PodTemplateDescriptor('historique', 'Historique')
+historyTemplate.odt_file = 'history.odt'
+historyTemplate.pod_portal_types = ['MeetingItemCollege']
+
 collegeTemplates = [agendaTemplate, agendaTemplatePDF,
                     decisionsTemplate, decisionsTemplatePDF,
                     itemProjectTemplate, itemProjectTemplatePDF,
                     itemTemplate, itemTemplatePDF,
-                    dfAdvicesTemplate, dashboardTemplate]
+                    dfAdvicesTemplate, dashboardTemplate,
+                    historyTemplate]
 
 # Pod templates ----------------------------------------------------------------
 agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
