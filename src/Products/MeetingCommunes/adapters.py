@@ -787,7 +787,7 @@ class CustomMeetingConfig(MeetingConfig):
                         ],
                         'sort_on': u'created',
                         'sort_reversed': True,
-                        'tal_condition': "python: not here.portal_plonemeeting.userIsAmong('reviewers')",
+                        'tal_condition': "python: not tool.userIsAmong('reviewers')",
                         'roles_bypassing_talcondition': ['Manager', ]
                     }
                  ),
@@ -835,8 +835,8 @@ class CustomMeetingConfig(MeetingConfig):
                             'sort_on': u'created',
                             'sort_reversed': True,
                             'tal_condition':
-                            "python: '%s_budgetimpacteditors' % here.portal_plonemeeting.getMeetingConfig(here)"
-                            ".getId() in member.getGroups() or here.portal_plonemeeting.isManager(here)",
+                            "python: '%s_budgetimpacteditors' % cfg.getId() in member.getGroups() or "
+                            "tool.isManager(here)",
                             'roles_bypassing_talcondition': ['Manager', ]
                         }
                      ),
