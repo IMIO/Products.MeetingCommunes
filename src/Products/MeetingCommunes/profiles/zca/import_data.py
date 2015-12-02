@@ -246,6 +246,5 @@ caMeeting.itemTemplates = []
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(caMeeting, ),
                                  groups=groups)
-data.unoEnabledPython = '/usr/bin/python'
 data.enableUserPreferences = False
 # ------------------------------------------------------------------------------

@@ -388,7 +388,6 @@ data = PloneMeetingConfiguration(
     meetingFolderTitle='Mes séances',
     meetingConfigs=(bpMeeting, casMeeting, comiteeMeeting,),
     groups=groups)
-data.unoEnabledPython = '/usr/bin/python'
 data.enableUserPreferences = False
 data.usersOutsideGroups = [president, conseiller]
 # ------------------------------------------------------------------------------

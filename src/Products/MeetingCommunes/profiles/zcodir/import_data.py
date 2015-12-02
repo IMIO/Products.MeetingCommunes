@@ -245,6 +245,5 @@ codirMeeting.itemTemplates = []
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(codirMeeting, ),
                                  groups=groups)
-data.unoEnabledPython = '/usr/bin/python'
 data.enableUserPreferences = False
 # ------------------------------------------------------------------------------

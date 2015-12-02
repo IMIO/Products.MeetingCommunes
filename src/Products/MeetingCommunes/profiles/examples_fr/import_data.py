@@ -656,7 +656,6 @@ councilMeeting.recurringItems = [
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(collegeMeeting, councilMeeting),
                                  groups=groups)
-data.unoEnabledPython = '/usr/bin/python'
 data.enableUserPreferences = False
 data.usersOutsideGroups = [bourgmestre, conseiller]
 # ------------------------------------------------------------------------------

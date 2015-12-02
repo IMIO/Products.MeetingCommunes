@@ -247,6 +247,5 @@ coGestMeeting.itemTemplates = []
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(coGestMeeting, ),
                                  groups=groups)
-data.unoEnabledPython = '/usr/bin/python'
 data.enableUserPreferences = False
 # ------------------------------------------------------------------------------
