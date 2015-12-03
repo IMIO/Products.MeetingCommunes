@@ -99,6 +99,10 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         '''See doc string in PloneMeeting.'''
         self.test_pm_PresentSeveralItems()
 
+    def test_subproduct_call_PresentSeveralItemsWithAutoSendToOtherMCUntilPresented(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_PresentSeveralItemsWithAutoSendToOtherMCUntilPresented()
+
     def test_subproduct_call_DecideSeveralItems(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_DecideSeveralItems()
