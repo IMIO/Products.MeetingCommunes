@@ -19,6 +19,7 @@ def update_group_schema(baseSchema):
                 label_msgid='MeetingCommunes_label_echevinServices',
                 description='Leave empty if he is not an echevin',
                 description_msgid='MeetingCommunes_descr_echevinServices',
+                format="checkbox",
                 i18n_domain='PloneMeeting',
             ),
             enforceVocabulary=True,

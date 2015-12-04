@@ -21,3 +21,10 @@
     color: white !important;
     border: 2px solid green;
 }
+
+/* make sure multiselect fields displayed on the edit form are not too long */
+div#archetypes-fieldname-echevinServices {
+    max-height: 300px;
+    max-width: 500px;
+    overflow-x: auto;
+}
