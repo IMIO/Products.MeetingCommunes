@@ -197,9 +197,37 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_HistorizedTakenOverBy()
 
-    def test_subproduct_call_ItemActionsPanelCaching(self):
+    def test_subproduct_call_ItemActionsPanelCachingInvalidatedWhenItemModified(self):
         '''See doc string in PloneMeeting.'''
-        self.test_pm_ItemActionsPanelCaching()
+        self.test_pm_ItemActionsPanelCachingInvalidatedWhenItemModified()
+
+    def test_subproduct_call_ItemActionsPanelCachingInvalidatedWhenItemStateChanged(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ItemActionsPanelCachingInvalidatedWhenItemStateChanged()
+
+    def test_subproduct_call_ItemActionsPanelCachingInvalidatedWhenUserChanged(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ItemActionsPanelCachingInvalidatedWhenUserChanged()
+
+    def test_subproduct_call_ItemActionsPanelCachingInvalidatedWhenItemTurnsToPresentable(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ItemActionsPanelCachingInvalidatedWhenItemTurnsToPresentable()
+
+    def test_subproduct_call_ItemActionsPanelCachingInvalidatedWhenItemTurnsToNoMorePresentable(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ItemActionsPanelCachingInvalidatedWhenItemTurnsToNoMorePresentable()
+
+    def ItemActionsPanelCachingInvalidatedWhenItemTurnsToNoMorePresentable(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ItemActionsPanelCachingInvalidatedWhenItemTurnsToNoMorePresentable()
+
+    def test_subproduct_call_ItemActionsPanelCachingInvalidatedWhenLinkedMeetingIsEdited(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ItemActionsPanelCachingInvalidatedWhenLinkedMeetingIsEdited()
+
+    def test_subproduct_call_ItemActionsPanelCachingInvalidatedWhenMeetingConfigEdited(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_ItemActionsPanelCachingInvalidatedWhenMeetingConfigEdited()
 
     def test_subproduct_call_HistoryCommentViewability(self):
         '''See doc string in PloneMeeting.'''
