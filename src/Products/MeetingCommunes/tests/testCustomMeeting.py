@@ -114,9 +114,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         m = self.create('Meeting', date='2007/12/11 09:00:00')
         # present every items in a meeting
         for item in items:
-            self.do(item, 'propose')
-            self.do(item, 'validate')
-            self.do(item, 'present')
+            self.presentItem(item)
         # build the list of uids
         itemUids = [anItem.UID() for anItem in m.getItems(ordered=True)]
         # test on the meeting
