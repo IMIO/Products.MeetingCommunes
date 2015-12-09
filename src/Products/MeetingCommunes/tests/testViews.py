@@ -49,6 +49,14 @@ class testViews(MeetingCommunesTestCase, pmtv):
         '''Run the test_pm_ChangeListTypeView from PloneMeeting.'''
         pmtv.test_pm_ChangeListTypeView(self)
 
+    def test_subproduct_call_UpdateDelayAwareAdvices(self):
+        '''Run the test_pm_UpdateDelayAwareAdvices from PloneMeeting.'''
+        self.test_pm_UpdateDelayAwareAdvices()
+
+    def test_subproduct_call_UpdateDelayAwareAdvicesUpdateAllAdvices(self):
+        '''Run the test_pm_UpdateDelayAwareAdvicesUpdateAllAdvices from PloneMeeting.'''
+        self.test_pm_UpdateDelayAwareAdvicesUpdateAllAdvices()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

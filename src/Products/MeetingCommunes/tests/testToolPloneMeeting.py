@@ -74,10 +74,6 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
         '''Run the test_pm_UpdateMeetingFileTypesAfterSentToOtherMeetingConfig from PloneMeeting.'''
         self.test_pm_UpdateMeetingFileTypesAfterSentToOtherMeetingConfig()
 
-    def test_subproduct_call_UpdateDelayAwareAdvices(self):
-        '''Run the test_pm_UpdateDelayAwareAdvices from PloneMeeting.'''
-        self.test_pm_UpdateDelayAwareAdvices()
-
     def test_subproduct_call_GetDefaultMeetingConfig(self):
         '''Run the test_pm_GetDefaultMeetingConfig from PloneMeeting.'''
         self.test_pm_GetDefaultMeetingConfig()
@@ -89,10 +85,6 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
     def test_subproduct_call_GetGroupsForUser(self):
         '''Run the test_pm_GetGroupsForUser from PloneMeeting.'''
         self.test_pm_GetGroupsForUser()
-
-    def test_subproduct_call_UpdateAllAdvicesAction(self):
-        '''Run the test_pm_UpdateAllAdvicesAction from PloneMeeting.'''
-        self.test_pm_UpdateAllAdvicesAction()
 
     def test_subproduct_call_UpdateCopyGroups(self):
         '''Run the test_pm_UpdateCopyGroups from PloneMeeting.'''
