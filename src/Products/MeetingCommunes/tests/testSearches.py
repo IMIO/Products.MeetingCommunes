@@ -65,6 +65,10 @@ class testSearches(MeetingCommunesTestCase, pmts):
         '''Run the test_pm_SearchItemsToValidateOfEveryReviewerLevelsAndLowerLevels from PloneMeeting.'''
         pmts.test_pm_SearchItemsToValidateOfEveryReviewerLevelsAndLowerLevels(self)
 
+    def test_subproduct_call_SearchItemsToCorrect(self):
+        '''Run the test_pm_SearchItemsToCorrect from PloneMeeting.'''
+        pmts.test_pm_SearchItemsToCorrect(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
