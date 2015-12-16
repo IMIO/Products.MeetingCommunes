@@ -175,7 +175,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.addAnnex(item2)
         # So now I should have 1 normal item left and one late item in the meeting
         self.failIf(len(meeting.getItems()) != 2)
-        self.failUnless(len(meeting.getItems(listTypes='late')) == 1)
+        self.failUnless(len(meeting.getItems(listTypes=['late'])) == 1)
         # pmReviewer1 can not add an annex on item1 as it is frozen
         self.changeUser('pmReviewer1')
         self.assertRaises(Unauthorized, self.addAnnex, item1)
@@ -305,24 +305,24 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
             self.assertEquals(item.getOwner().getId(), 'pmManager')
         # The meeting must contain recurring items : 2 defined and one added here above
         self.failUnless(len(meeting.getItems()) == 3)
-        self.failIf(meeting.getItems(listTypes='late'))
+        self.failIf(meeting.getItems(listTypes=['late'] ))
         # After freeze, the meeting must have one recurring item more
         self.freezeMeeting(meeting)
         self.failUnless(len(meeting.getItems()) == 4)
-        self.failUnless(len(meeting.getItems(listTypes='late')) == 1)
+        self.failUnless(len(meeting.getItems(listTypes=['late'])) == 1)
         # Back to created: rec item 2 is not inserted because
         # only some transitions can add a recurring item (see MeetingItem).
         self.backToState(meeting, 'created')
         self.failUnless(len(meeting.getItems()) == 4)
-        self.failUnless(len(meeting.getItems(listTypes='late')) == 1)
+        self.failUnless(len(meeting.getItems(listTypes=['late'])) == 1)
         # Recurring items can be added twice...
         self.freezeMeeting(meeting)
         self.failUnless(len(meeting.getItems()) == 5)
-        self.failUnless(len(meeting.getItems(listTypes='late')) == 2)
+        self.failUnless(len(meeting.getItems(listTypes=['late'])) == 2)
         # Decide the meeting, a third late item is added
         self.decideMeeting(meeting)
         self.failUnless(len(meeting.getItems()) == 6)
-        self.failUnless(len(meeting.getItems(listTypes='late')) == 3)
+        self.failUnless(len(meeting.getItems(listTypes=['late'])) == 3)
 
     def test_subproduct_FreezeMeeting(self):
         """
