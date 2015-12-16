@@ -26,52 +26,30 @@ categories = [CategoryDescriptor('category1', 'Catégorie 1'),
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaTemplate.odt_file = '../../examples_fr/templates/oj.odt'
+agendaTemplate.pod_formats = ['odt', 'pdf', ]
 agendaTemplate.pod_portal_types = ['MeetingCA']
 agendaTemplate.tal_condition = 'python:tool.isManager(here)'
 
-agendaTemplatePDF = PodTemplateDescriptor('oj-pdf', 'Ordre du jour')
-agendaTemplatePDF.odt_file = '../../examples_fr/templates/oj.odt'
-agendaTemplatePDF.pod_formats = ['pdf', ]
-agendaTemplatePDF.pod_portal_types = ['MeetingCA']
-agendaTemplatePDF.tal_condition = 'python:tool.isManager(here)'
-
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsTemplate.odt_file = '../../examples_fr/templates/pv.odt'
+decisionsTemplate.pod_formats = ['odt', 'pdf', ]
 decisionsTemplate.pod_portal_types = ['MeetingCA']
 decisionsTemplate.tal_condition = 'python:tool.isManager(here)'
 
-decisionsTemplatePDF = PodTemplateDescriptor('pv-pdf', 'Procès-verbal')
-decisionsTemplatePDF.odt_file = '../../examples_fr/templates/pv.odt'
-decisionsTemplatePDF.pod_formats = ['pdf', ]
-decisionsTemplatePDF.pod_portal_types = ['MeetingCA']
-decisionsTemplatePDF.tal_condition = 'python:tool.isManager(here)'
-
 itemProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
 itemProjectTemplate.odt_file = '../../examples_fr/templates/projet-deliberation.odt'
+itemProjectTemplate.pod_formats = ['odt', 'pdf', ]
 itemProjectTemplate.pod_portal_types = ['MeetingItemCA']
 itemProjectTemplate.tal_condition = 'python:not here.hasMeeting()'
 
-itemProjectTemplatePDF = PodTemplateDescriptor('projet-deliberation-pdf', 'Projet délibération')
-itemProjectTemplatePDF.odt_file = '../../examples_fr/templates/projet-deliberation.odt'
-itemProjectTemplatePDF.pod_formats = ['pdf', ]
-itemProjectTemplatePDF.pod_portal_types = ['MeetingItemCA']
-itemProjectTemplatePDF.tal_condition = 'python:not here.hasMeeting()'
-
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemTemplate.odt_file = '../../examples_fr/templates/deliberation.odt'
+itemTemplate.pod_formats = ['odt', 'pdf', ]
 itemTemplate.pod_portal_types = ['MeetingItemCA']
 itemTemplate.tal_condition = 'python:here.hasMeeting()'
 
-itemTemplatePDF = PodTemplateDescriptor('deliberation-pdf', 'Délibération')
-itemTemplatePDF.odt_file = '../../examples_fr/templates/deliberation.odt'
-itemTemplatePDF.pod_formats = ['pdf', ]
-itemTemplatePDF.pod_portal_types = ['MeetingItemCA']
-itemTemplatePDF.tal_condition = 'python:here.hasMeeting()'
-
-caTemplates = [agendaTemplate, agendaTemplatePDF,
-               decisionsTemplate, decisionsTemplatePDF,
-               itemProjectTemplate, itemProjectTemplatePDF,
-               itemTemplate, itemTemplatePDF]
+caTemplates = [agendaTemplate, decisionsTemplate,
+               itemProjectTemplate, itemTemplate]
 
 # Users and groups -------------------------------------------------------------
 dgen = UserDescriptor('dgen', [], email="test@test.be", fullname="Henry Directeur")
