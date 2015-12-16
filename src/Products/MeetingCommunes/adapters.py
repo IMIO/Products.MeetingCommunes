@@ -196,7 +196,7 @@ class CustomMeeting(Meeting):
     # Implements here methods that will be used by templates
     security.declarePublic('getPrintableItems')
 
-    def getPrintableItems(self, itemUids, late=False, ignore_review_states=[],
+    def getPrintableItems(self, itemUids, listTypes=['normal'], ignore_review_states=[],
                           privacy='*', oralQuestion='both', toDiscuss='both', categories=[],
                           excludedCategories=[], groupIds=[], firstNumber=1, renumber=False):
         '''Returns a list of items.
@@ -217,12 +217,10 @@ class CustomMeeting(Meeting):
         for elt in itemUids:
             if elt == '':
                 itemUids.remove(elt)
-        # late means listType='late'
-        listType = late and 'late' or 'normal'
         #no filtering, return the items ordered
         if not categories and not ignore_review_states and privacy == '*' and \
            oralQuestion == 'both' and toDiscuss == 'both':
-            return self.context.getItems(uids=itemUids, listType=listType, ordered=True)
+            return self.context.getItems(uids=itemUids, listTypes=listTypes, ordered=True)
         # Either, we will have to filter the state here and check privacy
         filteredItemUids = []
         uid_catalog = self.context.uid_catalog
@@ -242,14 +240,12 @@ class CustomMeeting(Meeting):
                 continue
             elif excludedCategories and obj.getCategory() in excludedCategories:
                 continue
-            elif late and not listType == 'late':
-                continue
             filteredItemUids.append(itemUid)
         #in case we do not have anything, we return an empty list
         if not filteredItemUids:
             return []
         else:
-            items = self.context.getItems(uids=filteredItemUids, listType=listType, ordered=True)
+            items = self.context.getItems(uids=filteredItemUids, listTypes=listTypes, ordered=True)
             if renumber:
                 #return a list of tuple with first element the number and second
                 #element the item itself
@@ -335,13 +331,13 @@ class CustomMeeting(Meeting):
 
     security.declarePublic('getPrintableItemsByCategory')
 
-    def getPrintableItemsByCategory(self, itemUids=[], late=False,
+    def getPrintableItemsByCategory(self, itemUids=[], listTypes=['normal'],
                                     ignore_review_states=[], by_proposing_group=False, group_prefixes={},
                                     privacy='*', oralQuestion='both', toDiscuss='both', categories=[],
                                     excludedCategories=[], groupIds=[], firstNumber=1, renumber=False,
                                     includeEmptyCategories=False, includeEmptyGroups=False,
                                     forceCategOrderFromConfig=False):
-        '''Returns a list of (late or normal or both) items (depending on p_late)
+        '''Returns a list of (late or normal or both) items (depending on p_listTypes)
            ordered by category. Items being in a state whose name is in
            p_ignore_review_state will not be included in the result.
            If p_by_proposing_group is True, items are grouped by proposing group
@@ -365,7 +361,7 @@ class CustomMeeting(Meeting):
         # - at position 0: the category object (MeetingCategory or MeetingGroup)
         # - at position 1 to n: the items in this category
         # If by_proposing_group is True, the structure is more complex.
-        # late can be 'both' or False or True
+        # listTypes is a list that can be filled with 'normal' and/or 'late'
         # oralQuestion can be 'both' or False or True
         # toDiscuss can be 'both' or 'False' or 'True'
         # privacy can be '*' or 'public' or 'secret'
@@ -384,16 +380,13 @@ class CustomMeeting(Meeting):
         res = []
         items = []
         tool = getToolByName(self.context, 'portal_plonemeeting')
-        # late means listType='late'
-        listType = late and 'late' or 'normal'
         # Retrieve the list of items
         for elt in itemUids:
             if elt == '':
                 itemUids.remove(elt)
-        if late == 'both':
-            items = self.context.getItems(uids=itemUids, ordered=True)
-        else:
-            items = self.context.getItems(uids=itemUids, listType=listType, ordered=True)
+
+        items = self.context.getItems(uids=itemUids, listTypes=listTypes, ordered=True)
+
         if by_proposing_group:
             groups = tool.getMeetingGroups()
         else:
@@ -415,8 +408,6 @@ class CustomMeeting(Meeting):
                     continue
                 elif excludedCategories and item.getCategory() in excludedCategories:
                     continue
-                elif late and not listType == 'late':
-                    continue
                 currentCat = item.getCategory(theObject=True)
                 # Add the item to a new category, excepted if the
                 # category already exists.
@@ -432,7 +423,7 @@ class CustomMeeting(Meeting):
                     res.append([currentCat])
                     self._insertItemInCategory(res[-1], item,
                                                by_proposing_group, group_prefixes, groups)
-        if forceCategOrderFromConfig or late == 'both':
+        if forceCategOrderFromConfig or cmp(listTypes.sort(), ['late', 'normal']) == 0:
             res.sort(cmp=_comp)
         if includeEmptyCategories:
             meetingConfig = tool.getMeetingConfig(
@@ -490,15 +481,14 @@ class CustomMeeting(Meeting):
 
     security.declarePublic('getNumberOfItems')
 
-    def getNumberOfItems(self, itemUids, privacy='*', categories=[], late=False):
+    def getNumberOfItems(self, itemUids, privacy='*', categories=[], listTypes=['normal']):
         '''Returns the number of items depending on parameters.
            This is used in templates to know how many items of a particular kind exist and
            often used to determine the 'firstNumber' parameter of getPrintableItems/getPrintableItemsByCategory.'''
         # sometimes, some empty elements are inserted in itemUids, remove them...
         itemUids = [itemUid for itemUid in itemUids if itemUid != '']
         if not categories and privacy == '*':
-            listType = late and 'late' or 'normal'
-            return len(self.context.getItems(uids=itemUids, listType=listType))
+            return len(self.context.getItems(uids=itemUids, listTypes=listTypes))
         # Either, we will have to filter (privacy, categories, late)
         filteredItemUids = []
         uid_catalog = getToolByName(self.context, 'uid_catalog')
@@ -508,14 +498,14 @@ class CustomMeeting(Meeting):
                 continue
             elif not (categories == [] or obj.getCategory() in categories):
                 continue
-            elif not obj.isLate() == late:
+            elif not obj.isLate() == bool(listTypes == ['late']):
                 continue
             filteredItemUids.append(itemUid)
         return len(filteredItemUids)
 
     security.declarePublic('getPrintableItemsByNumCategory')
 
-    def getPrintableItemsByNumCategory(self, late=False, uids=[],
+    def getPrintableItemsByNumCategory(self, listTypes=['normal'], uids=[],
                                        catstoexclude=[], exclude=True, allItems=False):
         '''Returns a list of items ordered by category number. If there are many
            items by category, there is always only one category, even if the
@@ -541,10 +531,10 @@ class CustomMeeting(Meeting):
                     catNum = current_cat_id
             return catNum
 
-        if not allItems and late:
-            items = self.context.getItems(uids=uids, listType='late', ordered=True)
-        elif not allItems and not late:
-            items = self.context.getItems(uids=uids, listType='normal', ordered=True)
+        if not allItems and listTypes == ['late']:
+            items = self.context.getItems(uids=uids, listTypes=['late'], ordered=True)
+        elif not allItems and not listTypes == ['late']:
+            items = self.context.getItems(uids=uids, listTypes=['normal'], ordered=True)
         else:
             items = self.context.getItems(uids=uids, ordered=True)
         # res contains all items by category, the key of res is the category

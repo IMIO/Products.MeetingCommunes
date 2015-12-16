@@ -157,24 +157,24 @@ class testCustomMeeting(MeetingCommunesTestCase):
         # and 1 normal research
         # build the list of uids
         itemUids = [anItem.UID() for anItem in meeting.getItems(ordered=True)]
-        # test on the meeting with late='both'
+        # test on the meeting with listTypes=['late','normal']
         # Every items (normal and late) should be in the same category, in the good order
-        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[0][0].getId(), 'development')
-        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[1][0].getId(), 'events')
-        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[2][0].getId(), 'research')
-        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[0][0].meta_type, 'MeetingCategory')
-        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[1][0].meta_type, 'MeetingCategory')
-        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[2][0].meta_type, 'MeetingCategory')
+        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, listTypes=['late','normal'])[0][0].getId(), 'development')
+        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, listTypes=['late','normal'])[1][0].getId(), 'events')
+        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, listTypes=['late','normal'])[2][0].getId(), 'research')
+        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, listTypes=['late','normal'])[0][0].meta_type, 'MeetingCategory')
+        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, listTypes=['late','normal'])[1][0].meta_type, 'MeetingCategory')
+        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, listTypes=['late','normal'])[2][0].meta_type, 'MeetingCategory')
         # the event category should have 2 items, research 1 and development 2 ( + 1 category element for each one)
-        self.assertEquals(len(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[0]), 3)
-        self.assertEquals(len(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[1]), 3)
-        self.assertEquals(len(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[2]), 2)
+        self.assertEquals(len(meeting.adapted().getPrintableItemsByCategory(itemUids, listTypes=['late','normal'])[0]), 3)
+        self.assertEquals(len(meeting.adapted().getPrintableItemsByCategory(itemUids, listTypes=['late','normal'])[1]), 3)
+        self.assertEquals(len(meeting.adapted().getPrintableItemsByCategory(itemUids, listTypes=['late','normal'])[2]), 2)
         # other element of the list are MeetingItems...
-        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[0][1].meta_type, 'MeetingItem')
-        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[0][2].meta_type, 'MeetingItem')
-        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[1][1].meta_type, 'MeetingItem')
-        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[1][2].meta_type, 'MeetingItem')
-        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, late='both')[2][1].meta_type, 'MeetingItem')
+        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, listTypes=['late','normal'])[0][1].meta_type, 'MeetingItem')
+        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, listTypes=['late','normal'])[0][2].meta_type, 'MeetingItem')
+        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, listTypes=['late','normal'])[1][1].meta_type, 'MeetingItem')
+        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, listTypes=['late','normal'])[1][2].meta_type, 'MeetingItem')
+        self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids, listTypes=['late','normal'])[2][1].meta_type, 'MeetingItem')
 
     def test_GetPrintableItemsByCategoryWhenForceCategOrderFromConfig(self):
         self.changeUser('pmManager')
@@ -319,17 +319,17 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.presentItem(item2)
         # now we have 4 normal items and 2 late items
         self.assertEquals(len(meeting.getItems()), 5)
-        self.assertEquals(len(meeting.getItems(listType='late')), 2)
+        self.assertEquals(len(meeting.getItems(listTypes=['late'])), 2)
         # same using getNumberOfItems
-        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, late=False), 3)
-        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, late=True), 2)
+        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, listTypes=['normal']), 3)
+        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, listTypes=['late']), 2)
 
         # we can combinate parameters
         # we know that we have 2 late items that are using the 'development' category...
-        lateItems = meeting.getItems(listType='late')
+        lateItems = meeting.getItems(listTypes=['late'])
         self.assertEquals(len(lateItems), 2)
         self.assertEquals(lateItems[0].getCategory(), 'development')
         self.assertEquals(lateItems[1].getCategory(), 'development')
-        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, categories=['development', ], late=True), 2)
+        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, categories=['development', ], listTypes=['late']), 2)
         # we have so 0 normal item using the 'development' category
-        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, categories=['development', ], late=False), 0)
+        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, categories=['development', ], listTypes=['normal']), 0)
