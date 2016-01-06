@@ -43,14 +43,17 @@ class Migrate_To_3_4(PMMigrate_To_3_4):
         logger.info('Migrating to MeetingCommunes 3.4...')
         self._cleanCDLD()
         self._migrateItemPositiveDecidedStates()
-        self.finish()
 
 
 # The migration function -------------------------------------------------------
 def migrate(context):
     '''This migration function:
 
-       1) Reinstalls Products.MeetingCommunes so changes regarding icons to use on transitions are applied.
+       1) Reinstall Products.MeetingCommunes and execute the Products.PloneMeeting migration;
+       2) Clean CDLD attributes;
+       3) Migrate positive decided states.
     '''
-    Migrate_To_3_4(context).run()
+    migrator = Migrate_To_3_4(context)
+    migrator.run()
+    migrator.finish()
 # ------------------------------------------------------------------------------
