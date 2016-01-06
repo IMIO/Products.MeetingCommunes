@@ -3,11 +3,11 @@
 import logging
 logger = logging.getLogger('MeetingCommunes')
 
-from Products.PloneMeeting.migrations import Migrator
+from Products.PloneMeeting.migrations.migrate_to_3_4 import Migrate_To_3_4 as PMMigrate_To_3_4
 
 
 # The migration class ----------------------------------------------------------
-class Migrate_To_3_4(Migrator):
+class Migrate_To_3_4(PMMigrate_To_3_4):
 
     def _cleanCDLD(self):
         """We removed things related to 'CDLD' finance advice, so:
@@ -35,11 +35,14 @@ class Migrate_To_3_4(Migrator):
         logger.info('Done.')
 
     def run(self):
+        # change self.profile_name everything is right before launching steps
+        self.profile_name = u'profile-Products.MeetingCommunes:default'
+        # call steps from Products.PloneMeeting
+        PMMigrate_To_3_4.run(self)
+        # now MeetingLiege specific steps
         logger.info('Migrating to MeetingCommunes 3.4...')
         self._cleanCDLD()
         self._migrateItemPositiveDecidedStates()
-        # reinstall so icons defined on workflows are applied
-        self.reinstall(profiles=[u'profile-Products.MeetingCommunes:default', ])
         self.finish()
 
 
