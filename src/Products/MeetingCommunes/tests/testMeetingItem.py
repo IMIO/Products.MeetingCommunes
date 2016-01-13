@@ -145,6 +145,10 @@ class testMeetingItem(MeetingCommunesTestCase, pmtmi):
         '''See doc string in PloneMeeting.'''
         self.test_pm_SendItemToOtherMCActions()
 
+    def test_subproduct_call_SendItemToOtherMCKeptFields(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_SendItemToOtherMCKeptFields()
+
     def test_subproduct_call_SendItemToOtherMCManually(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_SendItemToOtherMCManually()
