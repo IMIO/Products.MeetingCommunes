@@ -193,7 +193,7 @@ coGestMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present'
 coGestMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.decision',
-      'tal_expression': "string:Le Comité décide de reporter le point."},))
+      'tal_expression': "string:<p>Le Comité décide de reporter le point.</p>"},))
 coGestMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
                                                              'item_transition': 'itemfreeze'},
 
