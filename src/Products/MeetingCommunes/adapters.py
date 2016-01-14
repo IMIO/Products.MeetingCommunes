@@ -872,16 +872,6 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
     implements(IMeetingCollegeWorkflowConditions)
     security = ClassSecurityInfo()
 
-    security.declarePublic('mayFreeze')
-
-    def mayFreeze(self):
-        res = False
-        if checkPermission(ReviewPortalContent, self.context):
-            res = True  # At least at present
-            if not self.context.getRawItems():
-                res = No(translate('item_required_to_publish', domain='PloneMeeting', context=self.context.REQUEST))
-        return res
-
     security.declarePublic('mayClose')
 
     def mayClose(self):
@@ -1009,23 +999,6 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
 
     implements(IMeetingItemCouncilWorkflowConditions)
     security = ClassSecurityInfo()
-
-    security.declarePublic('mayFreeze')
-
-    def mayFreeze(self):
-        """
-          A MeetingManager may freeze an item if the meeting is at least frozen
-        """
-        res = False
-        if checkPermission(ReviewPortalContent, self.context):
-            if self.context.hasMeeting() and \
-               (self.context.getMeeting().queryState() in ('frozen',
-                                                           'published',
-                                                           'decided',
-                                                           'closed',
-                                                           'decisions_published', )):
-                res = True
-        return res
 
     security.declarePublic('mayPublish')
 

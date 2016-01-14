@@ -75,6 +75,10 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         '''See doc string in PloneMeeting.'''
         self.test_pm_InsertItemPrivacyThenCategoriesWithDisabledCategory()
 
+    def test_subproduct_call_InsertItemForceNormal(self):
+        '''See doc string in PloneMeeting.'''
+        self.test_pm_InsertItemForceNormal()
+
     def test_subproduct_call_RemoveOrDeleteLinkedItem(self):
         '''See doc string in PloneMeeting.'''
         self.test_pm_RemoveOrDeleteLinkedItem()
