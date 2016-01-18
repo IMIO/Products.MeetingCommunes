@@ -142,6 +142,11 @@ class testAdvices(MeetingCommunesTestCase, pmta):
         '''Run the test_pm_KeepAccessToItemWhenAdviceIsGiven from PloneMeeting.'''
         pmta.test_pm_KeepAccessToItemWhenAdviceIsGiven(self)
 
+    def test_subproduct_call_MeetingGroupDefinedKeepAccessToItemWhenAdviceIsGivenOverridesMeetingConfigValues(self):
+        '''Run the test_pm_MeetingGroupDefinedKeepAccessToItemWhenAdviceIsGivenOverridesMeetingConfigValues
+           from PloneMeeting.'''
+        pmta.test_pm_MeetingGroupDefinedKeepAccessToItemWhenAdviceIsGivenOverridesMeetingConfigValues(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
