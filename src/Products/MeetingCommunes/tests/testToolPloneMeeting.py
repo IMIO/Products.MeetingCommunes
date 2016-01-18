@@ -106,6 +106,10 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
         '''Run the test_pm_FormatMeetingDate from PloneMeeting.'''
         self.test_pm_FormatMeetingDate()
 
+    def test_subproduct_call_showHolidaysWarning(self):
+        '''Run the test_pm_showHolidaysWarning from PloneMeeting.'''
+        self.test_pm_showHolidaysWarning()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
