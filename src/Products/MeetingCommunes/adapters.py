@@ -22,9 +22,7 @@
 # ------------------------------------------------------------------------------
 
 from collections import OrderedDict
-from appy.gen import No
 from zope.interface import implements
-from zope.i18n import translate
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import DisplayList
 from Globals import InitializeClass
@@ -627,9 +625,11 @@ class CustomMeetingItem(MeetingItem):
         '''Returns all echevins defined for the proposing group'''
         res = []
         tool = getToolByName(self.context, 'portal_plonemeeting')
-        for group in tool.getMeetingGroups():
+        # keep also inactive groups because this method is often used in the customAdviser
+        # TAL expression and a disabled MeetingGroup must still be taken into account
+        for group in tool.getMeetingGroups(onlyActive=False):
             if self.context.getProposingGroup() in group.getEchevinServices():
-                res.append(group.id)
+                res.append(group.getId())
         return res
 
     def _initDecisionFieldIfEmpty(self):
