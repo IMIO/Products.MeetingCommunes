@@ -33,20 +33,28 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
     def test_GetEchevinsForProposingGroup(self):
         '''Check a meetingItem for developers group return an echevin (the Same group in our case)
            and a meetingItem for vendors return no echevin.'''
-        #create an item for test
+        # create an item for test
         self.changeUser('pmManager')
         meetingDate = DateTime('2008/06/12 08:00:00')
         self.create('Meeting', date=meetingDate)
-        #create items
+        # create items
         self.changeUser('pmCreator1')
         i1 = self.create('MeetingItem')
         i1.setProposingGroup('vendors')
-        #before present in meeting, certfiedSignatures must be empty
+        # before present in meeting, certfiedSignatures must be empty
         res = i1.adapted().getEchevinsForProposingGroup()
         self.assertEquals(res, [])
         self.changeUser('pmCreator1')
         i2 = self.create('MeetingItem')
         i2.setProposingGroup('developers')
-        #before present in meeting, certfiedSignatures must be empty
+        # before present in meeting, certfiedSignatures must be empty
         res = i2.adapted().getEchevinsForProposingGroup()
         self.assertEquals(res, ['developers'])
+        # disabled MeetingGroup are still taken into account
+        self.changeUser('admin')
+        self.do(self.tool.developers, 'deactivate')
+        self.assertEquals(self.wfTool.getInfoFor(self.tool.developers, 'review_state'), 'inactive')
+        # getMeetingGroups called by getEchevinsForProposingGroup is memoized
+        self.cleanMemoize()
+        self.assertEquals(i2.adapted().getEchevinsForProposingGroup(), ['developers'])
+
