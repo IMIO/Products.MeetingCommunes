@@ -108,7 +108,7 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
 
     def test_subproduct_call_ShowHolidaysWarning(self):
         '''Run the test_pm_showHolidaysWarning from PloneMeeting.'''
-        self.test_pm_showHolidaysWarning()
+        self.test_pm_ShowHolidaysWarning()
 
 
 def test_suite():
