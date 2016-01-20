@@ -195,9 +195,9 @@ class testMeeting(MeetingCommunesTestCase, pmtm):
         '''See doc string in PloneMeeting.'''
         self.test_pm_MeetingStrikedAssembly()
 
-    def test_subproduct_call_ChaningMeetingDateUpdateLinkedItemsMeetingDateMetadata(self):
+    def test_subproduct_call_ChangingMeetingDateUpdateLinkedItemsMeetingDateMetadata(self):
         '''See doc string in PloneMeeting.'''
-        self.test_pm_ChaningMeetingDateUpdateLinkedItemsMeetingDateMetadata()
+        self.test_pm_ChangingMeetingDateUpdateLinkedItemsMeetingDateMetadata()
 
     def test_subproduct_call_GetFirstItemNumberIgnoresSubnumbers(self):
         '''See doc string in PloneMeeting.'''
