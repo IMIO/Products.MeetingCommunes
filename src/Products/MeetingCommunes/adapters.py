@@ -872,16 +872,6 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
     implements(IMeetingCollegeWorkflowConditions)
     security = ClassSecurityInfo()
 
-    security.declarePublic('mayClose')
-
-    def mayClose(self):
-        res = False
-        # The user just needs the "Review portal content" permission on the
-        # object to close it.
-        if checkPermission(ReviewPortalContent, self.context):
-            res = True
-        return res
-
     security.declarePublic('mayDecide')
 
     def mayDecide(self):
@@ -968,15 +958,7 @@ class MeetingCouncilWorkflowConditions(MeetingCollegeWorkflowConditions):
     implements(IMeetingCouncilWorkflowConditions)
     security = ClassSecurityInfo()
 
-    security.declarePublic('mayClose')
-
-    def mayClose(self):
-        res = False
-        # The user just needs the "Review portal content" permission on the
-        # object to close it.
-        if checkPermission(ReviewPortalContent, self.context):
-            res = True
-        return res
+    security.declarePublic('mayDecide')
 
     def mayDecide(self):
         res = False
