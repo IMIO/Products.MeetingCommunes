@@ -57,6 +57,10 @@ class testViews(MeetingCommunesTestCase, pmtv):
         '''Run the test_pm_UpdateDelayAwareAdvicesUpdateAllAdvices from PloneMeeting.'''
         self.test_pm_UpdateDelayAwareAdvicesUpdateAllAdvices()
 
+    def test_subproduct_call_SendPodTemplateToMailingList(self):
+        '''Run the test_pm_SendPodTemplateToMailingList from PloneMeeting.'''
+        self.test_pm_SendPodTemplateToMailingList()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

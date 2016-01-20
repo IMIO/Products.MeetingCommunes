@@ -106,7 +106,7 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
         '''Run the test_pm_FormatMeetingDate from PloneMeeting.'''
         self.test_pm_FormatMeetingDate()
 
-    def test_subproduct_call_showHolidaysWarning(self):
+    def test_subproduct_call_ShowHolidaysWarning(self):
         '''Run the test_pm_showHolidaysWarning from PloneMeeting.'''
         self.test_pm_showHolidaysWarning()
 
