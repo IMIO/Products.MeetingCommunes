@@ -305,7 +305,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
             self.assertEquals(item.getOwner().getId(), 'pmManager')
         # The meeting must contain recurring items : 2 defined and one added here above
         self.failUnless(len(meeting.getItems()) == 3)
-        self.failIf(meeting.getItems(listTypes=['late'] ))
+        self.failIf(meeting.getItems(listTypes=['late']))
         # After freeze, the meeting must have one recurring item more
         self.freezeMeeting(meeting)
         self.failUnless(len(meeting.getItems()) == 4)
@@ -447,6 +447,10 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
     def test_subproduct_call_InactiveRecurringItemsAreNotInserted(self):
         '''Run the test_pm_InactiveRecurringItemsAreNotInserted from PloneMeeting.'''
         self.test_pm_InactiveRecurringItemsAreNotInserted()
+
+    def test_subproduct_call_MeetingNotClosableIfItemStillReturnedToProposingGroup(self):
+        '''Run the test_pm_MeetingNotClosableIfItemStillReturnedToProposingGroup from PloneMeeting.'''
+        self.test_pm_MeetingNotClosableIfItemStillReturnedToProposingGroup()
 
 
 def test_suite():
