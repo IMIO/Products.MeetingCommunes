@@ -41,6 +41,10 @@ class testMeetingFile(MeetingCommunesTestCase, pmmf):
         '''Run the test_pm_MeetingFileFoundInItemSearchableText from PloneMeeting.'''
         self.test_pm_MeetingFileFoundInItemSearchableText()
 
+    def test_subproduct_call_AnnexDefaultValues(self):
+        '''Run the test_pm_AnnexDefaultValues from PloneMeeting.'''
+        self.test_pm_AnnexDefaultValues()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
