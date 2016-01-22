@@ -23,8 +23,7 @@
 #
 
 from Products.PloneMeeting.tests.testVotes import testVotes as pmtv
-from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
-    MeetingCommunesTestCase
+from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 
 
 class testVotes(MeetingCommunesTestCase, pmtv):
@@ -32,41 +31,15 @@ class testVotes(MeetingCommunesTestCase, pmtv):
        Advices are enabled for PloneMeeting Assembly, not for PloneGov Assembly.
        By default, vote are encoded by 'theVoterHimself'.'''
 
-    def test_subproduct_call_MayConsultVotes(self):
-        """
-           Run the testMayConsultVotes from PloneMeeting
-        """
-        # votes are only enabled for the meeting-config-council
+    def setUp(self):
+        """ """
+        super(testVotes, self).setUp()
+        # use meetingConfig2
         self.setMeetingConfig(self.meetingConfig2.getId())
-        self.test_pm_MayConsultVotes()
-
-    def test_subproduct_call_MayEditVotes(self):
-        """
-           Run the testMayEditVotes from PloneMeeting
-        """
-        # votes are only enabled for the meeting-config-council
-        self.setMeetingConfig(self.meetingConfig2.getId())
-        self.test_pm_MayEditVotes()
-
-    def test_subproduct_call_OnSaveItemPeopleInfos(self):
-        """
-           Run the testOnSaveItemPeopleInfos from PloneMeeting
-        """
-        # votes are only enabled for the meeting-config-council
-        self.setMeetingConfig(self.meetingConfig2.getId())
-        self.test_pm_OnSaveItemPeopleInfos()
-
-    def test_subproduct_call_SecretVotes(self):
-        """
-           Run the testSecretVotes from PloneMeeting
-        """
-        # votes are only enabled for the meeting-config-council
-        self.setMeetingConfig(self.meetingConfig2.getId())
-        self.test_pm_SecretVotes()
 
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testVotes, prefix='test_subproduct_'))
+    suite.addTest(makeSuite(testVotes, prefix='test_pm_'))
     return suite

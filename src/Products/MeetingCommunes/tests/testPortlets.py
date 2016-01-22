@@ -22,25 +22,16 @@
 # 02110-1301, USA.
 #
 
-from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
-    MeetingCommunesTestCase
+from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testPortlets import testPortlets as pmtp
 
 
 class testPortlets(MeetingCommunesTestCase, pmtp):
     '''Tests the portlets methods.'''
 
-    def test_subproduct_call_PortletPMAvailableTemplates(self):
-        '''Run the test_pm_PortletPMAvailableTemplates from PloneMeeting.'''
-        self.test_pm_PortletPMAvailableTemplates()
-
-    def test_subproduct_call_CreateItemFromTemplate(self):
-        '''Run the test_pm_CreateItemFromTemplate from PloneMeeting.'''
-        self.test_pm_CreateItemFromTemplate()
-
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testPortlets, prefix='test_subproduct_'))
+    suite.addTest(makeSuite(testPortlets, prefix='test_pm_'))
     return suite

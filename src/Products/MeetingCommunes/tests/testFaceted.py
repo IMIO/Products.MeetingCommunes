@@ -29,37 +29,9 @@ from Products.PloneMeeting.tests.testFaceted import testFaceted as pmtf
 class testFaceted(MeetingCommunesTestCase, pmtf):
     '''Tests the faceted navigation.'''
 
-    def test_subproduct_call_RedirectedToOwnPMFolderIfOnAnotherUserPMFolder(self):
-        '''See doc string in PloneMeeting.'''
-        self.test_pm_RedirectedToOwnPMFolderIfOnAnotherUserPMFolder()
-
-    def test_subproduct_call_ItemCategoriesVocabulary(self):
-        '''See doc string in PloneMeeting.'''
-        self.test_pm_ItemCategoriesVocabulary()
-
-    def test_subproduct_call_MeetingDatesVocabulary(self):
-        '''See doc string in PloneMeeting.'''
-        self.test_pm_MeetingDatesVocabulary()
-
-    def test_subproduct_call_ProposingGroupsVocabularies(self):
-        '''See doc string in PloneMeeting.'''
-        self.test_pm_ProposingGroupsVocabularies()
-
-    def test_subproduct_call_CreatorsVocabulary(self):
-        '''See doc string in PloneMeeting.'''
-        self.test_pm_CreatorsVocabulary()
-
-    def test_subproduct_call_RedirectedToDefaultSearchPMFolderOnlyIfNecessary(self):
-        '''See doc string in PloneMeeting.'''
-        self.test_pm_RedirectedToDefaultSearchPMFolderOnlyIfNecessary()
-
-    def test_subproduct_call_DisabledCollectionsAreIgnored(self):
-        '''See doc string in PloneMeeting.'''
-        self.test_pm_DisabledCollectionsAreIgnored()
-
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testFaceted, prefix='test_subproduct_'))
+    suite.addTest(makeSuite(testFaceted, prefix='test_pm_'))
     return suite

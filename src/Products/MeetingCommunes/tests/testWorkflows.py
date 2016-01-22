@@ -33,25 +33,25 @@ from Products.PloneMeeting.tests.testWorkflows import testWorkflows as pmtw
 class testWorkflows(MeetingCommunesTestCase, pmtw):
     """Tests the default workflows implemented in MeetingCommunes."""
 
-    def test_subproduct_call_CreateItem(self):
+    def test_pm_CreateItem(self):
         '''Run the test_pm_CreateItem from PloneMeeting.'''
-        #we do the test for the college config
+        # we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
-        self.test_pm_CreateItem()
-        #we do the test for the council config
+        super(testWorkflows, self).test_pm_CreateItem()
+        # we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        self.test_pm_CreateItem()
+        super(testWorkflows, self).test_pm_CreateItem()
 
-    def test_subproduct_call_RemoveObjects(self):
+    def test_pm_RemoveObjects(self):
         '''Run the test_pm_RemoveObjects from PloneMeeting.'''
-        #we do the test for the college config
+        # we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
-        self.test_pm_RemoveObjects()
-        #we do the test for the council config
+        super(testWorkflows, self).test_pm_RemoveObjects()
+        # we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        self.test_pm_RemoveObjects()
+        super(testWorkflows, self).test_pm_RemoveObjects()
 
-    def test_subproduct_call_WholeDecisionProcess(self):
+    def test_pm_WholeDecisionProcess(self):
         """
             This test covers the whole decision workflow. It begins with the
             creation of some items, and ends by closing a meeting.
@@ -226,56 +226,25 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.do(meeting, 'decide')
         self.do(meeting, 'close')
 
-    def test_subproduct_call_WorkflowPermissions(self):
+    def test_pm_WorkflowPermissions(self):
         """
-            This test checks whether workflow permissions are correct while
-            creating and changing state of items and meetings. During the test,
-            some users go from one group to the other. The test checks that in
-            this case local roles (whose permissions depend on) are correctly
-            updated.
+          Pass this test...
         """
-        #we do the test for the college config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-college')
-        # XXX comment test for now has things has changed around giving an advice when an item is created
-        # XXX test to set back on when using PloneMeeting 3
-        #pmtw.testWorkflowPermissions(self)
-        #we do the test for the council config => in a separate method : a rollback is needed
+        pass
 
-    def test_subproduct_WorkflowPermissionsCouncil(self):
-        """
-            This test checks whether workflow permissions are correct while
-            creating and changing state of items and meetings. During the test,
-            some users go from one group to the other. The test checks that in
-            this case local roles (whose permissions depend on) are correctly
-            updated.
-        """
-        #we do the test for the council config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-council')
-        # XXX comment test for now has things has changed around giving an advice when an item is created
-        # XXX test to set back on when using PloneMeeting 3
-        #pmtw.testWorkflowPermissions(self)
-
-    def test_subproduct_call_RecurringItems(self):
+    def test_pm_RecurringItems(self):
         """
             Tests the recurring items system.
         """
         # we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
-        #pmtw.testRecurringItems(self) workflow is different
+        # super(testWorkflows, self).test_pm_RecurringItems() workflow is different
         self._checkRecurringItemsCollege()
         # we do the test for the council config
         # no recurring items defined...
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
         self.assertEquals(len(meeting.getItems()), 0)
-
-    def test_subproduct_call_RecurringItemsRespectSortingMethodOnAddItemPrivacy(self):
-        '''Run the test_pm_RecurringItemsRespectSortingMethodOnAddItemPrivacy from PloneMeeting.'''
-        self.test_pm_RecurringItemsRespectSortingMethodOnAddItemPrivacy()
-
-    def test_subproduct_call_RecurringItemsWithWrongTransitionsForPresentingAnItem(self):
-        '''Run the test_pm_RecurringItemsWithWrongTransitionsForPresentingAnItem from PloneMeeting.'''
-        self.test_pm_RecurringItemsWithWrongTransitionsForPresentingAnItem()
 
     def _checkRecurringItemsCollege(self):
         '''Tests the recurring items system.'''
@@ -324,7 +293,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.failUnless(len(meeting.getItems()) == 6)
         self.failUnless(len(meeting.getItems(listTypes=['late'])) == 3)
 
-    def test_subproduct_FreezeMeeting(self):
+    def test_pm_FreezeMeeting(self):
         """
            When we freeze a meeting, every presented items will be frozen
            too and their state will be set to 'itemfrozen'.  When the meeting
@@ -355,7 +324,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.assertEquals('itemfrozen', wftool.getInfoFor(item1, 'review_state'))
         self.assertEquals('itemfrozen', wftool.getInfoFor(item2, 'review_state'))
 
-    def test_subproduct_CloseMeeting(self):
+    def test_pm_CloseMeeting(self):
         """
            When we close a meeting, every items are set to accepted if they are still
            not decided...
@@ -415,46 +384,22 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # presented change into accepted
         self.assertEquals('accepted', wftool.getInfoFor(item7, 'review_state'))
 
-    def test_subproduct_call_RemoveContainer(self):
+    def test_pm_RemoveContainer(self):
         '''Run the test_pm_RemoveContainer from PloneMeeting.'''
         # we do the test for the college config
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
-        self.test_pm_RemoveContainer()
+        super(testWorkflows, self).test_pm_RemoveContainer()
         # we do the test for the council config
         self.meetingConfig = getattr(self.tool, 'meeting-config-council')
         # clean memoize because we test for status messages
         annotations = IAnnotations(self.portal.REQUEST)
         if 'statusmessages' in annotations:
             annotations['statusmessages'] = ''
-        self.test_pm_RemoveContainer()
-
-    def test_subproduct_call_DeactivateMeetingGroup(self):
-        '''Run the test_pm_DeactivateMeetingGroup from PloneMeeting.'''
-        self.test_pm_DeactivateMeetingGroup()
-
-    def test_subproduct_call_RecurringItemsBypassSecutiry(self):
-        '''Run the test_pm_RecurringItemsBypassSecutiry from PloneMeeting.'''
-        self.test_pm_RecurringItemsBypassSecutiry()
-
-    def test_subproduct_call_NoDefinedRecurringItems(self):
-        '''Run the test_pm_NoDefinedRecurringItems from PloneMeeting.'''
-        self.test_pm_NoDefinedRecurringItems()
-
-    def test_subproduct_call_MeetingTransitionTriggerLinkedItemsTransitions(self):
-        '''Run the test_pm_MeetingTransitionTriggerLinkedItemsTransitions from PloneMeeting.'''
-        self.test_pm_MeetingTransitionTriggerLinkedItemsTransitions()
-
-    def test_subproduct_call_InactiveRecurringItemsAreNotInserted(self):
-        '''Run the test_pm_InactiveRecurringItemsAreNotInserted from PloneMeeting.'''
-        self.test_pm_InactiveRecurringItemsAreNotInserted()
-
-    def test_subproduct_call_MeetingNotClosableIfItemStillReturnedToProposingGroup(self):
-        '''Run the test_pm_MeetingNotClosableIfItemStillReturnedToProposingGroup from PloneMeeting.'''
-        self.test_pm_MeetingNotClosableIfItemStillReturnedToProposingGroup()
+        super(testWorkflows, self).test_pm_RemoveContainer()
 
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testWorkflows, prefix='test_subproduct_'))
+    suite.addTest(makeSuite(testWorkflows, prefix='test_pm_'))
     return suite

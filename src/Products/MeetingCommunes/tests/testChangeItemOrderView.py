@@ -29,57 +29,9 @@ from Products.PloneMeeting.tests.testChangeItemOrderView import testChangeItemOr
 class testChangeItemOrderView(MeetingCommunesTestCase, pmciov):
     '''Tests the ChangeItemOrderView class methods.'''
 
-    def test_subproduct_call_ChangeItemOrderMoveUpDown(self):
-        '''Check docstring in PloneMeeting.'''
-        self.test_pm_ChangeItemOrderMoveUpDown()
-
-    def test_subproduct_call_ChangeItemOrderMoveUpDownWithSubnumbers(self):
-        '''See doc string in PloneMeeting.'''
-        self.test_pm_ChangeItemOrderMoveUpDownWithSubnumbers()
-
-    def test_subproduct_call_ChangeItemOrderMoveAtGivenNumber(self):
-        '''Check docstring in PloneMeeting.'''
-        self.test_pm_ChangeItemOrderMoveAtGivenNumber()
-
-    def test_subproduct_call_MoveLateItemDoNotChangeNormalItems(self):
-        '''Check docstring in PloneMeeting.'''
-        self.test_pm_MoveLateItemDoNotChangeNormalItems()
-
-    def test_subproduct_call_MayChangeItemOrder(self):
-        '''Check docstring in PloneMeeting.'''
-        self.test_pm_MayChangeItemOrder()
-
-    def test_subproduct_call_ChangeItemOrderMoveIntegerToInteger(self):
-        '''Check docstring in PloneMeeting.'''
-        self.test_pm_ChangeItemOrderMoveIntegerToInteger()
-
-    def test_subproduct_call_ChangeItemOrderMoveSubnumberToInteger(self):
-        '''Check docstring in PloneMeeting.'''
-        self.test_pm_ChangeItemOrderMoveSubnumberToInteger()
-
-    def test_subproduct_call_ChangeItemOrderMoveSubnumberToSubnumber(self):
-        '''Check docstring in PloneMeeting.'''
-        self.test_pm_ChangeItemOrderMoveSubnumberToSubnumber()
-
-    def test_subproduct_call_ChangeItemOrderMoveUpToFirstPositionWithSubnumbers(self):
-        '''Check docstring in PloneMeeting.'''
-        self.test_pm_ChangeItemOrderMoveUpToFirstPositionWithSubnumbers()
-
-    def test_subproduct_call_ChangeItemOrderMoveOutFromSubnumber(self):
-        '''Check docstring in PloneMeeting.'''
-        self.test_pm_ChangeItemOrderMoveOutFromSubnumber()
-
-    def test_subproduct_call_ChangeItemOrderMoveIntegerToSubnumber(self):
-        '''Check docstring in PloneMeeting.'''
-        self.test_pm_ChangeItemOrderMoveIntegerToSubnumber()
-
-    def test_subproduct_call_ChanteItemOrderSetup(self):
-        '''Check docstring in PloneMeeting.'''
-        self.test_pm_ChanteItemOrderSetup()
-
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testChangeItemOrderView, prefix='test_subproduct_'))
+    suite.addTest(makeSuite(testChangeItemOrderView, prefix='test_pm_'))
     return suite

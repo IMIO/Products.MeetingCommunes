@@ -29,33 +29,9 @@ from Products.PloneMeeting.tests.testMeetingFile import testMeetingFile as pmmf
 class testMeetingFile(MeetingCommunesTestCase, pmmf):
     '''Tests the MeetingFile class methods.'''
 
-    def test_subproduct_call_MayChangeToPrint(self):
-        '''Run the test_pm_MayChangeToPrint from PloneMeeting.'''
-        self.test_pm_MayChangeToPrint()
-
-    def test_subproduct_call_MayChangeConfidentiality(self):
-        '''Run the test_pm_MayChangeConfidentiality from PloneMeeting.'''
-        self.test_pm_MayChangeConfidentiality()
-
-    def test_subproduct_call_MeetingFileFoundInItemSearchableText(self):
-        '''Run the test_pm_MeetingFileFoundInItemSearchableText from PloneMeeting.'''
-        self.test_pm_MeetingFileFoundInItemSearchableText()
-
-    def test_subproduct_call_AnnexDefaultValues(self):
-        '''Run the test_pm_AnnexDefaultValues from PloneMeeting.'''
-        self.test_pm_AnnexDefaultValues()
-
-    def test_subproduct_call_ToggleAnnexIsConfidential(self):
-        '''Run the test_pm_ToggleAnnexIsConfidential from PloneMeeting.'''
-        self.test_pm_ToggleAnnexIsConfidential()
-
-    def test_subproduct_call_ToggleAnnexToPrint(self):
-        '''Run the test_pm_ToggleAnnexToPrint from PloneMeeting.'''
-        self.test_pm_ToggleAnnexToPrint()
-
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testMeetingFile, prefix='test_subproduct_'))
+    suite.addTest(makeSuite(testMeetingFile, prefix='test_pm_'))
     return suite

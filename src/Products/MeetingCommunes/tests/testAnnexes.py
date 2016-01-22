@@ -29,21 +29,9 @@ from Products.PloneMeeting.tests.testAnnexes import testAnnexes as pmta
 class testAnnexes(MeetingCommunesTestCase, pmta):
     ''' '''
 
-    def test_subproduct_call_GetLastInsertedAnnex(self):
-        '''Run the test_pm_GetLastInsertedAnnex from PloneMeeting.'''
-        pmta.test_pm_GetLastInsertedAnnex(self)
-
-    def test_subproduct_call_GetAnnexesByType(self):
-        '''Run the test_pm_GetAnnexesByType from PloneMeeting.'''
-        pmta.test_pm_GetAnnexesByType(self)
-
-    def test_subproduct_call_GetAnnexesByTypeAnnexConfidentiality(self):
-        '''Run the test_pm_GetAnnexesByTypeAnnexConfidentiality from PloneMeeting.'''
-        pmta.test_pm_GetAnnexesByTypeAnnexConfidentiality(self)
-
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testAnnexes, prefix='test_subproduct_'))
+    suite.addTest(makeSuite(testAnnexes, prefix='test_pm_'))
     return suite

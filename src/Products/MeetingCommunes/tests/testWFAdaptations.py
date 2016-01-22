@@ -29,7 +29,7 @@ from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommun
 class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
     '''See doc string in PloneMeeting.tests.testWFAdaptations.'''
 
-    def test_subproduct_call_WFA_availableWFAdaptations(self):
+    def test_pm_WFA_availableWFAdaptations(self):
         '''Test what are the available wfAdaptations.'''
         # we removed the 'archiving' and 'creator_initiated_decisions' wfAdaptations
         self.assertEquals(set(self.meetingConfig.listWorkflowAdaptations()),
@@ -46,86 +46,82 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
                                'return_to_proposing_group',
                                )))
 
-    def test_subproduct_call_WFA_no_publication(self):
+    def test_pm_WFA_no_publication(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
         # we have a 'published' state in the "meetingcouncil_worflow" in self.meetingConfig2
         self.meetingConfig = self.meetingConfig2
-        pmtwfa.test_pm_WFA_no_publication(self)
+        super(testWFAdaptations, self).test_pm_WFA_no_publication()
 
-    def test_subproduct_call_WFA_no_proposal(self):
+    def test_pm_WFA_no_proposal(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
-        pmtwfa.test_pm_WFA_no_proposal(self)
+        super(testWFAdaptations, self).test_pm_WFA_no_proposal()
         self.meetingConfig = self.meetingConfig2
-        pmtwfa.test_pm_WFA_no_proposal(self)
+        super(testWFAdaptations, self).test_pm_WFA_no_proposal()
 
-    def test_subproduct_call_WFA_pre_validation(self):
+    def test_pm_WFA_pre_validation(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
-        pmtwfa.test_pm_WFA_pre_validation(self)
+        super(testWFAdaptations, self).test_pm_WFA_pre_validation()
         self.meetingConfig = self.meetingConfig2
-        pmtwfa.test_pm_WFA_pre_validation(self)
+        super(testWFAdaptations, self).test_pm_WFA_pre_validation()
 
-    def test_subproduct_call_WFA_pre_validation_keep_reviewer_permissions(self):
+    def test_pm_WFA_pre_validation_keep_reviewer_permissions(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
-        pmtwfa.test_pm_WFA_pre_validation_keep_reviewer_permissions(self)
+        super(testWFAdaptations, self).test_pm_WFA_pre_validation_keep_reviewer_permissions()
         self.meetingConfig = self.meetingConfig2
-        pmtwfa.test_pm_WFA_pre_validation_keep_reviewer_permissions(self)
+        super(testWFAdaptations, self).test_pm_WFA_pre_validation_keep_reviewer_permissions()
 
-    def test_subproduct_call_WFA_creator_initiated_decisions(self):
+    def test_pm_WFA_creator_initiated_decisions(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py
            In MC WFs this wfAdaptation is not used (deactivated in adapters.py) because it is
            always 'enabled', the creator can edit the decision field by default.'''
         # we just call the subtest while wfAdaptation should be active
-        pmtwfa._creator_initiated_decisions_active(self)
+        super(testWFAdaptations, self)._creator_initiated_decisions_active()
 
-    def test_subproduct_call_WFA_items_come_validated(self):
+    def test_pm_WFA_items_come_validated(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
-        pmtwfa.test_pm_WFA_items_come_validated(self)
+        super(testWFAdaptations, self).test_pm_WFA_items_come_validated()
         self.meetingConfig = self.meetingConfig2
-        pmtwfa.test_pm_WFA_items_come_validated(self)
+        super(testWFAdaptations, self).test_pm_WFA_items_come_validated()
 
-    def test_subproduct_call_WFA_archiving(self):
+    def test_pm_WFA_archiving(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
         # we do not have an 'archived' state in the meeting/item WFs...
         # just call the subtest while wfAdaptation sould be inactive
         # it is deactived in adapters.py
-        pmtwfa._archiving_inactive(self)
+        super(testWFAdaptations, self)._archiving_inactive()
 
-    def test_subproduct_call_WFA_only_creator_may_delete(self):
+    def test_pm_WFA_only_creator_may_delete(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
-        pmtwfa.test_pm_WFA_only_creator_may_delete(self)
+        super(testWFAdaptations, self).test_pm_WFA_only_creator_may_delete()
         self.meetingConfig = self.meetingConfig2
-        pmtwfa.test_pm_WFA_only_creator_may_delete(self)
+        super(testWFAdaptations, self).test_pm_WFA_only_creator_may_delete()
 
-    def test_subproduct_call_WFA_no_global_observation(self):
+    def test_pm_WFA_no_global_observation(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
         # we have global observations in the meetingcouncil_workflow
         # once item is 'itempublished'
         self.meetingConfig = self.meetingConfig2
-        pmtwfa.test_pm_WFA_no_global_observation(self)
+        super(testWFAdaptations, self).test_pm_WFA_no_global_observation()
 
-    def test_subproduct_call_WFA_everyone_reads_all(self):
+    def test_pm_WFA_everyone_reads_all(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
         self.meetingConfig = self.meetingConfig2
-        pmtwfa.test_pm_WFA_everyone_reads_all(self)
+        super(testWFAdaptations, self).test_pm_WFA_everyone_reads_all()
 
-    def test_subproduct_call_WFA_creator_edits_unless_closed(self):
+    def test_pm_WFA_creator_edits_unless_closed(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
-        pmtwfa.test_pm_WFA_creator_edits_unless_closed(self)
+        super(testWFAdaptations, self).test_pm_WFA_creator_edits_unless_closed()
         self.meetingConfig = self.meetingConfig2
-        pmtwfa.test_pm_WFA_creator_edits_unless_closed(self)
+        super(testWFAdaptations, self).test_pm_WFA_creator_edits_unless_closed()
 
-    def test_subproduct_call_WFA_return_to_proposing_group(self):
+    def test_pm_WFA_return_to_proposing_group(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
         self.meetingConfig = self.meetingConfig2
-        pmtwfa.test_pm_WFA_return_to_proposing_group(self)
-
-    def test_subproduct_call_WFA_hide_decisions_when_under_writing(self):
-        '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
-        pmtwfa.test_pm_WFA_hide_decisions_when_under_writing(self)
+        super(testWFAdaptations, self).test_pm_WFA_return_to_proposing_group()
 
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testWFAdaptations, prefix='test_subproduct_'))
+    suite.addTest(makeSuite(testWFAdaptations, prefix='test_pm_'))
     return suite

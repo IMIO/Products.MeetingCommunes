@@ -29,21 +29,9 @@ from Products.PloneMeeting.tests.testMeetingCategory import testMeetingCategory 
 class testMeetingCategory(MeetingCommunesTestCase, pmmc):
     '''Tests the MeetingCategory class methods.'''
 
-    def test_subproduct_call_CanNotRemoveLinkedMeetingCategory(self):
-        '''Run the test_pm_CanNotRemoveLinkedMeetingCategory from PloneMeeting.'''
-        self.test_pm_CanNotRemoveLinkedMeetingCategory()
-
-    def test_subproduct_call_ListCategoriesOfOtherMCs(self):
-        '''Run the test_pm_ListCategoriesOfOtherMCs from PloneMeeting.'''
-        self.test_pm_ListCategoriesOfOtherMCs()
-
-    def test_subproduct_call_Validate_categoryMappingsWhenCloningToOtherMC(self):
-        '''Run the test_pm_Validate_categoryMappingsWhenCloningToOtherMC from PloneMeeting.'''
-        self.test_pm_Validate_categoryMappingsWhenCloningToOtherMC()
-
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testMeetingCategory, prefix='test_subproduct_'))
+    suite.addTest(makeSuite(testMeetingCategory, prefix='test_pm_'))
     return suite

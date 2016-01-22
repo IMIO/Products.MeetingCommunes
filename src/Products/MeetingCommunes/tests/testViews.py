@@ -29,41 +29,9 @@ from Products.PloneMeeting.tests.testViews import testViews as pmtv
 class testViews(MeetingCommunesTestCase, pmtv):
     ''' '''
 
-    def test_subproduct_call_ItemTemplates(self):
-        '''Run the test_pm_ItemTemplates from PloneMeeting.'''
-        pmtv.test_pm_ItemTemplates(self)
-
-    def test_subproduct_call_ItemTemplatesWithSubFolders(self):
-        '''Run the test_pm_ItemTemplatesWithSubFolders from PloneMeeting.'''
-        pmtv.test_pm_ItemTemplatesWithSubFolders(self)
-
-    def test_subproduct_call_ItemTemplatesWithSubFoldersContainedInEmptyFolders(self):
-        '''Run the test_pm_ItemTemplatesWithSubFoldersContainedInEmptyFolders from PloneMeeting.'''
-        pmtv.test_pm_ItemTemplatesWithSubFoldersContainedInEmptyFolders(self)
-
-    def test_subproduct_call_JSVariables(self):
-        '''Run the test_pm_JSVariables from PloneMeeting.'''
-        pmtv.test_pm_JSVariables(self)
-
-    def test_subproduct_call_ChangeListTypeView(self):
-        '''Run the test_pm_ChangeListTypeView from PloneMeeting.'''
-        pmtv.test_pm_ChangeListTypeView(self)
-
-    def test_subproduct_call_UpdateDelayAwareAdvices(self):
-        '''Run the test_pm_UpdateDelayAwareAdvices from PloneMeeting.'''
-        self.test_pm_UpdateDelayAwareAdvices()
-
-    def test_subproduct_call_UpdateDelayAwareAdvicesUpdateAllAdvices(self):
-        '''Run the test_pm_UpdateDelayAwareAdvicesUpdateAllAdvices from PloneMeeting.'''
-        self.test_pm_UpdateDelayAwareAdvicesUpdateAllAdvices()
-
-    def test_subproduct_call_SendPodTemplateToMailingList(self):
-        '''Run the test_pm_SendPodTemplateToMailingList from PloneMeeting.'''
-        self.test_pm_SendPodTemplateToMailingList()
-
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testViews, prefix='test_subproduct_'))
+    suite.addTest(makeSuite(testViews, prefix='test_pm_'))
     return suite

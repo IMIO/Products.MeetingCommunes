@@ -2,7 +2,6 @@
 from plone.testing import z2, zca
 from plone.app.testing import PloneWithPackageLayer
 from plone.app.testing import FunctionalTesting
-from Products.PloneMeeting.testing import PloneMeetingLayer
 import Products.MeetingCommunes
 from plone.app.robotframework.testing import REMOTE_LIBRARY_BUNDLE_FIXTURE
 
@@ -13,7 +12,7 @@ MC_ZCML = zca.ZCMLSandbox(filename="testing.zcml",
 MC_Z2 = z2.IntegrationTesting(bases=(z2.STARTUP, MC_ZCML),
                               name='MC_Z2')
 
-MC_TESTING_PROFILE = PloneMeetingLayer(
+MC_TESTING_PROFILE = PloneWithPackageLayer(
     zcml_filename="testing.zcml",
     zcml_package=Products.MeetingCommunes,
     additional_z2_products=('imio.dashboard',

@@ -22,97 +22,16 @@
 # 02110-1301, USA.
 #
 
-from Products.MeetingCommunes.tests.MeetingCommunesTestCase import \
-    MeetingCommunesTestCase
+from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testToolPloneMeeting import testToolPloneMeeting as pmtt
 
 
 class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
     '''Tests the ToolPloneMeeting class methods.'''
 
-    def test_subproduct_call_GetMeetingGroup(self):
-        '''Run the test_pm_GetMeetingGroup from PloneMeeting.'''
-        self.test_pm_GetMeetingGroup()
-
-    def test_subproduct_call_MoveMeetingGroups(self):
-        '''Run the test_pm_MoveMeetingGroups from PloneMeeting.'''
-        self.test_pm_MoveMeetingGroups()
-
-    def test_subproduct_call_CloneItem(self):
-        '''Run the test_pm_CloneItem from PloneMeeting.'''
-        self.test_pm_CloneItem()
-
-    def test_subproduct_call_CloneItemWithContent(self):
-        '''Run the test_pm_CloneItemWithContent from PloneMeeting.'''
-        self.test_pm_CloneItemWithContent()
-
-    def test_subproduct_call_CloneItemWithContentNotRemovableByPermission(self):
-        '''Run the test_pm_CloneItemWithContentNotRemovableByPermission from PloneMeeting.'''
-        self.test_pm_CloneItemWithContentNotRemovableByPermission()
-
-    def test_subproduct_call_CloneItemWithUnexistingNewOwnerId(self):
-        '''Run the test_pm_CloneItemWithUnexistingNewOwnerId from PloneMeeting.'''
-        self.test_pm_CloneItemWithUnexistingNewOwnerId()
-
-    def test_subproduct_call_CloneItemKeepingProposingGroup(self):
-        '''Run the test_pm_CloneItemKeepingProposingGroup from PloneMeeting.'''
-        self.test_pm_CloneItemKeepingProposingGroup()
-
-    def test_subproduct_call_PasteItems(self):
-        '''Run the test_pm_PasteItems from PloneMeeting.'''
-        self.test_pm_PasteItems()
-
-    def test_subproduct_call_ShowPloneMeetingTab(self):
-        '''Run the test_pm_ShowPloneMeetingTab from PloneMeeting.'''
-        self.test_pm_ShowPloneMeetingTab()
-
-    def test_subproduct_call_SetupProcessForCreationFlag(self):
-        '''Run the test_pm_SetupProcessForCreationFlag from PloneMeeting.'''
-        self.test_pm_SetupProcessForCreationFlag()
-
-    def test_subproduct_call_UpdateMeetingFileTypesAfterSentToOtherMeetingConfig(self):
-        '''Run the test_pm_UpdateMeetingFileTypesAfterSentToOtherMeetingConfig from PloneMeeting.'''
-        self.test_pm_UpdateMeetingFileTypesAfterSentToOtherMeetingConfig()
-
-    def test_subproduct_call_GetDefaultMeetingConfig(self):
-        '''Run the test_pm_GetDefaultMeetingConfig from PloneMeeting.'''
-        self.test_pm_GetDefaultMeetingConfig()
-
-    def test_subproduct_call_GetMeetingConfig(self):
-        '''Run the test_pm_GetMeetingConfig from PloneMeeting.'''
-        self.test_pm_GetMeetingConfig()
-
-    def test_subproduct_call_GetGroupsForUser(self):
-        '''Run the test_pm_GetGroupsForUser from PloneMeeting.'''
-        self.test_pm_GetGroupsForUser()
-
-    def test_subproduct_call_UpdateCopyGroups(self):
-        '''Run the test_pm_UpdateCopyGroups from PloneMeeting.'''
-        self.test_pm_UpdateCopyGroups()
-
-    def test_subproduct_call_UpdateBudgetImpactEditors(self):
-        '''Run the test_pm_UpdateBudgetImpactEditors from PloneMeeting.'''
-        self.test_pm_UpdateBudgetImpactEditors()
-
-    def test_subproduct_call_UpdatePowerObservers(self):
-        '''Run the test_pm_UpdatePowerObservers from PloneMeeting.'''
-        self.test_pm_UpdatePowerObservers()
-
-    def test_subproduct_call_ReindexAnnexes(self):
-        '''Run the test_pm_ReindexAnnexes from PloneMeeting.'''
-        self.test_pm_ReindexAnnexes()
-
-    def test_subproduct_call_FormatMeetingDate(self):
-        '''Run the test_pm_FormatMeetingDate from PloneMeeting.'''
-        self.test_pm_FormatMeetingDate()
-
-    def test_subproduct_call_ShowHolidaysWarning(self):
-        '''Run the test_pm_showHolidaysWarning from PloneMeeting.'''
-        self.test_pm_ShowHolidaysWarning()
-
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testToolPloneMeeting, prefix='test_subproduct_'))
+    suite.addTest(makeSuite(testToolPloneMeeting, prefix='test_pm_'))
     return suite
