@@ -45,6 +45,14 @@ class testMeetingFile(MeetingCommunesTestCase, pmmf):
         '''Run the test_pm_AnnexDefaultValues from PloneMeeting.'''
         self.test_pm_AnnexDefaultValues()
 
+    def test_subproduct_call_ToggleAnnexIsConfidential(self):
+        '''Run the test_pm_ToggleAnnexIsConfidential from PloneMeeting.'''
+        self.test_pm_ToggleAnnexIsConfidential()
+
+    def test_subproduct_call_ToggleAnnexToPrint(self):
+        '''Run the test_pm_ToggleAnnexToPrint from PloneMeeting.'''
+        self.test_pm_ToggleAnnexToPrint()
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
