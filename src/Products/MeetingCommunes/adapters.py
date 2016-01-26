@@ -45,6 +45,7 @@ from Products.MeetingCommunes.interfaces import \
     IMeetingCouncilWorkflowConditions, IMeetingCouncilWorkflowActions
 from Products.PloneMeeting.utils import checkPermission
 from Products.CMFCore.permissions import ReviewPortalContent
+from Products.PloneMeeting import logger
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import WF_DOES_NOT_EXIST_WARNING, WF_APPLIED
 from Products.PloneMeeting.interfaces import IAnnexable
@@ -75,14 +76,14 @@ RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = {'meetingitemcollege_workflow': 'meet
 adaptations.RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE
 
 
-def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdaptation=None):
+def customPerformWorkflowAdaptations(meetingConfig, logger=logger, specificAdaptation=None):
     '''This function applies workflow changes as specified by the
        p_meetingConfig.'''
 
     wfAdaptations = specificAdaptation and [specificAdaptation, ] or meetingConfig.getWorkflowAdaptations()
 
     #while reinstalling a separate profile, the workflow could not exist
-    wfTool = getToolByName(site, 'portal_workflow')
+    wfTool = api.portal.get_tool('portal_workflow')
     meetingWorkflow = getattr(wfTool, meetingConfig.getMeetingWorkflow(), None)
     if not meetingWorkflow:
         logger.warning(WF_DOES_NOT_EXIST_WARNING % meetingConfig.getMeetingWorkflow())
@@ -99,7 +100,7 @@ def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdapta
     for wfAdaptation in wfAdaptations:
         if not wfAdaptation in ['no_publication', ]:
             # call original perform of PloneMeeting
-            originalPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdaptation=wfAdaptation)
+            originalPerformWorkflowAdaptations(meetingConfig, logger, specificAdaptation=wfAdaptation)
         elif wfAdaptation == 'no_publication':
             # we override the PloneMeeting's 'no_publication' wfAdaptation
             # First, update the meeting workflow
