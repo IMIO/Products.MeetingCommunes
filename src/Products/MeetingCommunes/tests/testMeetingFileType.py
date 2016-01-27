@@ -29,25 +29,9 @@ from Products.PloneMeeting.tests.testMeetingFileType import testMeetingFileType 
 class testMeetingFileType(MeetingCommunesTestCase, pmmft):
     '''Tests the MeetingFileType class methods.'''
 
-    def test_subproduct_call_CanNotRemoveLinkedMeetingFileType(self):
-        '''Run the testCanNotRemoveLinkedMeetingFileType from PloneMeeting.'''
-        self.test_pm_CanNotRemoveLinkedMeetingFileType()
-
-    def test_subproduct_call_CanNotRemoveLinkedSubMeetingFileType(self):
-        '''Run the testCanNotRemoveLinkedSubMeetingFileType from PloneMeeting.'''
-        self.test_pm_CanNotRemoveLinkedSubMeetingFileType()
-
-    def test_subproduct_call_CanNotChangeRelatedToOfUsedMeetingFileType(self):
-        '''Run the test_pm_CanNotChangeRelatedToOfUsedMeetingFileType from PloneMeeting.'''
-        self.test_pm_CanNotChangeRelatedToOfUsedMeetingFileType()
-
-    def test_subproduct_call_validate_subTypes(self):
-        '''Run the test_pm_validate_subTypes from PloneMeeting.'''
-        self.test_pm_validate_subTypes()
-
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testMeetingFileType, prefix='test_subproduct_'))
+    suite.addTest(makeSuite(testMeetingFileType, prefix='test_pm_'))
     return suite
