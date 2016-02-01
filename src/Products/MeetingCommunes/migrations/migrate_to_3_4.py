@@ -41,7 +41,6 @@ class Migrate_To_3_4(PMMigrate_To_3_4):
            PloneMeeting, this way, we may launch some steps before PloneMeeting ones.
            Here we will update used workflows before letting PM do his job."""
         logger.info('Replacing old no more existing workflows...')
-        import ipdb; ipdb.set_trace()
         for cfg in self.tool.objectValues('MeetingConfig'):
             # MeetingItem workflow
             if cfg.getItemWorkflow() == 'meetingitemcollege_workflow':
@@ -63,12 +62,13 @@ class Migrate_To_3_4(PMMigrate_To_3_4):
             if cfg.getMeetingWorkflow() == 'meetingcouncil_workflow':
                 cfg.setMeetingWorkflow('meetingcommunes_workflow')
                 cfg._v_oldMeetingWorkflow = 'meetingcouncil_workflow'
-        # delete old unused workflows
+        # delete old unused workflows, aka every workflows containing 'college' or 'council'
         wfTool = api.portal.get_tool('portal_workflow')
-        toDelete = [wfId for wfId in wfTool.listWorkflows() if wfId in ('meetingitemcollege_workflow',
-                                                                        'meetingitemcouncil_workflow',
-                                                                        'meetingcollege_workflow',
-                                                                        'meetingcouncil_workflow')]
+        toDelete = [wfId for wfId in wfTool.listWorkflows()
+                    if wfId.endswith(('meetingitemcollege_workflow',
+                                      'meetingitemcouncil_workflow',
+                                      'meetingcollege_workflow',
+                                      'meetingcouncil_workflow'))]
         if toDelete:
             wfTool.manage_delObjects(toDelete)
         logger.info('Done.')
