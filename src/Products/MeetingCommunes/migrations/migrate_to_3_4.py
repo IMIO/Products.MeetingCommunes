@@ -3,6 +3,8 @@
 import logging
 logger = logging.getLogger('MeetingCommunes')
 
+from plone import api
+
 from Products.PloneMeeting.migrations.migrate_to_3_4 import Migrate_To_3_4 as PMMigrate_To_3_4
 
 
@@ -34,8 +36,45 @@ class Migrate_To_3_4(PMMigrate_To_3_4):
             cfg.setItemAutoSentToOtherMCStates(('accepted', 'accepted_but_modified', ))
         logger.info('Done.')
 
+    def _after_reinstall(self):
+        """Use that hook that is called just after the profile has been reinstalled by
+           PloneMeeting, this way, we may launch some steps before PloneMeeting ones.
+           Here we will update used workflows before letting PM do his job."""
+        logger.info('Replacing old no more existing workflows...')
+        for cfg in self.tool.objectValues('MeetingConfig'):
+            # MeetingItem workflow
+            if cfg.getItemWorkflow() == 'meetingitemcollege_workflow':
+                cfg.setItemWorkflow('meetingitemcommunes_workflow')
+                cfg._v_oldItemWorkflow = 'meetingitemcollege_workflow'
+                wfAdaptations = list(cfg.getWorkflowAdaptations())
+                if not 'no_publication' in wfAdaptations:
+                    wfAdaptations.append('no_publication')
+                if not 'no_global_observation' in wfAdaptations:
+                    wfAdaptations.append('no_global_observation')
+                cfg.setWorkflowAdaptations(wfAdaptations)
+            if cfg.getItemWorkflow() == 'meetingitemcouncil_workflow':
+                cfg.setItemWorkflow('meetingitemcommunes_workflow')
+                cfg._v_oldItemWorkflow = 'meetingitemcouncil_workflow'
+            # Meeting workflow
+            if cfg.getMeetingWorkflow() == 'meetingcollege_workflow':
+                cfg.setMeetingWorkflow('meetingcommunes_workflow')
+                cfg._v_oldMeetingWorkflow = 'meetingcollege_workflow'
+            if cfg.getMeetingWorkflow() == 'meetingcouncil_workflow':
+                cfg.setMeetingWorkflow('meetingcommunes_workflow')
+                cfg._v_oldMeetingWorkflow = 'meetingcouncil_workflow'
+        # delete old unused workflows, aka every workflows containing 'college' or 'council'
+        wfTool = api.portal.get_tool('portal_workflow')
+        toDelete = [wfId for wfId in wfTool.listWorkflows()
+                    if wfId.endswith(('meetingitemcollege_workflow',
+                                      'meetingitemcouncil_workflow',
+                                      'meetingcollege_workflow',
+                                      'meetingcouncil_workflow'))]
+        if toDelete:
+            wfTool.manage_delObjects(toDelete)
+        logger.info('Done.')
+
     def run(self):
-        # change self.profile_name everything is right before launching steps
+        # change self.profile_name that is reinstalled at the beginning of the PM migration
         self.profile_name = u'profile-Products.MeetingCommunes:default'
         # call steps from Products.PloneMeeting
         PMMigrate_To_3_4.run(self)

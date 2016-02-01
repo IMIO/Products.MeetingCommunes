@@ -60,7 +60,10 @@ class MeetingCommunesTestingHelpers(PloneMeetingTestingHelpers):
         'validated': ('backToItemPublished',
                       'backToItemFrozen',
                       'backToPresented',
-                      'backToValidated', )}
+                      'backToValidated',),
+        'presented': ('backToItemPublished',
+                      'backToItemFrozen',
+                      'backToPresented', )}
     # in which state an item must be after an particular meeting transition?
     ITEM_WF_STATE_AFTER_MEETING_TRANSITION = {'publish_decisions': 'accepted',
                                               'close': 'accepted'}

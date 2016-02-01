@@ -46,7 +46,7 @@ from Products.MeetingCommunes.interfaces import \
 from Products.PloneMeeting.utils import checkPermission
 from Products.CMFCore.permissions import ReviewPortalContent
 from Products.PloneMeeting.model import adaptations
-from Products.PloneMeeting.model.adaptations import WF_DOES_NOT_EXIST_WARNING, WF_APPLIED
+from Products.PloneMeeting.model.adaptations import WF_APPLIED
 from Products.PloneMeeting.interfaces import IAnnexable
 
 # Names of available workflow adaptations.
@@ -70,76 +70,8 @@ adaptations.noGlobalObsStates = noGlobalObsStates
 adaptations.WF_NOT_CREATOR_EDITS_UNLESS_CLOSED = ('delayed', 'refused', 'accepted',
                                                   'pre_accepted', 'accepted_but_modified')
 
-RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = {'meetingitemcollege_workflow': 'meetingitemcollege_workflow.itemcreated',
-                                            'meetingitemcouncil_workflow': 'meetingitemcouncil_workflow.itemcreated', }
+RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = {'meetingitemcommunes_workflow': 'meetingitemcommunes_workflow.itemcreated'}
 adaptations.RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE
-
-
-def customPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdaptation=None):
-    '''This function applies workflow changes as specified by the
-       p_meetingConfig.'''
-
-    wfAdaptations = specificAdaptation and [specificAdaptation, ] or meetingConfig.getWorkflowAdaptations()
-
-    #while reinstalling a separate profile, the workflow could not exist
-    wfTool = getToolByName(site, 'portal_workflow')
-    meetingWorkflow = getattr(wfTool, meetingConfig.getMeetingWorkflow(), None)
-    if not meetingWorkflow:
-        logger.warning(WF_DOES_NOT_EXIST_WARNING % meetingConfig.getMeetingWorkflow())
-        return
-    itemWorkflow = getattr(wfTool, meetingConfig.getItemWorkflow(), None)
-    if not itemWorkflow:
-        logger.warning(WF_DOES_NOT_EXIST_WARNING % meetingConfig.getItemWorkflow())
-        return
-
-    error = meetingConfig.validate_workflowAdaptations(wfAdaptations)
-    if error:
-        raise Exception(error)
-
-    for wfAdaptation in wfAdaptations:
-        if not wfAdaptation in ['no_publication', ]:
-            # call original perform of PloneMeeting
-            originalPerformWorkflowAdaptations(site, meetingConfig, logger, specificAdaptation=wfAdaptation)
-        elif wfAdaptation == 'no_publication':
-            # we override the PloneMeeting's 'no_publication' wfAdaptation
-            # First, update the meeting workflow
-            wf = meetingWorkflow
-            # Delete transitions 'publish' and 'backToPublished'
-            for tr in ('publish', 'backToPublished'):
-                if tr in wf.transitions:
-                    wf.transitions.deleteTransitions([tr])
-            # Update connections between states and transitions
-            wf.states['frozen'].setProperties(
-                title='frozen', description='',
-                transitions=['backToCreated', 'decide'])
-            wf.states['decided'].setProperties(
-                title='decided', description='', transitions=['backToFrozen', 'close'])
-            # Delete state 'published'
-            if 'published' in wf.states:
-                wf.states.deleteStates(['published'])
-            # Then, update the item workflow.
-            wf = itemWorkflow
-            # Delete transitions 'itempublish' and 'backToItemPublished'
-            for tr in ('itempublish', 'backToItemPublished'):
-                if tr in wf.transitions:
-                    wf.transitions.deleteTransitions([tr])
-            # Update connections between states and transitions
-            wf.states['itemfrozen'].setProperties(
-                title='itemfrozen', description='',
-                transitions=['accept', 'accept_but_modify', 'refuse', 'delay', 'pre_accept', 'backToPresented'])
-            for decidedState in ['accepted', 'refused', 'delayed', 'accepted_but_modified']:
-                wf.states[decidedState].setProperties(
-                    title=decidedState, description='',
-                    transitions=['backToItemFrozen', ])
-            wf.states['pre_accepted'].setProperties(
-                title='pre_accepted', description='',
-                transitions=['accept', 'accept_but_modify', 'backToItemFrozen'])
-            # Delete state 'published'
-            if 'itempublished' in wf.states:
-                wf.states.deleteStates(['itempublished'])
-            logger.info(WF_APPLIED % ("no_publication", meetingConfig.getId()))
-
-adaptations.performWorkflowAdaptations = customPerformWorkflowAdaptations
 
 
 def formatedAssembly(assembly, focus):
@@ -1013,6 +945,49 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
 
     implements(IToolPloneMeetingCustom)
     security = ClassSecurityInfo()
+
+    def performCustomWFAdaptations(self, meetingConfig, wfAdaptation, logger, itemWorkflow, meetingWorkflow):
+        """ """
+        if wfAdaptation == 'no_publication':
+            # we override the PloneMeeting's 'no_publication' wfAdaptation
+            # First, update the meeting workflow
+            wf = meetingWorkflow
+            # Delete transitions 'publish' and 'backToPublished'
+            for tr in ('publish', 'backToPublished'):
+                if tr in wf.transitions:
+                    wf.transitions.deleteTransitions([tr])
+            # Update connections between states and transitions
+            wf.states['frozen'].setProperties(
+                title='frozen', description='',
+                transitions=['backToCreated', 'decide'])
+            wf.states['decided'].setProperties(
+                title='decided', description='', transitions=['backToFrozen', 'close'])
+            # Delete state 'published'
+            if 'published' in wf.states:
+                wf.states.deleteStates(['published'])
+            # Then, update the item workflow.
+            wf = itemWorkflow
+            # Delete transitions 'itempublish' and 'backToItemPublished'
+            for tr in ('itempublish', 'backToItemPublished'):
+                if tr in wf.transitions:
+                    wf.transitions.deleteTransitions([tr])
+            # Update connections between states and transitions
+            wf.states['itemfrozen'].setProperties(
+                title='itemfrozen', description='',
+                transitions=['accept', 'accept_but_modify', 'refuse', 'delay', 'pre_accept', 'backToPresented'])
+            for decidedState in ['accepted', 'refused', 'delayed', 'accepted_but_modified']:
+                wf.states[decidedState].setProperties(
+                    title=decidedState, description='',
+                    transitions=['backToItemFrozen', ])
+            wf.states['pre_accepted'].setProperties(
+                title='pre_accepted', description='',
+                transitions=['accept', 'accept_but_modify', 'backToItemFrozen'])
+            # Delete state 'published'
+            if 'itempublished' in wf.states:
+                wf.states.deleteStates(['itempublished'])
+            logger.info(WF_APPLIED % ("no_publication", meetingConfig.getId()))
+            return True
+        return False
 
     security.declarePublic('getSpecificAssemblyFor')
 

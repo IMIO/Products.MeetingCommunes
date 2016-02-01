@@ -2,7 +2,7 @@
 #
 # File: setuphandlers.py
 #
-# Copyright (c) 2015 by Imio.be
+# Copyright (c) 2016 by Imio.be
 # Generator: ArchGenXML Version 2.7
 #            http://plone.org/products/archgenxml
 #
@@ -210,7 +210,7 @@ def finalizeExampleInstance(context):
     # due to some weird problems, the wfAdaptations can not be defined
     # thru the import_data...
     mc_council_or_cas.setWorkflowAdaptations(['no_global_observation', 'no_publication'])
-    performWorkflowAdaptations(site, mc_council_or_cas, logger)
+    performWorkflowAdaptations(mc_council_or_cas, logger)
 
 
 def reorderCss(context):

@@ -177,8 +177,8 @@ bpMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
                               annexeDecision, annexeAvis, annexeAvisLegal]
 bpMeeting.usedItemAttributes = ['budgetInfos', 'observations', ]
 bpMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
-bpMeeting.itemWorkflow = 'meetingitemcollege_workflow'
-bpMeeting.meetingWorkflow = 'meetingcollege_workflow'
+bpMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
+bpMeeting.meetingWorkflow = 'meetingcommunes_workflow'
 bpMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
 bpMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
 bpMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
@@ -200,6 +200,7 @@ bpMeeting.itemAdviceEditStates = ('validated',)
 bpMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',
                                   'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
 bpMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
+bpMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
 bpMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 bpMeeting.useCopies = True
 bpMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
@@ -236,8 +237,8 @@ casMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
                                annexeDecision, annexeAvis, annexeAvisLegal]
 casMeeting.usedItemAttributes = ['budgetInfos', 'observations', ]
 casMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
-casMeeting.itemWorkflow = 'meetingitemcollege_workflow'
-casMeeting.meetingWorkflow = 'meetingcollege_workflow'
+casMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
+casMeeting.meetingWorkflow = 'meetingcommunes_workflow'
 casMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
 casMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
 casMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
@@ -259,6 +260,7 @@ casMeeting.itemAdviceEditStates = ('validated',)
 casMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',
                                    'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
 casMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
+casMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
 casMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 casMeeting.useCopies = True
 casMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
@@ -292,8 +294,8 @@ comiteeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
                                    annexeDecision, annexeAvis, annexeAvisLegal]
 comiteeMeeting.usedItemAttributes = ['budgetInfos', 'observations', ]
 comiteeMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
-comiteeMeeting.itemWorkflow = 'meetingitemcollege_workflow'
-comiteeMeeting.meetingWorkflow = 'meetingcollege_workflow'
+comiteeMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
+comiteeMeeting.meetingWorkflow = 'meetingcommunes_workflow'
 comiteeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
 comiteeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
 comiteeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
@@ -303,6 +305,7 @@ comiteeMeeting.meetingTopicStates = ('created', 'frozen')
 comiteeMeeting.decisionTopicStates = ('decided', 'closed')
 comiteeMeeting.itemAdviceStates = ('validated',)
 comiteeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
+comiteeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
 comiteeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 comiteeMeeting.enforceAdviceMandatoriness = False
 comiteeMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',

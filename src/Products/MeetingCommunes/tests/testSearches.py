@@ -29,49 +29,9 @@ from Products.PloneMeeting.tests.testSearches import testSearches as pmts
 class testSearches(MeetingCommunesTestCase, pmts):
     """Test searches."""
 
-    def test_subproduct_call_DefaultSelectedSearch(self):
-        '''Run the test_pm_DefaultSelectedSearch from PloneMeeting.'''
-        pmts.test_pm_DefaultSelectedSearch(self)
-
-    def test_subproduct_call_SearchItemsToAdviceAdapter(self):
-        '''Run the test_pm_SearchItemsToAdviceAdapter from PloneMeeting.'''
-        pmts.test_pm_SearchItemsToAdviceAdapter(self)
-
-    def test_subproduct_call_SearchAdvisedItems(self):
-        '''Run the test_pm_SearchAdvisedItems from PloneMeeting.'''
-        pmts.test_pm_SearchAdvisedItems(self)
-
-    def test_subproduct_call_SearchAdvisedItemsWithDelay(self):
-        '''Run the test_pm_SearchAdvisedItemsWithDelay from PloneMeeting.'''
-        pmts.test_pm_SearchAdvisedItemsWithDelay(self)
-
-    def test_subproduct_call_SearchItemsInCopy(self):
-        '''Run the test_pm_SearchItemsInCopy from PloneMeeting.'''
-        pmts.test_pm_SearchItemsInCopy(self)
-
-    def test_subproduct_call_SearchMyItemsTakenOver(self):
-        '''Run the test_pm_SearchMyItemsTakenOver from PloneMeeting.'''
-        pmts.test_pm_SearchMyItemsTakenOver(self)
-
-    def test_subproduct_call_SearchItemsToValidateOfHighestHierarchicLevel(self):
-        '''Run the test_pm_SearchItemsToValidateOfHighestHierarchicLevel from PloneMeeting.'''
-        pmts.test_pm_SearchItemsToValidateOfHighestHierarchicLevel(self)
-
-    def test_subproduct_call_SearchItemsToValidateOfMyReviewerGroups(self):
-        '''Run the test_pm_SearchItemsToValidateOfMyReviewerGroups from PloneMeeting.'''
-        pmts.test_pm_SearchItemsToValidateOfMyReviewerGroups(self)
-
-    def test_subproduct_call_SearchItemsToValidateOfEveryReviewerLevelsAndLowerLevels(self):
-        '''Run the test_pm_SearchItemsToValidateOfEveryReviewerLevelsAndLowerLevels from PloneMeeting.'''
-        pmts.test_pm_SearchItemsToValidateOfEveryReviewerLevelsAndLowerLevels(self)
-
-    def test_subproduct_call_SearchItemsToCorrect(self):
-        '''Run the test_pm_SearchItemsToCorrect from PloneMeeting.'''
-        pmts.test_pm_SearchItemsToCorrect(self)
-
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testSearches, prefix='test_subproduct_'))
+    suite.addTest(makeSuite(testSearches, prefix='test_pm_'))
     return suite
