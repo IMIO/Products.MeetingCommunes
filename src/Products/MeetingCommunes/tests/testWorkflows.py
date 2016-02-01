@@ -24,6 +24,7 @@
 
 from AccessControl import Unauthorized
 from zope.annotation import IAnnotations
+from Products.CMFCore.permissions import View
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.interfaces import IAnnexable
 from Products.PloneMeeting.tests.testWorkflows import testWorkflows as pmtw
@@ -110,12 +111,24 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.failUnless(len(meeting.getItems(listTypes='late')) == 1)
         self.changeUser('pmManager')
         item1.setDecision(self.decisionText)
-        # pmManager adds a decision for item2, decides and closes the meeting
+
+        # pmManager adds a decision for item2, and decides both meeting and item
         self.changeUser('pmManager')
         item2.setDecision(self.decisionText)
         self.addAnnex(item2, relatedTo='item_decision')
         self.do(meeting, 'decide')
-        self.failIf(len(self.transitions(meeting)) != 2)
+        self.do(item1, 'accept')
+
+        # pmCreator2/pmReviewer2 are not able to see item1
+        self.changeUser('pmCreator2')
+        self.failIf(self.hasPermission(View, item1))
+        self.changeUser('pmReviewer2')
+        self.failIf(self.hasPermission(View, item1))
+
+        # meeting may be closed or set back to frozen
+        self.changeUser('pmManager')
+        self.assertEquals(self.transitions(meeting), ['backToFrozen', 'close'])
+        self.changeUser('pmManager')
         self.do(meeting, 'close')
 
     def _testWholeDecisionProcessCouncil(self):

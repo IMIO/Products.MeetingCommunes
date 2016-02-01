@@ -70,8 +70,7 @@ adaptations.noGlobalObsStates = noGlobalObsStates
 adaptations.WF_NOT_CREATOR_EDITS_UNLESS_CLOSED = ('delayed', 'refused', 'accepted',
                                                   'pre_accepted', 'accepted_but_modified')
 
-RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = {'meetingitemcollege_workflow': 'meetingitemcollege_workflow.itemcreated',
-                                            'meetingitemcouncil_workflow': 'meetingitemcouncil_workflow.itemcreated', }
+RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = {'meetingitemcommunes_workflow': 'meetingitemcommunes_workflow.itemcreated'}
 adaptations.RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE
 
 

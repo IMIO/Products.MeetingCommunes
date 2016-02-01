@@ -17,6 +17,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   (override of the 'no_publication' WFAdaptation)
 - Adapted tests, keep test... original PM files to overrides original PM tests and
   use testCustom... for every other tests, added a testCustomWorkflow.py
+- Now that the same WF may be used in several MeetingConfig in PloneMeeting, removed the
+  2 WFs meetingcollege and meetingcouncil and use only one meetingcommunes where wfAdaptations
+  'no_publication' and 'no_global_observation' are enabled
 
 3.3 (2015-02-27)
 ----------------

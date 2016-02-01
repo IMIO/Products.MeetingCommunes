@@ -149,8 +149,8 @@ codirMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'ass
 codirMeeting.recordMeetingHistoryStates = []
 codirMeeting.xhtmlTransformFields = ()
 codirMeeting.xhtmlTransformTypes = ()
-codirMeeting.itemWorkflow = 'meetingitemcollege_workflow'
-codirMeeting.meetingWorkflow = 'meetingcollege_workflow'
+codirMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
+codirMeeting.meetingWorkflow = 'meetingcommunes_workflow'
 codirMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
 codirMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
 codirMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
@@ -187,6 +187,7 @@ codirMeeting.itemPowerObserversStates = ('itemfrozen',
                                          'accepted_but_modified',
                                          'pre_accepted')
 codirMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
+codirMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
 codirMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 codirMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

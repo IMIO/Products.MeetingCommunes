@@ -213,8 +213,8 @@ collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier, itemAnnex
                                    annexeDecision, overheadAnalysis, marketingAnalysis,
                                    adviceAnnex, adviceLegalAnalysis]
 collegeMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
-collegeMeeting.itemWorkflow = 'meetingitemcollege_workflow'
-collegeMeeting.meetingWorkflow = 'meetingcollege_workflow'
+collegeMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
+collegeMeeting.meetingWorkflow = 'meetingcommunes_workflow'
 collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
 collegeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
 collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
@@ -256,6 +256,7 @@ collegeMeeting.transitionReinitializingDelays = 'backToItemCreated'
 collegeMeeting.enforceAdviceMandatoriness = False
 collegeMeeting.itemPowerObserversStates = ('itemcreated', 'presented', 'accepted', 'delayed', 'refused')
 collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
+collegeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation']
 collegeMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
                                              'reverse': '0'}, )
 collegeMeeting.useGroupsAsCategories = True
@@ -295,8 +296,8 @@ councilMeeting.categories = categories
 councilMeeting.shortName = 'Council'
 councilMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
                                    itemAnnex, annexeDecision, adviceAnnex, adviceLegalAnalysis]
-councilMeeting.itemWorkflow = 'meetingitemcouncil_workflow'
-councilMeeting.meetingWorkflow = 'meetingcouncil_workflow'
+councilMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
+councilMeeting.meetingWorkflow = 'meetingcommunes_workflow'
 councilMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCouncilWorkflowConditions'
 councilMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCouncilWorkflowActions'
 councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowConditions'
