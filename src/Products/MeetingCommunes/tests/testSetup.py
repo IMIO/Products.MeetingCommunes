@@ -23,13 +23,10 @@
 #
 
 from Products.PloneMeeting.tests.testSetup import testSetup as pm_ts
-from Products.MeetingCommunes.testing import MC_PLONE_INTEGRATION
 
 
 class testSetup(pm_ts):
     '''Tests the setup, especially registered profiles.'''
-
-    layer = MC_PLONE_INTEGRATION
 
 
 def test_suite():
