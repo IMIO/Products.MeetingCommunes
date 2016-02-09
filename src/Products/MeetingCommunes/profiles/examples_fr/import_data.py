@@ -519,7 +519,7 @@ councilMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeet
 councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowConditions'
 councilMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowActions'
 councilMeeting.transitionsToConfirm = []
-councilMeeting.meetingTopicStates = ('created', 'frozen', 'published')
+councilMeeting.meetingTopicStates = ('created', 'frozen')
 councilMeeting.decisionTopicStates = ('decided', 'closed')
 councilMeeting.itemAdviceStates = ('validated',)
 councilMeeting.enforceAdviceMandatoriness = False
@@ -541,35 +541,23 @@ councilMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present
 councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
                                                               'item_transition': 'itemfreeze'},
 
-                                                             {'meeting_transition': 'publish',
-                                                              'item_transition': 'itemfreeze'},
-                                                             {'meeting_transition': 'publish',
-                                                              'item_transition': 'itempublish'},
-
                                                              {'meeting_transition': 'decide',
                                                               'item_transition': 'itemfreeze'},
-                                                             {'meeting_transition': 'decide',
-                                                              'item_transition': 'itempublish'},
 
                                                              {'meeting_transition': 'publish_decisions',
                                                               'item_transition': 'itemfreeze'},
-                                                             {'meeting_transition': 'publish_decisions',
-                                                              'item_transition': 'itempublish'},
                                                              {'meeting_transition': 'publish_decisions',
                                                               'item_transition': 'accept'},
 
                                                              {'meeting_transition': 'close',
                                                               'item_transition': 'itemfreeze'},
                                                              {'meeting_transition': 'close',
-                                                              'item_transition': 'itempublish'},
-                                                             {'meeting_transition': 'close',
                                                               'item_transition': 'accept'},)
 councilMeeting.itemPowerObserversStates = ('itemfrozen',
-                                           'itempublished',
                                            'accepted', 'delayed',
                                            'refused',
                                            'accepted_but_modified', 'pre_accepted')
-councilMeeting.meetingPowerObserversStates = ('frozen', 'published', 'decided', 'closed')
+councilMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 councilMeeting.powerAdvisersGroups = ()
 councilMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 councilMeeting.useCopies = True

@@ -13,30 +13,29 @@ __author__ = """Gauthier Bastien <g.bastien@imio.be>, Stephan Geulette <s.geulet
 __docformat__ = 'plaintext'
 
 
+import os
 import logging
 logger = logging.getLogger('MeetingCommunes: setuphandlers')
-from Products.MeetingCommunes.config import PROJECTNAME
-from Products.MeetingCommunes.config import DEPENDENCIES
-import os
-from Products.CMFCore.utils import getToolByName
-import transaction
-##code-section HEAD
 from DateTime import DateTime
+from plone import api
+from Products.CMFPlone.utils import _createObjectByType
 from Products.PloneMeeting.exportimport.content import ToolInitializer
 from Products.PloneMeeting.model.adaptations import performWorkflowAdaptations
-##/code-section HEAD
+from Products.MeetingCommunes.config import PROJECTNAME
+
 
 def isNotMeetingCommunesProfile(context):
     return context.readDataFile("MeetingCommunes_marker.txt") is None
 
 
-
 def updateRoleMappings(context):
     """after workflow changed update the roles mapping. this is like pressing
     the button 'Update Security Setting' and portal_workflow"""
-    if isNotMeetingCommunesProfile(context): return
-    wft = getToolByName(context.getSite(), 'portal_workflow')
+    if isNotMeetingCommunesProfile(context):
+        return
+    wft = api.portal.get_tool('portal_workflow')
     wft.updateRoleMappings()
+
 
 def postInstall(context):
     """Called as at the end of the setup process. """
@@ -51,8 +50,6 @@ def postInstall(context):
     reorderSkinsLayers(context, site)
 
 
-
-##code-section FOOT
 def logStep(method, context):
     logger.info("Applying '%s' in profile '%s'" %
                 (method, '/'.join(context._profile_path.split(os.sep)[-3:])))
@@ -169,23 +166,25 @@ def finalizeExampleInstance(context):
 
     logStep("finalizeExampleInstance", context)
     # add the test users 'dfin' and 'bourgmestre' to every '_powerobservers' groups
-    member = site.portal_membership.getMemberById(specialUserId)
+    mTool = api.portal.get_tool('portal_membership')
+    groupsTool = api.portal.get_tool('portal_groups')
+    member = mTool.getMemberById(specialUserId)
     for memberId in ('dfin', 'bourgmestre', ):
-        member = site.portal_membership.getMemberById(memberId)
+        member = mTool.getMemberById(memberId)
         if member:
-            site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig1Id)
-            site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
+            groupsTool.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig1Id)
+            groupsTool.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
     # add the test user 'conseiller' only to the 'meeting-config-council_powerobservers' group
-    member = site.portal_membership.getMemberById('conseiller')
+    member = mTool.getMemberById('conseiller')
     if member:
-        site.portal_groups.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
+        groupsTool.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
 
     # add the test user 'dfin' and 'chefCompta' to the 'meeting-config-xxx_budgetimpacteditors' groups
     for memberId in ('dfin', 'chefCompta', ):
-        member = site.portal_membership.getMemberById(memberId)
+        member = mTool.getMemberById(memberId)
         if member:
-            site.portal_groups.addPrincipalToGroup(memberId, '%s_budgetimpacteditors' % meetingConfig1Id)
-            site.portal_groups.addPrincipalToGroup(memberId, '%s_budgetimpacteditors' % meetingConfig2Id)
+            groupsTool.addPrincipalToGroup(memberId, '%s_budgetimpacteditors' % meetingConfig1Id)
+            groupsTool.addPrincipalToGroup(memberId, '%s_budgetimpacteditors' % meetingConfig2Id)
 
     # add some topics to the portlet_todo
     mc_college_or_bp = getattr(site.portal_plonemeeting, meetingConfig1Id)
@@ -244,10 +243,11 @@ def addDemoData(context):
         return
 
     site = context.getSite()
-    tool = getToolByName(site, 'portal_plonemeeting')
+    tool = api.portal.get_tool('portal_plonemeeting')
     cfg = getattr(tool, 'meeting-config-college')
-    wfTool = getToolByName(site, 'portal_workflow')
-    pTool = getToolByName(site, 'plone_utils')
+    wfTool = api.portal.get_tool('portal_workflow')
+    pTool = api.portal.get_tool('plone_utils')
+    mTool = api.portal.get_tool('portal_membership')
     # first we need to be sure that our IPoneMeetingLayer is set correctly
     # https://dev.plone.org/ticket/11673
     from zope.event import notify
@@ -255,14 +255,18 @@ def addDemoData(context):
     notify(BeforeTraverseEvent(site, site.REQUEST))
     # we will create elements for some users, make sure their personal
     # area is correctly configured
-    site.portal_membership.createMemberArea('agentPers')
-    site.portal_membership.createMemberArea('agentInfo')
-    site.portal_membership.createMemberArea('agentCompta')
+    # first make sure the 'Members' folder exists
+    members = mTool.getMembersFolder()
+    if members is None:
+        _createObjectByType('Folder', site, id='Members')
+    mTool.createMemberArea('agentPers')
+    mTool.createMemberArea('agentInfo')
+    mTool.createMemberArea('agentCompta')
     # create 5 meetings : 2 passed, 1 current and 2 future
     today = DateTime()
     dates = [today-13, today-6, today+1, today+8, today+15]
     # login as 'dgen'
-    site.portal_membership.createMemberArea('dgen')
+    mTool.createMemberArea('dgen')
     secrFolder = tool.getPloneMeetingFolder(cfg.getId(), 'dgen')
     for date in dates:
         meetingId = secrFolder.invokeFactory('MeetingCollege', id=date.strftime('%Y%m%d'))
@@ -358,5 +362,3 @@ def addDemoData(context):
             if item['review_state'] == 'validated':
                 wfTool.doActionFor(newItem, 'validate')
             newItem.reindexObject()
-
-##/code-section FOOT
