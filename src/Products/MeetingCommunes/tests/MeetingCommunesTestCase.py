@@ -47,4 +47,3 @@ class MeetingCommunesTestCase(PloneMeetingTestCase, MeetingCommunesTestingHelper
         self.annexFile = 'INSTALL.TXT'
         self.annexFileType = 'annexeBudget'
         self.annexFileTypeDecision = 'annexeDecision'
-        self.transitionsToCloseAMeeting = ('freeze', 'publish', 'decide', 'close')
