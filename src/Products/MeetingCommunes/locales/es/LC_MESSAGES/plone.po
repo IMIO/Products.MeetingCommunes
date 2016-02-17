@@ -146,42 +146,6 @@ msgstr "Reunión de Consejo Social"
 msgid "Meetingcomitee"
 msgstr "Reunión de Comité de Concertación"
 
-#. Default: "Back to created"
-msgid "backToCreated"
-msgstr ""
-
-#. Default: "Back to decided"
-msgid "backToDecided"
-msgstr ""
-
-#. Default: "Back to frozen"
-msgid "backToFrozen"
-msgstr ""
-
-#. Default: "Back to item created"
-msgid "backToItemCreated"
-msgstr ""
-
-#. Default: "Back to item frozen"
-msgid "backToItemFrozen"
-msgstr ""
-
-#. Default: "Back to presented"
-msgid "backToPresented"
-msgstr ""
-
-#. Default: "Back to pre-validated"
-msgid "backToPrevalidated"
-msgstr ""
-
-#. Default: "Back to proposed"
-msgid "backToProposed"
-msgstr ""
-
-#. Default: "Back to published"
-msgid "backToPublished"
-msgstr ""
-
 #. Default: "Create an item CAS from an item BP"
 msgid "create_to_meeting-config-cas_from_meeting-config-bp"
 msgstr ""

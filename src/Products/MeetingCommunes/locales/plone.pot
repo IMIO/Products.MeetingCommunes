@@ -147,42 +147,6 @@ msgstr ""
 msgid "MeetingItemRecurringcomitee"
 msgstr ""
 
-#. Default: "Back to created"
-msgid "backToCreated"
-msgstr ""
-
-#. Default: "Back to decided"
-msgid "backToDecided"
-msgstr ""
-
-#. Default: "Back to frozen"
-msgid "backToFrozen"
-msgstr ""
-
-#. Default: "Back to item created"
-msgid "backToItemCreated"
-msgstr ""
-
-#. Default: "Back to item frozen"
-msgid "backToItemFrozen"
-msgstr ""
-
-#. Default: "Back to presented"
-msgid "backToPresented"
-msgstr ""
-
-#. Default: "Back to pre-validated"
-msgid "backToPrevalidated"
-msgstr ""
-
-#. Default: "Back to proposed"
-msgid "backToProposed"
-msgstr ""
-
-#. Default: "Back to published"
-msgid "backToPublished"
-msgstr ""
-
 #. Default: "Create an item council from an item college"
 msgid "create_to_meeting-config-council_from_meeting-config-college"
 msgstr ""
