@@ -929,12 +929,13 @@ class CustomMeetingConfig(MeetingConfig):
 
     security.declarePublic('printCDLDItems')
 
-    def printCDLDItems(self, sortKey='', sortOrder=''):
+    def printCDLDItems(self, sortKey='', sortOrder='', searchMethodName='searchCDLDItems'):
         '''
         Returns a list of advice for synthesis document (CDLD)
         '''
         meetingConfig = self.getSelf()
-        brains = meetingConfig.context.searchCDLDItems(sortKey=sortKey, sortOrder=sortOrder)
+        searchMethod = getattr(meetingConfig, searchMethodName)
+        brains = searchMethod(sortKey=sortKey, sortOrder=sortOrder)
         res = []
         groups = []
         cdldProposingGroups = meetingConfig.getCdldProposingGroup()
