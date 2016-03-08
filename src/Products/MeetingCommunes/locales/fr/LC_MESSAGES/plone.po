@@ -26,6 +26,10 @@ msgstr "Séance du CA"
 msgid "MeetingCOGES"
 msgstr "Séance du Comité de Gestion"
 
+#. Default: "MeetingBourgmestre"
+msgid "MeetingBourgmestre"
+msgstr "Séance du Bourgmestre"
+
 #. Default: "MeetingCoDir"
 msgid "MeetingCoDir"
 msgstr "Séance du Comité de Direction"
@@ -46,6 +50,10 @@ msgstr "Point CA"
 msgid "MeetingItemCOGES"
 msgstr "Point Comité de Gestion"
 
+#. Default: "MeetingItemBourgmestre"
+msgid "MeetingItemBourgmestre"
+msgstr "Point Bourgmestre"
+
 #. Default: "MeetingItemCoDir"
 msgid "MeetingItemCoDir"
 msgstr "Point Comité de Direction"
@@ -65,6 +73,10 @@ msgstr "Point récurrent CA"
 #. Default: "MeetingItemRecurringCOGES"
 msgid "MeetingItemRecurringCOGES"
 msgstr "Point récurrent Comité de Gestion"
+
+#. Default: "MeetingItemRecurringBourgmestre"
+msgid "MeetingItemRecurringBourgmestre"
+msgstr "Point récurrent Bourgmestre"
 
 #. Default: "MeetingItemRecurringCoDir"
 msgid "MeetingItemRecurringCoDir"
@@ -97,6 +109,10 @@ msgstr "Modèle de point CA"
 #. Default: "MeetingItemTemplateCOGES"
 msgid "MeetingItemTemplateCOGES"
 msgstr "Modèle de point Comité de Gestion"
+
+#. Default: "MeetingItemTemplateBourgmestre"
+msgid "MeetingItemTemplateBourgmestre"
+msgstr "Modèle de point Bourgmestre"
 
 #. Default: "MeetingItemTemplateCoDir"
 msgid "MeetingItemTemplateCoDir"
