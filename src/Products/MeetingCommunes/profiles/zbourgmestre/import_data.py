@@ -75,7 +75,7 @@ groups = [GroupDescriptor('groupe_bourgmestre', 'Groupe BOURGMESTRE', 'ordopol')
 # Meeting configurations -------------------------------------------------------
 # bourgmestre
 bourgmestreMeeting = MeetingConfigDescriptor(
-    'bourgmestre', 'Bourgmestre',
+    'meeting-config-bourgmestre', 'Bourgmestre',
     'Bourgmestre')
 bourgmestreMeeting.meetingManagers = []
 bourgmestreMeeting.assembly = 'Pierre Dupont - Président,\n' \
