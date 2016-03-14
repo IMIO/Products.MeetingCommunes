@@ -571,7 +571,7 @@ class CustomMeetingItem(MeetingItem):
         '''
         # set keepWithNext to False as it will add a 'class' and so
         # xhtmlContentIsEmpty will never consider it empty...
-        if xhtmlContentIsEmpty(self.getDeliberation(keepWithNext=False)):
+        if xhtmlContentIsEmpty(self.getDecision(keepWithNext=False)):
             self.setDecision("<p>%s</p>%s" % (self.Title(),
                                               self.Description()))
             self.reindexObject()
