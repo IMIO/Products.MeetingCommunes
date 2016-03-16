@@ -657,17 +657,17 @@ class CustomMeetingItem(MeetingItem):
         assembly = self.context.getItemAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
         return formatedAssembly(assembly, focus)
 
-    def adviceDelayIsTimedOutWithLabel(self, groupId, label=''):
+    def adviceDelayIsTimedOutWithRowId(self, groupId, rowIds=[]):
         ''' Check if advice with delay from a certain p_groupId and with
-            p_label contained in the advice delay label is timed out.
+            a row_id contained in p_rowIds is timed out.
         '''
         self = self.getSelf()
         if self.getAdviceDataFor(self) and groupId in self.getAdviceDataFor(self):
-            delayLabel = self.getAdviceDataFor(self, groupId)['delay_label']
+            adviceRowId = self.getAdviceDataFor(self, groupId)['row_id']
         else:
             return False
 
-        if not label or label in delayLabel:
+        if not rowIds or adviceRowId in rowIds:
             return self._adviceDelayIsTimedOut(groupId)
         else:
             return False
