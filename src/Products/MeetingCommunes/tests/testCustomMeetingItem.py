@@ -23,6 +23,7 @@
 #
 
 from DateTime import DateTime
+from datetime import datetime
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 
 
@@ -123,3 +124,79 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         item.setOptionalAdvisers(('developers__rowid__unique_id_001', ))
         item.at_post_edit_script()
         self.assertEquals(item.adapted().getUsedFinanceGroupId(), ['developers', ])
+
+    def test_AdviceDelayIsTimedOutWithLabel(self):
+
+        today = DateTime().strftime('%Y/%m/%d')
+        oneMonthAgo = DateTime() - 30
+        self.meetingConfig.setCustomAdvisers([
+            {'row_id': 'unique_id_001',
+             'group': 'developers',
+             'for_item_created_from': today,
+             'delay': '10',
+             'delay_left_alert': '4',
+             'delay_label': 'Finance advice < 20000 euros',
+             'is_linked_to_previous_row': '0'},
+            {'row_id': 'unique_id_002',
+             'group': 'developers',
+             'for_item_created_from': today,
+             'delay': '20',
+             'delay_left_alert': '4',
+             'delay_label': 'Finance advice > 20000 euros',
+             'is_linked_to_previous_row': '1'},
+            {'row_id': 'unique_id_003',
+             'group': 'developers',
+             'for_item_created_from': today,
+             'delay': '20',
+             'delay_left_alert': '4',
+             'delay_label': 'Finance advice > 40000 euros',
+             'is_linked_to_previous_row': '0'}, ]
+        )
+
+        # create an item without finance advice
+        self.changeUser('pmManager')
+        item = self.create('MeetingItem')
+        self.assertEquals(item.adapted().adviceDelayIsTimedOutWithLabel(groupId='developers'), False)
+        self.assertEquals(item.adapted().adviceDelayIsTimedOutWithLabel(groupId='developers', label='advice > 2'), False)
+
+        # ask advice to another group
+        item.setOptionalAdvisers(('vendors', ))
+        item.at_post_edit_script()
+        self.assertEquals(item.adapted().adviceDelayIsTimedOutWithLabel(groupId='developers'), False)
+        self.assertEquals(item.adapted().adviceDelayIsTimedOutWithLabel(groupId='developers', label='advice > 2'), False)
+
+        # ask advice without delay
+        item.setOptionalAdvisers(('developers', ))
+        item.at_post_edit_script()
+        self.assertEquals(item.adapted().adviceDelayIsTimedOutWithLabel(groupId='developers'), False)
+        self.assertEquals(item.adapted().adviceDelayIsTimedOutWithLabel(groupId='developers', label='advice > 2'), False)
+
+        # ask advice with delay but without the good label and not timed out
+        item.setOptionalAdvisers(('developers__rowid__unique_id_003', ))
+        item.at_post_edit_script()
+        self.do(item, 'propose')
+        self.assertEquals(item.adapted().adviceDelayIsTimedOutWithLabel(groupId='developers'), False)
+        self.assertEquals(item.adapted().adviceDelayIsTimedOutWithLabel(groupId='developers', label='advice > 2'), False)
+
+        # finally ask advice with delay and good label and not timed out
+        item.setOptionalAdvisers(('developers__rowid__unique_id_002', ))
+        item.at_post_edit_script()
+        self.assertEquals(item.adapted().adviceDelayIsTimedOutWithLabel(groupId='developers'), False)
+        self.assertEquals(item.adapted().adviceDelayIsTimedOutWithLabel(groupId='developers', label='advice > 2'), False)
+
+        # ask advice with delay and time out but without the good label
+        item.setOptionalAdvisers(('developers__rowid__unique_id_001', ))
+        item.at_post_edit_script()
+        item.adviceIndex['developers']['delay_started_on'] = datetime(2016,01,01)
+        item.at_post_edit_script()
+        self.assertEquals(item.adapted().adviceDelayIsTimedOutWithLabel(groupId='developers'), True)
+        self.assertEquals(item.adapted().adviceDelayIsTimedOutWithLabel(groupId='developers', label='advice > 2'), False)
+
+        # finally ask advice with delay, good label and timed out
+        item.setOptionalAdvisers(('developers__rowid__unique_id_002', ))
+        item.at_post_edit_script()
+        item.adviceIndex['developers']['delay_started_on'] = datetime(2016,01,01)
+        item.at_post_edit_script()
+        self.assertEquals(item.adapted().adviceDelayIsTimedOutWithLabel(groupId='developers'), True)
+        self.assertEquals(item.adapted().adviceDelayIsTimedOutWithLabel(groupId='developers', label='advice > 2'), True)
+

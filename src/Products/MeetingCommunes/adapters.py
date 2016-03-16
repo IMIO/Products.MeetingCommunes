@@ -657,6 +657,21 @@ class CustomMeetingItem(MeetingItem):
         assembly = self.context.getItemAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
         return formatedAssembly(assembly, focus)
 
+    def adviceDelayIsTimedOutWithLabel(self, groupId, label=''):
+        ''' Check if advice with delay from a certain p_groupId and with
+            p_label contained in the advice delay label is timed out.
+        '''
+        self = self.getSelf()
+        if self.getAdviceDataFor(self) and groupId in self.getAdviceDataFor(self):
+            delayLabel = self.getAdviceDataFor(self, groupId)['delay_label']
+        else:
+            return False
+
+        if not label or label in delayLabel:
+            return self._adviceDelayIsTimedOut(groupId)
+        else:
+            return False
+
 
 class CustomMeetingGroup(MeetingGroup):
     '''Adapter that adapts a meeting group implementing IMeetingGroup to the
