@@ -266,25 +266,6 @@ def addDemoData(context):
     # create 5 meetings : 2 passed, 1 current and 2 future
     today = DateTime()
     dates = [today-13, today-6, today+1, today+8, today+15]
-    # login as 'dgen'
-    mTool.createMemberArea('dgen')
-    secrFolder = tool.getPloneMeetingFolder(cfg.getId(), 'dgen')
-    for date in dates:
-        meetingId = secrFolder.invokeFactory('MeetingCollege', id=date.strftime('%Y%m%d'))
-        meeting = getattr(secrFolder, meetingId)
-        meeting.setDate(date)
-        pTool.changeOwnershipOf(meeting, 'dgen')
-        meeting.processForm()
-        # -13 meeting is closed
-        if date == today-13:
-            wfTool.doActionFor(meeting, 'freeze')
-            wfTool.doActionFor(meeting, 'decide')
-            wfTool.doActionFor(meeting, 'close')
-        # -6 meeting is frozen
-        if date == today-6:
-            wfTool.doActionFor(meeting, 'freeze')
-            wfTool.doActionFor(meeting, 'decide')
-        meeting.reindexObject()
 
     # items dict here : the key is the user we will create the item for
     # we use item templates so content is created for the demo
@@ -348,18 +329,41 @@ def addDemoData(context):
                        'review_state': 'validated',
                        },),
              }
-    for userId in items:
-        userFolder = tool.getPloneMeetingFolder(cfg.getId(), userId)
-        for item in items[userId]:
-            # get the template then clone it
-            template = getattr(tool.getMeetingConfig(userFolder).itemtemplates, item['templateId'])
-            newItem = template.clone(newOwnerId=userId,
-                                     destFolder=userFolder,
-                                     newPortalType=cfg.getItemTypeName())
-            newItem.setTitle(item['title'])
-            newItem.setBudgetRelated(item['budgetRelated'])
-            if item['review_state'] in ['proposed', 'validated', ]:
-                wfTool.doActionFor(newItem, 'propose')
-            if item['review_state'] == 'validated':
-                wfTool.doActionFor(newItem, 'validate')
-            newItem.reindexObject()
+    # login as 'dgen'
+    mTool.createMemberArea('dgen')
+    for cfg in tool.objectValues('MeetingConfig'):
+        secrFolder = tool.getPloneMeetingFolder(cfg.getId(), 'dgen')
+        # create meetings
+        for date in dates:
+            meetingId = secrFolder.invokeFactory(cfg.getMeetingTypeName(), id=date.strftime('%Y%m%d'))
+            meeting = getattr(secrFolder, meetingId)
+            meeting.setDate(date)
+            pTool.changeOwnershipOf(meeting, 'dgen')
+            meeting.processForm()
+            # -13 meeting is closed
+            if date == today-13:
+                wfTool.doActionFor(meeting, 'freeze')
+                wfTool.doActionFor(meeting, 'decide')
+                wfTool.doActionFor(meeting, 'close')
+            # -6 meeting is frozen
+            if date == today-6:
+                wfTool.doActionFor(meeting, 'freeze')
+                wfTool.doActionFor(meeting, 'decide')
+            meeting.reindexObject()
+
+        # create items
+        for userId in items:
+            userFolder = tool.getPloneMeetingFolder(cfg.getId(), userId)
+            for item in items[userId]:
+                # get the template then clone it
+                template = getattr(tool.getMeetingConfig(userFolder).itemtemplates, item['templateId'])
+                newItem = template.clone(newOwnerId=userId,
+                                         destFolder=userFolder,
+                                         newPortalType=cfg.getItemTypeName())
+                newItem.setTitle(item['title'])
+                newItem.setBudgetRelated(item['budgetRelated'])
+                if item['review_state'] in ['proposed', 'validated', ]:
+                    wfTool.doActionFor(newItem, 'propose')
+                if item['review_state'] == 'validated':
+                    wfTool.doActionFor(newItem, 'validate')
+                newItem.reindexObject()

@@ -595,6 +595,7 @@ councilMeeting.recurringItems = [
         category='recurrents',
         proposingGroup='secretariat',
         decision='Procès-verbal approuvé'), ]
+councilMeeting.itemTemplates = collegeMeeting.itemTemplates
 
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(collegeMeeting, councilMeeting),
