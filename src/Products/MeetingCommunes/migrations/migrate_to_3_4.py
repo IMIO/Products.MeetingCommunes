@@ -41,6 +41,7 @@ class Migrate_To_3_4(PMMigrate_To_3_4):
            PloneMeeting, this way, we may launch some steps before PloneMeeting ones.
            Here we will update used workflows before letting PM do his job."""
         logger.info('Replacing old no more existing workflows...')
+        PMMigrate_To_3_4._after_reinstall(self)
         for cfg in self.tool.objectValues('MeetingConfig'):
             # MeetingItem workflow
             if cfg.getItemWorkflow() == 'meetingitemcollege_workflow':
