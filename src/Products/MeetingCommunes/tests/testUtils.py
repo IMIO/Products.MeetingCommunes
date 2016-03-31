@@ -34,13 +34,13 @@ class testUtils(MeetingCommunesTestCase):
 
     def setUp(self):
         MeetingCommunesTestCase.setUp(self)
-        #add the ExternalMethod export_meetinggroups in Zope
+        # add the ExternalMethod export_meetinggroups in Zope
         manage_addExternalMethod(self.portal.aq_inner.aq_parent,
                                  'export_meetinggroups',
                                  '',
                                  'Products.MeetingCommunes.utils',
                                  'export_meetinggroups')
-        #add the ExternalMethod import_meetinggroups in Zope
+        # add the ExternalMethod import_meetinggroups in Zope
         manage_addExternalMethod(self.portal.aq_inner.aq_parent,
                                  'import_meetinggroups',
                                  '',
@@ -77,15 +77,15 @@ class testUtils(MeetingCommunesTestCase):
           Check that calling this method creates the MeetingGroups if not exist
         """
         self.changeUser('admin')
-        #if we pass a dict containing the existing groups, it does nothing but
-        #returning that the groups already exist
+        # if we pass a dict containing the existing groups, it does nothing but
+        # returning that the groups already exist
         dict = self._exportMeetingGroups()
         expected = 'MeetingGroup endUsers already exists\n' \
                    'MeetingGroup vendors already exists\n' \
                    'MeetingGroup developers already exists'
         res = self._importMeetingGroups(dict)
         self.assertEquals(expected, res)
-        #but it can also add a MeetingGroup if it does not exist
+        # but it can also add a MeetingGroup if it does not exist
         dict['newGroup'] = ('New group title', 'New group description', 'NGAcronym', 'python:False')
         expected = 'MeetingGroup endUsers already exists\n' \
                    'MeetingGroup vendors already exists\n' \

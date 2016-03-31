@@ -3,7 +3,6 @@ from DateTime import DateTime
 from Products.PloneMeeting.profiles import MeetingFileTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import PodTemplateDescriptor
-from Products.PloneMeeting.profiles import UserDescriptor
 from Products.PloneMeeting.profiles import GroupDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration

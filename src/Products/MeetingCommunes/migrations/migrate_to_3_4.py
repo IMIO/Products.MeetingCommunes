@@ -48,9 +48,9 @@ class Migrate_To_3_4(PMMigrate_To_3_4):
                 cfg.setItemWorkflow('meetingitemcommunes_workflow')
                 cfg._v_oldItemWorkflow = 'meetingitemcollege_workflow'
                 wfAdaptations = list(cfg.getWorkflowAdaptations())
-                if not 'no_publication' in wfAdaptations:
+                if 'no_publication' not in wfAdaptations:
                     wfAdaptations.append('no_publication')
-                if not 'no_global_observation' in wfAdaptations:
+                if 'no_global_observation' not in wfAdaptations:
                     wfAdaptations.append('no_global_observation')
                 cfg.setWorkflowAdaptations(wfAdaptations)
             if cfg.getItemWorkflow() == 'meetingitemcouncil_workflow':

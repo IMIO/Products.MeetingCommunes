@@ -44,7 +44,7 @@ def postInstall(context):
         return
     logStep("postInstall", context)
     site = context.getSite()
-    #need to reinstall PloneMeeting after reinstalling MC workflows to re-apply wfAdaptations
+    # need to reinstall PloneMeeting after reinstalling MC workflows to re-apply wfAdaptations
     reinstallPloneMeeting(context, site)
     showHomeTab(context, site)
     reorderSkinsLayers(context, site)
@@ -93,9 +93,9 @@ def initializeTool(context):
         return
 
     logStep("initializeTool", context)
-    #PloneMeeting is no more a dependency to avoid
-    #magic between quickinstaller and portal_setup
-    #so install it manually
+    # PloneMeeting is no more a dependency to avoid
+    # magic between quickinstaller and portal_setup
+    # so install it manually
     _installPloneMeeting(context)
     return ToolInitializer(context, PROJECTNAME).run()
 
@@ -265,7 +265,7 @@ def addDemoData(context):
     mTool.createMemberArea('agentCompta')
     # create 5 meetings : 2 passed, 1 current and 2 future
     today = DateTime()
-    dates = [today-13, today-6, today+1, today+8, today+15]
+    dates = [today - 13, today - 6, today + 1, today + 8, today + 15]
 
     # items dict here : the key is the user we will create the item for
     # we use item templates so content is created for the demo
@@ -341,12 +341,12 @@ def addDemoData(context):
             pTool.changeOwnershipOf(meeting, 'dgen')
             meeting.processForm()
             # -13 meeting is closed
-            if date == today-13:
+            if date == today - 13:
                 wfTool.doActionFor(meeting, 'freeze')
                 wfTool.doActionFor(meeting, 'decide')
                 wfTool.doActionFor(meeting, 'close')
             # -6 meeting is frozen
-            if date == today-6:
+            if date == today - 6:
                 wfTool.doActionFor(meeting, 'freeze')
                 wfTool.doActionFor(meeting, 'decide')
             meeting.reindexObject()

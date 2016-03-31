@@ -27,17 +27,3 @@
 __author__ = """Gauthier Bastien <g.bastien@imio.be>, Stephan Geulette
 <s.geulette@imio.be>"""
 __docformat__ = 'plaintext'
-
-
-##code-section init-module-header #fill in your manual code here
-##/code-section init-module-header
-
-
-# Subpackages
-# Additional
-
-# Classes
-
-##code-section init-module-footer #fill in your manual code here
-##/code-section init-module-footer
-

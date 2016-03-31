@@ -147,7 +147,7 @@ class CustomMeeting(Meeting):
         for elt in itemUids:
             if elt == '':
                 itemUids.remove(elt)
-        #no filtering, return the items ordered
+        # no filtering, return the items ordered
         if not categories and not ignore_review_states and privacy == '*' and \
            oralQuestion == 'both' and toDiscuss == 'both':
             return self.context.getItems(uids=itemUids, listTypes=listTypes, ordered=True)
@@ -171,14 +171,14 @@ class CustomMeeting(Meeting):
             elif excludedCategories and obj.getCategory() in excludedCategories:
                 continue
             filteredItemUids.append(itemUid)
-        #in case we do not have anything, we return an empty list
+        # in case we do not have anything, we return an empty list
         if not filteredItemUids:
             return []
         else:
             items = self.context.getItems(uids=filteredItemUids, listTypes=listTypes, ordered=True)
             if renumber:
-                #return a list of tuple with first element the number and second
-                #element the item itself
+                # return a list of tuple with first element the number and second
+                # element the item itself
                 i = firstNumber
                 res = []
                 for item in items:
@@ -233,9 +233,9 @@ class CustomMeeting(Meeting):
                 i += 1
                 if groups.index(meetingGroup) < groups.index(usedGroup):
                     if item:
-                        categoryList.insert(i+1, [meetingGroup, item])
+                        categoryList.insert(i + 1, [meetingGroup, item])
                     else:
-                        categoryList.insert(i+1, [meetingGroup])
+                        categoryList.insert(i + 1, [meetingGroup])
                     groupInserted = True
                     break
             if not groupInserted:
@@ -246,7 +246,7 @@ class CustomMeeting(Meeting):
         else:
             # Insert the item into the existing group.
             if item:
-                categoryList[groupIndex+1].append(item)
+                categoryList[groupIndex + 1].append(item)
 
     def _insertItemInCategory(self, categoryList, item, byProposingGroup, groupPrefixes, groups):
         '''This method is used by the next one for inserting an item into the
@@ -399,8 +399,8 @@ class CustomMeeting(Meeting):
                     # The method does nothing if the group (or another from the
                     # same macro-group) is already there.
         if renumber:
-            #return a list of tuple with first element the number and second
-            #element the item itself
+            # return a list of tuple with first element the number and second
+            # element the item itself
             i = firstNumber
             res = []
             for item in items:
@@ -491,9 +491,9 @@ class CustomMeeting(Meeting):
                     res[catNum][1][item.getItemNumber()] = item
                 else:
                     res[catNum] = {}
-                    #first value of the list is the category object
+                    # first value of the list is the category object
                     res[catNum][0] = item.getCategory(True)
-                    #second value of the list is a list of items
+                    # second value of the list is a list of items
                     res[catNum][1] = {}
                     res[catNum][1][item.getItemNumber()] = item
 
@@ -525,7 +525,7 @@ class CustomMeeting(Meeting):
                 resitemkey.sort()
                 ressorti1 = []
                 for j in resitemkey:
-                    k = k+1
+                    k = k + 1
                     ressorti1.append([res[i][1][j], k])
                 ressorti.append(ressorti1)
                 ressort.append(ressorti)
@@ -538,8 +538,8 @@ class CustomMeeting(Meeting):
             return formated assembly with 'absent', 'excused', ... '''
         if focus not in ('present', 'excuse', 'absent'):
             return ''
-        #ass is, ie: Pierre Helson, Bourgmestre, Président
-        #focus is present, excuse or absent
+        # ie: Pierre Helson, Bourgmestre, Président
+        # focus is present, excuse or absent
         assembly = self.context.getAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
         return formatedAssembly(assembly, focus)
 
@@ -598,14 +598,14 @@ class CustomMeetingItem(MeetingItem):
                 groupId = rowIdOrGroupId
                 # append it only if not already into res and if
                 # we have no 'row_id' for this adviser in adviceIndex
-                if not groupId in res and \
+                if groupId not in res and \
                    (groupId in self.context.adviceIndex and not self.context.adviceIndex[groupId]['row_id']):
                     res.append(groupId)
             else:
                 groupId = cfg._dataForCustomAdviserRowId(rowIdOrGroupId)['group']
                 # append it only if not already into res and if
                 # we have a 'row_id' for this adviser in adviceIndex
-                if not groupId in res and \
+                if groupId not in res and \
                     (groupId in self.context.adviceIndex and
                      self.context.adviceIndex[groupId]['row_id'] == rowIdOrGroupId):
                     res.append(groupId)
@@ -652,8 +652,8 @@ class CustomMeetingItem(MeetingItem):
             return formated assembly with 'absent', 'excused', ... '''
         if focus not in ('present', 'excuse', 'absent'):
             return ''
-        #ass is, ie: Pierre Helson, Bourgmestre, Président
-        #focus is present, excuse or absent
+        # ie: Pierre Helson, Bourgmestre, Président
+        # focus is present, excuse or absent
         assembly = self.context.getItemAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
         return formatedAssembly(assembly, focus)
 
@@ -1010,28 +1010,28 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
         ''' Return the Assembly between two tag.
             This method is used in templates.
         '''
-        #Pierre Dupont - Bourgmestre,
-        #Charles Exemple - 1er Echevin,
-        #Echevin Un, Echevin Deux excusé, Echevin Trois - Echevins,
-        #Jacqueline Exemple, Responsable du CPAS
-        #Absentes:
-        #Mademoiselle x
-        #Excusés:
-        #Monsieur Y, Madame Z
+        # Pierre Dupont - Bourgmestre,
+        # Charles Exemple - 1er Echevin,
+        # Echevin Un, Echevin Deux excusé, Echevin Trois - Echevins,
+        # Jacqueline Exemple, Responsable du CPAS
+        # Absentes:
+        # Mademoiselle x
+        # Excusés:
+        # Monsieur Y, Madame Z
         res = []
         tmp = ['<p class="mltAssembly">']
         splitted_assembly = assembly.replace('<p>', '').replace('</p>', '').split('<br />')
         start_text = startTxt == ''
         for assembly_line in splitted_assembly:
             assembly_line = assembly_line.strip()
-            #check if this line correspond to startTxt (in this cas, we can begin treatment)
+            # check if this line correspond to startTxt (in this cas, we can begin treatment)
             if not start_text:
                 start_text = assembly_line.startswith(startTxt)
                 if start_text:
-                    #when starting treatment, add tag (not use if startTxt=='')
+                    # when starting treatment, add tag (not use if startTxt=='')
                     res.append(assembly_line)
                 continue
-            #check if we must stop treatment...
+            # check if we must stop treatment...
             if assembly_line.endswith(':'):
                 break
             lines = assembly_line.split(',')

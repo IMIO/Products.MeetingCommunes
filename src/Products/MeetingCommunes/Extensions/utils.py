@@ -59,7 +59,7 @@ def import_meetingsGroups_from_csv(self, fname=None):
     from Products.CMFPlone.utils import safe_unicode
 
     if not member.has_role('Manager'):
-        raise Unauthorized, 'You must be a Manager to access this script !'
+        raise Unauthorized('You must be a Manager to access this script !')
 
     if not fname:
         return "This script needs a 'fname' parameter"
@@ -104,7 +104,7 @@ def import_meetingsUsersAndRoles_from_csv(self, fname=None):
 
     member = self.portal_membership.getAuthenticatedMember()
     if not member.has_role('Manager'):
-        raise Unauthorized, 'You must be a Manager to access this script !'
+        raise Unauthorized('You must be a Manager to access this script !')
 
     if not fname:
         return "This script needs a 'fname' parameter"
@@ -132,7 +132,7 @@ def import_meetingsUsersAndRoles_from_csv(self, fname=None):
     registration = getToolByName(self, 'portal_registration', None)
     for row in reader:
         row_id = normalizeString(row['username'], self)
-        #add users if not exist
+        # add users if not exist
         if row_id not in [ud['userid'] for ud in acl.searchUsers()]:
             pms.addMember(row_id, row['password'], ('Member',), [])
             member = pms.getMemberById(row_id)
@@ -144,7 +144,7 @@ def import_meetingsUsersAndRoles_from_csv(self, fname=None):
             out.append("User '%s' is added" % row_id)
         else:
             out.append("User %s already exists" % row_id)
-        #attribute roles
+        # attribute roles
         group_title = safe_unicode(row['grouptitle'])
         grouptitle = normalizeString(group_title, self)
         groups = []
@@ -171,7 +171,7 @@ def import_meetingsCategories_from_csv(self, meeting_config='', isClassifier=Fal
     """
     member = self.portal_membership.getAuthenticatedMember()
     if not member.has_role('Manager'):
-        raise Unauthorized, 'You must be a Manager to access this script !'
+        raise Unauthorized('You must be a Manager to access this script !')
 
     if not fname or not meeting_config:
         return "This script needs a 'meeting_config' and 'fname' parameters"

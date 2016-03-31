@@ -73,7 +73,7 @@ class TransformXmlToMeetingOrItem:
         for items in node.getElementsByTagName("item"):
             try:
                 itemid = self.getText(node.getElementsByTagName("item")[i])
-                #récupération du point ayant comme référence le itemid
+                # récupération du point ayant comme référence le itemid
                 kw = {}
                 if meetingConfigType == 'college':
                     kw['portal_type'] = ('MeetingItemCollege',)
@@ -83,9 +83,9 @@ class TransformXmlToMeetingOrItem:
                 itemRef = self.__portal__.portal_catalog.searchResults(kw)
                 if itemRef:
                     item = itemRef[0].getObject()
-                    #si le point est déjà dans une séance, alors c'est que c'est un point remis
-                    #dans ce cas, nous allons créer une copie.
-                    #Mais on garde la date de création du point d'origine.
+                    # si le point est déjà dans une séance, alors c'est que c'est un point remis
+                    # dans ce cas, nous allons créer une copie.
+                    # Mais on garde la date de création du point d'origine.
                     if item.getMeeting():
                         creationDate = item.created()
                         item = item.clone()
@@ -96,14 +96,14 @@ class TransformXmlToMeetingOrItem:
                         except:
                             pass  # prevalidation isn't use
                         self.__portal__.portal_workflow.doActionFor(item, 'validate')
-                    #présentation et insertion du point dans la séance
+                    # présentation et insertion du point dans la séance
                     self.__portal__.portal_workflow.doActionFor(item, 'present')
                 else:
                     self.__out__.append('Le point %s est introuvable.' % itemid)
                 i = i + 1
             except:
                 continue
-        #don't closed empty meeting
+        # don't closed empty meeting
         if meeting.getAllItems():
             meeting.portal_workflow.doActionFor(meeting, 'freeze')
             meeting.portal_workflow.doActionFor(meeting, 'decide')
@@ -119,7 +119,7 @@ class TransformXmlToMeetingOrItem:
         """
            Nous allons ajouter l'annexe et faire un lien dans le texte de l'observation
         """
-        #nous utiliserons le répertoire de xmlimport
+        # nous utiliserons le répertoire de xmlimport
         if meetingConfigType == 'college':
             Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get('meeting-config-college')
         else:
@@ -128,7 +128,7 @@ class TransformXmlToMeetingOrItem:
         if not os.path.isfile(annexe):
             self.__out__.append("Le fichier %s n'a pas ete trouve." % annexe.decode('utf-8'))
             return
-        #créons le fichier
+        # créons le fichier
         _id = os.path.basename(annexe)
         if not getattr(Memberfolder, _id, None):
             f = file(annexe, 'rb')
@@ -136,7 +136,7 @@ class TransformXmlToMeetingOrItem:
             f.close()
         else:
             fileId = _id
-        #Ajoutons le commentaire avec le lien
+        # Ajoutons le commentaire avec le lien
         fileObj = getattr(Memberfolder, fileId)
         _observations = 'Un fichier est attaché à cette séance. Vous pouvez l\'ouvrir en cliquant '\
                         '<a href="./resolveuid/%s">ici.</a>' % fileObj.UID()
@@ -195,12 +195,12 @@ class TransformXmlToMeetingOrItem:
             return self.__meetingList__
 
         self.__meetingList__ = []
-        #nous utiliserons le répertoire de xmlimport
+        # nous utiliserons le répertoire de xmlimport
         if meetingConfigType == 'college':
             Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get('meeting-config-college')
         else:
             Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get('meeting-config-council')
-        #nous ajoutons les droits nécessaire sinon l'invoke factory va raler
+        # nous ajoutons les droits nécessaire sinon l'invoke factory va raler
         Memberfolder.manage_addLocalRoles('admin', ('MeetingManagerLocal', 'MeetingManager'))
         lat = list(Memberfolder.getLocallyAllowedTypes())
         if meetingConfigType == 'college':
@@ -213,7 +213,7 @@ class TransformXmlToMeetingOrItem:
         for meetings in self.getRootElement().getElementsByTagName("seance"):
             if meetings.nodeType == meetings.ELEMENT_NODE:
                 try:
-                    #récupération des données de la séance
+                    # récupération des données de la séance
                     _id = self.getText(meetings.getElementsByTagName("id")[0])
                     _date = self.getText(meetings.getElementsByTagName("date")[0])
                     _startDate = self.getText(meetings.getElementsByTagName("startDate")[0])
@@ -224,7 +224,7 @@ class TransformXmlToMeetingOrItem:
                     if getattr(Memberfolder, _id, None):
                         self.__out__.append('La seance %s already exist.' % _id)
                         continue
-                    #14/09/2009 >>> 20090914
+                    # 14/09/2009 >>> 20090914
                     date_str = '%s/%s/%s 00:00:00 GMT+1' % (_date[6:10], _date[3:5], _date[0:2])
                     tme = DateTime(date_str)
                     meetingid = Memberfolder.invokeFactory(type_name=MeetingType, id=_id, date=tme)
@@ -233,7 +233,7 @@ class TransformXmlToMeetingOrItem:
                     meeting.setAssembly(_presences)
                     meeting.setPlace(_place)
                     meeting.at_post_create_script()
-                    #la modification des dates éffectives doivent se faire après la création de la séance.
+                    # la modification des dates éffectives doivent se faire après la création de la séance.
                     _heure = _startDate[8:10]
                     if _heure == '24':
                         _heure = '0'
@@ -253,7 +253,7 @@ class TransformXmlToMeetingOrItem:
                                               meetings.getElementsByTagName("pdfSeanceLink")[0], startPath, newPath)
                     except:
                         self.__out__.append('pas de pdf pour cette seance %s.' % _id)
-                    #Maintenant nous allons insérer les points de la séance.
+                    # Maintenant nous allons insérer les points de la séance.
                     self.insertItemInMeeting(meetingConfigType, meeting, meetings.getElementsByTagName("pointsRef")[0])
                     self.__meetingList__.append(meeting)
                 except Exception, msg:
@@ -283,10 +283,10 @@ class TransformXmlToMeetingOrItem:
         for items in self.getRootElement().getElementsByTagName("point"):
             if items.nodeType == items.ELEMENT_NODE:
                 try:
-                    #récuptération des données du point
+                    # récuptération des données du point
                     _id = self.getText(items.getElementsByTagName("id")[0])
-                    #if _id == '103513':
-                    #    import pdb;pdb.set_trace()
+                    # if _id == '103513':
+                    # import pdb;pdb.set_trace()
                     _title = self.getText(items.getElementsByTagName("title")[0])
                     _description = self.getText(items.getElementsByTagName("description")[0])
                     _creatorId = self.getText(items.getElementsByTagName("creatorId")[0])
@@ -296,7 +296,7 @@ class TransformXmlToMeetingOrItem:
                     _decision = self.getText(items.getElementsByTagName("decision")[0])
                     _category = self.getText(items.getElementsByTagName("category")[0])
                     if _creatorId not in useridLst:
-                        #utilisons le répertoire de l'utilisateur xmlimport'
+                        # utilisons le répertoire de l'utilisateur xmlimport'
                         Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get(meetingConfig)
                         _creatorId = 'xmlimport'
                     else:
@@ -339,7 +339,7 @@ class TransformXmlToMeetingOrItem:
                                               startPath, newPath)
                     except:
                         pass
-                    #plaçons le point en état validé afin qu'il puisse être placé dans une séance
+                    # plaçons le point en état validé afin qu'il puisse être placé dans une séance
                     item.portal_workflow.doActionFor(item, 'propose')
                     item.portal_workflow.doActionFor(item, 'validate')
                     self.__itemList__.append(item)

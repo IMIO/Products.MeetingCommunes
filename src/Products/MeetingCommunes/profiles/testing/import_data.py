@@ -165,7 +165,7 @@ getattr(developers, MEETINGREVIEWERS.keys()[-1]).append(pmReviewerLevel1)
 # put pmReviewerLevel2 in second level of reviewers from what is in MEETINGREVIEWERS
 getattr(developers, MEETINGREVIEWERS.keys()[0]).append(pmReviewerLevel2)
 
-#give an advice on recurring items
+# give an advice on recurring items
 vendors = GroupDescriptor('vendors', 'Vendors', 'Devil')
 vendors.creators.append(pmCreator2)
 vendors.reviewers.append(pmReviewer2)
@@ -372,8 +372,8 @@ councilMeeting.meetingUsers = [muser_voter1, muser_voter2, ]
 councilMeeting.recurringItems = []
 councilMeeting.itemTemplates = (template1, template2)
 
-#no recurring items for this meetingConfig, only for tests !!!
-#so we can test a meetingConfig with recurring items (college) and without (council)
+# no recurring items for this meetingConfig, only for tests !!!
+# so we can test a meetingConfig with recurring items (college) and without (council)
 
 data = PloneMeetingConfiguration(
     meetingFolderTitle='Mes seances',
