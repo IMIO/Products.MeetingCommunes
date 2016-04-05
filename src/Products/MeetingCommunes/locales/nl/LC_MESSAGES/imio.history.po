@@ -14,6 +14,18 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: DOMAIN\n"
 
+#. Default: "Item created from a CoDir item."
+msgid "create_to_meeting-config-bp_from_codir_comments"
+msgstr ""
+
+#. Default: "Item created from a BP item."
+msgid "create_to_meeting-config-cas_from_meeting-config-bp_comments"
+msgstr ""
+
+#. Default: "Item created from a CoDir item."
+msgid "create_to_meeting-config-college_from_codir_comments"
+msgstr ""
+
 #. Default: "Item created from a council item."
 msgid "create_to_meeting-config-college_from_meeting-config-council_comments"
 msgstr ""
