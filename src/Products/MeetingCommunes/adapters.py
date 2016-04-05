@@ -728,6 +728,7 @@ class CustomMeetingConfig(MeetingConfig):
                         ],
                         'sort_on': u'created',
                         'sort_reversed': True,
+                        'showNumberOfItems': False,
                         'tal_condition': "python: not tool.userIsAmong('reviewers')",
                         'roles_bypassing_talcondition': ['Manager', ]
                     }
@@ -747,6 +748,7 @@ class CustomMeetingConfig(MeetingConfig):
                         ],
                         'sort_on': u'created',
                         'sort_reversed': True,
+                        'showNumberOfItems': False,
                         'tal_condition': "",
                         'roles_bypassing_talcondition': ['Manager', ]
                     }
@@ -775,6 +777,7 @@ class CustomMeetingConfig(MeetingConfig):
                             ],
                             'sort_on': u'created',
                             'sort_reversed': True,
+                            'showNumberOfItems': False,
                             'tal_condition':
                             "python: '%s_budgetimpacteditors' % cfg.getId() in member.getGroups() or "
                             "tool.isManager(here)",
