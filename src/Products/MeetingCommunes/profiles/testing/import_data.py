@@ -260,6 +260,7 @@ collegeMeeting.meetingAppDefaultView = 'searchallitems'
 collegeMeeting.itemDocFormats = ('odt', 'pdf')
 collegeMeeting.meetingDocFormats = ('odt', 'pdf')
 collegeMeeting.useAdvices = True
+collegeMeeting.selectableAdvisers = ['developers', 'vendors']
 collegeMeeting.itemAdviceStates = ['proposed', ]
 collegeMeeting.itemAdviceEditStates = ['proposed', 'validated']
 collegeMeeting.itemAdviceViewStates = ['presented', ]
@@ -357,6 +358,7 @@ councilMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_categories',
                                              'reverse': '0'}, )
 councilMeeting.useGroupsAsCategories = False
 councilMeeting.useAdvices = False
+councilMeeting.selectableAdvisers = []
 councilMeeting.itemAdviceStates = ['proposed', ]
 councilMeeting.itemAdviceEditStates = ['proposed', 'validated']
 councilMeeting.itemAdviceViewStates = ['presented', ]

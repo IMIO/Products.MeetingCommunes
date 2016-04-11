@@ -156,8 +156,7 @@ bourgmestreMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 bourgmestreMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
 bourgmestreMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 bourgmestreMeeting.useCopies = True
-bourgmestreMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
-                                           ]
+bourgmestreMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers')]
 bourgmestreMeeting.podTemplates = bourgmestreTemplates
 bourgmestreMeeting.meetingConfigsToCloneTo = []
 bourgmestreMeeting.recurringItems = []

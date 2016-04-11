@@ -195,6 +195,9 @@ bpMeeting.maxShownMeetings = 5
 bpMeeting.maxDaysDecisions = 60
 bpMeeting.meetingAppDefaultView = 'searchmyitems'
 bpMeeting.useAdvices = True
+bpMeeting.selectableAdvisers = ['admingen', 'aidefamilles', 'comptabilite',
+                                'informatique', 'isp', 'dettes', 'personnel',
+                                'social', 'divers']
 bpMeeting.itemAdviceStates = ('validated',)
 bpMeeting.itemAdviceEditStates = ('validated',)
 bpMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',
@@ -255,6 +258,7 @@ casMeeting.maxShownMeetings = 5
 casMeeting.maxDaysDecisions = 60
 casMeeting.meetingAppDefaultView = 'searchmyitems'
 casMeeting.useAdvices = True
+casMeeting.selectableAdvisers = []
 casMeeting.itemAdviceStates = ('validated',)
 casMeeting.itemAdviceEditStates = ('validated',)
 casMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',

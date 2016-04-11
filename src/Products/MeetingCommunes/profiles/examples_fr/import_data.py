@@ -263,6 +263,8 @@ collegeMeeting.maxShownMeetings = 5
 collegeMeeting.maxDaysDecisions = 60
 collegeMeeting.meetingAppDefaultView = 'searchmyitems'
 collegeMeeting.useAdvices = True
+collegeMeeting.selectableAdvisers = ['comptabilite', 'dirfin', 'dirgen', 'informatique',
+                                     'personnel', 'secretariat', 'travaux']
 collegeMeeting.itemAdviceStates = ('validated',)
 collegeMeeting.itemAdviceEditStates = ('validated',)
 collegeMeeting.itemAdviceViewStates = ('validated',
