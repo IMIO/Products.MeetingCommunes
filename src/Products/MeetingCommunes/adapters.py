@@ -807,12 +807,17 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
            if decision field is empty.'''
         tool = getToolByName(self.context, 'portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
-        initializeDecision = cfg.getInitItemDecisionIfEmptyOnDecide()
-        for item in self.context.getItems():
-            if initializeDecision:
+        if cfg.getInitItemDecisionIfEmptyOnDecide():
+            for item in self.context.getItems():
                 # If deliberation (motivation+decision) is empty,
                 # initialize it the decision field
                 item._initDecisionFieldIfEmpty()
+
+    security.declarePrivate('doBackToPublished')
+
+    def doBackToPublished(self, stateChange):
+        '''We do not impact items while going back from decided.'''
+        pass
 
 
 class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
@@ -870,6 +875,19 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
             res = True
         return res
 
+    security.declarePublic('mayPublish')
+
+    def mayPublish(self):
+        """
+          A MeetingManager may publish (itempublish) an item if the meeting is at least published
+        """
+        res = False
+        if checkPermission(ReviewPortalContent, self.context):
+            if self.context.hasMeeting() and \
+               (self.context.getMeeting().queryState() in ('published', 'decided', 'closed', 'decisions_published',)):
+                res = True
+        return res
+
 
 class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
@@ -878,28 +896,6 @@ class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
     implements(IMeetingCouncilWorkflowActions)
     security = ClassSecurityInfo()
 
-    security.declarePrivate('doDecide')
-
-    def doDecide(self, stateChange):
-        '''We pass every item that is 'presented' in the 'itemfrozen'
-           state.  It is the case for late items. We initialize the decision
-           field with content of Title+Description if no decision has already
-           been written.'''
-        tool = getToolByName(self.context, 'portal_plonemeeting')
-        cfg = tool.getMeetingConfig(self.context)
-        initializeDecision = cfg.getInitItemDecisionIfEmptyOnDecide()
-        for item in self.context.getItems():
-            if initializeDecision:
-                # If deliberation (motivation+decision) is empty,
-                # initialize it the decision field
-                item._initDecisionFieldIfEmpty()
-
-    security.declarePrivate('doBackToPublished')
-
-    def doBackToPublished(self, stateChange):
-        '''We do not impact items while going back from decided.'''
-        pass
-
 
 class MeetingCouncilWorkflowConditions(MeetingCollegeWorkflowConditions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
@@ -907,14 +903,6 @@ class MeetingCouncilWorkflowConditions(MeetingCollegeWorkflowConditions):
 
     implements(IMeetingCouncilWorkflowConditions)
     security = ClassSecurityInfo()
-
-    security.declarePublic('mayDecide')
-
-    def mayDecide(self):
-        res = False
-        if checkPermission(ReviewPortalContent, self.context):
-            res = True
-        return res
 
 
 class MeetingItemCouncilWorkflowActions(MeetingItemCollegeWorkflowActions):
@@ -931,30 +919,6 @@ class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions)
 
     implements(IMeetingItemCouncilWorkflowConditions)
     security = ClassSecurityInfo()
-
-    security.declarePublic('mayPublish')
-
-    def mayPublish(self):
-        """
-          A MeetingManager may publish (itempublish) an item if the meeting is at least published
-        """
-        res = False
-        if checkPermission(ReviewPortalContent, self.context):
-            if self.context.hasMeeting() and \
-               (self.context.getMeeting().queryState() in ('published', 'decided', 'closed', 'decisions_published',)):
-                res = True
-        return res
-
-    security.declarePublic('mayDecide')
-
-    def mayDecide(self):
-        '''We may decide an item if the linked meeting is in relevant state.'''
-        res = False
-        meeting = self.context.getMeeting()
-        if checkPermission(ReviewPortalContent, self.context) and \
-           meeting and meeting.adapted().isDecided():
-            res = True
-        return res
 
 
 class CustomToolPloneMeeting(ToolPloneMeeting):
