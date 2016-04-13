@@ -175,7 +175,7 @@ bpMeeting.categories = categories
 bpMeeting.shortName = 'bp'
 bpMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
                               annexeDecision, annexeAvis, annexeAvisLegal]
-bpMeeting.usedItemAttributes = ['budgetInfos', 'observations', ]
+bpMeeting.usedItemAttributes = ['budgetInfos', 'observations', 'notes', 'inAndOutMoves']
 bpMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
 bpMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 bpMeeting.meetingWorkflow = 'meetingcommunes_workflow'
@@ -238,7 +238,7 @@ casMeeting.categories = categories
 casMeeting.shortName = 'cas'
 casMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
                                annexeDecision, annexeAvis, annexeAvisLegal]
-casMeeting.usedItemAttributes = ['budgetInfos', 'observations', ]
+casMeeting.usedItemAttributes = ['budgetInfos', 'observations', 'notes', 'inAndOutMoves']
 casMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
 casMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 casMeeting.meetingWorkflow = 'meetingcommunes_workflow'

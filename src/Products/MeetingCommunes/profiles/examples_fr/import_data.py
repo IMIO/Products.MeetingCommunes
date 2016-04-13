@@ -232,7 +232,9 @@ collegeMeeting.usedItemAttributes = ['detailedDescription',
                                      'observations',
                                      'toDiscuss',
                                      'itemAssembly',
-                                     'itemIsSigned', ]
+                                     'itemIsSigned',
+                                     'notes',
+                                     'inAndOutMoves']
 collegeMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 collegeMeeting.recordMeetingHistoryStates = []
 collegeMeeting.itemsListVisibleColumns = ['Creator', 'CreationDate', 'review_state',
@@ -504,7 +506,9 @@ councilMeeting.usedItemAttributes = ['detailedDescription',
                                      'itemInitiator',
                                      'observations',
                                      'privacy',
-                                     'itemAssembly', ]
+                                     'itemAssembly',
+                                     'notes',
+                                     'inAndOutMoves']
 councilMeeting.usedMeetingAttributes = ['startDate',
                                         'midDate',
                                         'endDate',
