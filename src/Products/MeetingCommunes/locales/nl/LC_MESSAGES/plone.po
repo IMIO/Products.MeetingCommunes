@@ -161,6 +161,10 @@ msgstr ""
 msgid "Meetingcomitee"
 msgstr "Comitevergadering"
 
+#. Default: "Create an item CoGest from an item College"
+msgid "create_to_cogest_from_meeting-config-college"
+msgstr ""
+
 #. Default: "Create an item BP from an item CoDir"
 msgid "create_to_meeting-config-bp_from_codir"
 msgstr ""
@@ -171,6 +175,10 @@ msgstr ""
 
 #. Default: "Create an item college from an item CoDir"
 msgid "create_to_meeting-config-college_from_codir"
+msgstr ""
+
+#. Default: "Create an item College from an item CoGest"
+msgid "create_to_meeting-config-college_from_cogest"
 msgstr ""
 
 #. Default: "Create an item college from an item council"

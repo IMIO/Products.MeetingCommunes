@@ -30,10 +30,13 @@ class Migrate_To_3_4(PMMigrate_To_3_4):
     def _migrateItemPositiveDecidedStates(self):
         """Before, the states in which an item was auto sent to
            selected other meetingConfig was defined in a method
-           'itemPositiveDecidedStates' now it is stored in MeetingConfig.itemAutoSentToOtherMCStates."""
+           'itemPositiveDecidedStates' now it is stored in MeetingConfig.itemAutoSentToOtherMCStates.
+           We store these states in the MeetingConfig.itemPositiveDecidedStates, it is used
+           to display the 'sent from' leading icon on items sent from another MeetingConfig."""
         logger.info('Defining values for MeetingConfig.itemAutoSentToOtherMCStates...')
         for cfg in self.tool.objectValues('MeetingConfig'):
             cfg.setItemAutoSentToOtherMCStates(('accepted', 'accepted_but_modified', ))
+            cfg.setItemPositiveDecidedStates(('accepted', 'accepted_but_modified', ))
         logger.info('Done.')
 
     def _after_reinstall(self):

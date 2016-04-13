@@ -14,6 +14,10 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: DOMAIN\n"
 
+#. Default: "Item created from a College item."
+msgid "create_to_cogest_from_meeting-config-college_comments"
+msgstr "Point CoGest créé depuis un point Collège Communal."
+
 #. Default: "Item created from a CoDir item."
 msgid "create_to_meeting-config-bp_from_codir_comments"
 msgstr "Point BP créé depuis un point CoDir."
@@ -25,6 +29,10 @@ msgstr "Point CAS créé depuis un point BP."
 #. Default: "Item created from a CoDir item."
 msgid "create_to_meeting-config-college_from_codir_comments"
 msgstr "Point Collège Communal créé depuis un point CoDir."
+
+#. Default: "Item created from a CoGest item."
+msgid "create_to_meeting-config-college_from_cogest_comments"
+msgstr "Point Collège Communal créé depuis un point CoGest."
 
 #. Default: "Item created from a council item."
 msgid "create_to_meeting-config-college_from_meeting-config-council_comments"
