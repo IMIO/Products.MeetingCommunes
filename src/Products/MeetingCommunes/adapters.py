@@ -672,6 +672,11 @@ class CustomMeetingItem(MeetingItem):
         else:
             return False
 
+    def showFinanceAdviceTemplate(self):
+        """ """
+        item = self.getSelf()
+        return set(item.adapted().getUsedFinanceGroupId()).intersection(set(item.adviceIndex.keys()))
+
 
 class CustomMeetingGroup(MeetingGroup):
     '''Adapter that adapts a meeting group implementing IMeetingGroup to the

@@ -65,6 +65,11 @@ dfAdvicesTemplate.odt_file = 'synthese-avis-df.odt'
 dfAdvicesTemplate.pod_formats = ['odt', 'pdf', ]
 dfAdvicesTemplate.dashboard_collections_ids = ['searchitemswithfinanceadvice']
 
+dfAdviceTemplate = PodTemplateDescriptor('avis-df', 'Avis DF')
+dfAdvicesTemplate.odt_file = 'avis-df.odt'
+dfAdvicesTemplate.pod_formats = ['odt', 'pdf', ]
+dfAdvicesTemplate.tal_condition = 'python: context.adapted().showFinanceAdviceTemplate()'
+
 dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif', dashboard=True)
 dashboardTemplate.odt_file = 'recapitulatif-tb.odt'
 dashboardTemplate.tal_condition = 'python: context.absolute_url().endswith("/searches_items")'
@@ -235,7 +240,14 @@ collegeMeeting.usedItemAttributes = ['detailedDescription',
                                      'itemIsSigned',
                                      'notes',
                                      'inAndOutMoves']
-collegeMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
+collegeMeeting.usedMeetingAttributes = ['startDate',
+                                        'endDate',
+                                        'signatures',
+                                        'assembly',
+                                        'place',
+                                        'observations',
+                                        'notes',
+                                        'inAndOutMoves']
 collegeMeeting.recordMeetingHistoryStates = []
 collegeMeeting.itemsListVisibleColumns = ['Creator', 'CreationDate', 'review_state',
                                           'getProposingGroup', 'advices', 'actions']
@@ -515,7 +527,9 @@ councilMeeting.usedMeetingAttributes = ['startDate',
                                         'signatures',
                                         'assembly',
                                         'place',
-                                        'observations', ]
+                                        'observations',
+                                        'notes',
+                                        'inAndOutMoves']
 councilMeeting.recordMeetingHistoryStates = []
 councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.detailedDescription',
