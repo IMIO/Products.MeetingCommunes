@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 Older versions than 3.0 can be found at http://svn.communesplone.org/svn/communesplone/MeetingCommunes/tags/
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-3.4 (unreleased)
+4.0 (unreleased)
 ----------------
 - Adapted workflows to define the icon to use for transitions
 - Removed field MeetingConfig.cdldProposingGroup and use the 'indexAdvisers' value
