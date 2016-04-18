@@ -292,9 +292,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         # present every items in the meeting
         items = (i1, i2, i3)
         for item in items:
-            self.do(item, 'propose')
-            self.do(item, 'validate')
-            self.do(item, 'present')
+            self.presentItem(item)
         # check the decision field of every item
         self.assertTrue(i1.getDecision(keepWithNext=False) == "")
         self.assertTrue(i2.getDecision(keepWithNext=False) == '<p>Decision Item2</p>')
