@@ -44,13 +44,14 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
                                'pre_validation',
                                'pre_validation_keep_reviewer_permissions',
                                'return_to_proposing_group',
+                               'waiting_advices',
                                )))
 
-    def test_pm_validate_workflowAdaptations_added_no_publication(self):
+    def test_pm_Validate_workflowAdaptations_added_no_publication(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
         # we have a 'published' state in self.meetingConfig2
         self.meetingConfig = self.meetingConfig2
-        super(testWFAdaptations, self).test_pm_validate_workflowAdaptations_added_no_publication()
+        super(testWFAdaptations, self).test_pm_Validate_workflowAdaptations_added_no_publication()
 
     def test_pm_WFA_no_publication(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
