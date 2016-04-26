@@ -249,11 +249,11 @@ collegeMeeting.usedMeetingAttributes = ['startDate',
                                         'notes',
                                         'inAndOutMoves']
 collegeMeeting.recordMeetingHistoryStates = []
-collegeMeeting.itemsListVisibleColumns = ['Creator', 'CreationDate', 'review_state',
-                                          'getProposingGroup', 'advices', 'actions']
-collegeMeeting.itemColumns = ['Creator', 'CreationDate', 'review_state',
+collegeMeeting.itemColumns = ['Creator', 'CreationDate', 'ModificationDate', 'review_state',
                               'getProposingGroup', 'advices', 'linkedMeetingDate',
                               'getItemIsSigned', 'actions']
+collegeMeeting.itemsListVisibleColumns = ['Creator', 'CreationDate', 'review_state',
+                                          'getProposingGroup', 'advices', 'actions']
 collegeMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.detailedDescription',
                                        'MeetingItem.decision',
