@@ -3,7 +3,9 @@
 
 from Products.CMFPlone.utils import normalizeString
 from DateTime import DateTime
+import transaction
 import os
+from Products.PloneMeeting.interfaces import IAnnexable
 
 
 class TransformXmlToMeetingOrItem:
@@ -153,8 +155,8 @@ class TransformXmlToMeetingOrItem:
         _file = file(_path, 'rb')
         meetingConfig = self.__portal__.portal_plonemeeting.getMeetingConfig(item)
         annexeType = getattr(meetingConfig.meetingfiletypes, annexeType)
-        item.addAnnex(idCandidate=_id, annex_type=annexeType, annex_title=title, annex_file=_file,
-                      decisionRelated=False, meetingFileType=annexeType)
+        IAnnexable(item).addAnnex(idCandidate=_id, annex_title=title, annex_file=_file,
+                                  relatedTo='item', meetingFileTypeUID=annexeType.UID())
         _file.close()
 
     def addItemPDFPoint(self, item, node, Memberfolder, startPath, newPath):
@@ -264,7 +266,7 @@ class TransformXmlToMeetingOrItem:
         Memberfolder.setLocallyAllowedTypes(tuple(lat))
         return self.__meetingList__
 
-    def getItems(self, meetingConfigType, fmapping, startPath, newPath):
+    def getItems(self, fmapping, meetingConfigType, startPath, newPath):
         """
            Notre méthode pour créer les points
         """
@@ -368,14 +370,12 @@ def importResultFile(self, fname=None, fmapping=None, meetingConfigType=None, st
 
     if meetingConfigType not in ('college', 'council'):
         return "This script needs a 'meetingConfigType' parameter equal to college or council'"
-
-    if not startPath or newPath:
-        return "This script needs startPath and newPath to replace path for annexes like"\
+    if not startPath or not newPath:
+        return "This script needs startPath and newPath to replace path for annexes like "\
                "startPath='file:///var/gru/pdf-files',"\
                "newPath='/home/zope/repries-gembloux/pdf-files')"
-
     x = TransformXmlToMeetingOrItem(self, fname)
-    x.getItems(fmapping, meetingConfigType, startPath, newPath)
+    #x.getItems(fmapping, meetingConfigType, startPath, newPath)
     x.getMeeting(meetingConfigType, startPath, newPath)
     return '\n'.join(x.__out__)
 
@@ -397,8 +397,32 @@ def createDicoMapping(self, fmapping=None):
     for row in reader:
         old = row['OLD'].decode('UTF-8').strip()
         plone = row['PLONE'].decode('UTF-8').strip()
-        if old not in dic.keys:
+        if old not in dic.keys():
             dic[old] = plone
         else:
             self.__out__.append('key %s - %s already present' % (old, plone))
     return dic
+
+
+def getProposingGroupByAcronym(self, acronym):
+    """
+        Specific for GEMBLOUX !!!
+        get proposing group based on acronym
+    """
+    groups = self.__portal__.portal_plonemeeting.getMeetingGroups(onlyActive=False)
+    for group in groups:
+        if group.getAcronym() == acronym:
+            return group.getId()
+    return 'agora'
+
+
+def getCategoryByCategoryId(self, meetingConfig, catID):
+    """
+        Specific for GEMBLOUX !!!
+        get category based on field categoryId
+    """
+    categories = self.__portal__.portal_plonemeeting.get(meetingConfig).getCategories(onlySelectable=False)
+    for category in categories:
+        if category.getCategoryId() == catID:
+            return category.getId()
+    return 'agora'
