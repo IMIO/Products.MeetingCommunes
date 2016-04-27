@@ -3,7 +3,9 @@
 
 from Products.CMFPlone.utils import normalizeString
 from DateTime import DateTime
+import transaction
 import os
+from Products.PloneMeeting.interfaces import IAnnexable
 
 
 class TransformXmlToMeetingOrItem:
@@ -153,8 +155,8 @@ class TransformXmlToMeetingOrItem:
         _file = file(_path, 'rb')
         meetingConfig = self.__portal__.portal_plonemeeting.getMeetingConfig(item)
         annexeType = getattr(meetingConfig.meetingfiletypes, annexeType)
-        item.addAnnex(idCandidate=_id, annex_type=annexeType, annex_title=title, annex_file=_file,
-                      decisionRelated=False, meetingFileType=annexeType)
+        IAnnexable(item).addAnnex(idCandidate=_id, annex_title=title, annex_file=_file,
+                                  relatedTo='item', meetingFileTypeUID=annexeType.UID())
         _file.close()
 
     def addItemPDFPoint(self, item, node, Memberfolder, startPath, newPath):
@@ -210,61 +212,82 @@ class TransformXmlToMeetingOrItem:
             MeetingType = 'MeetingCouncil'
             lat.append(MeetingType)
         Memberfolder.setLocallyAllowedTypes(tuple(lat))
-        for meetings in self.getRootElement().getElementsByTagName("seance"):
-            if meetings.nodeType == meetings.ELEMENT_NODE:
-                try:
-                    #récupération des données de la séance
-                    _id = self.getText(meetings.getElementsByTagName("id")[0])
-                    _date = self.getText(meetings.getElementsByTagName("date")[0])
-                    _startDate = self.getText(meetings.getElementsByTagName("startDate")[0])
-                    _endDate = self.getText(meetings.getElementsByTagName("endDate")[0])
-                    _signatures = self.getSignatures(meetings.getElementsByTagName("signatures")[0], _id)
-                    _presences = self.getPresences(meetings.getElementsByTagName("presences")[0], _id)
-                    _place = self.getText(meetings.getElementsByTagName("place")[0])
-                    if getattr(Memberfolder, _id, None):
-                        self.__out__.append('La seance %s already exist.' % _id)
-                        continue
-                    #14/09/2009 >>> 20090914
-                    date_str = '%s/%s/%s 00:00:00 GMT+1' % (_date[6:10], _date[3:5], _date[0:2])
-                    tme = DateTime(date_str)
-                    meetingid = Memberfolder.invokeFactory(type_name=MeetingType, id=_id, date=tme)
-                    meeting = getattr(Memberfolder, meetingid)
-                    meeting.setSignatures(_signatures)
-                    meeting.setAssembly(_presences)
-                    meeting.setPlace(_place)
-                    meeting.at_post_create_script()
-                    #la modification des dates éffectives doivent se faire après la création de la séance.
-                    _heure = _startDate[8:10]
-                    if _heure == '24':
-                        _heure = '0'
-                    date_str = '%s/%s/%s %s:%s:%s GMT+1' % (_startDate[0:4], _startDate[4:6], _startDate[6:8], _heure,
-                                                            _startDate[10:12], _startDate[12:14])
-                    tme = DateTime(date_str)
-                    meeting.setStartDate(tme)
-                    _heure = _endDate[8:10]
-                    if _heure == '24':
-                        _heure = '0'
-                    date_str = '%s/%s/%s %s:%s:%s GMT+1' % (_endDate[0:4], _endDate[4:6], _endDate[6:8], _heure,
-                                                            _endDate[10:12], _endDate[12:14])
-                    tme = DateTime(date_str)
-                    meeting.setEndDate(tme)
+        cpt = 0
+        import pdb;pdb.set_trace()
+        try:
+            for meetings in self.getRootElement().getElementsByTagName("seance"):
+                if meetings.nodeType == meetings.ELEMENT_NODE:
                     try:
-                        self.addMeetingAnnexe(meetingConfigType, meeting,
-                                              meetings.getElementsByTagName("pdfSeanceLink")[0], startPath, newPath)
-                    except:
-                        self.__out__.append('pas de pdf pour cette seance %s.' % _id)
-                    #Maintenant nous allons insérer les points de la séance.
-                    self.insertItemInMeeting(meetingConfigType, meeting, meetings.getElementsByTagName("pointsRef")[0])
-                    self.__meetingList__.append(meeting)
-                except Exception, msg:
-                    self.__out__.append("L'importation de la seance %s a echouee. %s." % (_id, msg.value))
+                        #récupération des données de la séance
+                        _id = '10000%s'%self.getText(meetings.getElementsByTagName("id")[0])
+                        _date = self.getText(meetings.getElementsByTagName("date")[0])
+                        # pas de start date ou endate on prend la _date
+                        #_startDate = self.getText(meetings.getElementsByTagName("startDate")[0])
+                        #_endDate = self.getText(meetings.getElementsByTagName("endDate")[0])
+                        # pas de signatures, présences
+                        #_signatures = self.getSignatures(meetings.getElementsByTagName("signatures")[0], _id)
+                        #_presences = self.getPresences(meetings.getElementsByTagName("presences")[0], _id)
+                        #_place = self.getText(meetings.getElementsByTagName("place")[0])
+                        _signatures = ''
+                        _presences = ''
+                        _place = ''
+                        if getattr(Memberfolder, _id, None):
+                            # La séance est déjà existante
+                            continue
+                        #14/09/2009 >>> 20090914000000 GMT+1
+                        date_str = '%s/%s/%s 00:00:00 GMT+1' % (_date[6:10], _date[3:5], _date[0:2])
+                        tme = DateTime(date_str)
+                        meetingid = Memberfolder.invokeFactory(type_name=MeetingType, id=_id, date=tme)
+                        meeting = getattr(Memberfolder, meetingid)
+                        meeting.setSignatures(_signatures)
+                        meeting.setAssembly(_presences)
+                        meeting.setPlace(_place)
+                        meeting.at_post_create_script()
+                        # on prend la date pour construire la startDate et la endDate
+                        _startDate = '%s%s%s000000' % (_date[6:10], _date[3:5], _date[0:2])
+                        _endDate = '%s%s%s000000' % (_date[6:10], _date[3:5], _date[0:2])
+                        #la modification des dates éffectives doivent se faire après la création de la séance.
+                        _heure = _startDate[8:10]
+                        if _heure == '24':
+                            _heure = '0'
+                        date_str = '%s/%s/%s %s:%s:%s GMT+1' % (_startDate[0:4], _startDate[4:6], _startDate[6:8], _heure,
+                                                                _startDate[10:12], _startDate[12:14])
+                        tme = DateTime(date_str)
+                        meeting.setStartDate(tme)
+                        _heure = _endDate[8:10]
+                        if _heure == '24':
+                            _heure = '0'
+                        date_str = '%s/%s/%s %s:%s:%s GMT+1' % (_endDate[0:4], _endDate[4:6], _endDate[6:8], _heure,
+                                                                _endDate[10:12], _endDate[12:14])
+                        tme = DateTime(date_str)
+                        meeting.setEndDate(tme)
+                        try:
+                            self.addMeetingAnnexe(meetingConfigType, meeting,
+                                                  meetings.getElementsByTagName("pdfSeanceLink")[0], startPath, newPath)
+                        except:
+                            self.__out__.append('pas de pdf pour cette seance %s.' % _id)
+                        #Maintenant nous allons insérer les points de la séance.
+                        self.insertItemInMeeting(meetingConfigType, meeting, meetings.getElementsByTagName("pointsRef")[0])
+                        self.__meetingList__.append(meeting)
+
+                        cpt = cpt + 1
+                        # commit transaction si nous avons créé 25 séances
+                        if cpt >= 25:
+                            transaction.commit()
+                            cpt = 0
+                            print 'commit'
+                    except Exception, msg:
+                        self.__out__.append("L'importation de la seance %s a echouee. %s." % (_id, msg.value))
+        except:
+            a = 1
+            import pdb; pdb.set_trace()
         Memberfolder.manage_delLocalRoles('admin', ('MeetingManagerLocal', 'MeetingManager'))
         lat = list(Memberfolder.getLocallyAllowedTypes())
         lat.remove(MeetingType)
         Memberfolder.setLocallyAllowedTypes(tuple(lat))
         return self.__meetingList__
 
-    def getItems(self, meetingConfigType, fmapping, startPath, newPath):
+    def getItems(self, fmapping, meetingConfigType, startPath, newPath):
         """
            Notre méthode pour créer les points
         """
@@ -280,71 +303,98 @@ class TransformXmlToMeetingOrItem:
         else:
             meetingConfig = 'meeting-config-council'
             itemType = "MeetingItemCouncil"
-        for items in self.getRootElement().getElementsByTagName("point"):
-            if items.nodeType == items.ELEMENT_NODE:
-                try:
-                    #récuptération des données du point
-                    _id = self.getText(items.getElementsByTagName("id")[0])
-                    #if _id == '103513':
-                    #    import pdb;pdb.set_trace()
-                    _title = self.getText(items.getElementsByTagName("title")[0])
-                    _description = self.getText(items.getElementsByTagName("description")[0])
-                    _creatorId = self.getText(items.getElementsByTagName("creatorId")[0])
-                    _createDate = self.getText(items.getElementsByTagName("createDate")[0])
-                    _old_group = self.getText(items.getElementsByTagName("proposingGroup")[0])
-                    _proposingGroup = normalizeString(mapping[_old_group], self)
-                    _decision = self.getText(items.getElementsByTagName("decision")[0])
-                    _category = self.getText(items.getElementsByTagName("category")[0])
-                    if _creatorId not in useridLst:
-                        #utilisons le répertoire de l'utilisateur xmlimport'
-                        Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get(meetingConfig)
-                        _creatorId = 'xmlimport'
-                    else:
-                        Memberfolder = self.__portal__.Members.get(_creatorId).mymeetings.get(meetingConfig)
-                    if getattr(Memberfolder, _id, None):
-                        self.__out__.append('Le point %s already exist.' % _title.decode('utf-8'))
-                        continue
-                    itemid = Memberfolder.invokeFactory(type_name=itemType, id=_id, title=_title,
-                                                        description=_description)
-                    item = getattr(Memberfolder, itemid)
-                    item.setDecision(_decision)
-                    item.setProposingGroup(_proposingGroup)
-                    item.setCategory(_category)
-                    _heure = _createDate[8:10]
-                    if _heure == '24':
-                        _heure = '0'
-                    date_str = '%s/%s/%s %s:%s:%s GMT+1' % (_createDate[0:4], _createDate[4:6], _createDate[6:8],
-                                                            _heure, _createDate[10:12], _createDate[12:14])
-                    tme = DateTime(date_str)
-                    item.setCreationDate(tme)
-                    item.setCreators(_creatorId)
-                    item.at_post_create_script()
+        cpt = 0
+        try:
+            for items in self.getRootElement().getElementsByTagName("point"):
+                if items.nodeType == items.ELEMENT_NODE:
                     try:
-                        self.addItemPDFPoint(item, items.getElementsByTagName("pdfPointLink")[0], Memberfolder,
-                                             startPath, newPath)
-                    except:
-                        pass
-                    try:
-                        self.addItemAnnexes(item, items.getElementsByTagName("annexesLink")[0], Memberfolder, startPath,
-                                            newPath)
-                    except:
-                        pass
-                    try:
-                        self.addItemAdvises(item, items.getElementsByTagName("advisesLink")[0], Memberfolder, startPath,
-                                            newPath)
-                    except:
-                        pass
-                    try:
-                        self.addItemPDFDelibe(item, items.getElementsByTagName("pdfDeliberationLink")[0], Memberfolder,
-                                              startPath, newPath)
-                    except:
-                        pass
-                    #plaçons le point en état validé afin qu'il puisse être placé dans une séance
-                    item.portal_workflow.doActionFor(item, 'propose')
-                    item.portal_workflow.doActionFor(item, 'validate')
-                    self.__itemList__.append(item)
-                except Exception, msg:
-                    self.__out__.append("L'importation du point %s a echouee.%s." % (_id, msg.value))
+                        #récuptération des données du point
+                        _id = self.getText(items.getElementsByTagName("id")[0])
+                        #if _id == '245':
+                        #    import pdb;pdb.set_trace()
+                        _title = self.getText(items.getElementsByTagName("title")[0])
+                        # pour gembloux, pas de description
+                        #_description = self.getText(items.getElementsByTagName("description")[0])
+                        _description = '<p></p>'
+                        # Pour Gembloux, il faut mettre en lowercase le creator
+                        _creatorId = self.getText(items.getElementsByTagName("creatorId")[0]).lower()
+                        #_createDate = self.getText(items.getElementsByTagName("createDate")[0])
+                        _createDate = '20160310120000'
+                        _old_group = self.getText(items.getElementsByTagName("proposingGroup")[0])
+                        # pour Gembloux, le mapping se fait sur l'acronyme et la category sur l'identifiant (et non l'id)
+                        _proposingGroup = getProposingGroupByAcronym(self, mapping[_old_group])
+                        # la categorie est parfois vide
+                        try:
+                            cat = self.getText(items.getElementsByTagName("category")[0])
+                        except:
+                            cat = 'agora'
+                        _category = getCategoryByCategoryId(self, meetingConfig, '-%s' % cat)
+                        #_proposingGroup = normalizeString(mapping[_old_group], self)
+                        #_category = self.getText(items.getElementsByTagName("category")[0])
+                        try:
+                            _decision = self.getText(items.getElementsByTagName("decision")[0])
+                        except:
+                            _decision = '<p></p>'
+                        if _creatorId not in useridLst:
+                            #utilisons le répertoire de l'utilisateur xmlimport'
+                            Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get(meetingConfig)
+                            _creatorId = 'xmlimport'
+                        else:
+                            Memberfolder = self.__portal__.Members.get(_creatorId).mymeetings.get(meetingConfig)
+                        if getattr(Memberfolder, _id, None):
+                            # Le point est déjà existant
+                            continue
+                        itemid = Memberfolder.invokeFactory(type_name=itemType, id=_id, title=_title,
+                                                            description=_description)
+                        item = getattr(Memberfolder, itemid)
+                        item.setDecision(_decision)
+                        item.setProposingGroup(_proposingGroup)
+                        item.setCategory(_category)
+                        _heure = _createDate[8:10]
+                        if _heure == '24':
+                            _heure = '0'
+                        date_str = '%s/%s/%s %s:%s:%s GMT+1' % (_createDate[0:4], _createDate[4:6], _createDate[6:8],
+                                                                _heure, _createDate[10:12], _createDate[12:14])
+                        tme = DateTime(date_str)
+                        item.setCreationDate(tme)
+                        item.setCreators(_creatorId)
+                        item.at_post_create_script()
+                        try:
+                            self.addItemPDFPoint(item, items.getElementsByTagName("pdfPointLink")[0], Memberfolder,
+                                                 startPath, newPath)
+                        except:
+                            pass
+                        try:
+                            self.addItemAnnexes(item, items.getElementsByTagName("annexesLink")[0], Memberfolder, startPath,
+                                                newPath)
+                        except:
+                            pass
+                        try:
+                            self.addItemAdvises(item, items.getElementsByTagName("advisesLink")[0], Memberfolder, startPath,
+                                                newPath)
+                        except:
+                            pass
+                        try:
+                            self.addItemPDFDelibe(item, items.getElementsByTagName("pdfDeliberationLink")[0], Memberfolder,
+                                                  startPath, newPath)
+                        except:
+                            pass
+                        #plaçons le point en état validé afin qu'il puisse être placé dans une séance
+                        item.portal_workflow.doActionFor(item, 'propose')
+                        item.portal_workflow.doActionFor(item, 'validate')
+                        self.__itemList__.append(item)
+                        cpt = cpt + 1
+                        # commit transaction si nous avons crÃ©Ã© 50 points
+                        if cpt >= 50:
+                            transaction.commit()
+                            cpt = 0
+                            print 'commit'
+                    except Exception, msg:
+                        self.__out__.append("L'importation du point %s a echouee.%s." % (_id, msg.value))
+        except:
+            a = 1
+            import pdb; pdb.set_trace()
+        transaction.commit()
         return self.__itemList__
 
     def getText(self, node):
@@ -368,14 +418,12 @@ def importResultFile(self, fname=None, fmapping=None, meetingConfigType=None, st
 
     if meetingConfigType not in ('college', 'council'):
         return "This script needs a 'meetingConfigType' parameter equal to college or council'"
-
-    if not startPath or newPath:
-        return "This script needs startPath and newPath to replace path for annexes like"\
+    if not startPath or not newPath:
+        return "This script needs startPath and newPath to replace path for annexes like "\
                "startPath='file:///var/gru/pdf-files',"\
                "newPath='/home/zope/repries-gembloux/pdf-files')"
-
     x = TransformXmlToMeetingOrItem(self, fname)
-    x.getItems(fmapping, meetingConfigType, startPath, newPath)
+    #x.getItems(fmapping, meetingConfigType, startPath, newPath)
     x.getMeeting(meetingConfigType, startPath, newPath)
     return '\n'.join(x.__out__)
 
@@ -397,8 +445,32 @@ def createDicoMapping(self, fmapping=None):
     for row in reader:
         old = row['OLD'].decode('UTF-8').strip()
         plone = row['PLONE'].decode('UTF-8').strip()
-        if old not in dic.keys:
+        if old not in dic.keys():
             dic[old] = plone
         else:
             self.__out__.append('key %s - %s already present' % (old, plone))
     return dic
+
+
+def getProposingGroupByAcronym(self, acronym):
+    """
+        Specific for GEMBLOUX !!!
+        get proposing group based on acronym
+    """
+    groups = self.__portal__.portal_plonemeeting.getMeetingGroups(onlyActive=False)
+    for group in groups:
+        if group.getAcronym() == acronym:
+            return group.getId()
+    return 'agora'
+
+
+def getCategoryByCategoryId(self, meetingConfig, catID):
+    """
+        Specific for GEMBLOUX !!!
+        get category based on field categoryId
+    """
+    categories = self.__portal__.portal_plonemeeting.get(meetingConfig).getCategories(onlySelectable=False)
+    for category in categories:
+        if category.getCategoryId() == catID:
+            return category.getId()
+    return 'agora'
