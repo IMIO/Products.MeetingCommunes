@@ -26,12 +26,7 @@ annexeAvisLegal = MeetingFileTypeDescriptor('annexeAvisLegal', 'Extrait article 
 # Categories -------------------------------------------------------------------
 recurring = CategoryDescriptor('recurrents', 'Récurrents')
 categories = [recurring,
-              CategoryDescriptor('travaux', 'Travaux'),
-              CategoryDescriptor('urbanisme', 'Urbanisme'),
-              CategoryDescriptor('comptabilite', 'Comptabilité/Recettes'),
-              CategoryDescriptor('personnel', 'Personnel'),
-              CategoryDescriptor('population', 'Population/Etat-civil'),
-              CategoryDescriptor('locations', 'Locations'),
+              CategoryDescriptor('casernes', 'Casernes'),
               CategoryDescriptor('divers', 'Divers'),
               ]
 
@@ -158,12 +153,12 @@ conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Co
 
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel")
 
-groups = [GroupDescriptor('dirgen', 'Directeur Général', 'DG'),
-          GroupDescriptor('secretariat', 'Secrétariat communal', 'Secr'),
+groups = [GroupDescriptor('commandant', 'Commandant de zone', 'CdZ'),
+          GroupDescriptor('secretariat', 'Secrétariat de zone', 'Secr'),
           GroupDescriptor('informatique', 'Service informatique', 'Info'),
           GroupDescriptor('personnel', 'Service du personnel', 'Pers'),
           GroupDescriptor('dirfin', 'Directeur Financier', 'DF'),
-          GroupDescriptor('comptabilite', 'Service comptabilité', 'Compt'),
+          GroupDescriptor('finances', 'Service finances', 'Fin'),
           GroupDescriptor('travaux', 'Service travaux', 'Trav'), ]
 
 # MeetingManager
@@ -221,24 +216,26 @@ groups[6].advisers.append(agentTrav)
 # Meeting configurations -------------------------------------------------------
 # college
 collegeMeeting = MeetingConfigDescriptor(
-    'meeting-config-college', 'Collège Communal',
-    'Collège communal', isDefault=True)
+    'meeting-config-college', 'Collège',
+    'Collège', isDefault=True)
 collegeMeeting.meetingManagers = ['dgen', ]
-collegeMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
-                          'Charles Exemple - 1er Echevin,\n' \
-                          'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
-                          'Jacqueline Exemple, Responsable du CPAS'
-collegeMeeting.signatures = 'Le Secrétaire communal\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
+collegeMeeting.assembly = 'Marie Curie - Présidente,\n' \
+                          'Isaac Newton(ville de Physique),\n' \
+                          'Pythagore (ville de Mathématiques),\n' \
+                          'Louis Pasteur (ville de Chimie), Bourgmestres\n' \
+                          'Archimède, Secrétaire du Collège,\n' \
+                          'Albert Einstein, Commandant de zone'
+collegeMeeting.signatures = 'Le Commandant de zone\nAlbert Einstein\nLa présidente\nMarie Curie'
 collegeMeeting.certifiedSignatures = [
     {'signatureNumber': '1',
-     'name': u'Mr Vraiment Présent',
-     'function': u'Le Secrétaire communal',
+     'name': u'Marie Curie',
+     'function': u'Présidente',
      'date_from': '',
      'date_to': '',
      },
     {'signatureNumber': '2',
-     'name': u'Mr Charles Exemple',
-     'function': u'Le Bourgmestre',
+     'name': u'Albert Einstein',
+     'function': u'Le Commandant de zone',
      'date_from': '',
      'date_to': '',
      },
@@ -247,7 +244,7 @@ collegeMeeting.places = """Place1\r
 Place2\r
 Place3\r"""
 collegeMeeting.categories = categories
-collegeMeeting.shortName = 'College'
+collegeMeeting.shortName = 'ZCollege'
 collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
                                    annexeDecision, annexeAvis, annexeAvisLegal]
 collegeMeeting.usedItemAttributes = ['detailedDescription',
@@ -313,7 +310,7 @@ collegeMeeting.enableAdviceInvalidation = False
 collegeMeeting.itemAdviceInvalidateStates = []
 collegeMeeting.customAdvisers = [
     {'row_id': 'unique_id_001',
-     'group': 'comptabilite',
+     'group': 'finances',
      'gives_auto_advice_on': 'item/getBudgetRelated',
      'for_item_created_from': today, },
     {'row_id': 'unique_id_002',
@@ -362,7 +359,7 @@ collegeMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transitio
                                                              {'meeting_transition': 'close',
                                                               'item_transition': 'accept'},)
 collegeMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
-collegeMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
+collegeMeeting.powerAdvisersGroups = ('commandant', 'dirfin', )
 collegeMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
@@ -401,7 +398,7 @@ collegeMeeting.itemTemplates = [
         description='Tutelle CPAS',
         category='personnel',
         proposingGroup='secretariat',
-        templateUsingGroups=['secretariat', 'dirgen', ],
+        templateUsingGroups=['secretariat', 'commandant', ],
         decision="""<p>Vu la loi du 8 juillet 1976 organique des centres publics d'action sociale et plus particulièrement son article 111;</p>
 <p>Vu l'Arrêté du Gouvernement Wallon du 22 avril 2004 portant codification de la législation relative aux pouvoirs locaux tel que confirmé par le décret du 27 mai 2004 du Conseil régional wallon;</p>
 <p>Attendu que les décisions suivantes du Bureau permanent/du Conseil de l'Action sociale du XXX ont été reçues le XXX dans le cadre de la tutelle générale sur les centres publics d'action sociale :</p>
@@ -423,16 +420,16 @@ collegeMeeting.itemTemplates = [
         templateUsingGroups=['personnel', ],
         decision="""
             <p>Vu la loi du 26 mai 2002 instituant le droit à l’intégration sociale;</p>
-<p>Vu la délibération du Conseil communal du 29 juin 2009 concernant le cahier spécial des charges relatif au marché de services portant sur le contrôle des agents communaux absents pour raisons médicales;</p>
-<p>Vu sa délibération du 17 décembre 2009 désignant le docteur XXX en qualité d’adjudicataire pour la mission de contrôle médical des agents de l’Administration communale;</p>
+<p>Vu la délibération du Conseil du 29 juin 2009 concernant le cahier spécial des charges relatif au marché de services portant sur le contrôle des agents absents pour raisons médicales;</p>
+<p>Vu sa délibération du 17 décembre 2009 désignant le docteur XXX en qualité d’adjudicataire pour la mission de contrôle médical des agents de la zone;</p>
 <p>Vu également sa décision du 17 décembre 2009 d’opérer les contrôles médicaux de manière systématique et pour une période d’essai d’un trimestre;</p>
 <p>Attendu qu’un certificat médical a été  reçu le XXX concernant XXX la couvrant du XXX au XXX, avec la mention « XXX »;</p>
 <p>Attendu que le Docteur XXX a transmis au service du Personnel, par fax, le même jour à XXX le rapport de contrôle mentionnant l’absence de XXX ce XXX à XXX;</p>
 <p>Considérant que XXX avait été informée par le Service du Personnel de la mise en route du système de contrôle systématique que le médecin-contrôleur;</p>
 <p>Considérant qu’ayant été absent(e) pour maladie la semaine précédente elle avait reçu la visite du médecin-contrôleur;</p>
 <p>DECIDE :</p>
-<p><strong>Article 1</strong> : De convoquer XXX devant  Monsieur le Secrétaire communal f.f. afin de lui rappeler ses obligations en la matière.</p>
-<p><strong>Article 2</strong> :  De prévenir XXX, qu’en cas de récidive, il sera proposé par le Secrétaire communal au Collège de transformer les jours de congés de maladie en absence injustifiée (retenue sur traitement avec application de la loi du 26 mai 2002 citée ci-dessus).</p>
+<p><strong>Article 1</strong> : De convoquer XXX devant  Monsieur le Commandant de zone f.f. afin de lui rappeler ses obligations en la matière.</p>
+<p><strong>Article 2</strong> :  De prévenir XXX, qu’en cas de récidive, il sera proposé par le Commandant de zone au Collège de transformer les jours de congés de maladie en absence injustifiée (retenue sur traitement avec application de la loi du 26 mai 2002 citée ci-dessus).</p>
 <p><strong>Article 3</strong> : De charger le service du personnel du suivi de ce dossier.</p>"""),
     ItemTemplateDescriptor(
         id='template3',
@@ -454,7 +451,7 @@ collegeMeeting.itemTemplates = [
 <p><b>Article 2</b> :</p>
 <p>L’horaire hebdomadaire de l’intéressé est fixé à 13 périodes.</p>
 <p><b>Article 3&nbsp;:</b></p>
-<p>La présente délibération sera soumise à la ratification du Conseil Communal. Elle sera transmise au Bureau Régional de l’Enseignement primaire et maternel, à l’Inspectrice Cantonale et à la direction concernée.</p>"""),
+<p>La présente délibération sera soumise à la ratification du Conseil. Elle sera transmise au Bureau Régional de l’Enseignement primaire et maternel, à l’Inspectrice Cantonale et à la direction concernée.</p>"""),
     ItemTemplateDescriptor(
         id='template4',
         title='Prestation réduite',
@@ -495,26 +492,28 @@ collegeMeeting.itemTemplates = [
 <p>...</p>"""),
 ]
 
-# Conseil communal
+# Conseil
 councilMeeting = MeetingConfigDescriptor(
-    'meeting-config-council', 'Conseil Communal',
-    'Conseil Communal')
+    'meeting-config-council', 'Conseil',
+    'Conseil')
 councilMeeting.meetingManagers = ['dgen', ]
-councilMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
-                          'Charles Exemple - 1er Echevin,\n' \
-                          'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
-                          'Jacqueline Exemple, Responsable du CPAS'
-councilMeeting.signatures = 'Le Secrétaire communal\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
+councilMeeting.assembly = 'Marie Curie - Présidente,\n' \
+                          'Isaac Newton(ville de Physique),\n' \
+                          'Pythagore (ville de Mathématiques),\n' \
+                          'Louis Pasteur (ville de Chimie), Bourgmestres\n' \
+                          'Archimède, Secrétaire du Collège,\n' \
+                          'Albert Einstein, Commandant de zone'
+councilMeeting.signatures = 'Le Commandant de zone\nAlbert Einstein\nLa présidente\nMarie Curie'
 councilMeeting.certifiedSignatures = [
     {'signatureNumber': '1',
-     'name': u'Mr Vraiment Présent',
-     'function': u'Le Secrétaire communal',
+     'name': u'Marie Curie',
+     'function': u'Présidente',
      'date_from': '',
      'date_to': '',
      },
     {'signatureNumber': '2',
-     'name': u'Mr Charles Exemple',
-     'function': u'Le Bourgmestre',
+     'name': u'Albert Einstein',
+     'function': u'Le Commandant de zone',
      'date_from': '',
      'date_to': '',
      },
@@ -523,7 +522,7 @@ councilMeeting.places = """Place1\n\r
 Place2\n\r
 Place3\n\r"""
 councilMeeting.categories = categories
-councilMeeting.shortName = 'Council'
+councilMeeting.shortName = 'ZCouncil'
 councilMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
                                    annexeDecision, annexeAvis, annexeAvisLegal]
 councilMeeting.usedItemAttributes = ['detailedDescription',
@@ -626,7 +625,7 @@ bourgmestre_mu = MeetingUserDescriptor('bourgmestre',
                                        usages=['assemblyMember', 'signer', 'asker', ],
                                        signatureIsDefault=True)
 receveur_mu = MeetingUserDescriptor('receveur',
-                                    duty='Receveur communal',
+                                    duty='Receveur régional',
                                     usages=['assemblyMember', 'signer', 'asker', ])
 echevinPers_mu = MeetingUserDescriptor('echevinPers',
                                        duty='Echevin GRH',
