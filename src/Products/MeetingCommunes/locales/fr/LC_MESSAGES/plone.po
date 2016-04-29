@@ -18,6 +18,10 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "X-is-fallback-for: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
 
+#. Default: "MeetingCOGES"
+msgid "MeetingCOGES"
+msgstr "Séance du Comité de Gestion"
+
 #. Default: "MeetingCollege"
 msgid "MeetingCollege"
 msgstr "Séance du Collège Communal"
@@ -34,6 +38,30 @@ msgstr "Point Collège Communal"
 msgid "MeetingItemCouncil"
 msgstr "Point Conseil Communal"
 
+#. Default: "MeetingItemRecurringZCollege"
+msgid "MeetingItemRecurringZCollege"
+msgstr "Point récurrent College"
+
+#. Default: "MeetingItemRecurringZCouncil"
+msgid "MeetingItemRecurringZCouncil"
+msgstr "Point récurrent Conseil"
+
+#. Default: "MeetingItemTemplateZCollege"
+msgid "MeetingItemTemplateZCollege"
+msgstr "Modèle de point Collège"
+
+#. Default: "MeetingItemTemplateZCouncil"
+msgid "MeetingItemTemplateZCouncil"
+msgstr "Modèle de point Conseil"
+
+#. Default: "MeetingItemZCollege"
+msgid "MeetingItemZCollege"
+msgstr "Point Collège"
+
+#. Default: "MeetingItemZCouncil"
+msgid "MeetingItemZCouncil"
+msgstr "Point Conseil"
+
 #. Default: "Meeting item BP"
 msgid "MeetingItembp"
 msgstr "Point Bureau Permanent"
@@ -45,6 +73,14 @@ msgstr "Point Conseil de l'Action Sociale"
 #. Default: "Meeting item Comitee"
 msgid "MeetingItemcomitee"
 msgstr "Point Comité de Concertation"
+
+#. Default: "MeetingZCollege"
+msgid "MeetingZCollege"
+msgstr "Séance Collège"
+
+#. Default: "MeetingZCouncil"
+msgid "MeetingZCouncil"
+msgstr "Séance Counseil"
 
 #. Default: "Meeting BP"
 msgid "Meetingbp"
@@ -106,6 +142,14 @@ msgstr "Remettre en \"Publié\""
 msgid "create_to_meeting-config-council_from_meeting-config-college"
 msgstr "Envoyer vers Conseil Communal"
 
+#. Default: "Create an item ZCouncil from an item ZCollege"
+msgid "create_to_meeting-config-zcollege_from_zcouncil"
+msgstr "Envoyer vers Collège"
+
+#. Default: "Create an item ZCollege from an item ZCouncil"
+msgid "create_to_meeting-config-zcouncil_from_zcollege"
+msgstr "Envoyer vers Conseil"
+
 #. Default: "Frozen"
 msgid "frozen"
 msgstr "Gelée"
@@ -121,4 +165,3 @@ msgstr "Accepter provisoirement"
 #. Default: "Pre accepted"
 msgid "pre_accepted"
 msgstr "Accepté provisoirement"
-

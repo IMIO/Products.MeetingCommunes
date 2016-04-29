@@ -18,6 +18,10 @@ msgstr ""
 "Domain: plone\n"
 "X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
 
+#. Default: "MeetingCOGES"
+msgid "MeetingCOGES"
+msgstr "Séance du Comité de Gestion"
+
 #. Default: "MeetingCollege"
 msgid "MeetingCollege"
 msgstr "Reunión del Colegio Comunal"
@@ -34,6 +38,30 @@ msgstr "Tema Colegio"
 msgid "MeetingItemCouncil"
 msgstr "Tema Consejo"
 
+#. Default: "MeetingItemRecurringZCollege"
+msgid "MeetingItemRecurringZCollege"
+msgstr ""
+
+#. Default: "MeetingItemRecurringZCouncil"
+msgid "MeetingItemRecurringZCouncil"
+msgstr ""
+
+#. Default: "MeetingItemTemplateZCollege"
+msgid "MeetingItemTemplateZCollege"
+msgstr ""
+
+#. Default: "MeetingItemTemplateZCouncil"
+msgid "MeetingItemTemplateZCouncil"
+msgstr ""
+
+#. Default: "MeetingItemZCollege"
+msgid "MeetingItemZCollege"
+msgstr ""
+
+#. Default: "MeetingItemZCouncil"
+msgid "MeetingItemZCouncil"
+msgstr ""
+
 #. Default: "Meeting item BP"
 msgid "MeetingItembp"
 msgstr "Tema Oficina Permanente"
@@ -45,6 +73,14 @@ msgstr "Tema Consejo Social"
 #. Default: "Meeting item Comitee"
 msgid "MeetingItemcomitee"
 msgstr "Tema Comite de Concertación"
+
+#. Default: "MeetingZCollege"
+msgid "MeetingZCollege"
+msgstr ""
+
+#. Default: "MeetingZCouncil"
+msgid "MeetingZCouncil"
+msgstr ""
 
 #. Default: "Meeting BP"
 msgid "Meetingbp"
@@ -106,6 +142,14 @@ msgstr ""
 msgid "create_to_meeting-config-council_from_meeting-config-college"
 msgstr ""
 
+#. Default: "Create an item ZCouncil from an item ZCollege"
+msgid "create_to_meeting-config-zcollege_from_zcouncil"
+msgstr ""
+
+#. Default: "Create an item ZCollege from an item ZCouncil"
+msgid "create_to_meeting-config-zcouncil_from_zcollege"
+msgstr ""
+
 #. Default: "Frozen"
 #, fuzzy
 msgid "frozen"
@@ -123,4 +167,3 @@ msgstr ""
 #. Default: "Pre accepted"
 msgid "pre_accepted"
 msgstr ""
-

@@ -17,6 +17,10 @@ msgstr ""
 "X-is-fallback-for: nl-be\n"
 "X-Generator: Poedit 1.5.5\n"
 
+#. Default: "MeetingCOGES"
+msgid "MeetingCOGES"
+msgstr "Séance du Comité de Gestion"
+
 #. Default: "MeetingCollege"
 msgid "MeetingCollege"
 msgstr "Collegevergadering"
@@ -33,6 +37,30 @@ msgstr "Item collegevergadering"
 msgid "MeetingItemCouncil"
 msgstr "Item gemeenteraadsvergadering"
 
+#. Default: "MeetingItemRecurringZCollege"
+msgid "MeetingItemRecurringZCollege"
+msgstr ""
+
+#. Default: "MeetingItemRecurringZCouncil"
+msgid "MeetingItemRecurringZCouncil"
+msgstr ""
+
+#. Default: "MeetingItemTemplateZCollege"
+msgid "MeetingItemTemplateZCollege"
+msgstr ""
+
+#. Default: "MeetingItemTemplateZCouncil"
+msgid "MeetingItemTemplateZCouncil"
+msgstr ""
+
+#. Default: "MeetingItemZCollege"
+msgid "MeetingItemZCollege"
+msgstr ""
+
+#. Default: "MeetingItemZCouncil"
+msgid "MeetingItemZCouncil"
+msgstr ""
+
 #. Default: "Meeting item BP"
 msgid "MeetingItembp"
 msgstr ""
@@ -44,6 +72,14 @@ msgstr ""
 #. Default: "Meeting item Comitee"
 msgid "MeetingItemcomitee"
 msgstr "Item comitevergadering"
+
+#. Default: "MeetingZCollege"
+msgid "MeetingZCollege"
+msgstr ""
+
+#. Default: "MeetingZCouncil"
+msgid "MeetingZCouncil"
+msgstr ""
 
 #. Default: "Meeting BP"
 msgid "Meetingbp"
@@ -106,6 +142,14 @@ msgstr "terug naar gepubliceerd"
 msgid "create_to_meeting-config-council_from_meeting-config-college"
 msgstr ""
 
+#. Default: "Create an item ZCouncil from an item ZCollege"
+msgid "create_to_meeting-config-zcollege_from_zcouncil"
+msgstr ""
+
+#. Default: "Create an item ZCollege from an item ZCouncil"
+msgid "create_to_meeting-config-zcouncil_from_zcollege"
+msgstr ""
+
 #. Default: "Frozen"
 #, fuzzy
 msgid "frozen"
@@ -123,4 +167,3 @@ msgstr ""
 #. Default: "Pre accepted"
 msgid "pre_accepted"
 msgstr ""
-

@@ -216,7 +216,7 @@ groups[6].advisers.append(agentTrav)
 # Meeting configurations -------------------------------------------------------
 # college
 collegeMeeting = MeetingConfigDescriptor(
-    'meeting-config-college', 'Collège',
+    'meeting-config-zcollege', 'Collège',
     'Collège', isDefault=True)
 collegeMeeting.meetingManagers = ['dgen', ]
 collegeMeeting.assembly = 'Marie Curie - Présidente,\n' \
@@ -367,7 +367,7 @@ collegeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                        groups[2].getIdSuffixed('reviewers'),
                                        groups[4].getIdSuffixed('reviewers')]
 collegeMeeting.podTemplates = collegeTemplates
-collegeMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-council',
+collegeMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-zcouncil',
                                            'trigger_workflow_transitions_until': '__nothing__'}, ]
 collegeMeeting.recurringItems = [
     RecurringItemDescriptor(
@@ -494,7 +494,7 @@ collegeMeeting.itemTemplates = [
 
 # Conseil
 councilMeeting = MeetingConfigDescriptor(
-    'meeting-config-council', 'Conseil',
+    'meeting-config-zcouncil', 'Conseil',
     'Conseil')
 councilMeeting.meetingManagers = ['dgen', ]
 councilMeeting.assembly = 'Marie Curie - Présidente,\n' \
