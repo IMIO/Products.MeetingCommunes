@@ -67,6 +67,13 @@
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
+  <genericsetup:registerProfile
+   name="zones"
+   title="PloneMeeting / zones (police ou secours)"
+   description="PloneMeeting for zones (help or police) (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
   <genericsetup:upgradeStep
       title="Go to MeetingCommunes 3.2.0"
       description=""

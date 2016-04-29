@@ -90,6 +90,14 @@ msgstr "Point récurrent Collège Communal"
 msgid "MeetingItemRecurringCouncil"
 msgstr "Point récurrent Conseil Communal"
 
+#. Default: "MeetingItemRecurringZCollege"
+msgid "MeetingItemRecurringZCollege"
+msgstr "Point récurrent Collège"
+
+#. Default: "MeetingItemRecurringZCouncil"
+msgid "MeetingItemRecurringZCouncil"
+msgstr "Point récurrent Conseil"
+
 #. Default: "Meeting item recurring BP"
 msgid "MeetingItemRecurringbp"
 msgstr "Point récurrent Bureau Permanent"
@@ -126,6 +134,14 @@ msgstr "Modèle de point Collège Communal"
 msgid "MeetingItemTemplateCouncil"
 msgstr "Modèle de point Conseil Communal"
 
+#. Default: "MeetingItemTemplateZCollege"
+msgid "MeetingItemTemplateZCollege"
+msgstr "Modèle de point Collège"
+
+#. Default: "MeetingItemTemplateZCouncil"
+msgid "MeetingItemTemplateZCouncil"
+msgstr "Modèle de point Conseil"
+
 #. Default: "Meeting item template BP"
 msgid "MeetingItemTemplatebp"
 msgstr "Modèle de point Bureau Permanent"
@@ -138,6 +154,14 @@ msgstr "Modèle de point Conseil de l'Action Sociale"
 msgid "MeetingItemTemplatecomitee"
 msgstr "Modèle de point Comité de Concertation"
 
+#. Default: "MeetingItemZCollege"
+msgid "MeetingItemZCollege"
+msgstr "Point Collège"
+
+#. Default: "MeetingItemZCouncil"
+msgid "MeetingItemZCouncil"
+msgstr "Point Conseil"
+
 #. Default: "Meeting item BP"
 msgid "MeetingItembp"
 msgstr "Point Bureau Permanent"
@@ -149,6 +173,14 @@ msgstr "Point Conseil de l'Action Sociale"
 #. Default: "Meeting item Comitee"
 msgid "MeetingItemcomitee"
 msgstr "Point Comité de Concertation"
+
+#. Default: "MeetingZCollege"
+msgid "MeetingZCollege"
+msgstr "Séance Collège"
+
+#. Default: "MeetingZCouncil"
+msgid "MeetingZCouncil"
+msgstr "Séance Conseil"
 
 #. Default: "Meeting BP"
 msgid "Meetingbp"
@@ -190,6 +222,14 @@ msgstr "Envoyer vers Collège Communal"
 msgid "create_to_meeting-config-council_from_meeting-config-college"
 msgstr "Envoyer vers Conseil Communal"
 
+#. Default: "Create an item ZCouncil from an item ZCollege"
+msgid "create_to_meeting-config-zcollege_from_zcouncil"
+msgstr "Envoyer vers Collège"
+
+#. Default: "Create an item ZCollege from an item ZCouncil"
+msgid "create_to_meeting-config-zcouncil_from_zcollege"
+msgstr "Envoyer vers Conseil"
+
 #. Default: "Frozen"
 msgid "frozen"
 msgstr "Gelée"
@@ -197,4 +237,3 @@ msgstr "Gelée"
 #. Default: "Itemfrozen"
 msgid "itemfrozen"
 msgstr "Gelé"
-

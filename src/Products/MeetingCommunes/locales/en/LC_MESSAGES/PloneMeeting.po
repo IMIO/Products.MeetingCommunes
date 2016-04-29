@@ -78,4 +78,3 @@ msgstr "The item has been successfully transfered to the comitee."
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
 msgstr "The item has been successfully transfered to the council."
-

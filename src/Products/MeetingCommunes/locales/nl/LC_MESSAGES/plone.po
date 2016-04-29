@@ -89,6 +89,14 @@ msgstr ""
 msgid "MeetingItemRecurringCouncil"
 msgstr ""
 
+#. Default: "MeetingItemRecurringZCollege"
+msgid "MeetingItemRecurringZCollege"
+msgstr ""
+
+#. Default: "MeetingItemRecurringZCouncil"
+msgid "MeetingItemRecurringZCouncil"
+msgstr ""
+
 #. Default: "Meeting item recurring BP"
 msgid "MeetingItemRecurringbp"
 msgstr ""
@@ -125,6 +133,14 @@ msgstr ""
 msgid "MeetingItemTemplateCouncil"
 msgstr ""
 
+#. Default: "MeetingItemTemplateZCollege"
+msgid "MeetingItemTemplateZCollege"
+msgstr ""
+
+#. Default: "MeetingItemTemplateZCouncil"
+msgid "MeetingItemTemplateZCouncil"
+msgstr ""
+
 #. Default: "Meeting item template BP"
 msgid "MeetingItemTemplatebp"
 msgstr ""
@@ -135,6 +151,14 @@ msgstr ""
 
 #. Default: "Meeting item template Comitee"
 msgid "MeetingItemTemplatecomitee"
+msgstr ""
+
+#. Default: "MeetingItemZCollege"
+msgid "MeetingItemZCollege"
+msgstr ""
+
+#. Default: "MeetingItemZCouncil"
+msgid "MeetingItemZCouncil"
 msgstr ""
 
 #. Default: "Meeting item BP"
@@ -148,6 +172,14 @@ msgstr ""
 #. Default: "Meeting item Comitee"
 msgid "MeetingItemcomitee"
 msgstr "Item comitevergadering"
+
+#. Default: "MeetingZCollege"
+msgid "MeetingZCollege"
+msgstr ""
+
+#. Default: "MeetingZCouncil"
+msgid "MeetingZCouncil"
+msgstr ""
 
 #. Default: "Meeting BP"
 msgid "Meetingbp"
@@ -189,6 +221,14 @@ msgstr ""
 msgid "create_to_meeting-config-council_from_meeting-config-college"
 msgstr ""
 
+#. Default: "Create an item ZCouncil from an item ZCollege"
+msgid "create_to_meeting-config-zcollege_from_zcouncil"
+msgstr ""
+
+#. Default: "Create an item ZCollege from an item ZCouncil"
+msgid "create_to_meeting-config-zcouncil_from_zcollege"
+msgstr ""
+
 #. Default: "Frozen"
 #, fuzzy
 msgid "frozen"
@@ -198,4 +238,3 @@ msgstr "Bevroren"
 #, fuzzy
 msgid "itemfrozen"
 msgstr "Item bevroren"
-

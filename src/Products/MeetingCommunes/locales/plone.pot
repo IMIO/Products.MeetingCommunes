@@ -190,3 +190,44 @@ msgstr ""
 #. Default: "MeetingItemTemplateBourgmestre"
 msgid "MeetingItemTemplateBourgmestre"
 msgstr ""
+
+#. Default: "MeetingZCollege"
+msgid "MeetingZCollege"
+msgstr ""
+
+#. Default: "MeetingZCouncil"
+msgid "MeetingZCouncil"
+msgstr ""
+
+#. Default: "MeetingItemZCollege"
+msgid "MeetingItemZCollege"
+msgstr ""
+
+#. Default: "MeetingItemZCouncil"
+msgid "MeetingItemZCouncil"
+msgstr ""
+
+#. Default: "MeetingItemRecurringZCollege"
+msgid "MeetingItemRecurringZCollege"
+msgstr ""
+
+#. Default: "MeetingItemRecurringZCouncil"
+msgid "MeetingItemRecurringZCouncil"
+msgstr ""
+
+#. Default: "MeetingItemTemplateZCollege"
+msgid "MeetingItemTemplateZCollege"
+msgstr ""
+
+#. Default: "MeetingItemTemplateZCouncil"
+msgid "MeetingItemTemplateZCouncil"
+msgstr ""
+
+#. Default: "Create an item ZCouncil from an item ZCollege"
+msgid "create_to_meeting-config-zcollege_from_zcouncil"
+msgstr ""
+
+#. Default: "Create an item ZCollege from an item ZCouncil"
+msgid "create_to_meeting-config-zcouncil_from_zcollege"
+msgstr ""
+
