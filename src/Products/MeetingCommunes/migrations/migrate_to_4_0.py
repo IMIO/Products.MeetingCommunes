@@ -5,11 +5,11 @@ logger = logging.getLogger('MeetingCommunes')
 
 from plone import api
 
-from Products.PloneMeeting.migrations.migrate_to_3_4 import Migrate_To_3_4 as PMMigrate_To_3_4
+from Products.PloneMeeting.migrations.migrate_to_4_0 import Migrate_To_4_0 as PMMigrate_To_4_0
 
 
 # The migration class ----------------------------------------------------------
-class Migrate_To_3_4(PMMigrate_To_3_4):
+class Migrate_To_4_0(PMMigrate_To_4_0):
 
     def _cleanCDLD(self):
         """We removed things related to 'CDLD' finance advice, so:
@@ -44,7 +44,7 @@ class Migrate_To_3_4(PMMigrate_To_3_4):
            PloneMeeting, this way, we may launch some steps before PloneMeeting ones.
            Here we will update used workflows before letting PM do his job."""
         logger.info('Replacing old no more existing workflows...')
-        PMMigrate_To_3_4._after_reinstall(self)
+        PMMigrate_To_4_0._after_reinstall(self)
         for cfg in self.tool.objectValues('MeetingConfig'):
             # MeetingItem workflow
             if cfg.getItemWorkflow() == 'meetingitemcollege_workflow':
@@ -81,9 +81,9 @@ class Migrate_To_3_4(PMMigrate_To_3_4):
         # change self.profile_name that is reinstalled at the beginning of the PM migration
         self.profile_name = u'profile-Products.MeetingCommunes:default'
         # call steps from Products.PloneMeeting
-        PMMigrate_To_3_4.run(self)
+        PMMigrate_To_4_0.run(self)
         # now MeetingLiege specific steps
-        logger.info('Migrating to MeetingCommunes 3.4...')
+        logger.info('Migrating to MeetingCommunes 4.0...')
         self._cleanCDLD()
         self._migrateItemPositiveDecidedStates()
 
@@ -96,7 +96,7 @@ def migrate(context):
        2) Clean CDLD attributes;
        3) Migrate positive decided states.
     '''
-    migrator = Migrate_To_3_4(context)
+    migrator = Migrate_To_4_0(context)
     migrator.run()
     migrator.finish()
 # ------------------------------------------------------------------------------

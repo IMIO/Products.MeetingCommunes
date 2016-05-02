@@ -91,11 +91,11 @@
       profile="Products.MeetingCommunes:default" />
 
   <genericsetup:upgradeStep
-      title="Go to MeetingCommunes 3.4"
+      title="Go to MeetingCommunes 4.0"
       description=""
       source="3.3"
-      destination="3.4"
-      handler="Products.MeetingCommunes.migrations.migrate_to_3_4.migrate"
+      destination="4.0"
+      handler="Products.MeetingCommunes.migrations.migrate_to_4_0.migrate"
       profile="Products.MeetingCommunes:default" />
 
   <!-- ##/code-section profiles.zcml-bottom -->
