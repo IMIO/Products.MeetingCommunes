@@ -20,6 +20,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Now that the same WF may be used in several MeetingConfig in PloneMeeting, removed the
   2 WFs meetingcollege and meetingcouncil and use only one meetingcommunes where wfAdaptations
   'no_publication' and 'no_global_observation' are enabled
+- Added profile 'financesadvice' to manage advanced finances advice using a particular
+  workflow and a specific meetingadvicefinances portal_type
 
 3.3 (2015-02-27)
 ----------------
