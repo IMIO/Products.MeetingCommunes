@@ -26,6 +26,10 @@ msgstr ""
 msgid "Meeting config Council"
 msgstr ""
 
+#. Default: "Finances advice"
+msgid "MeetingAdviceFinances"
+msgstr ""
+
 #. Default: "If the group is responsible of other groups, select them here above, either do not select any elements of the list."
 msgid "MeetingCommunes_descr_echevinServices"
 msgstr ""
@@ -36,6 +40,10 @@ msgstr ""
 
 #. Default: "Initialize the item decision when deciding meeting"
 msgid "MeetingCommunes_label_initItemDecisionIfEmptyOnDecide"
+msgstr ""
+
+#. Default: "Add a finances advice"
+msgid "add_new_meetingadvicefinances"
 msgstr ""
 
 msgid "front_page_body"
@@ -79,3 +87,4 @@ msgstr ""
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
 msgstr ""
+

@@ -238,3 +238,4 @@ msgstr "Bevroren"
 #, fuzzy
 msgid "itemfrozen"
 msgstr "Item bevroren"
+

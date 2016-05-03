@@ -237,3 +237,4 @@ msgstr "Gelée"
 #. Default: "Itemfrozen"
 msgid "itemfrozen"
 msgstr "Gelé"
+

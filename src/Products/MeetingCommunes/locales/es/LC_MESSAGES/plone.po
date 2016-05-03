@@ -239,3 +239,4 @@ msgstr "congelado"
 #, fuzzy
 msgid "itemfrozen"
 msgstr "congelado"
+
