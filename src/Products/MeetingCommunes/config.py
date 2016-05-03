@@ -40,6 +40,11 @@ DEPENDENCIES = []
 # override in custom configuration
 PRODUCT_DEPENDENCIES = []
 
+# extra suffixes while using 'meetingadvicefinances_workflow'
+FINANCE_GROUP_SUFFIXES = ('financialcontrollers',
+                          'financialreviewers',
+                          'financialmanagers')
+
 # Define PloneMeeting-specific permissions
 AddAnnex = 'PloneMeeting: Add annex'
 setDefaultRoles(AddAnnex, ('Manager', 'Owner'))

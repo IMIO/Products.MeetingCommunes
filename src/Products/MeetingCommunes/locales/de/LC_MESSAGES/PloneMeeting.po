@@ -53,6 +53,22 @@ msgstr ""
 msgid "init_item_decision_if_empty_on_decide"
 msgstr ""
 
+#. Default: "Advices proposed to financial controller"
+msgid "searchadviceproposedtocontroller"
+msgstr ""
+
+#. Default: "Advices proposed to financial manager"
+msgid "searchadviceproposedtomanager"
+msgstr ""
+
+#. Default: "Advices proposed to financial reviewer"
+msgid "searchadviceproposedtoreviewer"
+msgstr ""
+
+#. Default: "Items to control completeness of"
+msgid "searchitemstocontrolcompletenessof"
+msgstr ""
+
 #. Default: "Synthesis finance advices"
 msgid "searchitemswithfinanceadvice"
 msgstr ""

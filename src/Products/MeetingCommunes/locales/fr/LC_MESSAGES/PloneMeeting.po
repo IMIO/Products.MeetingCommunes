@@ -54,6 +54,22 @@ msgstr "<p>Avant de tester, nous vous recommandons de lire la <span class=\"link
 msgid "init_item_decision_if_empty_on_decide"
 msgstr "Si cette case est cochée, lorsqu'une séance passera 'En rédaction du PV', pour tous les points dont le champ 'Décision' est vide, ce champ sera automatiquement rempli avec une concaténation de ce qui est défini dans le titre et la description du point"
 
+#. Default: "Advices proposed to financial controller"
+msgid "searchadviceproposedtocontroller"
+msgstr "Avis proposés au contrôleurs financiers"
+
+#. Default: "Advices proposed to financial manager"
+msgid "searchadviceproposedtomanager"
+msgstr "Avis proposés au Directeur financier"
+
+#. Default: "Advices proposed to financial reviewer"
+msgid "searchadviceproposedtoreviewer"
+msgstr "Avis proposés aux validateurs financiers"
+
+#. Default: "Items to control completeness of"
+msgid "searchitemstocontrolcompletenessof"
+msgstr "Complétude à contrôler"
+
 # searches
 #. Default: "Synthesis finance advices"
 msgid "searchitemswithfinanceadvice"

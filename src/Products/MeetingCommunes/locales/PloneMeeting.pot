@@ -80,3 +80,19 @@ msgstr ""
 #. Default: "Finances advice"
 msgid "MeetingAdviceFinances"
 msgstr ""
+
+#. Default: "Items to control completeness of"
+msgid "searchitemstocontrolcompletenessof"
+msgstr ""
+
+#. Default: "Advices proposed to financial controller"
+msgid "searchadviceproposedtocontroller"
+msgstr ""
+
+#. Default: "Advices proposed to financial reviewer"
+msgid "searchadviceproposedtoreviewer"
+msgstr ""
+
+#. Default: "Advices proposed to financial manager"
+msgid "searchadviceproposedtomanager"
+msgstr ""

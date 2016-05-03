@@ -21,33 +21,47 @@
 #
 # ------------------------------------------------------------------------------
 
-from collections import OrderedDict
-from zope.interface import implements
 from AccessControl import ClassSecurityInfo
-from Products.Archetypes.atapi import DisplayList
+from collections import OrderedDict
 from Globals import InitializeClass
-from Products.CMFCore.utils import getToolByName
-from plone import api
-from imio.helpers.xhtml import xhtmlContentIsEmpty
-from Products.PloneMeeting.MeetingItem import MeetingItem, \
-    MeetingItemWorkflowConditions, MeetingItemWorkflowActions
-from Products.PloneMeeting.MeetingGroup import MeetingGroup
-from Products.PloneMeeting.Meeting import MeetingWorkflowActions, \
-    MeetingWorkflowConditions, Meeting
-from Products.PloneMeeting.MeetingConfig import MeetingConfig
-from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
-from Products.PloneMeeting.interfaces import IMeetingCustom, IMeetingItemCustom, \
-    IMeetingGroupCustom, IMeetingConfigCustom, IToolPloneMeetingCustom
-from Products.MeetingCommunes.interfaces import \
-    IMeetingItemCollegeWorkflowConditions, IMeetingItemCollegeWorkflowActions,\
-    IMeetingCollegeWorkflowConditions, IMeetingCollegeWorkflowActions, \
-    IMeetingItemCouncilWorkflowConditions, IMeetingItemCouncilWorkflowActions,\
-    IMeetingCouncilWorkflowConditions, IMeetingCouncilWorkflowActions
-from Products.PloneMeeting.utils import checkPermission
+from zope.interface import implements
+
 from Products.CMFCore.permissions import ReviewPortalContent
+from Products.CMFCore.utils import getToolByName
+from Products.Archetypes.atapi import DisplayList
+from plone import api
+from plone.memoize import ram
+
+from imio.helpers.xhtml import xhtmlContentIsEmpty
+from Products.PloneMeeting.MeetingItem import MeetingItem
+from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowActions
+from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowConditions
+
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import WF_APPLIED
 from Products.PloneMeeting.interfaces import IAnnexable
+from Products.PloneMeeting.interfaces import IMeetingCustom
+from Products.PloneMeeting.interfaces import IMeetingItemCustom
+from Products.PloneMeeting.interfaces import IMeetingGroupCustom
+from Products.PloneMeeting.interfaces import IMeetingConfigCustom
+from Products.PloneMeeting.interfaces import IToolPloneMeetingCustom
+from Products.PloneMeeting.Meeting import Meeting
+from Products.PloneMeeting.Meeting import MeetingWorkflowActions
+from Products.PloneMeeting.Meeting import MeetingWorkflowConditions
+from Products.PloneMeeting.MeetingConfig import MeetingConfig
+from Products.PloneMeeting.MeetingGroup import MeetingGroup
+from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
+from Products.PloneMeeting.utils import checkPermission
+
+from Products.MeetingCommunes.interfaces import IMeetingItemCollegeWorkflowConditions
+from Products.MeetingCommunes.interfaces import IMeetingItemCollegeWorkflowActions
+from Products.MeetingCommunes.interfaces import IMeetingCollegeWorkflowConditions
+from Products.MeetingCommunes.interfaces import IMeetingCollegeWorkflowActions
+from Products.MeetingCommunes.interfaces import IMeetingItemCouncilWorkflowConditions
+from Products.MeetingCommunes.interfaces import IMeetingItemCouncilWorkflowActions
+from Products.MeetingCommunes.interfaces import IMeetingCouncilWorkflowConditions
+from Products.MeetingCommunes.interfaces import IMeetingCouncilWorkflowActions
+from Products.MeetingCommunes.config import FINANCE_GROUP_SUFFIXES
 
 # Names of available workflow adaptations.
 customwfAdaptations = list(MeetingConfig.wfAdaptations)
@@ -792,6 +806,91 @@ class CustomMeetingConfig(MeetingConfig):
                 ]
             )
             infos.update(finance_infos)
+        # add some specific searches while using 'meetingadvicefinances'
+        typesTool = api.portal.get_tool('portal_types')
+        if 'meetingadvicefinances' in typesTool and cfg.getUseAdvices():
+            financesadvice_infos = OrderedDict(
+                [
+                    # Items in state 'proposed_to_finance' for which
+                    # completeness is not 'completeness_complete'
+                    ('searchitemstocontrolcompletenessof',
+                        {
+                            'subFolderId': 'searches_items',
+                            'query':
+                            [
+                                {'i': 'CompoundCriterion',
+                                 'o': 'plone.app.querystring.operation.compound.is',
+                                 'v': 'items-to-control-completeness-of'},
+                            ],
+                            'sort_on': u'created',
+                            'sort_reversed': True,
+                            'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
+                                             "tool.userIsAmong('financialcontrollers')) "
+                                             "or (not here.REQUEST.get('fromPortletTodo', False) and "
+                                             "tool.adapted().isFinancialUser())",
+                            'roles_bypassing_talcondition': ['Manager', ]
+                        }
+                     ),
+                    # Items having advice in state 'proposed_to_financial_controller'
+                    ('searchadviceproposedtocontroller',
+                        {
+                            'subFolderId': 'searches_items',
+                            'query':
+                            [
+                                {'i': 'CompoundCriterion',
+                                 'o': 'plone.app.querystring.operation.compound.is',
+                                 'v': 'items-with-advice-proposed-to-financial-controller'},
+                            ],
+                            'sort_on': u'created',
+                            'sort_reversed': True,
+                            'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
+                                             "tool.userIsAmong('financialcontrollers')) "
+                                             "or (not here.REQUEST.get('fromPortletTodo', False) and "
+                                             "tool.adapted().isFinancialUser())",
+                            'roles_bypassing_talcondition': ['Manager', ]
+                        }
+                     ),
+                    # Items having advice in state 'proposed_to_financial_reviewer'
+                    ('searchadviceproposedtoreviewer',
+                        {
+                            'subFolderId': 'searches_items',
+                            'query':
+                            [
+                                {'i': 'CompoundCriterion',
+                                 'o': 'plone.app.querystring.operation.compound.is',
+                                 'v': 'items-with-advice-proposed-to-financial-reviewer'},
+                            ],
+                            'sort_on': u'created',
+                            'sort_reversed': True,
+                            'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
+                                             "tool.userIsAmong('financialreviewers')) "
+                                             "or (not here.REQUEST.get('fromPortletTodo', False) and "
+                                             "tool.adapted().isFinancialUser())",
+                            'roles_bypassing_talcondition': ['Manager', ]
+                        }
+                     ),
+                    # Items having advice in state 'proposed_to_financial_manager'
+                    ('searchadviceproposedtomanager',
+                        {
+                            'subFolderId': 'searches_items',
+                            'query':
+                            [
+                                {'i': 'CompoundCriterion',
+                                 'o': 'plone.app.querystring.operation.compound.is',
+                                 'v': 'items-with-advice-proposed-to-financial-manager'},
+                            ],
+                            'sort_on': u'created',
+                            'sort_reversed': True,
+                            'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
+                                             "tool.userIsAmong('financialmanagers')) "
+                                             "or (not here.REQUEST.get('fromPortletTodo', False) and "
+                                             "tool.adapted().isFinancialUser())",
+                            'roles_bypassing_talcondition': ['Manager', ]
+                        }
+                     ),
+                ]
+            )
+            infos.update(financesadvice_infos)
         return infos
 
 
@@ -932,6 +1031,24 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
 
     implements(IToolPloneMeetingCustom)
     security = ClassSecurityInfo()
+
+    def isFinancialUser_cachekey(method, self, brain=False):
+        '''cachekey method for self.isFinancialUser.'''
+        tool = self.id
+        return str(tool.REQUEST._debug)
+
+    security.declarePublic('isFinancialUser')
+
+    @ram.cache(isFinancialUser_cachekey)
+    def isFinancialUser(self):
+        '''Is current user a financial user, so in groups 'financialcontrollers',
+           'financialreviewers' or 'financialmanagers'.'''
+        member = api.user.get_current()
+        for groupId in member.getGroups():
+            for suffix in FINANCE_GROUP_SUFFIXES:
+                if groupId.endswith('_%s' % suffix):
+                    return True
+        return False
 
     def performCustomWFAdaptations(self, meetingConfig, wfAdaptation, logger, itemWorkflow, meetingWorkflow):
         """ """

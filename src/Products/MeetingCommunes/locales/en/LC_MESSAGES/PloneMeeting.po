@@ -54,6 +54,22 @@ msgstr ""
 msgid "init_item_decision_if_empty_on_decide"
 msgstr "If you check this box, when a meeting will be decided, if an item does not have a decision defined, this decision will be automatically filled with title and description of the item"
 
+#. Default: "Advices proposed to financial controller"
+msgid "searchadviceproposedtocontroller"
+msgstr ""
+
+#. Default: "Advices proposed to financial manager"
+msgid "searchadviceproposedtomanager"
+msgstr ""
+
+#. Default: "Advices proposed to financial reviewer"
+msgid "searchadviceproposedtoreviewer"
+msgstr ""
+
+#. Default: "Items to control completeness of"
+msgid "searchitemstocontrolcompletenessof"
+msgstr ""
+
 #. Default: "Synthesis finance advices"
 msgid "searchitemswithfinanceadvice"
 msgstr ""
