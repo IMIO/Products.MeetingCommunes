@@ -60,9 +60,9 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.assertEquals(i2.adapted().getEchevinsForProposingGroup(), ['developers'])
 
     def test_GetUsedFinanceGroupId(self):
-        '''Test the custom MeetingItem.getUsedFinanceGroupId method
-           that will return adviser ids used on an item from finance
-           adviser ids defined on the 'searchitemswithfinanceadvice' collection.'''
+        '''Test the custom MeetingItem.getUsedFinanceGroupIds method
+           that will return adviser ids used on the 'searchitemswithfinanceadvice'
+           collection, this is used in the adapted method 'showFinanceAdviceTemplate'.'''
         cfg = self.meetingConfig
         collection = cfg.searches.searches_items.searchitemswithfinanceadvice
         collection.setQuery([
@@ -75,7 +75,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
                    'delay_real_group_id__unique_id_002']}
         ], )
         today = DateTime().strftime('%Y/%m/%d')
-        self.meetingConfig.setCustomAdvisers([
+        cfg.setCustomAdvisers([
             {'row_id': 'unique_id_001',
              'group': 'developers',
              'for_item_created_from': today,
@@ -101,29 +101,37 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         # create an item without finance advice
         self.changeUser('pmManager')
         item = self.create('MeetingItem')
-        self.assertEquals(item.adapted().getUsedFinanceGroupId(), [])
+        # there are financeGroupIds
+        self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(), ['developers'])
+        # but not for item
+        self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(item), [])
+        self.assertFalse(item.adapted().showFinanceAdviceTemplate())
 
         # ask advice of another group
         item.setOptionalAdvisers(('vendors', ))
         item.at_post_edit_script()
         # no usedFinanceGroupId
-        self.assertEquals(item.adapted().getUsedFinanceGroupId(), [])
+        self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(item), [])
+        self.assertFalse(item.adapted().showFinanceAdviceTemplate())
 
         # now ask advice of developers, considered as an non finance
         # advice as only customAdvisers are considered
         item.setOptionalAdvisers(('developers', ))
         item.at_post_edit_script()
-        self.assertEquals(item.adapted().getUsedFinanceGroupId(), [])
+        self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(item), [])
+        self.assertFalse(item.adapted().showFinanceAdviceTemplate())
 
         # right ask a custom advice that is not a finance advice this time
         item.setOptionalAdvisers(('developers__rowid__unique_id_003', ))
         item.at_post_edit_script()
-        self.assertEquals(item.adapted().getUsedFinanceGroupId(), [])
+        self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(item), [])
+        self.assertFalse(item.adapted().showFinanceAdviceTemplate())
 
         # finally ask a real finance advice, this time it will work
         item.setOptionalAdvisers(('developers__rowid__unique_id_001', ))
         item.at_post_edit_script()
-        self.assertEquals(item.adapted().getUsedFinanceGroupId(), ['developers', ])
+        self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(item), ['developers'])
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate())
 
     def test_AdviceDelayIsTimedOutWithRowId(self):
 

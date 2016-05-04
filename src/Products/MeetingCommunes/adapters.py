@@ -33,12 +33,7 @@ from plone import api
 from plone.memoize import ram
 
 from imio.helpers.xhtml import xhtmlContentIsEmpty
-from Products.PloneMeeting.MeetingItem import MeetingItem
-from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowActions
-from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowConditions
-
-from Products.PloneMeeting.model import adaptations
-from Products.PloneMeeting.model.adaptations import WF_APPLIED
+from Products.PloneMeeting.adapters import CompoundCriterionBaseAdapter
 from Products.PloneMeeting.interfaces import IAnnexable
 from Products.PloneMeeting.interfaces import IMeetingCustom
 from Products.PloneMeeting.interfaces import IMeetingItemCustom
@@ -50,6 +45,11 @@ from Products.PloneMeeting.Meeting import MeetingWorkflowActions
 from Products.PloneMeeting.Meeting import MeetingWorkflowConditions
 from Products.PloneMeeting.MeetingConfig import MeetingConfig
 from Products.PloneMeeting.MeetingGroup import MeetingGroup
+from Products.PloneMeeting.MeetingItem import MeetingItem
+from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowActions
+from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowConditions
+from Products.PloneMeeting.model import adaptations
+from Products.PloneMeeting.model.adaptations import WF_APPLIED
 from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
 from Products.PloneMeeting.utils import checkPermission
 
@@ -591,41 +591,6 @@ class CustomMeetingItem(MeetingItem):
             self.reindexObject()
     MeetingItem._initDecisionFieldIfEmpty = _initDecisionFieldIfEmpty
 
-    security.declarePublic('getUsedFinanceGroupId')
-
-    def getUsedFinanceGroupId(self):
-        """Possible finance advisers group ids are defined on
-           the 'FromSearchitemswithfinanceadvice' collection."""
-        tool = api.portal.get_tool('portal_plonemeeting')
-        cfg = tool.getMeetingConfig(self.context)
-        collection = cfg.searches.searches_items.searchitemswithfinanceadvice
-        # get the indexAdvisers value defined on the collection
-        # and find the relevant group, indexAdvisers form is :
-        # 'delay_real_group_id__2014-04-16.9996934488', 'real_group_id_directeur-financier'
-        # it is either a customAdviser row_id or a MeetingGroup id
-        values = [term['v'] for term in collection.getRawQuery()
-                  if term['i'] == 'indexAdvisers'][0]
-        res = []
-        for v in values:
-            rowIdOrGroupId = v.replace('delay_real_group_id__', '').replace('real_group_id__', '')
-            if hasattr(tool, rowIdOrGroupId):
-                groupId = rowIdOrGroupId
-                # append it only if not already into res and if
-                # we have no 'row_id' for this adviser in adviceIndex
-                if groupId not in res and \
-                   (groupId in self.context.adviceIndex and not self.context.adviceIndex[groupId]['row_id']):
-                    res.append(groupId)
-            else:
-                groupId = cfg._dataForCustomAdviserRowId(rowIdOrGroupId)['group']
-                # append it only if not already into res and if
-                # we have a 'row_id' for this adviser in adviceIndex
-                if groupId not in res and \
-                    (groupId in self.context.adviceIndex and
-                     self.context.adviceIndex[groupId]['row_id'] == rowIdOrGroupId):
-                    res.append(groupId)
-
-        return res
-
     security.declarePublic('printAllAnnexes')
 
     def printAllAnnexes(self):
@@ -689,7 +654,10 @@ class CustomMeetingItem(MeetingItem):
     def showFinanceAdviceTemplate(self):
         """ """
         item = self.getSelf()
-        return set(item.adapted().getUsedFinanceGroupId()).intersection(set(item.adviceIndex.keys()))
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(item)
+        return bool(set(cfg.adapted().getUsedFinanceGroupIds(item)).
+                    intersection(set(item.adviceIndex.keys())))
 
 
 class CustomMeetingGroup(MeetingGroup):
@@ -725,6 +693,45 @@ class CustomMeetingConfig(MeetingConfig):
 
     def __init__(self, item):
         self.context = item
+
+    security.declarePublic('getUsedFinanceGroupIds')
+
+    def getUsedFinanceGroupIds(self, item=None):
+        """Possible finance advisers group ids are defined on
+           the 'FromSearchitemswithfinanceadvice' collection."""
+        cfg = self.getSelf()
+        tool = api.portal.get_tool('portal_plonemeeting')
+        collection = cfg.searches.searches_items.searchitemswithfinanceadvice
+        # get the indexAdvisers value defined on the collection
+        # and find the relevant group, indexAdvisers form is :
+        # 'delay_real_group_id__2014-04-16.9996934488', 'real_group_id_directeur-financier'
+        # it is either a customAdviser row_id or a MeetingGroup id
+        values = [term['v'] for term in collection.getRawQuery()
+                  if term['i'] == 'indexAdvisers'][0]
+        res = []
+        for v in values:
+            rowIdOrGroupId = v.replace('delay_real_group_id__', '').replace('real_group_id__', '')
+            if hasattr(tool, rowIdOrGroupId):
+                groupId = rowIdOrGroupId
+                # append it only if not already into res and if
+                # we have no 'row_id' for this adviser in adviceIndex
+                if item and groupId not in res and \
+                   (groupId in item.adviceIndex and not item.adviceIndex[groupId]['row_id']):
+                    res.append(groupId)
+                elif not item:
+                    res.append(groupId)
+            else:
+                groupId = cfg._dataForCustomAdviserRowId(rowIdOrGroupId)['group']
+                # append it only if not already into res and if
+                # we have a 'row_id' for this adviser in adviceIndex
+                if item and groupId not in res and \
+                    (groupId in item.adviceIndex and
+                     item.adviceIndex[groupId]['row_id'] == rowIdOrGroupId):
+                    res.append(groupId)
+                elif not item:
+                    res.append(groupId)
+        # remove duplicates
+        return list(set(res))
 
     def _extraSearchesInfo(self, infos):
         """Add some specific searches."""
@@ -1157,3 +1164,118 @@ InitializeClass(MeetingCouncilWorkflowActions)
 InitializeClass(MeetingCouncilWorkflowConditions)
 InitializeClass(CustomToolPloneMeeting)
 # ------------------------------------------------------------------------------
+
+
+class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
+
+    def itemstocontrolcompletenessof_cachekey(method, self):
+        '''cachekey method for every CompoundCriterion adapters.'''
+        return str(self.request._debug)
+
+    @property
+    @ram.cache(itemstocontrolcompletenessof_cachekey)
+    def query_itemstocontrolcompletenessof(self):
+        '''Queries all items for which there is completeness to evaluate, so where completeness
+           is not 'completeness_complete'.'''
+        groupIds = []
+        member = api.user.get_current()
+        userGroups = member.getGroups()
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+        for financeGroup in cfg.adapted().getUsedFinanceGroupIds():
+            # only keep finance groupIds the current user is controller for
+            if '%s_financialcontrollers' % financeGroup in userGroups:
+                # advice not given yet
+                groupIds.append('delay__%s_advice_not_giveable' % financeGroup)
+                # advice was already given once and come back to the finance
+                groupIds.append('delay__%s_proposed_to_financial_controller' % financeGroup)
+        return {'portal_type': {'query': self.cfg.getItemTypeName()},
+                'getCompleteness': {'query': ('completeness_not_yet_evaluated',
+                                              'completeness_incomplete',
+                                              'completeness_evaluation_asked_again')},
+                'indexAdvisers': {'query': groupIds},
+                'review_state': {'query': 'waiting_advices'}}
+
+    # we may not ram.cache methods in same file with same name...
+    query = query_itemstocontrolcompletenessof
+
+
+class ItemsWithAdviceProposedToFinancialControllerAdapter(CompoundCriterionBaseAdapter):
+
+    def itemswithadviceproposedtofinancialcontroller_cachekey(method, self):
+        '''cachekey method for every CompoundCriterion adapters.'''
+        return str(self.request._debug)
+
+    @property
+    @ram.cache(itemswithadviceproposedtofinancialcontroller_cachekey)
+    def query_itemswithadviceproposedtofinancialcontroller(self):
+        '''Queries all items for which there is an advice in state 'proposed_to_financial_controller'.
+           We only return items for which completeness has been evaluated to 'complete'.'''
+        groupIds = []
+        member = api.user.get_current()
+        userGroups = member.getGroups()
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+        for financeGroup in cfg.adapted().getUsedFinanceGroupIds():
+            # only keep finance groupIds the current user is controller for
+            if '%s_financialcontrollers' % financeGroup in userGroups:
+                groupIds.append('delay__%s_proposed_to_financial_controller' % financeGroup)
+        # Create query parameters
+        return {'portal_type': {'query': self.cfg.getItemTypeName()},
+                'getCompleteness': {'query': 'completeness_complete'},
+                'indexAdvisers': {'query': groupIds}}
+
+    # we may not ram.cache methods in same file with same name...
+    query = query_itemswithadviceproposedtofinancialcontroller
+
+
+class ItemsWithAdviceProposedToFinancialReviewerAdapter(CompoundCriterionBaseAdapter):
+
+    def itemswithadviceproposedtofinancialreviewer_cachekey(method, self):
+        '''cachekey method for every CompoundCriterion adapters.'''
+        return str(self.request._debug)
+
+    @property
+    @ram.cache(itemswithadviceproposedtofinancialreviewer_cachekey)
+    def query_itemswithadviceproposedtofinancialreviewer(self):
+        '''Queries all items for which there is an advice in state 'proposed_to_financial_reviewer'.'''
+        groupIds = []
+        member = api.user.get_current()
+        userGroups = member.getGroups()
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+        for financeGroup in cfg.adapted().getUsedFinanceGroupIds():
+            # only keep finance groupIds the current user is reviewer for
+            if '%s_financialreviewers' % financeGroup in userGroups:
+                groupIds.append('delay__%s_proposed_to_financial_reviewer' % financeGroup)
+        return {'portal_type': {'query': self.cfg.getItemTypeName()},
+                'indexAdvisers': {'query': groupIds}}
+
+    # we may not ram.cache methods in same file with same name...
+    query = query_itemswithadviceproposedtofinancialreviewer
+
+
+class ItemsWithAdviceProposedToFinancialManagerAdapter(CompoundCriterionBaseAdapter):
+
+    def itemswithadviceproposedtofinancialmanager_cachekey(method, self):
+        '''cachekey method for every CompoundCriterion adapters.'''
+        return str(self.request._debug)
+
+    @property
+    @ram.cache(itemswithadviceproposedtofinancialmanager_cachekey)
+    def query_itemswithadviceproposedtofinancialmanager(self):
+        '''Queries all items for which there is an advice in state 'proposed_to_financial_manager'.'''
+        groupIds = []
+        member = api.user.get_current()
+        userGroups = member.getGroups()
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+        for financeGroup in cfg.adapted().getUsedFinanceGroupIds():
+            # only keep finance groupIds the current user is manager for
+            if '%s_financialmanagers' % financeGroup in userGroups:
+                groupIds.append('delay__%s_proposed_to_financial_manager' % financeGroup)
+        return {'portal_type': {'query': self.cfg.getItemTypeName()},
+                'indexAdvisers': {'query': groupIds}}
+
+    # we may not ram.cache methods in same file with same name...
+    query = query_itemswithadviceproposedtofinancialmanager
