@@ -230,6 +230,10 @@ msgstr "Envoyer vers Collège"
 msgid "create_to_meeting-config-zcouncil_from_zcollege"
 msgstr "Envoyer vers Conseil"
 
+#. Default: "Financial advice signed"
+msgid "financial_advice_signed"
+msgstr "Avis finances signé"
+
 #. Default: "Frozen"
 msgid "frozen"
 msgstr "Gelée"
@@ -238,3 +242,30 @@ msgstr "Gelée"
 msgid "itemfrozen"
 msgstr "Gelé"
 
+#. Default: "Propose to financial controller"
+msgid "proposeToFinancialController"
+msgstr "Proposer au contrôleur financier"
+
+#. Default: "Propose to financial manager"
+msgid "proposeToFinancialManager"
+msgstr "Proposer au Directeur financier"
+
+#. Default: "Propose to financial reviewer"
+msgid "proposeToFinancialReviewer"
+msgstr "Proposer au validateur financier"
+
+#. Default: "Proposed to financial controller"
+msgid "proposed_to_financial_controller"
+msgstr "Proposé au contrôleur financier"
+
+#. Default: "Proposed to financial manager"
+msgid "proposed_to_financial_manager"
+msgstr "Proposé au Directeur financier"
+
+#. Default: "Proposed to financial reviewer"
+msgid "proposed_to_financial_reviewer"
+msgstr "Proposé au validateur financier"
+
+#. Default: "Sign financial advice"
+msgid "signFinancialAdvice"
+msgstr "Avis finances signé"

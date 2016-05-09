@@ -28,3 +28,16 @@ div#archetypes-fieldname-echevinServices {
     max-width: 500px;
     overflow-x: auto;
 }
+
+.state-proposed_to_financial_controller,
+.label-state-proposed_to_financial_controller,
+.state-proposed_to_financial_reviewer,
+.label-state-proposed_to_financial_reviewer,
+.state-proposed_to_financial_manager,
+.label-state-proposed_to_financial_manager {
+    color: DarkOrange;
+}
+.state-financial_advice_signed,
+.label-state-financial_advice_signed {
+    color: blue;
+}

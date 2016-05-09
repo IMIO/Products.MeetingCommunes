@@ -230,6 +230,10 @@ msgstr ""
 msgid "create_to_meeting-config-zcouncil_from_zcollege"
 msgstr ""
 
+#. Default: "Financial advice signed"
+msgid "financial_advice_signed"
+msgstr ""
+
 #. Default: "Frozen"
 #, fuzzy
 msgid "frozen"
@@ -239,4 +243,32 @@ msgstr "congelado"
 #, fuzzy
 msgid "itemfrozen"
 msgstr "congelado"
+
+#. Default: "Propose to financial controller"
+msgid "proposeToFinancialController"
+msgstr ""
+
+#. Default: "Propose to financial manager"
+msgid "proposeToFinancialManager"
+msgstr ""
+
+#. Default: "Propose to financial reviewer"
+msgid "proposeToFinancialReviewer"
+msgstr ""
+
+#. Default: "Proposed to financial controller"
+msgid "proposed_to_financial_controller"
+msgstr ""
+
+#. Default: "Proposed to financial manager"
+msgid "proposed_to_financial_manager"
+msgstr ""
+
+#. Default: "Proposed to financial reviewer"
+msgid "proposed_to_financial_reviewer"
+msgstr ""
+
+#. Default: "Sign financial advice"
+msgid "signFinancialAdvice"
+msgstr ""
 
