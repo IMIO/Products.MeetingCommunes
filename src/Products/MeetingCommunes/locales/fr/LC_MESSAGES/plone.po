@@ -194,6 +194,18 @@ msgstr "Séance du Conseil de l'Action Sociale"
 msgid "Meetingcomitee"
 msgstr "Séance du Comité de Concertation"
 
+#. Default: "Send back to 'financial controller'"
+msgid "backToProposedToFinancialController"
+msgstr "Renvoyer au contrôleur financier"
+
+#. Default: "Send back to 'financial manager'"
+msgid "backToProposedToFinancialManager"
+msgstr "Renvoyer au Directeur financier"
+
+#. Default: "Send back to 'financial reviewer'"
+msgid "backToProposedToFinancialReviewer"
+msgstr "Renvoyer au validateur financier"
+
 #. Default: "Create an item CoGest from an item College"
 msgid "create_to_cogest_from_meeting-config-college"
 msgstr "Envoyer vers Comité de Gestion"
@@ -268,4 +280,5 @@ msgstr "Proposé au validateur financier"
 
 #. Default: "Sign financial advice"
 msgid "signFinancialAdvice"
-msgstr "Avis finances signé"
+msgstr "Signer l'avis finances"
+
