@@ -29,9 +29,11 @@ MC_TESTING_PROFILE_FUNCTIONAL = FunctionalTesting(
 MC_EXAMPLES_FR_TESTING_PROFILE = PloneWithPackageLayer(
     zcml_filename="testing.zcml",
     zcml_package=Products.MeetingCommunes,
-    additional_z2_products=('Products.MeetingCommunes',
+    additional_z2_products=('imio.dashboard',
+                            'Products.MeetingCommunes',
                             'Products.PloneMeeting',
-                            'Products.CMFPlacefulWorkflow'),
+                            'Products.CMFPlacefulWorkflow',
+                            'Products.PasswordStrength'),
     gs_profile_id='Products.MeetingCommunes:examples_fr',
     name="MC_TESTING_PROFILE")
 
