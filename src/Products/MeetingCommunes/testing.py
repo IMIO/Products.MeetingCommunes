@@ -26,7 +26,7 @@ MC_TESTING_PROFILE = PloneWithPackageLayer(
 MC_TESTING_PROFILE_FUNCTIONAL = FunctionalTesting(
     bases=(MC_TESTING_PROFILE,), name="MC_TESTING_PROFILE_FUNCTIONAL")
 
-MC_EXAMPLES_FR_TESTING_PROFILE = PloneWithPackageLayer(
+MC_DEMO_TESTING_PROFILE = PloneWithPackageLayer(
     zcml_filename="testing.zcml",
     zcml_package=Products.MeetingCommunes,
     additional_z2_products=('imio.dashboard',
@@ -34,12 +34,12 @@ MC_EXAMPLES_FR_TESTING_PROFILE = PloneWithPackageLayer(
                             'Products.PloneMeeting',
                             'Products.CMFPlacefulWorkflow',
                             'Products.PasswordStrength'),
-    gs_profile_id='Products.MeetingCommunes:examples_fr',
+    gs_profile_id='Products.MeetingCommunes:demo',
     name="MC_TESTING_PROFILE")
 
 MC_TESTING_ROBOT = FunctionalTesting(
     bases=(
-        MC_EXAMPLES_FR_TESTING_PROFILE,
+        MC_DEMO_TESTING_PROFILE,
         REMOTE_LIBRARY_BUNDLE_FIXTURE,
         z2.ZSERVER_FIXTURE,
     ),
