@@ -62,6 +62,7 @@ from Products.MeetingCommunes.interfaces import IMeetingItemCouncilWorkflowActio
 from Products.MeetingCommunes.interfaces import IMeetingCouncilWorkflowConditions
 from Products.MeetingCommunes.interfaces import IMeetingCouncilWorkflowActions
 from Products.MeetingCommunes.config import FINANCE_GROUP_SUFFIXES
+from Products.MeetingCommunes.config import FINANCE_WAITING_ADVICES_STATES
 
 # Names of available workflow adaptations.
 customwfAdaptations = list(MeetingConfig.wfAdaptations)
@@ -1194,7 +1195,7 @@ class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
                                               'completeness_incomplete',
                                               'completeness_evaluation_asked_again')},
                 'indexAdvisers': {'query': groupIds},
-                'review_state': {'query': 'waiting_advices'}}
+                'review_state': {'query': FINANCE_WAITING_ADVICES_STATES}}
 
     # we may not ram.cache methods in same file with same name...
     query = query_itemstocontrolcompletenessof

@@ -3,6 +3,7 @@ from App.class_init import InitializeClass
 from Products.Five import BrowserView
 from Products.CMFCore.permissions import ReviewPortalContent
 from Products.PloneMeeting.utils import checkPermission
+from Products.MeetingCommunes.config import POSITIVE_FINANCE_ADVICE_SIGNABLE_BY_REVIEWER
 
 
 class AdviceWFConditionsView(BrowserView):
@@ -61,11 +62,16 @@ class AdviceWFConditionsView(BrowserView):
         res = False
         if checkPermission(ReviewPortalContent, self.context):
             res = True
-            # if 'negative_finance', only finance manager can sign,
-            # aka advice must be in state 'proposed_to_finance_manager'
-            if self.context.advice_type == 'negative_finance' and not \
-               self.context.queryState() == 'proposed_to_financial_manager':
-                res = False
+            # if POSITIVE_FINANCES_ADVICE_SIGNABLE_BY_REVIEWER is True, it means
+            # that a finances reviewer may sign an item in place of the finances manager
+            # except if it is 'negative_finance'
+            if POSITIVE_FINANCE_ADVICE_SIGNABLE_BY_REVIEWER:
+                if self.context.advice_type == 'negative_finance' and \
+                   not self.context.queryState() == 'proposed_to_financial_manager':
+                    res = False
+            else:
+                if not self.context.queryState() == 'proposed_to_financial_manager':
+                    res = False
         return res
 
     security.declarePublic('mayBackToProposedToFinancialManager')

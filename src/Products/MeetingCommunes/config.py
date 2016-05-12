@@ -45,6 +45,13 @@ FINANCE_GROUP_SUFFIXES = ('financialcontrollers',
                           'financialreviewers',
                           'financialmanagers')
 
+# states in which the finance advice may be given
+FINANCE_WAITING_ADVICES_STATES = ['prevalidated_waiting_advices']
+
+# if True, a positive finances advice may be signed by a finances reviewer
+# if not, only the finances manager may sign advices
+POSITIVE_FINANCE_ADVICE_SIGNABLE_BY_REVIEWER = False
+
 # Define PloneMeeting-specific permissions
 AddAnnex = 'PloneMeeting: Add annex'
 setDefaultRoles(AddAnnex, ('Manager', 'Owner'))
