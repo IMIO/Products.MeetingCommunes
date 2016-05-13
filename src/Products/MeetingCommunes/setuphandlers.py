@@ -226,9 +226,8 @@ def reorderCss(context):
     logStep("reorderCss", context)
 
     portal_css = site.portal_css
-    css = ['plonemeeting.css',
-           'meeting.css',
-           'meetingitem.css',
+    css = ['imio.dashboard.css',
+           'plonemeeting.css',
            'meetingcommunes.css',
            'imioapps.css',
            'plonemeetingskin.css',

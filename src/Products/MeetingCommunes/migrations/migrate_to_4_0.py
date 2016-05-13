@@ -11,6 +11,8 @@ from Products.PloneMeeting.migrations.migrate_to_4_0 import Migrate_To_4_0 as PM
 # The migration class ----------------------------------------------------------
 class Migrate_To_4_0(PMMigrate_To_4_0):
 
+    wfs_to_delete = []
+
     def _cleanCDLD(self):
         """We removed things related to 'CDLD' finance advice, so:
            - remove the 'cdld-document-generate' from document_actions;
@@ -68,13 +70,19 @@ class Migrate_To_4_0(PMMigrate_To_4_0):
                 cfg._v_oldMeetingWorkflow = 'meetingcouncil_workflow'
         # delete old unused workflows, aka every workflows containing 'college' or 'council'
         wfTool = api.portal.get_tool('portal_workflow')
-        toDelete = [wfId for wfId in wfTool.listWorkflows()
-                    if wfId.endswith(('meetingitemcollege_workflow',
-                                      'meetingitemcouncil_workflow',
-                                      'meetingcollege_workflow',
-                                      'meetingcouncil_workflow'))]
-        if toDelete:
-            wfTool.manage_delObjects(toDelete)
+        self.wfs_to_delete = [wfId for wfId in wfTool.listWorkflows()
+                              if wfId.endswith(('meetingitemcollege_workflow',
+                                                'meetingitemcouncil_workflow',
+                                                'meetingcollege_workflow',
+                                                'meetingcouncil_workflow'))]
+        logger.info('Done.')
+
+    def _deleteUselessWorkflows(self):
+        """Finally, remove useless workflows."""
+        logger.info('Removing useless workflows...')
+        if self.wfs_to_delete:
+            wfTool = api.portal.get_tool('portal_workflow')
+            wfTool.manage_delObjects(self.wfs_to_delete)
         logger.info('Done.')
 
     def run(self):
@@ -86,6 +94,7 @@ class Migrate_To_4_0(PMMigrate_To_4_0):
         logger.info('Migrating to MeetingCommunes 4.0...')
         self._cleanCDLD()
         self._migrateItemPositiveDecidedStates()
+        self._deleteUselessWorkflows()
 
 
 # The migration function -------------------------------------------------------
