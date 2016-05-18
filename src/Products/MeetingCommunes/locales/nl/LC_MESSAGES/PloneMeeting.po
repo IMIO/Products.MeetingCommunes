@@ -44,11 +44,31 @@ msgstr ""
 msgid "add_new_meetingadvicefinances"
 msgstr ""
 
+#. Default: "Cautious opinion"
+msgid "cautious_finance"
+msgstr ""
+
 msgid "front_page_body"
 msgstr ""
 
 #. Default: "If you check this box, when a meeting will be decided, if an item does not have a decision defined, this decision will be automatically filled with title and description of the item"
 msgid "init_item_decision_if_empty_on_decide"
+msgstr ""
+
+#. Default: "Unfavorable opinion"
+msgid "negative_finance"
+msgstr ""
+
+#. Default: "Not given opinion"
+msgid "not_given_finance"
+msgstr ""
+
+#. Default: "Favorable opinion"
+msgid "positive_finance"
+msgstr ""
+
+#. Default: "Favorable opinion with remarks"
+msgid "positive_with_remarks_finance"
 msgstr ""
 
 #. Default: "Advices proposed to financial controller"

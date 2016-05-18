@@ -47,9 +47,11 @@ class AdviceWFConditionsView(BrowserView):
 
     def mayProposeToFinancialManager(self):
         '''A financial manager may send the advice to the financial manager
-           in any case (advice positive or negative).'''
+           in any case (advice positive or negative) except if advice
+           is still 'asked_again'.'''
         res = False
-        if checkPermission(ReviewPortalContent, self.context):
+        if checkPermission(ReviewPortalContent, self.context) and \
+           not self.context.advice_type == 'asked_again':
             res = True
         return res
 

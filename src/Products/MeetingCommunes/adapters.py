@@ -901,6 +901,14 @@ class CustomMeetingConfig(MeetingConfig):
             infos.update(financesadvice_infos)
         return infos
 
+    def extraAdviceTypes(self):
+        '''See doc in interfaces.py.'''
+        typesTool = api.portal.get_tool('portal_types')
+        if 'meetingadvicefinances' in typesTool:
+            return ['positive_finance', 'positive_with_remarks_finance',
+                    'cautious_finance', 'negative_finance', 'not_given_finance']
+        return []
+
 
 class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
