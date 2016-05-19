@@ -83,6 +83,10 @@ msgstr "vorgeschlageneTOP"
 msgid "searchvalidateditems"
 msgstr "validierte TOP"
 
+#. Default: "The item has been successfully transfered to the ag."
+msgid "sendto_meeting-config-ag_success"
+msgstr ""
+
 #. Default: "The item has been successfully transfered to the bp."
 msgid "sendto_meeting-config-bp_success"
 msgstr ""
@@ -101,4 +105,12 @@ msgstr ""
 
 #. Default: "The item has been successfully transfered to the council."
 msgid "sendto_meeting-config-council_success"
+msgstr ""
+
+#. Default: "The item has been successfully transfered to the zcollege."
+msgid "sendto_meeting-config-zcollege_success"
+msgstr ""
+
+#. Default: "The item has been successfully transfered to the zcouncil."
+msgid "sendto_meeting-config-zcouncil_success"
 msgstr ""

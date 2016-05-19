@@ -152,10 +152,30 @@ msgstr ""
 msgid "MeetingItemTemplateZCouncil"
 msgstr ""
 
-#. Default: "Create an item ZCouncil from an item ZCollege"
-msgid "create_to_meeting-config-zcollege_from_zcouncil"
+#. Default: "Create an item ZCollege from an item ZCouncil"
+msgid "create_to_meeting-config-zcollege_from_meeting-config-zcouncil"
 msgstr ""
 
-#. Default: "Create an item ZCollege from an item ZCouncil"
-msgid "create_to_meeting-config-zcouncil_from_zcollege"
+#. Default: "Create an item ZCouncil from an item ZCollege"
+msgid "create_to_meeting-config-zcouncil_from_meeting-config-zcollege"
+msgstr ""
+
+#. Default: "Meeting AG"
+msgid "MeetingAG"
+msgstr ""
+
+#. Default: "Meeting Item AG"
+msgid "MeetingItemAG"
+msgstr ""
+
+#. Default: "Meeting Item Recurring AG"
+msgid "MeetingItemRecurringAG"
+msgstr ""
+
+#. Default: "Meeting Item Template AG"
+msgid "MeetingItemTemplateAG"
+msgstr ""
+
+#. Default: "Create an item AG from an item ZCA"
+msgid "create_to_meeting-config-ag_from_ca"
 msgstr ""

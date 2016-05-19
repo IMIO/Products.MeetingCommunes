@@ -18,6 +18,10 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "X-is-fallback-for: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
 
+#. Default: "Meeting AG"
+msgid "MeetingAG"
+msgstr "Séance AG"
+
 #. Default: "MeetingCOGES"
 msgid "MeetingCOGES"
 msgstr "Séance du Comité de Gestion"
@@ -30,6 +34,10 @@ msgstr "Séance du Collège Communal"
 msgid "MeetingCouncil"
 msgstr "Séance du Conseil Communal"
 
+#. Default: "Meeting Item AG"
+msgid "MeetingItemAG"
+msgstr "Point AG"
+
 #. Default: "MeetingItemCollege"
 msgid "MeetingItemCollege"
 msgstr "Point Collège Communal"
@@ -38,6 +46,10 @@ msgstr "Point Collège Communal"
 msgid "MeetingItemCouncil"
 msgstr "Point Conseil Communal"
 
+#. Default: "Meeting Item Recurring AG"
+msgid "MeetingItemRecurringAG"
+msgstr "Point récurrent AG"
+
 #. Default: "MeetingItemRecurringZCollege"
 msgid "MeetingItemRecurringZCollege"
 msgstr "Point récurrent College"
@@ -45,6 +57,10 @@ msgstr "Point récurrent College"
 #. Default: "MeetingItemRecurringZCouncil"
 msgid "MeetingItemRecurringZCouncil"
 msgstr "Point récurrent Conseil"
+
+#. Default: "Meeting Item Template AG"
+msgid "MeetingItemTemplateAG"
+msgstr "Modèle de point AG"
 
 #. Default: "MeetingItemTemplateZCollege"
 msgid "MeetingItemTemplateZCollege"
@@ -138,16 +154,20 @@ msgstr "Remettre en \"Proposé\""
 msgid "backToPublished"
 msgstr "Remettre en \"Publié\""
 
+#. Default: "Create an item AG from an item ZCA"
+msgid "create_to_meeting-config-ag_from_ca"
+msgstr "Envoyer vers AG"
+
 #. Default: "Create an item council from an item college"
 msgid "create_to_meeting-config-council_from_meeting-config-college"
 msgstr "Envoyer vers Conseil Communal"
 
-#. Default: "Create an item ZCouncil from an item ZCollege"
-msgid "create_to_meeting-config-zcollege_from_zcouncil"
+#. Default: "Create an item ZCollege from an item ZCouncil"
+msgid "create_to_meeting-config-zcollege_from_meeting-config-zcouncil"
 msgstr "Envoyer vers Collège"
 
-#. Default: "Create an item ZCollege from an item ZCouncil"
-msgid "create_to_meeting-config-zcouncil_from_zcollege"
+#. Default: "Create an item ZCouncil from an item ZCollege"
+msgid "create_to_meeting-config-zcouncil_from_meeting-config-zcollege"
 msgstr "Envoyer vers Conseil"
 
 #. Default: "Frozen"

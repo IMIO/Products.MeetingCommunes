@@ -33,6 +33,13 @@
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:registerProfile
+   name="zag"
+   title="PloneMeeting / AG"
+   description="PloneMeeting for AG (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
    name="zca"
    title="PloneMeeting / CA"
    description="PloneMeeting for CA (Belgium)"

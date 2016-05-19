@@ -18,6 +18,10 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "X-is-fallback-for: en-us en-ca\n"
 
+#. Default: "Meeting AG"
+msgid "MeetingAG"
+msgstr ""
+
 #. Default: "MeetingCOGES"
 msgid "MeetingCOGES"
 msgstr "Séance du Comité de Gestion"
@@ -30,6 +34,10 @@ msgstr "City college meeting"
 msgid "MeetingCouncil"
 msgstr "City council meeting"
 
+#. Default: "Meeting Item AG"
+msgid "MeetingItemAG"
+msgstr ""
+
 #. Default: "MeetingItemCollege"
 msgid "MeetingItemCollege"
 msgstr "College item"
@@ -38,12 +46,20 @@ msgstr "College item"
 msgid "MeetingItemCouncil"
 msgstr "Council item"
 
+#. Default: "Meeting Item Recurring AG"
+msgid "MeetingItemRecurringAG"
+msgstr ""
+
 #. Default: "MeetingItemRecurringZCollege"
 msgid "MeetingItemRecurringZCollege"
 msgstr ""
 
 #. Default: "MeetingItemRecurringZCouncil"
 msgid "MeetingItemRecurringZCouncil"
+msgstr ""
+
+#. Default: "Meeting Item Template AG"
+msgid "MeetingItemTemplateAG"
 msgstr ""
 
 #. Default: "MeetingItemTemplateZCollege"
@@ -138,16 +154,20 @@ msgstr ""
 msgid "backToPublished"
 msgstr ""
 
+#. Default: "Create an item AG from an item ZCA"
+msgid "create_to_meeting-config-ag_from_ca"
+msgstr ""
+
 #. Default: "Create an item council from an item college"
 msgid "create_to_meeting-config-council_from_meeting-config-college"
 msgstr ""
 
-#. Default: "Create an item ZCouncil from an item ZCollege"
-msgid "create_to_meeting-config-zcollege_from_zcouncil"
+#. Default: "Create an item ZCollege from an item ZCouncil"
+msgid "create_to_meeting-config-zcollege_from_meeting-config-zcouncil"
 msgstr ""
 
-#. Default: "Create an item ZCollege from an item ZCouncil"
-msgid "create_to_meeting-config-zcouncil_from_zcollege"
+#. Default: "Create an item ZCouncil from an item ZCollege"
+msgid "create_to_meeting-config-zcouncil_from_meeting-config-zcollege"
 msgstr ""
 
 #. Default: "Frozen"
