@@ -18,6 +18,10 @@ msgstr ""
 "Domain: plone\n"
 "X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
 
+#. Default: "Meeting AG"
+msgid "MeetingAG"
+msgstr ""
+
 #. Default: "MeetingBourgmestre"
 msgid "MeetingBourgmestre"
 msgstr ""
@@ -42,6 +46,10 @@ msgstr "Reunión del Colegio Comunal"
 msgid "MeetingCouncil"
 msgstr "Reunión del Consejo Comunal"
 
+#. Default: "Meeting Item AG"
+msgid "MeetingItemAG"
+msgstr ""
+
 #. Default: "MeetingItemBourgmestre"
 msgid "MeetingItemBourgmestre"
 msgstr ""
@@ -65,6 +73,10 @@ msgstr "Tema Colegio"
 #. Default: "MeetingItemCouncil"
 msgid "MeetingItemCouncil"
 msgstr "Tema Consejo"
+
+#. Default: "Meeting Item Recurring AG"
+msgid "MeetingItemRecurringAG"
+msgstr ""
 
 #. Default: "MeetingItemRecurringBourgmestre"
 msgid "MeetingItemRecurringBourgmestre"
@@ -108,6 +120,10 @@ msgstr ""
 
 #. Default: "Meeting item recurring Comitee"
 msgid "MeetingItemRecurringcomitee"
+msgstr ""
+
+#. Default: "Meeting Item Template AG"
+msgid "MeetingItemTemplateAG"
 msgstr ""
 
 #. Default: "MeetingItemTemplateBourgmestre"
@@ -210,6 +226,10 @@ msgstr ""
 msgid "create_to_cogest_from_meeting-config-college"
 msgstr ""
 
+#. Default: "Create an item AG from an item ZCA"
+msgid "create_to_meeting-config-ag_from_ca"
+msgstr ""
+
 #. Default: "Create an item BP from an item CoDir"
 msgid "create_to_meeting-config-bp_from_codir"
 msgstr ""
@@ -234,12 +254,12 @@ msgstr ""
 msgid "create_to_meeting-config-council_from_meeting-config-college"
 msgstr ""
 
-#. Default: "Create an item ZCouncil from an item ZCollege"
-msgid "create_to_meeting-config-zcollege_from_zcouncil"
+#. Default: "Create an item ZCollege from an item ZCouncil"
+msgid "create_to_meeting-config-zcollege_from_meeting-config-zcouncil"
 msgstr ""
 
-#. Default: "Create an item ZCollege from an item ZCouncil"
-msgid "create_to_meeting-config-zcouncil_from_zcollege"
+#. Default: "Create an item ZCouncil from an item ZCollege"
+msgid "create_to_meeting-config-zcouncil_from_meeting-config-zcollege"
 msgstr ""
 
 #. Default: "Financial advice signed"
@@ -283,4 +303,3 @@ msgstr ""
 #. Default: "Sign financial advice"
 msgid "signFinancialAdvice"
 msgstr ""
-

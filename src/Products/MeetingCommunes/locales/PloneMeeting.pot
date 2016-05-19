@@ -65,6 +65,18 @@ msgstr ""
 msgid "sendto_meeting-config-comitee_success"
 msgstr ""
 
+#. Default: "The item has been successfully transfered to the zcouncil."
+msgid "sendto_meeting-config-zcouncil_success"
+msgstr ""
+
+#. Default: "The item has been successfully transfered to the zcollege."
+msgid "sendto_meeting-config-zcollege_success"
+msgstr ""
+
+#. Default: "The item has been successfully transfered to the ag."
+msgid "sendto_meeting-config-ag_success"
+msgstr ""
+
 #. Default: "Initialize the item decision when deciding meeting"
 msgid "MeetingCommunes_label_initItemDecisionIfEmptyOnDecide"
 msgstr ""
