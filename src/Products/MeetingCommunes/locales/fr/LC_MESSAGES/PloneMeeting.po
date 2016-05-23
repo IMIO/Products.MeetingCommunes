@@ -76,7 +76,7 @@ msgstr "Avis finances favorable avec remarques"
 
 #. Default: "Advices proposed to financial controller"
 msgid "searchadviceproposedtocontroller"
-msgstr "Avis proposés au contrôleurs financiers"
+msgstr "Avis proposés au contrôleur financier"
 
 #. Default: "Advices proposed to financial manager"
 msgid "searchadviceproposedtomanager"
@@ -84,7 +84,7 @@ msgstr "Avis proposés au Directeur financier"
 
 #. Default: "Advices proposed to financial reviewer"
 msgid "searchadviceproposedtoreviewer"
-msgstr "Avis proposés aux validateurs financiers"
+msgstr "Avis proposés au validateur financier"
 
 #. Default: "Items to control completeness of"
 msgid "searchitemstocontrolcompletenessof"
