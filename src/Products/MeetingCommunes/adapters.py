@@ -1048,10 +1048,12 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
     implements(IToolPloneMeetingCustom)
     security = ClassSecurityInfo()
 
+    def __init__(self, item):
+        self.context = item
+
     def isFinancialUser_cachekey(method, self, brain=False):
         '''cachekey method for self.isFinancialUser.'''
-        tool = self.id
-        return str(tool.REQUEST._debug)
+        return str(self.context.REQUEST._debug)
 
     security.declarePublic('isFinancialUser')
 
