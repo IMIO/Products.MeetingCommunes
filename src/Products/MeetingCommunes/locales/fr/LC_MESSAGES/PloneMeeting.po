@@ -106,7 +106,7 @@ msgstr "Points validés"
 
 #. Default: "The item has been successfully transfered to the ag."
 msgid "sendto_meeting-config-ag_success"
-msgstr ""
+msgstr "Le point a été envoyé à l'Assemblée Générale."
 
 #. Default: "The item has been successfully transfered to the bp."
 msgid "sendto_meeting-config-bp_success"
@@ -130,8 +130,8 @@ msgstr "Le point a été envoyé au Conseil communal."
 
 #. Default: "The item has been successfully transfered to the zcollege."
 msgid "sendto_meeting-config-zcollege_success"
-msgstr ""
+msgstr "Le point a été envoyé au Collège."
 
 #. Default: "The item has been successfully transfered to the zcouncil."
 msgid "sendto_meeting-config-zcouncil_success"
-msgstr ""
+msgstr "Le point a été envoyé au Conseil."
