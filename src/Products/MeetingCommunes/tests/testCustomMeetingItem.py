@@ -59,7 +59,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.cleanMemoize()
         self.assertEquals(i2.adapted().getEchevinsForProposingGroup(), ['developers'])
 
-    def test_GetUsedFinanceGroupId(self):
+    def test_GetUsedFinanceGroupIds(self):
         '''Test the custom MeetingItem.getUsedFinanceGroupIds method
            that will return adviser ids used on the 'searchitemswithfinanceadvice'
            collection, this is used in the adapted method 'showFinanceAdviceTemplate'.'''
