@@ -373,10 +373,11 @@ def addDemoData(context):
                 if item['templateId'] == 'template3' and cfg.id == 'meeting-config-college':
                     cpt = 1
                     for annexeType in ('annexe', 'annexe', 'annexeBudget', 'annexeCahier'):
+                        annex_title = 'CV Informaticien N°2016-%s' % (cpt)
                         annexFile = makeFileUpload('Je suis le contenu du fichier', 'CV-0%s.txt' % (cpt))
                         fileType = getattr(cfg.meetingfiletypes, annexeType)
                         IAnnexable(newItem).addAnnex(idCandidate=None,
-                                                     annex_title='CV',
+                                                     annex_title=annex_title,
                                                      annex_file=annexFile,
                                                      relatedTo='item',
                                                      meetingFileTypeUID=fileType.UID())
