@@ -133,6 +133,11 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(item), ['developers'])
         self.assertTrue(item.adapted().showFinanceAdviceTemplate())
 
+        # if the collection does not exist, [] is returned
+        self.deleteAsManager(collection.UID())
+        self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(item), [])
+        self.assertFalse(item.adapted().showFinanceAdviceTemplate())
+
     def test_AdviceDelayIsTimedOutWithRowId(self):
 
         today = DateTime().strftime('%Y/%m/%d')

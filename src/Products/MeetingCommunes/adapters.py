@@ -53,6 +53,9 @@ from Products.PloneMeeting.model.adaptations import WF_APPLIED
 from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
 from Products.PloneMeeting.utils import checkPermission
 
+from Products.MeetingCommunes import logger
+from Products.MeetingCommunes.config import FINANCE_GROUP_SUFFIXES
+from Products.MeetingCommunes.config import FINANCE_WAITING_ADVICES_STATES
 from Products.MeetingCommunes.interfaces import IMeetingItemCollegeWorkflowConditions
 from Products.MeetingCommunes.interfaces import IMeetingItemCollegeWorkflowActions
 from Products.MeetingCommunes.interfaces import IMeetingCollegeWorkflowConditions
@@ -61,8 +64,6 @@ from Products.MeetingCommunes.interfaces import IMeetingItemCouncilWorkflowCondi
 from Products.MeetingCommunes.interfaces import IMeetingItemCouncilWorkflowActions
 from Products.MeetingCommunes.interfaces import IMeetingCouncilWorkflowConditions
 from Products.MeetingCommunes.interfaces import IMeetingCouncilWorkflowActions
-from Products.MeetingCommunes.config import FINANCE_GROUP_SUFFIXES
-from Products.MeetingCommunes.config import FINANCE_WAITING_ADVICES_STATES
 
 # Names of available workflow adaptations.
 customwfAdaptations = list(MeetingConfig.wfAdaptations)
@@ -699,10 +700,14 @@ class CustomMeetingConfig(MeetingConfig):
 
     def getUsedFinanceGroupIds(self, item=None):
         """Possible finance advisers group ids are defined on
-           the 'FromSearchitemswithfinanceadvice' collection."""
+           the 'searchitemswithfinanceadvice' collection."""
         cfg = self.getSelf()
         tool = api.portal.get_tool('portal_plonemeeting')
-        collection = cfg.searches.searches_items.searchitemswithfinanceadvice
+        collection = getattr(cfg.searches.searches_items, 'searchitemswithfinanceadvice', None)
+        if not collection:
+            logger.warn(
+                "Method 'getUsedFinanceGroupIds' could not find the 'searchitemswithfinanceadvice' collection!")
+            return []
         # get the indexAdvisers value defined on the collection
         # and find the relevant group, indexAdvisers form is :
         # 'delay_real_group_id__2014-04-16.9996934488', 'real_group_id_directeur-financier'
