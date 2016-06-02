@@ -48,6 +48,9 @@ FINANCE_GROUP_SUFFIXES = ('financialcontrollers',
 # states in which the finance advice may be given
 FINANCE_WAITING_ADVICES_STATES = ['prevalidated_waiting_advices']
 
+# the id of the collection querying finance advices
+FINANCE_ADVICES_COLLECTION_ID = 'searchitemswithfinanceadvice'
+
 # if True, a positive finances advice may be signed by a finances reviewer
 # if not, only the finances manager may sign advices
 POSITIVE_FINANCE_ADVICE_SIGNABLE_BY_REVIEWER = False

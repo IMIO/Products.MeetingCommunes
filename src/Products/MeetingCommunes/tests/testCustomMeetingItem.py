@@ -24,6 +24,7 @@
 
 from DateTime import DateTime
 from datetime import datetime
+from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 
 
@@ -61,10 +62,10 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
 
     def test_GetUsedFinanceGroupIds(self):
         '''Test the custom MeetingItem.getUsedFinanceGroupIds method
-           that will return adviser ids used on the 'searchitemswithfinanceadvice'
+           that will return adviser ids used on the FINANCE_ADVICES_COLLECTION_ID
            collection, this is used in the adapted method 'showFinanceAdviceTemplate'.'''
         cfg = self.meetingConfig
-        collection = cfg.searches.searches_items.searchitemswithfinanceadvice
+        collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID)
         collection.setQuery([
             {'i': 'portal_type',
              'o': 'plone.app.querystring.operation.selection.is',

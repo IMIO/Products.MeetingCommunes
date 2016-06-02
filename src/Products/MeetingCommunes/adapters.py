@@ -54,6 +54,7 @@ from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
 from Products.PloneMeeting.utils import checkPermission
 
 from Products.MeetingCommunes import logger
+from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.config import FINANCE_GROUP_SUFFIXES
 from Products.MeetingCommunes.config import FINANCE_WAITING_ADVICES_STATES
 from Products.MeetingCommunes.interfaces import IMeetingItemCollegeWorkflowConditions
@@ -700,13 +701,14 @@ class CustomMeetingConfig(MeetingConfig):
 
     def getUsedFinanceGroupIds(self, item=None):
         """Possible finance advisers group ids are defined on
-           the 'searchitemswithfinanceadvice' collection."""
+           the FINANCE_ADVICES_COLLECTION_ID collection."""
         cfg = self.getSelf()
         tool = api.portal.get_tool('portal_plonemeeting')
-        collection = getattr(cfg.searches.searches_items, 'searchitemswithfinanceadvice', None)
+        collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID, None)
         if not collection:
             logger.warn(
-                "Method 'getUsedFinanceGroupIds' could not find the 'searchitemswithfinanceadvice' collection!")
+                "Method 'getUsedFinanceGroupIds' could not find the '{0}' collection!".format(
+                    FINANCE_ADVICES_COLLECTION_ID))
             return []
         # get the indexAdvisers value defined on the collection
         # and find the relevant group, indexAdvisers form is :
@@ -788,12 +790,12 @@ class CustomMeetingConfig(MeetingConfig):
             ]
         )
         infos.update(extra_infos)
-        # add the 'searchitemswithfinanceadvice' for 'meeting-config-college' and 'meeting-config-bp'
+        # add the FINANCE_ADVICES_COLLECTION_ID for 'meeting-config-college' and 'meeting-config-bp'
         if cfg.getId() in ('meeting-config-college', 'meeting-config-bp'):
             finance_infos = OrderedDict(
                 [
                     # Items for finance advices synthesis
-                    ('searchitemswithfinanceadvice',
+                    (FINANCE_ADVICES_COLLECTION_ID,
                         {
                             'subFolderId': 'searches_items',
                             'query':

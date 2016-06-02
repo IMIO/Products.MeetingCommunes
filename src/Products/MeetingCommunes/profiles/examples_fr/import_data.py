@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from DateTime import DateTime
+from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import GroupDescriptor
 from Products.PloneMeeting.profiles import ItemTemplateDescriptor
@@ -63,7 +64,7 @@ itemTemplate.tal_condition = 'python:here.hasMeeting()'
 dfAdvicesTemplate = PodTemplateDescriptor('synthese-avis-df', 'Synthèse Avis DF', dashboard=True)
 dfAdvicesTemplate.odt_file = 'synthese-avis-df.odt'
 dfAdvicesTemplate.pod_formats = ['odt', 'pdf', ]
-dfAdvicesTemplate.dashboard_collections_ids = ['searchitemswithfinanceadvice']
+dfAdvicesTemplate.dashboard_collections_ids = [FINANCE_ADVICES_COLLECTION_ID]
 
 dfAdviceTemplate = PodTemplateDescriptor('avis-df', 'Avis DF')
 dfAdvicesTemplate.odt_file = 'avis-df.odt'
