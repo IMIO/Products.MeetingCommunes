@@ -18,8 +18,10 @@ import logging
 logger = logging.getLogger('MeetingCommunes: setuphandlers')
 from DateTime import DateTime
 from plone import api
+from plone.app.blob.tests.utils import makeFileUpload
 from Products.CMFPlone.utils import _createObjectByType
 from Products.PloneMeeting.exportimport.content import ToolInitializer
+from Products.PloneMeeting.interfaces import IAnnexable
 from Products.PloneMeeting.model.adaptations import performWorkflowAdaptations
 from Products.MeetingCommunes.config import PROJECTNAME
 
@@ -272,7 +274,7 @@ def addDemoData(context):
     # we use item templates so content is created for the demo
     items = {'agentPers': ({'templateId': 'template3',
                             'title': u'Engagement temporaire d\'un informaticien',
-                            'budgetRelated': False,
+                            'budgetRelated': True,
                             'review_state': 'validated', },
                            {'templateId': 'template2',
                             'title': u'Contrôle médical de Mr Antonio',
@@ -367,4 +369,21 @@ def addDemoData(context):
                     wfTool.doActionFor(newItem, 'propose')
                 if item['review_state'] == 'validated':
                     wfTool.doActionFor(newItem, 'validate')
+                #add annexe and advise for one item in College
+                if item['templateId'] == 'template3' and cfg.id == 'meeting-config-college':
+                    cpt = 1
+                    for annexeType in ('annexe', 'annexe', 'annexeBudget', 'annexeCahier'):
+                        annexFile = makeFileUpload('Je suis le contenu du fichier', 'CV-0%s.txt' % (cpt))
+                        fileType = getattr(cfg.meetingfiletypes, annexeType)
+                        IAnnexable(newItem).addAnnex(idCandidate=None,
+                                                     annex_title='CV',
+                                                     annex_file=annexFile,
+                                                     relatedTo='item',
+                                                     meetingFileTypeUID=fileType.UID())
+                        cpt += 1
+                    newItem.setOptionalAdvisers(('dirfin__rowid__unique_id_003', 'informatique'))
+                    newItem.at_post_create_script()
                 newItem.reindexObject()
+        # adapt some parameters for config
+        cfg.setEnableAnnexToPrint('enabled_for_printing')
+        cfg.setEnableAnnexConfidentiality(True)
