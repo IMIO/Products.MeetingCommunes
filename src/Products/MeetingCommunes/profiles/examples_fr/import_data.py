@@ -240,7 +240,8 @@ collegeMeeting.usedItemAttributes = ['detailedDescription',
                                      'itemAssembly',
                                      'itemIsSigned',
                                      'notes',
-                                     'inAndOutMoves']
+                                     'inAndOutMoves',
+                                     'otherMeetingConfigsClonableToPrivacy']
 collegeMeeting.usedMeetingAttributes = ['startDate',
                                         'endDate',
                                         'signatures',
