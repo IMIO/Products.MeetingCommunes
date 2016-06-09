@@ -55,9 +55,31 @@ Caractéristiques de l'application
     Click element  css=dl.actionMenuAX:nth-child(2) > dt:nth-child(1)
     Sleep  0.5
     Add pointer  css=dl.actionMenuAX:nth-child(2) > dd:nth-child(2) > ul:nth-child(1) > li:nth-child(1) > fieldset:nth-child(1) > table:nth-child(2) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(5)  size=50
-    Capture and crop page screenshot  doc/caracteristique-de-l-application/2-4_4_avis_ajout_annexe.png  css=dl.actionMenuAX:nth-child(2) > dd:nth-child(2)
-    
-      
+    Capture and crop page screenshot  doc/caracteristique-de-l-application/2-4_5_avis_ajout_annexe.png  css=dl.actionMenuAX:nth-child(2) > dd:nth-child(2)
+    Go to  ${PLONE_URL}/Members/agentCompta/mymeetings/meeting-config-college/template5
+    Click element  css=dl.actionMenuAX:nth-child(2) > dt:nth-child(1)
+    Click element  css=dl.actionMenuAX:nth-child(2) > dd:nth-child(2) > ul:nth-child(1) > li:nth-child(1) > fieldset:nth-child(1) > table:nth-child(2) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(5)
+    Wait until element is visible  id=annex_file  10
+    Capture and crop page screenshot  doc/caracteristique-de-l-application/2-4_5_avis_ajout_annexe2.png  css=.site-plone  id=portal-footer-wrapper
+
+# partie 2.4.6. Gestion des avis : avis avec délai
+    Go to  ${PLONE_URL}/Members/agentCompta/mymeetings/meeting-config-college/template5
+    Click element  id=contentview-edit
+    Capture and crop page screenshot  doc/caracteristique-de-l-application/2-4_6_avis_avec_delais.png  id=optionalAdvisers
+    Click element  name=form.button.cancel
+    Go to  ${PLONE_URL}/Members/agentPers/mymeetings/meeting-config-college/template3
+    Click and Screenshot overlayForm  css=.advices_of_type  doc/caracteristique-de-l-application/2-4_6_voir_les_demandes_d_avis.png  css=.actionMenuContentAX.actionMenuContentAdvice
+    Go to  ${PLONE_URL}/Members/agentPers/mymeetings/meeting-config-college/template3
+    Mouse Over  css=.warn_delay_advice > img:nth-child(1)
+    #L'info bulle n'est pas capturée dans le screenshot.
+    #Sleep  1
+    #Capture and crop page screenshot  doc/caracteristique-de-l-application/2-4_6_avis_help_icone.png  css=.itemAdvicesCell
+
+# partie 2.4.7. Tableau récapitulatif affichant des points
+    Select collection  portal_plonemeeting/meeting-config-college/searches/searches_items/searchmyitems
+    Capture and crop page screenshot  doc/caracteristique-de-l-application/2-4_7_tableau_recapitulatif_de_mes_points.png  id=content
+    Debug
+
 
 *** Keywords ***
 Suite Setup
