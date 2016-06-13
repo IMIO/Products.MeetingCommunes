@@ -45,6 +45,10 @@ msgstr "Collegevergadering"
 msgid "MeetingCouncil"
 msgstr "Gemeenteraadsvergadering"
 
+#. Default: "Meeting EM"
+msgid "MeetingEM"
+msgstr ""
+
 #. Default: "Meeting Item AG"
 msgid "MeetingItemAG"
 msgstr ""
@@ -73,6 +77,10 @@ msgstr "Item collegevergadering"
 msgid "MeetingItemCouncil"
 msgstr "Item gemeenteraadsvergadering"
 
+#. Default: "Meeting Item EM"
+msgid "MeetingItemEM"
+msgstr ""
+
 #. Default: "Meeting Item Recurring AG"
 msgid "MeetingItemRecurringAG"
 msgstr ""
@@ -99,6 +107,10 @@ msgstr ""
 
 #. Default: "MeetingItemRecurringCouncil"
 msgid "MeetingItemRecurringCouncil"
+msgstr ""
+
+#. Default: "Meeting Item Recurring EM"
+msgid "MeetingItemRecurringEM"
 msgstr ""
 
 #. Default: "MeetingItemRecurringZCollege"
@@ -147,6 +159,10 @@ msgstr ""
 
 #. Default: "MeetingItemTemplateCouncil"
 msgid "MeetingItemTemplateCouncil"
+msgstr ""
+
+#. Default: "Meeting Item Template EM"
+msgid "MeetingItemTemplateEM"
 msgstr ""
 
 #. Default: "MeetingItemTemplateZCollege"
@@ -253,6 +269,10 @@ msgstr ""
 msgid "create_to_meeting-config-council_from_meeting-config-college"
 msgstr ""
 
+#. Default: "Create an item ZCollege from an item EM"
+msgid "create_to_meeting-config-zcollege_from_em"
+msgstr ""
+
 #. Default: "Create an item ZCollege from an item ZCouncil"
 msgid "create_to_meeting-config-zcollege_from_meeting-config-zcouncil"
 msgstr ""
@@ -302,3 +322,4 @@ msgstr ""
 #. Default: "Sign financial advice"
 msgid "signFinancialAdvice"
 msgstr ""
+

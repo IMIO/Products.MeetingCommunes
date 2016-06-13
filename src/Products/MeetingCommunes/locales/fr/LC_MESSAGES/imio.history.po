@@ -18,6 +18,10 @@ msgstr ""
 msgid "create_to_cogest_from_meeting-config-college_comments"
 msgstr "Point CoGest créé depuis un point Collège Communal."
 
+#. Default: "Item created from a CA item."
+msgid "create_to_meeting-config-ag_from_meeting-config-ca_comments"
+msgstr "Point AG créé depuis un point CA."
+
 #. Default: "Item created from a CoDir item."
 msgid "create_to_meeting-config-bp_from_codir_comments"
 msgstr "Point BP créé depuis un point CoDir."
@@ -41,3 +45,15 @@ msgstr "Point Collège Communal créé depuis un point Conseil Communal."
 #. Default: "Item created from a college item."
 msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
 msgstr "Point Conseil Communal créé depuis un point Collège Communal."
+
+#. Default: "Item created from a CoDir item."
+msgid "create_to_meeting-config-zcollege_from_codir_comments"
+msgstr "Point Collège créé depuis un point CoDir."
+
+#. Default: "Item created from a EM item."
+msgid "create_to_meeting-config-zcollege_from_meeting-config-em_comments"
+msgstr "Point Collège créé depuis un point Etat-Major."
+
+#. Default: "Item created from a ZCollege item."
+msgid "create_to_meeting-config-zcouncil_from_meeting-config-zcollege_comments"
+msgstr "Point Conseil créé depuis un point Collège."

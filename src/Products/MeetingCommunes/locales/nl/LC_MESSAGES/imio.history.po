@@ -18,6 +18,10 @@ msgstr ""
 msgid "create_to_cogest_from_meeting-config-college_comments"
 msgstr ""
 
+#. Default: "Item created from a CA item."
+msgid "create_to_meeting-config-ag_from_meeting-config-ca_comments"
+msgstr ""
+
 #. Default: "Item created from a CoDir item."
 msgid "create_to_meeting-config-bp_from_codir_comments"
 msgstr ""
@@ -41,3 +45,16 @@ msgstr ""
 #. Default: "Item created from a college item."
 msgid "create_to_meeting-config-council_from_meeting-config-college_comments"
 msgstr ""
+
+#. Default: "Item created from a CoDir item."
+msgid "create_to_meeting-config-zcollege_from_codir_comments"
+msgstr ""
+
+#. Default: "Item created from a EM item."
+msgid "create_to_meeting-config-zcollege_from_meeting-config-em_comments"
+msgstr ""
+
+#. Default: "Item created from a ZCollege item."
+msgid "create_to_meeting-config-zcouncil_from_meeting-config-zcollege_comments"
+msgstr ""
+
