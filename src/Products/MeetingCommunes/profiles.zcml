@@ -88,6 +88,13 @@
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
+  <genericsetup:registerProfile
+   name="zetat_major"
+   title="PloneMeeting / Etat Major"
+   description="PloneMeeting for EM (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
   <genericsetup:upgradeStep
       title="Go to MeetingCommunes 3.2.0"
       description=""
