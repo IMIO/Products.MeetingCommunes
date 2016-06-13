@@ -26,6 +26,10 @@ msgstr "Séance AG"
 msgid "MeetingCOGES"
 msgstr "Séance du Comité de Gestion"
 
+#. Default: "Meeting CoDir"
+msgid "MeetingCoDir"
+msgstr "Séance du CODIR"
+
 #. Default: "MeetingCollege"
 msgid "MeetingCollege"
 msgstr "Séance du Collège Communal"
@@ -41,6 +45,10 @@ msgstr "Séance de l'Etat-Major"
 #. Default: "Meeting Item AG"
 msgid "MeetingItemAG"
 msgstr "Point AG"
+
+#. Default: "Meeting Item CoDir"
+msgid "MeetingItemCoDir"
+msgstr "Point CODIR"
 
 #. Default: "MeetingItemCollege"
 msgid "MeetingItemCollege"
@@ -58,6 +66,10 @@ msgstr "Point Etat-Major"
 msgid "MeetingItemRecurringAG"
 msgstr "Point récurrent AG"
 
+#. Default: "Meeting Item Recurring CoDir"
+msgid "MeetingItemRecurringCoDir"
+msgstr "Point récurrent CODIR"
+
 #. Default: "Meeting Item Recurring EM"
 msgid "MeetingItemRecurringEM"
 msgstr "Point récurrent Etat-Major"
@@ -73,6 +85,10 @@ msgstr "Point récurrent Conseil"
 #. Default: "Meeting Item Template AG"
 msgid "MeetingItemTemplateAG"
 msgstr "Modèle de point AG"
+
+#. Default: "Meeting Item Template CoDir"
+msgid "MeetingItemTemplateCoDir"
+msgstr "Modèle de point CODIR"
 
 #. Default: "Meeting Item Template EM"
 msgid "MeetingItemTemplateEM"
@@ -174,9 +190,17 @@ msgstr "Remettre en \"Publié\""
 msgid "create_to_meeting-config-ag_from_ca"
 msgstr "Envoyer vers AG"
 
+#. Default: "Create an item College from an item CoDir"
+msgid "create_to_meeting-config-college_from_codir"
+msgstr "Envoyer vers Collège"
+
 #. Default: "Create an item council from an item college"
 msgid "create_to_meeting-config-council_from_meeting-config-college"
 msgstr "Envoyer vers Conseil Communal"
+
+#. Default: "Create an item ZCollege from an item CoDir"
+msgid "create_to_meeting-config-zcollege_from_codir"
+msgstr "Envoyer vers Collège"
 
 #. Default: "Create an item ZCollege from an item EM"
 msgid "create_to_meeting-config-zcollege_from_em"
