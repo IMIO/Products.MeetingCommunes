@@ -189,6 +189,7 @@ def import_meetingsCategories_from_csv(self, meeting_config='', isClassifier=Fal
     out = []
 
     pm = self.portal_plonemeeting
+    from Products.CMFPlone.utils import safe_unicode
     from Products.CMFPlone.utils import normalizeString
     from Products.PloneMeeting.profiles import CategoryDescriptor
 
@@ -199,7 +200,8 @@ def import_meetingsCategories_from_csv(self, meeting_config='', isClassifier=Fal
         catFolder = meetingConfig.categories
 
     for row in reader:
-        row_id = normalizeString(row['title'], self)
+        rowid = safe_unicode(row['title'])
+        row_id = normalizeString(rowid, self)
         if row_id == '':
             continue
         if not hasattr(catFolder, row_id):
