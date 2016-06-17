@@ -1060,7 +1060,7 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
 
     def isFinancialUser_cachekey(method, self, brain=False):
         '''cachekey method for self.isFinancialUser.'''
-        return str(self.context.REQUEST._debug)
+        return str(self.context.REQUEST._debug), self.context.REQUEST['AUTHENTICATED_USER']
 
     security.declarePublic('isFinancialUser')
 
