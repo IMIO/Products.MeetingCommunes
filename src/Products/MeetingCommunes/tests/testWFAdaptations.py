@@ -42,6 +42,7 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
                                'no_publication',
                                'only_creator_may_delete',
                                'postpone_next_meeting',
+                               'mark_not_applicable',
                                'pre_validation',
                                'pre_validation_keep_reviewer_permissions',
                                'return_to_proposing_group',
