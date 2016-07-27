@@ -45,6 +45,7 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
                                'mark_not_applicable',
                                'pre_validation',
                                'pre_validation_keep_reviewer_permissions',
+                               'removed',
                                'return_to_proposing_group',
                                'waiting_advices',
                                )))
