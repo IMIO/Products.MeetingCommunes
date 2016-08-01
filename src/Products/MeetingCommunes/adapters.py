@@ -570,6 +570,22 @@ class CustomMeetingItem(MeetingItem):
     def __init__(self, item):
         self.context = item
 
+    def getItemWithFinanceAdvice(self):
+        """Overridable method that returns item really containing finances advice."""
+        return self.context
+
+    def getFinanceAdviceId(self):
+        """ """
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+        usedFinanceGroupIds = cfg.adapted().getUsedFinanceGroupIds(self.context)
+        adviserIds = self.context.adviceIndex.keys()
+        financeAdvisersIds = set(usedFinanceGroupIds).intersection(set(adviserIds))
+        if financeAdvisersIds:
+            return list(financeAdvisersIds)[0]
+        else:
+            return None
+
     def getEchevinsForProposingGroup(self):
         '''Returns all echevins defined for the proposing group'''
         res = []
