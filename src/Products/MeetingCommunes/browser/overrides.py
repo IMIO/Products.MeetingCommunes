@@ -72,7 +72,6 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         Helper method. Return legal text for each advice type.
         '''
         adviceHolder = self.context.adapted().getItemWithFinanceAdvice()
-        import ipdb; ipdb.set_trace()
         if not self._mayGenerateFDAdvice():
             return ''
 
