@@ -17,7 +17,7 @@ today = DateTime().strftime('%Y/%m/%d')
 # File types -------------------------------------------------------------------
 annexe = ContentCategoryDescriptor('annexe', 'Annexe', u'attach.png', '')
 annexeBudget = ContentCategoryDescriptor('annexeBudget', 'Article Budgétaire', u'budget.png', '')
-annexeCahier = ContentCategoryDescriptor('annexeCahier', 'Cahier des Charges', u'cahier.gif', '')
+annexeCahier = ContentCategoryDescriptor('annexeCahier', 'Cahier des Charges', u'cahier.png', '')
 annexeDecision = ContentCategoryDescriptor('annexeDecision', 'Annexe à la décision', u'attach.png', '', 'item_decision')
 annexeAvis = ContentCategoryDescriptor('annexeAvis', 'Annexe à un avis',
                                        u'attach.png', '', 'advice')

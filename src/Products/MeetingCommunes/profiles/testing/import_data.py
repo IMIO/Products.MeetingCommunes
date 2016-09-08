@@ -17,7 +17,7 @@ from Products.PloneMeeting.profiles import UserDescriptor
 
 annexe = MeetingFileTypeDescriptor('annexe', 'Annexe', 'attach.png', '')
 annexeBudget = MeetingFileTypeDescriptor('annexeBudget', 'Article Budgetaire', 'budget.png', '')
-annexeCahier = MeetingFileTypeDescriptor('annexeCahier', 'Cahier des Charges', 'cahier.gif', '')
+annexeCahier = MeetingFileTypeDescriptor('annexeCahier', 'Cahier des Charges', 'cahier.png', '')
 itemAnnex = MeetingFileTypeDescriptor('item-annex', 'Other annex(es)', 'attach.png', '')
 annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe a la decision', 'attach.png', '', 'item_decision')
 # Some type of annexes taken from the default PloneMeeting test profile

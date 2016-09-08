@@ -16,7 +16,7 @@ today = DateTime().strftime('%Y/%m/%d')
 # File types -------------------------------------------------------------------
 annexe = MeetingFileTypeDescriptor('annexe', 'Annexe', 'attach.png', '')
 annexeBudget = MeetingFileTypeDescriptor('annexeBudget', 'Article Budgétaire', 'budget.png', '')
-annexeCahier = MeetingFileTypeDescriptor('annexeCahier', 'Cahier des Charges', 'cahier.gif', '')
+annexeCahier = MeetingFileTypeDescriptor('annexeCahier', 'Cahier des Charges', 'cahier.png', '')
 annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe à la décision', 'attach.png', '', 'item_decision')
 annexeAvis = MeetingFileTypeDescriptor('annexeAvis', 'Annexe à un avis',
                                        'attach.png', '', 'advice')
