@@ -570,10 +570,6 @@ class CustomMeetingItem(MeetingItem):
     def __init__(self, item):
         self.context = item
 
-    def getItemWithFinanceAdvice(self):
-        """Overridable method that returns item really containing finances advice."""
-        return self.context
-
     def getFinanceAdviceId(self):
         """ """
         tool = api.portal.get_tool('portal_plonemeeting')
