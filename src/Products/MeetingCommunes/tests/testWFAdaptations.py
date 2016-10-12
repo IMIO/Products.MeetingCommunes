@@ -123,6 +123,10 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
         pmtwfa.test_pm_WFA_hide_decisions_when_under_writing(self)
 
+    def test_subproduct_call_WFA_return_to_proposing_group_with_hide_decisions_when_under_writing(self):
+        '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
+        pmtwfa.test_pm_WFA_return_to_proposing_group_with_hide_decisions_when_under_writing(self)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
