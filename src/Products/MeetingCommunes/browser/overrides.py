@@ -7,14 +7,53 @@
 # GNU General Public License (GPL)
 #
 
-from zope.i18n import translate
 from plone import api
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_NOT_GIVEN
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_PRE
 from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperView
+from Products.PloneMeeting.utils import get_annexes
 from Products.PloneMeeting.utils import getLastEvent
+
+
+def formatedAssembly(assembly, focus):
+    is_finish = False
+    absentFind = False
+    excuseFind = False
+    res = []
+    res.append('<p class="mltAssembly">')
+    for ass in assembly:
+        if is_finish:
+            break
+        lines = ass.split(',')
+        cpt = 1
+        my_line = ''
+        for line in lines:
+            if((line.find('Excus') >= 0 or line.find('Absent') >= 0) and focus == 'present') or \
+                    (line.find('Absent') >= 0 and focus == 'excuse'):
+                is_finish = True
+                break
+            if line.find('Excus') >= 0:
+                excuseFind = True
+                continue
+            if line.find('Absent') >= 0:
+                absentFind = True
+                continue
+            if (focus == 'absent' and not absentFind) or (focus == 'excuse' and not excuseFind):
+                continue
+            if cpt == len(lines):
+                my_line = "%s%s<br />" % (my_line, line)
+                res.append(my_line)
+            else:
+                my_line = "%s%s," % (my_line, line)
+            cpt = cpt + 1
+    if len(res) > 1:
+        res[-1] = res[-1].replace('<br />', '')
+    else:
+        return ''
+    res.append('</p>')
+    return ('\n'.join(res))
 
 
 class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
@@ -55,9 +94,8 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             and res['out_of_financial_dpt'].strftime('%d/%m/%Y') or ''
         # "positive_with_remarks_finance" will be printed "positive_finance"
         if adviceData['type'] == 'positive_with_remarks_finance':
-            type_translated = translate('positive_finance',
-                                        domain='PloneMeeting',
-                                        context=self.context.REQUEST).encode('utf-8')
+            type_translated = self.translate(msgid='positive_finance',
+                                             domain='PloneMeeting').encode('utf-8')
         else:
             type_translated = adviceData['type_translated'].encode('utf-8')
         res['advice_type'] = '<p><u>Type d\'avis:</u>  %s</p>' % type_translated
@@ -127,6 +165,54 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             res = ''
         return res
 
+    def printAllAnnexes(self, portal_types=['annex']):
+        ''' Printing Method use in templates :
+            return all viewable annexes for item '''
+        res = []
+        annexes = get_annexes(self.context, portal_types=portal_types)
+        for annex in annexes:
+            url = annex.absolute_url()
+            title = annex.Title().replace('&', '&amp;')
+            res.append('<a href="{0}">{1}</a><br/>'.format(url, title))
+        return ('\n'.join(res))
+
+    def printFormatedAdvice(self):
+        ''' Printing Method use in templates :
+            return formated advice'''
+        res = []
+        keys = self.context.getAdvicesByType().keys()
+        for key in keys:
+            for advice in self.context.getAdvicesByType()[key]:
+                if advice['type'] == 'not_given':
+                    continue
+                comment = ''
+                if advice['comment']:
+                    comment = advice['comment']
+                res.append({'type': self.translate(msgid=key, domain='PloneMeeting').encode('utf-8'),
+                            'name': advice['name'].encode('utf-8'),
+                            'comment': comment})
+        return res
+
+    def printFormatedItemAssembly(self, focus=''):
+        ''' Printing Method use in templates :
+            return formated assembly with 'absent', 'excused', ... '''
+        if focus not in ('present', 'excuse', 'absent'):
+            return ''
+        # ie: Pierre Helson, Bourgmestre, Président
+        # focus is present, excuse or absent
+        assembly = self.context.getItemAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
+        return formatedAssembly(assembly, focus)
+
 
 class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView):
     """Specific printing methods used for meeting."""
+
+    def printFormatedMeetingAssembly(self, focus=''):
+        ''' Printing Method use in templates :
+            return formated assembly with 'absent', 'excused', ... '''
+        if focus not in ('present', 'excuse', 'absent'):
+            return ''
+        # ie: Pierre Helson, Bourgmestre, Président
+        # focus is present, excuse or absent
+        assembly = self.context.getAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
+        return formatedAssembly(assembly, focus)
