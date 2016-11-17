@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from DateTime import DateTime
-from Products.PloneMeeting.profiles import MeetingFileTypeDescriptor
+from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import PodTemplateDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
@@ -9,10 +9,11 @@ from Products.PloneMeeting.profiles import PloneMeetingConfiguration
 today = DateTime().strftime('%Y/%m/%d')
 
 # File types -------------------------------------------------------------------
-annexe = MeetingFileTypeDescriptor('annexe', 'Annexe', 'attach.png', '')
-annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe à la décision', 'attach.png', '', 'item_decision')
-annexeAvis = MeetingFileTypeDescriptor('annexeAvis', 'Annexe à un avis',
-                                       'attach.png', '', 'advice')
+annexe = AnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', '')
+annexeDecision = AnnexTypeDescriptor('annexeDecision', 'Annexe à la décision',
+                                     u'attach.png', '', 'item_decision')
+annexeAvis = AnnexTypeDescriptor('annexeAvis', 'Annexe à un avis',
+                                 u'attach.png', '', 'advice')
 
 # Categories -------------------------------------------------------------------
 categories = [CategoryDescriptor('category1', 'Catégorie 1'),
@@ -79,7 +80,7 @@ Place2\r
 Place3\r"""
 emMeeting.categories = categories
 emMeeting.shortName = 'EM'
-emMeeting.meetingFileTypes = [annexe, annexeDecision, annexeAvis]
+emMeeting.annexTypes = [annexe, annexeDecision, annexeAvis]
 emMeeting.usedItemAttributes = ['detailedDescription',
                                 'budgetInfos',
                                 'observations',
