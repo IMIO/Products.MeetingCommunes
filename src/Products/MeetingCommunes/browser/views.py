@@ -2,7 +2,7 @@ from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 from Products.Five import BrowserView
 from Products.CMFCore.permissions import ReviewPortalContent
-from Products.PloneMeeting.utils import checkPermission
+from Products.CMFCore.utils import _checkPermission
 from Products.MeetingCommunes.config import POSITIVE_FINANCE_ADVICE_SIGNABLE_BY_REVIEWER
 
 
@@ -19,7 +19,7 @@ class AdviceWFConditionsView(BrowserView):
         '''
         '''
         res = False
-        if checkPermission(ReviewPortalContent, self.context):
+        if _checkPermission(ReviewPortalContent, self.context):
             res = True
         return res
 
@@ -29,7 +29,7 @@ class AdviceWFConditionsView(BrowserView):
         '''
         '''
         res = False
-        if checkPermission(ReviewPortalContent, self.context):
+        if _checkPermission(ReviewPortalContent, self.context):
             res = True
         return res
 
@@ -39,7 +39,7 @@ class AdviceWFConditionsView(BrowserView):
         '''
         '''
         res = False
-        if checkPermission(ReviewPortalContent, self.context):
+        if _checkPermission(ReviewPortalContent, self.context):
             res = True
         return res
 
@@ -50,7 +50,7 @@ class AdviceWFConditionsView(BrowserView):
            in any case (advice positive or negative) except if advice
            is still 'asked_again'.'''
         res = False
-        if checkPermission(ReviewPortalContent, self.context) and \
+        if _checkPermission(ReviewPortalContent, self.context) and \
            not self.context.advice_type == 'asked_again':
             res = True
         return res
@@ -62,7 +62,7 @@ class AdviceWFConditionsView(BrowserView):
            or 'not_required_finance', if not this will be the financial manager
            that will be able to sign it.'''
         res = False
-        if checkPermission(ReviewPortalContent, self.context):
+        if _checkPermission(ReviewPortalContent, self.context):
             res = True
             # if POSITIVE_FINANCES_ADVICE_SIGNABLE_BY_REVIEWER is True, it means
             # that a finances reviewer may sign an item in place of the finances manager
@@ -82,7 +82,7 @@ class AdviceWFConditionsView(BrowserView):
         '''
         '''
         res = False
-        if checkPermission(ReviewPortalContent, self.context):
+        if _checkPermission(ReviewPortalContent, self.context):
             res = True
         return res
 

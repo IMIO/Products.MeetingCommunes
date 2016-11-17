@@ -27,6 +27,7 @@ from Globals import InitializeClass
 from zope.interface import implements
 
 from Products.CMFCore.permissions import ReviewPortalContent
+from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.utils import getToolByName
 from Products.Archetypes.atapi import DisplayList
 from plone import api
@@ -51,7 +52,6 @@ from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowConditions
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import WF_APPLIED
 from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
-from Products.PloneMeeting.utils import checkPermission
 
 from Products.MeetingCommunes import logger
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
@@ -974,7 +974,7 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
 
     def mayDecide(self):
         res = False
-        if checkPermission(ReviewPortalContent, self.context):
+        if _checkPermission(ReviewPortalContent, self.context):
             res = True
         return res
 
@@ -1013,7 +1013,7 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
         '''We may decide an item if the linked meeting is in relevant state.'''
         res = False
         meeting = self.context.getMeeting()
-        if checkPermission(ReviewPortalContent, self.context) and \
+        if _checkPermission(ReviewPortalContent, self.context) and \
            meeting and meeting.adapted().isDecided():
             res = True
         return res
@@ -1025,7 +1025,7 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
           A MeetingManager may publish (itempublish) an item if the meeting is at least published
         """
         res = False
-        if checkPermission(ReviewPortalContent, self.context):
+        if _checkPermission(ReviewPortalContent, self.context):
             if self.context.hasMeeting() and \
                (self.context.getMeeting().queryState() in ('published', 'decided', 'closed', 'decisions_published',)):
                 res = True

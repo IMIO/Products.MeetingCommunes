@@ -67,18 +67,5 @@ FINANCE_ADVICE_LEGAL_TEXT_NOT_GIVEN = "<p>Attendu l'absence d'avis du "\
     "Directeur financier rendu dans le délai prescrit à l'article L1124-40 "\
     "du Code de la démocratie locale et de la décentralisation;</p>"
 
-# Define PloneMeeting-specific permissions
-AddAnnex = 'PloneMeeting: Add annex'
-setDefaultRoles(AddAnnex, ('Manager', 'Owner'))
-# We need 'AddAnnex', which is a more specific permission than
-# 'PloneMeeting: Add MeetingFile', because decision-related annexes, which are
-# also MeetingFile instances, must be secured differently.
-# There is no permission linked to annex deletion. Deletion of annexes is allowed
-# if one has the permission 'Modify portal content' on the corresponding item.
-ReadDecision = 'PloneMeeting: Read decision'
-WriteDecision = 'PloneMeeting: Write decision'
-setDefaultRoles(ReadDecision, ('Manager',))
-setDefaultRoles(WriteDecision, ('Manager',))
-
 STYLESHEETS = [{'id': 'meetingcommunes.css',
                 'title': 'MeetingCommunes CSS styles'}]
