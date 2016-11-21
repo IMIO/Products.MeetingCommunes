@@ -65,23 +65,20 @@ Caractéristiques de l'application
 # partie 2.4.6. Gestion des avis : avis avec délai
     Go to  ${PLONE_URL}/Members/agentCompta/mymeetings/meeting-config-college/template5
     Click element  id=contentview-edit
+    Wait until element is visible  css=#optionalAdvisers  10
     Capture and crop page screenshot  doc/caracteristique-de-l-application/2-4_6_avis_avec_delais.png  id=optionalAdvisers
     Click element  name=form.button.cancel
     Go to  ${PLONE_URL}/Members/agentPers/mymeetings/meeting-config-college/template3
     Click and Screenshot overlayForm  css=.advices_of_type  doc/caracteristique-de-l-application/2-4_6_voir_les_demandes_d_avis.png  css=.actionMenuContentAX.actionMenuContentAdvice
     Go to  ${PLONE_URL}/Members/agentPers/mymeetings/meeting-config-college/template3
-    Mouse Over  css=.warn_delay_advice > img:nth-child(1)
-    #L'info bulle n'est pas capturée dans le screenshot.
-    #Sleep  1
-    #Capture and crop page screenshot  doc/caracteristique-de-l-application/2-4_6_avis_help_icone.png  css=.itemAdvicesCell
 
 # partie 2.4.7. Tableau récapitulatif affichant des points
     Select collection  portal_plonemeeting/meeting-config-college/searches/searches_items/searchmyitems
     Capture and crop page screenshot  doc/caracteristique-de-l-application/2-4_7_tableau_recapitulatif_de_mes_points.png  id=content
-    Debug
 
 
 *** Keywords ***
 Suite Setup
     Open test browser
+    #Set Window Size  1280  6000
     Set Window Size  1280  800
