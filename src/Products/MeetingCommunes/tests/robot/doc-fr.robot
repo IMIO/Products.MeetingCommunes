@@ -141,20 +141,29 @@ Caractéristiques de l'application
     Capture and crop page screenshot  doc/caracteristique-de-l-application/2-5_3_visualisation_seance_createur.png  id=portal-column-content
 
 # partie 2.5.4. Modification des points d'une séance
-2.5.4. Visualisation d'une séance par un gestionnaire de séance
+2.5.4. Modification des points d'une séance
     ConnectAs  dgen  Meeting_12
     Wait Until Page Loaded
     click element  css=.state-created
     Wait Until Page Loaded
-    Capture and crop page screenshot  doc/caracteristique-de-l-application/2-5_4_visualisation_seance_gestionnaire.png  id=portal-column-content
+    Go To  ${PLONE_URL}/Members/dgen/mymeetings/meeting-config-college/copy4_of_recurringofficialreport1
+    Wait Until Page Loaded
+    wait until element is visible  css=.navigateItem
+    Add pointer  css=.navigateItem  size=400
+    Capture page screenshot  doc/caracteristique-de-l-application/2-5_4_navigation_widget.png
+    reload page
+    Wait Until Page Loaded
+    wait until element is visible  css=#hook_description > fieldset:nth-child(2) > legend:nth-child(1) > img:nth-child(1)  2
+    click element  css=#hook_description > fieldset:nth-child(2) > legend:nth-child(1) > img:nth-child(1)
+    wait until element is visible  css=.cke_toolgroup  5
+    Capture page screenshot  doc/caracteristique-de-l-application/2-5_4_edition_champ.png
 
 # partie 2.5.5. Ajout d'un point "en urgence"
 
 # partie 2.5.6. Gestion des assemblée et signatures par points en mode "zones de texte libre"
-
+#    Debug
 
 *** Keywords ***
 Suite Setup
     Open test browser
     Set Window Size  1280  6000
-

@@ -357,6 +357,9 @@ def addDemoData(context):
                 wfTool.doActionFor(meeting, 'decide')
             meeting.reindexObject()
 
+            for item in meeting.getItems():
+                pTool.changeOwnershipOf(item, 'dgen')
+
         # create items
         for userId in items:
             userFolder = tool.getPloneMeetingFolder(cfg.getId(), userId)
@@ -408,6 +411,7 @@ def addDemoData(context):
                                                                                   "Morbi suscipit, tortor ullamcorper ultricies iaculis, quam mauris egestas sem, eu semper urna ante eget dolor. Phasellus sed rutrum est. Aliquam quis tincidunt ipsum. Phasellus sit amet maximus odio. Fusce quis accumsan magna. Donec iaculis pretium sodales.</p>")})
 
                 newItem.reindexObject()
+
         # adapt some parameters for config
         cfg.setEnableAnnexToPrint('enabled_for_printing')
         cfg.setEnableAnnexConfidentiality(True)
