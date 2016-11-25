@@ -4,17 +4,20 @@ from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import PodTemplateDescriptor
 from Products.PloneMeeting.profiles import GroupDescriptor
+from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
 
 today = DateTime().strftime('%Y/%m/%d')
 
 # File types -------------------------------------------------------------------
-annexe = AnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', '')
-annexeDecision = AnnexTypeDescriptor('annexeDecision', 'Annexe à la décision',
-                                     u'attach.png', '', 'item_decision')
+annexe = ItemAnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', '')
+annexeDecision = ItemAnnexTypeDescriptor('annexeDecision', 'Annexe à la décision',
+                                         u'attach.png', '', 'item_decision')
 annexeAvis = AnnexTypeDescriptor('annexeAvis', 'Annexe à un avis',
                                  u'attach.png', '', 'advice')
+annexeSeance = AnnexTypeDescriptor('annexe', 'Annexe',
+                                   u'attach.png', '', 'meeting')
 
 # Categories -------------------------------------------------------------------
 categories = [CategoryDescriptor('category1', 'Catégorie 1'),
@@ -83,7 +86,7 @@ Place2\r
 Place3\r"""
 bourgmestreMeeting.categories = categories
 bourgmestreMeeting.shortName = 'Bourgmestre'
-bourgmestreMeeting.annexTypes = [annexe, annexeDecision, annexeAvis]
+bourgmestreMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
 bourgmestreMeeting.usedItemAttributes = ['detailedDescription',
                                          'budgetInfos',
                                          'observations',

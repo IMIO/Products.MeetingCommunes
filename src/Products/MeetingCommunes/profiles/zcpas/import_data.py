@@ -2,6 +2,7 @@
 from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import GroupDescriptor
+from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
 from Products.PloneMeeting.profiles import PodTemplateDescriptor
@@ -9,15 +10,17 @@ from Products.PloneMeeting.profiles import RecurringItemDescriptor
 from Products.PloneMeeting.profiles import UserDescriptor
 
 # File types -------------------------------------------------------------------
-annexe = AnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', '')
-annexeBudget = AnnexTypeDescriptor('annexeBudget', 'Article Budgétaire', u'budget.png', '')
-annexeCahier = AnnexTypeDescriptor('annexeCahier', 'Cahier des Charges', u'cahier.png', '')
-annexeDecision = AnnexTypeDescriptor('annexeDecision', 'Annexe à la décision',
-                                     u'attach.png', '', 'item_decision')
+annexe = ItemAnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', '')
+annexeBudget = ItemAnnexTypeDescriptor('annexeBudget', 'Article Budgétaire', u'budget.png', '')
+annexeCahier = ItemAnnexTypeDescriptor('annexeCahier', 'Cahier des Charges', u'cahier.png', '')
+annexeDecision = ItemAnnexTypeDescriptor('annexeDecision', 'Annexe à la décision',
+                                         u'attach.png', '', 'item_decision')
 annexeAvis = AnnexTypeDescriptor('annexeAvis', 'Annexe à un avis',
                                  u'attach.png', '', 'advice')
 annexeAvisLegal = AnnexTypeDescriptor('annexeAvisLegal', 'Extrait article de loi',
                                       u'legalAdvice.png', '', 'advice')
+annexeSeance = AnnexTypeDescriptor('annexe', 'Annexe',
+                                   u'attach.png', '', 'meeting')
 
 # Categories -------------------------------------------------------------------
 categories = [CategoryDescriptor('recurrents', 'Récurrents'),
@@ -175,7 +178,7 @@ bpMeeting.signatures = 'Pierre Dupont,\nBourgmestre\nCharles Exemple,\n1er Echev
 bpMeeting.categories = categories
 bpMeeting.shortName = 'bp'
 bpMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
-                        annexeDecision, annexeAvis, annexeAvisLegal]
+                        annexeDecision, annexeAvis, annexeAvisLegal, annexeSeance]
 bpMeeting.usedItemAttributes = ['budgetInfos', 'observations', 'notes', 'inAndOutMoves']
 bpMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
 bpMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
@@ -238,7 +241,7 @@ casMeeting.signatures = 'Pierre Dupont,\nBourgmestre\nCharles Exemple,\n1er Eche
 casMeeting.categories = categories
 casMeeting.shortName = 'cas'
 casMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
-                         annexeDecision, annexeAvis, annexeAvisLegal]
+                         annexeDecision, annexeAvis, annexeAvisLegal, annexeSeance]
 casMeeting.usedItemAttributes = ['budgetInfos', 'observations', 'notes', 'inAndOutMoves']
 casMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
 casMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
