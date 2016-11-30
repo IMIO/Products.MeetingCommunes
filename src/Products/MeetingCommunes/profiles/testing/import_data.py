@@ -138,18 +138,16 @@ template2 = ItemTemplateDescriptor(id='template2',
 
 
 # Categories -------------------------------------------------------------------
-categories = [
-    CategoryDescriptor('deployment', 'Deployment topics'),
-    CategoryDescriptor('maintenance', 'Maintenance topics'),
-    CategoryDescriptor('development', 'Development topics'),
-    CategoryDescriptor('events', 'Events'),
-    CategoryDescriptor('research', 'Research topics'),
-    CategoryDescriptor('projects', 'Projects'),
-    # A vintage category
-    CategoryDescriptor('marketing', 'Marketing', active=False),
-    # usingGroups category
-    CategoryDescriptor('subproducts', 'Subproducts wishes', usingGroups=('vendors',)),
-]
+deployment = CategoryDescriptor('deployment', 'Deployment topics')
+maintenance = CategoryDescriptor('maintenance', 'Maintenance topics')
+development = CategoryDescriptor('development', 'Development topics')
+events = CategoryDescriptor('events', 'Events')
+research = CategoryDescriptor('research', 'Research topics')
+projects = CategoryDescriptor('projects', 'Projects')
+# A vintage category
+marketing = CategoryDescriptor('marketing', 'Marketing', active=False)
+# usingGroups category
+subproducts = CategoryDescriptor('subproducts', 'Subproducts wishes', usingGroups=('vendors',))
 
 # Users and groups -------------------------------------------------------------
 pmManager = UserDescriptor('pmManager', [])
@@ -267,7 +265,7 @@ collegeMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
                           'Jacqueline Exemple, Responsable du CPAS'
 collegeMeeting.signatures = 'Pierre Dupont, Bourgmestre - Charles Exemple, Secrétaire communal'
 collegeMeeting.certifiedSignatures = []
-collegeMeeting.categories = categories
+collegeMeeting.categories = [development, research]
 collegeMeeting.shortName = 'College'
 collegeMeeting.annexTypes = [financialAnalysis, budgetAnalysisCfg1, overheadAnalysis,
                              itemAnnex, decisionAnnex, marketingAnalysis,
@@ -353,7 +351,8 @@ councilMeeting.meetingManagers = ['pmManager', ]
 councilMeeting.assembly = 'Default assembly'
 councilMeeting.signatures = 'Default signatures'
 councilMeeting.certifiedSignatures = []
-councilMeeting.categories = categories
+councilMeeting.categories = [deployment, maintenance, development, events,
+                             research, projects, marketing, subproducts]
 councilMeeting.shortName = 'Council'
 councilMeeting.annexTypes = [financialAnalysis, legalAnalysis,
                              budgetAnalysisCfg2, itemAnnex, decisionAnnex,
