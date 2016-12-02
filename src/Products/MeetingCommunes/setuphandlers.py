@@ -18,12 +18,13 @@ import logging
 logger = logging.getLogger('MeetingCommunes: setuphandlers')
 from DateTime import DateTime
 from plone import api
-from plone.app.blob.tests.utils import makeFileUpload
+from plone import namedfile
 from plone.app.textfield.value import RichTextValue
 from plone.dexterity.utils import createContentInContainer
+from collective.iconifiedcategory.utils import calculate_category_id
+from collective.iconifiedcategory.utils import get_config_root
 from Products.CMFPlone.utils import _createObjectByType
 from Products.PloneMeeting.exportimport.content import ToolInitializer
-from Products.PloneMeeting.interfaces import IAnnexable
 from Products.PloneMeeting.model.adaptations import performWorkflowAdaptations
 from Products.MeetingCommunes.config import PROJECTNAME
 
@@ -378,40 +379,43 @@ def addDemoData(context):
                 #add annexe and advise for one item in College
                 if item['templateId'] == 'template3' and cfg.id == 'meeting-config-college':
                     cpt = 1
-                    for annexeType in ('annexe', 'annexe', 'annexeBudget', 'annexeCahier'):
-                        annex_title = 'CV Informaticien N°2016-%s' % (cpt)
-                        annexFile = makeFileUpload('Je suis le contenu du fichier', 'CV-0%s.txt' % (cpt))
-                        fileType = getattr(cfg.meetingfiletypes, annexeType)
-                        IAnnexable(newItem).addAnnex(idCandidate=None,
-                                                     annex_title=annex_title,
-                                                     annex_file=annexFile,
-                                                     relatedTo='item',
-                                                     meetingFileTypeUID=fileType.UID())
+                    annexes_config_root = get_config_root(newItem)
+                    for annexType in ('annexe', 'annexe', 'annexeBudget', 'annexeCahier'):
+                        annex_title = u'CV Informaticien N°2016-%s' % (cpt)
+                        annex_file = namedfile.NamedBlobFile('Je suis le contenu du fichier',
+                                                             filename=u'CV-0%s.txt' % (cpt))
+                        annexTypeId = calculate_category_id(annexes_config_root.get(annexType))
+                        api.content.create(container=newItem,
+                                           type='annex',
+                                           title=annex_title,
+                                           file=annex_file,
+                                           content_category=annexTypeId,
+                                           to_print=False,
+                                           confidential=False)
                         cpt += 1
                     newItem.setOptionalAdvisers(('dirfin__rowid__unique_id_003', 'informatique'))
                     newItem.at_post_create_script()
                     createContentInContainer(newItem,
                                              'meetingadvice',
                                              **{'advice_group': 'informatique',
-                                             'advice_type': u'positive',
-                                             'advice_comment': RichTextValue(u"<p><strong>Lorem ipsum dolor sit amet</strong>, consectetur adipiscing elit. Aliquam efficitur sapien quam, vitae auctor augue iaculis eget. <BR />Nulla blandit enim lectus. Ut in nunc ligula. Nunc nec magna et mi dictum molestie eu vitae est.<BR />Vestibulum justo erat, congue vel metus sed, condimentum vestibulum tortor. Sed nisi enim, posuere at cursus at, tincidunt eu est. Proin rhoncus ultricies justo. Nunc finibus quam non dolor imperdiet, non aliquet mi tincidunt. Aliquam at mauris suscipit, maximus purus at, dictum lectus.</p>"
-                                                                             "<p>Nunc faucibus sem eu congue varius. Vestibulum consectetur porttitor nisi. Phasellus ante nunc, elementum et bibendum sit amet, tincidunt vitae est. Morbi in odio sagittis, convallis turpis a, tristique quam. Vestibulum ut urna arcu. Etiam non odio ut felis porttitor elementum. Donec venenatis porta purus et scelerisque. Nullam dapibus nec erat at pellentesque. Aliquam placerat nunc molestie venenatis malesuada. Nam ac pretium justo, id imperdiet lacus.</p>"),
-                                             'advice_observations': RichTextValue(u"<p>Pellentesque ac ipsum suscipit, egestas lectus nec, mattis velit. In hac habitasse platea dictumst. Aenean vitae tortor viverra sapien mattis pretium. Pellentesque dapibus, tellus vel vulputate euismod, velit enim congue elit, vitae mollis arcu risus quis arcu. Aliquam non ante eleifend, sodales dolor at, ullamcorper nulla. Donec eget tellus a risus laoreet vestibulum sed id ante. Ut mauris magna, ultricies vel imperdiet sed, pulvinar vel nisl. Aliquam quis nisl quam. <BR />"
-                                                                                  "Morbi suscipit, tortor ullamcorper ultricies iaculis, quam mauris egestas sem, eu semper urna ante eget dolor. Phasellus sed rutrum est. Aliquam quis tincidunt ipsum. Phasellus sit amet maximus odio. Fusce quis accumsan magna. Donec iaculis pretium sodales.</p>")})
+                                                'advice_type': u'positive',
+                                                'advice_comment': RichTextValue(u"<p><strong>Lorem ipsum dolor sit amet</strong>, consectetur adipiscing elit. Aliquam efficitur sapien quam, vitae auctor augue iaculis eget. <BR />Nulla blandit enim lectus. Ut in nunc ligula. Nunc nec magna et mi dictum molestie eu vitae est.<BR />Vestibulum justo erat, congue vel metus sed, condimentum vestibulum tortor. Sed nisi enim, posuere at cursus at, tincidunt eu est. Proin rhoncus ultricies justo. Nunc finibus quam non dolor imperdiet, non aliquet mi tincidunt. Aliquam at mauris suscipit, maximus purus at, dictum lectus.</p>"
+                                                                                "<p>Nunc faucibus sem eu congue varius. Vestibulum consectetur porttitor nisi. Phasellus ante nunc, elementum et bibendum sit amet, tincidunt vitae est. Morbi in odio sagittis, convallis turpis a, tristique quam. Vestibulum ut urna arcu. Etiam non odio ut felis porttitor elementum. Donec venenatis porta purus et scelerisque. Nullam dapibus nec erat at pellentesque. Aliquam placerat nunc molestie venenatis malesuada. Nam ac pretium justo, id imperdiet lacus.</p>"),
+                                                'advice_observations': RichTextValue(u"<p>Pellentesque ac ipsum suscipit, egestas lectus nec, mattis velit. In hac habitasse platea dictumst. Aenean vitae tortor viverra sapien mattis pretium. Pellentesque dapibus, tellus vel vulputate euismod, velit enim congue elit, vitae mollis arcu risus quis arcu. Aliquam non ante eleifend, sodales dolor at, ullamcorper nulla. Donec eget tellus a risus laoreet vestibulum sed id ante. Ut mauris magna, ultricies vel imperdiet sed, pulvinar vel nisl. Aliquam quis nisl quam. <BR />"
+                                                                                     "Morbi suscipit, tortor ullamcorper ultricies iaculis, quam mauris egestas sem, eu semper urna ante eget dolor. Phasellus sed rutrum est. Aliquam quis tincidunt ipsum. Phasellus sit amet maximus odio. Fusce quis accumsan magna. Donec iaculis pretium sodales.</p>")})
                 if item['templateId'] == 'template5' and cfg.id == 'meeting-config-college':
                     newItem.setOptionalAdvisers(('dirgen',))
                     newItem.at_post_create_script()
                     createContentInContainer(newItem,
                                              'meetingadvice',
                                              **{'advice_group': 'dirgen',
-                                             'advice_type': u'negative',
-                                             'advice_comment': RichTextValue(u"<p><strong>Lorem ipsum dolor sit amet</strong>, consectetur adipiscing elit. Aliquam efficitur sapien quam, vitae auctor augue iaculis eget. <BR />Nulla blandit enim lectus. Ut in nunc ligula. Nunc nec magna et mi dictum molestie eu vitae est.<BR />Vestibulum justo erat, congue vel metus sed, condimentum vestibulum tortor. Sed nisi enim, posuere at cursus at, tincidunt eu est. Proin rhoncus ultricies justo. Nunc finibus quam non dolor imperdiet, non aliquet mi tincidunt. Aliquam at mauris suscipit, maximus purus at, dictum lectus.</p>"
-                                                                             "<p>Nunc faucibus sem eu congue varius. Vestibulum consectetur porttitor nisi. Phasellus ante nunc, elementum et bibendum sit amet, tincidunt vitae est. Morbi in odio sagittis, convallis turpis a, tristique quam. Vestibulum ut urna arcu. Etiam non odio ut felis porttitor elementum. Donec venenatis porta purus et scelerisque. Nullam dapibus nec erat at pellentesque. Aliquam placerat nunc molestie venenatis malesuada. Nam ac pretium justo, id imperdiet lacus.</p>"),
-                                             'advice_observations': RichTextValue(u"<p>Pellentesque ac ipsum suscipit, egestas lectus nec, mattis velit. In hac habitasse platea dictumst. Aenean vitae tortor viverra sapien mattis pretium. Pellentesque dapibus, tellus vel vulputate euismod, velit enim congue elit, vitae mollis arcu risus quis arcu. Aliquam non ante eleifend, sodales dolor at, ullamcorper nulla. Donec eget tellus a risus laoreet vestibulum sed id ante. Ut mauris magna, ultricies vel imperdiet sed, pulvinar vel nisl. Aliquam quis nisl quam. <BR />"
-                                                                                  "Morbi suscipit, tortor ullamcorper ultricies iaculis, quam mauris egestas sem, eu semper urna ante eget dolor. Phasellus sed rutrum est. Aliquam quis tincidunt ipsum. Phasellus sit amet maximus odio. Fusce quis accumsan magna. Donec iaculis pretium sodales.</p>")})
+                                                'advice_type': u'negative',
+                                                'advice_comment': RichTextValue(u"<p><strong>Lorem ipsum dolor sit amet</strong>, consectetur adipiscing elit. Aliquam efficitur sapien quam, vitae auctor augue iaculis eget. <BR />Nulla blandit enim lectus. Ut in nunc ligula. Nunc nec magna et mi dictum molestie eu vitae est.<BR />Vestibulum justo erat, congue vel metus sed, condimentum vestibulum tortor. Sed nisi enim, posuere at cursus at, tincidunt eu est. Proin rhoncus ultricies justo. Nunc finibus quam non dolor imperdiet, non aliquet mi tincidunt. Aliquam at mauris suscipit, maximus purus at, dictum lectus.</p>"
+                                                                                "<p>Nunc faucibus sem eu congue varius. Vestibulum consectetur porttitor nisi. Phasellus ante nunc, elementum et bibendum sit amet, tincidunt vitae est. Morbi in odio sagittis, convallis turpis a, tristique quam. Vestibulum ut urna arcu. Etiam non odio ut felis porttitor elementum. Donec venenatis porta purus et scelerisque. Nullam dapibus nec erat at pellentesque. Aliquam placerat nunc molestie venenatis malesuada. Nam ac pretium justo, id imperdiet lacus.</p>"),
+                                                'advice_observations': RichTextValue(u"<p>Pellentesque ac ipsum suscipit, egestas lectus nec, mattis velit. In hac habitasse platea dictumst. Aenean vitae tortor viverra sapien mattis pretium. Pellentesque dapibus, tellus vel vulputate euismod, velit enim congue elit, vitae mollis arcu risus quis arcu. Aliquam non ante eleifend, sodales dolor at, ullamcorper nulla. Donec eget tellus a risus laoreet vestibulum sed id ante. Ut mauris magna, ultricies vel imperdiet sed, pulvinar vel nisl. Aliquam quis nisl quam. <BR />"
+                                                                                     "Morbi suscipit, tortor ullamcorper ultricies iaculis, quam mauris egestas sem, eu semper urna ante eget dolor. Phasellus sed rutrum est. Aliquam quis tincidunt ipsum. Phasellus sit amet maximus odio. Fusce quis accumsan magna. Donec iaculis pretium sodales.</p>")})
 
                 newItem.reindexObject()
 
         # adapt some parameters for config
-        cfg.setEnableAnnexToPrint('enabled_for_printing')
-        cfg.setEnableAnnexConfidentiality(True)
+        cfg.setAnnexToPrintMode('enabled_for_info')

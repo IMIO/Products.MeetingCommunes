@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from DateTime import DateTime
-from Products.PloneMeeting.profiles import MeetingFileTypeDescriptor
+from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
+from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
 from Products.PloneMeeting.profiles import PodTemplateDescriptor
 from Products.PloneMeeting.profiles import UserDescriptor
 from Products.PloneMeeting.profiles import GroupDescriptor
@@ -11,10 +12,13 @@ from Products.PloneMeeting.profiles import PloneMeetingConfiguration
 today = DateTime().strftime('%Y/%m/%d')
 
 # File types -------------------------------------------------------------------
-annexe = MeetingFileTypeDescriptor('annexe', 'Annexe', 'attach.png', '')
-annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe à la décision', 'attach.png', '', 'item_decision')
-annexeAvis = MeetingFileTypeDescriptor('annexeAvis', 'Annexe à un avis',
-                                       'attach.png', '', 'advice')
+annexe = ItemAnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', '')
+annexeDecision = ItemAnnexTypeDescriptor('annexeDecision', 'Annexe à la décision',
+                                         u'attach.png', '', 'item_decision')
+annexeAvis = AnnexTypeDescriptor('annexeAvis', 'Annexe à un avis',
+                                 u'attach.png', '', 'advice')
+annexeSeance = AnnexTypeDescriptor('annexe', 'Annexe',
+                                   u'attach.png', '', 'meeting')
 
 # Categories -------------------------------------------------------------------
 categories = [CategoryDescriptor('category1', 'Catégorie 1'),
@@ -139,7 +143,7 @@ Place2\r
 Place3\r"""
 caMeeting.categories = categories
 caMeeting.shortName = 'CA'
-caMeeting.meetingFileTypes = [annexe, annexeDecision, annexeAvis]
+caMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
 caMeeting.usedItemAttributes = ['detailedDescription',
                                 'budgetInfos',
                                 'observations',

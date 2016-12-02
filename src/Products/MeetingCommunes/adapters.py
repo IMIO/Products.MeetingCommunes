@@ -27,6 +27,7 @@ from Globals import InitializeClass
 from zope.interface import implements
 
 from Products.CMFCore.permissions import ReviewPortalContent
+from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.utils import getToolByName
 from Products.Archetypes.atapi import DisplayList
 from plone import api
@@ -34,7 +35,6 @@ from plone.memoize import ram
 
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from Products.PloneMeeting.adapters import CompoundCriterionBaseAdapter
-from Products.PloneMeeting.interfaces import IAnnexable
 from Products.PloneMeeting.interfaces import IMeetingCustom
 from Products.PloneMeeting.interfaces import IMeetingItemCustom
 from Products.PloneMeeting.interfaces import IMeetingGroupCustom
@@ -51,7 +51,6 @@ from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowConditions
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import WF_APPLIED
 from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
-from Products.PloneMeeting.utils import checkPermission
 
 from Products.MeetingCommunes import logger
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
@@ -89,45 +88,6 @@ adaptations.WF_NOT_CREATOR_EDITS_UNLESS_CLOSED = ('delayed', 'refused', 'accepte
 
 RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = {'meetingitemcommunes_workflow': 'meetingitemcommunes_workflow.itemcreated'}
 adaptations.RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE
-
-
-def formatedAssembly(assembly, focus):
-    is_finish = False
-    absentFind = False
-    excuseFind = False
-    res = []
-    res.append('<p class="mltAssembly">')
-    for ass in assembly:
-        if is_finish:
-            break
-        lines = ass.split(',')
-        cpt = 1
-        my_line = ''
-        for line in lines:
-            if((line.find('Excus') >= 0 or line.find('Absent') >= 0) and focus == 'present') or \
-                    (line.find('Absent') >= 0 and focus == 'excuse'):
-                is_finish = True
-                break
-            if line.find('Excus') >= 0:
-                excuseFind = True
-                continue
-            if line.find('Absent') >= 0:
-                absentFind = True
-                continue
-            if (focus == 'absent' and not absentFind) or (focus == 'excuse' and not excuseFind):
-                continue
-            if cpt == len(lines):
-                my_line = "%s%s<br />" % (my_line, line)
-                res.append(my_line)
-            else:
-                my_line = "%s%s," % (my_line, line)
-            cpt = cpt + 1
-    if len(res) > 1:
-        res[-1] = res[-1].replace('<br />', '')
-    else:
-        return ''
-    res.append('</p>')
-    return ('\n'.join(res))
 
 
 class CustomMeeting(Meeting):
@@ -548,18 +508,6 @@ class CustomMeeting(Meeting):
                 ressort.append(ressorti)
         return ressort
 
-    security.declarePublic('printFormatedMeetingAssembly ')
-
-    def printFormatedMeetingAssembly(self, focus=''):
-        ''' Printing Method use in templates :
-            return formated assembly with 'absent', 'excused', ... '''
-        if focus not in ('present', 'excuse', 'absent'):
-            return ''
-        # ie: Pierre Helson, Bourgmestre, Président
-        # focus is present, excuse or absent
-        assembly = self.context.getAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
-        return formatedAssembly(assembly, focus)
-
 
 class CustomMeetingItem(MeetingItem):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
@@ -605,51 +553,6 @@ class CustomMeetingItem(MeetingItem):
                                               self.Description()))
             self.reindexObject()
     MeetingItem._initDecisionFieldIfEmpty = _initDecisionFieldIfEmpty
-
-    security.declarePublic('printAllAnnexes')
-
-    def printAllAnnexes(self):
-        ''' Printing Method use in templates :
-            return all viewable annexes for item '''
-        res = []
-        annexesByType = IAnnexable(self.context).getAnnexesByType('item')
-        for annexes in annexesByType:
-            for annex in annexes:
-                title = annex['Title'].replace('&', '&amp;')
-                url = getattr(self.context, annex['id']).absolute_url()
-                res.append('<a href="%s">%s</a><br/>' % (url, title))
-        return ('\n'.join(res))
-
-    security.declarePublic('printFormatedAdvice ')
-
-    def printFormatedAdvice(self):
-        ''' Printing Method use in templates :
-            return formated advice'''
-        res = []
-        meetingItem = self.context
-        keys = meetingItem.getAdvicesByType().keys()
-        for key in keys:
-            for advice in meetingItem.getAdvicesByType()[key]:
-                if advice['type'] == 'not_given':
-                    continue
-                comment = ''
-                if advice['comment']:
-                    comment = advice['comment']
-                res.append({'type': meetingItem.i18n(key).encode('utf-8'), 'name': advice['name'].encode('utf-8'),
-                            'comment': comment})
-        return res
-
-    security.declarePublic('printFormatedItemAssembly ')
-
-    def printFormatedItemAssembly(self, focus=''):
-        ''' Printing Method use in templates :
-            return formated assembly with 'absent', 'excused', ... '''
-        if focus not in ('present', 'excuse', 'absent'):
-            return ''
-        # ie: Pierre Helson, Bourgmestre, Président
-        # focus is present, excuse or absent
-        assembly = self.context.getItemAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
-        return formatedAssembly(assembly, focus)
 
     def adviceDelayIsTimedOutWithRowId(self, groupId, rowIds=[]):
         ''' Check if advice with delay from a certain p_groupId and with
@@ -970,7 +873,7 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
 
     def mayDecide(self):
         res = False
-        if checkPermission(ReviewPortalContent, self.context):
+        if _checkPermission(ReviewPortalContent, self.context):
             res = True
         return res
 
@@ -1009,7 +912,7 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
         '''We may decide an item if the linked meeting is in relevant state.'''
         res = False
         meeting = self.context.getMeeting()
-        if checkPermission(ReviewPortalContent, self.context) and \
+        if _checkPermission(ReviewPortalContent, self.context) and \
            meeting and meeting.adapted().isDecided():
             res = True
         return res
@@ -1021,7 +924,7 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
           A MeetingManager may publish (itempublish) an item if the meeting is at least published
         """
         res = False
-        if checkPermission(ReviewPortalContent, self.context):
+        if _checkPermission(ReviewPortalContent, self.context):
             if self.context.hasMeeting() and \
                (self.context.getMeeting().queryState() in ('published', 'decided', 'closed', 'decisions_published',)):
                 res = True

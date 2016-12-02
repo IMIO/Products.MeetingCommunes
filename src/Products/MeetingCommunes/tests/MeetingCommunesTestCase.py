@@ -43,7 +43,3 @@ class MeetingCommunesTestCase(PloneMeetingTestCase, MeetingCommunesTestingHelper
         PloneMeetingTestCase.setUp(self)
         self.meetingConfig = getattr(self.tool, 'meeting-config-college')
         self.meetingConfig2 = getattr(self.tool, 'meeting-config-council')
-        # Set the default file and file type for adding annexes
-        self.annexFile = 'INSTALL.TXT'
-        self.annexFileType = 'annexeBudget'
-        self.annexFileTypeDecision = 'annexeDecision'

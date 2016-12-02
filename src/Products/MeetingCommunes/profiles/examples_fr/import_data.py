@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from DateTime import DateTime
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
+from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import GroupDescriptor
+from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
 from Products.PloneMeeting.profiles import ItemTemplateDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
-from Products.PloneMeeting.profiles import MeetingFileTypeDescriptor
 from Products.PloneMeeting.profiles import MeetingUserDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
 from Products.PloneMeeting.profiles import PodTemplateDescriptor
@@ -14,15 +15,17 @@ from Products.PloneMeeting.profiles import UserDescriptor
 
 today = DateTime().strftime('%Y/%m/%d')
 
-# File types -------------------------------------------------------------------
-annexe = MeetingFileTypeDescriptor('annexe', 'Annexe', 'attach.png', '')
-annexeBudget = MeetingFileTypeDescriptor('annexeBudget', 'Article Budgétaire', 'budget.png', '')
-annexeCahier = MeetingFileTypeDescriptor('annexeCahier', 'Cahier des Charges', 'cahier.gif', '')
-annexeDecision = MeetingFileTypeDescriptor('annexeDecision', 'Annexe à la décision', 'attach.png', '', 'item_decision')
-annexeAvis = MeetingFileTypeDescriptor('annexeAvis', 'Annexe à un avis',
-                                       'attach.png', '', 'advice')
-annexeAvisLegal = MeetingFileTypeDescriptor('annexeAvisLegal', 'Extrait article de loi',
-                                            'legalAdvice.png', '', 'advice')
+# Annex types -------------------------------------------------------------------
+annexe = ItemAnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', '')
+annexeBudget = ItemAnnexTypeDescriptor('annexeBudget', 'Article Budgétaire', u'budget.png', '')
+annexeCahier = ItemAnnexTypeDescriptor('annexeCahier', 'Cahier des Charges', u'cahier.png', '')
+annexeDecision = ItemAnnexTypeDescriptor('annexeDecision', 'Annexe à la décision',
+                                         u'attach.png', '', 'item_decision')
+annexeAvis = AnnexTypeDescriptor('annexeAvis', 'Annexe à un avis',
+                                 u'attach.png', '', 'advice')
+annexeAvisLegal = AnnexTypeDescriptor('annexeAvisLegal', 'Extrait article de loi',
+                                      u'legalAdvice.png', '', 'advice')
+annexeSeance = AnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', '', relatedTo='meeting')
 
 # Categories -------------------------------------------------------------------
 recurring = CategoryDescriptor('recurrents', 'Récurrents')
@@ -231,8 +234,9 @@ Place2\r
 Place3\r"""
 collegeMeeting.categories = categories
 collegeMeeting.shortName = 'College'
-collegeMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
-                                   annexeDecision, annexeAvis, annexeAvisLegal]
+collegeMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
+                             annexeDecision, annexeAvis, annexeAvisLegal,
+                             annexeSeance]
 collegeMeeting.usedItemAttributes = ['detailedDescription',
                                      'budgetInfos',
                                      'observations',
@@ -513,8 +517,9 @@ Place2\n\r
 Place3\n\r"""
 councilMeeting.categories = categories
 councilMeeting.shortName = 'Council'
-councilMeeting.meetingFileTypes = [annexe, annexeBudget, annexeCahier,
-                                   annexeDecision, annexeAvis, annexeAvisLegal]
+councilMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
+                             annexeDecision, annexeAvis, annexeAvisLegal,
+                             annexeSeance]
 councilMeeting.usedItemAttributes = ['detailedDescription',
                                      'oralQuestion',
                                      'itemInitiator',
