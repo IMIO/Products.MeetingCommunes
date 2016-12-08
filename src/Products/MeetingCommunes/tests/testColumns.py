@@ -26,12 +26,12 @@ from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommun
 from Products.PloneMeeting.tests.testColumns import testColumns as pmtc
 
 
-class testAnnexes(MeetingCommunesTestCase, pmtc):
+class testColumns(MeetingCommunesTestCase, pmtc):
     ''' '''
 
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(testAnnexes, prefix='test_pm_'))
+    suite.addTest(makeSuite(testColumns, prefix='test_pm_'))
     return suite
