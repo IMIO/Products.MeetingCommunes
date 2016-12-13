@@ -425,7 +425,7 @@ class CustomMeeting(Meeting):
         if includeEmptyCategories:
             meetingConfig = tool.getMeetingConfig(
                 self.context)
-            allCategories = meetingConfig.getCategories()
+            allCategories = meetingConfig.getCategories(onlySelectable=False)
             usedCategories = [elem[0] for elem in res]
             for cat in allCategories:
                 if cat not in usedCategories:
