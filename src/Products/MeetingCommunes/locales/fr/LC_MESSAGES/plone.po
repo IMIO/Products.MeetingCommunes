@@ -230,6 +230,10 @@ msgstr "Séance du Comité de Concertation"
 msgid "backToProposedToFinancialController"
 msgstr "Renvoyer au contrôleur financier"
 
+#. Default: "Send back to 'financial editor'"
+msgid "backToProposedToFinancialEditor"
+msgstr "Renvoyer au rédacteur financier"
+
 #. Default: "Send back to 'financial manager'"
 msgid "backToProposedToFinancialManager"
 msgstr "Renvoyer au Directeur financier"
@@ -298,6 +302,10 @@ msgstr "Gelé"
 msgid "proposeToFinancialController"
 msgstr "Proposer au contrôleur financier"
 
+#. Default: "Propose to financial editor"
+msgid "proposeToFinancialEditor"
+msgstr "Proposer au rédacteur financier"
+
 #. Default: "Propose to financial manager"
 msgid "proposeToFinancialManager"
 msgstr "Proposer au Directeur financier"
@@ -309,6 +317,10 @@ msgstr "Proposer au validateur financier"
 #. Default: "Proposed to financial controller"
 msgid "proposed_to_financial_controller"
 msgstr "Proposé au contrôleur financier"
+
+#. Default: "Proposed to financial editor"
+msgid "proposed_to_financial_editor"
+msgstr "Proposé au rédacteur financier"
 
 #. Default: "Proposed to financial manager"
 msgid "proposed_to_financial_manager"

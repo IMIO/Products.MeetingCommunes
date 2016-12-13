@@ -42,8 +42,14 @@ PRODUCT_DEPENDENCIES = []
 
 # extra suffixes while using 'meetingadvicefinances_workflow'
 FINANCE_GROUP_SUFFIXES = ('financialcontrollers',
+                          'financialeditors',
                           'financialreviewers',
                           'financialmanagers')
+FINANCE_STATE_TO_GROUPS_MAPPINGS = {
+    'proposed_to_financial_controller': 'financialcontrollers',
+    'proposed_to_financial_editor': 'financialeditors',
+    'proposed_to_financial_reviewer': 'financialreviewers',
+    'proposed_to_financial_manager': 'financialmanagers', }
 
 # states in which the finance advice may be given
 FINANCE_WAITING_ADVICES_STATES = ['prevalidated_waiting_advices']

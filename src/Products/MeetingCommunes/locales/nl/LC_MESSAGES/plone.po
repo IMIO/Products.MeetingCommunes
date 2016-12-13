@@ -229,6 +229,10 @@ msgstr "Comitevergadering"
 msgid "backToProposedToFinancialController"
 msgstr ""
 
+#. Default: "Send back to 'financial editor'"
+msgid "backToProposedToFinancialEditor"
+msgstr ""
+
 #. Default: "Send back to 'financial manager'"
 msgid "backToProposedToFinancialManager"
 msgstr ""
@@ -299,6 +303,10 @@ msgstr "Item bevroren"
 msgid "proposeToFinancialController"
 msgstr ""
 
+#. Default: "Propose to financial editor"
+msgid "proposeToFinancialEditor"
+msgstr ""
+
 #. Default: "Propose to financial manager"
 msgid "proposeToFinancialManager"
 msgstr ""
@@ -309,6 +317,10 @@ msgstr ""
 
 #. Default: "Proposed to financial controller"
 msgid "proposed_to_financial_controller"
+msgstr ""
+
+#. Default: "Proposed to financial editor"
+msgid "proposed_to_financial_editor"
 msgstr ""
 
 #. Default: "Proposed to financial manager"

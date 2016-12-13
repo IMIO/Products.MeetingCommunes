@@ -23,9 +23,9 @@ class AdviceWFConditionsView(BrowserView):
             res = True
         return res
 
-    security.declarePublic('mayProposeToFinancialReviewer')
+    security.declarePublic('mayBackToProposedToFinancialEditor')
 
-    def mayProposeToFinancialReviewer(self):
+    def mayBackToProposedToFinancialEditor(self):
         '''
         '''
         res = False
@@ -36,6 +36,36 @@ class AdviceWFConditionsView(BrowserView):
     security.declarePublic('mayBackToProposedToFinancialReviewer')
 
     def mayBackToProposedToFinancialReviewer(self):
+        '''
+        '''
+        res = False
+        if _checkPermission(ReviewPortalContent, self.context):
+            res = True
+        return res
+
+    security.declarePublic('mayBackToProposedToFinancialManager')
+
+    def mayBackToProposedToFinancialManager(self):
+        '''
+        '''
+        res = False
+        if _checkPermission(ReviewPortalContent, self.context):
+            res = True
+        return res
+
+    security.declarePublic('mayProposeToFinancialEditor')
+
+    def mayProposeToFinancialEditor(self):
+        '''
+        '''
+        res = False
+        if _checkPermission(ReviewPortalContent, self.context):
+            res = True
+        return res
+
+    security.declarePublic('mayProposeToFinancialReviewer')
+
+    def mayProposeToFinancialReviewer(self):
         '''
         '''
         res = False
@@ -74,16 +104,6 @@ class AdviceWFConditionsView(BrowserView):
             else:
                 if not self.context.queryState() == 'proposed_to_financial_manager':
                     res = False
-        return res
-
-    security.declarePublic('mayBackToProposedToFinancialManager')
-
-    def mayBackToProposedToFinancialManager(self):
-        '''
-        '''
-        res = False
-        if _checkPermission(ReviewPortalContent, self.context):
-            res = True
         return res
 
 

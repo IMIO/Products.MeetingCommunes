@@ -73,6 +73,39 @@
  <state state_id="proposed_to_financial_controller"
         title="proposed_to_financial_controller"
         i18n:attributes="title">
+  <exit-transition transition_id="proposeToFinancialEditor"/>
+  <exit-transition transition_id="giveAdvice"/>
+  <permission-map name="Access contents information"
+                  acquired="True">
+  </permission-map>
+  <permission-map name="Delete objects"
+                  acquired="False">
+   <permission-role>MeetingFinanceEditor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Modify portal content"
+                  acquired="False">
+   <permission-role>MeetingFinanceEditor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="PloneMeeting: Add annex"
+                  acquired="False">
+   <permission-role>MeetingFinanceEditor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Review portal content"
+                  acquired="False">
+   <permission-role>MeetingFinanceEditor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="View"
+                  acquired="True">
+  </permission-map>
+ </state>
+ <state state_id="proposed_to_financial_editor"
+        title="proposed_to_financial_editor"
+        i18n:attributes="title">
+  <exit-transition transition_id="backToProposedToFinancialController"/>
   <exit-transition transition_id="proposeToFinancialReviewer"/>
   <exit-transition transition_id="giveAdvice"/>
   <permission-map name="Access contents information"
@@ -139,10 +172,11 @@
  <state state_id="proposed_to_financial_reviewer"
         title="proposed_to_financial_reviewer"
         i18n:attributes="title">
-  <exit-transition transition_id="backToProposedToFinancialController"/>
+  <exit-transition transition_id="backToProposedToFinancialEditor"/>
   <exit-transition transition_id="proposeToFinancialManager"/>
   <exit-transition transition_id="signFinancialAdvice"/>
   <exit-transition transition_id="giveAdvice"/>
+  <exit-transition transition_id="backToProposedToFinancialController"/>
   <permission-map name="Access contents information"
                   acquired="True">
   </permission-map>
@@ -194,6 +228,18 @@
     <guard-expression>python:here.restrictedTraverse('@@advice-wf-conditions').mayBackToProposedToFinancialController()</guard-expression>
   </guard>
  </transition>
+ <transition transition_id="backToProposedToFinancialEditor"
+             title="backToProposedToFinancialEditor"
+             new_state="proposed_to_financial_editor"
+             trigger="USER"
+             before_script=""
+             after_script=""
+             i18n:attributes="title">
+  <action url="" icon="" category="workflow" i18n:translate="">backToProposedToFinancialEditor</action>
+  <guard>
+    <guard-expression>python:here.restrictedTraverse('@@advice-wf-conditions').mayBackToProposedToFinancialEditor()</guard-expression>
+  </guard>
+ </transition>
  <transition transition_id="backToProposedToFinancialManager"
              title="backToProposedToFinancialManager"
              new_state="proposed_to_financial_manager"
@@ -228,6 +274,18 @@
   <action url="" icon="" category="workflow" i18n:translate="">giveAdvice</action>
   <guard>
     <guard-expression>python:here.REQUEST.get('mayGiveAdvice', False)</guard-expression>
+  </guard>
+ </transition>
+ <transition transition_id="proposeToFinancialEditor"
+             title="proposeToFinancialEditor"
+             new_state="proposed_to_financial_editor"
+             trigger="USER"
+             before_script=""
+             after_script=""
+             i18n:attributes="title">
+  <action url="" icon="" category="workflow" i18n:translate="">proposeToFinancialEditor</action>
+  <guard>
+    <guard-expression>python:here.restrictedTraverse('@@advice-wf-conditions').mayProposeToFinancialEditor()</guard-expression>
   </guard>
  </transition>
  <transition transition_id="proposeToFinancialManager"

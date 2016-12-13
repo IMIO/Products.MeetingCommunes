@@ -101,6 +101,10 @@ msgstr ""
 msgid "searchadviceproposedtocontroller"
 msgstr ""
 
+#. Default: "Advices proposed to financial editor"
+msgid "searchadviceproposedtoeditor"
+msgstr ""
+
 #. Default: "Advices proposed to financial reviewer"
 msgid "searchadviceproposedtoreviewer"
 msgstr ""
@@ -127,4 +131,20 @@ msgstr ""
 
 #. Default: "Cautious opinion"
 msgid "cautious_finance"
+msgstr ""
+
+#. Default: "Financial controllers"
+msgid "financialcontrollers"
+msgstr ""
+
+#. Default: "Financial editors"
+msgid "financialeditors"
+msgstr ""
+
+#. Default: "Financial reviewers"
+msgid "financialreviewers"
+msgstr ""
+
+#. Default: "Financial managers"
+msgid "financialmanagers"
 msgstr ""

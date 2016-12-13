@@ -231,6 +231,14 @@ msgstr ""
 msgid "proposed_to_financial_controller"
 msgstr ""
 
+#. Default: "Propose to financial editor"
+msgid "proposeToFinancialEditor"
+msgstr ""
+
+#. Default: "Proposed to financial editor"
+msgid "proposed_to_financial_editor"
+msgstr ""
+
 #. Default: "Propose to financial reviewer"
 msgid "proposeToFinancialReviewer"
 msgstr ""
@@ -257,6 +265,10 @@ msgstr ""
 
 #. Default: "Send back to 'financial controller'"
 msgid "backToProposedToFinancialController"
+msgstr ""
+
+#. Default: "Send back to 'financial editor'"
+msgid "backToProposedToFinancialEditor"
 msgstr ""
 
 #. Default: "Send back to 'financial reviewer'"
