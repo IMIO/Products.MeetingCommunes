@@ -76,6 +76,10 @@
            provides="collective.compoundcriterion.interfaces.ICompoundCriterionFilter"
            name="items-with-advice-proposed-to-financial-controller" />
   <adapter for="*"
+           factory="Products.MeetingCommunes.adapters.ItemsWithAdviceProposedToFinancialEditorAdapter"
+           provides="collective.compoundcriterion.interfaces.ICompoundCriterionFilter"
+           name="items-with-advice-proposed-to-financial-editor" />
+  <adapter for="*"
            factory="Products.MeetingCommunes.adapters.ItemsWithAdviceProposedToFinancialReviewerAdapter"
            provides="collective.compoundcriterion.interfaces.ICompoundCriterionFilter"
            name="items-with-advice-proposed-to-financial-reviewer" />

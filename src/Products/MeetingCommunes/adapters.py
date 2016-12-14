@@ -782,6 +782,25 @@ class CustomMeetingConfig(MeetingConfig):
                             'roles_bypassing_talcondition': ['Manager', ]
                         }
                      ),
+                    # Items having advice in state 'proposed_to_financial_editor'
+                    ('searchadviceproposedtoeditor',
+                        {
+                            'subFolderId': 'searches_items',
+                            'query':
+                            [
+                                {'i': 'CompoundCriterion',
+                                 'o': 'plone.app.querystring.operation.compound.is',
+                                 'v': 'items-with-advice-proposed-to-financial-editor'},
+                            ],
+                            'sort_on': u'created',
+                            'sort_reversed': True,
+                            'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
+                                             "tool.userIsAmong('financialeditors')) "
+                                             "or (not here.REQUEST.get('fromPortletTodo', False) and "
+                                             "tool.adapted().isFinancialUser())",
+                            'roles_bypassing_talcondition': ['Manager', ]
+                        }
+                     ),
                     # Items having advice in state 'proposed_to_financial_reviewer'
                     ('searchadviceproposedtoreviewer',
                         {
@@ -1161,6 +1180,35 @@ class ItemsWithAdviceProposedToFinancialControllerAdapter(CompoundCriterionBaseA
 
     # we may not ram.cache methods in same file with same name...
     query = query_itemswithadviceproposedtofinancialcontroller
+
+
+class ItemsWithAdviceProposedToFinancialEditorAdapter(CompoundCriterionBaseAdapter):
+
+    def itemswithadviceproposedtofinancialeditor_cachekey(method, self):
+        '''cachekey method for every CompoundCriterion adapters.'''
+        return str(self.request._debug)
+
+    @property
+    @ram.cache(itemswithadviceproposedtofinancialeditor_cachekey)
+    def query_itemswithadviceproposedtofinancialeditor(self):
+        '''Queries all items for which there is an advice in state 'proposed_to_financial_editor'.
+           We only return items for which completeness has been evaluated to 'complete'.'''
+        groupIds = []
+        member = api.user.get_current()
+        userGroups = member.getGroups()
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+        for financeGroup in cfg.adapted().getUsedFinanceGroupIds():
+            # only keep finance groupIds the current user is controller for
+            if '%s_financialeditors' % financeGroup in userGroups:
+                groupIds.append('delay__%s_proposed_to_financial_editor' % financeGroup)
+        # Create query parameters
+        return {'portal_type': {'query': self.cfg.getItemTypeName()},
+                'getCompleteness': {'query': 'completeness_complete'},
+                'indexAdvisers': {'query': groupIds}}
+
+    # we may not ram.cache methods in same file with same name...
+    query = query_itemswithadviceproposedtofinancialeditor
 
 
 class ItemsWithAdviceProposedToFinancialReviewerAdapter(CompoundCriterionBaseAdapter):
