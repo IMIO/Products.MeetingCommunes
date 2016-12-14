@@ -335,7 +335,9 @@ class CustomMeeting(Meeting):
         if includeEmptyCategories:
             meetingConfig = tool.getMeetingConfig(
                 self.context)
-            allCategories = meetingConfig.getCategories()
+            # onlySelectable = False will also return disabled categories...
+            allCategories = [cat for cat in meetingConfig.getCategories(onlySelectable=False)
+                             if api.content.get_state(cat) == 'active']
             usedCategories = [elem[0] for elem in res]
             for cat in allCategories:
                 if cat not in usedCategories:
@@ -981,8 +983,7 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
 
     @ram.cache(isFinancialUser_cachekey)
     def isFinancialUser(self):
-        '''Is current user a financial user, so in groups 'financialcontrollers',
-           'financialreviewers' or 'financialmanagers'.'''
+        '''Is current user a financial user, so in groups FINANCE_GROUP_SUFFIXES.'''
         member = api.user.get_current()
         for groupId in member.getGroups():
             for suffix in FINANCE_GROUP_SUFFIXES:

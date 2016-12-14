@@ -22,6 +22,7 @@
 # 02110-1301, USA.
 #
 
+from plone import api
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 
 
@@ -264,6 +265,33 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.assertEquals(meeting.adapted().getPrintableItemsByCategory(itemUids,
                                                                         forceCategOrderFromConfig=True)[2][1].meta_type,
                           'MeetingItem')
+
+    def test_GetPrintableItemsByCategoryIncludeEmptyCategories(self):
+        cfg2 = self.meetingConfig2
+        self.changeUser('admin')
+        # make categories available
+        self.setMeetingConfig(cfg2.getId())
+        self.changeUser('pmManager')
+        meeting = self._createMeetingWithItems()
+        # by default, only categories containing an item are returned
+        cat_empty_not_included = [
+            elt[0].getId() for elt in
+            meeting.adapted().getPrintableItemsByCategory(includeEmptyCategories=False)]
+        self.assertEqual(cat_empty_not_included,
+                         ['development', 'events', 'research'])
+        cat_empty_included = [
+            elt[0].getId() for elt in
+            meeting.adapted().getPrintableItemsByCategory(includeEmptyCategories=True)]
+        self.assertEqual(cat_empty_included,
+                         ['deployment', 'maintenance', 'development', 'events',
+                          'research', 'projects', 'subproducts'])
+        # it does not include 'inactive' categories
+        self.assertEqual(api.content.get_state(cfg2.categories.marketing), 'inactive')
+        self.assertFalse('marketing' in cat_empty_included)
+        # but it includes categories that current is not in usingGroups
+        self.assertFalse('vendors_creators' in self.member.getGroups())
+        self.assertTrue('vendors' in cfg2.categories.subproducts.getUsingGroups())
+        self.assertTrue('subproducts' in cat_empty_included)
 
     def test_InitializeDecisionField(self):
         """
