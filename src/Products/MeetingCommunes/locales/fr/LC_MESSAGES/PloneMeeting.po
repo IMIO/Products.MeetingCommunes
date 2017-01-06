@@ -124,35 +124,3 @@ msgstr "Points proposés"
 msgid "searchvalidateditems"
 msgstr "Points validés"
 
-#. Default: "The item has been successfully transfered to the ag."
-msgid "sendto_meeting-config-ag_success"
-msgstr "Le point a été envoyé à l'Assemblée Générale."
-
-#. Default: "The item has been successfully transfered to the bp."
-msgid "sendto_meeting-config-bp_success"
-msgstr "Le point a été envoyé au Bureau permanent."
-
-#. Default: "The item has been successfully transfered to the cas."
-msgid "sendto_meeting-config-cas_success"
-msgstr "Le point a été envoyé au Conseil de l'Action Sociale."
-
-#. Default: "The item has been successfully transfered to the college."
-msgid "sendto_meeting-config-college_success"
-msgstr "Le point a été envoyé au Collège."
-
-#. Default: "The item has been successfully transfered to the comitee."
-msgid "sendto_meeting-config-comitee_success"
-msgstr "Le point a été envoyé au Comité de concertation."
-
-#. Default: "The item has been successfully transfered to the council."
-msgid "sendto_meeting-config-council_success"
-msgstr "Le point a été envoyé au Conseil communal."
-
-#. Default: "The item has been successfully transfered to the zcollege."
-msgid "sendto_meeting-config-zcollege_success"
-msgstr "Le point a été envoyé au Collège."
-
-#. Default: "The item has been successfully transfered to the zcouncil."
-msgid "sendto_meeting-config-zcouncil_success"
-msgstr "Le point a été envoyé au Conseil."
-

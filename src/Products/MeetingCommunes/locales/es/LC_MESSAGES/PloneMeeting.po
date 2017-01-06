@@ -125,35 +125,3 @@ msgstr "los temas propuestos"
 msgid "searchvalidateditems"
 msgstr "los temas validados"
 
-#. Default: "The item has been successfully transfered to the ag."
-msgid "sendto_meeting-config-ag_success"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the bp."
-msgid "sendto_meeting-config-bp_success"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the cas."
-msgid "sendto_meeting-config-cas_success"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the college."
-msgid "sendto_meeting-config-college_success"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the comitee."
-msgid "sendto_meeting-config-comitee_success"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the council."
-msgid "sendto_meeting-config-council_success"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the zcollege."
-msgid "sendto_meeting-config-zcollege_success"
-msgstr ""
-
-#. Default: "The item has been successfully transfered to the zcouncil."
-msgid "sendto_meeting-config-zcouncil_success"
-msgstr ""
-
