@@ -333,7 +333,7 @@ class CustomMeeting(Meeting):
                                     excludedCategories=[], groupIds=[], firstNumber=1, renumber=False,
                                     includeEmptyCategories=False, includeEmptyGroups=False,
                                     forceCategOrderFromConfig=False):
-        '''Returns a list of (late or normal or both) items (depending on p_late)
+        """Returns a list of (late or normal or both) items (depending on p_late)
            ordered by category. Items being in a state whose name is in
            p_ignore_review_state will not be included in the result.
            If p_by_proposing_group is True, items are grouped by proposing group
@@ -352,7 +352,7 @@ class CustomMeeting(Meeting):
            nevertheless.Some specific categories can be given or some categories to exclude.
            These 2 parameters are exclusive.  If renumber is True, a list of tuple
            will be return with first element the number and second element, the item.
-           In this case, the firstNumber value can be used.'''
+           In this case, the firstNumber value can be used."""
         # The result is a list of lists, where every inner list contains:
         # - at position 0: the category object (MeetingCategory or MeetingGroup)
         # - at position 1 to n: the items in this category
@@ -367,6 +367,7 @@ class CustomMeeting(Meeting):
         #   * at position 0: the proposing group object
         #   * at positions 1 to n: the items belonging to this group.
         def _comp(v1, v2):
+            import ipdb; ipdb.set_trace()
             if v1[0].getOrder(onlySelectable=False) < v2[0].getOrder(onlySelectable=False):
                 return -1
             elif v1[0].getOrder(onlySelectable=False) > v2[0].getOrder(onlySelectable=False):
@@ -421,11 +422,11 @@ class CustomMeeting(Meeting):
                     res.append([currentCat])
                     self._insertItemInCategory(res[-1], item,
                                                by_proposing_group, group_prefixes, groups)
-        if forceCategOrderFromConfig or late == 'both':
+        meetingConfig = tool.getMeetingConfig(self.context)
+        if forceCategOrderFromConfig or (not meetingConfig.getUseGroupsAsCategories() and late == 'both'):
             res.sort(cmp=_comp)
         if includeEmptyCategories:
-            meetingConfig = tool.getMeetingConfig(
-                self.context)
+
             # onlySelectable = False will also return disabled categories...
             allCategories = [cat for cat in meetingConfig.getCategories(onlySelectable=False)
                              if api.content.get_state(cat) == 'active']
