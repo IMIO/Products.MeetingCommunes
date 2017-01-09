@@ -25,7 +25,6 @@ from collective.iconifiedcategory.utils import calculate_category_id
 from collective.iconifiedcategory.utils import get_config_root
 from Products.CMFPlone.utils import _createObjectByType
 from Products.PloneMeeting.exportimport.content import ToolInitializer
-from Products.PloneMeeting.model.adaptations import performWorkflowAdaptations
 from Products.MeetingCommunes.config import PROJECTNAME
 
 
@@ -214,11 +213,6 @@ def finalizeExampleInstance(context):
     # finally, re-launch plonemeetingskin and MeetingCommunes skins step
     # because PM has been installed before the import_data profile and messed up skins layers
     site.portal_setup.runImportStepFromProfile(u'profile-Products.MeetingCommunes:default', 'skins')
-    # define default workflowAdaptations for council
-    # due to some weird problems, the wfAdaptations can not be defined
-    # thru the import_data...
-    mc_council_or_cas.setWorkflowAdaptations(['no_global_observation', 'no_publication'])
-    performWorkflowAdaptations(mc_council_or_cas, logger)
 
 
 def reorderCss(context):

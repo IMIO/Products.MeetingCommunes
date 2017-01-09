@@ -75,10 +75,8 @@ if 'archiving' in customwfAdaptations:
     customwfAdaptations.remove('archiving')
 
 MeetingConfig.wfAdaptations = customwfAdaptations
-originalPerformWorkflowAdaptations = adaptations.performWorkflowAdaptations
 
 # states taken into account by the 'no_global_observation' wfAdaptation
-from Products.PloneMeeting.model import adaptations
 noGlobalObsStates = ('itempublished', 'itemfrozen', 'accepted', 'refused',
                      'delayed', 'accepted_but_modified', 'pre_accepted')
 adaptations.noGlobalObsStates = noGlobalObsStates
@@ -582,7 +580,8 @@ class CustomMeetingItem(MeetingItem):
     def printFinanceAdvice(self, case):
         """
         :param case: can be either 'initiative', 'legal', 'simple' or 'not_given'
-        :return: an array dictionaries same as MeetingItem.getAdviceDataFor or empty if no advice matching the given case.
+        :return: an array dictionaries same as MeetingItem.getAdviceDataFor
+        or empty if no advice matching the given case.
         """
         result = []
         tool = api.portal.get_tool('portal_plonemeeting')
