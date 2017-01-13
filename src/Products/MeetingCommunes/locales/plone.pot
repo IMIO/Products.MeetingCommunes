@@ -326,3 +326,19 @@ msgstr ""
 #. Default: "Create an item ZCollege from an item EM"
 msgid "create_to_meeting-config-zcollege_from_em"
 msgstr ""
+
+#. Default: "MeetingCoordinateOffice"
+msgid "MeetingCoordinateOffice"
+msgstr ""
+
+#. Default: "MeetingItemCoordinateOffice"
+msgid "MeetingItemCoordinateOffice"
+msgstr ""
+
+#. Default: "MeetingItemRecurring"
+msgid "MeetingItemRecurringCoordinateOffice"
+msgstr ""
+
+#. Default: "MeetingItemTemplateBourgmestre"
+msgid "MeetingItemTemplateCoordinateOffice"
+msgstr ""

@@ -39,6 +39,10 @@ msgstr ""
 msgid "MeetingCollege"
 msgstr "Sitzung des Gemeindekollegiums"
 
+#. Default: "MeetingCoordinateOffice"
+msgid "MeetingCoordinateOffice"
+msgstr ""
+
 #. Default: "MeetincCouncil"
 msgid "MeetingCouncil"
 msgstr "Sitzung des Gemeinderats"
@@ -71,6 +75,10 @@ msgstr ""
 msgid "MeetingItemCollege"
 msgstr "TOP Kollegium"
 
+#. Default: "MeetingItemCoordinateOffice"
+msgid "MeetingItemCoordinateOffice"
+msgstr ""
+
 #. Default: "MeetingItemCouncil"
 msgid "MeetingItemCouncil"
 msgstr "TOP Rat"
@@ -101,6 +109,10 @@ msgstr ""
 
 #. Default: "MeetingItemRecurringCollege"
 msgid "MeetingItemRecurringCollege"
+msgstr ""
+
+#. Default: "MeetingItemRecurring"
+msgid "MeetingItemRecurringCoordinateOffice"
 msgstr ""
 
 #. Default: "MeetingItemRecurringCouncil"
@@ -153,6 +165,10 @@ msgstr ""
 
 #. Default: "MeetingItemTemplateCollege"
 msgid "MeetingItemTemplateCollege"
+msgstr ""
+
+#. Default: "MeetingItemTemplateBourgmestre"
+msgid "MeetingItemTemplateCoordinateOffice"
 msgstr ""
 
 #. Default: "MeetingItemTemplateCouncil"

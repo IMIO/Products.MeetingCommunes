@@ -42,6 +42,10 @@ msgstr "Séance du Comité de Direction"
 msgid "MeetingCollege"
 msgstr "Séance du Collège Communal"
 
+#. Default: "MeetingCoordinateOffice"
+msgid "MeetingCoordinateOffice"
+msgstr "Séance du Bureau de Coordination"
+
 #. Default: "MeetincCouncil"
 msgid "MeetingCouncil"
 msgstr "Séance du Conseil Communal"
@@ -74,6 +78,10 @@ msgstr "Point Comité de Direction"
 msgid "MeetingItemCollege"
 msgstr "Point Collège Communal"
 
+#. Default: "MeetingItemCoordinateOffice"
+msgid "MeetingItemCoordinateOffice"
+msgstr "Point Bureau de Coordination"
+
 #. Default: "MeetingItemCouncil"
 msgid "MeetingItemCouncil"
 msgstr "Point Conseil Communal"
@@ -105,6 +113,10 @@ msgstr "Point récurrent Comité de Direction"
 #. Default: "MeetingItemRecurringCollege"
 msgid "MeetingItemRecurringCollege"
 msgstr "Point récurrent Collège Communal"
+
+#. Default: "MeetingItemRecurring"
+msgid "MeetingItemRecurringCoordinateOffice"
+msgstr "Point récurrent Bureau de Coordination"
 
 #. Default: "MeetingItemRecurringCouncil"
 msgid "MeetingItemRecurringCouncil"
@@ -157,6 +169,10 @@ msgstr "Modèle de point Comité de Direction"
 #. Default: "MeetingItemTemplateCollege"
 msgid "MeetingItemTemplateCollege"
 msgstr "Modèle de point Collège Communal"
+
+#. Default: "MeetingItemTemplateBourgmestre"
+msgid "MeetingItemTemplateCoordinateOffice"
+msgstr "Modèle de point Bureau de Coordination"
 
 #. Default: "MeetingItemTemplateCouncil"
 msgid "MeetingItemTemplateCouncil"

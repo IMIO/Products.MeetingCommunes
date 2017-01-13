@@ -42,6 +42,10 @@ msgstr ""
 msgid "MeetingCollege"
 msgstr "City college meeting"
 
+#. Default: "MeetingCoordinateOffice"
+msgid "MeetingCoordinateOffice"
+msgstr ""
+
 #. Default: "MeetincCouncil"
 msgid "MeetingCouncil"
 msgstr "City council meeting"
@@ -74,6 +78,10 @@ msgstr ""
 msgid "MeetingItemCollege"
 msgstr "College item"
 
+#. Default: "MeetingItemCoordinateOffice"
+msgid "MeetingItemCoordinateOffice"
+msgstr ""
+
 #. Default: "MeetingItemCouncil"
 msgid "MeetingItemCouncil"
 msgstr "Council item"
@@ -104,6 +112,10 @@ msgstr ""
 
 #. Default: "MeetingItemRecurringCollege"
 msgid "MeetingItemRecurringCollege"
+msgstr ""
+
+#. Default: "MeetingItemRecurring"
+msgid "MeetingItemRecurringCoordinateOffice"
 msgstr ""
 
 #. Default: "MeetingItemRecurringCouncil"
@@ -156,6 +168,10 @@ msgstr ""
 
 #. Default: "MeetingItemTemplateCollege"
 msgid "MeetingItemTemplateCollege"
+msgstr ""
+
+#. Default: "MeetingItemTemplateBourgmestre"
+msgid "MeetingItemTemplateCoordinateOffice"
 msgstr ""
 
 #. Default: "MeetingItemTemplateCouncil"
