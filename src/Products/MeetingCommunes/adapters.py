@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
-# Copyright (c) 2007 by PloneGov
+# Copyright (c) 2017 by Imio.be
 #
 # GNU General Public License (GPL)
 #
@@ -103,7 +103,8 @@ class CustomMeeting(Meeting):
 
     def getPrintableItems(self, itemUids, listTypes=['normal'], ignore_review_states=[],
                           privacy='*', oralQuestion='both', toDiscuss='both', categories=[],
-                          excludedCategories=[], groupIds=[], firstNumber=1, renumber=False):
+                          excludedCategories=[], groupIds=[], excludedGroupIds=[],
+                          firstNumber=1, renumber=False):
         '''Returns a list of items.
            An extra list of review states to ignore can be defined.
            A privacy can also be given, and the fact that the item is an
@@ -114,19 +115,15 @@ class CustomMeeting(Meeting):
            will be return with first element the number and second element, the item.
            In this case, the firstNumber value can be used.'''
         # We just filter ignore_review_states here and privacy and call
-        # getItems(uids), passing the correct uids and removing empty
-        # uids.
-        # privacy can be '*' or 'public' or 'secret'
+        # getItems(uids), passing the correct uids and removing empty uids.
+        # privacy can be '*' or 'public' or 'secret' or 'public_heading' or 'secret_heading'
         # oralQuestion can be 'both' or False or True
         # toDiscuss can be 'both' or 'False' or 'True'
         for elt in itemUids:
             if elt == '':
                 itemUids.remove(elt)
-        # no filtering, return the items ordered
-        if not categories and not ignore_review_states and privacy == '*' and \
-           oralQuestion == 'both' and toDiscuss == 'both':
-            return self.context.getItems(uids=itemUids, listTypes=listTypes, ordered=True)
-        # Either, we will have to filter the state here and check privacy
+
+        # check filters
         filteredItemUids = []
         uid_catalog = self.context.uid_catalog
         for itemUid in itemUids:
@@ -144,6 +141,8 @@ class CustomMeeting(Meeting):
             elif groupIds and not obj.getProposingGroup() in groupIds:
                 continue
             elif excludedCategories and obj.getCategory() in excludedCategories:
+                continue
+            elif excludedGroupIds and obj.getProposingGroup() in excludedGroupIds:
                 continue
             filteredItemUids.append(itemUid)
         # in case we do not have anything, we return an empty list
@@ -239,7 +238,8 @@ class CustomMeeting(Meeting):
     def getPrintableItemsByCategory(self, itemUids=[], listTypes=['normal'],
                                     ignore_review_states=[], by_proposing_group=False, group_prefixes={},
                                     privacy='*', oralQuestion='both', toDiscuss='both', categories=[],
-                                    excludedCategories=[], groupIds=[], firstNumber=1, renumber=False,
+                                    excludedCategories=[], groupIds=[], excludedGroupIds=[],
+                                    firstNumber=1, renumber=False,
                                     includeEmptyCategories=False, includeEmptyGroups=False,
                                     forceCategOrderFromConfig=False):
         '''Returns a list of (late or normal or both) items (depending on p_listTypes)
@@ -312,6 +312,8 @@ class CustomMeeting(Meeting):
                 elif categories and not item.getCategory() in categories:
                     continue
                 elif excludedCategories and item.getCategory() in excludedCategories:
+                    continue
+                elif excludedGroupIds and item.getProposingGroup() in excludedGroupIds:
                     continue
                 currentCat = item.getCategory(theObject=True)
                 # Add the item to a new category, excepted if the
