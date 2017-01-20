@@ -579,43 +579,6 @@ class CustomMeetingItem(MeetingItem):
         return bool(set(cfg.adapted().getUsedFinanceGroupIds(item)).
                     intersection(set(item.adviceIndex.keys())))
 
-    def printFinanceAdvice(self, case):
-        """
-        :param case: can be either 'initiative', 'legal', 'simple' or 'not_given'
-        :return: an array dictionaries same as MeetingItem.getAdviceDataFor
-        or empty if no advice matching the given case.
-        """
-        result = []
-        tool = api.portal.get_tool('portal_plonemeeting')
-        cfg = tool.getMeetingConfig(self.context)
-        financeAdviceIds = cfg.adapted().getUsedFinanceGroupIds()
-
-        if financeAdviceIds and case in ['initiative', 'legal', 'simple', 'not_given']:
-            advices = self.context.getAdviceDataFor(self.context.context)
-
-            for financeAdviceId in financeAdviceIds:
-                if financeAdviceId in advices:
-                    advice = advices[financeAdviceId]
-                else:
-                    continue
-
-                if advice['advice_given_on']:
-                    if case == 'initiative' and advice['not_asked']:
-                        result.append(advice)
-
-                if case == 'initiative' and advice['not_asked']:
-                    result.append(advice)
-                elif 'delay_infos' in advice and not advice['not_asked']:
-                    if case == 'simple' and not advice['delay_infos']:
-                        result.append(advice)
-                    elif advice['delay_infos']:
-                        if advice['advice_given_on']:
-                            if case == 'legal':
-                                result.append(advice)
-                        elif case == 'not_given':
-                            result.append(advice)
-        return result
-
 
 class CustomMeetingGroup(MeetingGroup):
     '''Adapter that adapts a meeting group implementing IMeetingGroup to the

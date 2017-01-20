@@ -185,6 +185,89 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         assembly = self.context.getItemAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
         return formatedAssembly(assembly, focus)
 
+    def printFinanceAdvice(self, case):
+        """
+        :param case: can be either 'initiative', 'legal', 'simple' or 'not_given'
+        :return: an array dictionaries same as MeetingItem.getAdviceDataFor
+        or empty if no advice matching the given case.
+        """
+
+        """
+        case 'simple' means the financial advice was requested but without any delay.
+        case 'legal' means the financial advice was requested with a delay. It a legal financial advice.
+        case 'initiative' means the financial advice was given without being requested at the first place.
+        case 'not_given' means the financial advice was requested with or without delay. But was ignored by the finance
+         director.
+        """
+        result = []
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+        finance_advice_ids = cfg.adapted().getUsedFinanceGroupIds()
+
+        if finance_advice_ids and case in ['initiative', 'legal', 'simple', 'not_given']:
+            advices = self.context.getAdviceDataFor(self.context.context)
+
+            for finance_advice_id in finance_advice_ids:
+                if finance_advice_id in advices:
+                    advice = advices[finance_advice_id]
+                else:
+                    continue
+
+                if advice['advice_given_on']:
+                    if case == 'initiative' and advice['not_asked']:
+                        result.append(advice)
+
+                if case == 'initiative' and advice['not_asked']:
+                    result.append(advice)
+                elif 'delay_infos' in advice and not advice['not_asked']:
+                    advice['item_transmitted_on'] = self.getItemFinanceAdviceTransmissionDate()
+                    if case == 'simple' and not advice['delay_infos']:
+                        result.append(advice)
+                    elif advice['delay_infos']:
+                        if advice['advice_given_on']:
+                            if case == 'legal':
+                                result.append(advice)
+                        elif case == 'not_given':
+                            result.append(advice)
+        return result
+
+    def getItemFinanceAdviceTransmissionDate(self):
+        """
+        :return: The date as a string when the finance service received the advice request.
+                 No matter if a legal delay applies on it or not.
+        """
+        finance_id = self.context.adapted().getFinanceAdviceId()
+        if finance_id:
+            data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
+            if 'delay_infos' in data and 'delay_started_on_localized' in data['delay_infos'] \
+                    and data['delay_infos']['delay_started_on_localized']:
+                return data['delay_infos']['delay_started_on_localized']
+            else:
+                return self.getWorkFlowAdviceTransmissionStep()
+        return None
+
+    def getWorkFlowAdviceTransmissionStep(self):
+
+        """
+        :return: The date as a string when the finance service received the advice request if no legal delay applies.
+        """
+
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+
+        wf_present_transition = list(cfg.getTransitionsForPresentingAnItem())
+        item_advice_states = cfg.itemAdviceStates
+
+        if 'itemfrozen' in item_advice_states and 'itemfreeze' not in wf_present_transition:
+            wf_present_transition.append('itemfreeze')
+
+        for item_transition in wf_present_transition:
+            event = getLastEvent(self.context, item_transition)
+            if event and 'review_state' in event and event['review_state'] in item_advice_states:
+                return event['time'].strftime('%d/%m/%Y')
+
+        return None
+
 
 class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView):
     """Specific printing methods used for meeting."""
