@@ -62,6 +62,14 @@ msgstr "Point Conseil Communal"
 msgid "MeetingItemEM"
 msgstr "Point Etat-Major"
 
+#. Default: "Meeting Item MMBE"
+msgid "MeetingItemMMBE"
+msgstr "Point MM - Bureau exécutif"
+
+#. Default: "Meeting Item MMCOGES"
+msgid "MeetingItemMMCOGES"
+msgstr "Point MM - Comité de gestion"
+
 #. Default: "Meeting Item Recurring AG"
 msgid "MeetingItemRecurringAG"
 msgstr "Point récurrent AG"
@@ -73,6 +81,14 @@ msgstr "Point récurrent CODIR"
 #. Default: "Meeting Item Recurring EM"
 msgid "MeetingItemRecurringEM"
 msgstr "Point récurrent Etat-Major"
+
+#. Default: "Meeting Item Recurring MMBE"
+msgid "MeetingItemRecurringMMBE"
+msgstr "Point récurrent MM - Bureau exécutif"
+
+#. Default: "Meeting Item Recurring MMCOGES"
+msgid "MeetingItemRecurringMMCOGES"
+msgstr "Point récurrent MM - Comité de gestion"
 
 #. Default: "MeetingItemRecurringZCollege"
 msgid "MeetingItemRecurringZCollege"
@@ -93,6 +109,14 @@ msgstr "Modèle de point CODIR"
 #. Default: "Meeting Item Template EM"
 msgid "MeetingItemTemplateEM"
 msgstr "Modèle de point Etat-Major"
+
+#. Default: "Meeting Item Template MMBE"
+msgid "MeetingItemTemplateMMBE"
+msgstr "Modèle de point MM - Bureau exécutif"
+
+#. Default: "Meeting Item Template MMCOGES"
+msgid "MeetingItemTemplateMMCOGES"
+msgstr "Modèle de point MM - Comité de gestion"
 
 #. Default: "MeetingItemTemplateZCollege"
 msgid "MeetingItemTemplateZCollege"
@@ -121,6 +145,14 @@ msgstr "Point Conseil de l'Action Sociale"
 #. Default: "Meeting item Comitee"
 msgid "MeetingItemcomitee"
 msgstr "Point Comité de Concertation"
+
+#. Default: "Meeting MMBE"
+msgid "MeetingMMBE"
+msgstr "Séance MM - Bureau exécutif"
+
+#. Default: "Meeting MMCOGES"
+msgid "MeetingMMCOGES"
+msgstr "Séance MM - Comité de gestion"
 
 #. Default: "MeetingZCollege"
 msgid "MeetingZCollege"

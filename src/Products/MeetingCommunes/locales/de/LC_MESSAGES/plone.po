@@ -59,6 +59,14 @@ msgstr "TOP Rat"
 msgid "MeetingItemEM"
 msgstr ""
 
+#. Default: "Meeting Item MMBE"
+msgid "MeetingItemMMBE"
+msgstr ""
+
+#. Default: "Meeting Item MMCOGES"
+msgid "MeetingItemMMCOGES"
+msgstr ""
+
 #. Default: "Meeting Item Recurring AG"
 msgid "MeetingItemRecurringAG"
 msgstr ""
@@ -69,6 +77,14 @@ msgstr ""
 
 #. Default: "Meeting Item Recurring EM"
 msgid "MeetingItemRecurringEM"
+msgstr ""
+
+#. Default: "Meeting Item Recurring MMBE"
+msgid "MeetingItemRecurringMMBE"
+msgstr ""
+
+#. Default: "Meeting Item Recurring MMCOGES"
+msgid "MeetingItemRecurringMMCOGES"
 msgstr ""
 
 #. Default: "MeetingItemRecurringZCollege"
@@ -89,6 +105,14 @@ msgstr ""
 
 #. Default: "Meeting Item Template EM"
 msgid "MeetingItemTemplateEM"
+msgstr ""
+
+#. Default: "Meeting Item Template MMBE"
+msgid "MeetingItemTemplateMMBE"
+msgstr ""
+
+#. Default: "Meeting Item Template MMCOGES"
+msgid "MeetingItemTemplateMMCOGES"
 msgstr ""
 
 #. Default: "MeetingItemTemplateZCollege"
@@ -118,6 +142,14 @@ msgstr "TOP Sozialhilferat"
 #. Default: "Meeting item Comitee"
 msgid "MeetingItemcomitee"
 msgstr "TOP Konzertierungsausschuss"
+
+#. Default: "Meeting MMBE"
+msgid "MeetingMMBE"
+msgstr ""
+
+#. Default: "Meeting MMCOGES"
+msgid "MeetingMMCOGES"
+msgstr ""
 
 #. Default: "MeetingZCollege"
 msgid "MeetingZCollege"

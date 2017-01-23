@@ -223,3 +223,35 @@ msgstr ""
 #. Default: "Create an item College from an item CoDir"
 msgid "create_to_meeting-config-college_from_codir"
 msgstr ""
+
+#. Default: "Meeting MMBE"
+msgid "MeetingMMBE"
+msgstr ""
+
+#. Default: "Meeting Item MMBE"
+msgid "MeetingItemMMBE"
+msgstr ""
+
+#. Default: "Meeting Item Recurring MMBE"
+msgid "MeetingItemRecurringMMBE"
+msgstr ""
+
+#. Default: "Meeting Item Template MMBE"
+msgid "MeetingItemTemplateMMBE"
+msgstr ""
+
+#. Default: "Meeting MMCOGES"
+msgid "MeetingMMCOGES"
+msgstr ""
+
+#. Default: "Meeting Item MMCOGES"
+msgid "MeetingItemMMCOGES"
+msgstr ""
+
+#. Default: "Meeting Item Recurring MMCOGES"
+msgid "MeetingItemRecurringMMCOGES"
+msgstr ""
+
+#. Default: "Meeting Item Template MMCOGES"
+msgid "MeetingItemTemplateMMCOGES"
+msgstr ""

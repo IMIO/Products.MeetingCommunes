@@ -75,6 +75,20 @@
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:registerProfile
+   name="zmmcoges"
+   title="PloneMeeting / Medical House CoGes"
+   description="PloneMeeting for MM CoGes (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
+   name="zmmbexecutif"
+   title="PloneMeeting / Medical House Executive"
+   description="PloneMeeting for MM Executive (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>  
+
+  <genericsetup:registerProfile
    name="zones"
    title="PloneMeeting / zones (police ou secours)"
    description="PloneMeeting for zones (help or police) (Belgium)"
