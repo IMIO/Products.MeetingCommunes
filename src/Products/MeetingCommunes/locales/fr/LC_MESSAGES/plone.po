@@ -62,8 +62,8 @@ msgstr "Point Conseil Communal"
 msgid "MeetingItemEM"
 msgstr "Point Etat-Major"
 
-#. Default: "Meeting Item MMBE"
-msgid "MeetingItemMMBE"
+#. Default: "Meeting Item MMTM"
+msgid "MeetingItemMMTM"
 msgstr "Point MM - Bureau exécutif"
 
 #. Default: "Meeting Item MMCOGES"
@@ -82,8 +82,8 @@ msgstr "Point récurrent CODIR"
 msgid "MeetingItemRecurringEM"
 msgstr "Point récurrent Etat-Major"
 
-#. Default: "Meeting Item Recurring MMBE"
-msgid "MeetingItemRecurringMMBE"
+#. Default: "Meeting Item Recurring MMTM"
+msgid "MeetingItemRecurringMMTM"
 msgstr "Point récurrent MM - Bureau exécutif"
 
 #. Default: "Meeting Item Recurring MMCOGES"
@@ -110,8 +110,8 @@ msgstr "Modèle de point CODIR"
 msgid "MeetingItemTemplateEM"
 msgstr "Modèle de point Etat-Major"
 
-#. Default: "Meeting Item Template MMBE"
-msgid "MeetingItemTemplateMMBE"
+#. Default: "Meeting Item Template MMTM"
+msgid "MeetingItemTemplateMMTM"
 msgstr "Modèle de point MM - Bureau exécutif"
 
 #. Default: "Meeting Item Template MMCOGES"
@@ -146,8 +146,8 @@ msgstr "Point Conseil de l'Action Sociale"
 msgid "MeetingItemcomitee"
 msgstr "Point Comité de Concertation"
 
-#. Default: "Meeting MMBE"
-msgid "MeetingMMBE"
+#. Default: "Meeting MMTM"
+msgid "MeetingMMTM"
 msgstr "Séance MM - Bureau exécutif"
 
 #. Default: "Meeting MMCOGES"

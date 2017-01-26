@@ -82,9 +82,9 @@
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:registerProfile
-   name="zmmbexecutif"
-   title="PloneMeeting / Medical House Executive"
-   description="PloneMeeting for MM Executive (Belgium)"
+   name="zmmteammeeting"
+   title="PloneMeeting / Medical House Team Meeting"
+   description="PloneMeeting for MM Team Meeting (Belgium)"
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>  
 
