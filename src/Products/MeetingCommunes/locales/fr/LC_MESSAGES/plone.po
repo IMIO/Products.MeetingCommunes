@@ -64,7 +64,7 @@ msgstr "Point Etat-Major"
 
 #. Default: "Meeting Item MMTM"
 msgid "MeetingItemMMTM"
-msgstr "Point MM - Bureau exécutif"
+msgstr "Point MM - Réunion d'équipe"
 
 #. Default: "Meeting Item MMCOGES"
 msgid "MeetingItemMMCOGES"
@@ -84,7 +84,7 @@ msgstr "Point récurrent Etat-Major"
 
 #. Default: "Meeting Item Recurring MMTM"
 msgid "MeetingItemRecurringMMTM"
-msgstr "Point récurrent MM - Bureau exécutif"
+msgstr "Point récurrent MM - Réunion d'équipe"
 
 #. Default: "Meeting Item Recurring MMCOGES"
 msgid "MeetingItemRecurringMMCOGES"
@@ -112,7 +112,7 @@ msgstr "Modèle de point Etat-Major"
 
 #. Default: "Meeting Item Template MMTM"
 msgid "MeetingItemTemplateMMTM"
-msgstr "Modèle de point MM - Bureau exécutif"
+msgstr "Modèle de point MM - Réunion d'équipe"
 
 #. Default: "Meeting Item Template MMCOGES"
 msgid "MeetingItemTemplateMMCOGES"
@@ -148,7 +148,7 @@ msgstr "Point Comité de Concertation"
 
 #. Default: "Meeting MMTM"
 msgid "MeetingMMTM"
-msgstr "Séance MM - Bureau exécutif"
+msgstr "Séance MM - Réunion d'équipe"
 
 #. Default: "Meeting MMCOGES"
 msgid "MeetingMMCOGES"

@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <import-steps>
- <import-step id="installMeetingCommunes" version="20170123-02"
+ <import-step id="installMeetingCommunes" version="20170127-01"
               handler="Products.MeetingCommunes.setuphandlers.installMeetingCommunes"
               title="Install MeetingCommunes.">
   Install MeetingCommunes.
  </import-step>
  <import-step id="initializetool-MeetingCommunes" version="20060707-01"
               handler="Products.MeetingCommunes.setuphandlers.initializeTool"
-              title="Initialize MeetingCommunes with CoGes.">
+              title="Initialize MeetingCommunes with MM TEAM.">
   <dependency step="installMeetingCommunes"/>
   Initialize portal_plonemeeting folders.
  </import-step>

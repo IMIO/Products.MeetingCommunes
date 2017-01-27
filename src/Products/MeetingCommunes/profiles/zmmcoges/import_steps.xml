@@ -7,7 +7,7 @@
  </import-step>
  <import-step id="initializetool-MeetingCommunes" version="20060707-01"
               handler="Products.MeetingCommunes.setuphandlers.initializeTool"
-              title="Initialize MeetingCommunes with CoGes.">
+              title="Initialize MeetingCommunes with MM CoGes.">
   <dependency step="installMeetingCommunes"/>
   Initialize portal_plonemeeting folders.
  </import-step>

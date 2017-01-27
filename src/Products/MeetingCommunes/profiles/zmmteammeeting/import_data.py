@@ -33,8 +33,8 @@ groups = []
 # Meeting configurations -------------------------------------------------------
 # mmteam
 mmteamMeeting = MeetingConfigDescriptor(
-    'meeting-config-mmteam', 'MM - Bureau exécutif',
-    'MM - Bureau exécutif')
+    "meeting-config-mmteam", "MM - Réunion d'équipe",
+    "MM - Réunion d'équipe")
 mmteamMeeting.meetingManagers = ['dgen', ]
 mmteamMeeting.assembly = 'A compléter'
 mmteamMeeting.signatures = 'Le Directeur Général\nPierre Dupont\nLe Président\nCharles Exemple'
@@ -54,7 +54,7 @@ mmteamMeeting.certifiedSignatures = [
 ]
 mmteamMeeting.places = ''
 mmteamMeeting.categories = categories
-mmteamMeeting.shortName = 'MMBE'
+mmteamMeeting.shortName = 'MMTM'
 mmteamMeeting.meetingFileTypes = [annexe, annexeDecision, annexeAvis]
 mmteamMeeting.usedItemAttributes = ['observations',
                                     'toDiscuss',
