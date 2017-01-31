@@ -5,6 +5,7 @@ logger = logging.getLogger('MeetingCommunes')
 
 from plone import api
 
+from Products.MeetingCommunes.profiles.examples_fr.import_data import annexeSeance
 from Products.PloneMeeting.migrations.migrate_to_4_0 import Migrate_To_4_0 as PMMigrate_To_4_0
 
 
@@ -77,6 +78,17 @@ class Migrate_To_4_0(PMMigrate_To_4_0):
                                                 'meetingcouncil_workflow'))]
         logger.info('Done.')
 
+    def _addSampleAnnexTypeForMeetings(self):
+        """Add a sample annexType for Meetings now that
+           annexes may be added to meetings."""
+        logger.info('Adding sample annexType in meeting_annexes...')
+        for cfg in self.tool.objectValues('MeetingConfig'):
+            if not cfg.annexes_types.meeting_annexes.objectIds():
+                source = self.ps.getProfileInfo(
+                    self.profile_name)['path'].replace('/default', '/examples_fr')
+                cfg.addAnnexType(annexeSeance, source)
+        logger.info('Done.')
+
     def _deleteUselessWorkflows(self):
         """Finally, remove useless workflows."""
         logger.info('Removing useless workflows...')
@@ -94,6 +106,7 @@ class Migrate_To_4_0(PMMigrate_To_4_0):
         logger.info('Migrating to MeetingCommunes 4.0...')
         self._cleanCDLD()
         self._migrateItemPositiveDecidedStates()
+        self._addSampleAnnexTypeForMeetings()
         self._deleteUselessWorkflows()
 
 
@@ -103,7 +116,9 @@ def migrate(context):
 
        1) Reinstall Products.MeetingCommunes and execute the Products.PloneMeeting migration;
        2) Clean CDLD attributes;
-       3) Migrate positive decided states.
+       3) Add an annex type for Meetings;
+       4) Remove useless workflows;
+       5) Migrate positive decided states.
     '''
     migrator = Migrate_To_4_0(context)
     migrator.run()
