@@ -35,7 +35,7 @@ financialAnalysisSubAnnex = ItemAnnexSubTypeDescriptor(
 
 financialAnalysis = ItemAnnexTypeDescriptor(
     'financial-analysis', 'Financial analysis', u'financialAnalysis.png',
-    'Predefined title for financial analysis', subTypes=[financialAnalysisSubAnnex])
+    u'Predefined title for financial analysis', subTypes=[financialAnalysisSubAnnex])
 
 legalAnalysis = ItemAnnexTypeDescriptor(
     'legal-analysis', 'Legal analysis', u'legalAnalysis.png')
