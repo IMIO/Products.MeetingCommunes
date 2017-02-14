@@ -10,17 +10,17 @@ from Products.PloneMeeting.profiles import RecurringItemDescriptor
 from Products.PloneMeeting.profiles import UserDescriptor
 
 # File types -------------------------------------------------------------------
-annexe = ItemAnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', '')
-annexeBudget = ItemAnnexTypeDescriptor('annexeBudget', 'Article Budgétaire', u'budget.png', '')
-annexeCahier = ItemAnnexTypeDescriptor('annexeCahier', 'Cahier des Charges', u'cahier.png', '')
+annexe = ItemAnnexTypeDescriptor('annexe', 'Annexe', u'attach.png')
+annexeBudget = ItemAnnexTypeDescriptor('annexeBudget', 'Article Budgétaire', u'budget.png')
+annexeCahier = ItemAnnexTypeDescriptor('annexeCahier', 'Cahier des Charges', u'cahier.png')
 annexeDecision = ItemAnnexTypeDescriptor('annexeDecision', 'Annexe à la décision',
-                                         u'attach.png', '', 'item_decision')
+                                         u'attach.png', relatedTo='item_decision')
 annexeAvis = AnnexTypeDescriptor('annexeAvis', 'Annexe à un avis',
-                                 u'attach.png', '', 'advice')
+                                 u'attach.png', relatedTo='advice')
 annexeAvisLegal = AnnexTypeDescriptor('annexeAvisLegal', 'Extrait article de loi',
-                                      u'legalAdvice.png', '', 'advice')
+                                      u'legalAdvice.png', relatedTo='advice')
 annexeSeance = AnnexTypeDescriptor('annexe', 'Annexe',
-                                   u'attach.png', '', 'meeting')
+                                   u'attach.png', relatedTo='meeting')
 
 # Categories -------------------------------------------------------------------
 categories = [CategoryDescriptor('recurrents', 'Récurrents'),

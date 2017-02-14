@@ -3,7 +3,6 @@ from DateTime import DateTime
 from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import PodTemplateDescriptor
-from Products.PloneMeeting.profiles import GroupDescriptor
 from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
@@ -11,13 +10,13 @@ from Products.PloneMeeting.profiles import PloneMeetingConfiguration
 today = DateTime().strftime('%Y/%m/%d')
 
 # File types -------------------------------------------------------------------
-annexe = ItemAnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', '')
+annexe = ItemAnnexTypeDescriptor('annexe', 'Annexe', u'attach.png')
 annexeDecision = ItemAnnexTypeDescriptor('annexeDecision', 'Annexe à la décision',
-                                         u'attach.png', '', 'item_decision')
+                                         u'attach.png', relatedTo='item_decision')
 annexeAvis = AnnexTypeDescriptor('annexeAvis', 'Annexe à un avis',
-                                 u'attach.png', '', 'advice')
+                                 u'attach.png', relatedTo='advice')
 annexeSeance = AnnexTypeDescriptor('annexe', 'Annexe',
-                                   u'attach.png', '', 'meeting')
+                                   u'attach.png', relatedTo='meeting')
 
 # Categories -------------------------------------------------------------------
 categories = [CategoryDescriptor('category1', 'Catégorie 1'),
