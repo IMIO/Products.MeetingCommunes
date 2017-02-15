@@ -29,25 +29,25 @@ categories = [CategoryDescriptor('category1', 'Catégorie 1'),
 agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaTemplate.odt_file = '../../examples_fr/templates/oj.odt'
 agendaTemplate.pod_formats = ['odt', 'pdf', ]
-agendaTemplate.pod_portal_types = ['MeetingAG']
+agendaTemplate.pod_portal_types = ['MeetingEM']
 agendaTemplate.tal_condition = 'python:tool.isManager(here)'
 
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsTemplate.odt_file = '../../examples_fr/templates/pv.odt'
 decisionsTemplate.pod_formats = ['odt', 'pdf', ]
-decisionsTemplate.pod_portal_types = ['MeetingAG']
+decisionsTemplate.pod_portal_types = ['MeetingEM']
 decisionsTemplate.tal_condition = 'python:tool.isManager(here)'
 
 itemProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
 itemProjectTemplate.odt_file = '../../examples_fr/templates/projet-deliberation.odt'
 itemProjectTemplate.pod_formats = ['odt', 'pdf', ]
-itemProjectTemplate.pod_portal_types = ['MeetingItemAG']
+itemProjectTemplate.pod_portal_types = ['MeetingItemEM']
 itemProjectTemplate.tal_condition = 'python:not here.hasMeeting()'
 
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemTemplate.odt_file = '../../examples_fr/templates/deliberation.odt'
 itemTemplate.pod_formats = ['odt', 'pdf', ]
-itemTemplate.pod_portal_types = ['MeetingItemAG']
+itemTemplate.pod_portal_types = ['MeetingItemEM']
 itemTemplate.tal_condition = 'python:here.hasMeeting()'
 
 agTemplates = [agendaTemplate, decisionsTemplate,

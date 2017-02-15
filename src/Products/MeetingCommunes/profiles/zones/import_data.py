@@ -38,25 +38,25 @@ categories = [recurring,
 agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaTemplate.odt_file = 'oj.odt'
 agendaTemplate.pod_formats = ['odt', 'pdf', ]
-agendaTemplate.pod_portal_types = ['MeetingCollege']
+agendaTemplate.pod_portal_types = ['MeetingZCollege']
 agendaTemplate.tal_condition = 'python:tool.isManager(here)'
 
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsTemplate.odt_file = 'pv.odt'
 decisionsTemplate.pod_formats = ['odt', 'pdf', ]
-decisionsTemplate.pod_portal_types = ['MeetingCollege']
+decisionsTemplate.pod_portal_types = ['MeetingZCollege']
 decisionsTemplate.tal_condition = 'python:tool.isManager(here)'
 
 itemProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
 itemProjectTemplate.odt_file = 'projet-deliberation.odt'
 itemProjectTemplate.pod_formats = ['odt', 'pdf', ]
-itemProjectTemplate.pod_portal_types = ['MeetingItemCollege']
+itemProjectTemplate.pod_portal_types = ['MeetingItemZCollege']
 itemProjectTemplate.tal_condition = 'python:not here.hasMeeting()'
 
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemTemplate.odt_file = 'deliberation.odt'
 itemTemplate.pod_formats = ['odt', 'pdf', ]
-itemTemplate.pod_portal_types = ['MeetingItemCollege']
+itemTemplate.pod_portal_types = ['MeetingItemZCollege']
 itemTemplate.tal_condition = 'python:here.hasMeeting()'
 
 dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif', dashboard=True)
@@ -71,7 +71,7 @@ dashboardTemplateOds.tal_condition = 'python: context.absolute_url().endswith("/
 historyTemplate = PodTemplateDescriptor('historique', 'Historique')
 historyTemplate.odt_file = 'history.odt'
 historyTemplate.pod_formats = ['odt', 'pdf', ]
-historyTemplate.pod_portal_types = ['MeetingItemCollege']
+historyTemplate.pod_portal_types = ['MeetingItemZCollege']
 
 collegeTemplates = [agendaTemplate, decisionsTemplate,
                     itemProjectTemplate, itemTemplate,
@@ -82,31 +82,31 @@ collegeTemplates = [agendaTemplate, decisionsTemplate,
 agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaCouncilTemplate.odt_file = 'council-oj.odt'
 agendaCouncilTemplate.pod_formats = ['odt', 'pdf', ]
-agendaCouncilTemplate.pod_portal_types = ['MeetingCouncil']
+agendaCouncilTemplate.pod_portal_types = ['MeetingZCouncil']
 agendaCouncilTemplate.tal_condition = 'python:tool.isManager(here)'
 
 decisionsCouncilTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsCouncilTemplate.odt_file = 'council-pv.odt'
 decisionsCouncilTemplate.pod_formats = ['odt', 'pdf', ]
-decisionsCouncilTemplate.pod_portal_types = ['MeetingCouncil']
+decisionsCouncilTemplate.pod_portal_types = ['MeetingZCouncil']
 decisionsCouncilTemplate.tal_condition = 'python:tool.isManager(here)'
 
 itemCouncilRapportTemplate = PodTemplateDescriptor('rapport', 'Rapport')
 itemCouncilRapportTemplate.odt_file = 'council-rapport.odt'
 itemCouncilRapportTemplate.pod_formats = ['odt', 'pdf', ]
-itemCouncilRapportTemplate.pod_portal_types = ['MeetingItemCouncil']
+itemCouncilRapportTemplate.pod_portal_types = ['MeetingItemZCouncil']
 itemCouncilRapportTemplate.tal_condition = ''
 
 itemCouncilProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
 itemCouncilProjectTemplate.odt_file = 'projet-deliberation.odt'
 itemCouncilProjectTemplate.pod_formats = ['odt', 'pdf', ]
-itemCouncilProjectTemplate.pod_portal_types = ['MeetingItemCouncil']
+itemCouncilProjectTemplate.pod_portal_types = ['MeetingItemZCouncil']
 itemCouncilProjectTemplate.tal_condition = 'python:not here.hasMeeting()'
 
 itemCouncilTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemCouncilTemplate.odt_file = 'deliberation.odt'
 itemCouncilTemplate.pod_formats = ['odt', 'pdf', ]
-itemCouncilTemplate.pod_portal_types = ['MeetingItemCouncil']
+itemCouncilTemplate.pod_portal_types = ['MeetingItemZCouncil']
 itemCouncilTemplate.tal_condition = 'python:here.hasMeeting()'
 
 councilTemplates = [agendaCouncilTemplate, decisionsCouncilTemplate,
