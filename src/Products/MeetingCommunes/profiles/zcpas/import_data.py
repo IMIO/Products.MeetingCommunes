@@ -56,7 +56,6 @@ itemTemplate.tal_condition = ''
 
 dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif', dashboard=True)
 dashboardTemplate.odt_file = '../../examples_fr/templates/recapitulatif-tb.odt'
-dashboardTemplate.pod_portal_types = ['Folder']
 dashboardTemplate.tal_condition = 'python: context.absolute_url().endswith("/searches_items")'
 
 bpTemplates = [agendaTemplate, decisionsTemplate,
