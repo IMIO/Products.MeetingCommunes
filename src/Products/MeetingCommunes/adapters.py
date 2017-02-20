@@ -849,7 +849,8 @@ class CustomMeetingConfig(MeetingConfig):
         typesTool = api.portal.get_tool('portal_types')
         if 'meetingadvicefinances' in typesTool:
             return ['positive_finance', 'positive_with_remarks_finance',
-                    'cautious_finance', 'negative_finance', 'not_given_finance']
+                    'cautious_finance', 'negative_finance', 'not_given_finance',
+                    'not_required_finance']
         return []
 
 

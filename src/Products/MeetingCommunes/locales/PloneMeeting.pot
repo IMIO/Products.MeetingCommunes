@@ -101,6 +101,10 @@ msgstr ""
 msgid "cautious_finance"
 msgstr ""
 
+#. Default: "Not required opinion"
+msgid "not_required_finance"
+msgstr ""
+
 #. Default: "Financial controllers"
 msgid "financialcontrollers"
 msgstr ""
