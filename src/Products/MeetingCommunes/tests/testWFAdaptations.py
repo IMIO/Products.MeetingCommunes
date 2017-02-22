@@ -32,23 +32,23 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
     def test_pm_WFA_availableWFAdaptations(self):
         '''Test what are the available wfAdaptations.'''
         # we removed the 'archiving' and 'creator_initiated_decisions' wfAdaptations
-        self.assertEquals(set(self.meetingConfig.listWorkflowAdaptations()),
-                          set(('creator_edits_unless_closed',
-                               'everyone_reads_all',
-                               'hide_decisions_when_under_writing',
-                               'items_come_validated',
-                               'no_global_observation',
-                               'no_proposal',
-                               'no_publication',
-                               'only_creator_may_delete',
-                               'postpone_next_meeting',
-                               'mark_not_applicable',
-                               'pre_validation',
-                               'pre_validation_keep_reviewer_permissions',
-                               'removed',
-                               'return_to_proposing_group',
-                               'waiting_advices',
-                               )))
+        self.assertEquals(sorted(self.meetingConfig.listWorkflowAdaptations().keys()),
+                          ['creator_edits_unless_closed',
+                           'everyone_reads_all',
+                           'hide_decisions_when_under_writing',
+                           'items_come_validated',
+                           'mark_not_applicable',
+                           'no_global_observation',
+                           'no_proposal',
+                           'no_publication',
+                           'only_creator_may_delete',
+                           'postpone_next_meeting',
+                           'pre_validation',
+                           'pre_validation_keep_reviewer_permissions',
+                           'removed',
+                           'return_to_proposing_group',
+                           'reviewers_take_back_validated_item',
+                           'waiting_advices'])
 
     def test_pm_Validate_workflowAdaptations_added_no_publication(self):
         '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
