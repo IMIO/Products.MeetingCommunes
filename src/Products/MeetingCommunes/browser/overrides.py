@@ -268,6 +268,14 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
 
         return None
 
+    def print_item_state(self):
+        return self.translate(self.real_context.queryState())
+
+    def print_creator_name(self):
+        return (self.real_context.portal_membership.getMemberInfo(str(self.real_context.Creator())) \
+               and self.real_context.portal_membership.getMemberInfo(str(self.real_context.Creator()))['fullname']) \
+               or str(self.real_context.Creator())
+
 
 class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView):
     """Specific printing methods used for meeting."""
