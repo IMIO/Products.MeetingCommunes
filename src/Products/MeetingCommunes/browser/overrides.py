@@ -11,7 +11,7 @@ from plone import api
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_NOT_GIVEN
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_PRE
-from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView
+from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView, FolderDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperView
 from Products.PloneMeeting.utils import get_annexes
 from Products.PloneMeeting.utils import getLastEvent
@@ -231,6 +231,38 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                             result.append(advice)
         return result
 
+    def getItemFinanceDalayLimitDate(self):
+        finance_id = self.context.adapted().getFinanceAdviceId()
+        if finance_id:
+            data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
+            return ('delay_infos' in data and 'limit_date_localized' in data['delay_infos']
+                    and data['delay_infos']['limit_date_localized']) or None
+
+        return None
+
+    def getItemFinanceAdviceGivenDate(self):
+        finance_id = self.context.adapted().getFinanceAdviceId()
+        if finance_id:
+            data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
+            return ('advice_given_on' in data and data['advice_given_on']) or None
+
+        return None
+
+    def printItemFinanceAdviceGivenDate(self):
+        given_advice_date = self.getItemFinanceAdviceGivenDate()
+        if given_advice_date:
+            return self.display_date(date=given_advice_date)
+
+        return None
+
+    def getItemFinanceAdviceDelayDays(self):
+        finance_id = self.context.adapted().getFinanceAdviceId()
+        if finance_id:
+            data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
+            return ('delay' in data and data['delay']) or None
+
+        return None
+
     def getItemFinanceAdviceTransmissionDate(self):
         """
         :return: The date as a string when the finance service received the advice request.
@@ -289,3 +321,29 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         # focus is present, excuse or absent
         assembly = self.context.getAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
         return formatedAssembly(assembly, focus)
+
+
+class MCFolderDocumentGenerationHelperView(FolderDocumentGenerationHelperView):
+
+    def get_all_items_dghv_with_finance_advice(self, brains):
+        """
+        :param brains: the brains collection representing @Product.PloneMeeting.MeetingItem
+        :return: an array of dictionary with onnly the items linked to a finance advics which contains 2 keys
+                 itemView : the documentgenerator helper view of a MeetingItem.
+                 advice   : the data from a single advice linked to this MeetingItem as extracted with getAdviceDataFor.
+        """
+        res = []
+
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+        finance_advice_ids = cfg.adapted().getUsedFinanceGroupIds()
+
+        for brain in brains:
+            item = brain.getObject()
+            advices = item.getAdviceDataFor(item)
+            if advices:
+                for advice in advices:
+                    if advice in finance_advice_ids:
+                        res.append({'itemView': self.getDGHV(item), 'advice': advices[advice]})
+
+        return res

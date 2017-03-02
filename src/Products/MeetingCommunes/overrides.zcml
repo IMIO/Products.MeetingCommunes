@@ -19,4 +19,11 @@
         name="document_generation_helper_view"
      />
 
+    <!-- collective.documentgenerator helper view for Folder -->
+    <browser:page
+        for="Products.ATContentTypes.interfaces.folder.IATBTreeFolder"
+        class=".browser.overrides.MCFolderDocumentGenerationHelperView"
+        permission="zope2.View"
+        name="document_generation_helper_view"
+    />
 </configure>
