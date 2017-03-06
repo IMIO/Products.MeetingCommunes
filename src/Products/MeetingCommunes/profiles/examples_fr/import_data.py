@@ -247,12 +247,8 @@ collegeMeeting.itemColumns = ['Creator', 'CreationDate', 'ModificationDate', 're
                               'getItemIsSigned', 'actions']
 collegeMeeting.itemsListVisibleColumns = ['Creator', 'CreationDate', 'review_state',
                                           'getProposingGroup', 'advices', 'actions']
-collegeMeeting.xhtmlTransformFields = ('MeetingItem.description',
-                                       'MeetingItem.detailedDescription',
-                                       'MeetingItem.decision',
-                                       'MeetingItem.observations',
-                                       'Meeting.observations', )
-collegeMeeting.xhtmlTransformTypes = ('removeBlanks',)
+collegeMeeting.xhtmlTransformFields = ()
+collegeMeeting.xhtmlTransformTypes = ()
 collegeMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 collegeMeeting.meetingWorkflow = 'meetingcommunes_workflow'
 collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'

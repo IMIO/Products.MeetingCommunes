@@ -194,20 +194,23 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
 
         """
         case 'simple' means the financial advice was requested but without any delay.
-        case 'legal' means the financial advice was requested with a delay. It a legal financial advice.
+        case 'legal' means the financial advice was requested with a delay. It's a legal financial advice.
         case 'initiative' means the financial advice was given without being requested at the first place.
-        case 'not_given' means the financial advice was requested with or without delay. But was ignored by the finance
+        case 'legal_not_given' means the financial advice was requested with delay. But was ignored by the finance
+        case 'simple_not_given' means the financial advice was requested without delay. But was ignored by the finance
          director.
         """
+
         result = []
         tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
         finance_advice_ids = cfg.adapted().getUsedFinanceGroupIds()
 
-        if finance_advice_ids and case in ['initiative', 'legal', 'simple', 'not_given']:
+        if finance_advice_ids and case in ['initiative', 'legal', 'simple', 'simple_not_given', 'legal_not_given']:
             advices = self.context.getAdviceDataFor(self.context.context)
 
             for finance_advice_id in finance_advice_ids:
+
                 if finance_advice_id in advices:
                     advice = advices[finance_advice_id]
                 else:
@@ -217,17 +220,26 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                     if case == 'initiative' and advice['not_asked']:
                         result.append(advice)
 
-                if case == 'initiative' and advice['not_asked']:
-                    result.append(advice)
-                elif 'delay_infos' in advice and not advice['not_asked']:
-                    advice['item_transmitted_on'] = self.getItemFinanceAdviceTransmissionDate()
-                    if case == 'simple' and not advice['delay_infos']:
-                        result.append(advice)
+                if 'delay_infos' in advice and not advice['not_asked']:
+
+                    advice['item_transmitted_on_localized'] = self.getItemFinanceAdviceTransmissionDate()
+
+                    if (case == 'simple' or case == 'simple_not_given') and not advice['delay_infos']:
+
+                        if case == 'simple' and advice['advice_given_on']:
+                            result.append(advice)
+
+                        elif case == 'simple_not_given' and not advice['advice_given_on']:
+                            result.append(advice)
+
                     elif advice['delay_infos']:
+
                         if advice['advice_given_on']:
+
                             if case == 'legal':
                                 result.append(advice)
-                        elif case == 'not_given':
+
+                        elif case == 'legal_not_given':
                             result.append(advice)
         return result
 
@@ -237,21 +249,6 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
             return ('delay_infos' in data and 'limit_date_localized' in data['delay_infos']
                     and data['delay_infos']['limit_date_localized']) or None
-
-        return None
-
-    def getItemFinanceAdviceGivenDate(self):
-        finance_id = self.context.adapted().getFinanceAdviceId()
-        if finance_id:
-            data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
-            return ('advice_given_on' in data and data['advice_given_on']) or None
-
-        return None
-
-    def printItemFinanceAdviceGivenDate(self):
-        given_advice_date = self.getItemFinanceAdviceGivenDate()
-        if given_advice_date:
-            return self.display_date(date=given_advice_date)
 
         return None
 
