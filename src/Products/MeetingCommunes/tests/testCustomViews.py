@@ -344,7 +344,7 @@ class testCustomViews(MeetingCommunesTestCase):
 
         # remove the advice
         self.changeUser('pmAdviserNG1')
-        item1.restrictedTraverse('@@delete_givenuid')(item1.getAdviceObj('o1').UID())
+        item1.restrictedTraverse('@@delete_givenuid')(item1.getAdviceObj(new_group).UID())
         item1.at_post_edit_script()
         result = helper1.printFinanceAdvice('legal_not_given')
         self.assertEqual(len(result), 2)

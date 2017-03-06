@@ -222,7 +222,9 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
 
                 if 'delay_infos' in advice and not advice['not_asked']:
 
-                    advice['item_transmitted_on_localized'] = self.getItemFinanceAdviceTransmissionDate()
+                    advice['item_transmitted_on'] = self.getItemFinanceAdviceTransmissionDate()
+                    if advice['item_transmitted_on']:
+                        advice['item_transmitted_on_localized'] = self.display_date(date=advice['item_transmitted_on'])
 
                     if (case == 'simple' or case == 'simple_not_given') and not advice['delay_infos']:
 
@@ -268,9 +270,9 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         finance_id = self.context.adapted().getFinanceAdviceId()
         if finance_id:
             data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
-            if 'delay_infos' in data and 'delay_started_on_localized' in data['delay_infos'] \
-                    and data['delay_infos']['delay_started_on_localized']:
-                return data['delay_infos']['delay_started_on_localized']
+            if 'delay_infos' in data and 'delay_started_on' in data['delay_infos'] \
+                    and data['delay_infos']['delay_started_on']:
+                return data['delay_infos']['delay_started_on']
             else:
                 return self.getWorkFlowAdviceTransmissionStep()
         return None
@@ -293,7 +295,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         for item_transition in wf_present_transition:
             event = getLastEvent(self.context, item_transition)
             if event and 'review_state' in event and event['review_state'] in item_advice_states:
-                return event['time'].strftime('%d/%m/%Y')
+                return event['time']
 
         return None
 
