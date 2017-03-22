@@ -680,7 +680,7 @@ class CustomMeetingConfig(MeetingConfig):
                         'sort_on': u'created',
                         'sort_reversed': True,
                         'showNumberOfItems': False,
-                        'tal_condition': "python: not tool.userIsAmong('reviewers')",
+                        'tal_condition': "python: not tool.userIsAmong(['reviewers'])",
                         'roles_bypassing_talcondition': ['Manager', ]
                     }
                  ),
@@ -757,7 +757,7 @@ class CustomMeetingConfig(MeetingConfig):
                             'sort_on': u'created',
                             'sort_reversed': True,
                             'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
-                                             "tool.userIsAmong('financialcontrollers')) "
+                                             "tool.userIsAmong(['financialcontrollers'])) "
                                              "or (not here.REQUEST.get('fromPortletTodo', False) and "
                                              "tool.adapted().isFinancialUser())",
                             'roles_bypassing_talcondition': ['Manager', ]
@@ -776,7 +776,7 @@ class CustomMeetingConfig(MeetingConfig):
                             'sort_on': u'created',
                             'sort_reversed': True,
                             'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
-                                             "tool.userIsAmong('financialcontrollers')) "
+                                             "tool.userIsAmong(['financialcontrollers'])) "
                                              "or (not here.REQUEST.get('fromPortletTodo', False) and "
                                              "tool.adapted().isFinancialUser())",
                             'roles_bypassing_talcondition': ['Manager', ]
@@ -795,7 +795,7 @@ class CustomMeetingConfig(MeetingConfig):
                             'sort_on': u'created',
                             'sort_reversed': True,
                             'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
-                                             "tool.userIsAmong('financialeditors')) "
+                                             "tool.userIsAmong(['financialeditors'])) "
                                              "or (not here.REQUEST.get('fromPortletTodo', False) and "
                                              "tool.adapted().isFinancialUser())",
                             'roles_bypassing_talcondition': ['Manager', ]
@@ -814,7 +814,7 @@ class CustomMeetingConfig(MeetingConfig):
                             'sort_on': u'created',
                             'sort_reversed': True,
                             'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
-                                             "tool.userIsAmong('financialreviewers')) "
+                                             "tool.userIsAmong(['financialreviewers'])) "
                                              "or (not here.REQUEST.get('fromPortletTodo', False) and "
                                              "tool.adapted().isFinancialUser())",
                             'roles_bypassing_talcondition': ['Manager', ]
@@ -833,7 +833,7 @@ class CustomMeetingConfig(MeetingConfig):
                             'sort_on': u'created',
                             'sort_reversed': True,
                             'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
-                                             "tool.userIsAmong('financialmanagers')) "
+                                             "tool.userIsAmong(['financialmanagers'])) "
                                              "or (not here.REQUEST.get('fromPortletTodo', False) and "
                                              "tool.adapted().isFinancialUser())",
                             'roles_bypassing_talcondition': ['Manager', ]
