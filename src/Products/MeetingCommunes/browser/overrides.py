@@ -11,7 +11,8 @@ from plone import api
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_NOT_GIVEN
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_PRE
-from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView, FolderDocumentGenerationHelperView
+from Products.PloneMeeting.browser.views import FolderDocumentGenerationHelperView
+from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperView
 from Products.PloneMeeting.utils import get_annexes
 from Products.PloneMeeting.utils import getLastEvent
@@ -245,7 +246,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                             result.append(advice)
         return result
 
-    def getItemFinanceDalayLimitDate(self):
+    def getItemFinanceDelayLimitDate(self):
         finance_id = self.context.adapted().getFinanceAdviceId()
         if finance_id:
             data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
