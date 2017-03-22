@@ -11,6 +11,7 @@ from plone import api
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_NOT_GIVEN
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_PRE
+from Products.PloneMeeting.browser.views import FolderDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperView
 from Products.PloneMeeting.utils import get_annexes
@@ -194,20 +195,23 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
 
         """
         case 'simple' means the financial advice was requested but without any delay.
-        case 'legal' means the financial advice was requested with a delay. It a legal financial advice.
+        case 'legal' means the financial advice was requested with a delay. It's a legal financial advice.
         case 'initiative' means the financial advice was given without being requested at the first place.
-        case 'not_given' means the financial advice was requested with or without delay. But was ignored by the finance
+        case 'legal_not_given' means the financial advice was requested with delay. But was ignored by the finance
+        case 'simple_not_given' means the financial advice was requested without delay. But was ignored by the finance
          director.
         """
+
         result = []
         tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
         finance_advice_ids = cfg.adapted().getUsedFinanceGroupIds()
 
-        if finance_advice_ids and case in ['initiative', 'legal', 'simple', 'not_given']:
+        if finance_advice_ids and case in ['initiative', 'legal', 'simple', 'simple_not_given', 'legal_not_given']:
             advices = self.context.getAdviceDataFor(self.context.context)
 
             for finance_advice_id in finance_advice_ids:
+
                 if finance_advice_id in advices:
                     advice = advices[finance_advice_id]
                 else:
@@ -217,19 +221,47 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                     if case == 'initiative' and advice['not_asked']:
                         result.append(advice)
 
-                if case == 'initiative' and advice['not_asked']:
-                    result.append(advice)
-                elif 'delay_infos' in advice and not advice['not_asked']:
+                if 'delay_infos' in advice and not advice['not_asked']:
+
                     advice['item_transmitted_on'] = self.getItemFinanceAdviceTransmissionDate()
-                    if case == 'simple' and not advice['delay_infos']:
-                        result.append(advice)
+                    if advice['item_transmitted_on']:
+                        advice['item_transmitted_on_localized'] = self.display_date(date=advice['item_transmitted_on'])
+
+                    if (case == 'simple' or case == 'simple_not_given') and not advice['delay_infos']:
+
+                        if case == 'simple' and advice['advice_given_on']:
+                            result.append(advice)
+
+                        elif case == 'simple_not_given' and not advice['advice_given_on']:
+                            result.append(advice)
+
                     elif advice['delay_infos']:
+
                         if advice['advice_given_on']:
+
                             if case == 'legal':
                                 result.append(advice)
-                        elif case == 'not_given':
+
+                        elif case == 'legal_not_given':
                             result.append(advice)
         return result
+
+    def getItemFinanceDelayLimitDate(self):
+        finance_id = self.context.adapted().getFinanceAdviceId()
+        if finance_id:
+            data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
+            return ('delay_infos' in data and 'limit_date_localized' in data['delay_infos']
+                    and data['delay_infos']['limit_date_localized']) or None
+
+        return None
+
+    def getItemFinanceAdviceDelayDays(self):
+        finance_id = self.context.adapted().getFinanceAdviceId()
+        if finance_id:
+            data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
+            return ('delay' in data and data['delay']) or None
+
+        return None
 
     def getItemFinanceAdviceTransmissionDate(self):
         """
@@ -239,9 +271,9 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         finance_id = self.context.adapted().getFinanceAdviceId()
         if finance_id:
             data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
-            if 'delay_infos' in data and 'delay_started_on_localized' in data['delay_infos'] \
-                    and data['delay_infos']['delay_started_on_localized']:
-                return data['delay_infos']['delay_started_on_localized']
+            if 'delay_infos' in data and 'delay_started_on' in data['delay_infos'] \
+                    and data['delay_infos']['delay_started_on']:
+                return data['delay_infos']['delay_started_on']
             else:
                 return self.getWorkFlowAdviceTransmissionStep()
         return None
@@ -264,9 +296,17 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         for item_transition in wf_present_transition:
             event = getLastEvent(self.context, item_transition)
             if event and 'review_state' in event and event['review_state'] in item_advice_states:
-                return event['time'].strftime('%d/%m/%Y')
+                return event['time']
 
         return None
+
+    def print_item_state(self):
+        return self.translate(self.real_context.queryState())
+
+    def print_creator_name(self):
+        return (self.real_context.portal_membership.getMemberInfo(str(self.real_context.Creator())) \
+               and self.real_context.portal_membership.getMemberInfo(str(self.real_context.Creator()))['fullname']) \
+               or str(self.real_context.Creator())
 
 
 class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView):
@@ -281,3 +321,29 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         # focus is present, excuse or absent
         assembly = self.context.getAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
         return formatedAssembly(assembly, focus)
+
+
+class MCFolderDocumentGenerationHelperView(FolderDocumentGenerationHelperView):
+
+    def get_all_items_dghv_with_finance_advice(self, brains):
+        """
+        :param brains: the brains collection representing @Product.PloneMeeting.MeetingItem
+        :return: an array of dictionary with onnly the items linked to a finance advics which contains 2 keys
+                 itemView : the documentgenerator helper view of a MeetingItem.
+                 advice   : the data from a single advice linked to this MeetingItem as extracted with getAdviceDataFor.
+        """
+        res = []
+
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+        finance_advice_ids = cfg.adapted().getUsedFinanceGroupIds()
+
+        for brain in brains:
+            item = brain.getObject()
+            advices = item.getAdviceDataFor(item)
+            if advices:
+                for advice in advices:
+                    if advice in finance_advice_ids:
+                        res.append({'itemView': self.getDGHV(item), 'advice': advices[advice]})
+
+        return res
