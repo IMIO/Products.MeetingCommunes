@@ -38,20 +38,12 @@ decisionsTemplate.pod_formats = ['odt', 'pdf', ]
 decisionsTemplate.pod_portal_types = ['MeetingAG']
 decisionsTemplate.tal_condition = 'python:tool.isManager(here)'
 
-itemProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
-itemProjectTemplate.odt_file = '../../examples_fr/templates/projet-deliberation.odt'
-itemProjectTemplate.pod_formats = ['odt', 'pdf', ]
-itemProjectTemplate.pod_portal_types = ['MeetingItemAG']
-itemProjectTemplate.tal_condition = 'python:not here.hasMeeting()'
-
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemTemplate.odt_file = '../../examples_fr/templates/deliberation.odt'
 itemTemplate.pod_formats = ['odt', 'pdf', ]
 itemTemplate.pod_portal_types = ['MeetingItemAG']
-itemTemplate.tal_condition = 'python:here.hasMeeting()'
 
-agTemplates = [agendaTemplate, decisionsTemplate,
-               itemProjectTemplate, itemTemplate]
+agTemplates = [agendaTemplate, decisionsTemplate, itemTemplate]
 
 # Meeting configurations -------------------------------------------------------
 # ag

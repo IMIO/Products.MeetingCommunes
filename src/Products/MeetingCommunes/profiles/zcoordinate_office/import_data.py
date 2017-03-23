@@ -38,20 +38,12 @@ decisionsTemplate.pod_formats = ['odt', 'pdf', ]
 decisionsTemplate.pod_portal_types = ['MeetingCoordinateOffice']
 decisionsTemplate.tal_condition = 'python:tool.isManager(here)'
 
-itemProjectTemplate = PodTemplateDescriptor('projet-deliberation', 'Projet délibération')
-itemProjectTemplate.odt_file = '../../examples_fr/templates/projet-deliberation.odt'
-itemProjectTemplate.pod_formats = ['odt', 'pdf', ]
-itemProjectTemplate.pod_portal_types = ['MeetingItemCoordinateOffice']
-itemProjectTemplate.tal_condition = 'python:not here.hasMeeting()'
-
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemTemplate.odt_file = '../../examples_fr/templates/deliberation.odt'
 itemTemplate.pod_formats = ['odt', 'pdf', ]
 itemTemplate.pod_portal_types = ['MeetingItemCoordinateOffice']
-itemTemplate.tal_condition = 'python:here.hasMeeting()'
 
-coordinateTemplates = [agendaTemplate, decisionsTemplate,
-                        itemProjectTemplate, itemTemplate]
+coordinateTemplates = [agendaTemplate, decisionsTemplate, itemTemplate]
 
 # Meeting configurations -------------------------------------------------------
 # coordinate
@@ -60,9 +52,9 @@ coordinateOffice = MeetingConfigDescriptor(
     'Bureau de Coordination')
 coordinateOffice.meetingManagers = []
 coordinateOffice.assembly = 'Pierre Dupont - Président,\n' \
-                              'Charles Exemple - Premier membre assemblée,\n' \
-                              'Luc Un, Luc Deux, Luc Trois - Membres,\n' \
-                              'Jacqueline Exemple, Observateur'
+    'Charles Exemple - Premier membre assemblée,\n' \
+    'Luc Un, Luc Deux, Luc Trois - Membres,\n' \
+    'Jacqueline Exemple, Observateur'
 coordinateOffice.certifiedSignatures = [
     {'signatureNumber': '1',
      'name': u'Vraiment Présent',
@@ -84,11 +76,11 @@ coordinateOffice.categories = categories
 coordinateOffice.shortName = 'CoordinateOffice'
 coordinateOffice.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
 coordinateOffice.usedItemAttributes = ['detailedDescription',
-                                         'budgetInfos',
-                                         'observations',
-                                         'toDiscuss',
-                                         'itemAssembly',
-                                         'itemIsSigned', ]
+                                       'budgetInfos',
+                                       'observations',
+                                       'toDiscuss',
+                                       'itemAssembly',
+                                       'itemIsSigned', ]
 coordinateOffice.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 coordinateOffice.recordMeetingHistoryStates = []
 coordinateOffice.xhtmlTransformFields = ()
@@ -104,7 +96,7 @@ coordinateOffice.meetingTopicStates = ('created', 'frozen')
 coordinateOffice.decisionTopicStates = ('decided', 'closed')
 coordinateOffice.enforceAdviceMandatoriness = False
 coordinateOffice.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
-                                                 'reverse': '0'}, )
+                                               'reverse': '0'}, )
 coordinateOffice.recordItemHistoryStates = []
 coordinateOffice.maxShownMeetings = 5
 coordinateOffice.maxDaysDecisions = 60
@@ -113,23 +105,23 @@ coordinateOffice.useAdvices = True
 coordinateOffice.itemAdviceStates = ('validated',)
 coordinateOffice.itemAdviceEditStates = ('validated',)
 coordinateOffice.itemAdviceViewStates = ('validated',
-                                           'presented',
-                                           'itemfrozen',
-                                           'accepted',
-                                           'refused',
-                                           'accepted_but_modified',
-                                           'delayed',
-                                           'pre_accepted',)
+                                         'presented',
+                                         'itemfrozen',
+                                         'accepted',
+                                         'refused',
+                                         'accepted_but_modified',
+                                         'delayed',
+                                         'pre_accepted',)
 coordinateOffice.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 coordinateOffice.enableAdviceInvalidation = False
 coordinateOffice.itemAdviceInvalidateStates = []
 coordinateOffice.customAdvisers = []
 coordinateOffice.itemPowerObserversStates = ('itemfrozen',
-                                               'accepted',
-                                               'delayed',
-                                               'refused',
-                                               'accepted_but_modified',
-                                               'pre_accepted')
+                                             'accepted',
+                                             'delayed',
+                                             'refused',
+                                             'accepted_but_modified',
+                                             'pre_accepted')
 coordinateOffice.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 coordinateOffice.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
 coordinateOffice.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
@@ -138,20 +130,20 @@ coordinateOffice.onTransitionFieldTransforms = (
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:<p>Le président décide de reporter le point.</p>"},))
 coordinateOffice.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                                  'item_transition': 'itemfreeze'},
+                                                                'item_transition': 'itemfreeze'},
 
-                                                                 {'meeting_transition': 'decide',
-                                                                  'item_transition': 'itemfreeze'},
+                                                               {'meeting_transition': 'decide',
+                                                                'item_transition': 'itemfreeze'},
 
-                                                                 {'meeting_transition': 'publish_decisions',
-                                                                  'item_transition': 'itemfreeze'},
-                                                                 {'meeting_transition': 'publish_decisions',
-                                                                  'item_transition': 'accept'},
+                                                               {'meeting_transition': 'publish_decisions',
+                                                                'item_transition': 'itemfreeze'},
+                                                               {'meeting_transition': 'publish_decisions',
+                                                                'item_transition': 'accept'},
 
-                                                                 {'meeting_transition': 'close',
-                                                                  'item_transition': 'itemfreeze'},
-                                                                 {'meeting_transition': 'close',
-                                                                  'item_transition': 'accept'},)
+                                                               {'meeting_transition': 'close',
+                                                                'item_transition': 'itemfreeze'},
+                                                               {'meeting_transition': 'close',
+                                                                'item_transition': 'accept'},)
 coordinateOffice.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 coordinateOffice.powerAdvisersGroups = ('dirgen', 'dirfin', )
 coordinateOffice.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
