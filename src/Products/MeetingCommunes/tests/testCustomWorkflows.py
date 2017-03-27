@@ -23,6 +23,10 @@
 #
 
 from DateTime import DateTime
+from Products.CMFCore.permissions import AccessContentsInformation
+from Products.CMFCore.permissions import View
+from Products.PloneMeeting.tests.PloneMeetingTestCase import pm_logger
+from Products.PloneMeeting.model.adaptations import performWorkflowAdaptations
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 
 
@@ -119,3 +123,43 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         self.assertEquals('accepted', wftool.getInfoFor(item6, 'review_state'))
         # presented change into accepted
         self.assertEquals('accepted', wftool.getInfoFor(item7, 'review_state'))
+
+    def test_pm_ObserversMayViewInEveryStates(self):
+        """A MeetingObserverLocal has every 'View' permissions."""
+        def _checkObserverMayView(item):
+            """Log as 'pmObserver1' and check if he has every 'View' like permissions."""
+            original_user_id = self.member.getId()
+            self.changeUser('pmObserver1')
+            # compute permissions to check, it is View + ACI + every "PloneMeeting: Read ..." permissions
+            itemWF = self.portal.portal_workflow.getWorkflowsFor(item)[0]
+            read_permissions = [permission for permission in itemWF.permissions
+                                if permission.startswith('PloneMeeting: Read')]
+            read_permissions.append(View)
+            read_permissions.append(AccessContentsInformation)
+            for read_permission in read_permissions:
+                self.assertTrue(self.hasPermission(read_permission, item))
+            self.changeUser(original_user_id)
+        # enable prevalidation
+        cfg = self.meetingConfig
+        cfg.setWorkflowAdaptations(('pre_validation', ))
+        performWorkflowAdaptations(cfg, logger=pm_logger)
+        self.changeUser('pmManager')
+        self._turnUserIntoPrereviewer(self.member)
+        item = self.create('MeetingItem')
+        item.setDecision(self.decisionText)
+        meeting = self.create('Meeting', date=DateTime('2017/03/27'))
+        _checkObserverMayView(item)
+        self.do(item, 'propose')
+        _checkObserverMayView(item)
+        self.do(item, 'prevalidate')
+        _checkObserverMayView(item)
+        self.do(item, 'validate')
+        _checkObserverMayView(item)
+        self.do(item, 'present')
+        _checkObserverMayView(item)
+        self.do(meeting, 'freeze')
+        _checkObserverMayView(item)
+        self.do(meeting, 'decide')
+        _checkObserverMayView(item)
+        self.do(meeting, 'close')
+        _checkObserverMayView(item)
