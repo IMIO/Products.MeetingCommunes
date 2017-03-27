@@ -26,6 +26,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Added new adapter method to ease financial advices management while generating documents
   printFinanceAdvice(self, case)
 - Added parameter 'excludedGroupIds' to getPrintableItems and getPrintableItemsByCategory
+- MeetingObserverLocal has every View-like permissions in every states
 
 3.3 (2015-02-27)
 ----------------
