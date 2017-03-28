@@ -98,17 +98,13 @@ class Migrate_To_4_0(PMMigrate_To_4_0):
         logger.info('Done.')
 
     def run(self, step=None):
-        if not step or step == 1:
-            # change self.profile_name that is reinstalled at the beginning of the PM migration
-            self.profile_name = u'profile-Products.MeetingCommunes:default'
-            # call steps from Products.PloneMeeting
-            PMMigrate_To_4_0.run(self, step=step)
+        # change self.profile_name that is reinstalled at the beginning of the PM migration
+        self.profile_name = u'profile-Products.MeetingCommunes:default'
 
-        if not step or step == 2:
-            PMMigrate_To_4_0.run(self, step=step)
+        # call steps from Products.PloneMeeting
+        PMMigrate_To_4_0.run(self, step=step)
 
-        if not step or step == 3:
-            PMMigrate_To_4_0.run(self, step=step)
+        if step == 3:
             # now MeetingCommunes specific steps
             logger.info('Migrating to MeetingCommunes 4.0...')
             self._cleanCDLD()
