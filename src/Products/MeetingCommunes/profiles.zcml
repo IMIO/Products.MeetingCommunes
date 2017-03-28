@@ -103,11 +103,35 @@
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:upgradeStep
-      title="Go to MeetingCommunes 4.0"
+      title="Go to MeetingCommunes 4.0 (All in one)"
       description=""
       source="3.3"
       destination="4.0"
       handler="Products.MeetingCommunes.migrations.migrate_to_4_0.migrate"
+      profile="Products.MeetingCommunes:default" />
+
+  <genericsetup:upgradeStep
+      title="Go to MeetingCommunes 4.0"
+      description=""
+      source="3.3"
+      destination="4.0b1"
+      handler="Products.MeetingCommunes.migrations.migrate_to_4_0.migrate_step1"
+      profile="Products.MeetingCommunes:default" />
+
+  <genericsetup:upgradeStep
+      title="Go to MeetingCommunes 4.0"
+      description=""
+      source="4.0b1"
+      destination="4.0b2"
+      handler="Products.MeetingCommunes.migrations.migrate_to_4_0.migrate_step2"
+      profile="Products.MeetingCommunes:default" />
+
+  <genericsetup:upgradeStep
+      title="Go to MeetingCommunes 4.0"
+      description=""
+      source="4.0b2"
+      destination="4.0"
+      handler="Products.MeetingCommunes.migrations.migrate_to_4_0.migrate_step3"
       profile="Products.MeetingCommunes:default" />
 
   <!-- ##/code-section profiles.zcml-bottom -->
