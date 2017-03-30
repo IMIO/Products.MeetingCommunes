@@ -251,8 +251,10 @@ collegeMeeting.recordMeetingHistoryStates = []
 collegeMeeting.itemColumns = ['Creator', 'CreationDate', 'ModificationDate', 'review_state',
                               'getProposingGroup', 'advices', 'linkedMeetingDate',
                               'getItemIsSigned', 'actions']
-collegeMeeting.itemsListVisibleColumns = ['Creator', 'CreationDate', 'review_state',
-                                          'getProposingGroup', 'advices', 'actions']
+collegeMeeting.availableItemsListVisibleColumns = [
+    'Creator', 'CreationDate', 'review_state', 'getProposingGroup', 'advices', 'actions']
+collegeMeeting.itemsListVisibleColumns = [
+    'Creator', 'CreationDate', 'review_state', 'getProposingGroup', 'advices', 'actions']
 collegeMeeting.xhtmlTransformFields = ()
 collegeMeeting.xhtmlTransformTypes = ()
 collegeMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
