@@ -622,18 +622,24 @@ class CustomMeetingConfig(MeetingConfig):
         cfg = self.getSelf()
         tool = api.portal.get_tool('portal_plonemeeting')
         collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID, None)
+        res = []
         if not collection:
             logger.warn(
                 "Method 'getUsedFinanceGroupIds' could not find the '{0}' collection!".format(
                     FINANCE_ADVICES_COLLECTION_ID))
-            return []
+            return res
+        # if collection is inactive, we just return an empty list
+        # for convenience, the collection is added to every MeetingConfig, even if not used
+        wfTool = api.portal.get_tool('portal_workflow')
+        if wfTool.getInfoFor(collection, 'review_state') == 'inactive':
+            return res
         # get the indexAdvisers value defined on the collection
         # and find the relevant group, indexAdvisers form is :
         # 'delay_real_group_id__2014-04-16.9996934488', 'real_group_id_directeur-financier'
         # it is either a customAdviser row_id or a MeetingGroup id
         values = [term['v'] for term in collection.getRawQuery()
                   if term['i'] == 'indexAdvisers'][0]
-        res = []
+
         for v in values:
             rowIdOrGroupId = v.replace('delay_real_group_id__', '').replace('real_group_id__', '')
             if hasattr(tool, rowIdOrGroupId):
@@ -668,6 +674,7 @@ class CustomMeetingConfig(MeetingConfig):
                 ('searchproposeditems',
                     {
                         'subFolderId': 'searches_items',
+                        'active': True,
                         'query':
                         [
                             {'i': 'portal_type',
@@ -688,6 +695,7 @@ class CustomMeetingConfig(MeetingConfig):
                 ('searchvalidateditems',
                     {
                         'subFolderId': 'searches_items',
+                        'active': True,
                         'query':
                         [
                             {'i': 'portal_type',
@@ -704,40 +712,39 @@ class CustomMeetingConfig(MeetingConfig):
                         'roles_bypassing_talcondition': ['Manager', ]
                     }
                  ),
+                # Items for finance advices synthesis
+                (FINANCE_ADVICES_COLLECTION_ID,
+                    {
+                        'subFolderId': 'searches_items',
+                        'active': True,
+                        'query':
+                        [
+                            {'i': 'portal_type',
+                             'o': 'plone.app.querystring.operation.selection.is',
+                             'v': [itemType, ]},
+                            {'i': 'indexAdvisers',
+                             'o': 'plone.app.querystring.operation.selection.is',
+                             'v': ['delay_real_group_id__unique_id_002',
+                                   'delay_real_group_id__unique_id_003',
+                                   'delay_real_group_id__unique_id_004']}
+                        ],
+                        'sort_on': u'created',
+                        'sort_reversed': True,
+                        'showNumberOfItems': False,
+                        'tal_condition':
+                        "python: '%s_budgetimpacteditors' % cfg.getId() in member.getGroups() or "
+                        "tool.isManager(here)",
+                        'roles_bypassing_talcondition': ['Manager', ]
+                    }
+                 ),
             ]
         )
         infos.update(extra_infos)
-        # add the FINANCE_ADVICES_COLLECTION_ID for 'meeting-config-college' and 'meeting-config-bp'
-        if cfg.getId() in ('meeting-config-college', 'meeting-config-bp'):
-            finance_infos = OrderedDict(
-                [
-                    # Items for finance advices synthesis
-                    (FINANCE_ADVICES_COLLECTION_ID,
-                        {
-                            'subFolderId': 'searches_items',
-                            'query':
-                            [
-                                {'i': 'portal_type',
-                                 'o': 'plone.app.querystring.operation.selection.is',
-                                 'v': [itemType, ]},
-                                {'i': 'indexAdvisers',
-                                 'o': 'plone.app.querystring.operation.selection.is',
-                                 'v': ['delay_real_group_id__unique_id_002',
-                                       'delay_real_group_id__unique_id_003',
-                                       'delay_real_group_id__unique_id_004']}
-                            ],
-                            'sort_on': u'created',
-                            'sort_reversed': True,
-                            'showNumberOfItems': False,
-                            'tal_condition':
-                            "python: '%s_budgetimpacteditors' % cfg.getId() in member.getGroups() or "
-                            "tool.isManager(here)",
-                            'roles_bypassing_talcondition': ['Manager', ]
-                        }
-                     ),
-                ]
-            )
-            infos.update(finance_infos)
+
+        # disable FINANCE_ADVICES_COLLECTION_ID excepted for 'meeting-config-college' and 'meeting-config-bp'
+        if cfg.getId() not in ('meeting-config-college', 'meeting-config-bp'):
+            infos[FINANCE_ADVICES_COLLECTION_ID]['active'] = False
+
         # add some specific searches while using 'meetingadvicefinances'
         typesTool = api.portal.get_tool('portal_types')
         if 'meetingadvicefinances' in typesTool and cfg.getUseAdvices():
@@ -748,6 +755,7 @@ class CustomMeetingConfig(MeetingConfig):
                     ('searchitemstocontrolcompletenessof',
                         {
                             'subFolderId': 'searches_items',
+                            'active': True,
                             'query':
                             [
                                 {'i': 'CompoundCriterion',
@@ -767,6 +775,7 @@ class CustomMeetingConfig(MeetingConfig):
                     ('searchadviceproposedtocontroller',
                         {
                             'subFolderId': 'searches_items',
+                            'active': True,
                             'query':
                             [
                                 {'i': 'CompoundCriterion',
@@ -786,6 +795,7 @@ class CustomMeetingConfig(MeetingConfig):
                     ('searchadviceproposedtoeditor',
                         {
                             'subFolderId': 'searches_items',
+                            'active': True,
                             'query':
                             [
                                 {'i': 'CompoundCriterion',
@@ -805,6 +815,7 @@ class CustomMeetingConfig(MeetingConfig):
                     ('searchadviceproposedtoreviewer',
                         {
                             'subFolderId': 'searches_items',
+                            'active': True,
                             'query':
                             [
                                 {'i': 'CompoundCriterion',
@@ -824,6 +835,7 @@ class CustomMeetingConfig(MeetingConfig):
                     ('searchadviceproposedtomanager',
                         {
                             'subFolderId': 'searches_items',
+                            'active': True,
                             'query':
                             [
                                 {'i': 'CompoundCriterion',
