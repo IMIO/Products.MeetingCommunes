@@ -46,6 +46,7 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
                            'pre_validation',
                            'pre_validation_keep_reviewer_permissions',
                            'removed',
+                           'removed_and_duplicated',
                            'return_to_proposing_group',
                            'return_to_proposing_group_with_all_validations',
                            'return_to_proposing_group_with_last_validation',
