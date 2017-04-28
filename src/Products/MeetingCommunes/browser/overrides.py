@@ -186,7 +186,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         assembly = self.context.getItemAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
         return formatedAssembly(assembly, focus)
 
-    def printFinanceAdvice(self, case):
+    def printFinanceAdvice(self, case, show_hidden=False):
         """
         :param case: can be either 'initiative', 'legal', 'simple' or 'not_given'
         :return: an array dictionaries same as MeetingItem.getAdviceDataFor
@@ -220,6 +220,12 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                 if advice['advice_given_on']:
                     if case == 'initiative' and advice['not_asked']:
                         result.append(advice)
+
+                if 'hidden_during_redaction' in advice and advice['hidden_during_redaction'] and not show_hidden:
+                    message = self.translate('hidden_during_redaction', domain='PloneMeeting')
+                    advice['type_translated'] = message
+                    advice['type'] = 'hidden_during_redaction'
+                    advice['comment'] = message
 
                 if 'delay_infos' in advice and not advice['not_asked']:
 
