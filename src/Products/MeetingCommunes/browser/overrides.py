@@ -168,10 +168,16 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             for advice in self.context.getAdvicesByType()[key]:
                 if advice['type'] == 'not_given':
                     continue
+
                 comment = ''
-                if advice['comment']:
+                type = key
+
+                if 'hidden_during_redaction' in advice and advice['hidden_during_redaction']:
+                    type = 'hidden_during_redaction'
+                elif advice['comment']:
                     comment = advice['comment']
-                res.append({'type': self.translate(msgid=key, domain='PloneMeeting').encode('utf-8'),
+
+                res.append({'type': self.translate(msgid=type, domain='PloneMeeting').encode('utf-8'),
                             'name': advice['name'].encode('utf-8'),
                             'comment': comment})
         return res
