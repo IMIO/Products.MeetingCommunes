@@ -156,7 +156,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         for annex in annexes:
             url = annex.absolute_url()
             title = annex.Title().replace('&', '&amp;')
-            res.append('<a href="{0}">{1}</a><br/>'.format(url, title))
+            res.append('<p><a href="{0}">{1}</a></p>'.format(url, title))
         return ('\n'.join(res))
 
     def printFormatedAdvice(self):
