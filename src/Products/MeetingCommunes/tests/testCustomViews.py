@@ -46,10 +46,10 @@ class testCustomViews(MeetingCommunesTestCase):
         view = item.restrictedTraverse('@@document-generation')
         helper = view.get_generation_context_helper()
         self.assertEqual(helper.printAllAnnexes(),
-            '<a href="{0}">Annex</a><br/>\n<a href="{1}">Annex 2</a><br/>'.format(annex1.absolute_url(),
+            '<p><a href="{0}">Annex</a></p>\n<p><a href="{1}">Annex 2</a></p>'.format(annex1.absolute_url(),
                 annex2.absolute_url()))
         self.assertEqual(helper.printAllAnnexes(portal_types=('annexDecision',)),
-            '<a href="{0}">Annex decision 1</a><br/>'.format(annexDecision1.absolute_url()))
+            '<p><a href="{0}">Annex decision 1</a></p>'.format(annexDecision1.absolute_url()))
 
     def _set_up_additional_finance_advisor_group(self, new_group_name="New Group 1", adviser_user_id='pmAdviserNG1'):
         self.changeUser('siteadmin')
