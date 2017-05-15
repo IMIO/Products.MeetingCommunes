@@ -70,8 +70,11 @@ def isMeetingCommunesConfigureProfile(context):
         context.readDataFile("MeetingCommunes_ag_marker.txt") or \
         context.readDataFile("MeetingCommunes_etat_major_marker.txt") or \
         context.readDataFile("MeetingCommunes_coordinateOffice_marker.txt") or \
+        context.readDataFile("MeetingCommunes_negociation_marker.txt") or \
+        context.readDataFile("MeetingCommunes_wellbeing_marker.txt") or \
+        context.readDataFile("MeetingCommunes_scresthome_marker.txt") or \
+        context.readDataFile("MeetingCommunes_technicalcommittee_marker.txt") or \
         context.readDataFile("MeetingCommunes_testing_marker.txt")
-
 
 def isNotMeetingCommunesDemoProfile(context):
     return context.readDataFile("MeetingCommunes_demo_marker.txt") is None

@@ -91,6 +91,70 @@ msgstr ""
 msgid "MeetingItemRecurringCOGES"
 msgstr ""
 
+#. Default: "MeetingCT"
+msgid "MeetingCT"
+msgstr ""
+
+#. Default: "MeetingItemCT"
+msgid "MeetingItemCT"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCT"
+msgid "MeetingItemTemplateCT"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCT"
+msgid "MeetingItemRecurringCT"
+msgstr ""
+
+#. Default: "MeetingSCRH"
+msgid "MeetingSCRH"
+msgstr ""
+
+#. Default: "MeetingItemSCRH"
+msgid "MeetingItemSCRH"
+msgstr ""
+
+#. Default: "MeetingItemTemplateSCRH"
+msgid "MeetingItemTemplateSCRH"
+msgstr ""
+
+#. Default: "MeetingItemRecurringSCRH"
+msgid "MeetingItemRecurringSCRH"
+msgstr ""
+
+#. Default: "MeetingNEGO"
+msgid "MeetingNEGO"
+msgstr ""
+
+#. Default: "MeetingItemNEGO"
+msgid "MeetingItemNEGO"
+msgstr ""
+
+#. Default: "MeetingItemTemplateNEGO"
+msgid "MeetingItemTemplateNEGO"
+msgstr ""
+
+#. Default: "MeetingItemRecurringNEGO"
+msgid "MeetingItemRecurringNEGO"
+msgstr ""
+
+#. Default: "MeetingWB"
+msgid "MeetingWB"
+msgstr ""
+
+#. Default: "MeetingItemWB"
+msgid "MeetingItemWB"
+msgstr ""
+
+#. Default: "MeetingItemTemplateWB"
+msgid "MeetingItemTemplateWB"
+msgstr ""
+
+#. Default: "MeetingItemRecurringWB"
+msgid "MeetingItemRecurringWB"
+msgstr ""
+
 #. Default: "Frozen"
 msgid "frozen"
 msgstr ""

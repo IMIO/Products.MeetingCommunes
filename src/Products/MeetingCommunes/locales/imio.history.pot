@@ -54,3 +54,7 @@ msgstr ""
 #. Default: "Item created from a ZCollege item."
 msgid "create_to_meeting-config-zcouncil_from_meeting-config-zcollege_comments"
 msgstr ""
+
+#. Default: "Item created from a CoDir item."
+msgid "create_to_meeting-config-college_from_codir_comments"
+msgstr ""

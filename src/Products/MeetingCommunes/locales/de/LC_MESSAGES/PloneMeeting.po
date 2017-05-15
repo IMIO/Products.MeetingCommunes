@@ -127,4 +127,3 @@ msgstr "vorgeschlageneTOP"
 #, fuzzy
 msgid "searchvalidateditems"
 msgstr "validierte TOP"
-

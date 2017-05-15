@@ -57,4 +57,3 @@ msgstr "Point Collège créé depuis un point Etat-Major."
 #. Default: "Item created from a ZCollege item."
 msgid "create_to_meeting-config-zcouncil_from_meeting-config-zcollege_comments"
 msgstr "Point Conseil créé depuis un point Collège."
-

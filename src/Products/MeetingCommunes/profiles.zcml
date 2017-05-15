@@ -102,6 +102,34 @@
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
+  <genericsetup:registerProfile
+   name="ztechnicalcommittee"
+   title="PloneMeeting / Commission technique"
+   description="PloneMeeting for CT (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
+   name="znegotiation"
+   title="PloneMeeting / Comité de concertation et négociation"
+   description="PloneMeeting for Negociation (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
+   name="zwellbeing"
+   title="PloneMeeting / Comité bien-être"
+   description="PloneMeeting for WellBeing (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
+   name="zscresthome"
+   title="PloneMeeting / comité spécial de la maison de repos"
+   description="PloneMeeting for SCRestHome (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
   <genericsetup:upgradeStep
       title="Go to MeetingCommunes 4.0 (Step 1)"
       description=""

@@ -128,4 +128,3 @@ msgstr "los temas propuestos"
 #, fuzzy
 msgid "searchvalidateditems"
 msgstr "los temas validados"
-

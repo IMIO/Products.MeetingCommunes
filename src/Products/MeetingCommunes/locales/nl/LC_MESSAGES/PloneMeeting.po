@@ -125,4 +125,3 @@ msgstr "Voorgestelde items"
 #, fuzzy
 msgid "searchvalidateditems"
 msgstr "Gevalideerde items"
-

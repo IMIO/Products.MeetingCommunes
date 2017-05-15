@@ -33,6 +33,10 @@ msgstr ""
 msgid "MeetingCOGES"
 msgstr ""
 
+#. Default: "MeetingCT"
+msgid "MeetingCT"
+msgstr ""
+
 #. Default: "MeetingCoDir"
 msgid "MeetingCoDir"
 msgstr ""
@@ -69,6 +73,10 @@ msgstr ""
 msgid "MeetingItemCOGES"
 msgstr ""
 
+#. Default: "MeetingItemCT"
+msgid "MeetingItemCT"
+msgstr ""
+
 #. Default: "MeetingItemCoDir"
 msgid "MeetingItemCoDir"
 msgstr ""
@@ -89,6 +97,10 @@ msgstr "Item gemeenteraadsvergadering"
 msgid "MeetingItemEM"
 msgstr ""
 
+#. Default: "MeetingItemNEGO"
+msgid "MeetingItemNEGO"
+msgstr ""
+
 #. Default: "Meeting Item Recurring AG"
 msgid "MeetingItemRecurringAG"
 msgstr ""
@@ -103,6 +115,10 @@ msgstr ""
 
 #. Default: "MeetingItemRecurringCOGES"
 msgid "MeetingItemRecurringCOGES"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCT"
+msgid "MeetingItemRecurringCT"
 msgstr ""
 
 #. Default: "MeetingItemRecurringCoDir"
@@ -125,6 +141,18 @@ msgstr ""
 msgid "MeetingItemRecurringEM"
 msgstr ""
 
+#. Default: "MeetingItemRecurringNEGO"
+msgid "MeetingItemRecurringNEGO"
+msgstr ""
+
+#. Default: "MeetingItemRecurringSCRH"
+msgid "MeetingItemRecurringSCRH"
+msgstr ""
+
+#. Default: "MeetingItemRecurringWB"
+msgid "MeetingItemRecurringWB"
+msgstr ""
+
 #. Default: "MeetingItemRecurringZCollege"
 msgid "MeetingItemRecurringZCollege"
 msgstr ""
@@ -145,6 +173,10 @@ msgstr ""
 msgid "MeetingItemRecurringcomitee"
 msgstr ""
 
+#. Default: "MeetingItemSCRH"
+msgid "MeetingItemSCRH"
+msgstr ""
+
 #. Default: "Meeting Item Template AG"
 msgid "MeetingItemTemplateAG"
 msgstr ""
@@ -159,6 +191,10 @@ msgstr ""
 
 #. Default: "MeetingItemTemplateCOGES"
 msgid "MeetingItemTemplateCOGES"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCT"
+msgid "MeetingItemTemplateCT"
 msgstr ""
 
 #. Default: "MeetingItemTemplateCoDir"
@@ -181,6 +217,18 @@ msgstr ""
 msgid "MeetingItemTemplateEM"
 msgstr ""
 
+#. Default: "MeetingItemTemplateNEGO"
+msgid "MeetingItemTemplateNEGO"
+msgstr ""
+
+#. Default: "MeetingItemTemplateSCRH"
+msgid "MeetingItemTemplateSCRH"
+msgstr ""
+
+#. Default: "MeetingItemTemplateWB"
+msgid "MeetingItemTemplateWB"
+msgstr ""
+
 #. Default: "MeetingItemTemplateZCollege"
 msgid "MeetingItemTemplateZCollege"
 msgstr ""
@@ -199,6 +247,10 @@ msgstr ""
 
 #. Default: "Meeting item template Comitee"
 msgid "MeetingItemTemplatecomitee"
+msgstr ""
+
+#. Default: "MeetingItemWB"
+msgid "MeetingItemWB"
 msgstr ""
 
 #. Default: "MeetingItemZCollege"
@@ -220,6 +272,18 @@ msgstr ""
 #. Default: "Meeting item Comitee"
 msgid "MeetingItemcomitee"
 msgstr "Item comitevergadering"
+
+#. Default: "MeetingNEGO"
+msgid "MeetingNEGO"
+msgstr ""
+
+#. Default: "MeetingSCRH"
+msgid "MeetingSCRH"
+msgstr ""
+
+#. Default: "MeetingWB"
+msgid "MeetingWB"
+msgstr ""
 
 #. Default: "MeetingZCollege"
 msgid "MeetingZCollege"
@@ -350,4 +414,3 @@ msgstr ""
 #. Default: "Sign financial advice"
 msgid "signFinancialAdvice"
 msgstr ""
-

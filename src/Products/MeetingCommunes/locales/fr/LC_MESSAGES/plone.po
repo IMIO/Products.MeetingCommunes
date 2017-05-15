@@ -34,6 +34,10 @@ msgstr "Séance du CA"
 msgid "MeetingCOGES"
 msgstr "Séance du Comité de Gestion"
 
+#. Default: "MeetingCT"
+msgid "MeetingCT"
+msgstr "Séance de la Commission technique"
+
 #. Default: "MeetingCoDir"
 msgid "MeetingCoDir"
 msgstr "Séance du Comité de Direction"
@@ -70,6 +74,10 @@ msgstr "Point CA"
 msgid "MeetingItemCOGES"
 msgstr "Point Comité de Gestion"
 
+#. Default: "MeetingItemCT"
+msgid "MeetingItemCT"
+msgstr "Point Commission technique"
+
 #. Default: "MeetingItemCoDir"
 msgid "MeetingItemCoDir"
 msgstr "Point Comité de Direction"
@@ -90,6 +98,10 @@ msgstr "Point Conseil Communal"
 msgid "MeetingItemEM"
 msgstr "Point Etat-Major"
 
+#. Default: "MeetingItemNEGO"
+msgid "MeetingItemNEGO"
+msgstr "Point Comité de concertation et négociation "
+
 #. Default: "Meeting Item Recurring AG"
 msgid "MeetingItemRecurringAG"
 msgstr "Point récurrent AG"
@@ -105,6 +117,10 @@ msgstr "Point récurrent CA"
 #. Default: "MeetingItemRecurringCOGES"
 msgid "MeetingItemRecurringCOGES"
 msgstr "Point récurrent Comité de Gestion"
+
+#. Default: "MeetingItemRecurringCT"
+msgid "MeetingItemRecurringCT"
+msgstr "Point récurrent Commission technique"
 
 #. Default: "MeetingItemRecurringCoDir"
 msgid "MeetingItemRecurringCoDir"
@@ -126,6 +142,18 @@ msgstr "Point récurrent Conseil Communal"
 msgid "MeetingItemRecurringEM"
 msgstr "Point récurrent Etat-Major"
 
+#. Default: "MeetingItemRecurringNEGO"
+msgid "MeetingItemRecurringNEGO"
+msgstr "Point récurrent Comité de concertation et négociation "
+
+#. Default: "MeetingItemRecurringSCRH"
+msgid "MeetingItemRecurringSCRH"
+msgstr "Point récurrent Comité spécial de la maison de repos "
+
+#. Default: "MeetingItemRecurringWB"
+msgid "MeetingItemRecurringWB"
+msgstr "Point récurrent Comité bien-être "
+
 #. Default: "MeetingItemRecurringZCollege"
 msgid "MeetingItemRecurringZCollege"
 msgstr "Point récurrent Collège"
@@ -146,6 +174,10 @@ msgstr "Point récurrent Conseil de l'Action Sociale"
 msgid "MeetingItemRecurringcomitee"
 msgstr "Point récurrent Comité de Concertation"
 
+#. Default: "MeetingItemSCRH"
+msgid "MeetingItemSCRH"
+msgstr "Point Comité spécial de la maison de repos "
+
 #. Default: "Meeting Item Template AG"
 msgid "MeetingItemTemplateAG"
 msgstr "Modèle de point AG"
@@ -161,6 +193,10 @@ msgstr "Modèle de point CA"
 #. Default: "MeetingItemTemplateCOGES"
 msgid "MeetingItemTemplateCOGES"
 msgstr "Modèle de point Comité de Gestion"
+
+#. Default: "MeetingItemTemplateCT"
+msgid "MeetingItemTemplateCT"
+msgstr "Modèle de point Commission technique"
 
 #. Default: "MeetingItemTemplateCoDir"
 msgid "MeetingItemTemplateCoDir"
@@ -182,6 +218,18 @@ msgstr "Modèle de point Conseil Communal"
 msgid "MeetingItemTemplateEM"
 msgstr "Modèle de point Etat-Major"
 
+#. Default: "MeetingItemTemplateNEGO"
+msgid "MeetingItemTemplateNEGO"
+msgstr "Modèle de point Comité de concertation et négociation"
+
+#. Default: "MeetingItemTemplateSCRH"
+msgid "MeetingItemTemplateSCRH"
+msgstr "Modèle de point Comité spécial de la maison de repos"
+
+#. Default: "MeetingItemTemplateWB"
+msgid "MeetingItemTemplateWB"
+msgstr "Modèle de point Comité bien-être"
+
 #. Default: "MeetingItemTemplateZCollege"
 msgid "MeetingItemTemplateZCollege"
 msgstr "Modèle de point Collège"
@@ -202,6 +250,10 @@ msgstr "Modèle de point Conseil de l'Action Sociale"
 msgid "MeetingItemTemplatecomitee"
 msgstr "Modèle de point Comité de Concertation"
 
+#. Default: "MeetingItemWB"
+msgid "MeetingItemWB"
+msgstr "Séance Comité bien-être"
+
 #. Default: "MeetingItemZCollege"
 msgid "MeetingItemZCollege"
 msgstr "Point Collège"
@@ -221,6 +273,18 @@ msgstr "Point Conseil de l'Action Sociale"
 #. Default: "Meeting item Comitee"
 msgid "MeetingItemcomitee"
 msgstr "Point Comité de Concertation"
+
+#. Default: "MeetingNEGO"
+msgid "MeetingNEGO"
+msgstr "Séance Comité de concertation et négociation"
+
+#. Default: "MeetingSCRH"
+msgid "MeetingSCRH"
+msgstr "Séance comité spécial de la maison de repos"
+
+#. Default: "MeetingWB"
+msgid "MeetingWB"
+msgstr "Séance Comité bien-être"
 
 #. Default: "MeetingZCollege"
 msgid "MeetingZCollege"
@@ -349,4 +413,3 @@ msgstr "Proposé au validateur financier"
 #. Default: "Sign financial advice"
 msgid "signFinancialAdvice"
 msgstr "Signer l'avis finances"
-

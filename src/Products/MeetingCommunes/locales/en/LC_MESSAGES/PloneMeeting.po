@@ -126,4 +126,3 @@ msgstr "Proposed items"
 #. Default: "Validated items"
 msgid "searchvalidateditems"
 msgstr "Validated items"
-
