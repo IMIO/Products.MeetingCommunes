@@ -1114,6 +1114,33 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
         res.append(''.join(tmp))
         return res
 
+    def initializeProposingGroupWithGroupInCharge(self):
+        """Initialize every items of MeetingConfig for which
+           'proposingGroupWithGroupInCharge' is in usedItemAttributes."""
+        tool = self.getSelf()
+        catalog = api.portal.get_tool('portal_catalog')
+        logger.info('Initializing proposingGroupWithGroupInCharge...')
+        for cfg in tool.objectValues('MeetingConfig'):
+            if 'proposingGroupWithGroupInCharge' in cfg.getUsedItemAttributes():
+                brains = catalog(portal_type=cfg.getItemTypeName())
+                logger.info('Updating MeetingConfig {0}'.format(cfg.getId()))
+                len_brains = len(brains)
+                i = 1
+                for brain in brains:
+                    logger.info('Updating item {0}/{1}'.format(i, len_brains))
+                    i = i + 1
+                    item = brain.getObject()
+                    proposingGroup = item.getProposingGroup(theObject=True)
+                    groupsInCharge = proposingGroup.getGroupsInCharge()
+                    groupInCharge = groupsInCharge and groupsInCharge[0] or ''
+                    value = '{0}__groupincharge__{1}'.format(proposingGroup.getId(),
+                                                             groupInCharge)
+                    item.setProposingGroupWithGroupInCharge(value)
+                    if cfg.getItemGroupInChargeStates():
+                        item._updateGroupInChargeLocalRoles()
+                        item.reindexObjectSecurity()
+                    item.reindexObject(idxs=['getGroupInCharge'])
+        logger.info('Done.')
 
 # ------------------------------------------------------------------------------
 InitializeClass(CustomMeeting)
