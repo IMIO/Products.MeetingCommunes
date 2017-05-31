@@ -219,30 +219,6 @@ def finalizeExampleInstance(context):
     site.portal_setup.runImportStepFromProfile(u'profile-Products.MeetingCommunes:default', 'skins')
 
 
-def reorderCss(context):
-    """
-       Make sure CSS are correctly reordered in portal_css so things
-       work as expected...
-    """
-    if isNotMeetingCommunesProfile(context) and not isMeetingCommunesConfigureProfile(context):
-        return
-
-    site = context.getSite()
-
-    logStep("reorderCss", context)
-
-    portal_css = site.portal_css
-    css = ['imio.dashboard.css',
-           'plonemeeting.css',
-           'meetingcommunes.css',
-           'imioapps.css',
-           'plonemeetingskin.css',
-           'imioapps_IEFixes.css',
-           'ploneCustom.css']
-    for resource in css:
-        portal_css.moveResourceToBottom(resource)
-
-
 def addDemoData(context):
     ''' '''
     if isNotMeetingCommunesDemoProfile(context):

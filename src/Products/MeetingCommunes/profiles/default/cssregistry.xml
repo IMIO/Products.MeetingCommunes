@@ -16,6 +16,6 @@
  <!-- ##code-section cssregistry.xml -->
  <stylesheet title="" cacheable="True" compression="safe" cookable="True"
     enabled="1" expression="" id="meetingcommunes.css" media="screen"
-    rel="stylesheet" rendering="import" insert-before="ploneCustom.css"/>
+    rel="stylesheet" rendering="import" insert-after="plonemeeting.css"/>
  <!-- ##/code-section cssregistry.xml -->
 </object>
