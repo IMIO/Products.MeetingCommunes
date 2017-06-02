@@ -40,4 +40,4 @@ for brain in brains:
             currentAbsents = item.getItemAssemblyAbsents(real=True)
 
         if item.getItemAssemblyAbsents(real=True) != currentAbsents:
-            item.setItemAssemblyExcused(currentAbsents)
+            item.setItemAssemblyAbsents(currentAbsents)
