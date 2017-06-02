@@ -16,7 +16,7 @@ for brain in brains:
     for item in meeting.getItems(uids=meeting.getRawItems(), ordered=True):
 
         # Presents
-        if item.getItemAssembly() == meeting.getAssembly():
+        if item.getItemAssembly(real=True) == meeting.getAssembly():
             currentAssembly = ''
         elif item.getItemAssembly(real=True) != currentAssembly:
             currentAssembly = item.getItemAssembly(real=True)
@@ -25,7 +25,7 @@ for brain in brains:
             item.setItemAssembly(currentAssembly)
 
         # Excused
-        if item.getItemAssemblyExcused() == meeting.getAssemblyExcused():
+        if item.getItemAssemblyExcused(real=True) == meeting.getAssemblyExcused():
             currentExcused = ''
         elif item.getItemAssemblyExcused(real=True) != currentExcused:
             currentExcused = item.getItemAssemblyExcused(real=True)
@@ -34,7 +34,7 @@ for brain in brains:
             item.setItemAssemblyExcused(currentExcused)
 
         # Absents
-        if item.getItemAssemblyAbsents() == meeting.getAssemblyAbsents():
+        if item.getItemAssemblyAbsents(real=True) == meeting.getAssemblyAbsents():
             currentAbsents = ''
         elif item.getItemAssemblyAbsents(real=True) != currentAbsents:
             currentAbsents = item.getItemAssemblyAbsents(real=True)
