@@ -29,19 +29,19 @@ categories = [CategoryDescriptor('category1', 'Catégorie 1'),
 agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaTemplate.odt_file = '../../examples_fr/templates/oj.odt'
 agendaTemplate.pod_formats = ['odt', 'pdf', ]
-agendaTemplate.pod_portal_types = ['MeetingSCRH']
+agendaTemplate.pod_portal_types = ['MeetingREMUN']
 agendaTemplate.tal_condition = 'python:tool.isManager(here)'
 
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsTemplate.odt_file = '../../examples_fr/templates/pv.odt'
 decisionsTemplate.pod_formats = ['odt', 'pdf', ]
-decisionsTemplate.pod_portal_types = ['MeetingSCRH']
+decisionsTemplate.pod_portal_types = ['MeetingREMUN']
 decisionsTemplate.tal_condition = 'python:tool.isManager(here)'
 
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemTemplate.odt_file = '../../examples_fr/templates/deliberation.odt'
 itemTemplate.pod_formats = ['odt', 'pdf', ]
-itemTemplate.pod_portal_types = ['MeetingItemSCRH']
+itemTemplate.pod_portal_types = ['MeetingItemREMUN']
 
 agTemplates = [agendaTemplate, decisionsTemplate, itemTemplate]
 
