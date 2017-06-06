@@ -130,6 +130,13 @@
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
+  <genericsetup:registerProfile
+   name="zremunarate"
+   title="PloneMeeting / comité de rémunération"
+   description="PloneMeeting for REMUNARATE (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
   <genericsetup:upgradeStep
       title="Go to MeetingCommunes 4.0 (Step 1)"
       description=""
