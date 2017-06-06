@@ -102,6 +102,10 @@ msgstr "Point Etat-Major"
 msgid "MeetingItemNEGO"
 msgstr "Point Comité de concertation et négociation "
 
+#. Default: "MeetingItemREMUN"
+msgid "MeetingItemREMUN"
+msgstr "Point Comité de rémunération"
+
 #. Default: "Meeting Item Recurring AG"
 msgid "MeetingItemRecurringAG"
 msgstr "Point récurrent AG"
@@ -145,6 +149,10 @@ msgstr "Point récurrent Etat-Major"
 #. Default: "MeetingItemRecurringNEGO"
 msgid "MeetingItemRecurringNEGO"
 msgstr "Point récurrent Comité de concertation et négociation "
+
+#. Default: "MeetingItemRecurringREMUN"
+msgid "MeetingItemRecurringREMUN"
+msgstr "Séance du Comité de rémunération"
 
 #. Default: "MeetingItemRecurringSCRH"
 msgid "MeetingItemRecurringSCRH"
@@ -222,6 +230,10 @@ msgstr "Modèle de point Etat-Major"
 msgid "MeetingItemTemplateNEGO"
 msgstr "Modèle de point Comité de concertation et négociation"
 
+#. Default: "MeetingItemTemplateREMUN"
+msgid "MeetingItemTemplateREMUN"
+msgstr "Modèle de point Comité de rémunération"
+
 #. Default: "MeetingItemTemplateSCRH"
 msgid "MeetingItemTemplateSCRH"
 msgstr "Modèle de point Comité spécial de la maison de repos"
@@ -277,6 +289,10 @@ msgstr "Point Comité de Concertation"
 #. Default: "MeetingNEGO"
 msgid "MeetingNEGO"
 msgstr "Séance Comité de concertation et négociation"
+
+#. Default: "MeetingREMUN"
+msgid "MeetingREMUN"
+msgstr "Séance du Comité de rémunération"
 
 #. Default: "MeetingSCRH"
 msgid "MeetingSCRH"

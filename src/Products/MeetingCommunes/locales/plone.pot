@@ -155,6 +155,22 @@ msgstr ""
 msgid "MeetingItemRecurringWB"
 msgstr ""
 
+#. Default: "MeetingREMUN"
+msgid "MeetingREMUN"
+msgstr ""
+
+#. Default: "MeetingItemREMUN"
+msgid "MeetingItemREMUN"
+msgstr ""
+
+#. Default: "MeetingItemTemplateREMUN"
+msgid "MeetingItemTemplateREMUN"
+msgstr ""
+
+#. Default: "MeetingItemRecurringREMUN"
+msgid "MeetingItemRecurringREMUN"
+msgstr ""
+
 #. Default: "Frozen"
 msgid "frozen"
 msgstr ""

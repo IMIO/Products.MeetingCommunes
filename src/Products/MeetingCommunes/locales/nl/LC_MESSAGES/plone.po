@@ -101,6 +101,10 @@ msgstr ""
 msgid "MeetingItemNEGO"
 msgstr ""
 
+#. Default: "MeetingItemREMUN"
+msgid "MeetingItemREMUN"
+msgstr ""
+
 #. Default: "Meeting Item Recurring AG"
 msgid "MeetingItemRecurringAG"
 msgstr ""
@@ -143,6 +147,10 @@ msgstr ""
 
 #. Default: "MeetingItemRecurringNEGO"
 msgid "MeetingItemRecurringNEGO"
+msgstr ""
+
+#. Default: "MeetingItemRecurringREMUN"
+msgid "MeetingItemRecurringREMUN"
 msgstr ""
 
 #. Default: "MeetingItemRecurringSCRH"
@@ -221,6 +229,10 @@ msgstr ""
 msgid "MeetingItemTemplateNEGO"
 msgstr ""
 
+#. Default: "MeetingItemTemplateREMUN"
+msgid "MeetingItemTemplateREMUN"
+msgstr ""
+
 #. Default: "MeetingItemTemplateSCRH"
 msgid "MeetingItemTemplateSCRH"
 msgstr ""
@@ -275,6 +287,10 @@ msgstr "Item comitevergadering"
 
 #. Default: "MeetingNEGO"
 msgid "MeetingNEGO"
+msgstr ""
+
+#. Default: "MeetingREMUN"
+msgid "MeetingREMUN"
 msgstr ""
 
 #. Default: "MeetingSCRH"
