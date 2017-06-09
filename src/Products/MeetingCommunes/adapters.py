@@ -903,6 +903,14 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
     implements(IMeetingCollegeWorkflowConditions)
     security = ClassSecurityInfo()
 
+    security.declarePublic('mayCorrect')
+
+    def mayCorrect(self, destinationState=None):
+        '''Override to avoid call to _decisionsWereConfirmed.'''
+        if not _checkPermission(ReviewPortalContent, self.context):
+            return
+        return True
+
     security.declarePublic('mayDecide')
 
     def mayDecide(self):
