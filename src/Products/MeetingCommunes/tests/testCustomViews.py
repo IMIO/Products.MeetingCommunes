@@ -43,12 +43,19 @@ class testCustomViews(MeetingCommunesTestCase):
         annex2 = self.addAnnex(item, annexTitle='Annex 2')
         annexDecision1 = self.addAnnex(item, annexTitle='Annex decision 1', relatedTo='item_decision')
 
+        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
         view = item.restrictedTraverse('@@document-generation')
+        view()
         helper = view.get_generation_context_helper()
-        self.assertEqual(helper.printAllAnnexes(),
-            '<p><a href="{0}">Annex</a></p>\n<p><a href="{1}">Annex 2</a></p>'.format(annex1.absolute_url(),
+        self.assertEqual(
+            helper.printAllAnnexes(),
+            '<p><a href="{0}">Annex</a></p>\n<p><a href="{1}">Annex 2</a></p>'.format(
+                annex1.absolute_url(),
                 annex2.absolute_url()))
-        self.assertEqual(helper.printAllAnnexes(portal_types=('annexDecision',)),
+        self.assertEqual(
+            helper.printAllAnnexes(portal_types=('annexDecision',)),
             '<p><a href="{0}">Annex decision 1</a></p>'.format(annexDecision1.absolute_url()))
 
     def _set_up_additional_finance_advisor_group(self, new_group_name="New Group 1", adviser_user_id='pmAdviserNG1'):
@@ -92,10 +99,13 @@ class testCustomViews(MeetingCommunesTestCase):
         cfg.setItemAdviceEditStates(('itemcreated',))
         cfg.setItemAdviceViewStates(('itemcreated',))
 
-    def _give_advice(self, item, adviser_group_id, adviser_user_id, advice_id = 'meetingadvice'):
+    def _give_advice(self, item, adviser_group_id, adviser_user_id, advice_id='meetingadvice'):
         self.changeUser(adviser_user_id)
-        createContentInContainer(item, advice_id,
-            **{'advice_group': adviser_group_id, 'advice_type': u'positive', 'advice_hide_during_redaction': False,
+        createContentInContainer(
+            item, advice_id,
+            **{'advice_group': adviser_group_id,
+               'advice_type': u'positive',
+               'advice_hide_during_redaction': False,
                 'advice_comment': RichTextValue(u'My comment')})
 
     def test_printFinanceAdvice_case_simple(self):
@@ -109,7 +119,11 @@ class testCustomViews(MeetingCommunesTestCase):
         item1 = self.create('MeetingItem', **data)
         item1.at_post_edit_script()
 
+        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
         view = item1.restrictedTraverse('@@document-generation')
+        view()
         helper = view.get_generation_context_helper()
 
         # Advice not asked
@@ -164,7 +178,11 @@ class testCustomViews(MeetingCommunesTestCase):
         item1 = self.create('MeetingItem', **data)
         item1.at_post_edit_script()
 
+        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
         view = item1.restrictedTraverse('@@document-generation')
+        view()
         helper = view.get_generation_context_helper()
 
         # Advice not asked
@@ -213,7 +231,11 @@ class testCustomViews(MeetingCommunesTestCase):
         item1.setOptionalAdvisers('developers')
         item1.at_post_edit_script()
 
+        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
         view = item1.restrictedTraverse('@@document-generation')
+        view()
         helper = view.get_generation_context_helper()
         result = helper.printFinanceAdvice('initiative')
         self.assertEqual(result, [])
@@ -262,7 +284,11 @@ class testCustomViews(MeetingCommunesTestCase):
         item1.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', new_group + '__rowid__unique_id_003'))
         item1.at_post_edit_script()
 
+        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
         view = item1.restrictedTraverse('@@document-generation')
+        view()
         helper1 = view.get_generation_context_helper()
         result = helper1.printFinanceAdvice('legal')
         self.assertEqual(result, [])
@@ -283,7 +309,12 @@ class testCustomViews(MeetingCommunesTestCase):
         item2.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', ))
         item2.at_post_edit_script()
 
+
+        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
         view = item2.restrictedTraverse('@@document-generation')
+        view()
         helper2 = view.get_generation_context_helper()
         result = helper2.printFinanceAdvice('legal')
         self.assertEqual(result, [])
@@ -321,7 +352,11 @@ class testCustomViews(MeetingCommunesTestCase):
         item1.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', new_group + '__rowid__unique_id_003'))
         item1.at_post_edit_script()
 
+        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
         view = item1.restrictedTraverse('@@document-generation')
+        view()
         helper1 = view.get_generation_context_helper()
         result = helper1.printFinanceAdvice('legal_not_given')
 
@@ -357,7 +392,11 @@ class testCustomViews(MeetingCommunesTestCase):
         item2.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', ))
         item2.at_post_edit_script()
 
+        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
         view = item2.restrictedTraverse('@@document-generation')
+        view()
         helper2 = view.get_generation_context_helper()
         result = helper2.printFinanceAdvice('legal_not_given')
         self.assertEqual(len(result), 1)
