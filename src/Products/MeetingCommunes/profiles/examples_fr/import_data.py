@@ -254,7 +254,7 @@ collegeMeeting.itemColumns = ['Creator', 'CreationDate', 'ModificationDate', 're
 collegeMeeting.availableItemsListVisibleColumns = [
     'Creator', 'CreationDate', 'getProposingGroup', 'advices', 'actions']
 collegeMeeting.itemsListVisibleColumns = [
-    'Creator', 'CreationDate', 'review_state', 'getProposingGroup', 'advices', 'actions']
+    u'item_reference', u'Creator', u'CreationDate', u'review_state', u'getProposingGroup', u'advices', u'actions']
 collegeMeeting.xhtmlTransformFields = ()
 collegeMeeting.xhtmlTransformTypes = ()
 collegeMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
