@@ -58,7 +58,34 @@ class testCustomViews(MeetingCommunesTestCase):
             helper.printAllAnnexes(portal_types=('annexDecision',)),
             '<p><a href="{0}">Annex decision 1</a></p>'.format(annexDecision1.absolute_url()))
 
-    def _set_up_additional_finance_advisor_group(self, new_group_name="New Group 1", adviser_user_id='pmAdviserNG1'):
+    def test_print_methods(self):
+        """Test various print methods :
+           - print_creator_name;
+           - print_item_state.
+        """
+        self.changeUser('pmCreator1')
+        item = self.create('MeetingItem')
+        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
+        view = item.restrictedTraverse('@@document-generation')
+        view()
+        helper = view.get_generation_context_helper()
+
+        # print_creator_name
+        self.assertEqual(helper.print_creator_name(), 'M. PMCreator One')
+        # does not fail if user not found
+        item.setCreators(('unknown', ))
+        self.assertEqual(helper.print_creator_name(), 'unknown')
+
+        # print_item_state
+        self.assertEqual(helper.print_item_state(), u'Created')
+        self.validateItem(item)
+        self.assertEqual(helper.print_item_state(), u'Validated')
+
+    def _set_up_additional_finance_advisor_group(self,
+                                                 new_group_name="New Group 1",
+                                                 adviser_user_id='pmAdviserNG1'):
         self.changeUser('siteadmin')
         # create a new group and make sure every Plone groups are created
         new_group = self.create('MeetingGroup', title=new_group_name, acronym='N.G.')
@@ -308,7 +335,6 @@ class testCustomViews(MeetingCommunesTestCase):
         item2 = self.create('MeetingItem', **data)
         item2.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', ))
         item2.at_post_edit_script()
-
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())

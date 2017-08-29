@@ -126,13 +126,13 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             else:
                 # u'cautious_finance'
                 adviceTypeFr = 'réservé'
-            #if it's a meetingItem, return the legal bullshit.
+            # if it's a meetingItem, return the legal bullshit.
             if not isMeeting:
                 res = res + FINANCE_ADVICE_LEGAL_TEXT.format(
                     adviceTypeFr,
                     outOfFinancialdptLocalized
                 )
-            #if it's a meeting, returns only the type and date of the advice.
+            # if it's a meeting, returns only the type and date of the advice.
             else:
                 res = "<p>Avis {0} du Directeur Financier du {1}</p>".format(
                     adviceTypeFr, outOfFinancialdptLocalized)
@@ -262,8 +262,9 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         finance_id = self.context.adapted().getFinanceAdviceId()
         if finance_id:
             data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
-            return ('delay_infos' in data and 'limit_date_localized' in data['delay_infos']
-                    and data['delay_infos']['limit_date_localized']) or None
+            return (
+                'delay_infos' in data and 'limit_date_localized' in data['delay_infos'] and
+                data['delay_infos']['limit_date_localized']) or None
 
         return None
 
@@ -316,9 +317,8 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         return self.translate(self.real_context.queryState())
 
     def print_creator_name(self):
-        return (self.real_context.portal_membership.getMemberInfo(str(self.real_context.Creator())) \
-               and self.real_context.portal_membership.getMemberInfo(str(self.real_context.Creator()))['fullname']) \
-               or str(self.real_context.Creator())
+        creator = api.user.get(self.real_context.Creator())
+        return creator and creator.getProperty('fullname') or self.real_context.Creator()
 
 
 class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView):
