@@ -234,10 +234,12 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                     advice['comment'] = message
 
                 if 'delay_infos' in advice and not advice['not_asked']:
+                    advice['item_transmitted_on'] = self.getItemFinanceAdviceTransmissionDate(finance_advice_id)
 
-                    advice['item_transmitted_on'] = self.getItemFinanceAdviceTransmissionDate()
                     if advice['item_transmitted_on']:
                         advice['item_transmitted_on_localized'] = self.display_date(date=advice['item_transmitted_on'])
+                    else:
+                        advice['item_transmitted_on_localized'] = ''
 
                     if (case == 'simple' or case == 'simple_not_given') and not advice['delay_infos']:
 
@@ -276,12 +278,15 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
 
         return None
 
-    def getItemFinanceAdviceTransmissionDate(self):
+    def getItemFinanceAdviceTransmissionDate(self, finance_id=None):
         """
         :return: The date as a string when the finance service received the advice request.
                  No matter if a legal delay applies on it or not.
         """
-        finance_id = self.context.adapted().getFinanceAdviceId()
+        if not finance_id:
+            finance_id = self.context.adapted().getFinanceAdviceId()
+            # may return None anyway
+
         if finance_id:
             data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
             if 'delay_infos' in data and 'delay_started_on' in data['delay_infos'] \
