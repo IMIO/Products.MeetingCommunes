@@ -31,7 +31,7 @@ def formatedAssembly(assembly, focus):
         cpt = 1
         my_line = ''
         for line in lines:
-            if((line.find('Excus') >= 0 or line.find('Absent') >= 0) and focus == 'present') or \
+            if ((line.find('Excus') >= 0 or line.find('Absent') >= 0) and focus == 'present') or \
                     (line.find('Absent') >= 0 and focus == 'excuse'):
                 is_finish = True
                 break
@@ -67,14 +67,14 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         cfg = tool.getMeetingConfig(self.context)
         financialAdvice = cfg.adapted().getUsedFinanceGroupIds()[0]
         adviceData = self.context.getAdviceDataFor(self.context.context, financialAdvice)
-        res['comment'] = 'comment' in adviceData\
-            and adviceData['comment'] or ''
-        advice_id = 'advice_id' in adviceData\
-            and adviceData['advice_id'] or ''
+        res['comment'] = 'comment' in adviceData \
+                         and adviceData['comment'] or ''
+        advice_id = 'advice_id' in adviceData \
+                    and adviceData['advice_id'] or ''
         signature_event = advice_id and getLastEvent(getattr(self.context, advice_id), 'signFinancialAdvice') or ''
         res['out_of_financial_dpt'] = 'time' in signature_event and signature_event['time'] or ''
-        res['out_of_financial_dpt_localized'] = res['out_of_financial_dpt']\
-            and res['out_of_financial_dpt'].strftime('%d/%m/%Y') or ''
+        res['out_of_financial_dpt_localized'] = res['out_of_financial_dpt'] \
+                                                and res['out_of_financial_dpt'].strftime('%d/%m/%Y') or ''
         # "positive_with_remarks_finance" will be printed "positive_finance"
         if adviceData['type'] == 'positive_with_remarks_finance':
             type_translated = self.translate(msgid='positive_finance',
@@ -82,10 +82,10 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         else:
             type_translated = adviceData['type_translated'].encode('utf-8')
         res['advice_type'] = '<p><u>Type d\'avis:</u>  %s</p>' % type_translated
-        res['delay_started_on_localized'] = 'delay_started_on_localized' in adviceData['delay_infos']\
-            and adviceData['delay_infos']['delay_started_on_localized'] or ''
-        res['delay_started_on'] = 'delay_started_on' in adviceData\
-            and adviceData['delay_started_on'] or ''
+        res['delay_started_on_localized'] = 'delay_started_on_localized' in adviceData['delay_infos'] \
+                                            and adviceData['delay_infos']['delay_started_on_localized'] or ''
+        res['delay_started_on'] = 'delay_started_on' in adviceData \
+                                  and adviceData['delay_started_on'] or ''
         return res
 
     def getLegalTextForFDAdvice(self, isMeeting=False):
@@ -116,9 +116,9 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             res = FINANCE_ADVICE_LEGAL_TEXT_PRE.format(delayStartedOnLocalized)
 
         if not hidden and \
-           adviceGivenOnLocalized and \
-           (adviceType in (u'positive_finance', u'positive_with_remarks_finance',
-                           u'negative_finance', u'cautious_finance')):
+                adviceGivenOnLocalized and \
+                (adviceType in (u'positive_finance', u'positive_with_remarks_finance',
+                                u'negative_finance', u'cautious_finance')):
             if adviceType in (u'positive_finance', u'positive_with_remarks_finance'):
                 adviceTypeFr = 'favorable'
             elif adviceType == u'negative_finance':
@@ -265,8 +265,8 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         if finance_id:
             data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
             return (
-                'delay_infos' in data and 'limit_date_localized' in data['delay_infos'] and
-                data['delay_infos']['limit_date_localized']) or None
+                       'delay_infos' in data and 'limit_date_localized' in data['delay_infos'] and
+                       data['delay_infos']['limit_date_localized']) or None
 
         return None
 
@@ -339,9 +339,111 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         assembly = self.context.getAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
         return formatedAssembly(assembly, focus)
 
+    def _is_in_value_dict(self, item, value_map={}):
+        for key in value_map.keys():
+            if self._get_value(item, key) in value_map[key]:
+                return True
+        return False
+
+    def _filter_item_uids(self, itemUids, ignore_review_states=[], privacy='*', included_values={}, excluded_values={}):
+        """
+        We just filter ignore_review_states here and privacy in order call getItems(uids), passing the correct uids and removing empty uids.
+        :param privacy: can be '*' or 'public' or 'secret' or 'public_heading' or 'secret_heading'
+        """
+        for elt in itemUids:
+            if elt == '':
+                itemUids.remove(elt)
+
+        filteredItemUids = []
+        uid_catalog = self.context.uid_catalog
+
+        for itemUid in itemUids:
+            obj = uid_catalog(UID=itemUid)[0].getObject()
+            if obj.queryState() in ignore_review_states:
+                continue
+            elif not (privacy == '*' or obj.getPrivacy() == privacy):
+                continue
+            elif included_values and not self._is_in_value_dict(obj, included_values):
+                continue
+            elif excluded_values and self._is_in_value_dict(obj, excluded_values):
+                continue
+            filteredItemUids.append(itemUid)
+        return filteredItemUids
+
+    def _renumber_item(self, items, firstNumber):
+        """
+        :return: a list of tuple with first element the number and second element the item itself
+        """
+        i = firstNumber
+        res = []
+        for item in items:
+            res.append((i, item))
+            i = i + 1
+        return res
+
+    def _get_value(self, item, value_name):
+        if value_name == 'category' or 'proposingGroup':
+            return self.getDGHV(item).display(value_name)
+        elif item.getField(value_name):
+            return item.getField(value_name).get(item)
+
+    def get_grouped_items(self, itemUids, listTypes=['normal'],
+                          group_by=[], included_values={}, excluded_values={},
+                          ignore_review_states=[], privacy='*',
+                          firstNumber=1, renumber=False):
+
+        """
+
+        :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
+        :param group_by: Can be either 'category', 'proposingGroup' or a field name as described in MettingItem Schema
+        :param included_values: a Map to filter the returned items regarding the value of a given field.
+                for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
+        :param excluded_values: a Map to filter the returned items regarding the value of a given field.
+                for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
+        :param privacy: can be '*' or 'public' or 'secret'
+        :param firstNumber: If renumber is True, a list of tuple
+           will be return with first element the number and second element, the item.
+           In this case, the firstNumber value can be used.'
+        :return: a list of list of list ... (late or normal or both) items (depending on p_listTypes) in the meeting order but wrapped in defined group_by if not empty.
+                every group condition defined increase the depth of this collection.
+        """
+
+        # Retrieve the list of items
+        filteredItemUids = self._filter_item_uids(itemUids, ignore_review_states, privacy, included_values, excluded_values)
+
+        if not filteredItemUids:
+            return []
+        else:
+            items = self.real_context.getItems(uids=filteredItemUids, listTypes=listTypes, ordered=True)
+            if renumber:
+                items = self._renumber_item(items, firstNumber)
+
+        if not group_by:
+            return items
+
+        res = []
+
+        for item in items:
+            # compute result keeping item original order and repeating groups if needed
+            node = res
+
+            for group in group_by:
+                value = self._get_value(item, group)
+
+                if len(node) == 0 or node[-1][0] != value:
+                    node.append([value])
+
+                node = node[-1]
+
+            if not isinstance(node[-1], (list)):
+                node.append([])
+
+            node[-1].append(item)
+
+        return res
+
 
 class MCFolderDocumentGenerationHelperView(FolderDocumentGenerationHelperView):
-
     def get_all_items_dghv_with_finance_advice(self, brains):
         """
         :param brains: the brains collection representing @Product.PloneMeeting.MeetingItem
