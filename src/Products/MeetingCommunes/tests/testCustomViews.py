@@ -144,7 +144,7 @@ class testCustomViews(MeetingCommunesTestCase):
 
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
@@ -158,7 +158,7 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertEqual(result, [])
 
         item1.setOptionalAdvisers(('vendors',))
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         # No advice given
         result = helper.printFinanceAdvice('simple')
@@ -171,7 +171,7 @@ class testCustomViews(MeetingCommunesTestCase):
 
         self.changeUser('pmCreator1')
         item1.setOptionalAdvisers((new_group, 'vendors', 'developers'))
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         self._give_advice(item1, 'developers', 'pmAdviser1')
         result = helper.printFinanceAdvice('simple')
@@ -203,7 +203,7 @@ class testCustomViews(MeetingCommunesTestCase):
 
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
@@ -217,7 +217,7 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertEqual(result, [])
 
         item1.setOptionalAdvisers(('vendors', new_group))
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         # No advice given
         result = helper.printFinanceAdvice('simple_not_given')
@@ -230,7 +230,7 @@ class testCustomViews(MeetingCommunesTestCase):
 
         # remove the advice
         item1.restrictedTraverse('@@delete_givenuid')(item1.meetingadvice.UID())
-        item1.at_post_edit_script()
+        item1._update_after_edit()
         result = helper.printFinanceAdvice('simple_not_given')
         self.assertEqual(len(result), 2)
 
@@ -256,7 +256,7 @@ class testCustomViews(MeetingCommunesTestCase):
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
         item1.setOptionalAdvisers('developers')
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
@@ -282,7 +282,7 @@ class testCustomViews(MeetingCommunesTestCase):
         # remove the advice
         self.changeUser('pmReviewer2')
         item1.restrictedTraverse('@@delete_givenuid')(item1.meetingadvice.UID())
-        item1.at_post_edit_script()
+        item1._update_after_edit()
         result = helper.printFinanceAdvice('initiative')
         self.assertEqual(len(result), 1)
 
@@ -309,7 +309,7 @@ class testCustomViews(MeetingCommunesTestCase):
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
         item1.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', new_group + '__rowid__unique_id_003'))
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
@@ -334,7 +334,7 @@ class testCustomViews(MeetingCommunesTestCase):
         self.changeUser('pmCreator1')
         item2 = self.create('MeetingItem', **data)
         item2.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', ))
-        item2.at_post_edit_script()
+        item2._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
@@ -376,7 +376,7 @@ class testCustomViews(MeetingCommunesTestCase):
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
         item1.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', new_group + '__rowid__unique_id_003'))
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
@@ -399,14 +399,14 @@ class testCustomViews(MeetingCommunesTestCase):
         # remove the advice
         self.changeUser('pmReviewer2')
         item1.restrictedTraverse('@@delete_givenuid')(item1.meetingadvice.UID())
-        item1.at_post_edit_script()
+        item1._update_after_edit()
         result = helper1.printFinanceAdvice('legal_not_given')
         self.assertEqual(len(result), 1)
 
         # remove the advice
         self.changeUser('pmAdviserNG1')
         item1.restrictedTraverse('@@delete_givenuid')(item1.getAdviceObj(new_group).UID())
-        item1.at_post_edit_script()
+        item1._update_after_edit()
         result = helper1.printFinanceAdvice('legal_not_given')
         self.assertEqual(len(result), 2)
 
@@ -416,7 +416,7 @@ class testCustomViews(MeetingCommunesTestCase):
         self.changeUser('pmCreator1')
         item2 = self.create('MeetingItem', **data)
         item2.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', ))
-        item2.at_post_edit_script()
+        item2._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())

@@ -7,8 +7,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Do not call at_post_edit_script directly anymore, use Meeting(Item)._update_after_edit
 
 4.0 (2017-08-04)
 ----------------
