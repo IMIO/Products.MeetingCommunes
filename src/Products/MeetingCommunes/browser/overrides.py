@@ -381,8 +381,17 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
             i = i + 1
         return res
 
+    def _get_list_type_value(self, item):
+        # 'normal' items should not be under a group title
+        if item.getListType() == 'normal':
+            return ''
+        else:
+            return self.translate(item.getListType())
+
     def _get_value(self, item, value_name):
-        if value_name == 'category' or 'proposingGroup':
+        if value_name == 'listType' or value_name == 'listTypes':
+            return self._get_list_type_value(item)
+        elif value_name == 'category' or 'proposingGroup':
             return self.getDGHV(item).display(value_name)
         elif item.getField(value_name):
             return item.getField(value_name).get(item)
@@ -395,7 +404,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         """
 
         :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
-        :param group_by: Can be either 'category', 'proposingGroup' or a field name as described in MettingItem Schema
+        :param group_by: Can be either 'listTypes', 'category', 'proposingGroup' or a field name as described in MettingItem Schema
         :param included_values: a Map to filter the returned items regarding the value of a given field.
                 for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
         :param excluded_values: a Map to filter the returned items regarding the value of a given field.
