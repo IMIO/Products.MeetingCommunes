@@ -382,11 +382,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         return res
 
     def _get_list_type_value(self, item):
-        # 'normal' items should not be under a group title
-        if item.getListType() == 'normal':
-            return ''
-        else:
-            return self.translate(item.getListType())
+        return self.translate(item.getListType())
 
     def _get_value(self, item, value_name):
         if value_name == 'listType' or value_name == 'listTypes':
