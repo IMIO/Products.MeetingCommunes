@@ -9,20 +9,10 @@
 # GNU General Public License (GPL)
 #
 
+from Products.CMFCore.permissions import setDefaultRoles
+
 __author__ = """Gauthier Bastien <g.bastien@imio.be>, Stephan Geulette <s.geulette@imio.be>"""
 __docformat__ = 'plaintext'
-
-
-# Product configuration.
-#
-# The contents of this module will be imported into __init__.py, the
-# workflow configuration and every content type module.
-#
-# If you wish to perform custom configuration, you may put a file
-# AppConfig.py in your product's root directory. The items in there
-# will be included (by importing) in this file if found.
-
-from Products.CMFCore.permissions import setDefaultRoles
 
 PROJECTNAME = "MeetingCommunes"
 
@@ -31,14 +21,6 @@ DEFAULT_ADD_CONTENT_PERMISSION = "Add portal content"
 setDefaultRoles(DEFAULT_ADD_CONTENT_PERMISSION, ('Manager', 'Owner', 'Contributor'))
 
 product_globals = globals()
-
-# Dependencies of Products to be installed by quick-installer
-# override in custom configuration
-DEPENDENCIES = []
-
-# Dependend products - not quick-installed - used in testcase
-# override in custom configuration
-PRODUCT_DEPENDENCIES = []
 
 # extra suffixes while using 'meetingadvicefinances_workflow'
 FINANCE_GROUP_SUFFIXES = ('financialcontrollers',
@@ -72,6 +54,3 @@ FINANCE_ADVICE_LEGAL_TEXT = "<p>Attendu l'avis {0} du Directeur financier " \
 FINANCE_ADVICE_LEGAL_TEXT_NOT_GIVEN = "<p>Attendu l'absence d'avis du " \
     "Directeur financier rendu dans le délai prescrit à l'article L1124-40 " \
     "du Code de la démocratie locale et de la décentralisation;</p>"
-
-STYLESHEETS = [{'id': 'meetingcommunes.css',
-                'title': 'MeetingCommunes CSS styles'}]
