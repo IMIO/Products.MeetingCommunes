@@ -8,6 +8,7 @@
 #
 
 from plone import api
+from Products.CMFPlone.utils import safe_unicode
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_NOT_GIVEN
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_PRE
@@ -156,8 +157,9 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         for annex in annexes:
             url = annex.absolute_url()
             title = annex.Title().replace('&', '&amp;')
-            res.append('<p><a href="{0}">{1}</a></p>'.format(url, title))
-        return ('\n'.join(res))
+            res.append(u'<p><a href="{0}">{1}</a></p>'.format(
+                url, safe_unicode(title)))
+        return (u'\n'.join(res))
 
     def printFormatedAdvice(self):
         ''' Printing Method use in templates :
