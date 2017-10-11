@@ -41,6 +41,7 @@ class testCustomViews(MeetingCommunesTestCase):
         item = self.create('MeetingItem')
         annex1 = self.addAnnex(item)
         annex2 = self.addAnnex(item, annexTitle='Annex 2')
+        annex3 = self.addAnnex(item, annexTitle=u'Annex 3 with special characters h\xc3\xa9h\xc3\xa9')
         annexDecision1 = self.addAnnex(item, annexTitle='Annex decision 1', relatedTo='item_decision')
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
@@ -51,12 +52,15 @@ class testCustomViews(MeetingCommunesTestCase):
         helper = view.get_generation_context_helper()
         self.assertEqual(
             helper.printAllAnnexes(),
-            '<p><a href="{0}">Annex</a></p>\n<p><a href="{1}">Annex 2</a></p>'.format(
+            u'<p><a href="{0}">Annex</a></p>\n'
+            u'<p><a href="{1}">Annex 2</a></p>\n'
+            u'<p><a href="{2}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a></p>'.format(
                 annex1.absolute_url(),
-                annex2.absolute_url()))
+                annex2.absolute_url(),
+                annex3.absolute_url()))
         self.assertEqual(
             helper.printAllAnnexes(portal_types=('annexDecision',)),
-            '<p><a href="{0}">Annex decision 1</a></p>'.format(annexDecision1.absolute_url()))
+            u'<p><a href="{0}">Annex decision 1</a></p>'.format(annexDecision1.absolute_url()))
 
     def test_print_methods(self):
         """Test various print methods :

@@ -8,6 +8,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 ----------------
 
 - Do not call at_post_edit_script directly anymore, use Meeting(Item)._update_after_edit
+- Adapted default 'deliberation.odt' to no more use global margin and integrate printAllAnnexes
 
 4.0 (2017-08-04)
 ----------------
