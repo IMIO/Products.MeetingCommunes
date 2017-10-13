@@ -27,6 +27,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   printFinanceAdvice(self, case)
 - Added parameter 'excludedGroupIds' to getPrintableItems and getPrintableItemsByCategory
 - MeetingObserverLocal has every View-like permissions in every states
+- Adapted default 'deliberation.odt' to no more use global margin and integrate printAllAnnexes
 
 3.3 (2015-02-27)
 ----------------
