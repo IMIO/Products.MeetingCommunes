@@ -124,7 +124,7 @@ emMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 emMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-emMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+emMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 emMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 emMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

@@ -122,7 +122,7 @@ remunMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 remunMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-remunMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+remunMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 remunMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 remunMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

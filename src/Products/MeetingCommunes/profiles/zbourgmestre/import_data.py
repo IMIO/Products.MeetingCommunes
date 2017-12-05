@@ -127,7 +127,7 @@ bourgmestreMeeting.itemPowerObserversStates = ('itemfrozen',
                                                'accepted_but_modified',
                                                'pre_accepted')
 bourgmestreMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-bourgmestreMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+bourgmestreMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 bourgmestreMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 bourgmestreMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

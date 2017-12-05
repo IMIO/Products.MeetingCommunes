@@ -122,7 +122,7 @@ tcMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 tcMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-tcMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+tcMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 tcMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 tcMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

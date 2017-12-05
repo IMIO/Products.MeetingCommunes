@@ -184,7 +184,7 @@ caMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 caMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-caMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+caMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 caMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 caMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

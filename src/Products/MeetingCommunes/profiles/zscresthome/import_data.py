@@ -122,7 +122,7 @@ scrhMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 scrhMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-scrhMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+scrhMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 scrhMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 scrhMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

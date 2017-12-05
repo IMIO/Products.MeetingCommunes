@@ -122,7 +122,7 @@ negoMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 negoMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-negoMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+negoMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 negoMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 negoMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

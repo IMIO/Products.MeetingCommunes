@@ -123,7 +123,7 @@ coordinateOffice.itemPowerObserversStates = ('itemfrozen',
                                              'accepted_but_modified',
                                              'pre_accepted')
 coordinateOffice.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-coordinateOffice.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+coordinateOffice.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 coordinateOffice.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 coordinateOffice.onTransitionFieldTransforms = (
     ({'transition': 'delay',

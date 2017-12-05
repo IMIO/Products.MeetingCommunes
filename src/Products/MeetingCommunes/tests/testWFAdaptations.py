@@ -45,6 +45,7 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
                            'postpone_next_meeting',
                            'pre_validation',
                            'pre_validation_keep_reviewer_permissions',
+                           'refused',
                            'removed',
                            'removed_and_duplicated',
                            'return_to_proposing_group',

@@ -77,8 +77,9 @@ if 'archiving' in customwfAdaptations:
 MeetingConfig.wfAdaptations = customwfAdaptations
 
 # states taken into account by the 'no_global_observation' wfAdaptation
-noGlobalObsStates = ('itempublished', 'itemfrozen', 'accepted', 'refused',
-                     'delayed', 'accepted_but_modified', 'pre_accepted')
+noGlobalObsStates = list(adaptations.noGlobalObsStates)
+noGlobalObsStates.append('accepted_but_modified')
+noGlobalObsStates.append('pre_accepted')
 adaptations.noGlobalObsStates = noGlobalObsStates
 
 adaptations.WF_NOT_CREATOR_EDITS_UNLESS_CLOSED = ('delayed', 'refused', 'accepted',
@@ -1059,8 +1060,8 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
             # Update connections between states and transitions
             wf.states['itemfrozen'].setProperties(
                 title='itemfrozen', description='',
-                transitions=['accept', 'accept_but_modify', 'refuse', 'delay', 'pre_accept', 'backToPresented'])
-            for decidedState in ['accepted', 'refused', 'delayed', 'accepted_but_modified']:
+                transitions=['accept', 'accept_but_modify', 'delay', 'pre_accept', 'backToPresented'])
+            for decidedState in ['accepted', 'delayed', 'accepted_but_modified']:
                 wf.states[decidedState].setProperties(
                     title=decidedState, description='',
                     transitions=['backToItemFrozen', ])

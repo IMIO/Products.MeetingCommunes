@@ -124,7 +124,7 @@ agMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 agMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-agMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+agMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 agMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 agMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

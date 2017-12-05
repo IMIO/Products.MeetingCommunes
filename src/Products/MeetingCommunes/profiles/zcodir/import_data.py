@@ -183,7 +183,7 @@ codirMeeting.itemPowerObserversStates = ('itemfrozen',
                                          'accepted_but_modified',
                                          'pre_accepted')
 codirMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-codirMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+codirMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 codirMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 codirMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

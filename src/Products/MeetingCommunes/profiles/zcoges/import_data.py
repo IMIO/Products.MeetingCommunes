@@ -185,7 +185,7 @@ coGestMeeting.itemPowerObserversStates = ('itemfrozen',
                                           'accepted_but_modified',
                                           'pre_accepted')
 coGestMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-coGestMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+coGestMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 coGestMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 coGestMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

@@ -206,7 +206,7 @@ bpMeeting.itemAdviceEditStates = ('validated',)
 bpMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',
                                   'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
 bpMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-bpMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+bpMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 bpMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 bpMeeting.useCopies = True
 bpMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
@@ -267,7 +267,7 @@ casMeeting.itemAdviceEditStates = ('validated',)
 casMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',
                                    'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
 casMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-casMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+casMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 casMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 casMeeting.useCopies = True
 casMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
@@ -312,7 +312,7 @@ comiteeMeeting.meetingTopicStates = ('created', 'frozen')
 comiteeMeeting.decisionTopicStates = ('decided', 'closed')
 comiteeMeeting.itemAdviceStates = ('validated',)
 comiteeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-comiteeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+comiteeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 comiteeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 comiteeMeeting.enforceAdviceMandatoriness = False
 comiteeMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',

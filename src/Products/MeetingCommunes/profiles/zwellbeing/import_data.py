@@ -122,7 +122,7 @@ wbMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 wbMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-wbMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+wbMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 wbMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 wbMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
