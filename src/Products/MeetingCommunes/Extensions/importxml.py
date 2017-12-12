@@ -207,7 +207,14 @@ class TransformXmlToMeetingOrItem:
                     Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get(meetingConfig)
                     _creatorId = 'xmlimport'
                 else:
-                    Memberfolder = self.__portal__.Members.get(_creatorId).mymeetings.get(meetingConfig)
+                    member = self.__portal__.Members.get(_creatorId)
+                    if member:
+                        Memberfolder = member.mymeetings.get(meetingConfig)
+                    else:
+                        # utilisons le répertoire de l'utilisateur xmlimport'
+                        Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get(meetingConfig)
+                        useridLst.remove(_creatorId)
+                        _creatorId = 'xmlimport'
 
                 if getattr(Memberfolder, _id, None):
                     # Le point est déjà existant
@@ -218,8 +225,8 @@ class TransformXmlToMeetingOrItem:
                 item = getattr(Memberfolder, itemid)
 
                 # pour mes tests en attendant mes réponses
-                # _createDate = self.getText(items.getElementsByTagName("createDate")[0])
-                _createDate = '20160310120000'
+                _createDate = self.get_text_from_node(itemNode, 'createDate', '20000310120000')
+
                 _proposingGroup = self.get_mapping_value(item, self.get_text_from_node(itemNode, 'proposingGroup'),
                                                          group_mapping, 'importation')
                 _category = self.get_mapping_value(item, self.get_text_from_node(itemNode, 'category'), cat_mapping,
@@ -288,7 +295,6 @@ class TransformXmlToMeetingOrItem:
             MeetingType = 'MeetingCouncil'
             lat.append(MeetingType)
         Memberfolder.setLocallyAllowedTypes(tuple(lat))
-        cpt = 0
         for meetings in self.get_root_element().getElementsByTagName("seance"):
             if meetings.nodeType == meetings.ELEMENT_NODE:
                 # récupération des données de la séance
@@ -354,12 +360,8 @@ class TransformXmlToMeetingOrItem:
                 else:
                     print 'La seance %s est vide.' % meeting.Title().decode('utf-8')
 
-                cpt = cpt + 1
-                # commit transaction si nous avons créé 10 séances
-                if cpt >= 10:
-                    transaction.commit()
-                    cpt = 0
-                    print 'commit'
+                transaction.commit()
+                print 'commit'
 
         return self.__meetingList__
 
