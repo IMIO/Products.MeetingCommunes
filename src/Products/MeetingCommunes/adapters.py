@@ -379,14 +379,16 @@ class CustomMeeting(Meeting):
                     # The method does nothing if the group (or another from the
                     # same macro-group) is already there.
         if renumber:
-            # return a list of tuple with first element the number and second
-            # element the item itself
+            # items are replaced by tuples with first element the number and second element the item itself
             i = firstNumber
-            res = []
-            for item in items:
-                res.append((i, item))
-                i = i + 1
-            items = res
+            tmp_res = []
+            for cat in res:
+                tmp_cat=[cat[0]]
+                for item in cat[1:]:
+                    tmp_cat.append((i, item))
+                    i = i + 1
+                tmp_res.append(tmp_cat)
+            res = tmp_res
         return res
 
     security.declarePublic('getNumberOfItems')
