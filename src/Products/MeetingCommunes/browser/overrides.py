@@ -194,10 +194,11 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         assembly = self.context.getItemAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
         return formatedAssembly(assembly, focus)
 
-    def printFinanceAdvice(self, case, show_hidden=False):
+    def printFinanceAdvice(self, cases, show_hidden=False):
         """
-        :param case: can be either 'initiative', 'legal', 'simple' or 'not_given'
-        :return: an array dictionaries same as MeetingItem.getAdviceDataFor
+        :param cases: collection containing either 'initiative', 'legal', 'simple' or 'not_given'
+               cases can also be a string in case a single case should be returned and for backward compatibility.
+        :return: an array of dictionaries same as MeetingItem.getAdviceDataFor
         or empty if no advice matching the given case.
         """
 
@@ -205,61 +206,66 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         case 'simple' means the financial advice was requested but without any delay.
         case 'legal' means the financial advice was requested with a delay. It's a legal financial advice.
         case 'initiative' means the financial advice was given without being requested at the first place.
-        case 'legal_not_given' means the financial advice was requested with delay. But was ignored by the finance
+        case 'legal_not_given' means the financial advice was requested with delay. But was ignored by the finance director.
         case 'simple_not_given' means the financial advice was requested without delay. But was ignored by the finance
          director.
         """
+
+        if isinstance(cases, str):
+            cases = [cases]
 
         result = []
         tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
         finance_advice_ids = cfg.adapted().getUsedFinanceGroupIds()
 
-        if finance_advice_ids and case in ['initiative', 'legal', 'simple', 'simple_not_given', 'legal_not_given']:
+        if finance_advice_ids:
             advices = self.context.getAdviceDataFor(self.context.context)
 
-            for finance_advice_id in finance_advice_ids:
+            for case in cases:
+                if case in ['initiative', 'legal', 'simple', 'simple_not_given', 'legal_not_given']:
+                    for finance_advice_id in finance_advice_ids:
 
-                if finance_advice_id in advices:
-                    advice = advices[finance_advice_id]
-                else:
-                    continue
-
-                if advice['advice_given_on']:
-                    if case == 'initiative' and advice['not_asked']:
-                        result.append(advice)
-
-                if 'hidden_during_redaction' in advice and advice['hidden_during_redaction'] and not show_hidden:
-                    message = self.translate('hidden_during_redaction', domain='PloneMeeting')
-                    advice['type_translated'] = message
-                    advice['type'] = 'hidden_during_redaction'
-                    advice['comment'] = message
-
-                if 'delay_infos' in advice and not advice['not_asked']:
-                    advice['item_transmitted_on'] = self.getItemFinanceAdviceTransmissionDate(finance_advice_id)
-
-                    if advice['item_transmitted_on']:
-                        advice['item_transmitted_on_localized'] = self.display_date(date=advice['item_transmitted_on'])
-                    else:
-                        advice['item_transmitted_on_localized'] = ''
-
-                    if (case == 'simple' or case == 'simple_not_given') and not advice['delay_infos']:
-
-                        if case == 'simple' and advice['advice_given_on']:
-                            result.append(advice)
-
-                        elif case == 'simple_not_given' and not advice['advice_given_on']:
-                            result.append(advice)
-
-                    elif advice['delay_infos']:
+                        if finance_advice_id in advices:
+                            advice = advices[finance_advice_id]
+                        else:
+                            continue
 
                         if advice['advice_given_on']:
-
-                            if case == 'legal':
+                            if case == 'initiative' and advice['not_asked']:
                                 result.append(advice)
 
-                        elif case == 'legal_not_given':
-                            result.append(advice)
+                        if 'hidden_during_redaction' in advice and advice['hidden_during_redaction'] and not show_hidden:
+                            message = self.translate('hidden_during_redaction', domain='PloneMeeting')
+                            advice['type_translated'] = message
+                            advice['type'] = 'hidden_during_redaction'
+                            advice['comment'] = message
+
+                        if 'delay_infos' in advice and not advice['not_asked']:
+                            advice['item_transmitted_on'] = self.getItemFinanceAdviceTransmissionDate(finance_advice_id)
+
+                            if advice['item_transmitted_on']:
+                                advice['item_transmitted_on_localized'] = self.display_date(date=advice['item_transmitted_on'])
+                            else:
+                                advice['item_transmitted_on_localized'] = ''
+
+                            if (case == 'simple' or case == 'simple_not_given') and not advice['delay_infos']:
+
+                                if case == 'simple' and advice['advice_given_on']:
+                                    result.append(advice)
+
+                                elif case == 'simple_not_given' and not advice['advice_given_on']:
+                                    result.append(advice)
+
+                            elif advice['delay_infos']:
+
+                                if advice['advice_given_on']:
+
+                                    if case == 'legal':
+                                        result.append(advice)
+
+                                elif case == 'legal_not_given':
+                                    result.append(advice)
         return result
 
     def getItemFinanceDelayLimitDate(self):
