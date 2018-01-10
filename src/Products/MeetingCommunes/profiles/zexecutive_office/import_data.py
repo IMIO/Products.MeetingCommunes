@@ -122,7 +122,7 @@ executiveMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 executiveMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-executiveMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+executiveMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 executiveMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 executiveMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
