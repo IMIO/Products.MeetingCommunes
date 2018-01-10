@@ -422,3 +422,19 @@ msgstr ""
 #. Default: "MeetingItemTemplateBourgmestre"
 msgid "MeetingItemTemplateCoordinateOffice"
 msgstr ""
+
+#. Default: "Meetingexecutive"
+msgid "Meetingexecutive"
+msgstr ""
+
+#. Default: "MeetingItemexecutive"
+msgid "MeetingItemexecutive"
+msgstr ""
+
+#. Default: "MeetingItemTemplateexecutive"
+msgid "MeetingItemTemplateexecutive"
+msgstr ""
+
+#. Default: "MeetingItemRecurringexecutive"
+msgid "MeetingItemRecurringexecutive"
+msgstr ""

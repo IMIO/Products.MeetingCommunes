@@ -182,6 +182,10 @@ msgstr ""
 msgid "MeetingItemRecurringcomitee"
 msgstr ""
 
+#. Default: "MeetingItemRecurringexecutive"
+msgid "MeetingItemRecurringexecutive"
+msgstr ""
+
 #. Default: "MeetingItemSCRH"
 msgid "MeetingItemSCRH"
 msgstr ""
@@ -262,6 +266,10 @@ msgstr ""
 msgid "MeetingItemTemplatecomitee"
 msgstr ""
 
+#. Default: "MeetingItemTemplateexecutive"
+msgid "MeetingItemTemplateexecutive"
+msgstr ""
+
 #. Default: "MeetingItemWB"
 msgid "MeetingItemWB"
 msgstr ""
@@ -285,6 +293,10 @@ msgstr "Tema Consejo Social"
 #. Default: "Meeting item Comitee"
 msgid "MeetingItemcomitee"
 msgstr "Tema Comite de Concertación"
+
+#. Default: "MeetingItemexecutive"
+msgid "MeetingItemexecutive"
+msgstr ""
 
 #. Default: "MeetingNEGO"
 msgid "MeetingNEGO"
@@ -321,6 +333,10 @@ msgstr "Reunión de Consejo Social"
 #. Default: "Meeting Comitee"
 msgid "Meetingcomitee"
 msgstr "Reunión de Comité de Concertación"
+
+#. Default: "Meetingexecutive"
+msgid "Meetingexecutive"
+msgstr ""
 
 #. Default: "Send back to 'financial controller'"
 msgid "backToProposedToFinancialController"
