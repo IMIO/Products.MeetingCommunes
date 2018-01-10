@@ -182,6 +182,10 @@ msgstr ""
 msgid "MeetingItemRecurringcomitee"
 msgstr ""
 
+#. Default: "MeetingItemRecurringexecutive"
+msgid "MeetingItemRecurringexecutive"
+msgstr ""
+
 #. Default: "MeetingItemSCRH"
 msgid "MeetingItemSCRH"
 msgstr ""
@@ -262,6 +266,10 @@ msgstr ""
 msgid "MeetingItemTemplatecomitee"
 msgstr ""
 
+#. Default: "MeetingItemTemplateexecutive"
+msgid "MeetingItemTemplateexecutive"
+msgstr ""
+
 #. Default: "MeetingItemWB"
 msgid "MeetingItemWB"
 msgstr ""
@@ -284,6 +292,10 @@ msgstr ""
 
 #. Default: "Meeting item Comitee"
 msgid "MeetingItemcomitee"
+msgstr ""
+
+#. Default: "MeetingItemexecutive"
+msgid "MeetingItemexecutive"
 msgstr ""
 
 #. Default: "MeetingNEGO"
@@ -320,6 +332,10 @@ msgstr ""
 
 #. Default: "Meeting Comitee"
 msgid "Meetingcomitee"
+msgstr ""
+
+#. Default: "Meetingexecutive"
+msgid "Meetingexecutive"
 msgstr ""
 
 #. Default: "Send back to 'financial controller'"
