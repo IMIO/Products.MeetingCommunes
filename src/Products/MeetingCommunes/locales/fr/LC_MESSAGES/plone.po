@@ -148,7 +148,7 @@ msgstr "Point récurrent Etat-Major"
 
 #. Default: "MeetingItemRecurringNEGO"
 msgid "MeetingItemRecurringNEGO"
-msgstr "Point récurrent Comité de concertation et négociation "
+msgstr "Point récurrent Comité de concertation et négociation"
 
 #. Default: "MeetingItemRecurringREMUN"
 msgid "MeetingItemRecurringREMUN"
@@ -156,11 +156,11 @@ msgstr "Séance du Comité de rémunération"
 
 #. Default: "MeetingItemRecurringSCRH"
 msgid "MeetingItemRecurringSCRH"
-msgstr "Point récurrent Comité spécial de la maison de repos "
+msgstr "Point récurrent Comité spécial de la maison de repos"
 
 #. Default: "MeetingItemRecurringWB"
 msgid "MeetingItemRecurringWB"
-msgstr "Point récurrent Comité bien-être "
+msgstr "Point récurrent Comité bien-être"
 
 #. Default: "MeetingItemRecurringZCollege"
 msgid "MeetingItemRecurringZCollege"
@@ -181,6 +181,10 @@ msgstr "Point récurrent Conseil de l'Action Sociale"
 #. Default: "Meeting item recurring Comitee"
 msgid "MeetingItemRecurringcomitee"
 msgstr "Point récurrent Comité de Concertation"
+
+#. Default: "MeetingItemRecurringexecutive"
+msgid "MeetingItemRecurringexecutive"
+msgstr "Point récurrent Bureau exécutif"
 
 #. Default: "MeetingItemSCRH"
 msgid "MeetingItemSCRH"
@@ -262,9 +266,13 @@ msgstr "Modèle de point Conseil de l'Action Sociale"
 msgid "MeetingItemTemplatecomitee"
 msgstr "Modèle de point Comité de Concertation"
 
+#. Default: "MeetingItemTemplateexecutive"
+msgid "MeetingItemTemplateexecutive"
+msgstr "Modèle de point Bureau exécutif"
+
 #. Default: "MeetingItemWB"
 msgid "MeetingItemWB"
-msgstr "Séance Comité bien-être"
+msgstr "Point Comité bien-être"
 
 #. Default: "MeetingItemZCollege"
 msgid "MeetingItemZCollege"
@@ -285,6 +293,10 @@ msgstr "Point Conseil de l'Action Sociale"
 #. Default: "Meeting item Comitee"
 msgid "MeetingItemcomitee"
 msgstr "Point Comité de Concertation"
+
+#. Default: "MeetingItemexecutive"
+msgid "MeetingItemexecutive"
+msgstr "Point Bureau exécutif"
 
 #. Default: "MeetingNEGO"
 msgid "MeetingNEGO"
@@ -321,6 +333,10 @@ msgstr "Séance du Conseil de l'Action Sociale"
 #. Default: "Meeting Comitee"
 msgid "Meetingcomitee"
 msgstr "Séance du Comité de Concertation"
+
+#. Default: "Meetingexecutive"
+msgid "Meetingexecutive"
+msgstr "Séance Bureau exécutif"
 
 #. Default: "Send back to 'financial controller'"
 msgid "backToProposedToFinancialController"
