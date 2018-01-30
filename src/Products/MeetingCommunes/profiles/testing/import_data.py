@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from Products.PloneMeeting.config import MEETINGREVIEWERS
 from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import GroupDescriptor
@@ -203,8 +202,10 @@ developers = GroupDescriptor('developers', 'Developers', 'Devel')
 developers.creators.append(pmCreator1)
 developers.creators.append(pmCreator1b)
 developers.creators.append(pmManager)
+developers.prereviewers.append(pmReviewerLevel1)
 developers.reviewers.append(pmReviewer1)
 developers.reviewers.append(pmManager)
+developers.reviewers.append(pmReviewerLevel2)
 developers.observers.append(pmObserver1)
 developers.observers.append(pmReviewer1)
 developers.observers.append(pmManager)
@@ -212,10 +213,6 @@ developers.advisers.append(pmAdviser1)
 developers.advisers.append(pmManager)
 setattr(developers, 'signatures', 'developers signatures')
 setattr(developers, 'echevinServices', 'developers')
-# put pmReviewerLevel1 in first level of reviewers from what is in MEETINGREVIEWERS
-getattr(developers, MEETINGREVIEWERS.keys()[-1]).append(pmReviewerLevel1)
-# put pmReviewerLevel2 in second level of reviewers from what is in MEETINGREVIEWERS
-getattr(developers, MEETINGREVIEWERS.keys()[0]).append(pmReviewerLevel2)
 
 # give an advice on recurring items
 vendors = GroupDescriptor('vendors', 'Vendors', 'Devil')
@@ -277,7 +274,7 @@ collegeMeeting.annexTypes = [financialAnalysis, budgetAnalysisCfg1, overheadAnal
                              itemAnnex, decisionAnnex, marketingAnalysis,
                              adviceAnnex, adviceLegalAnalysis, meetingAnnex]
 collegeMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
-collegeMeeting.maxShownListings = '100' 
+collegeMeeting.maxShownListings = '100'
 collegeMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 collegeMeeting.meetingWorkflow = 'meetingcommunes_workflow'
 collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
