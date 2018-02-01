@@ -62,7 +62,34 @@ class testCustomViews(MeetingCommunesTestCase):
             helper.printAllAnnexes(portal_types=('annexDecision',)),
             u'<p><a href="{0}">Annex decision 1</a></p>'.format(annexDecision1.absolute_url()))
 
-    def _set_up_additional_finance_advisor_group(self, new_group_name="New Group 1", adviser_user_id='pmAdviserNG1'):
+    def test_print_methods(self):
+        """Test various print methods :
+           - print_creator_name;
+           - print_item_state.
+        """
+        self.changeUser('pmCreator1')
+        item = self.create('MeetingItem')
+        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
+        view = item.restrictedTraverse('@@document-generation')
+        view()
+        helper = view.get_generation_context_helper()
+
+        # print_creator_name
+        self.assertEqual(helper.print_creator_name(), 'M. PMCreator One')
+        # does not fail if user not found
+        item.setCreators(('unknown', ))
+        self.assertEqual(helper.print_creator_name(), 'unknown')
+
+        # print_item_state
+        self.assertEqual(helper.print_item_state(), u'Created')
+        self.validateItem(item)
+        self.assertEqual(helper.print_item_state(), u'Validated')
+
+    def _set_up_additional_finance_advisor_group(self,
+                                                 new_group_name="New Group 1",
+                                                 adviser_user_id='pmAdviserNG1'):
         self.changeUser('siteadmin')
         # create a new group and make sure every Plone groups are created
         new_group = self.create('MeetingGroup', title=new_group_name, acronym='N.G.')
@@ -112,6 +139,22 @@ class testCustomViews(MeetingCommunesTestCase):
                'advice_hide_during_redaction': False,
                 'advice_comment': RichTextValue(u'My comment')})
 
+    def handle_finance_cases(self, case_to_test, helper):
+        cases = ['simple', 'legal_not_given', 'simple_not_given', 'legal', 'initiative']
+        other_cases = list(cases)
+        other_cases.remove(case_to_test)
+
+        for case in other_cases:
+            result = helper.printFinanceAdvice(case)
+            self.assertListEqual(result, [])
+            result = helper.printFinanceAdvice([case])
+            self.assertListEqual(result, [])
+
+        result = helper.printFinanceAdvice(other_cases)
+        self.assertEqual(result, [])
+        result = helper.printFinanceAdvice(cases)
+        self.assertEqual(len(result), 2)
+
     def test_printFinanceAdvice_case_simple(self):
         # creator for group 'developers'
         self.changeUser('pmCreator1')
@@ -121,7 +164,7 @@ class testCustomViews(MeetingCommunesTestCase):
 
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
@@ -133,43 +176,43 @@ class testCustomViews(MeetingCommunesTestCase):
         # Advice not asked
         result = helper.printFinanceAdvice('simple')
         self.assertEqual(result, [])
+        result = helper.printFinanceAdvice(['simple'])
+        self.assertEqual(result, [])
 
         item1.setOptionalAdvisers(('vendors',))
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         # No advice given
         result = helper.printFinanceAdvice('simple')
+        self.assertEqual(result, [])
+        result = helper.printFinanceAdvice(['simple'])
         self.assertEqual(result, [])
 
         # 1 Advice given
         self._give_advice(item1, 'vendors', 'pmReviewer2')
         result = helper.printFinanceAdvice('simple')
         self.assertEqual(len(result), 1)
+        result = helper.printFinanceAdvice(['simple'])
+        self.assertEqual(len(result), 1)
 
         self.changeUser('pmCreator1')
         item1.setOptionalAdvisers((new_group, 'vendors', 'developers'))
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         self._give_advice(item1, 'developers', 'pmAdviser1')
         result = helper.printFinanceAdvice('simple')
+        self.assertEqual(len(result), 1)
+        result = helper.printFinanceAdvice(['simple'])
         self.assertEqual(len(result), 1)
 
         self._give_advice(item1, new_group, 'pmAdviserNG1')
         result = helper.printFinanceAdvice('simple')
         self.assertEqual(len(result), 2)
+        result = helper.printFinanceAdvice(['simple'])
+        self.assertEqual(len(result), 2)
 
-        # assert other cases are empty
-        result = helper.printFinanceAdvice('legal_not_given')
-        self.assertEqual(result, [])
-
-        result = helper.printFinanceAdvice('simple_not_given')
-        self.assertEqual(result, [])
-
-        result = helper.printFinanceAdvice('legal')
-        self.assertEqual(result, [])
-
-        result = helper.printFinanceAdvice('initiative')
-        self.assertEqual(result, [])
+        # assert other cases
+        self.handle_finance_cases('simple', helper)
 
     def test_printFinanceAdvice_case_simple_not_given(self):
         # creator for group 'developers'
@@ -180,7 +223,7 @@ class testCustomViews(MeetingCommunesTestCase):
 
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
@@ -194,7 +237,7 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertEqual(result, [])
 
         item1.setOptionalAdvisers(('vendors', new_group))
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         # No advice given
         result = helper.printFinanceAdvice('simple_not_given')
@@ -207,21 +250,12 @@ class testCustomViews(MeetingCommunesTestCase):
 
         # remove the advice
         item1.restrictedTraverse('@@delete_givenuid')(item1.meetingadvice.UID())
-        item1.at_post_edit_script()
+        item1._update_after_edit()
         result = helper.printFinanceAdvice('simple_not_given')
         self.assertEqual(len(result), 2)
 
-        result = helper.printFinanceAdvice('legal_not_given')
-        self.assertEqual(result, [])
-
-        result = helper.printFinanceAdvice('simple')
-        self.assertEqual(result, [])
-
-        result = helper.printFinanceAdvice('legal')
-        self.assertEqual(result, [])
-
-        result = helper.printFinanceAdvice('initiative')
-        self.assertEqual(result, [])
+        # assert other cases
+        self.handle_finance_cases('simple_not_given', helper)
 
     def test_printFinanceAdvice_case_initiative(self):
         new_group = self._set_up_additional_finance_advisor_group()
@@ -233,7 +267,7 @@ class testCustomViews(MeetingCommunesTestCase):
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
         item1.setOptionalAdvisers('developers')
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
@@ -256,25 +290,15 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper.printFinanceAdvice('initiative')
         self.assertEqual(len(result), 2)
 
+        # assert other cases
+        self.handle_finance_cases('initiative', helper)
+
         # remove the advice
         self.changeUser('pmReviewer2')
         item1.restrictedTraverse('@@delete_givenuid')(item1.meetingadvice.UID())
-        item1.at_post_edit_script()
+        item1._update_after_edit()
         result = helper.printFinanceAdvice('initiative')
         self.assertEqual(len(result), 1)
-
-        # assert other cases are empty
-        result = helper.printFinanceAdvice('legal_not_given')
-        self.assertEqual(result, [])
-
-        result = helper.printFinanceAdvice('simple_not_given')
-        self.assertEqual(result, [])
-
-        result = helper.printFinanceAdvice('legal')
-        self.assertEqual(result, [])
-
-        result = helper.printFinanceAdvice('simple')
-        self.assertEqual(result, [])
 
     def test_printFinanceAdvice_case_legal(self):
         new_group = self._set_up_additional_finance_advisor_group()
@@ -286,7 +310,7 @@ class testCustomViews(MeetingCommunesTestCase):
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
         item1.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', new_group + '__rowid__unique_id_003'))
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
@@ -305,14 +329,16 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper1.printFinanceAdvice('legal')
         self.assertEqual(len(result), 2)
 
+        # assert other cases
+        self.handle_finance_cases('legal', helper1)
+
         # test with power observer
         self.changeUser('siteadmin')
         self.meetingConfig.powerAdvisersGroups = (new_group, 'vendors',)
         self.changeUser('pmCreator1')
         item2 = self.create('MeetingItem', **data)
         item2.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', ))
-        item2.at_post_edit_script()
-
+        item2._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
@@ -331,19 +357,6 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper2.printFinanceAdvice('legal')
         self.assertEqual(len(result), 1)
 
-        # assert other cases are empty
-        result = helper1.printFinanceAdvice('legal_not_given')
-        self.assertEqual(result, [])
-
-        result = helper1.printFinanceAdvice('simple_not_given')
-        self.assertEqual(result, [])
-
-        result = helper1.printFinanceAdvice('simple')
-        self.assertEqual(result, [])
-
-        result = helper1.printFinanceAdvice('initiative')
-        self.assertEqual(result, [])
-
     def test_printFinanceAdvice_case_legal_not_given(self):
         new_group = self._set_up_additional_finance_advisor_group()
 
@@ -354,7 +367,7 @@ class testCustomViews(MeetingCommunesTestCase):
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
         item1.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', new_group + '__rowid__unique_id_003'))
-        item1.at_post_edit_script()
+        item1._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
@@ -377,16 +390,19 @@ class testCustomViews(MeetingCommunesTestCase):
         # remove the advice
         self.changeUser('pmReviewer2')
         item1.restrictedTraverse('@@delete_givenuid')(item1.meetingadvice.UID())
-        item1.at_post_edit_script()
+        item1._update_after_edit()
         result = helper1.printFinanceAdvice('legal_not_given')
         self.assertEqual(len(result), 1)
 
         # remove the advice
         self.changeUser('pmAdviserNG1')
         item1.restrictedTraverse('@@delete_givenuid')(item1.getAdviceObj(new_group).UID())
-        item1.at_post_edit_script()
+        item1._update_after_edit()
         result = helper1.printFinanceAdvice('legal_not_given')
         self.assertEqual(len(result), 2)
+
+        # assert other cases
+        self.handle_finance_cases('legal_not_given', helper1)
 
         # test with power observer
         self.changeUser('siteadmin')
@@ -394,7 +410,7 @@ class testCustomViews(MeetingCommunesTestCase):
         self.changeUser('pmCreator1')
         item2 = self.create('MeetingItem', **data)
         item2.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', ))
-        item2.at_post_edit_script()
+        item2._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
@@ -411,17 +427,4 @@ class testCustomViews(MeetingCommunesTestCase):
 
         self._give_advice(item2, new_group, 'pmAdviserNG1')
         result = helper2.printFinanceAdvice('legal_not_given')
-        self.assertEqual(result, [])
-
-        # assert other cases are empty
-        result = helper1.printFinanceAdvice('legal')
-        self.assertEqual(result, [])
-
-        result = helper1.printFinanceAdvice('simple_not_given')
-        self.assertEqual(result, [])
-
-        result = helper1.printFinanceAdvice('simple')
-        self.assertEqual(result, [])
-
-        result = helper1.printFinanceAdvice('initiative')
         self.assertEqual(result, [])
