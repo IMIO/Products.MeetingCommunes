@@ -211,6 +211,12 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
          director.
         """
 
+        def check_given_or_not_cases(advice, case_to_check, case_given, case_not_given):
+            if advice['advice_given_on']:
+                return case_to_check == case_given
+            else:
+                return case_to_check == case_not_given
+
         if isinstance(cases, str):
             cases = [cases]
 
@@ -231,41 +237,32 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                         else:
                             continue
 
-                        if advice['advice_given_on']:
-                            if case == 'initiative' and advice['not_asked']:
-                                result.append(advice)
-
+                        # Change data if advice is hidden
                         if 'hidden_during_redaction' in advice and advice['hidden_during_redaction'] and not show_hidden:
                             message = self.translate('hidden_during_redaction', domain='PloneMeeting')
                             advice['type_translated'] = message
                             advice['type'] = 'hidden_during_redaction'
                             advice['comment'] = message
 
-                        if 'delay_infos' in advice and not advice['not_asked']:
+                        # check if advice was given on self initiative by the adviser
+                        if advice['not_asked']:
+                            if case == 'initiative' and advice['advice_given_on']:
+                                result.append(advice)
+                        else:
+                            # set transmission date to adviser because advice was asked by the agent
                             advice['item_transmitted_on'] = self.getItemFinanceAdviceTransmissionDate(finance_advice_id)
-
                             if advice['item_transmitted_on']:
-                                advice['item_transmitted_on_localized'] = self.display_date(date=advice['item_transmitted_on'])
+                                advice['item_transmitted_on_localized'] = self.display_date(
+                                    date=advice['item_transmitted_on'])
                             else:
                                 advice['item_transmitted_on_localized'] = ''
 
-                            if (case == 'simple' or case == 'simple_not_given') and not advice['delay_infos']:
-
-                                if case == 'simple' and advice['advice_given_on']:
+                            # If there is a delay then it is a legal advice. If not, it's a simple advice
+                            if advice['delay']:
+                                if check_given_or_not_cases(advice, case, 'legal', 'legal_not_given'):
                                     result.append(advice)
-
-                                elif case == 'simple_not_given' and not advice['advice_given_on']:
-                                    result.append(advice)
-
-                            elif advice['delay_infos']:
-
-                                if advice['advice_given_on']:
-
-                                    if case == 'legal':
-                                        result.append(advice)
-
-                                elif case == 'legal_not_given':
-                                    result.append(advice)
+                            elif check_given_or_not_cases(advice, case, 'simple', 'simple_not_given'):
+                                result.append(advice)
         return result
 
     def getItemFinanceDelayLimitDate(self):
