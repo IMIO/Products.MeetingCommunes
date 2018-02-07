@@ -161,14 +161,14 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                 url, safe_unicode(title)))
         return (u'\n'.join(res))
 
-    def printFormatedAdvice(self):
+    def printFormatedAdvice(self, exclude_not_given=True):
         ''' Printing Method use in templates :
             return formated advice'''
         res = []
         keys = self.context.getAdvicesByType().keys()
         for key in keys:
             for advice in self.context.getAdvicesByType()[key]:
-                if advice['type'] == 'not_given':
+                if advice['type'] == 'not_given' and exclude_not_given:
                     continue
 
                 comment = ''
