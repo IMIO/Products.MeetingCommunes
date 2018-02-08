@@ -22,9 +22,10 @@
 # 02110-1301, USA.
 #
 
-from DateTime import DateTime
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
+
+from DateTime import DateTime
 from plone import api
 from plone.app.textfield import RichTextValue
 from plone.dexterity.utils import createContentInContainer
@@ -86,6 +87,64 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertEqual(helper.print_item_state(), u'Created')
         self.validateItem(item)
         self.assertEqual(helper.print_item_state(), u'Validated')
+
+    def test_printFormatedAdvice(self):
+        # advice are addable/editable when item is 'proposed'
+        # create an item and ask advice of 'vendors'
+        self.changeUser('pmCreator1')
+        item = self.create('MeetingItem')
+        item.setOptionalAdvisers(('vendors', 'developers',))
+        item.at_post_edit_script()
+        # an advice can be given when an item is 'proposed'
+        self.proposeItem(item)
+
+        self.changeUser('pmManager')
+
+        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
+        view = item.restrictedTraverse('@@document-generation')
+        view()
+        helper = view.get_generation_context_helper()
+
+        result = helper.printFormatedAdvice()
+        self.assertListEqual(result, [])
+
+        result = helper.printFormatedAdvice(True)
+        self.assertListEqual(result, [])
+
+        result = helper.printFormatedAdvice(False)
+        self.assertListEqual(result,
+                             [{'type': helper.translate(msgid='not_given', domain='PloneMeeting').encode('utf-8'),
+                               'name': 'Vendors',
+                               'comment': ''},
+                              {'type': helper.translate(msgid='not_given', domain='PloneMeeting').encode('utf-8'),
+                               'name': 'Developers',
+                               'comment': ''}])
+
+        # add advice for 'developers'
+        self.changeUser('pmAdviser1')
+        developers_advice = createContentInContainer(item,
+                                                     'meetingadvice',
+                                                     **{'advice_group': 'developers',
+                                                        'advice_type': u'positive',
+                                                        'advice_comment': RichTextValue(u'My comment')})
+
+        result = helper.printFormatedAdvice()
+        self.assertListEqual(result, [{'type': helper.translate(msgid='positive', domain='PloneMeeting').encode('utf-8'),
+                              'name': 'Developers',
+                              'comment': 'My comment'}])
+
+        self.assertListEqual(helper.printFormatedAdvice(), helper.printFormatedAdvice(True))
+
+        result = helper.printFormatedAdvice(False)
+        self.assertListEqual(result,
+                             [{'type': helper.translate(msgid='positive', domain='PloneMeeting').encode('utf-8'),
+                               'name': 'Developers',
+                               'comment': 'My comment'},
+                              {'type': helper.translate(msgid='not_given', domain='PloneMeeting').encode('utf-8'),
+                               'name': 'Vendors',
+                               'comment': ''}])
 
     def _set_up_additional_finance_advisor_group(self,
                                                  new_group_name="New Group 1",
