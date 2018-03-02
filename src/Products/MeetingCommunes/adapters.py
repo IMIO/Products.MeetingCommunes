@@ -56,14 +56,10 @@ from Products.MeetingCommunes import logger
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.config import FINANCE_GROUP_SUFFIXES
 from Products.MeetingCommunes.config import FINANCE_WAITING_ADVICES_STATES
-from Products.MeetingCommunes.interfaces import IMeetingItemCollegeWorkflowConditions
-from Products.MeetingCommunes.interfaces import IMeetingItemCollegeWorkflowActions
-from Products.MeetingCommunes.interfaces import IMeetingCollegeWorkflowConditions
-from Products.MeetingCommunes.interfaces import IMeetingCollegeWorkflowActions
-from Products.MeetingCommunes.interfaces import IMeetingItemCouncilWorkflowConditions
-from Products.MeetingCommunes.interfaces import IMeetingItemCouncilWorkflowActions
-from Products.MeetingCommunes.interfaces import IMeetingCouncilWorkflowConditions
-from Products.MeetingCommunes.interfaces import IMeetingCouncilWorkflowActions
+from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowConditions
+from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowActions
+from Products.MeetingCommunes.interfaces import IMeetingCommunesWorkflowConditions
+from Products.MeetingCommunes.interfaces import IMeetingCommunesWorkflowActions
 
 # Names of available workflow adaptations.
 customwfAdaptations = list(MeetingConfig.wfAdaptations)
@@ -383,7 +379,7 @@ class CustomMeeting(Meeting):
             i = firstNumber
             tmp_res = []
             for cat in res:
-                tmp_cat=[cat[0]]
+                tmp_cat = [cat[0]]
                 for item in cat[1:]:
                     tmp_cat.append((i, item))
                     i = i + 1
@@ -869,11 +865,11 @@ class CustomMeetingConfig(MeetingConfig):
         return []
 
 
-class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
+class MeetingCommunesWorkflowActions(MeetingWorkflowActions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
-       interface IMeetingCollegeWorkflowActions'''
+       interface IMeetingCommunesWorkflowActions'''
 
-    implements(IMeetingCollegeWorkflowActions)
+    implements(IMeetingCommunesWorkflowActions)
     security = ClassSecurityInfo()
 
     security.declarePrivate('doDecide')
@@ -899,11 +895,11 @@ class MeetingCollegeWorkflowActions(MeetingWorkflowActions):
         pass
 
 
-class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
+class MeetingCommunesWorkflowConditions(MeetingWorkflowConditions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
-       interface IMeetingCollegeWorkflowConditions'''
+       interface IMeetingCommunesWorkflowConditions'''
 
-    implements(IMeetingCollegeWorkflowConditions)
+    implements(IMeetingCommunesWorkflowConditions)
     security = ClassSecurityInfo()
 
     security.declarePublic('mayCorrect')
@@ -923,11 +919,11 @@ class MeetingCollegeWorkflowConditions(MeetingWorkflowConditions):
         return res
 
 
-class MeetingItemCollegeWorkflowActions(MeetingItemWorkflowActions):
+class MeetingItemCommunesWorkflowActions(MeetingItemWorkflowActions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
-       interface IMeetingItemCollegeWorkflowActions'''
+       interface IMeetingItemCommunesWorkflowActions'''
 
-    implements(IMeetingItemCollegeWorkflowActions)
+    implements(IMeetingItemCommunesWorkflowActions)
     security = ClassSecurityInfo()
 
     security.declarePrivate('doAccept_but_modify')
@@ -941,11 +937,11 @@ class MeetingItemCollegeWorkflowActions(MeetingItemWorkflowActions):
         pass
 
 
-class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
+class MeetingItemCommunesWorkflowConditions(MeetingItemWorkflowConditions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
-       interface IMeetingItemCollegeWorkflowConditions'''
+       interface IMeetingItemCommunesWorkflowConditions'''
 
-    implements(IMeetingItemCollegeWorkflowConditions)
+    implements(IMeetingItemCommunesWorkflowConditions)
     security = ClassSecurityInfo()
 
     def __init__(self, item):
@@ -974,38 +970,6 @@ class MeetingItemCollegeWorkflowConditions(MeetingItemWorkflowConditions):
                (self.context.getMeeting().queryState() in ('published', 'decided', 'closed', 'decisions_published',)):
                 res = True
         return res
-
-
-class MeetingCouncilWorkflowActions(MeetingCollegeWorkflowActions):
-    '''Adapter that adapts a meeting item implementing IMeetingItem to the
-       interface IMeetingCouncilWorkflowActions'''
-
-    implements(IMeetingCouncilWorkflowActions)
-    security = ClassSecurityInfo()
-
-
-class MeetingCouncilWorkflowConditions(MeetingCollegeWorkflowConditions):
-    '''Adapter that adapts a meeting item implementing IMeetingItem to the
-       interface IMeetingCouncilWorkflowConditions'''
-
-    implements(IMeetingCouncilWorkflowConditions)
-    security = ClassSecurityInfo()
-
-
-class MeetingItemCouncilWorkflowActions(MeetingItemCollegeWorkflowActions):
-    '''Adapter that adapts a meeting item implementing IMeetingItem to the
-       interface IMeetingItemCouncilWorkflowActions'''
-
-    implements(IMeetingItemCouncilWorkflowActions)
-    security = ClassSecurityInfo()
-
-
-class MeetingItemCouncilWorkflowConditions(MeetingItemCollegeWorkflowConditions):
-    '''Adapter that adapts a meeting item implementing IMeetingItem to the
-       interface IMeetingItemCouncilWorkflowConditions'''
-
-    implements(IMeetingItemCouncilWorkflowConditions)
-    security = ClassSecurityInfo()
 
 
 class CustomToolPloneMeeting(ToolPloneMeeting):
@@ -1158,14 +1122,10 @@ InitializeClass(CustomMeeting)
 InitializeClass(CustomMeetingItem)
 InitializeClass(CustomMeetingConfig)
 InitializeClass(CustomMeetingGroup)
-InitializeClass(MeetingCollegeWorkflowActions)
-InitializeClass(MeetingCollegeWorkflowConditions)
-InitializeClass(MeetingItemCollegeWorkflowActions)
-InitializeClass(MeetingItemCollegeWorkflowConditions)
-InitializeClass(MeetingItemCouncilWorkflowActions)
-InitializeClass(MeetingItemCouncilWorkflowConditions)
-InitializeClass(MeetingCouncilWorkflowActions)
-InitializeClass(MeetingCouncilWorkflowConditions)
+InitializeClass(MeetingCommunesWorkflowActions)
+InitializeClass(MeetingCommunesWorkflowConditions)
+InitializeClass(MeetingItemCommunesWorkflowActions)
+InitializeClass(MeetingItemCommunesWorkflowConditions)
 InitializeClass(CustomToolPloneMeeting)
 # ------------------------------------------------------------------------------
 
