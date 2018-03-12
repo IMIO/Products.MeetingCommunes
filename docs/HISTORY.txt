@@ -12,6 +12,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Fix reviewer groups of pmReviewerLevel1 and pmReviewerLevel2 to avoid importing MEETINGREVIEWERS
 - Do not use separated 'College'/'Council' interfaces for WF actions and conditions, use 'Communes'
   interfaces in both cases
+- Added a "simple" profile that add the most simple configuration possible.  Useable to create a very
+  simple configuration or as base for another complex configuration
 
 4.0 (2017-08-04)
 ----------------

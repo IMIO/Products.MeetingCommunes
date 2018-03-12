@@ -33,6 +33,14 @@
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:registerProfile
+   name="simple"
+   title="PloneMeeting / The most simple profile possible"
+   directory="profiles/simple"
+   description="Very simple profile for PloneMeeting"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
    name="financesadvice"
    title="PloneMeeting / Finances advice specific behavior"
    directory="profiles/financesadvice"
