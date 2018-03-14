@@ -104,6 +104,7 @@ simpleMeeting.onMeetingTransitionItemTransitionToTrigger = (
 simpleMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
-                                 meetingConfigs=(simpleMeeting, ))
+                                 meetingConfigs=(simpleMeeting, ),
+                                 groups=[])
 data.enableUserPreferences = False
 # ------------------------------------------------------------------------------
