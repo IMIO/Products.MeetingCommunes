@@ -228,6 +228,7 @@ developers.observers.append(voter1)
 developers.observers.append(voter2)
 vendors.observers.append(voter1)
 vendors.observers.append(voter2)
+
 # Add a vintage group
 endUsers = GroupDescriptor('endUsers', 'End users', 'EndUsers', active=False)
 

@@ -66,6 +66,11 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
            collection, this is used in the adapted method 'showFinanceAdviceTemplate'.'''
         cfg = self.meetingConfig
         collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID)
+        # make sure collection is active
+        if self.wfTool.getInfoFor(collection, 'review_state') == 'inactive':
+            self.changeUser('siteadmin')
+            self.do(collection, 'activate')
+
         collection.setQuery([
             {'i': 'portal_type',
              'o': 'plone.app.querystring.operation.selection.is',
