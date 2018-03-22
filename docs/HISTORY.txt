@@ -14,6 +14,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   interfaces in both cases
 - Added a "simple" profile that add the most simple configuration possible.  Useable to create a very
   simple configuration or as base for another complex configuration
+- Added variables cfg1_id and cfg2_id to MeetingCommunesTestCase, this is used when defining
+  meetingConfig and meetingConfig2 attributes of tests and useful for profiles based on MeetingCommunes
 
 4.0 (2017-08-04)
 ----------------

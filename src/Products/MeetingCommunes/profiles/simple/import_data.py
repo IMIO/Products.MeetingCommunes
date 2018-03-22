@@ -81,10 +81,20 @@ simpleMeeting.itemAdviceViewStates = ('validated',
                                       'pre_accepted',)
 simpleMeeting.itemPowerObserversStates = ('itemfrozen',
                                           'accepted',
+                                          'accepted_but_modified',
                                           'delayed',
                                           'refused',
-                                          'accepted_but_modified',
+                                          'returned_to_proposing_group',
                                           'pre_accepted')
+simpleMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
+simpleMeeting.itemRestrictedPowerObserversStates = ('itemfrozen',
+                                                    'accepted',
+                                                    'accepted_but_modified',
+                                                    'delayed',
+                                                    'refused',
+                                                    'returned_to_proposing_group',
+                                                    'pre_accepted')
+simpleMeeting.meetingRestrictedPowerObserversStates = ('frozen', 'decided', 'closed')
 simpleMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 simpleMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 simpleMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
@@ -101,7 +111,6 @@ simpleMeeting.onMeetingTransitionItemTransitionToTrigger = (
      'item_transition': 'itemfreeze'},
     {'meeting_transition': 'close',
      'item_transition': 'accept'},)
-simpleMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(simpleMeeting, ),
