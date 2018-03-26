@@ -149,10 +149,10 @@ coGestMeeting.xhtmlTransformFields = ()
 coGestMeeting.xhtmlTransformTypes = ()
 coGestMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 coGestMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-coGestMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
-coGestMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
-coGestMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
-coGestMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions'
+coGestMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
+coGestMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
+coGestMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
+coGestMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
 coGestMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 coGestMeeting.meetingTopicStates = ('created', 'frozen')
 coGestMeeting.decisionTopicStates = ('decided', 'closed')
@@ -185,7 +185,7 @@ coGestMeeting.itemPowerObserversStates = ('itemfrozen',
                                           'accepted_but_modified',
                                           'pre_accepted')
 coGestMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-coGestMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+coGestMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 coGestMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 coGestMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

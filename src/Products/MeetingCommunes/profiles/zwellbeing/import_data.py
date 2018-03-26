@@ -86,10 +86,10 @@ wbMeeting.xhtmlTransformFields = ()
 wbMeeting.xhtmlTransformTypes = ()
 wbMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 wbMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-wbMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
-wbMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
-wbMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
-wbMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions'
+wbMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
+wbMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
+wbMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
+wbMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
 wbMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 wbMeeting.meetingTopicStates = ('created', 'frozen')
 wbMeeting.decisionTopicStates = ('decided', 'closed')
@@ -122,7 +122,7 @@ wbMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 wbMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-wbMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+wbMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 wbMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 wbMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

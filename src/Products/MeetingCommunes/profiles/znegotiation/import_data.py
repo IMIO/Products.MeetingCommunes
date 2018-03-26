@@ -86,10 +86,10 @@ negoMeeting.xhtmlTransformFields = ()
 negoMeeting.xhtmlTransformTypes = ()
 negoMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 negoMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-negoMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
-negoMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
-negoMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
-negoMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions'
+negoMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
+negoMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
+negoMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
+negoMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
 negoMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 negoMeeting.meetingTopicStates = ('created', 'frozen')
 negoMeeting.decisionTopicStates = ('decided', 'closed')
@@ -122,7 +122,7 @@ negoMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 negoMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-negoMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+negoMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 negoMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 negoMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

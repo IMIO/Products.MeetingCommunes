@@ -7,8 +7,15 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Do not call at_post_edit_script directly anymore, use Meeting(Item)._update_after_edit
+- Adapted default 'deliberation.odt' to no more use global margin and integrate printAllAnnexes
+- Fix reviewer groups of pmReviewerLevel1 and pmReviewerLevel2 to avoid importing MEETINGREVIEWERS
+- Do not use separated 'College'/'Council' interfaces for WF actions and conditions, use 'Communes'
+  interfaces in both cases
+- Added a "simple" profile that add the most simple configuration possible.  Useable to create a very
+  simple configuration or as base for another complex configuration
+- Added variables cfg1_id and cfg2_id to MeetingCommunesTestCase, this is used when defining
+  meetingConfig and meetingConfig2 attributes of tests and useful for profiles based on MeetingCommunes
 
 4.0 (2017-08-04)
 ----------------

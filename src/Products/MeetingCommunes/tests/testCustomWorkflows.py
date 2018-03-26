@@ -69,6 +69,10 @@ class testCustomWorkflows(MeetingCommunesTestCase):
            When we close a meeting, every items are set to accepted if they are still
            not decided...
         """
+        # activate the 'refused' WFAdaptation
+        cfg = self.meetingConfig
+        cfg.setWorkflowAdaptations(('refused', ))
+        performWorkflowAdaptations(cfg, logger=pm_logger)
         # First, define recurring items in the meeting config
         self.changeUser('pmManager')
         # create a meeting (with 7 items)

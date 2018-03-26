@@ -86,10 +86,10 @@ scrhMeeting.xhtmlTransformFields = ()
 scrhMeeting.xhtmlTransformTypes = ()
 scrhMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 scrhMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-scrhMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
-scrhMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
-scrhMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
-scrhMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions'
+scrhMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
+scrhMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
+scrhMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
+scrhMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
 scrhMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 scrhMeeting.meetingTopicStates = ('created', 'frozen')
 scrhMeeting.decisionTopicStates = ('decided', 'closed')
@@ -122,7 +122,7 @@ scrhMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 scrhMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-scrhMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+scrhMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 scrhMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 scrhMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

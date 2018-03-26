@@ -9,13 +9,8 @@
 # GNU General Public License (GPL)
 #
 
-__author__ = """Gauthier Bastien <g.bastien@imio.be>, Stephan Geulette <s.geulette@imio.be>"""
-__docformat__ = 'plaintext'
-
-
 import os
 import logging
-logger = logging.getLogger('MeetingCommunes: setuphandlers')
 from DateTime import DateTime
 from plone import api
 from plone import namedfile
@@ -26,6 +21,11 @@ from collective.iconifiedcategory.utils import get_config_root
 from Products.CMFPlone.utils import _createObjectByType
 from Products.PloneMeeting.exportimport.content import ToolInitializer
 from Products.MeetingCommunes.config import PROJECTNAME
+
+__author__ = """Gauthier Bastien <g.bastien@imio.be>, Stephan Geulette <s.geulette@imio.be>"""
+__docformat__ = 'plaintext'
+
+logger = logging.getLogger('MeetingCommunes: setuphandlers')
 
 
 def isNotMeetingCommunesProfile(context):
@@ -75,7 +75,9 @@ def isMeetingCommunesConfigureProfile(context):
         context.readDataFile("MeetingCommunes_scresthome_marker.txt") or \
         context.readDataFile("MeetingCommunes_technicalcommittee_marker.txt") or \
         context.readDataFile("MeetingCommunes_remunarate_marker.txt") or \
-        context.readDataFile("MeetingCommunes_testing_marker.txt")
+        context.readDataFile("MeetingCommunes_testing_marker.txt")  or \
+        context.readDataFile("MeetingCommunes_executive_marker.txt")
+
 
 def isNotMeetingCommunesDemoProfile(context):
     return context.readDataFile("MeetingCommunes_demo_marker.txt") is None
@@ -351,7 +353,7 @@ def addDemoData(context):
                     wfTool.doActionFor(newItem, 'propose')
                 if item['review_state'] == 'validated':
                     wfTool.doActionFor(newItem, 'validate')
-                #add annexe and advise for one item in College
+                # add annexe and advise for one item in College
                 if item['templateId'] == 'template3' and cfg.id == 'meeting-config-college':
                     cpt = 1
                     annexes_config_root = get_config_root(newItem)

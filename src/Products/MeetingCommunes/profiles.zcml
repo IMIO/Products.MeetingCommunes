@@ -33,6 +33,14 @@
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:registerProfile
+   name="simple"
+   title="PloneMeeting / The most simple profile possible"
+   directory="profiles/simple"
+   description="Very simple profile for PloneMeeting"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
    name="financesadvice"
    title="PloneMeeting / Finances advice specific behavior"
    directory="profiles/financesadvice"
@@ -125,15 +133,22 @@
 
   <genericsetup:registerProfile
    name="zscresthome"
-   title="PloneMeeting / comité spécial de la maison de repos"
+   title="PloneMeeting / Comité spécial de la maison de repos"
    description="PloneMeeting for SCRestHome (Belgium)"
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:registerProfile
    name="zremunarate"
-   title="PloneMeeting / comité de rémunération"
+   title="PloneMeeting / Comité de rémunération"
    description="PloneMeeting for REMUNARATE (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
+   name="zexecutive_office"
+   title="PloneMeeting / Bureau exécutif"
+   description="PloneMeeting for executive office (Belgium)"
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 

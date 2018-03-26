@@ -87,10 +87,10 @@ coordinateOffice.xhtmlTransformFields = ()
 coordinateOffice.xhtmlTransformTypes = ()
 coordinateOffice.itemWorkflow = 'meetingitemcommunes_workflow'
 coordinateOffice.meetingWorkflow = 'meetingcommunes_workflow'
-coordinateOffice.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
-coordinateOffice.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
-coordinateOffice.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
-coordinateOffice.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions'
+coordinateOffice.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
+coordinateOffice.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
+coordinateOffice.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
+coordinateOffice.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
 coordinateOffice.transitionsToConfirm = ['MeetingItem.delay', ]
 coordinateOffice.meetingTopicStates = ('created', 'frozen')
 coordinateOffice.decisionTopicStates = ('decided', 'closed')
@@ -123,7 +123,7 @@ coordinateOffice.itemPowerObserversStates = ('itemfrozen',
                                              'accepted_but_modified',
                                              'pre_accepted')
 coordinateOffice.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-coordinateOffice.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+coordinateOffice.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 coordinateOffice.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 coordinateOffice.onTransitionFieldTransforms = (
     ({'transition': 'delay',

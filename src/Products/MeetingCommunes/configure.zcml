@@ -15,36 +15,20 @@
   <includeOverrides file="overrides.zcml" />
 
   <adapter for="Products.PloneMeeting.interfaces.IMeetingItem"
-           factory="Products.MeetingCommunes.adapters.MeetingItemCollegeWorkflowActions"
-           provides="Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions"/>
+           factory="Products.MeetingCommunes.adapters.MeetingItemCommunesWorkflowActions"
+           provides="Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions"/>
 
   <adapter for="Products.PloneMeeting.interfaces.IMeetingItem"
-           factory="Products.MeetingCommunes.adapters.MeetingItemCollegeWorkflowConditions"
-           provides="Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions"/>
+           factory="Products.MeetingCommunes.adapters.MeetingItemCommunesWorkflowConditions"
+           provides="Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions"/>
 
   <adapter for="Products.PloneMeeting.interfaces.IMeeting"
-           factory="Products.MeetingCommunes.adapters.MeetingCollegeWorkflowActions"
-           provides="Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions"/>
+           factory="Products.MeetingCommunes.adapters.MeetingCommunesWorkflowActions"
+           provides="Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions"/>
 
   <adapter for="Products.PloneMeeting.interfaces.IMeeting"
-           factory="Products.MeetingCommunes.adapters.MeetingCollegeWorkflowConditions"
-           provides="Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions"/>
-
-  <adapter for="Products.PloneMeeting.interfaces.IMeetingItem"
-           factory="Products.MeetingCommunes.adapters.MeetingItemCouncilWorkflowActions"
-           provides="Products.MeetingCommunes.interfaces.IMeetingItemCouncilWorkflowActions"/>
-
-  <adapter for="Products.PloneMeeting.interfaces.IMeetingItem"
-           factory="Products.MeetingCommunes.adapters.MeetingItemCouncilWorkflowConditions"
-           provides="Products.MeetingCommunes.interfaces.IMeetingItemCouncilWorkflowConditions"/>
-
-  <adapter for="Products.PloneMeeting.interfaces.IMeeting"
-           factory="Products.MeetingCommunes.adapters.MeetingCouncilWorkflowActions"
-           provides="Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowActions"/>
-
-  <adapter for="Products.PloneMeeting.interfaces.IMeeting"
-           factory="Products.MeetingCommunes.adapters.MeetingCouncilWorkflowConditions"
-           provides="Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowConditions"/>
+           factory="Products.MeetingCommunes.adapters.MeetingCommunesWorkflowConditions"
+           provides="Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions"/>
 
   <adapter for="Products.PloneMeeting.interfaces.IMeetingItem"
            factory="Products.MeetingCommunes.adapters.CustomMeetingItem"

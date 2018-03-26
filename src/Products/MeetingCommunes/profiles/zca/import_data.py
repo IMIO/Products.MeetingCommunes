@@ -148,10 +148,10 @@ caMeeting.xhtmlTransformFields = ()
 caMeeting.xhtmlTransformTypes = ()
 caMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 caMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-caMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
-caMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
-caMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
-caMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions'
+caMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
+caMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
+caMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
+caMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
 caMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 caMeeting.meetingTopicStates = ('created', 'frozen')
 caMeeting.decisionTopicStates = ('decided', 'closed')
@@ -184,7 +184,7 @@ caMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 caMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-caMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+caMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 caMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 caMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

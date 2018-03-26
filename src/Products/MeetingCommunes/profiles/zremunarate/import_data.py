@@ -86,10 +86,10 @@ remunMeeting.xhtmlTransformFields = ()
 remunMeeting.xhtmlTransformTypes = ()
 remunMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 remunMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-remunMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
-remunMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
-remunMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
-remunMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions'
+remunMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
+remunMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
+remunMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
+remunMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
 remunMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 remunMeeting.meetingTopicStates = ('created', 'frozen')
 remunMeeting.decisionTopicStates = ('decided', 'closed')
@@ -122,7 +122,7 @@ remunMeeting.itemPowerObserversStates = ('itemfrozen',
                                       'accepted_but_modified',
                                       'pre_accepted')
 remunMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-remunMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+remunMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 remunMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 remunMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

@@ -39,7 +39,10 @@ class MeetingCommunesTestCase(PloneMeetingTestCase, MeetingCommunesTestingHelper
 
     layer = MC_TESTING_PROFILE_FUNCTIONAL
 
+    cfg1_id = 'meeting-config-college'
+    cfg2_id = 'meeting-config-council'
+
     def setUp(self):
         PloneMeetingTestCase.setUp(self)
-        self.meetingConfig = getattr(self.tool, 'meeting-config-college')
-        self.meetingConfig2 = getattr(self.tool, 'meeting-config-council')
+        self.meetingConfig = getattr(self.tool, self.cfg1_id)
+        self.meetingConfig2 = getattr(self.tool, self.cfg2_id)

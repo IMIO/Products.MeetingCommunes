@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from Products.PloneMeeting.config import MEETINGREVIEWERS
 from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import GroupDescriptor
@@ -203,8 +202,10 @@ developers = GroupDescriptor('developers', 'Developers', 'Devel')
 developers.creators.append(pmCreator1)
 developers.creators.append(pmCreator1b)
 developers.creators.append(pmManager)
+developers.prereviewers.append(pmReviewerLevel1)
 developers.reviewers.append(pmReviewer1)
 developers.reviewers.append(pmManager)
+developers.reviewers.append(pmReviewerLevel2)
 developers.observers.append(pmObserver1)
 developers.observers.append(pmReviewer1)
 developers.observers.append(pmManager)
@@ -212,10 +213,6 @@ developers.advisers.append(pmAdviser1)
 developers.advisers.append(pmManager)
 setattr(developers, 'signatures', 'developers signatures')
 setattr(developers, 'echevinServices', 'developers')
-# put pmReviewerLevel1 in first level of reviewers from what is in MEETINGREVIEWERS
-getattr(developers, MEETINGREVIEWERS.keys()[-1]).append(pmReviewerLevel1)
-# put pmReviewerLevel2 in second level of reviewers from what is in MEETINGREVIEWERS
-getattr(developers, MEETINGREVIEWERS.keys()[0]).append(pmReviewerLevel2)
 
 # give an advice on recurring items
 vendors = GroupDescriptor('vendors', 'Vendors', 'Devil')
@@ -231,6 +228,7 @@ developers.observers.append(voter1)
 developers.observers.append(voter2)
 vendors.observers.append(voter1)
 vendors.observers.append(voter2)
+
 # Add a vintage group
 endUsers = GroupDescriptor('endUsers', 'End users', 'EndUsers', active=False)
 
@@ -277,13 +275,13 @@ collegeMeeting.annexTypes = [financialAnalysis, budgetAnalysisCfg1, overheadAnal
                              itemAnnex, decisionAnnex, marketingAnalysis,
                              adviceAnnex, adviceLegalAnalysis, meetingAnnex]
 collegeMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
-collegeMeeting.maxShownListings = '100' 
+collegeMeeting.maxShownListings = '100'
 collegeMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 collegeMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
-collegeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
-collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
-collegeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions'
+collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
+collegeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
+collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
+collegeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
 collegeMeeting.transitionsToConfirm = []
 collegeMeeting.transitionsForPresentingAnItem = ['propose', 'validate', 'present', ]
 collegeMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
@@ -320,8 +318,8 @@ collegeMeeting.itemAdviceEditStates = ['proposed', 'validated']
 collegeMeeting.itemAdviceViewStates = ['presented', ]
 collegeMeeting.transitionsReinitializingDelays = ('backToItemCreated', )
 collegeMeeting.enforceAdviceMandatoriness = False
-collegeMeeting.itemPowerObserversStates = ('itemcreated', 'presented', 'accepted', 'delayed', 'refused')
-collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
+collegeMeeting.itemPowerObserversStates = ('itemcreated', 'presented', 'accepted', 'delayed')
+collegeMeeting.itemDecidedStates = ['accepted', 'delayed', 'accepted_but_modified', 'pre_accepted']
 collegeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation']
 collegeMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
                                              'reverse': '0'}, )
@@ -367,10 +365,10 @@ councilMeeting.annexTypes = [financialAnalysis, legalAnalysis,
                              adviceAnnex, adviceLegalAnalysis, meetingAnnex]
 councilMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 councilMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-councilMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCouncilWorkflowConditions'
-councilMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCouncilWorkflowActions'
-councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowConditions'
-councilMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowActions'
+councilMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
+councilMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
+councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
+councilMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
 councilMeeting.transitionsToConfirm = []
 councilMeeting.transitionsForPresentingAnItem = ['propose', 'validate', 'present', ]
 councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
@@ -421,7 +419,7 @@ councilMeeting.itemAdviceEditStates = ['proposed', 'validated']
 councilMeeting.itemAdviceViewStates = ['presented', ]
 councilMeeting.transitionsReinitializingDelays = ('backToItemCreated')
 councilMeeting.enforceAdviceMandatoriness = False
-councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
+councilMeeting.itemDecidedStates = ['accepted', 'delayed', 'accepted_but_modified', 'pre_accepted']
 councilMeeting.itemPowerObserversStates = collegeMeeting.itemPowerObserversStates
 councilMeeting.meetingPowerObserversStates = collegeMeeting.meetingPowerObserversStates
 councilMeeting.useCopies = True

@@ -91,10 +91,10 @@ bourgmestreMeeting.xhtmlTransformFields = ()
 bourgmestreMeeting.xhtmlTransformTypes = ()
 bourgmestreMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 bourgmestreMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-bourgmestreMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
-bourgmestreMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
-bourgmestreMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
-bourgmestreMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions'
+bourgmestreMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
+bourgmestreMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
+bourgmestreMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
+bourgmestreMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
 bourgmestreMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 bourgmestreMeeting.meetingTopicStates = ('created', 'frozen')
 bourgmestreMeeting.decisionTopicStates = ('decided', 'closed')
@@ -127,7 +127,7 @@ bourgmestreMeeting.itemPowerObserversStates = ('itemfrozen',
                                                'accepted_but_modified',
                                                'pre_accepted')
 bourgmestreMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-bourgmestreMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+bourgmestreMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 bourgmestreMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 bourgmestreMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

@@ -36,19 +36,19 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
     def test_pm_CreateItem(self):
         '''Run the test_pm_CreateItem from PloneMeeting.'''
         # we do the test for the college config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-college')
+        self.meetingConfig = getattr(self.tool, self.cfg1_id)
         super(testWorkflows, self).test_pm_CreateItem()
         # we do the test for the council config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-council')
+        self.meetingConfig = getattr(self.tool, self.cfg2_id)
         super(testWorkflows, self).test_pm_CreateItem()
 
     def test_pm_RemoveObjects(self):
         '''Run the test_pm_RemoveObjects from PloneMeeting.'''
         # we do the test for the college config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-college')
+        self.meetingConfig = getattr(self.tool, self.cfg1_id)
         super(testWorkflows, self).test_pm_RemoveObjects()
         # we do the test for the council config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-council')
+        self.meetingConfig = getattr(self.tool, self.cfg2_id)
         super(testWorkflows, self).test_pm_RemoveObjects()
 
     def test_pm_WholeDecisionProcess(self):
@@ -138,7 +138,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         """
         # meeting-config-college is tested in test_pm_WholeDecisionProcessCollege
         # we do the test for the council config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-council')
+        self.meetingConfig = getattr(self.tool, self.cfg2_id)
         # pmCreator1 creates an item with 1 annex and proposes it
         self.changeUser('pmCreator1')
         item1 = self.create('MeetingItem', title='The first item')
@@ -249,12 +249,12 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
             Tests the recurring items system.
         """
         # we do the test for the college config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-college')
+        self.meetingConfig = getattr(self.tool, self.cfg1_id)
         # super(testWorkflows, self).test_pm_RecurringItems() workflow is different
         self._checkRecurringItemsCollege()
         # we do the test for the council config
         # no recurring items defined...
-        self.meetingConfig = getattr(self.tool, 'meeting-config-council')
+        self.meetingConfig = getattr(self.tool, self.cfg2_id)
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
         self.assertEquals(len(meeting.getItems()), 0)
 
@@ -308,10 +308,10 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
     def test_pm_RemoveContainer(self):
         '''Run the test_pm_RemoveContainer from PloneMeeting.'''
         # we do the test for the college config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-college')
+        self.meetingConfig = getattr(self.tool, self.cfg1_id)
         super(testWorkflows, self).test_pm_RemoveContainer()
         # we do the test for the council config
-        self.meetingConfig = getattr(self.tool, 'meeting-config-council')
+        self.meetingConfig = getattr(self.tool, self.cfg2_id)
         # clean memoize because we test for status messages
         annotations = IAnnotations(self.portal.REQUEST)
         if 'statusmessages' in annotations:

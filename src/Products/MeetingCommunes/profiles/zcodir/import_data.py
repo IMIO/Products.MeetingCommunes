@@ -147,10 +147,10 @@ codirMeeting.xhtmlTransformFields = ()
 codirMeeting.xhtmlTransformTypes = ()
 codirMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 codirMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-codirMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
-codirMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
-codirMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
-codirMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions'
+codirMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
+codirMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
+codirMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
+codirMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
 codirMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 codirMeeting.meetingTopicStates = ('created', 'frozen')
 codirMeeting.decisionTopicStates = ('decided', 'closed')
@@ -183,7 +183,7 @@ codirMeeting.itemPowerObserversStates = ('itemfrozen',
                                          'accepted_but_modified',
                                          'pre_accepted')
 codirMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-codirMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+codirMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 codirMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 codirMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',

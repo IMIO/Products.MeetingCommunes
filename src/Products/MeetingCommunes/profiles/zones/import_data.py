@@ -4,12 +4,10 @@ from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import GroupDescriptor
 from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
-from Products.PloneMeeting.profiles import ItemTemplateDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
 from Products.PloneMeeting.profiles import MeetingUserDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
 from Products.PloneMeeting.profiles import PodTemplateDescriptor
-from Products.PloneMeeting.profiles import RecurringItemDescriptor
 from Products.PloneMeeting.profiles import UserDescriptor
 
 today = DateTime().strftime('%Y/%m/%d')
@@ -238,10 +236,10 @@ collegeMeeting.xhtmlTransformFields = ('MeetingItem.description',
 collegeMeeting.xhtmlTransformTypes = ('removeBlanks',)
 collegeMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 collegeMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowConditions'
-collegeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCollegeWorkflowActions'
-collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowConditions'
-collegeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCollegeWorkflowActions'
+collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
+collegeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
+collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
+collegeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
 collegeMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 collegeMeeting.meetingTopicStates = ('created', 'frozen')
 collegeMeeting.decisionTopicStates = ('decided', 'closed')
@@ -253,8 +251,7 @@ collegeMeeting.maxShownMeetings = 5
 collegeMeeting.maxDaysDecisions = 60
 collegeMeeting.meetingAppDefaultView = 'searchmyitems'
 collegeMeeting.useAdvices = True
-collegeMeeting.selectableAdvisers = ['finances', 'dirfin', 'commandant', 'informatique',
-                                     'personnel', 'secretariat', 'travaux']
+collegeMeeting.selectableAdvisers = []
 collegeMeeting.itemAdviceStates = ('validated',)
 collegeMeeting.itemAdviceEditStates = ('validated',)
 collegeMeeting.itemAdviceViewStates = ('validated',
@@ -268,33 +265,7 @@ collegeMeeting.itemAdviceViewStates = ('validated',
 collegeMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 collegeMeeting.enableAdviceInvalidation = False
 collegeMeeting.itemAdviceInvalidateStates = []
-collegeMeeting.customAdvisers = [
-    {'row_id': 'unique_id_001',
-     'group': 'finances',
-     'gives_auto_advice_on': 'item/getBudgetRelated',
-     'for_item_created_from': today,
-     'is_linked_to_previous_row': '0'},
-    {'row_id': 'unique_id_002',
-     'group': 'dirfin',
-     'for_item_created_from': today,
-     'delay': '5',
-     'delay_left_alert': '2',
-     'delay_label': 'Incidence financière >= 22.000€',
-     'is_linked_to_previous_row': '0'},
-    {'row_id': 'unique_id_003',
-     'group': 'dirfin',
-     'for_item_created_from': today,
-     'delay': '10',
-     'delay_left_alert': '4',
-     'delay_label': 'Incidence financière >= 22.000€',
-     'is_linked_to_previous_row': '1'},
-    {'row_id': 'unique_id_004',
-     'group': 'dirfin',
-     'for_item_created_from': today,
-     'delay': '20',
-     'delay_left_alert': '4',
-     'delay_label': 'Incidence financière >= 22.000€',
-     'is_linked_to_previous_row': '1'}, ]
+collegeMeeting.customAdvisers = []
 collegeMeeting.itemPowerObserversStates = ('itemfrozen',
                                            'accepted',
                                            'delayed',
@@ -302,7 +273,7 @@ collegeMeeting.itemPowerObserversStates = ('itemfrozen',
                                            'accepted_but_modified',
                                            'pre_accepted')
 collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-collegeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+collegeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 collegeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 collegeMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
@@ -324,139 +295,16 @@ collegeMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transitio
                                                              {'meeting_transition': 'close',
                                                               'item_transition': 'accept'},)
 collegeMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
-collegeMeeting.powerAdvisersGroups = ('commandant', 'dirfin', )
+collegeMeeting.powerAdvisersGroups = ()
 collegeMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 collegeMeeting.useCopies = True
-collegeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
-                                       groups[1].getIdSuffixed('reviewers'),
-                                       groups[2].getIdSuffixed('reviewers'),
-                                       groups[4].getIdSuffixed('reviewers')]
+collegeMeeting.selectableCopyGroups = []
 collegeMeeting.podTemplates = collegeTemplates
 collegeMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-zcouncil',
                                            'trigger_workflow_transitions_until': '__nothing__'}, ]
 collegeMeeting.itemAutoSentToOtherMCStates = ('accepted', 'accepted_but_modified', )
-collegeMeeting.recurringItems = [
-    RecurringItemDescriptor(
-        id='recurringagenda1',
-        title='Approuve le procès-verbal de la séance antérieure',
-        description='Approuve le procès-verbal de la séance antérieure',
-        category='recurrents',
-        proposingGroup='secretariat',
-        decision='Procès-verbal approuvé'),
-    RecurringItemDescriptor(
-        id='recurringofficialreport1',
-        title='Autorise et signe les bons de commande de la semaine',
-        description='Autorise et signe les bons de commande de la semaine',
-        category='recurrents',
-        proposingGroup='secretariat',
-        decision='Bons de commande signés'),
-    RecurringItemDescriptor(
-        id='recurringofficialreport2',
-        title='Ordonnance et signe les mandats de paiement de la semaine',
-        description='Ordonnance et signe les mandats de paiement de la semaine',
-        category='recurrents',
-        proposingGroup='secretariat',
-        decision='Mandats de paiement de la semaine approuvés'), ]
-collegeMeeting.itemTemplates = [
-    ItemTemplateDescriptor(
-        id='template1',
-        title='Tutelle CPAS',
-        description='Tutelle CPAS',
-        category='personnel',
-        proposingGroup='secretariat',
-        templateUsingGroups=['secretariat', 'commandant', ],
-        decision="""<p>Vu la loi du 8 juillet 1976 organique des centres publics d'action sociale et plus particulièrement son article 111;</p>
-<p>Vu l'Arrêté du Gouvernement Wallon du 22 avril 2004 portant codification de la législation relative aux pouvoirs locaux tel que confirmé par le décret du 27 mai 2004 du Conseil régional wallon;</p>
-<p>Attendu que les décisions suivantes du Bureau permanent/du Conseil de l'Action sociale du XXX ont été reçues le XXX dans le cadre de la tutelle générale sur les centres publics d'action sociale :</p>
-<p>- ...;</p>
-<p>- ...;</p>
-<p>- ...</p>
-<p>Attendu que ces décisions sont conformes à la loi et à l'intérêt général;</p>
-<p>Déclare à l'unanimité que :</p>
-<p><strong>Article 1er :</strong></p>
-<p>Les décisions du Bureau permanent/Conseil de l'Action sociale visées ci-dessus sont conformes à la loi et à l'intérêt général et qu'il n'y a, dès lors, pas lieu de les annuler.</p>
-<p><strong>Article 2 :</strong></p>
-<p>Copie de la présente délibération sera transmise au Bureau permanent/Conseil de l'Action sociale.</p>"""),
-    ItemTemplateDescriptor(
-        id='template2',
-        title='Contrôle médical systématique agent contractuel',
-        description='Contrôle médical systématique agent contractuel',
-        category='personnel',
-        proposingGroup='personnel',
-        templateUsingGroups=['personnel', ],
-        decision="""
-            <p>Vu la loi du 26 mai 2002 instituant le droit à l’intégration sociale;</p>
-<p>Vu la délibération du Conseil du 29 juin 2009 concernant le cahier spécial des charges relatif au marché de services portant sur le contrôle des agents communaux absents pour raisons médicales;</p>
-<p>Vu sa délibération du 17 décembre 2009 désignant le docteur XXX en qualité d’adjudicataire pour la mission de contrôle médical des agents de l’Administration;</p>
-<p>Vu également sa décision du 17 décembre 2009 d’opérer les contrôles médicaux de manière systématique et pour une période d’essai d’un trimestre;</p>
-<p>Attendu qu’un certificat médical a été  reçu le XXX concernant XXX la couvrant du XXX au XXX, avec la mention « XXX »;</p>
-<p>Attendu que le Docteur XXX a transmis au service du Personnel, par fax, le même jour à XXX le rapport de contrôle mentionnant l’absence de XXX ce XXX à XXX;</p>
-<p>Considérant que XXX avait été informée par le Service du Personnel de la mise en route du système de contrôle systématique que le médecin-contrôleur;</p>
-<p>Considérant qu’ayant été absent(e) pour maladie la semaine précédente elle avait reçu la visite du médecin-contrôleur;</p>
-<p>DECIDE :</p>
-<p><strong>Article 1</strong> : De convoquer XXX devant  Monsieur le Commandant de zone f.f. afin de lui rappeler ses obligations en la matière.</p>
-<p><strong>Article 2</strong> :  De prévenir XXX, qu’en cas de récidive, il sera proposé par le Commandant de zone au Collège de transformer les jours de congés de maladie en absence injustifiée (retenue sur traitement avec application de la loi du 26 mai 2002 citée ci-dessus).</p>
-<p><strong>Article 3</strong> : De charger le service du personnel du suivi de ce dossier.</p>"""),
-    ItemTemplateDescriptor(
-        id='template3',
-        title='Engagement temporaire',
-        description='Engagement temporaire',
-        category='personnel',
-        proposingGroup='personnel',
-        templateUsingGroups=['personnel', ],
-        decision="""<p>Considérant qu’il y a lieu de pourvoir au remplacement de Madame XXX, XXX bénéficiant d’une interruption de carrière pour convenances personnelles pour l’année scolaire 2009/2010. &nbsp;</p>
-<p>Attendu qu’un appel public a été lancé au mois de mai dernier;</p>
-<p>Vu la circulaire N° 2772 de la Communauté Française&nbsp;du 29 juin 2009 concernant &nbsp;la gestion des carrières administrative et pécuniaire dans l’enseignement fondamental ordinaire et principalement le chapitre 3 relatif aux engagements temporaires pendant l’année scolaire 2009/2010;</p>
-<p>Vu la proposition du directeur concerné d’attribuer cet emploi à Monsieur XXX, titulaire des titres requis;</p>
-<p>Vu le décret de la Communauté Française du 13 juillet 1998 portant restructuration de l’enseignement&nbsp;maternel et primaire ordinaires avec effet au 1er octobre 1998;</p>
-<p>Vu la loi du 29 mai 1959 (Pacte scolaire) et les articles L1122-19 et L1213-1 du Code de la démocratie locale et de la décentralisation;</p>
-<p>Vu l’avis favorable de l’Echevin de l’Enseignement;</p>
-<p><b>DECIDE&nbsp;:</b><br>
-<b><br> Article 1<sup>er</sup></b> :</p>
-<p>Au scrutin secret et à l’unanimité, de désigner Monsieur XXX, né le XXX à XXX et domicilié à XXX, en qualité d’instituteur maternel temporaire mi-temps en remplacement de Madame XXX aux écoles communales fondamentales de Sambreville (section de XXX) du XXX au XXX.</p>
-<p><b>Article 2</b> :</p>
-<p>L’horaire hebdomadaire de l’intéressé est fixé à 13 périodes.</p>
-<p><b>Article 3&nbsp;:</b></p>
-<p>La présente délibération sera soumise à la ratification du Conseil. Elle sera transmise au Bureau Régional de l’Enseignement primaire et maternel, à l’Inspectrice Cantonale et à la direction concernée.</p>"""),
-    ItemTemplateDescriptor(
-        id='template4',
-        title='Prestation réduite',
-        description='Prestation réduite',
-        category='personnel',
-        proposingGroup='personnel',
-        templateUsingGroups=['personnel', ],
-        decision="""<p>Vu la loi de redressement du 22 janvier 1985 (article 99 et suivants) et de l’Arrêté Royal du 12 août 1991 (tel que modifié) relatifs à l’interruption de carrière professionnelle dans l’enseignement;</p>
-<p>Vu la lettre du XXX par laquelle Madame XXX, institutrice maternelle, sollicite le renouvellement pendant l’année scolaire 2009/2010 de son congé pour prestations réduites mi-temps pour convenances personnelles dont elle bénéficie depuis le 01 septembre 2006;</p>
-<p>Attendu que le remplacement de l’intéressée&nbsp;est assuré pour la prochaine rentrée scolaire;</p>
-<p>Vu le décret de la Communauté Française du 13 juillet 1988 portant restructuration de l’enseignement maternel et primaire ordinaires avec effet au 1er octobre 1998;</p>
-<p>Vu la loi du 29 mai 1959 (Pacte Scolaire) et les articles L1122-19 et L1213-1 du code de la démocratie locale et de la décentralisation;</p>
-<p>Vu l’avis favorable de l’Echevin de l’Enseignement;</p>
-<p><b>DECIDE&nbsp;:</b><br><b><br> Article 1<sup>er</sup></b>&nbsp;:</p>
-<p>Au scrutin secret et à l’unanimité, d’accorder à Madame XXX le congé pour prestations réduites mi-temps sollicité pour convenances personnelles en qualité d’institutrice maternelle aux écoles communales fondamentales&nbsp;&nbsp;de Sambreville (section de XXX).</p>
-<p><b>Article 2</b> :</p>
-<p>Une activité lucrative est autorisée durant ce congé qui est assimilé à une période d’activité de service, dans le respect de la réglementation relative au cumul.</p>
-<p><b>Article 3&nbsp;:</b></p>
-<p>La présente délibération sera soumise pour accord au prochain Conseil, transmise au Bureau Régional de l’Enseignement primaire et maternel, à&nbsp;l’Inspectrice Cantonale, à la direction concernée et à l’intéressée.</p>"""),
-    ItemTemplateDescriptor(
-        id='template5',
-        title='Exemple modèle disponible pour tous',
-        description='Exemple modèle disponible pour tous',
-        category='personnel',
-        proposingGroup='',
-        templateUsingGroups=[],
-        decision="""<p>Vu la loi du XXX;</p>
-<p>Vu ...;</p>
-<p>Attendu que ...;</p>
-<p>Vu le décret de la Communauté Française du ...;</p>
-<p>Vu la loi du ...;</p>
-<p>Vu l’avis favorable de ...;</p>
-<p><b>DECIDE&nbsp;:</b><br><b><br> Article 1<sup>er</sup></b>&nbsp;:</p>
-<p>...</p>
-<p><b>Article 2</b> :</p>
-<p>...</p>
-<p><b>Article 3&nbsp;:</b></p>
-<p>...</p>"""),
-]
+collegeMeeting.recurringItems = []
+collegeMeeting.itemTemplates = []
 
 # Conseil
 councilMeeting = MeetingConfigDescriptor(
@@ -517,10 +365,10 @@ councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
 councilMeeting.xhtmlTransformTypes = ('removeBlanks',)
 councilMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 councilMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-councilMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCouncilWorkflowConditions'
-councilMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCouncilWorkflowActions'
-councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowConditions'
-councilMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCouncilWorkflowActions'
+councilMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
+councilMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
+councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
+councilMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
 councilMeeting.transitionsToConfirm = []
 councilMeeting.meetingTopicStates = ('created', 'frozen')
 councilMeeting.decisionTopicStates = ('decided', 'closed')
@@ -539,7 +387,7 @@ councilMeeting.itemAdviceStates = ()
 councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
 councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-councilMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group']
+councilMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 councilMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
                                                               'item_transition': 'itemfreeze'},
@@ -564,10 +412,7 @@ councilMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 councilMeeting.powerAdvisersGroups = ()
 councilMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 councilMeeting.useCopies = True
-councilMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
-                                       groups[1].getIdSuffixed('reviewers'),
-                                       groups[2].getIdSuffixed('reviewers'),
-                                       groups[4].getIdSuffixed('reviewers')]
+councilMeeting.selectableCopyGroups = []
 councilMeeting.podTemplates = councilTemplates
 
 bourgmestre_mu = MeetingUserDescriptor('bourgmestre',
@@ -590,14 +435,7 @@ dgen_mu = MeetingUserDescriptor('dgen',
 
 councilMeeting.meetingUsers = [bourgmestre_mu, receveur_mu, echevinPers_mu, echevinTrav_mu, dgen_mu]
 
-councilMeeting.recurringItems = [
-    RecurringItemDescriptor(
-        id='recurringagenda1',
-        title='Approuve le procès-verbal de la séance antérieure',
-        description='Approuve le procès-verbal de la séance antérieure',
-        category='recurrents',
-        proposingGroup='secretariat',
-        decision='Procès-verbal approuvé'), ]
+councilMeeting.recurringItems = []
 councilMeeting.itemTemplates = collegeMeeting.itemTemplates
 
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
