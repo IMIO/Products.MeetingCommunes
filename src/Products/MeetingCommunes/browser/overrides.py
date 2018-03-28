@@ -7,6 +7,8 @@
 # GNU General Public License (GPL)
 #
 
+from collections import OrderedDict
+
 from plone import api
 from Products.CMFPlone.utils import safe_unicode
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT
@@ -450,6 +452,68 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
 
             node[-1].append(item)
 
+        return res
+
+    def get_multiple_level_printing(self, itemUids, listTypes=['normal'],
+                          included_values={}, excluded_values={},
+                          ignore_review_states=[], privacy='*',
+                          firstNumber=1, renumber=False, level_number=1, text_before_first_level=''):
+        """
+
+        :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
+        :param included_values: a Map to filter the returned items regarding the value of a given field.
+                for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
+        :param excluded_values: a Map to filter the returned items regarding the value of a given field.
+                for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
+        :param privacy: can be '*' or 'public' or 'secret'
+        :param firstNumber: If renumber is True, a list of tuple
+           will be return with first element the number and second element, the item.
+           In this case, the firstNumber value can be used.'
+        :param level_number: number of sublist we want
+        This method to be used to have a multiple sublist based on an hierarchy in id's category like this :
+            X.X.X.X (we want 4 levels of sublist).
+            For have label, except first level and last level, we have the label in description's category separated by '|'
+            For exemple : If we have A.1.1.4, normaly, we have in description this : subTitle1|subTitle2
+                          If we have A.1.1, normaly, we have in description this : subTitle1
+                          If we have A.1, normaly, we have in description this : (we use Title)
+                          The first value on id is keeping
+        :return: a list with formated like this :
+            [Title (with class H1...Hx, depending of level number x.x.x. in id), [items list]]
+        """
+        res = OrderedDict()
+        items = self.get_grouped_items(itemUids, listTypes, [], included_values, excluded_values,
+                ignore_review_states, privacy, firstNumber, renumber)
+
+        # now we construct tree structure
+        for item in items:
+            category = item.getCategory(theObject=True)
+            cats_ids = category.getCategoryId().split('.')  # Exemple : A.1.2.4
+            cats_descri = category.Description().split('|')  # Exemple : Organisation et structures|Secteur Hospitalier
+            max_level = min(len(cats_ids), level_number)
+            res_key = ''
+            # create key in dico if needed
+            for i, cat_id in enumerate(cats_ids):
+                # first level
+                if i == 0:
+                    catid = cat_id
+                    keyid = '<h1>{0} {1}</h1>'.format(text_before_first_level, catid)
+                    if keyid not in res:
+                        res[keyid] = []
+                    res_key = keyid
+                # sub level except last
+                elif 0 < i < (max_level-1):
+                    catid += '.{0}'.format(cat_id)
+                    keyid = '<h{0}>{1}. {2}</h{0}>'.format(i+1, catid, cats_descri[i-1])
+                    if keyid not in res:
+                        res[keyid] = []
+                    res_key = keyid
+                #last level
+                else:
+                    keyid = '<h{0}>{1}</h{0}>'.format(i+1, category.Title())
+                    if keyid not in res:
+                         res[keyid] = []
+                    res_key = keyid
+            res[res_key].append(item)
         return res
 
 
