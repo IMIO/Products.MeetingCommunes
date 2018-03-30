@@ -457,7 +457,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
     def get_multiple_level_printing(self, itemUids, listTypes=['normal'],
                           included_values={}, excluded_values={},
                           ignore_review_states=[], privacy='*',
-                          firstNumber=1, renumber=False, level_number=1, text_before_first_level=''):
+                          firstNumber=1, renumber=False, level_number=1, text_pattern='{0}'):
         """
 
         :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
@@ -470,6 +470,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
            will be return with first element the number and second element, the item.
            In this case, the firstNumber value can be used.'
         :param level_number: number of sublist we want
+        :param text_pattern: text formatting with one string-param like this : 'xxx {0} yyy'
         This method to be used to have a multiple sublist based on an hierarchy in id's category like this :
             X.X.X.X (we want 4 levels of sublist).
             For have label, except first level and last level, we have the label in description's category separated by '|'
@@ -496,7 +497,8 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
                 # first level
                 if i == 0:
                     catid = cat_id
-                    keyid = '<h1>{0} {1}</h1>'.format(text_before_first_level, catid)
+                    text = text_pattern.format(catid)
+                    keyid = '<h1>{0}</h1>'.format(text)
                     if keyid not in res:
                         res[keyid] = []
                     res_key = keyid
