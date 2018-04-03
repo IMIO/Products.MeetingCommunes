@@ -152,6 +152,34 @@
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
+  <genericsetup:registerProfile
+   name="zcommittee_volonteers"
+   title="PloneMeeting / Commission des volontaires"
+   description="PloneMeeting for volonteers committee (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
+   name="zconsultation"
+   title="PloneMeeting / Concertation"
+   description="PloneMeeting for consultation (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
+   name="zcppt"
+   title="PloneMeeting / CPPT"
+   description="PloneMeeting for cppt (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
+   name="zsippt"
+   title="PloneMeeting / SIPPT"
+   description="PloneMeeting for SIPPT (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
   <genericsetup:upgradeStep
       title="Go to MeetingCommunes 4.0 (Step 1)"
       description=""

@@ -182,9 +182,25 @@ msgstr "Point récurrent Conseil de l'Action Sociale"
 msgid "MeetingItemRecurringcomitee"
 msgstr "Point récurrent Comité de Concertation"
 
+#. Default: "MeetingItemRecurringconcertation"
+msgid "MeetingItemRecurringconcertation"
+msgstr "Point récurrent Concertation"
+
+#. Default: "MeetingItemRecurringcppt"
+msgid "MeetingItemRecurringcppt"
+msgstr "Point récurrent CPPT"
+
 #. Default: "MeetingItemRecurringexecutive"
 msgid "MeetingItemRecurringexecutive"
 msgstr "Point récurrent Bureau exécutif"
+
+#. Default: "MeetingItemRecurringsippt"
+msgid "MeetingItemRecurringsippt"
+msgstr "Point récurrent SIPPT"
+
+#. Default: "MeetingItemRecurringvolonteers"
+msgid "MeetingItemRecurringvolonteers"
+msgstr "Point récurrent Commission des volontaires"
 
 #. Default: "MeetingItemSCRH"
 msgid "MeetingItemSCRH"
@@ -266,9 +282,25 @@ msgstr "Modèle de point Conseil de l'Action Sociale"
 msgid "MeetingItemTemplatecomitee"
 msgstr "Modèle de point Comité de Concertation"
 
+#. Default: "MeetingItemTemplateconcertation"
+msgid "MeetingItemTemplateconcertation"
+msgstr "Modèle de point  Concertation"
+
+#. Default: "MeetingItemTemplatecppt"
+msgid "MeetingItemTemplatecppt"
+msgstr "Modèle de point  CPPT"
+
 #. Default: "MeetingItemTemplateexecutive"
 msgid "MeetingItemTemplateexecutive"
 msgstr "Modèle de point Bureau exécutif"
+
+#. Default: "MeetingItemTemplatesippt"
+msgid "MeetingItemTemplatesippt"
+msgstr "Modèle de point  SIPPT"
+
+#. Default: "MeetingItemTemplatevolonteers"
+msgid "MeetingItemTemplatevolonteers"
+msgstr "Modèle de point Commission des volontaires"
 
 #. Default: "MeetingItemWB"
 msgid "MeetingItemWB"
@@ -294,9 +326,25 @@ msgstr "Point Conseil de l'Action Sociale"
 msgid "MeetingItemcomitee"
 msgstr "Point Comité de Concertation"
 
+#. Default: "MeetingItemconcertation"
+msgid "MeetingItemconcertation"
+msgstr "Point Concertation"
+
+#. Default: "MeetingItemcppt"
+msgid "MeetingItemcppt"
+msgstr "Point CPPT"
+
 #. Default: "MeetingItemexecutive"
 msgid "MeetingItemexecutive"
 msgstr "Point Bureau exécutif"
+
+#. Default: "MeetingItemsippt"
+msgid "MeetingItemsippt"
+msgstr "Point SIPPT"
+
+#. Default: "MeetingItemvolonteers"
+msgid "MeetingItemvolonteers"
+msgstr "Point Commission des volontaires"
 
 #. Default: "MeetingNEGO"
 msgid "MeetingNEGO"
@@ -334,9 +382,25 @@ msgstr "Séance du Conseil de l'Action Sociale"
 msgid "Meetingcomitee"
 msgstr "Séance du Comité de Concertation"
 
+#. Default: "Meetingconcertation"
+msgid "Meetingconcertation"
+msgstr "Séance de Concertation"
+
+#. Default: "Meetingcppt"
+msgid "Meetingcppt"
+msgstr "Séance du CPPT"
+
 #. Default: "Meetingexecutive"
 msgid "Meetingexecutive"
 msgstr "Séance Bureau exécutif"
+
+#. Default: "Meetingsippt"
+msgid "Meetingsippt"
+msgstr "Séance du SIPPT"
+
+#. Default: "Meetingvolonteers"
+msgid "Meetingvolonteers"
+msgstr "Séance de la Commission des Volontaires"
 
 #. Default: "Send back to 'financial controller'"
 msgid "backToProposedToFinancialController"
