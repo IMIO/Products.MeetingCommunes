@@ -182,8 +182,24 @@ msgstr ""
 msgid "MeetingItemRecurringcomitee"
 msgstr ""
 
+#. Default: "MeetingItemRecurringconcertation"
+msgid "MeetingItemRecurringconcertation"
+msgstr ""
+
+#. Default: "MeetingItemRecurringcppt"
+msgid "MeetingItemRecurringcppt"
+msgstr ""
+
 #. Default: "MeetingItemRecurringexecutive"
 msgid "MeetingItemRecurringexecutive"
+msgstr ""
+
+#. Default: "MeetingItemRecurringsippt"
+msgid "MeetingItemRecurringsippt"
+msgstr ""
+
+#. Default: "MeetingItemRecurringvolonteers"
+msgid "MeetingItemRecurringvolonteers"
 msgstr ""
 
 #. Default: "MeetingItemSCRH"
@@ -266,8 +282,24 @@ msgstr ""
 msgid "MeetingItemTemplatecomitee"
 msgstr ""
 
+#. Default: "MeetingItemTemplateconcertation"
+msgid "MeetingItemTemplateconcertation"
+msgstr ""
+
+#. Default: "MeetingItemTemplatecppt"
+msgid "MeetingItemTemplatecppt"
+msgstr ""
+
 #. Default: "MeetingItemTemplateexecutive"
 msgid "MeetingItemTemplateexecutive"
+msgstr ""
+
+#. Default: "MeetingItemTemplatesippt"
+msgid "MeetingItemTemplatesippt"
+msgstr ""
+
+#. Default: "MeetingItemTemplatevolonteers"
+msgid "MeetingItemTemplatevolonteers"
 msgstr ""
 
 #. Default: "MeetingItemWB"
@@ -294,8 +326,24 @@ msgstr ""
 msgid "MeetingItemcomitee"
 msgstr ""
 
+#. Default: "MeetingItemconcertation"
+msgid "MeetingItemconcertation"
+msgstr ""
+
+#. Default: "MeetingItemcppt"
+msgid "MeetingItemcppt"
+msgstr ""
+
 #. Default: "MeetingItemexecutive"
 msgid "MeetingItemexecutive"
+msgstr ""
+
+#. Default: "MeetingItemsippt"
+msgid "MeetingItemsippt"
+msgstr ""
+
+#. Default: "MeetingItemvolonteers"
+msgid "MeetingItemvolonteers"
 msgstr ""
 
 #. Default: "MeetingNEGO"
@@ -334,8 +382,24 @@ msgstr ""
 msgid "Meetingcomitee"
 msgstr ""
 
+#. Default: "Meetingconcertation"
+msgid "Meetingconcertation"
+msgstr ""
+
+#. Default: "Meetingcppt"
+msgid "Meetingcppt"
+msgstr ""
+
 #. Default: "Meetingexecutive"
 msgid "Meetingexecutive"
+msgstr ""
+
+#. Default: "Meetingsippt"
+msgid "Meetingsippt"
+msgstr ""
+
+#. Default: "Meetingvolonteers"
+msgid "Meetingvolonteers"
 msgstr ""
 
 #. Default: "Send back to 'financial controller'"

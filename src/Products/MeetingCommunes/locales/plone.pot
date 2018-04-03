@@ -438,3 +438,67 @@ msgstr ""
 #. Default: "MeetingItemRecurringexecutive"
 msgid "MeetingItemRecurringexecutive"
 msgstr ""
+
+#. Default: "Meetingvolonteers"
+msgid "Meetingvolonteers"
+msgstr ""
+
+#. Default: "MeetingItemvolonteers"
+msgid "MeetingItemvolonteers"
+msgstr ""
+
+#. Default: "MeetingItemTemplatevolonteers"
+msgid "MeetingItemTemplatevolonteers"
+msgstr ""
+
+#. Default: "MeetingItemRecurringvolonteers"
+msgid "MeetingItemRecurringvolonteers"
+msgstr ""
+
+#. Default: "Meetingconcertation"
+msgid "Meetingconcertation"
+msgstr ""
+
+#. Default: "MeetingItemconcertation"
+msgid "MeetingItemconcertation"
+msgstr ""
+
+#. Default: "MeetingItemTemplateconcertation"
+msgid "MeetingItemTemplateconcertation"
+msgstr ""
+
+#. Default: "MeetingItemRecurringconcertation"
+msgid "MeetingItemRecurringconcertation"
+msgstr ""
+
+#. Default: "Meetingcppt"
+msgid "Meetingcppt"
+msgstr ""
+
+#. Default: "MeetingItemcppt"
+msgid "MeetingItemcppt"
+msgstr ""
+
+#. Default: "MeetingItemTemplatecppt"
+msgid "MeetingItemTemplatecppt"
+msgstr ""
+
+#. Default: "MeetingItemRecurringcppt"
+msgid "MeetingItemRecurringcppt"
+msgstr ""
+
+#. Default: "Meetingsippt"
+msgid "Meetingsippt"
+msgstr ""
+
+#. Default: "MeetingItemsippt"
+msgid "MeetingItemsippt"
+msgstr ""
+
+#. Default: "MeetingItemTemplatesippt"
+msgid "MeetingItemTemplatesippt"
+msgstr ""
+
+#. Default: "MeetingItemRecurringsippt"
+msgid "MeetingItemRecurringsippt"
+msgstr ""
