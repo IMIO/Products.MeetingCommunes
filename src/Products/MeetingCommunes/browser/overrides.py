@@ -7,6 +7,8 @@
 # GNU General Public License (GPL)
 #
 
+from collections import OrderedDict
+
 from plone import api
 from Products.CMFPlone.utils import safe_unicode
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT
