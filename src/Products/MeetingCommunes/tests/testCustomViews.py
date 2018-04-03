@@ -487,3 +487,45 @@ class testCustomViews(MeetingCommunesTestCase):
         self._give_advice(item2, new_group, 'pmAdviserNG1')
         result = helper2.printFinanceAdvice('legal_not_given')
         self.assertEqual(result, [])
+
+    def test_get_multiple_level_printing(self):
+        self.changeUser('pmManager')
+        self.meetingConfig.useGroupsAsCategories = False
+        m = self._createMeetingWithItems()
+        # adapt categories to have catid and item to have category
+        for item in m.getItems(ordered=True):
+            item.setCategory('development')
+        i6 = self.create('MeetingItem', title='Item6')
+        i6.setCategory('development')
+        i6.getCategory(theObject=True).setCategoryId('A.1.2.1.1')
+        i6.getCategory(theObject=True).setDescription('DESCRI1|DESCRI2|DESCRI3')
+        i7 = self.create('MeetingItem', title='Item7')
+        i7.setCategory('research')
+        i7.getCategory(theObject=True).setCategoryId('B.1')
+        i7.getCategory(theObject=True).setDescription('')
+        self.presentItem(i6)
+        self.presentItem(i7)
+        # build the list of uids
+        itemUids = [anItem.UID() for anItem in m.getItems(ordered=True)]
+        # create view obj
+        # first, get template to use view
+        pod_template = self.meetingConfig.podtemplates.agendaTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
+        view = m.restrictedTraverse('@@document-generation')
+        view()
+        helper = view.get_generation_context_helper()
+        # test on the meeting
+        # we should have a ordereddic containing 3 lists, 6 list by category
+        ordered_dico = helper.get_multiple_level_printing(itemUids=itemUids, level_number=5)
+        self.assertEquals(len(ordered_dico), 7)
+        keys = ordered_dico.keys()
+        self.assertEquals(keys, ['<h1>A</h1>', '<h2>A.1. DESCRI1</h2>', '<h3>A.1.2. DESCRI2</h3>',
+                                 '<h4>A.1.2.1. DESCRI3</h4>', '<h5>Development topics</h5>',
+                                 '<h1>B</h1>', '<h2>Research topics</h2>'])
+        # check somes values
+        self.assertEquals(ordered_dico['<h5>Development topics</h5>'][0][0], 'A.1.2.1.1.1')
+        self.assertEquals(ordered_dico['<h5>Development topics</h5>'][0][1].getId(), 'o3')
+        self.assertEquals(ordered_dico['<h5>Development topics</h5>'][1][0], 'A.1.2.1.1.2')
+        self.assertEquals(ordered_dico['<h5>Development topics</h5>'][1][1].getId(), 'item6')
+        self.assertEquals(ordered_dico['<h1>A</h1>'], [])

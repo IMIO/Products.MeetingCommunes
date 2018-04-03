@@ -344,6 +344,180 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         assembly = self.context.getAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
         return formatedAssembly(assembly, focus)
 
+    def _is_in_value_dict(self, item, value_map={}):
+        for key in value_map.keys():
+            if self._get_value(item, key) in value_map[key]:
+                return True
+        return False
+
+    def _filter_item_uids(self, itemUids, ignore_review_states=[], privacy='*', included_values={}, excluded_values={}):
+        """
+        We just filter ignore_review_states here and privacy in order call getItems(uids), passing the correct uids and removing empty uids.
+        :param privacy: can be '*' or 'public' or 'secret' or 'public_heading' or 'secret_heading'
+        """
+        for elt in itemUids:
+            if elt == '':
+                itemUids.remove(elt)
+
+        filteredItemUids = []
+        uid_catalog = self.context.uid_catalog
+
+        for itemUid in itemUids:
+            obj = uid_catalog(UID=itemUid)[0].getObject()
+            if obj.queryState() in ignore_review_states:
+                continue
+            elif not (privacy == '*' or obj.getPrivacy() == privacy):
+                continue
+            elif included_values and not self._is_in_value_dict(obj, included_values):
+                continue
+            elif excluded_values and self._is_in_value_dict(obj, excluded_values):
+                continue
+            filteredItemUids.append(itemUid)
+        return filteredItemUids
+
+    def _renumber_item(self, items, firstNumber):
+        """
+        :return: a list of tuple with first element the number and second element the item itself
+        """
+        i = firstNumber
+        res = []
+        for item in items:
+            res.append((i, item))
+            i = i + 1
+        return res
+
+    def _get_list_type_value(self, item):
+        return self.translate(item.getListType())
+
+    def _get_value(self, item, value_name):
+        if value_name == 'listType' or value_name == 'listTypes':
+            return self._get_list_type_value(item)
+        elif value_name == 'category' or 'proposingGroup':
+            return self.getDGHV(item).display(value_name)
+        elif item.getField(value_name):
+            return item.getField(value_name).get(item)
+
+    def get_grouped_items(self, itemUids, listTypes=['normal'],
+                          group_by=[], included_values={}, excluded_values={},
+                          ignore_review_states=[], privacy='*',
+                          firstNumber=1, renumber=False):
+
+        """
+
+        :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
+        :param group_by: Can be either 'listTypes', 'category', 'proposingGroup' or a field name as described in MettingItem Schema
+        :param included_values: a Map to filter the returned items regarding the value of a given field.
+                for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
+        :param excluded_values: a Map to filter the returned items regarding the value of a given field.
+                for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
+        :param privacy: can be '*' or 'public' or 'secret'
+        :param firstNumber: If renumber is True, a list of tuple
+           will be return with first element the number and second element, the item.
+           In this case, the firstNumber value can be used.'
+        :return: a list of list of list ... (late or normal or both) items (depending on p_listTypes) in the meeting order but wrapped in defined group_by if not empty.
+                every group condition defined increase the depth of this collection.
+        """
+
+        # Retrieve the list of items
+        filteredItemUids = self._filter_item_uids(itemUids, ignore_review_states, privacy, included_values, excluded_values)
+
+        if not filteredItemUids:
+            return []
+        else:
+            items = self.real_context.getItems(uids=filteredItemUids, listTypes=listTypes, ordered=True)
+            if renumber:
+                items = self._renumber_item(items, firstNumber)
+
+        if not group_by:
+            return items
+
+        res = []
+
+        for item in items:
+            # compute result keeping item original order and repeating groups if needed
+            node = res
+
+            for group in group_by:
+                value = self._get_value(item, group)
+
+                if len(node) == 0 or node[-1][0] != value:
+                    node.append([value])
+
+                node = node[-1]
+
+            if not isinstance(node[-1], (list)):
+                node.append([])
+
+            node[-1].append(item)
+
+        return res
+
+    def get_multiple_level_printing(self, itemUids, listTypes=['normal'],
+                          included_values={}, excluded_values={},
+                          ignore_review_states=[], privacy='*',
+                          firstNumber=1, level_number=1, text_pattern='{0}'):
+        """
+
+        :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
+        :param included_values: a Map to filter the returned items regarding the value of a given field.
+                for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
+        :param excluded_values: a Map to filter the returned items regarding the value of a given field.
+                for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
+        :param privacy: can be '*' or 'public' or 'secret'
+        :param firstNumber: If renumber is True, a list of tuple
+           will be return with first element the number and second element, the item.
+           In this case, the firstNumber value can be used.'
+        :param level_number: number of sublist we want
+        :param text_pattern: text formatting with one string-param like this : 'xxx {0} yyy'
+        This method to be used to have a multiple sublist based on an hierarchy in id's category like this :
+            X.X.X.X (we want 4 levels of sublist).
+            For have label, except first level and last level, we have the label in description's category separated by '|'
+            For exemple : If we have A.1.1.4, normaly, we have in description this : subTitle1|subTitle2
+                          If we have A.1.1, normaly, we have in description this : subTitle1
+                          If we have A.1, normaly, we have in description this : (we use Title)
+                          The first value on id is keeping
+        :return: a list with formated like this :
+            [Title (with class H1...Hx, depending of level number x.x.x. in id), [items list of tuple :
+            item with number (num, item)]]
+        """
+        res = OrderedDict()
+        items = self.get_grouped_items(itemUids, listTypes, [], included_values, excluded_values,
+                ignore_review_states, privacy, firstNumber, False)
+
+        # now we construct tree structure
+        for item in items:
+            category = item.getCategory(theObject=True)
+            category_id = category.getCategoryId()
+            cats_ids = category_id.split('.')  # Exemple : A.1.2.4
+            cats_descri = category.Description().split('|')  # Exemple : Organisation et structures|Secteur Hospitalier
+            max_level = min(len(cats_ids), level_number)
+            res_key = ''
+            # create key in dico if needed
+            for i, cat_id in enumerate(cats_ids):
+                # first level
+                if i == 0:
+                    catid = cat_id
+                    text = text_pattern.format(catid)
+                    keyid = '<h1>{0}</h1>'.format(text)
+                    if keyid not in res:
+                        res[keyid] = []
+                    res_key = keyid
+                # sub level except last
+                elif 0 < i < (max_level-1):
+                    catid += '.{0}'.format(cat_id)
+                    keyid = '<h{0}>{1}. {2}</h{0}>'.format(i+1, catid, cats_descri[i-1])
+                    if keyid not in res:
+                        res[keyid] = []
+                    res_key = keyid
+                #last level
+                else:
+                    keyid = '<h{0}>{1}</h{0}>'.format(i+1, category.Title())
+                    if keyid not in res:
+                         res[keyid] = []
+                    res_key = keyid
+            res[res_key].append(('{0}.{1}'.format(category_id, len(res[res_key])+1), item)) # start numbering to 1
+        return res
+
 
 class MCFolderDocumentGenerationHelperView(FolderDocumentGenerationHelperView):
 
