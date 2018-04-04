@@ -53,6 +53,7 @@ simpleMeeting.usedItemAttributes = [
     'detailedDescription',
     'budgetInfos',
     'observations',
+    'sendToAuthority',
     'toDiscuss',
     'itemAssembly',
     'itemIsSigned', ]

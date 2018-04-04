@@ -490,7 +490,8 @@ class testCustomViews(MeetingCommunesTestCase):
 
     def test_get_multiple_level_printing(self):
         self.changeUser('pmManager')
-        self.meetingConfig.useGroupsAsCategories = False
+        cfg = self.meetingConfig
+        cfg.setUseGroupsAsCategories(False)
         m = self._createMeetingWithItems()
         # adapt categories to have catid and item to have category
         for item in m.getItems(ordered=True):
@@ -509,7 +510,7 @@ class testCustomViews(MeetingCommunesTestCase):
         itemUids = [anItem.UID() for anItem in m.getItems(ordered=True)]
         # create view obj
         # first, get template to use view
-        pod_template = self.meetingConfig.podtemplates.agendaTemplate
+        pod_template = cfg.podtemplates.agendaTemplate
         self.request.set('template_uid', pod_template.UID())
         self.request.set('output_format', 'odt')
         view = m.restrictedTraverse('@@document-generation')
@@ -519,10 +520,10 @@ class testCustomViews(MeetingCommunesTestCase):
         # we should have a ordereddic containing 3 lists, 6 list by category
         ordered_dico = helper.get_multiple_level_printing(itemUids=itemUids, level_number=5)
         self.assertEquals(len(ordered_dico), 7)
-        keys = ordered_dico.keys()
-        self.assertEquals(keys, ['<h1>A</h1>', '<h2>A.1. DESCRI1</h2>', '<h3>A.1.2. DESCRI2</h3>',
-                                 '<h4>A.1.2.1. DESCRI3</h4>', '<h5>Development topics</h5>',
-                                 '<h1>B</h1>', '<h2>Research topics</h2>'])
+        self.assertEquals(ordered_dico.keys(),
+                          ['<h1>A</h1>', '<h2>A.1. DESCRI1</h2>', '<h3>A.1.2. DESCRI2</h3>',
+                           '<h4>A.1.2.1. DESCRI3</h4>', '<h5>Development topics</h5>',
+                           '<h1>B</h1>', '<h2>Research topics</h2>'])
         # check somes values
         self.assertEquals(ordered_dico['<h5>Development topics</h5>'][0][0], 'A.1.2.1.1.1')
         self.assertEquals(ordered_dico['<h5>Development topics</h5>'][0][1].getId(), 'o3')

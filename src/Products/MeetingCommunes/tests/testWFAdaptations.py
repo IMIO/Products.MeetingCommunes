@@ -33,7 +33,11 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         '''Test what are the available wfAdaptations.'''
         # we removed the 'archiving' and 'creator_initiated_decisions' wfAdaptations
         self.assertEquals(sorted(self.meetingConfig.listWorkflowAdaptations().keys()),
-                          ['creator_edits_unless_closed',
+                          ['accepted_out_of_meeting',
+                           'accepted_out_of_meeting_and_duplicated',
+                           'accepted_out_of_meeting_emergency',
+                           'accepted_out_of_meeting_emergency_and_duplicated',
+                           'creator_edits_unless_closed',
                            'everyone_reads_all',
                            'hide_decisions_when_under_writing',
                            'items_come_validated',
