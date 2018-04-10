@@ -77,6 +77,12 @@ dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif', das
 dashboardTemplate.odt_file = 'recapitulatif-tb.odt'
 dashboardTemplate.tal_condition = 'python: context.absolute_url().endswith("/searches_items")'
 
+
+dashboardExportTemplate = PodTemplateDescriptor('export', 'Export', dashboard=True)
+dashboardExportTemplate.odt_file = 'dashboard.ods'
+dashboardExportTemplate.pod_formats = ['ods', 'xls', ]
+dashboardExportTemplate.tal_condition = 'python: context.absolute_url().endswith("/searches_items")'
+
 dashboardTemplateOds = PodTemplateDescriptor('recapitulatifods', 'Récapitulatif', dashboard=True)
 dashboardTemplateOds.odt_file = 'recapitulatif-tb.ods'
 dashboardTemplateOds.pod_formats = ['ods', 'xls', ]
@@ -90,7 +96,7 @@ historyTemplate.pod_portal_types = ['MeetingItemCollege']
 collegeTemplates = [agendaTemplate, agendaTemplateWithIndex,
                     decisionsTemplate, itemTemplate,
                     dfAdvicesTemplate, dashboardTemplate,
-                    dashboardTemplateOds, historyTemplate]
+                    dashboardTemplateOds, dashboardExportTemplate, historyTemplate]
 
 # Pod templates ----------------------------------------------------------------
 agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
