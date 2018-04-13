@@ -499,7 +499,10 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
                 # first level
                 if i == 0:
                     catid = cat_id
-                    text = text_pattern.format(catid)
+                    if text_pattern == 'description':
+                        text = category.Description()
+                    else:
+                        text = text_pattern.format(catid)
                     keyid = '<h1>{0}</h1>'.format(text)
                     if keyid not in res:
                         res[keyid] = []
