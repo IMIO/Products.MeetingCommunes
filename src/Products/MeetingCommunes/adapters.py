@@ -731,7 +731,7 @@ class CustomMeetingConfig(MeetingConfig):
                         'sort_reversed': True,
                         'showNumberOfItems': False,
                         'tal_condition':
-                        "python: '%s_budgetimpacteditors' % cfg.getId() in member.getGroups() or "
+                        "python: '%s_budgetimpacteditors' % cfg.getId() in tool.getPloneGroupsForUser() or "
                         "tool.isManager(here)",
                         'roles_bypassing_talcondition': ['Manager', ]
                     }
@@ -991,8 +991,8 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
     @ram.cache(isFinancialUser_cachekey)
     def isFinancialUser(self):
         '''Is current user a financial user, so in groups FINANCE_GROUP_SUFFIXES.'''
-        member = api.user.get_current()
-        for groupId in member.getGroups():
+        tool = api.portal.get_tool('portal_plonemeeting')
+        for groupId in tool.getPloneGroupsForUser():
             for suffix in FINANCE_GROUP_SUFFIXES:
                 if groupId.endswith('_%s' % suffix):
                     return True
@@ -1142,11 +1142,8 @@ class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
         '''Queries all items for which there is completeness to evaluate, so where completeness
            is not 'completeness_complete'.'''
         groupIds = []
-        member = api.user.get_current()
-        userGroups = member.getGroups()
-        tool = api.portal.get_tool('portal_plonemeeting')
-        cfg = tool.getMeetingConfig(self.context)
-        for financeGroup in cfg.adapted().getUsedFinanceGroupIds():
+        userGroups = self.tool.getPloneGroupsForUser()
+        for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
             # only keep finance groupIds the current user is controller for
             if '%s_financialcontrollers' % financeGroup in userGroups:
                 # advice not given yet
@@ -1176,11 +1173,8 @@ class ItemsWithAdviceProposedToFinancialControllerAdapter(CompoundCriterionBaseA
         '''Queries all items for which there is an advice in state 'proposed_to_financial_controller'.
            We only return items for which completeness has been evaluated to 'complete'.'''
         groupIds = []
-        member = api.user.get_current()
-        userGroups = member.getGroups()
-        tool = api.portal.get_tool('portal_plonemeeting')
-        cfg = tool.getMeetingConfig(self.context)
-        for financeGroup in cfg.adapted().getUsedFinanceGroupIds():
+        userGroups = self.tool.getPloneGroupsForUser()
+        for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
             # only keep finance groupIds the current user is controller for
             if '%s_financialcontrollers' % financeGroup in userGroups:
                 groupIds.append('delay__%s_proposed_to_financial_controller' % financeGroup)
@@ -1205,11 +1199,8 @@ class ItemsWithAdviceProposedToFinancialEditorAdapter(CompoundCriterionBaseAdapt
         '''Queries all items for which there is an advice in state 'proposed_to_financial_editor'.
            We only return items for which completeness has been evaluated to 'complete'.'''
         groupIds = []
-        member = api.user.get_current()
-        userGroups = member.getGroups()
-        tool = api.portal.get_tool('portal_plonemeeting')
-        cfg = tool.getMeetingConfig(self.context)
-        for financeGroup in cfg.adapted().getUsedFinanceGroupIds():
+        userGroups = self.tool.getPloneGroupsForUser()
+        for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
             # only keep finance groupIds the current user is controller for
             if '%s_financialeditors' % financeGroup in userGroups:
                 groupIds.append('delay__%s_proposed_to_financial_editor' % financeGroup)
@@ -1233,11 +1224,8 @@ class ItemsWithAdviceProposedToFinancialReviewerAdapter(CompoundCriterionBaseAda
     def query_itemswithadviceproposedtofinancialreviewer(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_reviewer'.'''
         groupIds = []
-        member = api.user.get_current()
-        userGroups = member.getGroups()
-        tool = api.portal.get_tool('portal_plonemeeting')
-        cfg = tool.getMeetingConfig(self.context)
-        for financeGroup in cfg.adapted().getUsedFinanceGroupIds():
+        userGroups = self.tool.getPloneGroupsForUser()
+        for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
             # only keep finance groupIds the current user is reviewer for
             if '%s_financialreviewers' % financeGroup in userGroups:
                 groupIds.append('delay__%s_proposed_to_financial_reviewer' % financeGroup)
@@ -1259,11 +1247,8 @@ class ItemsWithAdviceProposedToFinancialManagerAdapter(CompoundCriterionBaseAdap
     def query_itemswithadviceproposedtofinancialmanager(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_manager'.'''
         groupIds = []
-        member = api.user.get_current()
-        userGroups = member.getGroups()
-        tool = api.portal.get_tool('portal_plonemeeting')
-        cfg = tool.getMeetingConfig(self.context)
-        for financeGroup in cfg.adapted().getUsedFinanceGroupIds():
+        userGroups = self.tool.getPloneGroupsForUser()
+        for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
             # only keep finance groupIds the current user is manager for
             if '%s_financialmanagers' % financeGroup in userGroups:
                 groupIds.append('delay__%s_proposed_to_financial_manager' % financeGroup)
