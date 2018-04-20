@@ -9,16 +9,17 @@
 
 from collections import OrderedDict
 
-from plone import api
-from Products.CMFPlone.utils import safe_unicode
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_NOT_GIVEN
 from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_PRE
 from Products.PloneMeeting.browser.views import FolderDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperView
-from Products.PloneMeeting.utils import get_annexes
 from Products.PloneMeeting.utils import getLastEvent
+from Products.PloneMeeting.utils import get_annexes
+
+from Products.CMFPlone.utils import safe_unicode
+from plone import api
 
 
 def formatedAssembly(assembly, focus):
@@ -34,7 +35,7 @@ def formatedAssembly(assembly, focus):
         cpt = 1
         my_line = ''
         for line in lines:
-            if((line.find('Excus') >= 0 or line.find('Absent') >= 0) and focus == 'present') or \
+            if ((line.find('Excus') >= 0 or line.find('Absent') >= 0) and focus == 'present') or \
                     (line.find('Absent') >= 0 and focus == 'excuse'):
                 is_finish = True
                 break
@@ -70,13 +71,13 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         cfg = tool.getMeetingConfig(self.context)
         financialAdvice = cfg.adapted().getUsedFinanceGroupIds()[0]
         adviceData = self.context.getAdviceDataFor(self.context.context, financialAdvice)
-        res['comment'] = 'comment' in adviceData\
-            and adviceData['comment'] or ''
-        advice_id = 'advice_id' in adviceData\
-            and adviceData['advice_id'] or ''
+        res['comment'] = 'comment' in adviceData \
+                         and adviceData['comment'] or ''
+        advice_id = 'advice_id' in adviceData \
+                    and adviceData['advice_id'] or ''
         signature_event = advice_id and getLastEvent(getattr(self.context, advice_id), 'signFinancialAdvice') or ''
         res['out_of_financial_dpt'] = 'time' in signature_event and signature_event['time'] or ''
-        res['out_of_financial_dpt_localized'] = res['out_of_financial_dpt']\
+        res['out_of_financial_dpt_localized'] = res['out_of_financial_dpt'] \
             and res['out_of_financial_dpt'].strftime('%d/%m/%Y') or ''
         # "positive_with_remarks_finance" will be printed "positive_finance"
         if adviceData['type'] == 'positive_with_remarks_finance':
@@ -85,10 +86,10 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         else:
             type_translated = adviceData['type_translated'].encode('utf-8')
         res['advice_type'] = '<p><u>Type d\'avis:</u>  %s</p>' % type_translated
-        res['delay_started_on_localized'] = 'delay_started_on_localized' in adviceData['delay_infos']\
-            and adviceData['delay_infos']['delay_started_on_localized'] or ''
-        res['delay_started_on'] = 'delay_started_on' in adviceData\
-            and adviceData['delay_started_on'] or ''
+        res['delay_started_on_localized'] = 'delay_started_on_localized' in adviceData['delay_infos'] \
+                                            and adviceData['delay_infos']['delay_started_on_localized'] or ''
+        res['delay_started_on'] = 'delay_started_on' in adviceData \
+                                  and adviceData['delay_started_on'] or ''
         return res
 
     def getLegalTextForFDAdvice(self, isMeeting=False):
@@ -119,9 +120,9 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             res = FINANCE_ADVICE_LEGAL_TEXT_PRE.format(delayStartedOnLocalized)
 
         if not hidden and \
-           adviceGivenOnLocalized and \
-           (adviceType in (u'positive_finance', u'positive_with_remarks_finance',
-                           u'negative_finance', u'cautious_finance')):
+                adviceGivenOnLocalized and \
+                (adviceType in (u'positive_finance', u'positive_with_remarks_finance',
+                                u'negative_finance', u'cautious_finance')):
             if adviceType in (u'positive_finance', u'positive_with_remarks_finance'):
                 adviceTypeFr = 'favorable'
             elif adviceType == u'negative_finance':
@@ -240,7 +241,8 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                             continue
 
                         # Change data if advice is hidden
-                        if 'hidden_during_redaction' in advice and advice['hidden_during_redaction'] and not show_hidden:
+                        if 'hidden_during_redaction' in advice and advice[
+                                'hidden_during_redaction'] and not show_hidden:
                             message = self.translate('hidden_during_redaction', domain='PloneMeeting')
                             advice['type_translated'] = message
                             advice['type'] = 'hidden_during_redaction'
@@ -272,8 +274,8 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         if finance_id:
             data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
             return (
-                'delay_infos' in data and 'limit_date_localized' in data['delay_infos'] and
-                data['delay_infos']['limit_date_localized']) or None
+                           'delay_infos' in data and 'limit_date_localized' in data['delay_infos'] and
+                           data['delay_infos']['limit_date_localized']) or None
 
         return None
 
@@ -331,6 +333,29 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
     def print_creator_name(self):
         creator = api.user.get(self.real_context.Creator())
         return creator and creator.getProperty('fullname') or self.real_context.Creator()
+
+    def print_item_number_within_category(self, listTypes=['normal', 'late'], default=''):
+        res = default
+
+        if self.real_context.hasMeeting() and \
+           self.real_context.getListType() in listTypes and \
+           self.real_context.getCategory():
+            meeting = self.real_context.getMeeting()
+            context_category = self.real_context.getCategory()
+            context_uid = self.real_context.UID()
+            count = 0
+
+            for brain in meeting.getItems(listTypes=listTypes,
+                                          ordered=True,
+                                          useCatalog=True,
+                                          additional_catalog_query={'getCategory': context_category},
+                                          unrestricted=True):
+                count += 1
+                if brain.UID == context_uid:
+                    break
+
+            res = str(count)
+        return res
 
 
 class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView):
@@ -421,7 +446,8 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         """
 
         # Retrieve the list of items
-        filteredItemUids = self._filter_item_uids(itemUids, ignore_review_states, privacy, included_values, excluded_values)
+        filteredItemUids = self._filter_item_uids(itemUids, ignore_review_states, privacy, included_values,
+                                                  excluded_values)
 
         if not filteredItemUids:
             return []
@@ -455,9 +481,9 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         return res
 
     def get_multiple_level_printing(self, itemUids, listTypes=['normal'],
-                          included_values={}, excluded_values={},
-                          ignore_review_states=[], privacy='*',
-                          firstNumber=1, level_number=1, text_pattern='{0}'):
+                                    included_values={}, excluded_values={},
+                                    ignore_review_states=[], privacy='*',
+                                    firstNumber=1, level_number=1, text_pattern='{0}'):
         """
 
         :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
@@ -484,7 +510,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         """
         res = OrderedDict()
         items = self.get_grouped_items(itemUids, listTypes, [], included_values, excluded_values,
-                ignore_review_states, privacy, firstNumber, False)
+                                       ignore_review_states, privacy, firstNumber, False)
 
         # now we construct tree structure
         for item in items:
@@ -508,19 +534,19 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
                         res[keyid] = []
                     res_key = keyid
                 # sub level except last
-                elif 0 < i < (max_level-1):
+                elif 0 < i < (max_level - 1):
                     catid += '.{0}'.format(cat_id)
-                    keyid = '<h{0}>{1}. {2}</h{0}>'.format(i+1, catid, cats_descri[i-1])
+                    keyid = '<h{0}>{1}. {2}</h{0}>'.format(i + 1, catid, cats_descri[i - 1])
                     if keyid not in res:
                         res[keyid] = []
                     res_key = keyid
-                #last level
+                # last level
                 else:
-                    keyid = '<h{0}>{1}</h{0}>'.format(i+1, category.Title())
+                    keyid = '<h{0}>{1}</h{0}>'.format(i + 1, category.Title())
                     if keyid not in res:
-                         res[keyid] = []
+                        res[keyid] = []
                     res_key = keyid
-            res[res_key].append(('{0}.{1}'.format(category_id, len(res[res_key])+1), item)) # start numbering to 1
+            res[res_key].append(('{0}.{1}'.format(category_id, len(res[res_key]) + 1), item))  # start numbering to 1
         return res
 
 

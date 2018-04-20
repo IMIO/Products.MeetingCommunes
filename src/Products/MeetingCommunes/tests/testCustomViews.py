@@ -530,3 +530,66 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertEquals(ordered_dico['<h5>Development topics</h5>'][1][0], 'A.1.2.1.1.2')
         self.assertEquals(ordered_dico['<h5>Development topics</h5>'][1][1].getId(), 'item6')
         self.assertEquals(ordered_dico['<h1>A</h1>'], [])
+
+    def test_print_item_number_within_category(self):
+        cfg = self.meetingConfig
+        cfg.setUseGroupsAsCategories(True)
+
+        def create_and_validate_item(creator, preffered_meeting=None):
+            self.changeUser(creator)
+            item = self.create('MeetingItem')
+            self.validateItem(item)
+            if preffered_meeting:
+                item.setPreferredMeeting(preffered_meeting)
+            return item
+
+        def get_item_view(item):
+            pod_template = cfg.podtemplates.itemTemplate
+            self.request.set('template_uid', pod_template.UID())
+            self.request.set('output_format', 'odt')
+            view = item.restrictedTraverse('@@document-generation')
+            view()
+            return view.get_generation_context_helper()
+
+        self.changeUser('pmManager')
+        meeting = self.create('Meeting', date=DateTime('2015/12/12'))
+
+        test1 = create_and_validate_item('pmCreator1')
+        helper1 = get_item_view(test1)
+        test2 = create_and_validate_item('pmCreator2')
+        helper2 = get_item_view(test2)
+
+        self.presentItem(create_and_validate_item('pmCreator1'))
+        self.presentItem(create_and_validate_item('pmCreator2'))
+        self.presentItem(test1)
+        self.presentItem(create_and_validate_item('pmCreator2'))
+        self.presentItem(create_and_validate_item('pmCreator1'))
+        self.presentItem(test2)
+
+        self.freezeMeeting(meeting)
+
+        test3 = create_and_validate_item('pmCreator1', meeting.UID())
+        helper3 = get_item_view(test3)
+        test4 = create_and_validate_item('pmCreator2', meeting.UID())
+        helper4 = get_item_view(test4)
+
+        self.presentItem(test3)
+        self.presentItem(create_and_validate_item('pmCreator2', meeting.UID()))
+        self.presentItem(create_and_validate_item('pmCreator1', meeting.UID()))
+        self.presentItem(create_and_validate_item('pmCreator2', meeting.UID()))
+        self.presentItem(create_and_validate_item('pmCreator1', meeting.UID()))
+        self.presentItem(test4)
+
+        self.assertEquals(helper1.print_item_number_within_category(), '4')
+        self.assertEquals(helper2.print_item_number_within_category(), '3')
+        self.assertEquals(helper3.print_item_number_within_category(), '6')
+        self.assertEquals(helper4.print_item_number_within_category(), '6')
+
+        self.assertEquals(helper3.print_item_number_within_category(listTypes=['late']), '1')
+        self.assertEquals(helper4.print_item_number_within_category(listTypes=['late']), '3')
+
+        self.assertEquals(helper3.print_item_number_within_category(listTypes=['normal']), '')
+        self.assertEquals(helper4.print_item_number_within_category(listTypes=['normal']), '')
+
+        self.assertEquals(helper3.print_item_number_within_category(listTypes=['normal'], default='XXXX'), 'XXXX')
+        self.assertEquals(helper4.print_item_number_within_category(listTypes=['normal'], default='ERROR'), 'ERROR')
