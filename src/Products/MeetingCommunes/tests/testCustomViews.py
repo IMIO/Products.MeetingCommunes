@@ -124,16 +124,17 @@ class testCustomViews(MeetingCommunesTestCase):
 
         # add advice for 'developers'
         self.changeUser('pmAdviser1')
-        developers_advice = createContentInContainer(item,
-                                                     'meetingadvice',
-                                                     **{'advice_group': 'developers',
-                                                        'advice_type': u'positive',
-                                                        'advice_comment': RichTextValue(u'My comment')})
+        createContentInContainer(item,
+                                 'meetingadvice',
+                                 **{'advice_group': 'developers',
+                                    'advice_type': u'positive',
+                                    'advice_comment': RichTextValue(u'My comment')})
 
         result = helper.printFormatedAdvice()
-        self.assertListEqual(result, [{'type': helper.translate(msgid='positive', domain='PloneMeeting').encode('utf-8'),
-                              'name': 'Developers',
-                              'comment': 'My comment'}])
+        self.assertListEqual(result,
+                             [{'type': helper.translate(msgid='positive', domain='PloneMeeting').encode('utf-8'),
+                               'name': 'Developers',
+                               'comment': 'My comment'}])
 
         self.assertListEqual(helper.printFormatedAdvice(), helper.printFormatedAdvice(True))
 
