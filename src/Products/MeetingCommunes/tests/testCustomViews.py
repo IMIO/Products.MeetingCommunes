@@ -492,6 +492,8 @@ class testCustomViews(MeetingCommunesTestCase):
         self.changeUser('pmManager')
         cfg = self.meetingConfig
         cfg.setUseGroupsAsCategories(False)
+        cfg.setInsertingMethodsOnAddItem(
+            ({'insertingMethod': 'on_categories', 'reverse': '0'},))
         m = self._createMeetingWithItems()
         # adapt categories to have catid and item to have category
         for item in m.getItems(ordered=True):
@@ -506,8 +508,6 @@ class testCustomViews(MeetingCommunesTestCase):
         i7.getCategory(theObject=True).setDescription('')
         self.presentItem(i6)
         self.presentItem(i7)
-        # build the list of uids
-        itemUids = [anItem.UID() for anItem in m.getItems(ordered=True)]
         # create view obj
         # first, get template to use view
         pod_template = cfg.podtemplates.agendaTemplate
@@ -518,18 +518,28 @@ class testCustomViews(MeetingCommunesTestCase):
         helper = view.get_generation_context_helper()
         # test on the meeting
         # we should have a ordereddic containing 3 lists, 6 list by category
+        # build the list of uids
+        items = m.getItems(ordered=True)
+        itemUids = [anItem.UID() for anItem in items]
         ordered_dico = helper.get_multiple_level_printing(itemUids=itemUids, level_number=5)
         self.assertEquals(len(ordered_dico), 7)
-        self.assertEquals(ordered_dico.keys(),
-                          ['<h1>A</h1>', '<h2>A.1. DESCRI1</h2>', '<h3>A.1.2. DESCRI2</h3>',
-                           '<h4>A.1.2.1. DESCRI3</h4>', '<h5>Development topics</h5>',
-                           '<h1>B</h1>', '<h2>Research topics</h2>'])
-        # check somes values
-        self.assertEquals(ordered_dico['<h5>Development topics</h5>'][0][0], 'A.1.2.1.1.1')
-        self.assertEquals(ordered_dico['<h5>Development topics</h5>'][0][1].getId(), 'o3')
-        self.assertEquals(ordered_dico['<h5>Development topics</h5>'][1][0], 'A.1.2.1.1.2')
-        self.assertEquals(ordered_dico['<h5>Development topics</h5>'][1][1].getId(), 'item6')
-        self.assertEquals(ordered_dico['<h1>A</h1>'], [])
+        self.assertEquals(
+            ordered_dico.items(),
+            [('<h1>A</h1>', []),
+             ('<h2>A.1. DESCRI1</h2>', []),
+             ('<h3>A.1.2. DESCRI2</h3>', []),
+             ('<h4>A.1.2.1. DESCRI3</h4>', []),
+             ('<h5>Development topics</h5>',
+             [('A.1.2.1.1.1', items[0]),
+              ('A.1.2.1.1.2', items[1]),
+              ('A.1.2.1.1.3', items[2]),
+              ('A.1.2.1.1.4', items[3]),
+              ('A.1.2.1.1.5', items[4]),
+              ('A.1.2.1.1.6', i6)]),
+             ('<h1>B</h1>', []),
+             ('<h2>Research topics</h2>',
+             [('B.1.1', i7)])]
+            )
 
     def test_print_item_number_within_category(self):
         cfg = self.meetingConfig

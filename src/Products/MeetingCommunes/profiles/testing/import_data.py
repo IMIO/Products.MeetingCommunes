@@ -268,7 +268,7 @@ collegeMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
                           'Jacqueline Exemple, Responsable du CPAS'
 collegeMeeting.signatures = 'Pierre Dupont, Bourgmestre - Charles Exemple, Secrétaire communal'
 collegeMeeting.certifiedSignatures = []
-collegeMeeting.categories = [development, research]
+collegeMeeting.categories = [development, research, events]
 collegeMeeting.classifiers = [classifier1, classifier2, classifier3]
 collegeMeeting.shortName = 'College'
 collegeMeeting.annexTypes = [financialAnalysis, budgetAnalysisCfg1, overheadAnalysis,
