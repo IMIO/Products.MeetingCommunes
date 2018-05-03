@@ -25,6 +25,7 @@
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 
+from Products.PloneMeeting.utils import getLastEvent
 from DateTime import DateTime
 from plone import api
 from plone.app.textfield import RichTextValue
@@ -197,6 +198,67 @@ class testCustomViews(MeetingCommunesTestCase):
                'advice_type': u'positive',
                'advice_hide_during_redaction': False,
                 'advice_comment': RichTextValue(u'My comment')})
+
+    def test_getItemFinanceAdviceTransmissionDate(self):
+        self.changeUser('siteadmin')
+        self.meetingConfig.powerAdvisersGroups = ('vendors',)
+        self.meetingConfig.setItemAdviceStates(('validated',))
+        self.meetingConfig.setItemAdviceEditStates(('validated',))
+        self.meetingConfig.setItemAdviceViewStates(('validated',))
+
+        collection = getattr(self.meetingConfig.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID)
+        collection.setQuery(
+            [{'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is', 'v': [self.meetingConfig.getItemTypeName(), ]},
+             {'i': 'indexAdvisers', 'o': 'plone.app.querystring.operation.selection.is',
+              'v': []}], )
+        today = DateTime().strftime('%Y/%m/%d')
+        self.meetingConfig.setCustomAdvisers((
+            {'row_id': 'unique_id_002', 'group': 'vendors', 'for_item_created_from': today, 'delay': '10',
+             'delay_left_alert': '4', 'delay_label': 'Finance advice 1', 'is_linked_to_previous_row': '0'},
+            {'row_id': 'unique_id_004', 'group': 'vendors', 'for_item_created_from': today, 'delay': '20',
+             'delay_left_alert': '4', 'delay_label': 'Finance advice 2', 'is_linked_to_previous_row': '1'},
+            {'row_id': 'unique_id_006', 'group': 'vendors', 'for_item_created_from': today, 'delay': '20',
+             'delay_left_alert': '4', 'delay_label': 'Not a finance advice', 'is_linked_to_previous_row': '0'},))
+
+        self.changeUser('pmCreator1')
+
+        data = {'title': 'Item to advice', 'category': 'maintenance'}
+        item = self.create('MeetingItem', **data)
+        item.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002'))
+        item.at_post_edit_script()
+
+        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
+        view = item.restrictedTraverse('@@document-generation')
+        view()
+        helper = view.get_generation_context_helper()
+        # test no finance id available
+        self.assertIsNone(helper._getItemFinanceAdviceTransmissionDate())
+
+        # test no delay available
+        collection.setQuery(
+            [{'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is',
+              'v': [self.meetingConfig.getItemTypeName(), ]},
+             {'i': 'indexAdvisers', 'o': 'plone.app.querystring.operation.selection.is',
+              'v': ['delay_real_group_id__unique_id_002']}], )
+        self.assertIsNone(helper._getItemFinanceAdviceTransmissionDate())
+
+        # test delay started from WF
+        self.changeUser('siteadmin')
+        self.proposeItem(item)
+        self.meetingConfig.setItemAdviceStates(('proposed', 'validated',))
+        self.meetingConfig.setItemAdviceEditStates(('proposed', 'validated',))
+        self.meetingConfig.setItemAdviceViewStates(('proposed', 'validated',))
+        self.assertEqual(helper._getItemFinanceAdviceTransmissionDate(), getLastEvent(item, 'propose')['time'])
+
+        # test delay started regular way
+        self.meetingConfig.setItemAdviceStates(('validated',))
+        self.meetingConfig.setItemAdviceEditStates(('validated',))
+        self.meetingConfig.setItemAdviceViewStates(('validated',))
+        self.validateItem(item)
+        self.assertEqual(helper._getItemFinanceAdviceTransmissionDate(), item.getAdviceDataFor(item, 'vendors')['delay_started_on'])
+
 
     def handle_finance_cases(self, case_to_test, helper):
         cases = ['simple', 'legal_not_given', 'simple_not_given', 'legal', 'initiative']

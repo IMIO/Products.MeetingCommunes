@@ -252,7 +252,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                                 result.append(advice)
                         else:
                             # set transmission date to adviser because advice was asked by the agent
-                            advice['item_transmitted_on'] = self.getItemFinanceAdviceTransmissionDate(finance_advice_id)
+                            advice['item_transmitted_on'] = self._getItemFinanceAdviceTransmissionDate(finance_advice_id)
                             if advice['item_transmitted_on']:
                                 advice['item_transmitted_on_localized'] = self.display_date(
                                     date=advice['item_transmitted_on'])
@@ -284,7 +284,10 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
 
         return None
 
-    def getItemFinanceAdviceTransmissionDate(self, finance_id=None):
+    def print_advice_transmission_date_localized(self):
+        return self.display_date(date=self._getItemFinanceAdviceTransmissionDate())
+
+    def _getItemFinanceAdviceTransmissionDate(self, finance_id=None):
         """
         :return: The date as a string when the finance service received the advice request.
                  No matter if a legal delay applies on it or not.
@@ -292,17 +295,15 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         if not finance_id:
             finance_id = self.context.adapted().getFinanceAdviceId()
             # may return None anyway
-
         if finance_id:
             data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
-            if 'delay_infos' in data and 'delay_started_on' in data['delay_infos'] \
-                    and data['delay_infos']['delay_started_on']:
-                return data['delay_infos']['delay_started_on']
-            else:
-                return self.getWorkFlowAdviceTransmissionStep()
+            return 'delay_started_on' in data and data['delay_started_on'] \
+                   or self._getWorkFlowAdviceTransmissionDate() \
+                   or None
+
         return None
 
-    def getWorkFlowAdviceTransmissionStep(self):
+    def _getWorkFlowAdviceTransmissionDate(self):
 
         """
         :return: The date as a string when the finance service received the advice request if no legal delay applies.
