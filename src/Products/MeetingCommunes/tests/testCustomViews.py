@@ -159,7 +159,7 @@ class testCustomViews(MeetingCommunesTestCase):
         membershipTool = api.portal.get_tool('portal_membership')
         membershipTool.addMember(id=adviser_user_id, password='12345', roles=('Member',), domains=())
 
-        self.portal.portal_groups.addPrincipalToGroup('pmAdviserNG1', new_group.getId() + '_advisers')
+        self._addPrincipalToGroup('pmAdviserNG1', new_group.getId() + '_advisers')
         return new_group.getId()
 
     def _set_up_second_finance_adviser(self, adviser_group_id):
