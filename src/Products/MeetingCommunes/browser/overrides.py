@@ -22,45 +22,6 @@ from Products.CMFPlone.utils import safe_unicode
 from plone import api
 
 
-def formatedAssembly(assembly, focus):
-    is_finish = False
-    absentFind = False
-    excuseFind = False
-    res = []
-    res.append('<p class="mltAssembly">')
-    for ass in assembly:
-        if is_finish:
-            break
-        lines = ass.split(',')
-        cpt = 1
-        my_line = ''
-        for line in lines:
-            if ((line.find('Excus') >= 0 or line.find('Absent') >= 0) and focus == 'present') or \
-                    (line.find('Absent') >= 0 and focus == 'excuse'):
-                is_finish = True
-                break
-            if line.find('Excus') >= 0:
-                excuseFind = True
-                continue
-            if line.find('Absent') >= 0:
-                absentFind = True
-                continue
-            if (focus == 'absent' and not absentFind) or (focus == 'excuse' and not excuseFind):
-                continue
-            if cpt == len(lines):
-                my_line = "%s%s<br />" % (my_line, line)
-                res.append(my_line)
-            else:
-                my_line = "%s%s," % (my_line, line)
-            cpt = cpt + 1
-    if len(res) > 1:
-        res[-1] = res[-1].replace('<br />', '')
-    else:
-        return ''
-    res.append('</p>')
-    return ('\n'.join(res))
-
-
 class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
     """Specific printing methods used for item."""
 
@@ -186,16 +147,6 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                             'name': advice['name'].encode('utf-8'),
                             'comment': comment})
         return res
-
-    def printFormatedItemAssembly(self, focus=''):
-        ''' Printing Method use in templates :
-            return formated assembly with 'absent', 'excused', ... '''
-        if focus not in ('present', 'excuse', 'absent'):
-            return ''
-        # ie: Pierre Helson, Bourgmestre, Président
-        # focus is present, excuse or absent
-        assembly = self.context.getItemAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
-        return formatedAssembly(assembly, focus)
 
     def printFinanceAdvice(self, cases, show_hidden=False):
         """
@@ -360,16 +311,6 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
 
 class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView):
     """Specific printing methods used for meeting."""
-
-    def printFormatedMeetingAssembly(self, focus=''):
-        ''' Printing Method use in templates :
-            return formated assembly with 'absent', 'excused', ... '''
-        if focus not in ('present', 'excuse', 'absent'):
-            return ''
-        # ie: Pierre Helson, Bourgmestre, Président
-        # focus is present, excuse or absent
-        assembly = self.context.getAssembly().replace('<p>', '').replace('</p>', '').split('<br />')
-        return formatedAssembly(assembly, focus)
 
     def _is_in_value_dict(self, item, value_map={}):
         for key in value_map.keys():
@@ -564,13 +505,6 @@ class MCFolderDocumentGenerationHelperView(FolderDocumentGenerationHelperView):
         tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
         finance_advice_ids = cfg.adapted().getUsedFinanceGroupIds()
-
-        for brain in brains:
-            item = brain.getObject()
-            advices = item.getAdviceDataFor(item)
-            if advices:
-                for advice in advices:
-                    if advice in finance_advice_ids:
-                        res.append({'itemView': self.getDGHV(item), 'advice': advices[advice]})
-
+        if finance_advice_ids:
+            res = self.get_all_items_dghv_with_single_advice(brains, finance_advice_ids)
         return res
