@@ -252,7 +252,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                                 result.append(advice)
                         else:
                             # set transmission date to adviser because advice was asked by the agent
-                            advice['item_transmitted_on'] = self._getItemFinanceAdviceTransmissionDate(finance_advice_id)
+                            advice['item_transmitted_on'] = self._getItemAdviceTransmissionDate(finance_advice_id)
                             if advice['item_transmitted_on']:
                                 advice['item_transmitted_on_localized'] = self.display_date(
                                     date=advice['item_transmitted_on'])
@@ -267,36 +267,52 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                                 result.append(advice)
         return result
 
-    def getItemFinanceDelayLimitDate(self):
-        finance_id = self.context.adapted().getFinanceAdviceId()
-        if finance_id:
-            data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
-            return ('delay_infos' in data and 'limit_date_localized' in data['delay_infos']
-                    and data['delay_infos']['limit_date_localized']) or None
+    def print_advice_delay_limit_date(self, adviser_id=None):
+        if adviser_id is None:
+            adviser_id = self.context.adapted().getFinanceAdviceId()
+
+        if adviser_id:
+            data = self.real_context.getAdviceDataFor(self.real_context, adviser_id)
+            return ('delay_infos' in data
+                    and 'limit_date' in data['delay_infos']
+                    and self.display_date(date=data['delay_infos']['limit_date'])) \
+                   or None
 
         return None
 
-    def getItemFinanceAdviceDelayDays(self):
-        finance_id = self.context.adapted().getFinanceAdviceId()
-        if finance_id:
-            data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
+    def print_advice_delay_days(self, adviser_id=None):
+        if adviser_id is None:
+            adviser_id = self.context.adapted().getFinanceAdviceId()
+
+        if adviser_id:
+            data = self.real_context.getAdviceDataFor(self.real_context, adviser_id)
             return ('delay' in data and data['delay']) or None
 
         return None
 
-    def print_advice_transmission_date_localized(self):
-        return self.display_date(date=self._getItemFinanceAdviceTransmissionDate())
+    def print_advice_given_date(self, adviser_id=None):
+        if adviser_id is None:
+            adviser_id = self.context.adapted().getFinanceAdviceId()
 
-    def _getItemFinanceAdviceTransmissionDate(self, finance_id=None):
+        if adviser_id:
+            data = self.real_context.getAdviceDataFor(self.real_context, adviser_id)
+            return ('advice_given_on' in data and self.display_date(date=data['advice_given_on'])) or None
+
+        return None
+
+    def print_advice_transmission_date(self, adviser_id=None):
+        return self.display_date(date=self._getItemAdviceTransmissionDate(adviser_id))
+
+    def _getItemAdviceTransmissionDate(self, adviser_id=None):
         """
         :return: The date as a string when the finance service received the advice request.
                  No matter if a legal delay applies on it or not.
         """
-        if not finance_id:
-            finance_id = self.context.adapted().getFinanceAdviceId()
+        if adviser_id is None:
+            adviser_id = self.context.adapted().getFinanceAdviceId()
             # may return None anyway
-        if finance_id:
-            data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
+        if adviser_id:
+            data = self.real_context.getAdviceDataFor(self.real_context, adviser_id)
             return 'delay_started_on' in data and data['delay_started_on'] \
                    or self._getWorkFlowAdviceTransmissionDate() \
                    or None

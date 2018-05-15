@@ -199,7 +199,7 @@ class testCustomViews(MeetingCommunesTestCase):
                'advice_hide_during_redaction': False,
                 'advice_comment': RichTextValue(u'My comment')})
 
-    def test_getItemFinanceAdviceTransmissionDate(self):
+    def test_getItemAdviceTransmissionDate(self):
         self.changeUser('siteadmin')
         self.meetingConfig.powerAdvisersGroups = ('vendors',)
         self.meetingConfig.setItemAdviceStates(('validated',))
@@ -234,7 +234,7 @@ class testCustomViews(MeetingCommunesTestCase):
         view()
         helper = view.get_generation_context_helper()
         # test no finance id available
-        self.assertIsNone(helper._getItemFinanceAdviceTransmissionDate())
+        self.assertIsNone(helper._getItemAdviceTransmissionDate())
 
         # test no delay available
         collection.setQuery(
@@ -242,7 +242,7 @@ class testCustomViews(MeetingCommunesTestCase):
               'v': [self.meetingConfig.getItemTypeName(), ]},
              {'i': 'indexAdvisers', 'o': 'plone.app.querystring.operation.selection.is',
               'v': ['delay_real_group_id__unique_id_002']}], )
-        self.assertIsNone(helper._getItemFinanceAdviceTransmissionDate())
+        self.assertIsNone(helper._getItemAdviceTransmissionDate())
 
         # test delay started from WF
         self.changeUser('siteadmin')
@@ -250,15 +250,14 @@ class testCustomViews(MeetingCommunesTestCase):
         self.meetingConfig.setItemAdviceStates(('proposed', 'validated',))
         self.meetingConfig.setItemAdviceEditStates(('proposed', 'validated',))
         self.meetingConfig.setItemAdviceViewStates(('proposed', 'validated',))
-        self.assertEqual(helper._getItemFinanceAdviceTransmissionDate(), getLastEvent(item, 'propose')['time'])
+        self.assertEqual(helper._getItemAdviceTransmissionDate(), getLastEvent(item, 'propose')['time'])
 
         # test delay started regular way
         self.meetingConfig.setItemAdviceStates(('validated',))
         self.meetingConfig.setItemAdviceEditStates(('validated',))
         self.meetingConfig.setItemAdviceViewStates(('validated',))
         self.validateItem(item)
-        self.assertEqual(helper._getItemFinanceAdviceTransmissionDate(), item.getAdviceDataFor(item, 'vendors')['delay_started_on'])
-
+        self.assertEqual(helper._getItemAdviceTransmissionDate(), item.getAdviceDataFor(item, 'vendors')['delay_started_on'])
 
     def handle_finance_cases(self, case_to_test, helper):
         cases = ['simple', 'legal_not_given', 'simple_not_given', 'legal', 'initiative']
