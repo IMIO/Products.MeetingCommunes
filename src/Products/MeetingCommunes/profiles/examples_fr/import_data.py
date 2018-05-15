@@ -63,15 +63,15 @@ itemTemplate.odt_file = 'deliberation.odt'
 itemTemplate.pod_formats = ['odt', 'pdf', ]
 itemTemplate.pod_portal_types = ['MeetingItemCollege']
 
-dfAdvicesTemplate = PodTemplateDescriptor('synthese-avis-df', 'Synthèse Avis DF', dashboard=True)
+dfAdvicesTemplate = PodTemplateDescriptor('synthese-avis-df-odt', 'Synthèse Avis DF', dashboard=True)
 dfAdvicesTemplate.odt_file = 'synthese-avis-df.odt'
 dfAdvicesTemplate.pod_formats = ['odt', 'pdf', ]
 dfAdvicesTemplate.dashboard_collections_ids = [FINANCE_ADVICES_COLLECTION_ID]
 
 dfAdviceTemplate = PodTemplateDescriptor('avis-df', 'Avis DF')
-dfAdvicesTemplate.odt_file = 'avis-df.odt'
-dfAdvicesTemplate.pod_formats = ['odt', 'pdf', ]
-dfAdvicesTemplate.tal_condition = 'python: context.adapted().showFinanceAdviceTemplate()'
+dfAdviceTemplate.odt_file = 'avis-df.odt'
+dfAdviceTemplate.pod_formats = ['odt', 'pdf', ]
+dfAdviceTemplate.tal_condition = 'python: context.adapted().showFinanceAdviceTemplate()'
 
 dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif', dashboard=True)
 dashboardTemplate.odt_file = 'recapitulatif-tb.odt'
@@ -88,15 +88,20 @@ dashboardTemplateOds.odt_file = 'recapitulatif-tb.ods'
 dashboardTemplateOds.pod_formats = ['ods', 'xls', ]
 dashboardTemplateOds.tal_condition = 'python: context.absolute_url().endswith("/searches_items")'
 
+dashboardDFTemplateOds = PodTemplateDescriptor('synthese-avis-df-ods', 'Synthèse avis DF', dashboard=True)
+dashboardDFTemplateOds.odt_file = 'synthese-df-tb.ods'
+dashboardDFTemplateOds.pod_formats = ['ods', 'xls', ]
+dashboardDFTemplateOds.dashboard_collections_ids = [FINANCE_ADVICES_COLLECTION_ID]
+
 historyTemplate = PodTemplateDescriptor('historique', 'Historique')
 historyTemplate.odt_file = 'history.odt'
 historyTemplate.pod_formats = ['odt', 'pdf', ]
 historyTemplate.pod_portal_types = ['MeetingItemCollege']
 
-collegeTemplates = [agendaTemplate, agendaTemplateWithIndex,
+collegeTemplates = [agendaTemplate, agendaTemplateWithIndex, dfAdviceTemplate,
                     decisionsTemplate, itemTemplate,
                     dfAdvicesTemplate, dashboardTemplate,
-                    dashboardTemplateOds, dashboardExportTemplate, historyTemplate]
+                    dashboardTemplateOds, dashboardExportTemplate, dashboardDFTemplateOds, historyTemplate]
 
 # Pod templates ----------------------------------------------------------------
 agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
