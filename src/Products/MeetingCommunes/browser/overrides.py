@@ -506,5 +506,5 @@ class MCFolderDocumentGenerationHelperView(FolderDocumentGenerationHelperView):
         cfg = tool.getMeetingConfig(self.context)
         finance_advice_ids = cfg.adapted().getUsedFinanceGroupIds()
         if finance_advice_ids:
-            res = self.get_all_items_dghv_with_single_advice(brains, finance_advice_ids)
+            res = self.get_all_items_dghv_with_advice(brains, finance_advice_ids)
         return res
