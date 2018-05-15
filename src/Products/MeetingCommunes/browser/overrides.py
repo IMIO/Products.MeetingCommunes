@@ -539,13 +539,6 @@ class MCFolderDocumentGenerationHelperView(FolderDocumentGenerationHelperView):
         tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
         finance_advice_ids = cfg.adapted().getUsedFinanceGroupIds()
-
-        for brain in brains:
-            item = brain.getObject()
-            advices = item.getAdviceDataFor(item)
-            if advices:
-                for advice in advices:
-                    if advice in finance_advice_ids:
-                        res.append({'itemView': self.getDGHV(item), 'advice': advices[advice]})
-
+        if finance_advice_ids:
+            res = self.get_all_items_dghv_with_advice(brains, finance_advice_ids)
         return res
