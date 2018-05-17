@@ -69,9 +69,10 @@ dfAdvicesTemplate.pod_formats = ['odt', 'pdf', ]
 dfAdvicesTemplate.dashboard_collections_ids = [FINANCE_ADVICES_COLLECTION_ID]
 
 dfAdviceTemplate = PodTemplateDescriptor('avis-df', 'Avis DF')
-dfAdvicesTemplate.odt_file = 'avis-df.odt'
-dfAdvicesTemplate.pod_formats = ['odt', 'pdf', ]
-dfAdvicesTemplate.tal_condition = 'python: context.adapted().showFinanceAdviceTemplate()'
+dfAdviceTemplate.odt_file = 'avis-df.odt'
+dfAdviceTemplate.pod_formats = ['odt', 'pdf', ]
+dfAdviceTemplate.pod_portal_types = ['MeetingItemCollege']
+dfAdviceTemplate.tal_condition = 'python: context.adapted().showFinanceAdviceTemplate()'
 
 dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif', dashboard=True)
 dashboardTemplate.odt_file = 'recapitulatif-tb.odt'

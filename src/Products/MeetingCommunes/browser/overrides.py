@@ -20,6 +20,7 @@ from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperV
 from Products.PloneMeeting.utils import get_annexes
 from Products.PloneMeeting.utils import getLastEvent
 
+from plone.api.validation import mutually_exclusive_parameters
 
 def formatedAssembly(assembly, focus):
     is_finish = False
@@ -62,94 +63,6 @@ def formatedAssembly(assembly, focus):
 
 class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
     """Specific printing methods used for item."""
-
-    def _financialAdviceDetails(self):
-        '''Get the financial advice signature date, advice type and comment'''
-        res = {}
-        tool = api.portal.get_tool('portal_plonemeeting')
-        cfg = tool.getMeetingConfig(self.context)
-        financialAdvice = cfg.adapted().getUsedFinanceGroupIds()[0]
-        adviceData = self.context.getAdviceDataFor(self.context.context, financialAdvice)
-        res['comment'] = 'comment' in adviceData\
-            and adviceData['comment'] or ''
-        advice_id = 'advice_id' in adviceData\
-            and adviceData['advice_id'] or ''
-        signature_event = advice_id and getLastEvent(getattr(self.context, advice_id), 'signFinancialAdvice') or ''
-        res['out_of_financial_dpt'] = 'time' in signature_event and signature_event['time'] or ''
-        res['out_of_financial_dpt_localized'] = res['out_of_financial_dpt']\
-            and res['out_of_financial_dpt'].strftime('%d/%m/%Y') or ''
-        # "positive_with_remarks_finance" will be printed "positive_finance"
-        if adviceData['type'] == 'positive_with_remarks_finance':
-            type_translated = self.translate(msgid='positive_finance',
-                                             domain='PloneMeeting').encode('utf-8')
-        else:
-            type_translated = adviceData['type_translated'].encode('utf-8')
-        res['advice_type'] = '<p><u>Type d\'avis:</u>  %s</p>' % type_translated
-        res['delay_started_on_localized'] = 'delay_started_on_localized' in adviceData['delay_infos']\
-            and adviceData['delay_infos']['delay_started_on_localized'] or ''
-        res['delay_started_on'] = 'delay_started_on' in adviceData\
-            and adviceData['delay_started_on'] or ''
-        return res
-
-    def getLegalTextForFDAdvice(self, isMeeting=False):
-        '''
-        Helper method. Return legal text for each advice type.
-        '''
-        adviceHolder = self.context.adapted().getItemWithFinanceAdvice()
-        if not self._mayGenerateFDAdvice():
-            return ''
-
-        financialStuff = self._financialAdviceDetails()
-        tool = api.portal.get_tool('portal_plonemeeting')
-        cfg = tool.getMeetingConfig(self.context)
-        financeAdviceId = cfg.adapted().getUsedFinanceGroupIds()[0]
-        adviceInd = adviceHolder.adviceIndex[financeAdviceId]
-        advice = adviceHolder.getAdviceDataFor(adviceHolder.context, financeAdviceId)
-        hidden = advice['hidden_during_redaction']
-        statusWhenStopped = advice['delay_infos']['delay_status_when_stopped']
-        adviceType = adviceInd['type']
-        comment = financialStuff['comment']
-        adviceGivenOnLocalized = advice['advice_given_on_localized']
-        delayStartedOnLocalized = advice['delay_infos']['delay_started_on_localized']
-        delayStatus = advice['delay_infos']['delay_status']
-        outOfFinancialdptLocalized = financialStuff['out_of_financial_dpt_localized']
-        limitDateLocalized = advice['delay_infos']['limit_date_localized']
-
-        if not isMeeting:
-            res = FINANCE_ADVICE_LEGAL_TEXT_PRE.format(delayStartedOnLocalized)
-
-        if not hidden and \
-           adviceGivenOnLocalized and \
-           (adviceType in (u'positive_finance', u'positive_with_remarks_finance',
-                           u'negative_finance', u'cautious_finance')):
-            if adviceType in (u'positive_finance', u'positive_with_remarks_finance'):
-                adviceTypeFr = 'favorable'
-            elif adviceType == u'negative_finance':
-                adviceTypeFr = 'défavorable'
-            else:
-                # u'cautious_finance'
-                adviceTypeFr = 'réservé'
-            #if it's a meetingItem, return the legal bullshit.
-            if not isMeeting:
-                res = res + FINANCE_ADVICE_LEGAL_TEXT.format(
-                    adviceTypeFr,
-                    outOfFinancialdptLocalized
-                )
-            #if it's a meeting, returns only the type and date of the advice.
-            else:
-                res = "<p>Avis {0} du Directeur Financier du {1}</p>".format(
-                    adviceTypeFr, outOfFinancialdptLocalized)
-
-            if comment and adviceType == u'negative_finance':
-                res = res + "<p>{0}</p>".format(comment)
-        elif statusWhenStopped == 'stopped_timed_out' or delayStatus == 'timed_out':
-            if not isMeeting:
-                res = res + FINANCE_ADVICE_LEGAL_TEXT_NOT_GIVEN
-            else:
-                res = "<p>Avis du Directeur financier expir? le {0}</p>".format(limitDateLocalized)
-        else:
-            res = ''
-        return res
 
     def printAllAnnexes(self, portal_types=['annex']):
         ''' Printing Method use in templates :
@@ -251,11 +164,10 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                             if case == 'initiative' and advice['advice_given_on']:
                                 result.append(advice)
                         else:
-                            # set transmission date to adviser because advice was asked by the agent
-                            advice['item_transmitted_on'] = self.getItemFinanceAdviceTransmissionDate(finance_advice_id)
+                            # set date of transmission to adviser because the advice was asked by the agent
+                            advice['item_transmitted_on'] = self._getItemAdviceTransmissionDate(advice=advice)
                             if advice['item_transmitted_on']:
-                                advice['item_transmitted_on_localized'] = self.display_date(
-                                    date=advice['item_transmitted_on'])
+                                advice['item_transmitted_on_localized'] = self.display_date(date=advice['item_transmitted_on'])
                             else:
                                 advice['item_transmitted_on_localized'] = ''
 
@@ -267,42 +179,74 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                                 result.append(advice)
         return result
 
-    def getItemFinanceDelayLimitDate(self):
-        finance_id = self.context.adapted().getFinanceAdviceId()
-        if finance_id:
-            data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
-            return ('delay_infos' in data and 'limit_date_localized' in data['delay_infos']
-                    and data['delay_infos']['limit_date_localized']) or None
+    def _get_advice(self, adviser_id=None):
+        """
+        :param adviser_id: the adviser id to seek advice for.
+               If None, it will try to find and use the fianancial adviser id.
+        :return: the advice data for the used adviser id.
+        """
+        if adviser_id is None:
+            adviser_id = self.context.adapted().getFinanceAdviceId()
+
+        if adviser_id:
+            return self.real_context.getAdviceDataFor(self.real_context, adviser_id)
 
         return None
 
-    def getItemFinanceAdviceDelayDays(self):
-        finance_id = self.context.adapted().getFinanceAdviceId()
-        if finance_id:
-            data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
-            return ('delay' in data and data['delay']) or None
+    @mutually_exclusive_parameters('adviser_id', 'advice')
+    def print_advice_delay_limit_date(self, adviser_id=None, advice=None):
+        if advice is None:
+            advice = self._get_advice(adviser_id)
+            # may return None anyway
+        if advice:
+            return ('delay_infos' in advice
+                    and 'limit_date' in advice['delay_infos']
+                    and self.display_date(date=advice['delay_infos']['limit_date'])) \
+                   or None
 
         return None
 
-    def getItemFinanceAdviceTransmissionDate(self, finance_id=None):
+    @mutually_exclusive_parameters('adviser_id', 'advice')
+    def print_advice_delay_days(self, adviser_id=None, advice=None):
+        if advice is None:
+            advice = self._get_advice(adviser_id)
+            # may return None anyway
+        if advice:
+            return ('delay' in advice and advice['delay']) or None
+
+        return None
+
+    @mutually_exclusive_parameters('adviser_id', 'advice')
+    def print_advice_given_date(self, adviser_id=None, advice=None):
+        if advice is None:
+            advice = self._get_advice(adviser_id)
+            # may return None anyway
+        if advice:
+            return ('advice_given_on' in advice and self.display_date(date=advice['advice_given_on'])) or None
+
+        return None
+
+    @mutually_exclusive_parameters('adviser_id', 'advice')
+    def print_advice_transmission_date(self, adviser_id=None, advice=None):
+        return self.display_date(date=self._getItemAdviceTransmissionDate(adviser_id, advice))
+
+    @mutually_exclusive_parameters('adviser_id', 'advice')
+    def _getItemAdviceTransmissionDate(self, adviser_id=None, advice=None):
         """
         :return: The date as a string when the finance service received the advice request.
                  No matter if a legal delay applies on it or not.
         """
-        if not finance_id:
-            finance_id = self.context.adapted().getFinanceAdviceId()
+        if advice is None:
+            advice = self._get_advice(adviser_id)
             # may return None anyway
+        if advice:
+            return 'delay_started_on' in advice and advice['delay_started_on'] \
+                   or self._getWorkFlowAdviceTransmissionDate() \
+                   or None
 
-        if finance_id:
-            data = self.real_context.getAdviceDataFor(self.real_context, finance_id)
-            if 'delay_infos' in data and 'delay_started_on' in data['delay_infos'] \
-                    and data['delay_infos']['delay_started_on']:
-                return data['delay_infos']['delay_started_on']
-            else:
-                return self.getWorkFlowAdviceTransmissionStep()
         return None
 
-    def getWorkFlowAdviceTransmissionStep(self):
+    def _getWorkFlowAdviceTransmissionDate(self):
 
         """
         :return: The date as a string when the finance service received the advice request if no legal delay applies.
@@ -538,13 +482,6 @@ class MCFolderDocumentGenerationHelperView(FolderDocumentGenerationHelperView):
         tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
         finance_advice_ids = cfg.adapted().getUsedFinanceGroupIds()
-
-        for brain in brains:
-            item = brain.getObject()
-            advices = item.getAdviceDataFor(item)
-            if advices:
-                for advice in advices:
-                    if advice in finance_advice_ids:
-                        res.append({'itemView': self.getDGHV(item), 'advice': advices[advice]})
-
+        if finance_advice_ids:
+            res = self.get_all_items_dghv_with_advice(brains, finance_advice_ids)
         return res
