@@ -300,9 +300,9 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         return self.translate(item.getListType())
 
     def _get_value(self, item, value_name):
-        if value_name == 'listType' or value_name == 'listTypes':
+        if value_name in ('listType', 'listTypes'):
             return self._get_list_type_value(item)
-        elif value_name == 'category' or 'proposingGroup':
+        elif value_name in ('category', 'proposingGroup'):
             return self.getDGHV(item).display(value_name)
         elif item.getField(value_name):
             return item.getField(value_name).get(item)
