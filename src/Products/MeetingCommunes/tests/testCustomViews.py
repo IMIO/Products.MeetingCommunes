@@ -81,7 +81,7 @@ class testCustomViews(MeetingCommunesTestCase):
         # print_creator_name
         self.assertEqual(helper.print_creator_name(), 'M. PMCreator One')
         # does not fail if user not found
-        item.setCreators(('unknown', ))
+        item.setCreators(('unknown',))
         self.assertEqual(helper.print_creator_name(), 'unknown')
 
         # print_item_state
@@ -170,22 +170,22 @@ class testCustomViews(MeetingCommunesTestCase):
         collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID)
         collection.setQuery(
             [{'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is', 'v': [cfg.getItemTypeName(), ]},
-                {'i': 'indexAdvisers', 'o': 'plone.app.querystring.operation.selection.is',
-                    'v': ['delay_real_group_id__unique_id_001', 'delay_real_group_id__unique_id_002']}], )
+             {'i': 'indexAdvisers', 'o': 'plone.app.querystring.operation.selection.is',
+              'v': ['delay_real_group_id__unique_id_001', 'delay_real_group_id__unique_id_002']}], )
 
         cfg.setCustomAdvisers((
             {'row_id': 'unique_id_001', 'group': adviser_group_id, 'for_item_created_from': today, 'delay': '10',
-                'delay_left_alert': '4', 'delay_label': 'Finance advice 1', 'is_linked_to_previous_row': '0'},
+             'delay_left_alert': '4', 'delay_label': 'Finance advice 1', 'is_linked_to_previous_row': '0'},
             {'row_id': 'unique_id_002', 'group': 'vendors', 'for_item_created_from': today, 'delay': '10',
-                'delay_left_alert': '4', 'delay_label': 'Finance advice 1', 'is_linked_to_previous_row': '0'},
+             'delay_left_alert': '4', 'delay_label': 'Finance advice 1', 'is_linked_to_previous_row': '0'},
             {'row_id': 'unique_id_003', 'group': adviser_group_id, 'for_item_created_from': today, 'delay': '20',
-                'delay_left_alert': '4', 'delay_label': 'Finance advice 2', 'is_linked_to_previous_row': '1'},
+             'delay_left_alert': '4', 'delay_label': 'Finance advice 2', 'is_linked_to_previous_row': '1'},
             {'row_id': 'unique_id_004', 'group': 'vendors', 'for_item_created_from': today, 'delay': '20',
-                'delay_left_alert': '4', 'delay_label': 'Finance advice 2', 'is_linked_to_previous_row': '1'},
+             'delay_left_alert': '4', 'delay_label': 'Finance advice 2', 'is_linked_to_previous_row': '1'},
             {'row_id': 'unique_id_005', 'group': adviser_group_id, 'for_item_created_from': today, 'delay': '20',
-                'delay_left_alert': '4', 'delay_label': 'Not a finance advice', 'is_linked_to_previous_row': '0'},
+             'delay_left_alert': '4', 'delay_label': 'Not a finance advice', 'is_linked_to_previous_row': '0'},
             {'row_id': 'unique_id_006', 'group': 'vendors', 'for_item_created_from': today, 'delay': '20',
-                'delay_left_alert': '4', 'delay_label': 'Not a finance advice', 'is_linked_to_previous_row': '0'}, ))
+             'delay_left_alert': '4', 'delay_label': 'Not a finance advice', 'is_linked_to_previous_row': '0'},))
 
         cfg.setItemAdviceStates(('itemcreated',))
         cfg.setItemAdviceEditStates(('itemcreated',))
@@ -198,7 +198,7 @@ class testCustomViews(MeetingCommunesTestCase):
             **{'advice_group': adviser_group_id,
                'advice_type': u'positive',
                'advice_hide_during_redaction': False,
-                'advice_comment': RichTextValue(u'My comment')})
+               'advice_comment': RichTextValue(u'My comment')})
 
     def test_getItemAdviceTransmissionDate(self):
         self.changeUser('siteadmin')
@@ -209,7 +209,8 @@ class testCustomViews(MeetingCommunesTestCase):
 
         collection = getattr(self.meetingConfig.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID)
         collection.setQuery(
-            [{'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is', 'v': [self.meetingConfig.getItemTypeName(), ]},
+            [{'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is',
+              'v': [self.meetingConfig.getItemTypeName(), ]},
              {'i': 'indexAdvisers', 'o': 'plone.app.querystring.operation.selection.is',
               'v': []}], )
         today = DateTime().strftime('%Y/%m/%d')
@@ -258,7 +259,8 @@ class testCustomViews(MeetingCommunesTestCase):
         self.meetingConfig.setItemAdviceEditStates(('validated',))
         self.meetingConfig.setItemAdviceViewStates(('validated',))
         self.validateItem(item)
-        self.assertEqual(helper._getItemAdviceTransmissionDate(), item.getAdviceDataFor(item, 'vendors')['delay_started_on'])
+        self.assertEqual(helper._getItemAdviceTransmissionDate(),
+                         item.getAdviceDataFor(item, 'vendors')['delay_started_on'])
 
     def handle_finance_cases(self, case_to_test, helper):
         cases = ['simple', 'legal_not_given', 'simple_not_given', 'legal', 'initiative']
@@ -458,7 +460,7 @@ class testCustomViews(MeetingCommunesTestCase):
         self.meetingConfig.powerAdvisersGroups = (new_group, 'vendors',)
         self.changeUser('pmCreator1')
         item2 = self.create('MeetingItem', **data)
-        item2.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', ))
+        item2.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002',))
         item2._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
@@ -530,7 +532,7 @@ class testCustomViews(MeetingCommunesTestCase):
         self.meetingConfig.powerAdvisersGroups = (new_group, 'vendors',)
         self.changeUser('pmCreator1')
         item2 = self.create('MeetingItem', **data)
-        item2.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', ))
+        item2.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002',))
         item2._update_after_edit()
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
@@ -550,6 +552,94 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper2.printFinanceAdvice('legal_not_given')
         self.assertEqual(result, [])
 
+    def test__filter_items(self):
+        self.changeUser('pmManager')
+        cfg = self.meetingConfig
+        cfg.setUseGroupsAsCategories(False)
+        cfg.setInsertingMethodsOnAddItem(
+            ({'insertingMethod': 'on_categories', 'reverse': '0'},))
+        m = self._createMeetingWithItems()
+        # adapt categories to have catid and item to have category
+        for item in m.getItems(ordered=True):
+            item.setCategory('development')
+        # intel inside *Joke*
+        i5 = self.create('MeetingItem', title='Item5')
+        i5.setCategory('development')
+        i7 = self.create('MeetingItem', title='Item7')
+        i7.setCategory('research')
+        self.presentItem(i5)
+        self.presentItem(i7)
+        # create view obj
+        # first, get template to use view
+        pod_template = cfg.podtemplates.agendaTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
+        view = m.restrictedTraverse('@@document-generation')
+        view()
+        helper = view.get_generation_context_helper()
+        items = m.getItems(ordered=True)
+
+        res = helper._filter_items(items,
+                                   included_values={},
+                                   excluded_values={})
+        self.assertListEqual(res, items)
+
+        res = helper._filter_items(items,
+                                   included_values={},
+                                   excluded_values={'category':[i7.getCategory(theObject=True).Title()]})
+        self.assertListEqual(res, items[0:-1])
+
+        res = helper._filter_items(items,
+                                   included_values={'category': [i5.getCategory(theObject=True).Title()]},
+                                   excluded_values={'category': [i7.getCategory(theObject=True).Title()]})
+        self.assertListEqual(res, items[0:-1])
+
+        res = helper._filter_items(items,
+                                   included_values={'category': [i5.getCategory(theObject=True).Title()]},
+                                   excluded_values={})
+        self.assertListEqual(res, items[0:-1])
+
+        res = helper._filter_items(items,
+                                   included_values={'category': [i5.getCategory(theObject=True).Title()]},
+                                   excluded_values={'category': [i5.getCategory(theObject=True).Title()]})
+        self.assertListEqual(res, [])
+
+    def test_get_grouped_items(self):
+        self.changeUser('pmManager')
+        cfg = self.meetingConfig
+        cfg.setUseGroupsAsCategories(False)
+        cfg.setInsertingMethodsOnAddItem(
+            ({'insertingMethod': 'on_categories', 'reverse': '0'},))
+        m = self._createMeetingWithItems()
+        # adapt categories to have catid and item to have category
+        for item in m.getItems(ordered=True):
+            item.setCategory('development')
+        # intel inside *Joke*
+        i5 = self.create('MeetingItem', title='Item5')
+        i5.setCategory('development')
+        i7 = self.create('MeetingItem', title='Item7')
+        i7.setCategory('research')
+        self.presentItem(i5)
+        self.presentItem(i7)
+        # create view obj
+        # first, get template to use view
+        pod_template = cfg.podtemplates.agendaTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
+        view = m.restrictedTraverse('@@document-generation')
+        view()
+        helper = view.get_generation_context_helper()
+        items = m.getItems(ordered=True)
+        itemUids = [anItem.UID() for anItem in items]
+
+        res = helper.get_grouped_items(itemUids)
+        self.assertListEqual(res, items)
+
+        res = helper.get_grouped_items(itemUids, group_by='category')
+        self.assertListEqual(res,
+                             [[i5.getCategory(theObject=True).Title(), items[0:-1]],
+                             [i7.getCategory(theObject=True).Title(), [i7]]])
+
     def test_get_multiple_level_printing(self):
         self.changeUser('pmManager')
         cfg = self.meetingConfig
@@ -560,15 +650,16 @@ class testCustomViews(MeetingCommunesTestCase):
         # adapt categories to have catid and item to have category
         for item in m.getItems(ordered=True):
             item.setCategory('development')
-        i6 = self.create('MeetingItem', title='Item6')
-        i6.setCategory('development')
-        i6.getCategory(theObject=True).setCategoryId('A.1.2.1.1')
-        i6.getCategory(theObject=True).setDescription('DESCRI1|DESCRI2|DESCRI3')
+        # intel inside *Joke*
+        i5 = self.create('MeetingItem', title='Item5')
+        i5.setCategory('development')
+        i5.getCategory(theObject=True).setCategoryId('A.1.2.1.1')
+        i5.getCategory(theObject=True).setDescription('DESCRI1|DESCRI2|DESCRI3')
         i7 = self.create('MeetingItem', title='Item7')
         i7.setCategory('research')
         i7.getCategory(theObject=True).setCategoryId('B.1')
         i7.getCategory(theObject=True).setDescription('')
-        self.presentItem(i6)
+        self.presentItem(i5)
         self.presentItem(i7)
         # create view obj
         # first, get template to use view
@@ -592,16 +683,16 @@ class testCustomViews(MeetingCommunesTestCase):
              ('<h3>A.1.2. DESCRI2</h3>', []),
              ('<h4>A.1.2.1. DESCRI3</h4>', []),
              ('<h5>Development topics</h5>',
-             [('A.1.2.1.1.1', items[0]),
-              ('A.1.2.1.1.2', items[1]),
-              ('A.1.2.1.1.3', items[2]),
-              ('A.1.2.1.1.4', items[3]),
-              ('A.1.2.1.1.5', items[4]),
-              ('A.1.2.1.1.6', i6)]),
+              [('A.1.2.1.1.1', items[0]),
+               ('A.1.2.1.1.2', items[1]),
+               ('A.1.2.1.1.3', items[2]),
+               ('A.1.2.1.1.4', items[3]),
+               ('A.1.2.1.1.5', items[4]),
+               ('A.1.2.1.1.6', i5)]),
              ('<h1>B</h1>', []),
              ('<h2>Research topics</h2>',
-             [('B.1.1', i7)])]
-            )
+              [('B.1.1', i7)])]
+        )
 
     def test_print_item_number_within_category(self):
         cfg = self.meetingConfig

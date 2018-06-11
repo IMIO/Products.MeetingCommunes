@@ -260,6 +260,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         else:
             return None
 
+
 class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView):
     """Specific printing methods used for meeting."""
 
@@ -269,89 +270,74 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
                 return True
         return False
 
-    def _filter_item_uids(self, itemUids, ignore_review_states=[], privacy='*', included_values={}, excluded_values={}):
+    def _filter_items(self, items, included_values={}, excluded_values={}):
         """
-        We just filter ignore_review_states here and privacy in order call getItems(uids), passing the correct uids and removing empty uids.
-        :param privacy: can be '*' or 'public' or 'secret' or 'public_heading' or 'secret_heading'
+        Filters the items based on included_values and excluded_values.
+        :param items:
+        :param included_values:
+        :param excluded_values:
+        :return:
         """
-        for elt in itemUids:
-            if elt == '':
-                itemUids.remove(elt)
+        if not included_values and not excluded_values:
+            # If there are no filter criterion, it's useless to iterate.
+            return items
 
-        filteredItemUids = []
-        uid_catalog = self.context.uid_catalog
-
-        for itemUid in itemUids:
-            obj = uid_catalog(UID=itemUid)[0].getObject()
-            if obj.queryState() in ignore_review_states:
-                continue
-            elif not (privacy == '*' or obj.getPrivacy() == privacy):
-                continue
-            elif included_values and not self._is_in_value_dict(obj, included_values):
-                continue
-            elif excluded_values and self._is_in_value_dict(obj, excluded_values):
-                continue
-            filteredItemUids.append(itemUid)
-        return filteredItemUids
-
-    def _renumber_item(self, items, firstNumber):
-        """
-        :return: a list of tuple with first element the number and second element the item itself
-        """
-        i = firstNumber
-        res = []
+        result = []
         for item in items:
-            res.append((i, item))
-            i = i + 1
-        return res
-
-    def _get_list_type_value(self, item):
-        return self.translate(item.getListType())
+            if included_values and not self._is_in_value_dict(item, included_values):
+                continue
+            elif excluded_values and self._is_in_value_dict(item, excluded_values):
+                continue
+            result.append(item)
+        return result
 
     def _get_value(self, item, value_name):
-        if value_name in ('listType', 'listTypes'):
-            return self._get_list_type_value(item)
-        elif value_name in ('category', 'proposingGroup'):
+        if hasattr(item, value_name):
             return self.getDGHV(item).display(value_name)
-        elif item.getField(value_name):
-            return item.getField(value_name).get(item)
+        else:
+            raise AttributeError
 
     def get_grouped_items(self, itemUids, listTypes=['normal'],
                           group_by=[], included_values={}, excluded_values={},
-                          ignore_review_states=[], privacy='*',
-                          firstNumber=1, renumber=False):
+                          ignore_review_states=[], privacy='*'):
 
         """
-
         :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
-        :param group_by: Can be either 'listTypes', 'category', 'proposingGroup' or a field name as described in MettingItem Schema
+        :param group_by: is a list and each element can be either 'listTypes', 'category', 'proposingGroup' or a field name as described in MettingItem Schema
         :param included_values: a Map to filter the returned items regarding the value of a given field.
                 for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
         :param excluded_values: a Map to filter the returned items regarding the value of a given field.
                 for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
         :param privacy: can be '*' or 'public' or 'secret'
-        :param firstNumber: If renumber is True, a list of tuple
-           will be return with first element the number and second element, the item.
-           In this case, the firstNumber value can be used.'
+
         :return: a list of list of list ... (late or normal or both) items (depending on p_listTypes) in the meeting order but wrapped in defined group_by if not empty.
                 every group condition defined increase the depth of this collection.
         """
 
         # Retrieve the list of items
-        filteredItemUids = self._filter_item_uids(itemUids, ignore_review_states, privacy, included_values,
-                                                  excluded_values)
+        query = {}
+        if privacy != '*':
+            query['privacy'] = privacy
+        if ignore_review_states:
+            query['review_state'] = {'not':ignore_review_states}
 
-        if not filteredItemUids:
-            return []
-        else:
-            items = self.real_context.getItems(uids=filteredItemUids, listTypes=listTypes, ordered=True)
-            if renumber:
-                items = self._renumber_item(items, firstNumber)
+        brains = self.real_context.getItems(uids=itemUids,
+                                           listTypes=listTypes,
+                                           ordered=True,
+                                           useCatalog=True,
+                                           additional_catalog_query=query)
+
+        items = [brain.getObject() for brain in brains]
+        # because we can't assume included and excluded values are indexed in catalog.
+        items = self._filter_items(items, included_values, excluded_values)
 
         if not group_by:
             return items
 
         res = []
+
+        if isinstance(group_by, str):
+            group_by = [group_by]
 
         for item in items:
             # compute result keeping item original order and repeating groups if needed
@@ -375,7 +361,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
     def get_multiple_level_printing(self, itemUids, listTypes=['normal'],
                                     included_values={}, excluded_values={},
                                     ignore_review_states=[], privacy='*',
-                                    firstNumber=1, level_number=1, text_pattern='{0}'):
+                                    level_number=1, text_pattern='{0}'):
         """
 
         :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
@@ -384,9 +370,6 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         :param excluded_values: a Map to filter the returned items regarding the value of a given field.
                 for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
         :param privacy: can be '*' or 'public' or 'secret'
-        :param firstNumber: If renumber is True, a list of tuple
-           will be return with first element the number and second element, the item.
-           In this case, the firstNumber value can be used.'
         :param level_number: number of sublist we want
         :param text_pattern: text formatting with one string-param like this : 'xxx {0} yyy'
         This method to be used to have a multiple sublist based on an hierarchy in id's category like this :
@@ -401,9 +384,9 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
             item with number (num, item)]]
         """
         res = OrderedDict()
-        items = self.get_grouped_items(itemUids, listTypes, [], included_values, excluded_values,
-                                       ignore_review_states, privacy, firstNumber, False)
-
+        items = self.get_grouped_items(itemUids, listTypes=listTypes, group_by=[],
+                                       included_values=included_values, excluded_values=excluded_values,
+                                       ignore_review_states=ignore_review_states, privacy=privacy)
         # now we construct tree structure
         for item in items:
             category = item.getCategory(theObject=True)
@@ -412,6 +395,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
             cats_descri = category.Description().split('|')  # Exemple : Organisation et structures|Secteur Hospitalier
             max_level = min(len(cats_ids), level_number)
             res_key = ''
+            catid = ''
             # create key in dico if needed
             for i, cat_id in enumerate(cats_ids):
                 # first level
