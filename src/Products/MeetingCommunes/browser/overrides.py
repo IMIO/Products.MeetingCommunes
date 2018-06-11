@@ -9,9 +9,6 @@
 
 from collections import OrderedDict
 
-from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT
-from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_NOT_GIVEN
-from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_PRE
 from Products.PloneMeeting.browser.views import FolderDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperView
@@ -19,8 +16,11 @@ from Products.PloneMeeting.utils import getLastEvent
 from Products.PloneMeeting.utils import get_annexes
 
 from Products.CMFPlone.utils import safe_unicode
+from imio.history.interfaces import IImioHistory
+from imio.history.utils import getLastAction
 from plone import api
 from plone.api.validation import mutually_exclusive_parameters
+from zope.component import getAdapter
 
 
 class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
@@ -250,6 +250,15 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             res = str(count)
         return res
 
+    def print_completeness_date(self, completeness_action, format='%d/%m/%Y'):
+        completeness_changes_adapter = getAdapter(self.real_context,
+                                                  IImioHistory,
+                                                  'completeness_changes')
+        last_action = getLastAction(completeness_changes_adapter, action=completeness_action)
+        if (last_action):
+            return last_action['time'].strftime(format)
+        else:
+            return None
 
 class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView):
     """Specific printing methods used for meeting."""
