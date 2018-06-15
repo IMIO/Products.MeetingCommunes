@@ -94,6 +94,13 @@ dashboardDFTemplateOds.odt_file = 'synthese-df-tb.ods'
 dashboardDFTemplateOds.pod_formats = ['ods', 'xls', ]
 dashboardDFTemplateOds.dashboard_collections_ids = [FINANCE_ADVICES_COLLECTION_ID]
 
+dashboardMeetingAssemblies = PodTemplateDescriptor('meeting-assemblies', 'Assemblée des séances', dashboard=True)
+dashboardMeetingAssemblies.odt_file = 'meeting_assemblies.odt'
+dashboardMeetingAssemblies.pod_formats = ['doc', 'pdf', ]
+dashboardMeetingAssemblies.tal_condition = 'python:False'
+dashboardMeetingAssemblies.roles_bypassing_talcondition = ['Manager', 'MeetingManager']
+dashboardMeetingAssemblies.dashboard_collections_ids = ['searchalldecisions']
+
 historyTemplate = PodTemplateDescriptor('historique', 'Historique')
 historyTemplate.odt_file = 'history.odt'
 historyTemplate.pod_formats = ['odt', 'pdf', ]
@@ -102,7 +109,7 @@ historyTemplate.pod_portal_types = ['MeetingItemCollege']
 collegeTemplates = [agendaTemplate, agendaTemplateWithIndex, dfAdviceTemplate,
                     decisionsTemplate, itemTemplate,
                     dfAdvicesTemplate, dashboardTemplate,
-                    dashboardTemplateOds, dashboardExportTemplate, dashboardDFTemplateOds, historyTemplate]
+                    dashboardTemplateOds, dashboardExportTemplate, dashboardDFTemplateOds, historyTemplate, dashboardMeetingAssemblies]
 
 # Pod templates ----------------------------------------------------------------
 agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
@@ -130,7 +137,7 @@ itemCouncilTemplate.pod_portal_types = ['MeetingItemCouncil']
 
 councilTemplates = [agendaCouncilTemplate, decisionsCouncilTemplate,
                     itemCouncilRapportTemplate, itemCouncilTemplate,
-                    dashboardTemplate]
+                    dashboardTemplate, dashboardMeetingAssemblies]
 
 # Users and groups -------------------------------------------------------------
 dgen = UserDescriptor('dgen', [], email="test@test.be", fullname="Henry Directeur")

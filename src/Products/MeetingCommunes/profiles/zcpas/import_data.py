@@ -58,8 +58,15 @@ dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif', das
 dashboardTemplate.odt_file = '../../examples_fr/templates/recapitulatif-tb.odt'
 dashboardTemplate.tal_condition = 'python: context.absolute_url().endswith("/searches_items")'
 
+dashboardMeetingAssemblies = PodTemplateDescriptor('meeting-assemblies', 'Assemblée des séances', dashboard=True)
+dashboardMeetingAssemblies.odt_file = 'meeting_assemblies.odt'
+dashboardMeetingAssemblies.pod_formats = ['doc', 'pdf', ]
+dashboardMeetingAssemblies.tal_condition = 'python:False'
+dashboardMeetingAssemblies.roles_bypassing_talcondition = ['Manager', 'MeetingManager']
+dashboardMeetingAssemblies.dashboard_collections_ids = ['searchalldecisions']
+
 bpTemplates = [agendaTemplate, decisionsTemplate,
-               itemTemplate, dashboardTemplate]
+               itemTemplate, dashboardTemplate, dashboardMeetingAssemblies]
 
 # CAS
 agendaCASTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
@@ -81,7 +88,7 @@ itemCASTemplate.pod_portal_types = ['MeetingItemcas']
 itemCASTemplate.tal_condition = ''
 
 casTemplates = [agendaCASTemplate, decisionsCASTemplate,
-                itemCASTemplate, dashboardTemplate]
+                itemCASTemplate, dashboardTemplate, dashboardMeetingAssemblies]
 
 # Comitee
 agendaComiteeTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
