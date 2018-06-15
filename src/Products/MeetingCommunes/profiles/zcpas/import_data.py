@@ -59,7 +59,7 @@ dashboardTemplate.odt_file = '../../examples_fr/templates/recapitulatif-tb.odt'
 dashboardTemplate.tal_condition = 'python: context.absolute_url().endswith("/searches_items")'
 
 dashboardMeetingAssemblies = PodTemplateDescriptor('meeting-assemblies', 'Assemblée des séances', dashboard=True)
-dashboardMeetingAssemblies.odt_file = 'meeting_assemblies.odt'
+dashboardMeetingAssemblies.odt_file = '../examples_fr/templates/meeting_assemblies.odt'
 dashboardMeetingAssemblies.pod_formats = ['doc', 'pdf', ]
 dashboardMeetingAssemblies.tal_condition = 'python:False'
 dashboardMeetingAssemblies.roles_bypassing_talcondition = ['Manager', 'MeetingManager']
