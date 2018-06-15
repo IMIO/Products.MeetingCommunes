@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import logging
-logger = logging.getLogger('MeetingCommunes')
-
+import os
 from plone import api
 
-from Products.MeetingCommunes.profiles.examples_fr.import_data import annexeSeance
+from Products.MeetingCommunes.profiles.examples_fr import import_data
+from Products.PloneMeeting.profiles import PodTemplateDescriptor
 from Products.PloneMeeting.migrations.migrate_to_4_0 import Migrate_To_4_0 as PMMigrate_To_4_0
+
+logger = logging.getLogger('MeetingCommunes')
 
 
 # The migration class ----------------------------------------------------------
@@ -86,7 +88,7 @@ class Migrate_To_4_0(PMMigrate_To_4_0):
             if not cfg.annexes_types.meeting_annexes.objectIds():
                 source = self.ps.getProfileInfo(
                     self.profile_name)['path'].replace('/default', '/examples_fr')
-                cfg.addAnnexType(annexeSeance, source)
+                cfg.addAnnexType(import_data.annexeSeance, source)
         logger.info('Done.')
 
     def _deleteUselessWorkflows(self):
@@ -95,6 +97,23 @@ class Migrate_To_4_0(PMMigrate_To_4_0):
         if self.wfs_to_delete:
             wfTool = api.portal.get_tool('portal_workflow')
             wfTool.manage_delObjects(self.wfs_to_delete)
+        logger.info('Done.')
+
+    def _addMeetingAssembliesDashboardPODTemplate(self):
+        """Add DashboardPODTemplate that extracts meeting assemblies."""
+        logger.info('Add meeting assemblies DashboardPODTemplate...')
+        templateId = 'meeting-assemblies'
+        descr = PodTemplateDescriptor(id=templateId, title=u'Assemblée des séances', dashboard=True)
+        descr.odt_file = 'meeting_assemblies.odt'
+        descr.tal_condition = 'python:False'
+        descr.roles_bypassing_talcondition = ['Manager', 'MeetingManager']
+        descr.pod_formats = ['doc', 'pdf']
+        descr.dashboard_collections_ids = ['searchalldecisions']
+        source = os.path.dirname(import_data.__file__)
+        for cfg in self.tool.objectValues('MeetingConfig'):
+            templatesFolder = cfg.podtemplates
+            if templateId not in templatesFolder.objectIds():
+                cfg.addPodTemplate(descr, source=source)
         logger.info('Done.')
 
     def run(self, step=None):
@@ -111,6 +130,10 @@ class Migrate_To_4_0(PMMigrate_To_4_0):
             self._migrateItemPositiveDecidedStates()
             self._addSampleAnnexTypeForMeetings()
             self._deleteUselessWorkflows()
+
+        if step == 4:
+            # add meeting-assemblies DashboardPODTemplate
+            self._addMeetingAssembliesDashboardPODTemplate()
 
 
 # The migration function -------------------------------------------------------
@@ -159,4 +182,14 @@ def migrate_step3(context):
     '''
     migrator = Migrate_To_4_0(context)
     migrator.run(step=3)
+    migrator.finish()
+
+
+def migrate_step4(context):
+    '''This migration function:
+
+       1) Add meeting assemblies DashboardPODTemplate.
+    '''
+    migrator = Migrate_To_4_0(context)
+    migrator.run(step=4)
     migrator.finish()
