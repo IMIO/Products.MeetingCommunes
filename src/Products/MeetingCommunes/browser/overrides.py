@@ -9,18 +9,16 @@
 
 from collections import OrderedDict
 
-from plone import api
-from Products.CMFPlone.utils import safe_unicode
-from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT
-from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_NOT_GIVEN
-from Products.MeetingCommunes.config import FINANCE_ADVICE_LEGAL_TEXT_PRE
 from Products.PloneMeeting.browser.views import FolderDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperView
-from Products.PloneMeeting.utils import get_annexes
 from Products.PloneMeeting.utils import getLastEvent
+from Products.PloneMeeting.utils import get_annexes
 
+from Products.CMFPlone.utils import safe_unicode
+from plone import api
 from plone.api.validation import mutually_exclusive_parameters
+
 
 def formatedAssembly(assembly, focus):
     is_finish = False
@@ -275,6 +273,14 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         return (self.real_context.portal_membership.getMemberInfo(str(self.real_context.Creator())) \
                and self.real_context.portal_membership.getMemberInfo(str(self.real_context.Creator()))['fullname']) \
                or str(self.real_context.Creator())
+
+    def print_completeness_date(self, completeness_trx, format='%d/%m/%Y'):
+        history = self.real_context.completeness_changes_history
+        last_event = getLastEvent(self.real_context, transition=completeness_trx, history=history)
+        if(last_event):
+            return last_event['time'].strftime(format)
+        else:
+            return None
 
 
 class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView):
