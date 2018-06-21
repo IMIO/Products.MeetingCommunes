@@ -18,6 +18,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   meetingConfig and meetingConfig2 attributes of tests and useful for profiles based on MeetingCommunes
 - Added helper method to print item number within a category
 - Use _addPrincipalToGroup from PloneMeetingTestCase in tests.
+- DashboardCollection have no more WF but have a 'enabled' field, use it in adapters.getUsedFinanceGroupIds
+  to check if finance DashboardCollection is enabled or not.
 
 4.0 (2017-08-04)
 ----------------

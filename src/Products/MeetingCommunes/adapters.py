@@ -23,7 +23,7 @@
 
 from AccessControl import ClassSecurityInfo
 from collections import OrderedDict
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 from zope.interface import implements
 
 from Products.CMFCore.permissions import ReviewPortalContent
@@ -627,10 +627,9 @@ class CustomMeetingConfig(MeetingConfig):
                 "Method 'getUsedFinanceGroupIds' could not find the '{0}' collection!".format(
                     FINANCE_ADVICES_COLLECTION_ID))
             return res
-        # if collection is inactive, we just return an empty list
+        # if collection is not enabled, we just return an empty list
         # for convenience, the collection is added to every MeetingConfig, even if not used
-        wfTool = api.portal.get_tool('portal_workflow')
-        if wfTool.getInfoFor(collection, 'review_state') == 'inactive':
+        if not collection.enabled:
             return res
         # get the indexAdvisers value defined on the collection
         # and find the relevant group, indexAdvisers form is :
