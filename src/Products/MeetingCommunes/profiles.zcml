@@ -197,10 +197,10 @@
       profile="Products.MeetingCommunes:default" />
 
   <genericsetup:upgradeStep
-      title="Go to MeetingCommunes 4.0 (Step 4)"
+      title="Go to MeetingCommunes 4.0.1 (Step 4)"
       description=""
-      source="*"
-      destination="4.0"
+      source="4.0"
+      destination="4.0.1"
       handler="Products.MeetingCommunes.migrations.migrate_to_4_0.migrate_step4"
       profile="Products.MeetingCommunes:default" />
 
