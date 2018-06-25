@@ -145,7 +145,7 @@ coordinateOffice.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transit
                                                                {'meeting_transition': 'close',
                                                                 'item_transition': 'accept'},)
 coordinateOffice.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
-coordinateOffice.powerAdvisersGroups = ('dirgen', 'dirfin', )
+coordinateOffice.powerAdvisersGroups = []
 coordinateOffice.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 coordinateOffice.useCopies = True
 coordinateOffice.selectableCopyGroups = []

@@ -74,12 +74,13 @@ remunMeeting.places = ''
 remunMeeting.categories = categories
 remunMeeting.shortName = 'REMUN'
 remunMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
-remunMeeting.usedItemAttributes = ['detailedDescription',
-                                'budgetInfos',
-                                'observations',
-                                'toDiscuss',
-                                'itemAssembly',
-                                'itemIsSigned', ]
+remunMeeting.usedItemAttributes = [
+    'detailedDescription',
+    'budgetInfos',
+    'observations',
+    'toDiscuss',
+    'itemAssembly',
+    'itemIsSigned', ]
 remunMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 remunMeeting.recordMeetingHistoryStates = []
 remunMeeting.xhtmlTransformFields = ()
@@ -95,7 +96,7 @@ remunMeeting.meetingTopicStates = ('created', 'frozen')
 remunMeeting.decisionTopicStates = ('decided', 'closed')
 remunMeeting.enforceAdviceMandatoriness = False
 remunMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
-                                        'reverse': '0'}, )
+                                           'reverse': '0'}, )
 remunMeeting.recordItemHistoryStates = []
 remunMeeting.maxShownMeetings = 5
 remunMeeting.maxDaysDecisions = 60
@@ -103,24 +104,26 @@ remunMeeting.meetingAppDefaultView = 'searchmyitems'
 remunMeeting.useAdvices = True
 remunMeeting.itemAdviceStates = ('validated',)
 remunMeeting.itemAdviceEditStates = ('validated',)
-remunMeeting.itemAdviceViewStates = ('validated',
-                                  'presented',
-                                  'itemfrozen',
-                                  'accepted',
-                                  'refused',
-                                  'accepted_but_modified',
-                                  'delayed',
-                                  'pre_accepted',)
+remunMeeting.itemAdviceViewStates = (
+    'validated',
+    'presented',
+    'itemfrozen',
+    'accepted',
+    'refused',
+    'accepted_but_modified',
+    'delayed',
+    'pre_accepted',)
 remunMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 remunMeeting.enableAdviceInvalidation = False
 remunMeeting.itemAdviceInvalidateStates = []
 remunMeeting.customAdvisers = []
-remunMeeting.itemPowerObserversStates = ('itemfrozen',
-                                      'accepted',
-                                      'delayed',
-                                      'refused',
-                                      'accepted_but_modified',
-                                      'pre_accepted')
+remunMeeting.itemPowerObserversStates = (
+    'itemfrozen',
+    'accepted',
+    'delayed',
+    'refused',
+    'accepted_but_modified',
+    'pre_accepted')
 remunMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 remunMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 remunMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
@@ -128,21 +131,22 @@ remunMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:<p>Le Comité décide de reporter le point.</p>"},))
-remunMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                         'item_transition': 'itemfreeze'},
+remunMeeting.onMeetingTransitionItemTransitionToTrigger = (
+    {'meeting_transition': 'freeze',
+     'item_transition': 'itemfreeze'},
 
-                                                        {'meeting_transition': 'decide',
-                                                         'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'decide',
+     'item_transition': 'itemfreeze'},
 
-                                                        {'meeting_transition': 'publish_decisions',
-                                                         'item_transition': 'itemfreeze'},
-                                                        {'meeting_transition': 'publish_decisions',
-                                                         'item_transition': 'accept'},
+    {'meeting_transition': 'publish_decisions',
+     'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'publish_decisions',
+     'item_transition': 'accept'},
 
-                                                        {'meeting_transition': 'close',
-                                                         'item_transition': 'itemfreeze'},
-                                                        {'meeting_transition': 'close',
-                                                         'item_transition': 'accept'},)
+    {'meeting_transition': 'close',
+     'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'close',
+     'item_transition': 'accept'},)
 remunMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 remunMeeting.powerAdvisersGroups = ()
 remunMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
