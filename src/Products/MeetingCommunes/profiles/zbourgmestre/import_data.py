@@ -149,7 +149,7 @@ bourgmestreMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_trans
                                                                  {'meeting_transition': 'close',
                                                                   'item_transition': 'accept'},)
 bourgmestreMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
-bourgmestreMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
+bourgmestreMeeting.powerAdvisersGroups = []
 bourgmestreMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 bourgmestreMeeting.useCopies = True
 bourgmestreMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers')]

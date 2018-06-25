@@ -67,9 +67,9 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         cfg = self.meetingConfig
         collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID)
         # make sure collection is active
-        if self.wfTool.getInfoFor(collection, 'review_state') == 'inactive':
-            self.changeUser('siteadmin')
-            self.do(collection, 'activate')
+        if not collection.enabled:
+            collection.enabled = True
+            collection.reindexObject(idxs=['enabled'])
 
         collection.setQuery([
             {'i': 'portal_type',

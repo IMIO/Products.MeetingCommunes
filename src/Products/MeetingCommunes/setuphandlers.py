@@ -209,17 +209,17 @@ def finalizeExampleInstance(context):
     # add some topics to the portlet_todo
     mc_college_or_bp = getattr(site.portal_plonemeeting, meetingConfig1Id)
     mc_college_or_bp.setToDoListSearches(
-        [getattr(mc_college_or_bp.searches.searches_items, 'searchdecideditems'),
-         getattr(mc_college_or_bp.searches.searches_items, 'searchallitemsincopy'),
-         getattr(mc_college_or_bp.searches.searches_items, 'searchitemstoadvicewithdelay'),
-         getattr(mc_college_or_bp.searches.searches_items, 'searchallitemstoadvice'),
+        [getattr(mc_college_or_bp.searches.searches_items, 'searchdecideditems').UID(),
+         getattr(mc_college_or_bp.searches.searches_items, 'searchallitemsincopy').UID(),
+         getattr(mc_college_or_bp.searches.searches_items, 'searchitemstoadvicewithdelay').UID(),
+         getattr(mc_college_or_bp.searches.searches_items, 'searchallitemstoadvice').UID(),
          ])
 
     # add some topics to the portlet_todo
     mc_council_or_cas = getattr(site.portal_plonemeeting, meetingConfig2Id)
     mc_council_or_cas.setToDoListSearches(
-        [getattr(mc_council_or_cas.searches.searches_items, 'searchdecideditems'),
-         getattr(mc_council_or_cas.searches.searches_items, 'searchallitemsincopy'),
+        [getattr(mc_council_or_cas.searches.searches_items, 'searchdecideditems').UID(),
+         getattr(mc_council_or_cas.searches.searches_items, 'searchallitemsincopy').UID(),
          ])
 
     # finally, re-launch plonemeetingskin and MeetingCommunes skins step
