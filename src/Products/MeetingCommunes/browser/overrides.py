@@ -73,9 +73,10 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         case 'simple' means the financial advice was requested but without any delay.
         case 'legal' means the financial advice was requested with a delay. It's a legal financial advice.
         case 'initiative' means the financial advice was given without being requested at the first place.
-        case 'legal_not_given' means the financial advice was requested with delay. But was ignored by the finance director.
-        case 'simple_not_given' means the financial advice was requested without delay. But was ignored by the finance
-         director.
+        case 'legal_not_given' means the financial advice was requested with delay.
+            But was ignored by the finance director.
+        case 'simple_not_given' means the financial advice was requested without delay.
+            But was ignored by the finance director.
         """
 
         def check_given_or_not_cases(advice, case_to_check, case_given, case_not_given):
@@ -105,7 +106,8 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                             continue
 
                         # Change data if advice is hidden
-                        if 'hidden_during_redaction' in advice and advice['hidden_during_redaction'] and not show_hidden:
+                        if 'hidden_during_redaction' in advice and \
+                           advice['hidden_during_redaction'] and not show_hidden:
                             message = self.translate('hidden_during_redaction', domain='PloneMeeting')
                             advice['type_translated'] = message
                             advice['type'] = 'hidden_during_redaction'
@@ -119,7 +121,8 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                             # set date of transmission to adviser because the advice was asked by the agent
                             advice['item_transmitted_on'] = self._getItemAdviceTransmissionDate(advice=advice)
                             if advice['item_transmitted_on']:
-                                advice['item_transmitted_on_localized'] = self.display_date(date=advice['item_transmitted_on'])
+                                advice['item_transmitted_on_localized'] = \
+                                    self.display_date(date=advice['item_transmitted_on'])
                             else:
                                 advice['item_transmitted_on_localized'] = ''
 
@@ -151,9 +154,9 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             advice = self._get_advice(adviser_id)
             # may return None anyway
         if advice:
-            return ('delay_infos' in advice
-                    and 'limit_date' in advice['delay_infos']
-                    and self.display_date(date=advice['delay_infos']['limit_date'])) \
+            return ('delay_infos' in advice and
+                    'limit_date' in advice['delay_infos'] and
+                    self.display_date(date=advice['delay_infos']['limit_date'])) \
                    or None
 
         return None
@@ -240,7 +243,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
 
             for brain in meeting.getItems(listTypes=listTypes,
                                           ordered=True,
-                                          useCatalog=True,
+                                          theObjects=False,
                                           additional_catalog_query={'getCategory': context_category},
                                           unrestricted=True):
                 count += 1
@@ -303,15 +306,21 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
 
         """
         :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
-        :param group_by: is a list and each element can be either 'listTypes', 'category', 'proposingGroup' or a field name as described in MettingItem Schema
+        :param group_by: is a list and each element can be either 'listTypes', 'category',
+                         'proposingGroup' or a field name as described in MeetingItem Schema
         :param included_values: a Map to filter the returned items regarding the value of a given field.
-                for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
+                for example : {'proposingGroup':['Secrétariat communal',
+                                                 'Service informatique',
+                                                 'Service comptabilité']}
         :param excluded_values: a Map to filter the returned items regarding the value of a given field.
-                for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
+                for example : {'proposingGroup':['Secrétariat communal',
+                                                 'Service informatique',
+                                                 'Service comptabilité']}
         :param privacy: can be '*' or 'public' or 'secret'
 
-        :return: a list of list of list ... (late or normal or both) items (depending on p_listTypes) in the meeting order but wrapped in defined group_by if not empty.
-                every group condition defined increase the depth of this collection.
+        :return: a list of list of list ... (late or normal or both) items (depending on p_listTypes)
+                 in the meeting order but wrapped in defined group_by if not empty.
+        Every group condition defined increase the depth of this collection.
         """
 
         # Retrieve the list of items
@@ -319,13 +328,14 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         if privacy != '*':
             query['privacy'] = privacy
         if ignore_review_states:
-            query['review_state'] = {'not':ignore_review_states}
+            query['review_state'] = {'not': ignore_review_states}
 
-        brains = self.real_context.getItems(uids=itemUids,
-                                           listTypes=listTypes,
-                                           ordered=True,
-                                           useCatalog=True,
-                                           additional_catalog_query=query)
+        brains = self.real_context.getItems(
+            uids=itemUids,
+            listTypes=listTypes,
+            ordered=True,
+            theObjects=False,
+            additional_catalog_query=query)
 
         items = [brain.getObject() for brain in brains]
         # because we can't assume included and excluded values are indexed in catalog.
@@ -366,15 +376,20 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
 
         :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
         :param included_values: a Map to filter the returned items regarding the value of a given field.
-                for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
+                for example : {'proposingGroup':['Secrétariat communal',
+                                                 'Service informatique',
+                                                 'Service comptabilité']}
         :param excluded_values: a Map to filter the returned items regarding the value of a given field.
-                for example : {'proposingGroup':['Secrétariat communal', 'Service informatique', 'Service comptabilité']}
+                for example : {'proposingGroup':['Secrétariat communal',
+                                                 'Service informatique',
+                                                 'Service comptabilité']}
         :param privacy: can be '*' or 'public' or 'secret'
         :param level_number: number of sublist we want
         :param text_pattern: text formatting with one string-param like this : 'xxx {0} yyy'
         This method to be used to have a multiple sublist based on an hierarchy in id's category like this :
             X.X.X.X (we want 4 levels of sublist).
-            For have label, except first level and last level, we have the label in description's category separated by '|'
+            For have label, except first level and last level,
+            we have the label in description's category separated by '|'
             For exemple : If we have A.1.1.4, normaly, we have in description this : subTitle1|subTitle2
                           If we have A.1.1, normaly, we have in description this : subTitle1
                           If we have A.1, normaly, we have in description this : (we use Title)
