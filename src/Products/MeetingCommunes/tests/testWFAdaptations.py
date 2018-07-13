@@ -135,11 +135,6 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         self.meetingConfig = self.meetingConfig2
         super(testWFAdaptations, self).test_pm_WFA_creator_edits_unless_closed()
 
-    def test_pm_WFA_return_to_proposing_group(self):
-        '''See doc in PloneMeeting/tests/testWFAdaptations.py'''
-        self.meetingConfig = self.meetingConfig2
-        super(testWFAdaptations, self).test_pm_WFA_return_to_proposing_group()
-
 
 def test_suite():
     from unittest import TestSuite, makeSuite
