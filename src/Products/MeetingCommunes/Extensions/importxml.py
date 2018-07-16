@@ -16,14 +16,14 @@ from plone.dexterity.utils import createContentInContainer
 N'oubliez-pas de fusionner les 3 fichiers xmls afin d'en avoir qu'un seul...
 A faire dans l'instance avant migration :
 1. Créer un groupe Importation.
-2. Créer un utilisateur xmlimport créateur d'un quelconque service (nom complet : Importation Acropole)
-et se connecter avec.
+2. Créer un utilisateur xmlimport créateur d'un quelconque service (nom complet : Importation Acropole) et se connecter avec.
 3. Créer une catégorie 'Reprise Acropole' et la désactiver [SI LES CATEGORIES SONT UTILISEES].
 4. Créer les types d'annexes suivants :
-1. deliberation
-2. advise
-3. pdf-link
-5. Désactiver les points récurrents dans la config, sinon lors de la création des séances on va avoir des surprises:-)
+    1. deliberation
+    2. advise
+    3. pdf-link
+5. Désactiver les points récurrents dans la config, sinon lors de la création des séances on va avoir des surprises :-)
+
 A faire dans l'instance après migration :
 6. A la fin de l'import, supprimer les droits de xmlimport et réactiver les points récurrents et désactiver le groupe.
 """
@@ -142,17 +142,16 @@ class TransformXmlToMeetingOrItem:
             # self._addAnnexe(item, Memberfolder, _path, 'pdf-link', 'PDF-POINT')
 
     def add_annexe_to_object(self, obj, objNode, startPath, newPath, listNodeName, listItemNodeName):
-        i = 1
         node = objNode.getElementsByTagName(listNodeName)
         if node:
             for annexe in node[0].getElementsByTagName(listItemNodeName):
                 _path = self._compute_path(self.get_text(annexe), startPath, newPath)
-                title = 'Annexe-%d' % i
-                self.add_annex(obj, _path, annexTitle=title)
-                i = i + 1
+                if _path:
+                    title = 'Annexe-%s' %(_path.split('/')[-1].strip('.pdf'))
+                    self.add_annex(obj, _path, annexTitle=title)
 
     def _compute_path(self, base, to_replace, new_value):
-        return safe_unicode(base).replace(safe_unicode(to_replace), safe_unicode(new_value))
+        return base and safe_unicode(base).replace(safe_unicode(to_replace), safe_unicode(new_value)) or None
 
     def add_item_advises(self, item, itemNode, Memberfolder, startPath, newPath):
         i = 0
@@ -227,9 +226,9 @@ class TransformXmlToMeetingOrItem:
                 # pour mes tests en attendant mes réponses
                 _createDate = self.get_text_from_node(itemNode, 'createDate', '20000310120000')
 
-                _proposingGroup = self.get_mapping_value(item, self.get_text_from_node(itemNode, 'proposingGroup'),
+                _proposingGroup = self.get_mapping_value(self.get_text_from_node(itemNode, 'proposingGroup'),
                                                          group_mapping, 'importation')
-                _category = self.get_mapping_value(item, self.get_text_from_node(itemNode, 'category'), cat_mapping,
+                _category = self.get_mapping_value(self.get_text_from_node(itemNode, 'category'), cat_mapping,
                                                    'reprise')
                 _decision = self.get_text_from_node(itemNode, "decision")
 
@@ -262,7 +261,7 @@ class TransformXmlToMeetingOrItem:
         transaction.commit()
         return self.__itemList__
 
-    def get_mapping_value(self, context, valueName, mapping, default):
+    def get_mapping_value(self, valueName, mapping, default):
         if valueName in mapping:
             groupName = mapping[valueName]
             tool = api.portal.get_tool('portal_plonemeeting')
@@ -428,8 +427,10 @@ def import_result_file(self, fname=None, fgrmapping=None, fcatmapping=None, meet
     """
     #
     # context.xmlimport(context, fname='/home/oli/Téléchargements/Dison/data.xml',
-    #                   fgrmapping='/home/oli/Téléchargements/Dison/groups_mapping.csv', meetingConfigType='college',
-    #                   startPath='/home/lambil/Documents/DATA', newPath='/home/oli/Téléchargements/Dison')
+    #                   fgrmapping='/home/oli/Téléchargements/Dison/groups_mapping.csv',
+    #                   meetingConfigType='college',
+    #                   startPath='/home/lambil/Documents/DATA',
+    #                   newPath='/home/oli/Téléchargements/Dison')
     #
     #
     member = self.portal_membership.getAuthenticatedMember()
