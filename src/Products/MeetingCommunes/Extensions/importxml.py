@@ -9,7 +9,10 @@ import transaction
 from DateTime import DateTime
 from Products.CMFPlone.utils import safe_unicode
 from collective.iconifiedcategory.utils import get_config_root, calculate_category_id
+from imio.helpers.cache import cleanRamCacheFor
 from plone import namedfile, api
+from plone.api import portal
+from plone.app.querystring import queryparser
 from plone.dexterity.utils import createContentInContainer
 
 """ Reprise des données ACROPOLE de chez Stesud
@@ -32,8 +35,11 @@ A faire dans l'instance après migration :
 class TransformXmlToMeetingOrItem:
     __currentNode__ = None
     __meetingList__ = None
-    __itemList__ = None
+    __itemDict__ = None
     __portal__ = None
+    __ext_ids = []
+
+    __extId_prefix = 'Import-'
 
     def __init__(self, portal):
         self.__portal__ = portal
@@ -147,7 +153,7 @@ class TransformXmlToMeetingOrItem:
             for annexe in node[0].getElementsByTagName(listItemNodeName):
                 _path = self._compute_path(self.get_text(annexe), startPath, newPath)
                 if _path:
-                    title = 'Annexe-%s' %(_path.split('/')[-1].strip('.pdf'))
+                    title = 'Annexe-%s' % (_path.split('/')[-1].strip('.pdf'))
                     self.add_annex(obj, _path, annexTitle=title)
 
     def _compute_path(self, base, to_replace, new_value):
@@ -175,10 +181,10 @@ class TransformXmlToMeetingOrItem:
         """
            Notre méthode pour créer les points
         """
-        if self.__itemList__ is not None:
-            return self.__itemList__
+        if self.__itemDict__ is not None:
+            return self.__itemDict__
 
-        self.__itemList__ = []
+        self.__itemDict__ = {}
         useridLst = [ud['userid'] for ud in self.__portal__.acl_users.searchUsers()]
         group_mapping = create_dico_mapping(self, fgrmapping)
         if fcatmapping:
@@ -197,9 +203,8 @@ class TransformXmlToMeetingOrItem:
 
                 # récuptération des données du point
                 _id = self.get_text_from_node(itemNode, 'id')
-                _description = self.get_text_from_node(itemNode, "description")
-                _creatorId = self.get_text_from_node(itemNode, "creatorId")
-                _title = self.get_text_from_node(itemNode, "title")
+                _creatorId = self.get_text_from_node(itemNode, "creatorId").strip()
+                _title = self.get_text_from_node(itemNode, "title").replace('\n', '').replace('  ', ' ').strip()
 
                 if _creatorId not in useridLst:
                     # utilisons le répertoire de l'utilisateur xmlimport'
@@ -215,12 +220,15 @@ class TransformXmlToMeetingOrItem:
                         useridLst.remove(_creatorId)
                         _creatorId = 'xmlimport'
 
-                if getattr(Memberfolder, _id, None):
+                _extId = '%sitem-%s' % (self.__extId_prefix, _id)
+                item = self.object_already_exists(_extId, itemType)
+                if item and item[0]:
                     # Le point est déjà existant
+                    self.__itemDict__[_id] = item[0].getObject()
+                    self.__ext_ids.append(_extId)
                     continue
 
-                itemid = Memberfolder.invokeFactory(type_name=itemType, id=_id, title=_title,
-                                                    description=_description)
+                itemid = Memberfolder.invokeFactory(type_name=itemType, id=_id, title=_title)
                 item = getattr(Memberfolder, itemid)
 
                 # pour mes tests en attendant mes réponses
@@ -230,11 +238,18 @@ class TransformXmlToMeetingOrItem:
                                                          group_mapping, 'importation')
                 _category = self.get_mapping_value(self.get_text_from_node(itemNode, 'category'), cat_mapping,
                                                    'reprise')
-                _decision = self.get_text_from_node(itemNode, "decision")
+                _description = self.get_text_html_from_node(itemNode, "description", None)
+                _decision = self.get_text_html_from_node(itemNode, "decision", None)
 
-                item.setDecision(_decision)
+                if _description:
+                    item.setDescription(_description)
+                if _decision:
+                    item.setDecision(_decision)
+
                 item.setProposingGroup(_proposingGroup)
                 item.setCategory(_category)
+                item.externalIdentifier = _extId
+
                 _heure = _createDate[8:10]
                 if _heure == '24':
                     _heure = '0'
@@ -243,23 +258,26 @@ class TransformXmlToMeetingOrItem:
                 tme = DateTime(date_str)
                 item.setCreationDate(tme)
                 item.setCreators(_creatorId)
-                item.at_post_create_script()
+                item.externalIdentifier = _extId
+                ## do not call item.at_post_create_script(). This would get only throuble with cancel quick edit in objects
+                item.processForm(values={'dummy': None})
+
                 self.add_item_pdf_point(item, itemNode, Memberfolder, startPath, newPath)
                 self.add_annexe_to_object(item, itemNode, startPath, newPath, "annexesLink", "annexLink")
                 self.add_item_advises(item, itemNode, Memberfolder, startPath, newPath)
                 self.add_item_annex_decision(item, itemNode, Memberfolder, startPath, newPath)
-                # plaçons le point en état validé afin qu'il puisse être placé dans une séance
-                self.do_item_transaction(item)
-                self.__itemList__.append(item)
+
+                self.__itemDict__[_id] = item
+                self.__ext_ids.append(_extId)
                 cpt = cpt + 1
-                # commit transaction si nous avons crÃ©Ã© 50 points
+                # commit transaction si nous avons créé 50 points
                 if cpt >= 50:
                     transaction.commit()
                     cpt = 0
                     print 'commit'
 
         transaction.commit()
-        return self.__itemList__
+        return self.__itemDict__
 
     def get_mapping_value(self, valueName, mapping, default):
         if valueName in mapping:
@@ -293,6 +311,7 @@ class TransformXmlToMeetingOrItem:
         else:
             MeetingType = 'MeetingCouncil'
             lat.append(MeetingType)
+
         Memberfolder.setLocallyAllowedTypes(tuple(lat))
         for meetings in self.get_root_element().getElementsByTagName("seance"):
             if meetings.nodeType == meetings.ELEMENT_NODE:
@@ -312,6 +331,7 @@ class TransformXmlToMeetingOrItem:
                 if getattr(Memberfolder, _id, None):
                     # La séance est déjà existante
                     continue
+
                 # 14/09/2009 >>> 20090914000000 GMT+1
                 date_str = '%s/%s/%s 00:00:00 GMT+1' % (_date[6:10], _date[3:5], _date[0:2])
                 tme = DateTime(date_str)
@@ -320,7 +340,10 @@ class TransformXmlToMeetingOrItem:
                 meeting.setSignatures(_signatures)
                 meeting.setAssembly(_presences)
                 meeting.setPlace(_place)
-                meeting.at_post_create_script()
+
+                # meeting.at_post_create_script()
+                meeting.processForm(values={'dummy': None})
+
                 # on prend la date pour construire la startDate et la endDate
                 _startDate = '%s%s%s000000' % (_date[6:10], _date[3:5], _date[0:2])
                 _endDate = '%s%s%s000000' % (_date[6:10], _date[3:5], _date[0:2])
@@ -343,7 +366,7 @@ class TransformXmlToMeetingOrItem:
                 self.add_annexe_to_object(meeting, meetings, startPath, newPath, "pdfsSeanceLink", "pdfSeanceLink")
 
                 print 'Inserting Items in Meetings %s' % meeting.Title()
-                self._insert_items_in_meeting(meeting, meetingConfigType, meetings.getElementsByTagName("pointsRef"))
+                self._insert_items_in_meeting(meeting, meetings.getElementsByTagName("pointsRef"))
 
                 self.__meetingList__.append(meeting)
 
@@ -359,40 +382,33 @@ class TransformXmlToMeetingOrItem:
                 else:
                     print 'La seance %s est vide.' % meeting.Title().decode('utf-8')
 
-                transaction.commit()
-                print 'commit'
-
         return self.__meetingList__
 
-    def _insert_items_in_meeting(self, meeting, meetingConfigType, node):
+    def _insert_items_in_meeting(self, meeting, node):
         """
             Notre méthode pour rattacher les points dans leur séances
         """
         if node:
-            kw = {}
-            if meetingConfigType == 'college':
-                kw['portal_type'] = ('MeetingItemCollege',)
-            else:
-                kw['portal_type'] = ('MeetingItemCouncil',)
-
-            kw['id'] = []
-
+            cleanRamCacheFor('Products.PloneMeeting.MeetingConfig.getMeetingsAcceptingItems')
+            cleanRamCacheFor('Products.PloneMeeting.MeetingItem.getMeetingToInsertIntoWhenNoCurrentMeetingObject')
             for itemIdNode in node[0].getElementsByTagName("item"):
-                itemId = self.get_text(itemIdNode)
-                if itemId:
-                    kw['id'].append(itemId)
-
-            if kw['id']:
-                brains = self.__portal__.portal_catalog.searchResults(kw)
-                meeting.REQUEST['PUBLISHED'] = meeting
-                for brain in brains:
-                    item = brain.getObject()
-
+                _id = self.get_text(itemIdNode)
+                item = self.__itemDict__[_id]
+                if item:
                     if item.hasMeeting():
+                        print 'Copying Item : %s | %s' % (safe_unicode(_id), safe_unicode(item.Title()))
                         item = self.get_copy_of_item(item)
-
+                    # RAM CACHE on MeetingConfig.getMeetingsAcceptingItems is doing shit and make meeting up to second fail like pussy
                     item.setPreferredMeeting(meeting.UID())
-                    item.portal_workflow.doActionFor(item, 'present')
+                    print 'Presenting Item : %s | %s' % (safe_unicode(_id), safe_unicode(item.Title()))
+                    self.do_item_transaction(item)
+
+    def get_text_html_from_node(self, node, childName, default='<p></p>'):
+        result = self.get_text_from_node(node, childName, default)
+        if result:
+            result.strip()
+            return portal.get().portal_transforms.convertTo('text/html', result).getData()
+        return default
 
     def get_text_from_node(self, node, childName, default='<p></p>'):
         # returns a list of child nodes matching the given name
@@ -418,6 +434,21 @@ class TransformXmlToMeetingOrItem:
         except:
             pass  # prevalidation isn't use
         self.__portal__.portal_workflow.doActionFor(item, 'validate')
+        self.__portal__.portal_workflow.doActionFor(item, 'present')
+
+
+    def object_already_exists(self, _extId, portalType):
+        catalog_query = [{'i': 'portal_type',
+                          'o': 'plone.app.querystring.operation.selection.is',
+                          'v': portalType},
+                         {'i': 'externalIdentifier',
+                          'o': 'plone.app.querystring.operation.selection.is',
+                          'v': _extId}, ]
+        query = queryparser.parseFormquery(self, catalog_query)
+        res = self.__portal__.portal_catalog(**query)
+        if res:
+            print 'Already created %s'%_extId
+        return res
 
 
 def import_result_file(self, fname=None, fgrmapping=None, fcatmapping=None, meetingConfigType=None, startPath=None,
@@ -459,7 +490,7 @@ def import_result_file(self, fname=None, fgrmapping=None, fcatmapping=None, meet
     x.get_meeting(meetingConfigType, startPath, newPath)
     transaction.commit()
     print 'Import finished'
-    return '<body><h1>Done</h1></body>'
+    return '<html><body><h1>Done</h1></body></html>'
 
 
 def create_dico_mapping(self, fmapping=None):
