@@ -203,8 +203,10 @@ class TransformXmlToMeetingOrItem:
 
                 # récuptération des données du point
                 _id = self.get_text_from_node(itemNode, 'id')
-                _creatorId = self.get_text_from_node(itemNode, "creatorId").strip()
-                _title = self.get_text_from_node(itemNode, "title").replace('\n', '').replace('  ', ' ').strip()
+                _creatorId = self.get_text_from_node(itemNode, "creatorId")
+                _title = self.get_text_from_node(itemNode, "title")
+                if _title:
+                    _title.replace('\n', '').replace('  ', ' ').strip()
 
                 if _creatorId not in useridLst:
                     # utilisons le répertoire de l'utilisateur xmlimport'
@@ -414,7 +416,10 @@ class TransformXmlToMeetingOrItem:
         # returns a list of child nodes matching the given name
         child = node.getElementsByTagName(childName)
         if child and child:
-            return self.get_text(child[0])
+            result =  self.get_text(child[0])
+            if result:
+                result.strip()
+            return result
         return default
 
     def get_text(self, node):
