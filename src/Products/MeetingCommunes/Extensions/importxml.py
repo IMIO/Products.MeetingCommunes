@@ -381,6 +381,7 @@ class TransformXmlToMeetingOrItem:
                     except:
                         pass  # publish state not use
                     meeting.portal_workflow.doActionFor(meeting, 'close')
+                    transaction.commit()
                 else:
                     print 'La seance %s est vide.' % meeting.Title().decode('utf-8')
 
