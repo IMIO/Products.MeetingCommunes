@@ -58,15 +58,16 @@ decisionsTemplate.pod_formats = ['odt', 'pdf', ]
 decisionsTemplate.pod_portal_types = ['MeetingCollege']
 decisionsTemplate.tal_condition = 'python:tool.isManager(here)'
 
+attendeesTemplate = PodTemplateDescriptor('attendees', 'Exemple assemblées')
+attendeesTemplate.odt_file = 'pv.odt'
+attendeesTemplate.pod_formats = ['odt', 'pdf', ]
+attendeesTemplate.pod_portal_types = ['MeetingCollege']
+attendeesTemplate.tal_condition = 'python:tool.isManager(here, realManagers=True)'
+
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemTemplate.odt_file = 'deliberation.odt'
 itemTemplate.pod_formats = ['odt', 'pdf', ]
 itemTemplate.pod_portal_types = ['MeetingItemCollege']
-
-dfAdvicesTemplate = PodTemplateDescriptor('synthese-avis-df-odt', 'Synthèse Avis DF', dashboard=True)
-dfAdvicesTemplate.odt_file = 'synthese-avis-df.odt'
-dfAdvicesTemplate.pod_formats = ['odt', 'pdf', ]
-dfAdvicesTemplate.dashboard_collections_ids = [FINANCE_ADVICES_COLLECTION_ID]
 
 dfAdviceTemplate = PodTemplateDescriptor('avis-df', 'Avis DF')
 dfAdviceTemplate.odt_file = 'avis-df.odt'
@@ -74,10 +75,14 @@ dfAdviceTemplate.pod_formats = ['odt', 'pdf', ]
 dfAdviceTemplate.pod_portal_types = ['MeetingItemCollege']
 dfAdviceTemplate.tal_condition = 'python: context.adapted().showFinanceAdviceTemplate()'
 
+dfAdvicesTemplate = PodTemplateDescriptor('synthese-avis-df-odt', 'Synthèse Avis DF', dashboard=True)
+dfAdvicesTemplate.odt_file = 'synthese-avis-df.odt'
+dfAdvicesTemplate.pod_formats = ['odt', 'pdf', ]
+dfAdvicesTemplate.dashboard_collections_ids = [FINANCE_ADVICES_COLLECTION_ID]
+
 dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif', dashboard=True)
 dashboardTemplate.odt_file = 'recapitulatif-tb.odt'
 dashboardTemplate.tal_condition = 'python: context.absolute_url().endswith("/searches_items")'
-
 
 dashboardExportTemplate = PodTemplateDescriptor('export', 'Export', dashboard=True)
 dashboardExportTemplate.odt_file = 'dashboard.ods'
@@ -106,10 +111,12 @@ historyTemplate.odt_file = 'history.odt'
 historyTemplate.pod_formats = ['odt', 'pdf', ]
 historyTemplate.pod_portal_types = ['MeetingItemCollege']
 
-collegeTemplates = [agendaTemplate, agendaTemplateWithIndex, dfAdviceTemplate,
-                    decisionsTemplate, itemTemplate,
+collegeTemplates = [agendaTemplate, agendaTemplateWithIndex,
+                    decisionsTemplate, attendeesTemplate,
+                    itemTemplate, dfAdviceTemplate,
                     dfAdvicesTemplate, dashboardTemplate,
-                    dashboardTemplateOds, dashboardExportTemplate, dashboardDFTemplateOds, historyTemplate, dashboardMeetingAssemblies]
+                    dashboardTemplateOds, dashboardExportTemplate, dashboardDFTemplateOds,
+                    historyTemplate, dashboardMeetingAssemblies]
 
 # Pod templates ----------------------------------------------------------------
 agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')

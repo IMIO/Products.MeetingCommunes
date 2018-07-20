@@ -20,6 +20,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Use _addPrincipalToGroup from PloneMeetingTestCase in tests.
 - DashboardCollection have no more WF but have a 'enabled' field, use it in adapters.getUsedFinanceGroupIds
   to check if finance DashboardCollection is enabled or not.
+- Added sample Meeting POD template 'attendees' to show various possibilities of printing methods
+  'print_attendees' and 'print_attendees_by_type'.
 
 4.0 (2017-08-04)
 ----------------
