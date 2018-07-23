@@ -74,12 +74,13 @@ negoMeeting.places = ''
 negoMeeting.categories = categories
 negoMeeting.shortName = 'NEGO'
 negoMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
-negoMeeting.usedItemAttributes = ['detailedDescription',
-                                'budgetInfos',
-                                'observations',
-                                'toDiscuss',
-                                'itemAssembly',
-                                'itemIsSigned', ]
+negoMeeting.usedItemAttributes = ['description',
+                                  'detailedDescription',
+                                  'budgetInfos',
+                                  'observations',
+                                  'toDiscuss',
+                                  'itemAssembly',
+                                  'itemIsSigned', ]
 negoMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 negoMeeting.recordMeetingHistoryStates = []
 negoMeeting.xhtmlTransformFields = ()
@@ -94,8 +95,8 @@ negoMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 negoMeeting.meetingTopicStates = ('created', 'frozen')
 negoMeeting.decisionTopicStates = ('decided', 'closed')
 negoMeeting.enforceAdviceMandatoriness = False
-negoMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
-                                        'reverse': '0'}, )
+negoMeeting.insertingMethodsOnAddItem = (
+    {'insertingMethod': 'on_proposing_groups', 'reverse': '0'}, )
 negoMeeting.recordItemHistoryStates = []
 negoMeeting.maxShownMeetings = 5
 negoMeeting.maxDaysDecisions = 60
@@ -103,46 +104,45 @@ negoMeeting.meetingAppDefaultView = 'searchmyitems'
 negoMeeting.useAdvices = True
 negoMeeting.itemAdviceStates = ('validated',)
 negoMeeting.itemAdviceEditStates = ('validated',)
-negoMeeting.itemAdviceViewStates = ('validated',
-                                  'presented',
-                                  'itemfrozen',
-                                  'accepted',
-                                  'refused',
-                                  'accepted_but_modified',
-                                  'delayed',
-                                  'pre_accepted',)
+negoMeeting.itemAdviceViewStates = (
+    'validated',
+    'presented',
+    'itemfrozen',
+    'accepted',
+    'refused',
+    'accepted_but_modified',
+    'delayed',
+    'pre_accepted',)
 negoMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 negoMeeting.enableAdviceInvalidation = False
 negoMeeting.itemAdviceInvalidateStates = []
 negoMeeting.customAdvisers = []
-negoMeeting.itemPowerObserversStates = ('itemfrozen',
-                                      'accepted',
-                                      'delayed',
-                                      'refused',
-                                      'accepted_but_modified',
-                                      'pre_accepted')
-negoMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-negoMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
+negoMeeting.itemPowerObserversStates = (
+    'itemfrozen',
+    'accepted',
+    'delayed',
+    'refused',
+    'accepted_but_modified',
+    'pre_accepted')
+negoMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed',
+                                 'accepted_but_modified', 'pre_accepted']
+negoMeeting.workflowAdaptations = ['no_publication', 'no_global_observation',
+                                   'return_to_proposing_group', 'refused']
 negoMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 negoMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:<p>Le Comité décide de reporter le point.</p>"},))
-negoMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                         'item_transition': 'itemfreeze'},
+negoMeeting.onMeetingTransitionItemTransitionToTrigger = (
+    {'meeting_transition': 'freeze', 'item_transition': 'itemfreeze'},
 
-                                                        {'meeting_transition': 'decide',
-                                                         'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'decide', 'item_transition': 'itemfreeze'},
 
-                                                        {'meeting_transition': 'publish_decisions',
-                                                         'item_transition': 'itemfreeze'},
-                                                        {'meeting_transition': 'publish_decisions',
-                                                         'item_transition': 'accept'},
+    {'meeting_transition': 'publish_decisions', 'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'publish_decisions', 'item_transition': 'accept'},
 
-                                                        {'meeting_transition': 'close',
-                                                         'item_transition': 'itemfreeze'},
-                                                        {'meeting_transition': 'close',
-                                                         'item_transition': 'accept'},)
+    {'meeting_transition': 'close', 'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'close', 'item_transition': 'accept'},)
 negoMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 negoMeeting.powerAdvisersGroups = ()
 negoMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')

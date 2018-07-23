@@ -74,7 +74,8 @@ wbMeeting.places = ''
 wbMeeting.categories = categories
 wbMeeting.shortName = 'WB'
 wbMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
-wbMeeting.usedItemAttributes = ['detailedDescription',
+wbMeeting.usedItemAttributes = ['description',
+                                'detailedDescription',
                                 'budgetInfos',
                                 'observations',
                                 'toDiscuss',

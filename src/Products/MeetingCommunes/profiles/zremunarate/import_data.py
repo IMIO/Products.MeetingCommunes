@@ -75,6 +75,7 @@ remunMeeting.categories = categories
 remunMeeting.shortName = 'REMUN'
 remunMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
 remunMeeting.usedItemAttributes = [
+    'description',
     'detailedDescription',
     'budgetInfos',
     'observations',

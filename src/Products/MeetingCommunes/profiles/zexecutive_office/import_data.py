@@ -74,12 +74,13 @@ executiveMeeting.places = ''
 executiveMeeting.categories = categories
 executiveMeeting.shortName = 'executive'
 executiveMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
-executiveMeeting.usedItemAttributes = ['detailedDescription',
-                                'budgetInfos',
-                                'observations',
-                                'toDiscuss',
-                                'itemAssembly',
-                                'itemIsSigned', ]
+executiveMeeting.usedItemAttributes = ['description',
+                                       'detailedDescription',
+                                       'budgetInfos',
+                                       'observations',
+                                       'toDiscuss',
+                                       'itemAssembly',
+                                       'itemIsSigned']
 executiveMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 executiveMeeting.recordMeetingHistoryStates = []
 executiveMeeting.xhtmlTransformFields = ()
@@ -94,8 +95,8 @@ executiveMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 executiveMeeting.meetingTopicStates = ('created', 'frozen')
 executiveMeeting.decisionTopicStates = ('decided', 'closed')
 executiveMeeting.enforceAdviceMandatoriness = False
-executiveMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
-                                        'reverse': '0'}, )
+executiveMeeting.insertingMethodsOnAddItem = (
+    {'insertingMethod': 'on_proposing_groups', 'reverse': '0'}, )
 executiveMeeting.recordItemHistoryStates = []
 executiveMeeting.maxShownMeetings = 5
 executiveMeeting.maxDaysDecisions = 60
@@ -103,46 +104,45 @@ executiveMeeting.meetingAppDefaultView = 'searchmyitems'
 executiveMeeting.useAdvices = True
 executiveMeeting.itemAdviceStates = ('validated',)
 executiveMeeting.itemAdviceEditStates = ('validated',)
-executiveMeeting.itemAdviceViewStates = ('validated',
-                                  'presented',
-                                  'itemfrozen',
-                                  'accepted',
-                                  'refused',
-                                  'accepted_but_modified',
-                                  'delayed',
-                                  'pre_accepted',)
+executiveMeeting.itemAdviceViewStates = (
+    'validated',
+    'presented',
+    'itemfrozen',
+    'accepted',
+    'refused',
+    'accepted_but_modified',
+    'delayed',
+    'pre_accepted',)
 executiveMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 executiveMeeting.enableAdviceInvalidation = False
 executiveMeeting.itemAdviceInvalidateStates = []
 executiveMeeting.customAdvisers = []
-executiveMeeting.itemPowerObserversStates = ('itemfrozen',
-                                      'accepted',
-                                      'delayed',
-                                      'refused',
-                                      'accepted_but_modified',
-                                      'pre_accepted')
-executiveMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-executiveMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
+executiveMeeting.itemPowerObserversStates = (
+    'itemfrozen',
+    'accepted',
+    'delayed',
+    'refused',
+    'accepted_but_modified',
+    'pre_accepted')
+executiveMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed',
+                                      'accepted_but_modified', 'pre_accepted']
+executiveMeeting.workflowAdaptations = ['no_publication', 'no_global_observation',
+                                        'return_to_proposing_group', 'refused']
 executiveMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 executiveMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:<p>Le Comité décide de reporter le point.</p>"},))
-executiveMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                         'item_transition': 'itemfreeze'},
+executiveMeeting.onMeetingTransitionItemTransitionToTrigger = (
+    {'meeting_transition': 'freeze', 'item_transition': 'itemfreeze'},
 
-                                                        {'meeting_transition': 'decide',
-                                                         'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'decide', 'item_transition': 'itemfreeze'},
 
-                                                        {'meeting_transition': 'publish_decisions',
-                                                         'item_transition': 'itemfreeze'},
-                                                        {'meeting_transition': 'publish_decisions',
-                                                         'item_transition': 'accept'},
+    {'meeting_transition': 'publish_decisions', 'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'publish_decisions', 'item_transition': 'accept'},
 
-                                                        {'meeting_transition': 'close',
-                                                         'item_transition': 'itemfreeze'},
-                                                        {'meeting_transition': 'close',
-                                                         'item_transition': 'accept'},)
+    {'meeting_transition': 'close', 'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'close', 'item_transition': 'accept'},)
 executiveMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 executiveMeeting.powerAdvisersGroups = ()
 executiveMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')

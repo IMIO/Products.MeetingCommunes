@@ -137,7 +137,8 @@ Place3\r"""
 coGestMeeting.categories = categories
 coGestMeeting.shortName = 'COGES'
 coGestMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
-coGestMeeting.usedItemAttributes = ['detailedDescription',
+coGestMeeting.usedItemAttributes = ['description',
+                                    'detailedDescription',
                                     'budgetInfos',
                                     'observations',
                                     'toDiscuss',

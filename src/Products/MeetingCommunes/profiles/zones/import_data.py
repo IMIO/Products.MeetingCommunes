@@ -206,7 +206,8 @@ collegeMeeting.categories = categories
 collegeMeeting.shortName = 'ZCollege'
 collegeMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
                              annexeDecision, annexeAvis, annexeAvisLegal, annexeSeance]
-collegeMeeting.usedItemAttributes = ['detailedDescription',
+collegeMeeting.usedItemAttributes = ['description',
+                                     'detailedDescription',
                                      'budgetInfos',
                                      'observations',
                                      'toDiscuss',

@@ -76,7 +76,8 @@ Place3\r"""
 agMeeting.categories = categories
 agMeeting.shortName = 'AG'
 agMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
-agMeeting.usedItemAttributes = ['detailedDescription',
+agMeeting.usedItemAttributes = ['description',
+                                'detailedDescription',
                                 'budgetInfos',
                                 'observations',
                                 'toDiscuss',

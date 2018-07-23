@@ -17,11 +17,13 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Added variables cfg1_id and cfg2_id to MeetingCommunesTestCase, this is used when defining
   meetingConfig and meetingConfig2 attributes of tests and useful for profiles based on MeetingCommunes
 - Added helper method to print item number within a category
-- Use _addPrincipalToGroup from PloneMeetingTestCase in tests.
+- Use _addPrincipalToGroup from PloneMeetingTestCase in tests
 - DashboardCollection have no more WF but have a 'enabled' field, use it in adapters.getUsedFinanceGroupIds
-  to check if finance DashboardCollection is enabled or not.
+  to check if finance DashboardCollection is enabled or not
 - Added sample Meeting POD template 'attendees' to show various possibilities of printing methods
-  'print_attendees' and 'print_attendees_by_type'.
+  'print_attendees' and 'print_attendees_by_type'
+- Adapted profiles import_data to select 'description' in usedItemAttributes as MeetingItem.description
+  is now an optional field
 
 4.0 (2017-08-04)
 ----------------

@@ -274,7 +274,7 @@ collegeMeeting.shortName = 'College'
 collegeMeeting.annexTypes = [financialAnalysis, budgetAnalysisCfg1, overheadAnalysis,
                              itemAnnex, decisionAnnex, marketingAnalysis,
                              adviceAnnex, adviceLegalAnalysis, meetingAnnex]
-collegeMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
+collegeMeeting.usedItemAttributes = ('description', 'toDiscuss', 'associatedGroups', 'itemIsSigned',)
 collegeMeeting.maxShownListings = '100'
 collegeMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 collegeMeeting.meetingWorkflow = 'meetingcommunes_workflow'
@@ -408,7 +408,7 @@ councilMeeting.recordItemHistoryStates = []
 councilMeeting.maxShownMeetings = 5
 councilMeeting.maxDaysDecisions = 60
 councilMeeting.meetingAppDefaultView = 'searchallitems'
-councilMeeting.usedItemAttributes = ('toDiscuss', 'associatedGroups', 'itemIsSigned',)
+councilMeeting.usedItemAttributes = ('description', 'toDiscuss', 'associatedGroups', 'itemIsSigned',)
 councilMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_categories',
                                              'reverse': '0'}, )
 councilMeeting.useGroupsAsCategories = False

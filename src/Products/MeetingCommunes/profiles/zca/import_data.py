@@ -136,7 +136,8 @@ Place3\r"""
 caMeeting.categories = categories
 caMeeting.shortName = 'CA'
 caMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
-caMeeting.usedItemAttributes = ['detailedDescription',
+caMeeting.usedItemAttributes = ['description',
+                                'detailedDescription',
                                 'budgetInfos',
                                 'observations',
                                 'toDiscuss',

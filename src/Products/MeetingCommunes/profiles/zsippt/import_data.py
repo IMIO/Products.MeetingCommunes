@@ -70,7 +70,7 @@ sipptMeeting.places = ''
 sipptMeeting.categories = categories
 sipptMeeting.shortName = 'sippt'
 sipptMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
-sipptMeeting.usedItemAttributes = ['motivation', 'observations', 'itemAssembly']
+sipptMeeting.usedItemAttributes = ['description', 'motivation', 'observations', 'itemAssembly']
 sipptMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'observations', ]
 sipptMeeting.recordMeetingHistoryStates = []
 sipptMeeting.xhtmlTransformFields = ()
@@ -85,8 +85,8 @@ sipptMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 sipptMeeting.meetingTopicStates = ('created', 'frozen')
 sipptMeeting.decisionTopicStates = ('decided', 'closed')
 sipptMeeting.enforceAdviceMandatoriness = False
-sipptMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
-                                        'reverse': '0'}, )
+sipptMeeting.insertingMethodsOnAddItem = (
+    {'insertingMethod': 'on_proposing_groups', 'reverse': '0'}, )
 sipptMeeting.recordItemHistoryStates = []
 sipptMeeting.maxShownMeetings = 5
 sipptMeeting.maxDaysDecisions = 60
@@ -94,24 +94,26 @@ sipptMeeting.meetingAppDefaultView = 'searchmyitems'
 sipptMeeting.useAdvices = True
 sipptMeeting.itemAdviceStates = ('validated',)
 sipptMeeting.itemAdviceEditStates = ('validated',)
-sipptMeeting.itemAdviceViewStates = ('validated',
-                                  'presented',
-                                  'itemfrozen',
-                                  'accepted',
-                                  'refused',
-                                  'accepted_but_modified',
-                                  'delayed',
-                                  'pre_accepted',)
+sipptMeeting.itemAdviceViewStates = (
+    'validated',
+    'presented',
+    'itemfrozen',
+    'accepted',
+    'refused',
+    'accepted_but_modified',
+    'delayed',
+    'pre_accepted',)
 sipptMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 sipptMeeting.enableAdviceInvalidation = False
 sipptMeeting.itemAdviceInvalidateStates = []
 sipptMeeting.customAdvisers = []
-sipptMeeting.itemPowerObserversStates = ('itemfrozen',
-                                      'accepted',
-                                      'delayed',
-                                      'refused',
-                                      'accepted_but_modified',
-                                      'pre_accepted')
+sipptMeeting.itemPowerObserversStates = (
+    'itemfrozen',
+    'accepted',
+    'delayed',
+    'refused',
+    'accepted_but_modified',
+    'pre_accepted')
 sipptMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 sipptMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 sipptMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
@@ -119,21 +121,16 @@ sipptMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:<p>Le Comité décide de reporter le point.</p>"},))
-sipptMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                         'item_transition': 'itemfreeze'},
+sipptMeeting.onMeetingTransitionItemTransitionToTrigger = (
+    {'meeting_transition': 'freeze', 'item_transition': 'itemfreeze'},
 
-                                                        {'meeting_transition': 'decide',
-                                                         'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'decide', 'item_transition': 'itemfreeze'},
 
-                                                        {'meeting_transition': 'publish_decisions',
-                                                         'item_transition': 'itemfreeze'},
-                                                        {'meeting_transition': 'publish_decisions',
-                                                         'item_transition': 'accept'},
+    {'meeting_transition': 'publish_decisions', 'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'publish_decisions', 'item_transition': 'accept'},
 
-                                                        {'meeting_transition': 'close',
-                                                         'item_transition': 'itemfreeze'},
-                                                        {'meeting_transition': 'close',
-                                                         'item_transition': 'accept'},)
+    {'meeting_transition': 'close', 'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'close', 'item_transition': 'accept'},)
 sipptMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 sipptMeeting.powerAdvisersGroups = ()
 sipptMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')

@@ -185,7 +185,7 @@ bpMeeting.categories = categories
 bpMeeting.shortName = 'bp'
 bpMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
                         annexeDecision, annexeAvis, annexeAvisLegal, annexeSeance]
-bpMeeting.usedItemAttributes = ['budgetInfos', 'observations', 'notes', 'inAndOutMoves']
+bpMeeting.usedItemAttributes = ['description', 'budgetInfos', 'observations', 'notes', 'inAndOutMoves']
 bpMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
 bpMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 bpMeeting.meetingWorkflow = 'meetingcommunes_workflow'
@@ -248,7 +248,7 @@ casMeeting.categories = categories
 casMeeting.shortName = 'cas'
 casMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
                          annexeDecision, annexeAvis, annexeAvisLegal, annexeSeance]
-casMeeting.usedItemAttributes = ['budgetInfos', 'observations', 'notes', 'inAndOutMoves']
+casMeeting.usedItemAttributes = ['description', 'budgetInfos', 'observations', 'notes', 'inAndOutMoves']
 casMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
 casMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 casMeeting.meetingWorkflow = 'meetingcommunes_workflow'
@@ -306,7 +306,7 @@ comiteeMeeting.categories = categories
 comiteeMeeting.shortName = 'comitee'
 comiteeMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
                              annexeDecision, annexeAvis, annexeAvisLegal]
-comiteeMeeting.usedItemAttributes = ['budgetInfos', 'observations', ]
+comiteeMeeting.usedItemAttributes = ['description', 'budgetInfos', 'observations', ]
 comiteeMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
 comiteeMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 comiteeMeeting.meetingWorkflow = 'meetingcommunes_workflow'

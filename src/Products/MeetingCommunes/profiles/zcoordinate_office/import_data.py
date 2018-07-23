@@ -75,7 +75,8 @@ Place3\r"""
 coordinateOffice.categories = categories
 coordinateOffice.shortName = 'CoordinateOffice'
 coordinateOffice.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
-coordinateOffice.usedItemAttributes = ['detailedDescription',
+coordinateOffice.usedItemAttributes = ['description',
+                                       'detailedDescription',
                                        'budgetInfos',
                                        'observations',
                                        'toDiscuss',

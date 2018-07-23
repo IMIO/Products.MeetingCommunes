@@ -79,7 +79,8 @@ Place3\r"""
 bourgmestreMeeting.categories = categories
 bourgmestreMeeting.shortName = 'Bourgmestre'
 bourgmestreMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
-bourgmestreMeeting.usedItemAttributes = ['detailedDescription',
+bourgmestreMeeting.usedItemAttributes = ['description',
+                                         'detailedDescription',
                                          'budgetInfos',
                                          'observations',
                                          'toDiscuss',

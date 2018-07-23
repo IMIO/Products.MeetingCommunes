@@ -74,12 +74,14 @@ scrhMeeting.places = ''
 scrhMeeting.categories = categories
 scrhMeeting.shortName = 'SCRH'
 scrhMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
-scrhMeeting.usedItemAttributes = ['detailedDescription',
-                                'budgetInfos',
-                                'observations',
-                                'toDiscuss',
-                                'itemAssembly',
-                                'itemIsSigned', ]
+scrhMeeting.usedItemAttributes = [
+    'description',
+    'detailedDescription',
+    'budgetInfos',
+    'observations',
+    'toDiscuss',
+    'itemAssembly',
+    'itemIsSigned', ]
 scrhMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 scrhMeeting.recordMeetingHistoryStates = []
 scrhMeeting.xhtmlTransformFields = ()
@@ -94,8 +96,8 @@ scrhMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
 scrhMeeting.meetingTopicStates = ('created', 'frozen')
 scrhMeeting.decisionTopicStates = ('decided', 'closed')
 scrhMeeting.enforceAdviceMandatoriness = False
-scrhMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
-                                        'reverse': '0'}, )
+scrhMeeting.insertingMethodsOnAddItem = (
+    {'insertingMethod': 'on_proposing_groups', 'reverse': '0'}, )
 scrhMeeting.recordItemHistoryStates = []
 scrhMeeting.maxShownMeetings = 5
 scrhMeeting.maxDaysDecisions = 60
@@ -103,46 +105,45 @@ scrhMeeting.meetingAppDefaultView = 'searchmyitems'
 scrhMeeting.useAdvices = True
 scrhMeeting.itemAdviceStates = ('validated',)
 scrhMeeting.itemAdviceEditStates = ('validated',)
-scrhMeeting.itemAdviceViewStates = ('validated',
-                                  'presented',
-                                  'itemfrozen',
-                                  'accepted',
-                                  'refused',
-                                  'accepted_but_modified',
-                                  'delayed',
-                                  'pre_accepted',)
+scrhMeeting.itemAdviceViewStates = (
+    'validated',
+    'presented',
+    'itemfrozen',
+    'accepted',
+    'refused',
+    'accepted_but_modified',
+    'delayed',
+    'pre_accepted',)
 scrhMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 scrhMeeting.enableAdviceInvalidation = False
 scrhMeeting.itemAdviceInvalidateStates = []
 scrhMeeting.customAdvisers = []
-scrhMeeting.itemPowerObserversStates = ('itemfrozen',
-                                      'accepted',
-                                      'delayed',
-                                      'refused',
-                                      'accepted_but_modified',
-                                      'pre_accepted')
-scrhMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-scrhMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
+scrhMeeting.itemPowerObserversStates = (
+    'itemfrozen',
+    'accepted',
+    'delayed',
+    'refused',
+    'accepted_but_modified',
+    'pre_accepted')
+scrhMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed',
+                                 'accepted_but_modified', 'pre_accepted']
+scrhMeeting.workflowAdaptations = ['no_publication', 'no_global_observation',
+                                   'return_to_proposing_group', 'refused']
 scrhMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 scrhMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:<p>Le Comité décide de reporter le point.</p>"},))
-scrhMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                         'item_transition': 'itemfreeze'},
+scrhMeeting.onMeetingTransitionItemTransitionToTrigger = (
+    {'meeting_transition': 'freeze', 'item_transition': 'itemfreeze'},
 
-                                                        {'meeting_transition': 'decide',
-                                                         'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'decide', 'item_transition': 'itemfreeze'},
 
-                                                        {'meeting_transition': 'publish_decisions',
-                                                         'item_transition': 'itemfreeze'},
-                                                        {'meeting_transition': 'publish_decisions',
-                                                         'item_transition': 'accept'},
+    {'meeting_transition': 'publish_decisions', 'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'publish_decisions', 'item_transition': 'accept'},
 
-                                                        {'meeting_transition': 'close',
-                                                         'item_transition': 'itemfreeze'},
-                                                        {'meeting_transition': 'close',
-                                                         'item_transition': 'accept'},)
+    {'meeting_transition': 'close', 'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'close', 'item_transition': 'accept'},)
 scrhMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 scrhMeeting.powerAdvisersGroups = ()
 scrhMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')

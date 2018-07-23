@@ -74,7 +74,8 @@ tcMeeting.places = ''
 tcMeeting.categories = categories
 tcMeeting.shortName = 'CT'
 tcMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
-tcMeeting.usedItemAttributes = ['detailedDescription',
+tcMeeting.usedItemAttributes = ['description',
+                                'detailedDescription',
                                 'budgetInfos',
                                 'observations',
                                 'toDiscuss',

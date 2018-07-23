@@ -255,7 +255,8 @@ collegeMeeting.shortName = 'College'
 collegeMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
                              annexeDecision, annexeAvis, annexeAvisLegal,
                              annexeSeance]
-collegeMeeting.usedItemAttributes = ['detailedDescription',
+collegeMeeting.usedItemAttributes = ['description',
+                                     'detailedDescription',
                                      'budgetInfos',
                                      'observations',
                                      'toDiscuss',
@@ -537,7 +538,8 @@ councilMeeting.shortName = 'Council'
 councilMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
                              annexeDecision, annexeAvis, annexeAvisLegal,
                              annexeSeance]
-councilMeeting.usedItemAttributes = ['detailedDescription',
+councilMeeting.usedItemAttributes = ['description',
+                                     'detailedDescription',
                                      'oralQuestion',
                                      'itemInitiator',
                                      'observations',

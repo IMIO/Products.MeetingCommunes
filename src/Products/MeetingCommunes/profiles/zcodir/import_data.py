@@ -135,7 +135,8 @@ Place3\r"""
 codirMeeting.categories = categories
 codirMeeting.shortName = 'CoDir'
 codirMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
-codirMeeting.usedItemAttributes = ['detailedDescription',
+codirMeeting.usedItemAttributes = ['description',
+                                   'detailedDescription',
                                    'budgetInfos',
                                    'observations',
                                    'toDiscuss',

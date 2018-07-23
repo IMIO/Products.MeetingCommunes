@@ -76,7 +76,8 @@ Place3\r"""
 emMeeting.categories = categories
 emMeeting.shortName = 'EM'
 emMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
-emMeeting.usedItemAttributes = ['detailedDescription',
+emMeeting.usedItemAttributes = ['description',
+                                'detailedDescription',
                                 'budgetInfos',
                                 'observations',
                                 'toDiscuss',
