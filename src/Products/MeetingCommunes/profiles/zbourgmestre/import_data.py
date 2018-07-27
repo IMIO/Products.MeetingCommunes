@@ -31,13 +31,13 @@ agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaTemplate.odt_file = '../../examples_fr/templates/oj.odt'
 agendaTemplate.pod_formats = ['odt', 'pdf', ]
 agendaTemplate.pod_portal_types = ['MeetingBourgmestre']
-agendaTemplate.tal_condition = 'python:tool.isManager(here)'
+agendaTemplate.tal_condition = u'python:tool.isManager(here)'
 
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsTemplate.odt_file = '../../examples_fr/templates/pv.odt'
 decisionsTemplate.pod_formats = ['odt', 'pdf', ]
 decisionsTemplate.pod_portal_types = ['MeetingBourgmestre']
-decisionsTemplate.tal_condition = 'python:tool.isManager(here)'
+decisionsTemplate.tal_condition = u'python:tool.isManager(here)'
 
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemTemplate.odt_file = '../../examples_fr/templates/deliberation.odt'

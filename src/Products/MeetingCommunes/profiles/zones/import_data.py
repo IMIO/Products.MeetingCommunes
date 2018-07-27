@@ -37,13 +37,13 @@ agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaTemplate.odt_file = 'oj.odt'
 agendaTemplate.pod_formats = ['odt', 'pdf', ]
 agendaTemplate.pod_portal_types = ['MeetingZCollege']
-agendaTemplate.tal_condition = 'python:tool.isManager(here)'
+agendaTemplate.tal_condition = u'python:tool.isManager(here)'
 
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsTemplate.odt_file = 'pv.odt'
 decisionsTemplate.pod_formats = ['odt', 'pdf', ]
 decisionsTemplate.pod_portal_types = ['MeetingZCollege']
-decisionsTemplate.tal_condition = 'python:tool.isManager(here)'
+decisionsTemplate.tal_condition = u'python:tool.isManager(here)'
 
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemTemplate.odt_file = 'deliberation.odt'
@@ -52,12 +52,12 @@ itemTemplate.pod_portal_types = ['MeetingItemZCollege']
 
 dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif', dashboard=True)
 dashboardTemplate.odt_file = 'recapitulatif-tb.odt'
-dashboardTemplate.tal_condition = 'python: context.absolute_url().endswith("/searches_items")'
+dashboardTemplate.tal_condition = u'python: context.absolute_url().endswith("/searches_items")'
 
 dashboardTemplateOds = PodTemplateDescriptor('recapitulatifods', 'Récapitulatif', dashboard=True)
 dashboardTemplateOds.odt_file = 'recapitulatif-tb.ods'
 dashboardTemplateOds.pod_formats = ['ods', 'xls', ]
-dashboardTemplateOds.tal_condition = 'python: context.absolute_url().endswith("/searches_items")'
+dashboardTemplateOds.tal_condition = u'python: context.absolute_url().endswith("/searches_items")'
 
 historyTemplate = PodTemplateDescriptor('historique', 'Historique')
 historyTemplate.odt_file = 'history.odt'
@@ -73,19 +73,19 @@ agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaCouncilTemplate.odt_file = 'council-oj.odt'
 agendaCouncilTemplate.pod_formats = ['odt', 'pdf', ]
 agendaCouncilTemplate.pod_portal_types = ['MeetingZCouncil']
-agendaCouncilTemplate.tal_condition = 'python:tool.isManager(here)'
+agendaCouncilTemplate.tal_condition = u'python:tool.isManager(here)'
 
 decisionsCouncilTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsCouncilTemplate.odt_file = 'council-pv.odt'
 decisionsCouncilTemplate.pod_formats = ['odt', 'pdf', ]
 decisionsCouncilTemplate.pod_portal_types = ['MeetingZCouncil']
-decisionsCouncilTemplate.tal_condition = 'python:tool.isManager(here)'
+decisionsCouncilTemplate.tal_condition = u'python:tool.isManager(here)'
 
 itemCouncilRapportTemplate = PodTemplateDescriptor('rapport', 'Rapport')
 itemCouncilRapportTemplate.odt_file = 'council-rapport.odt'
 itemCouncilRapportTemplate.pod_formats = ['odt', 'pdf', ]
 itemCouncilRapportTemplate.pod_portal_types = ['MeetingItemZCouncil']
-itemCouncilRapportTemplate.tal_condition = ''
+itemCouncilRapportTemplate.tal_condition = u''
 
 itemCouncilTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemCouncilTemplate.odt_file = 'deliberation.odt'

@@ -24,6 +24,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   'print_attendees' and 'print_attendees_by_type'
 - Adapted profiles import_data to select 'description' in usedItemAttributes as MeetingItem.description
   is now an optional field
+- Fixed PODTemplateDescriptor definitions in various import_data.py to use correct field type
 
 4.0 (2017-08-04)
 ----------------

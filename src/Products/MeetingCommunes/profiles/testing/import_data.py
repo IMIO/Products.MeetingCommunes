@@ -84,18 +84,18 @@ meetingAnnex = AnnexTypeDescriptor(
 agendaTemplate = PodTemplateDescriptor('agendaTemplate', 'Meeting agenda')
 agendaTemplate.odt_file = 'Agenda.odt'
 agendaTemplate.pod_portal_types = ['MeetingCollege']
-agendaTemplate.tal_condition = ''
+agendaTemplate.tal_condition = u''
 
 decisionsTemplate = PodTemplateDescriptor('decisionsTemplate',
                                           'Meeting decisions')
 decisionsTemplate.odt_file = 'Decisions.odt'
 decisionsTemplate.pod_portal_types = ['MeetingCollege']
-decisionsTemplate.tal_condition = 'python:here.adapted().isDecided()'
+decisionsTemplate.tal_condition = u'python:here.adapted().isDecided()'
 
 itemTemplate = PodTemplateDescriptor('itemTemplate', 'Meeting item')
 itemTemplate.odt_file = 'Item.odt'
 itemTemplate.pod_portal_types = ['MeetingItemCollege']
-itemTemplate.tal_condition = ''
+itemTemplate.tal_condition = u''
 
 # item templates
 template1 = ItemTemplateDescriptor(id='template1',
