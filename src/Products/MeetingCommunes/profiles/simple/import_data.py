@@ -50,7 +50,7 @@ Place3\r"""
 simpleMeeting.shortName = 'Simple'
 simpleMeeting.annexTypes = [annexe, annexeDecision, annexeAvis, annexeSeance]
 simpleMeeting.usedItemAttributes = [
-    'detailedDescription',
+    'motivation',
     'budgetInfos',
     'observations',
     'sendToAuthority',
