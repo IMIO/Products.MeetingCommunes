@@ -83,7 +83,6 @@ def isMeetingCommunesConfigureProfile(context):
         context.readDataFile("MeetingCommunes_sippt_marker.txt")
 
 
-
 def isNotMeetingCommunesDemoProfile(context):
     return context.readDataFile("MeetingCommunes_demo_marker.txt") is None
 
