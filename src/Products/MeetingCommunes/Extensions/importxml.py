@@ -383,7 +383,7 @@ class TransformXmlToMeetingOrItem:
                         item = self.get_copy_of_item(item)
                     # RAM CACHE on MeetingConfig.getMeetingsAcceptingItems is doing shit and make meeting up to second fail like pussy
                     item.setPreferredMeeting(meeting.UID())
-                    print(u'Presenting Item : %s | %s' % (safe_unicode(_id), safe_unicode(item.Title())))
+                    print(safe_unicode(u'Presenting Item : %s | %s' % (safe_unicode(_id), safe_unicode(item.Title()))))
                     self.do_item_transaction(item)
 
     def get_text_html_from_node(self, node, childName, default='<p></p>'):
