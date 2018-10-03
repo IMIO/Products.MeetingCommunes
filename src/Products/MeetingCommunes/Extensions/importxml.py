@@ -208,6 +208,7 @@ class TransformXmlToMeetingOrItem:
                 _creatorIdXml = self.get_text_from_node(itemNode, "creatorId")
                 _creatorId = 'xmlimport'
                 _title = self.get_text_from_node(itemNode, "title")
+                print('Item XML #%05d %s' % (int(_id), _title))
                 if _title:
                     _title.replace('\n', '').replace('  ', ' ').strip()
 
@@ -321,6 +322,7 @@ class TransformXmlToMeetingOrItem:
                 _id = self.get_text_from_node(meetings, "id")
                 # date is formatted like 31/12/2006
                 _date = self.get_text_from_node(meetings, "date", 'NULL')
+                print('Meeting XML %s' % _date)
                 _startDate = self.get_text_from_node(meetings, "startDate", _date)
                 _endDate = self.get_text_from_node(meetings, "endDate", _date)
                 _signatures = self.get_signatures(meetings)
