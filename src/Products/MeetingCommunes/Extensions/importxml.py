@@ -1,6 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
 import csv
 import os
 from xml.dom.minidom import parse
@@ -94,7 +95,7 @@ class TransformXmlToMeetingOrItem:
            If no p_annexType is provided, self.annexFileType is used.
            If no p_annexTitle is specified, the predefined title of the annex type is used.'''
         if not os.path.isfile(_path):
-            print "Le fichier %s n'a pas ete trouve." % _path
+            print("Le fichier %s n'a pas ete trouve." % _path)
             return
 
         if annexType is None:
@@ -133,7 +134,7 @@ class TransformXmlToMeetingOrItem:
 
     def _annex_file_content(self, _path):
         if not os.path.isfile(_path):
-            print "Le fichier %s n'a pas ete trouve." % _path
+            print("Le fichier %s n'a pas ete trouve." % _path)
             return None
         f = open(_path, 'r')
         name = os.path.basename(_path)
@@ -203,24 +204,24 @@ class TransformXmlToMeetingOrItem:
 
                 # récuptération des données du point
                 _id = self.get_text_from_node(itemNode, 'id')
-                _creatorId = self.get_text_from_node(itemNode, "creatorId")
+                _creatorIdXml = self.get_text_from_node(itemNode, "creatorId")
+                _creatorId = 'xmlimport'
                 _title = self.get_text_from_node(itemNode, "title")
                 if _title:
                     _title.replace('\n', '').replace('  ', ' ').strip()
 
-                if _creatorId not in useridLst:
+                if _creatorIdXml not in useridLst:
                     # utilisons le répertoire de l'utilisateur xmlimport'
                     Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get(meetingConfig)
-                    _creatorId = 'xmlimport'
                 else:
-                    member = self.__portal__.Members.get(_creatorId)
+                    member = self.__portal__.Members.get(_creatorIdXml)
                     if member:
                         Memberfolder = member.mymeetings.get(meetingConfig)
+                        _creatorId = _creatorIdXml
                     else:
                         # utilisons le répertoire de l'utilisateur xmlimport'
                         Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get(meetingConfig)
-                        useridLst.remove(_creatorId)
-                        _creatorId = 'xmlimport'
+                        useridLst.remove(_creatorIdXml)
 
                 _extId = '%sitem-%s' % (self.__extId_prefix, _id)
                 item = self.object_already_exists(_extId, itemType)
@@ -233,15 +234,16 @@ class TransformXmlToMeetingOrItem:
                 itemid = Memberfolder.invokeFactory(type_name=itemType, id=_id, title=_title)
                 item = getattr(Memberfolder, itemid)
 
-                # pour mes tests en attendant mes réponses
-                _createDate = self.get_text_from_node(itemNode, 'createDate', '20000310120000')
+                # createdate is a linux epoch timestamp
+                # Default is Friday, March 10, 2000 12:00:00 PM GMT+01:00
+                _createDate = self.get_text_from_node(itemNode, 'createDate', '952686000')
 
                 _proposingGroup = self.get_mapping_value(self.get_text_from_node(itemNode, 'proposingGroup'),
                                                          group_mapping, 'importation')
                 _category = self.get_mapping_value(self.get_text_from_node(itemNode, 'category'), cat_mapping,
                                                    'reprise')
-                _description = self.get_text_html_from_node(itemNode, "description", None)
-                _decision = self.get_text_html_from_node(itemNode, "decision", None)
+                _description = self.get_text_html_from_node(itemNode, "description", '')
+                _decision = self.get_text_html_from_node(itemNode, "decision", '')
 
                 if _description:
                     item.setDescription(_description)
@@ -252,14 +254,11 @@ class TransformXmlToMeetingOrItem:
                 item.setCategory(_category)
                 item.externalIdentifier = _extId
 
-                _heure = _createDate[8:10]
-                if _heure == '24':
-                    _heure = '0'
-                date_str = '%s/%s/%s %s:%s:%s GMT+1' % (_createDate[0:4], _createDate[4:6], _createDate[6:8],
-                                                        _heure, _createDate[10:12], _createDate[12:14])
-                tme = DateTime(date_str)
+                tme = DateTime(int(_createDate))
                 item.setCreationDate(tme)
                 item.setCreators(_creatorId)
+                if _creatorId == 'xmlimport':
+                    item.setObservations(u'<p>Créateur originel : %s</p>'%safe_unicode(_creatorIdXml))
                 item.externalIdentifier = _extId
                 ## do not call item.at_post_create_script(). This would get only throuble with cancel quick edit in objects
                 item.processForm(values={'dummy': None})
@@ -276,7 +275,7 @@ class TransformXmlToMeetingOrItem:
                 if cpt >= 50:
                     transaction.commit()
                     cpt = 0
-                    print 'commit'
+                    print('commit')
 
         transaction.commit()
         return self.__itemDict__
@@ -319,13 +318,10 @@ class TransformXmlToMeetingOrItem:
             if meetings.nodeType == meetings.ELEMENT_NODE:
                 # récupération des données de la séance
                 _id = self.get_text_from_node(meetings, "id")
-                _date = self.get_text_from_node(meetings, "date")
-                _startDate = self.get_text_from_node(meetings, "startDate")
-                if _startDate == 'NULL':
-                    _startDate = _date
-                _endDate = self.get_text_from_node(meetings, "endDate")
-                if _endDate == 'NULL':
-                    _endDate = _date
+                # date is formatted like 31/12/2006
+                _date = self.get_text_from_node(meetings, "date", 'NULL')
+                _startDate = self.get_text_from_node(meetings, "startDate", _date)
+                _endDate = self.get_text_from_node(meetings, "endDate", _date)
                 _signatures = self.get_signatures(meetings)
                 _presences = self.get_presences(meetings)
                 _place = self.get_text_from_node(meetings, "place")
@@ -334,9 +330,7 @@ class TransformXmlToMeetingOrItem:
                     # La séance est déjà existante
                     continue
 
-                # 14/09/2009 >>> 20090914000000 GMT+1
-                date_str = '%s/%s/%s 00:00:00 GMT+1' % (_date[6:10], _date[3:5], _date[0:2])
-                tme = DateTime(date_str)
+                tme = DateTime(_date)
                 meetingid = Memberfolder.invokeFactory(type_name=MeetingType, id=_id, date=tme)
                 meeting = getattr(Memberfolder, meetingid)
                 meeting.setSignatures(_signatures)
@@ -346,28 +340,14 @@ class TransformXmlToMeetingOrItem:
                 # meeting.at_post_create_script()
                 meeting.processForm(values={'dummy': None})
 
-                # on prend la date pour construire la startDate et la endDate
-                _startDate = '%s%s%s000000' % (_date[6:10], _date[3:5], _date[0:2])
-                _endDate = '%s%s%s000000' % (_date[6:10], _date[3:5], _date[0:2])
-                # la modification des dates éffectives doivent se faire après la création de la séance.
-                _heure = _startDate[8:10]
-                if _heure == '24':
-                    _heure = '0'
-                date_str = '%s/%s/%s %s:%s:%s GMT+1' % (
-                    _startDate[0:4], _startDate[4:6], _startDate[6:8], _heure,
-                    _startDate[10:12], _startDate[12:14])
-                tme = DateTime(date_str)
+                tme = DateTime(_startDate)
                 meeting.setStartDate(tme)
-                _heure = _endDate[8:10]
-                if _heure == '24':
-                    _heure = '0'
-                date_str = '%s/%s/%s %s:%s:%s GMT+1' % (_endDate[0:4], _endDate[4:6], _endDate[6:8], _heure,
-                                                        _endDate[10:12], _endDate[12:14])
-                tme = DateTime(date_str)
+
+                tme = DateTime(_endDate)
                 meeting.setEndDate(tme)
                 self.add_annexe_to_object(meeting, meetings, startPath, newPath, "pdfsSeanceLink", "pdfSeanceLink")
 
-                print 'Inserting Items in Meetings %s' % meeting.Title()
+                print('Inserting Items in Meetings %s' % meeting.Title())
                 self._insert_items_in_meeting(meeting, meetings.getElementsByTagName("pointsRef"))
 
                 self.__meetingList__.append(meeting)
@@ -381,9 +361,9 @@ class TransformXmlToMeetingOrItem:
                     except:
                         pass  # publish state not use
                     meeting.portal_workflow.doActionFor(meeting, 'close')
-                    transaction.commit()
+                    self.reset_items_modified_date(meeting.getItems())
                 else:
-                    print 'La seance %s est vide.' % meeting.Title().decode('utf-8')
+                    print('La seance %s est vide.' % meeting.Title().decode('utf-8'))
 
         return self.__meetingList__
 
@@ -399,11 +379,11 @@ class TransformXmlToMeetingOrItem:
                 item = self.__itemDict__[_id]
                 if item:
                     if item.hasMeeting():
-                        print 'Copying Item : %s | %s' % (safe_unicode(_id), safe_unicode(item.Title()))
+                        print('Copying Item : %s | %s' % (safe_unicode(_id), safe_unicode(item.Title())))
                         item = self.get_copy_of_item(item)
                     # RAM CACHE on MeetingConfig.getMeetingsAcceptingItems is doing shit and make meeting up to second fail like pussy
                     item.setPreferredMeeting(meeting.UID())
-                    print u'Presenting Item : %s | %s' % (safe_unicode(_id), safe_unicode(item.Title()))
+                    print('Presenting Item : %s | %s' % (safe_unicode(_id), safe_unicode(item.Title())))
                     self.do_item_transaction(item)
 
     def get_text_html_from_node(self, node, childName, default='<p></p>'):
@@ -417,7 +397,7 @@ class TransformXmlToMeetingOrItem:
         # returns a list of child nodes matching the given name
         child = node.getElementsByTagName(childName)
         if child and child:
-            result =  self.get_text(child[0])
+            result = self.get_text(child[0])
             if result:
                 result.strip()
             return result
@@ -442,7 +422,6 @@ class TransformXmlToMeetingOrItem:
         self.__portal__.portal_workflow.doActionFor(item, 'validate')
         self.__portal__.portal_workflow.doActionFor(item, 'present')
 
-
     def object_already_exists(self, _extId, portalType):
         catalog_query = [{'i': 'portal_type',
                           'o': 'plone.app.querystring.operation.selection.is',
@@ -453,8 +432,13 @@ class TransformXmlToMeetingOrItem:
         query = queryparser.parseFormquery(self, catalog_query)
         res = self.__portal__.portal_catalog(**query)
         if res:
-            print 'Already created %s'%_extId
+            print('Already created %s' % _extId)
         return res
+
+    # Asked specifically by Dison
+    def reset_items_modified_date(self, items):
+        for item in items:
+            item.setModificationDate(item.created())
 
 
 def import_result_file(self, fname=None, fgrmapping=None, fcatmapping=None, meetingConfigType=None, startPath=None,
@@ -488,14 +472,14 @@ def import_result_file(self, fname=None, fgrmapping=None, fcatmapping=None, meet
                "startPath='file:///var/gru/pdf-files'," \
                "newPath='/home/zope/repries-gembloux/pdf-files')"
 
-    print 'Starting Import'
+    print('Starting Import')
     x = TransformXmlToMeetingOrItem(self)
     x.read_xml(fname)
     x.get_items(fgrmapping, fcatmapping, meetingConfigType, safe_unicode(startPath), safe_unicode(newPath))
     transaction.commit()
     x.get_meeting(meetingConfigType, startPath, newPath)
     transaction.commit()
-    print 'Import finished'
+    print('Import finished')
     return '<html><body><h1>Done</h1></body></html>'
 
 
@@ -503,11 +487,13 @@ def create_dico_mapping(self, fmapping=None):
     """
        create dico with csv file with mapping OLD xxx and PLONE xxx
     """
+    file = None
     try:
         file = open(fmapping, "rb")
         reader = csv.DictReader(file)
     except Exception:
-        file.close()
+        if file:
+            file.close()
         raise Exception
 
     dic = {}
@@ -518,5 +504,5 @@ def create_dico_mapping(self, fmapping=None):
         if old not in dic.keys():
             dic[old] = plone
         else:
-            print 'key %s - %s already present' % (old, plone)
+            print('key %s - %s already present' % (old, plone))
     return dic
