@@ -380,9 +380,9 @@ class TransformXmlToMeetingOrItem:
                 item = self.__itemDict__[_id]
                 if item:
                     if item.hasMeeting():
-                        print(u'Copying Item : %s | %s' % (safe_unicode(_id), safe_unicode(item.Title())))
+                        print((u'Copying Item : %s | %s' % (safe_unicode(_id), safe_unicode(item.Title()))).encode('UTF8'))
                         item = self.get_copy_of_item(item)
-                    # RAM CACHE on MeetingConfig.getMeetingsAcceptingItems is doing shit and make meeting up to second fail like pussy
+
                     item.setPreferredMeeting(meeting.UID())
                     print((u'Presenting Item : %s | %s' % (safe_unicode(_id), safe_unicode(item.Title()))).encode('UTF8'))
                     self.do_item_transaction(item)
