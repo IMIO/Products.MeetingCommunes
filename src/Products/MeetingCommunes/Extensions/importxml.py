@@ -40,6 +40,8 @@ class TransformXmlToMeetingOrItem:
     __itemDict__ = None
     __portal__ = None
     __ext_ids = []
+    _meetingConfigId = None
+    _deactivated_recurring_items = []
 
     __extId_prefix = 'Import-'
 
@@ -179,7 +181,7 @@ class TransformXmlToMeetingOrItem:
             # _path = self.getText(node[0]).replace(startPath, newPath)
             # self._addAnnexe(item, Memberfolder, _path, 'deliberation', 'Deliberation')
 
-    def get_items(self, fgrmapping, fcatmapping, meetingConfigType, startPath, newPath):
+    def get_items(self, fgrmapping, fcatmapping, startPath, newPath):
         """
            Notre méthode pour créer les points
         """
@@ -193,12 +195,14 @@ class TransformXmlToMeetingOrItem:
             cat_mapping = create_dico_mapping(self, fcatmapping)
         else:  # Les catégories ne sont pas utilisées
             cat_mapping = {}
-        if meetingConfigType == 'college':
-            meetingConfig = 'meeting-config-college'
+
+        if self._meetingConfigId == 'meeting-config-college':
             itemType = "MeetingItemCollege"
         else:
-            meetingConfig = 'meeting-config-council'
             itemType = "MeetingItemCouncil"
+
+        self.disable_recurring_items()
+
         cpt = 0
         for itemNode in self.get_root_element().getElementsByTagName("point"):
             if itemNode.nodeType == itemNode.ELEMENT_NODE:
@@ -214,15 +218,15 @@ class TransformXmlToMeetingOrItem:
 
                 if _creatorIdXml not in useridLst:
                     # utilisons le répertoire de l'utilisateur xmlimport'
-                    Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get(meetingConfig)
+                    Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get(self._meetingConfigId)
                 else:
                     member = self.__portal__.Members.get(_creatorIdXml)
                     if member:
-                        Memberfolder = member.mymeetings.get(meetingConfig)
+                        Memberfolder = member.mymeetings.get(self._meetingConfigId)
                         _creatorId = _creatorIdXml
                     else:
                         # utilisons le répertoire de l'utilisateur xmlimport'
-                        Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get(meetingConfig)
+                        Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get(self._meetingConfigId)
                         useridLst.remove(_creatorIdXml)
 
                 _extId = '%sitem-%s' % (self.__extId_prefix, _id)
@@ -292,7 +296,7 @@ class TransformXmlToMeetingOrItem:
                     return group.getId()
         return default
 
-    def get_meeting(self, meetingConfigType, startPath, newPath):
+    def get_meeting(self, startPath, newPath):
         """
            Notre méthode pour créer les séances
         """
@@ -301,14 +305,11 @@ class TransformXmlToMeetingOrItem:
 
         self.__meetingList__ = []
         # nous utiliserons le répertoire de xmlimport
-        if meetingConfigType == 'college':
-            Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get('meeting-config-college')
-        else:
-            Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get('meeting-config-council')
+        Memberfolder = self.__portal__.Members.xmlimport.mymeetings.get(self._meetingConfigId)
         # nous ajoutons les droits nécessaire sinon l'invoke factory va raler
         Memberfolder.manage_addLocalRoles('admin', ('MeetingManagerLocal', 'MeetingManager'))
         lat = list(Memberfolder.getLocallyAllowedTypes())
-        if meetingConfigType == 'college':
+        if self._meetingConfigId == 'meeting-config-college':
             MeetingType = 'MeetingCollege'
             lat.append(MeetingType)
         else:
@@ -333,7 +334,7 @@ class TransformXmlToMeetingOrItem:
                     # La séance est déjà existante
                     continue
 
-                tme = DateTime(_date)
+                tme = DateTime(_date, datefmt='international')
                 meetingid = Memberfolder.invokeFactory(type_name=MeetingType, id=_id, date=tme)
                 meeting = getattr(Memberfolder, meetingid)
                 meeting.setSignatures(_signatures)
@@ -368,6 +369,7 @@ class TransformXmlToMeetingOrItem:
                 else:
                     print('La seance %s est vide.' % meeting.Title().decode('utf-8'))
 
+        self.re_enable_recurring_items()
         return self.__meetingList__
 
     def _insert_items_in_meeting(self, meeting, node):
@@ -443,6 +445,20 @@ class TransformXmlToMeetingOrItem:
         for item in items:
             item.setModificationDate(item.created())
 
+    def disable_recurring_items(self):
+        self._deactivated_recurring_items = []
+        cfg = self.__portal__.portal_plonemeeting.get(self._meetingConfigId)
+        for item in cfg.getRecurringItems():
+            self.__portal__.portal_workflow.doActionFor(item, 'deactivate')
+            self._deactivated_recurring_items.append(item.UID())
+
+    def re_enable_recurring_items(self):
+        cfg = self.__portal__.portal_plonemeeting.get(self._meetingConfigId)
+        for item in cfg.getRecurringItems(False):
+            if item.UID() in self._deactivated_recurring_items:
+                self.__portal__.portal_workflow.doActionFor(item, 'activate')
+
+
 
 def import_result_file(self, fname=None, fgrmapping=None, fcatmapping=None, meetingConfigType=None, startPath=None,
                        newPath=None):
@@ -468,19 +484,22 @@ def import_result_file(self, fname=None, fgrmapping=None, fcatmapping=None, meet
         return "This script needs a 'fgrmapping' parameter like '/media/Data/Documents/Projets/'\
         'Reprises GRU/Mons/Mapping.csv'"
 
+    x = TransformXmlToMeetingOrItem(self)
     if meetingConfigType not in ('college', 'council'):
-        return "This script needs a 'meetingConfigType' parameter equal to college or council'"
+        return "<html><body>This script needs a 'meetingConfigType' parameter equal to college or council'</body></html>"
+    else:
+        x._meetingConfigId = 'meeting-config-%s' % meetingConfigType
+
     if not startPath or not newPath:
-        return "This script needs startPath and newPath to replace path for annexes like " \
+        return "<html><body>This script needs startPath and newPath to replace path for annexes like " \
                "startPath='file:///var/gru/pdf-files'," \
-               "newPath='/home/zope/repries-gembloux/pdf-files')"
+               "newPath='/home/zope/repries-gembloux/pdf-files')</body></html>"
 
     print('Starting Import')
-    x = TransformXmlToMeetingOrItem(self)
     x.read_xml(fname)
-    x.get_items(fgrmapping, fcatmapping, meetingConfigType, safe_unicode(startPath), safe_unicode(newPath))
+    x.get_items(fgrmapping, fcatmapping, safe_unicode(startPath), safe_unicode(newPath))
     transaction.commit()
-    x.get_meeting(meetingConfigType, startPath, newPath)
+    x.get_meeting(startPath, newPath)
     transaction.commit()
     print('Import finished')
     return '<html><body><h1>Done</h1></body></html>'
