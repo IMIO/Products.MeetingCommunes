@@ -33,6 +33,7 @@ setup(name='Products.MeetingCommunes',
           'setuptools',
           'Products.CMFPlone',
           'Pillow',
-          'Products.PloneMeeting'],
+          'Products.PloneMeeting',
+          'imio.pyutils',],
       entry_points={},
       )
