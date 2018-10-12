@@ -3,7 +3,7 @@ from DateTime import DateTime
 from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import PodTemplateDescriptor
-from Products.PloneMeeting.profiles import GroupDescriptor
+from Products.PloneMeeting.profiles import OrgDescriptor
 from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
@@ -47,7 +47,7 @@ itemTemplate.pod_portal_types = ['MeetingItemBourgmestre']
 bourgmestreTemplates = [agendaTemplate, decisionsTemplate, itemTemplate]
 
 # Users and groups -------------------------------------------------------------
-groups = [GroupDescriptor('groupe_bourgmestre', 'Groupe BOURGMESTRE', 'ordopol')]
+groups = [OrgDescriptor('groupe_bourgmestre', 'Groupe BOURGMESTRE', 'ordopol')]
 
 # Meeting configurations -------------------------------------------------------
 # Bourgmestre
@@ -161,6 +161,6 @@ bourgmestreMeeting.itemTemplates = []
 
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(bourgmestreMeeting, ),
-                                 groups=groups)
+                                 orgs=groups)
 data.enableUserPreferences = False
 # ------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
-from Products.PloneMeeting.profiles import GroupDescriptor
+from Products.PloneMeeting.profiles import OrgDescriptor
 from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
@@ -125,15 +125,15 @@ echevinPers = UserDescriptor('echevinPers', [], email="test@test.be")
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be")
 conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Conseiller")
 
-groups = [GroupDescriptor('admingen', 'Administration générale', 'AdminGen'),
-          GroupDescriptor('aidefamilles', 'Aide aux familles', 'Aide'),
-          GroupDescriptor('comptabilite', 'Comptabilité', 'Compta'),
-          GroupDescriptor('informatique', 'Informatique', 'Info'),
-          GroupDescriptor('isp', 'Insertion socio-professionnelle', 'ISP'),
-          GroupDescriptor('dettes', 'Médiation de dettes', 'Dettes'),
-          GroupDescriptor('personnel', 'Personnel', 'Pers'),
-          GroupDescriptor('social', 'Social', 'Soc'),
-          GroupDescriptor('divers', 'Divers', 'Divers'), ]
+groups = [OrgDescriptor('admingen', 'Administration générale', 'AdminGen'),
+          OrgDescriptor('aidefamilles', 'Aide aux familles', 'Aide'),
+          OrgDescriptor('comptabilite', 'Comptabilité', 'Compta'),
+          OrgDescriptor('informatique', 'Informatique', 'Info'),
+          OrgDescriptor('isp', 'Insertion socio-professionnelle', 'ISP'),
+          OrgDescriptor('dettes', 'Médiation de dettes', 'Dettes'),
+          OrgDescriptor('personnel', 'Personnel', 'Pers'),
+          OrgDescriptor('social', 'Social', 'Soc'),
+          OrgDescriptor('divers', 'Divers', 'Divers'), ]
 # MeetingManager
 groups[0].creators.append(secretaire)
 groups[0].reviewers.append(secretaire)
@@ -356,7 +356,7 @@ comiteeMeeting.recurringItems = [
 data = PloneMeetingConfiguration(
     meetingFolderTitle='Mes séances',
     meetingConfigs=(bpMeeting, casMeeting, comiteeMeeting,),
-    groups=groups)
+    orgs=groups)
 data.enableUserPreferences = False
 data.usersOutsideGroups = [president, conseiller]
 # ------------------------------------------------------------------------------
