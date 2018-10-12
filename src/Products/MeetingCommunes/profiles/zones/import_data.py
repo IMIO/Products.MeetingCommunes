@@ -2,7 +2,7 @@
 from DateTime import DateTime
 from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
-from Products.PloneMeeting.profiles import GroupDescriptor
+from Products.PloneMeeting.profiles import OrgDescriptor
 from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
 from Products.PloneMeeting.profiles import MeetingUserDescriptor
@@ -112,13 +112,13 @@ conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Co
 
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel")
 
-groups = [GroupDescriptor('commandant', 'Commandant de zone', 'CdZ'),
-          GroupDescriptor('secretariat', 'Secrétariat de zone', 'Secr'),
-          GroupDescriptor('informatique', 'Service informatique', 'Info'),
-          GroupDescriptor('personnel', 'Service du personnel', 'Pers'),
-          GroupDescriptor('dirfin', 'Directeur Financier', 'DF'),
-          GroupDescriptor('finances', 'Service finances', 'Fin'),
-          GroupDescriptor('travaux', 'Service travaux', 'Trav'), ]
+groups = [OrgDescriptor('commandant', 'Commandant de zone', 'CdZ'),
+          OrgDescriptor('secretariat', 'Secrétariat de zone', 'Secr'),
+          OrgDescriptor('informatique', 'Service informatique', 'Info'),
+          OrgDescriptor('personnel', 'Service du personnel', 'Pers'),
+          OrgDescriptor('dirfin', 'Directeur Financier', 'DF'),
+          OrgDescriptor('finances', 'Service finances', 'Fin'),
+          OrgDescriptor('travaux', 'Service travaux', 'Trav'), ]
 
 # MeetingManager
 groups[0].creators.append(dgen)
@@ -441,7 +441,7 @@ councilMeeting.itemTemplates = collegeMeeting.itemTemplates
 
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(collegeMeeting, councilMeeting),
-                                 groups=groups)
+                                 orgs=groups)
 data.enableUserPreferences = False
 data.usersOutsideGroups = [bourgmestre, conseiller]
 # ------------------------------------------------------------------------------

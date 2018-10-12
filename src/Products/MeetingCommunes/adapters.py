@@ -22,23 +22,30 @@
 # ------------------------------------------------------------------------------
 
 from AccessControl import ClassSecurityInfo
-from collections import OrderedDict
 from AccessControl.class_init import InitializeClass
-from zope.interface import implements
-
+from collections import OrderedDict
+from imio.helpers.xhtml import xhtmlContentIsEmpty
+from plone import api
+from plone.memoize import ram
+from Products.Archetypes.atapi import DisplayList
 from Products.CMFCore.permissions import ReviewPortalContent
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.utils import getToolByName
-from Products.Archetypes.atapi import DisplayList
-from plone import api
-from plone.memoize import ram
-
-from imio.helpers.xhtml import xhtmlContentIsEmpty
+from Products.MeetingCommunes import logger
+from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
+from Products.MeetingCommunes.config import FINANCE_GROUP_SUFFIXES
+from Products.MeetingCommunes.config import FINANCE_WAITING_ADVICES_STATES
+from Products.MeetingCommunes.interfaces import IMeetingCommunesWorkflowActions
+from Products.MeetingCommunes.interfaces import IMeetingCommunesWorkflowConditions
+from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowActions
+from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowConditions
 from Products.PloneMeeting.adapters import CompoundCriterionBaseAdapter
-from Products.PloneMeeting.interfaces import IMeetingCustom
-from Products.PloneMeeting.interfaces import IMeetingItemCustom
-from Products.PloneMeeting.interfaces import IMeetingGroupCustom
+from Products.PloneMeeting.indexes import DELAYAWARE_ROW_ID_PATTERN
+from Products.PloneMeeting.indexes import REAL_ORG_UID_PATTERN
 from Products.PloneMeeting.interfaces import IMeetingConfigCustom
+from Products.PloneMeeting.interfaces import IMeetingCustom
+from Products.PloneMeeting.interfaces import IMeetingGroupCustom
+from Products.PloneMeeting.interfaces import IMeetingItemCustom
 from Products.PloneMeeting.interfaces import IToolPloneMeetingCustom
 from Products.PloneMeeting.Meeting import Meeting
 from Products.PloneMeeting.Meeting import MeetingWorkflowActions
@@ -51,15 +58,8 @@ from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowConditions
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.model.adaptations import WF_APPLIED
 from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
+from zope.interface import implements
 
-from Products.MeetingCommunes import logger
-from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
-from Products.MeetingCommunes.config import FINANCE_GROUP_SUFFIXES
-from Products.MeetingCommunes.config import FINANCE_WAITING_ADVICES_STATES
-from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowConditions
-from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowActions
-from Products.MeetingCommunes.interfaces import IMeetingCommunesWorkflowConditions
-from Products.MeetingCommunes.interfaces import IMeetingCommunesWorkflowActions
 
 # Names of available workflow adaptations.
 customwfAdaptations = list(MeetingConfig.wfAdaptations)
@@ -619,7 +619,6 @@ class CustomMeetingConfig(MeetingConfig):
         """Possible finance advisers group ids are defined on
            the FINANCE_ADVICES_COLLECTION_ID collection."""
         cfg = self.getSelf()
-        tool = api.portal.get_tool('portal_plonemeeting')
         collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID, None)
         res = []
         if not collection:
@@ -633,32 +632,35 @@ class CustomMeetingConfig(MeetingConfig):
             return res
         # get the indexAdvisers value defined on the collection
         # and find the relevant group, indexAdvisers form is :
-        # 'delay_real_group_id__2014-04-16.9996934488', 'real_group_id_directeur-financier'
-        # it is either a customAdviser row_id or a MeetingGroup id
+        # 'delay_row_id__2014-04-16.9996934488', 'real_org_uid__[directeur-financier_UID]'
+        # it is either a customAdviser row_id or an organization uid
         values = [term['v'] for term in collection.getRawQuery()
                   if term['i'] == 'indexAdvisers'][0]
 
         for v in values:
-            rowIdOrGroupId = v.replace('delay_real_group_id__', '').replace('real_group_id__', '')
-            if hasattr(tool, rowIdOrGroupId):
-                groupId = rowIdOrGroupId
+            real_org_uid_prefix = REAL_ORG_UID_PATTERN.format('')
+            if v.startswith(real_org_uid_prefix):
+                org_uid = v.replace(real_org_uid_prefix, '')
                 # append it only if not already into res and if
                 # we have no 'row_id' for this adviser in adviceIndex
-                if item and groupId not in res and \
-                   (groupId in item.adviceIndex and not item.adviceIndex[groupId]['row_id']):
-                    res.append(groupId)
+                if item and org_uid not in res and \
+                   (org_uid in item.adviceIndex and not item.adviceIndex[org_uid]['row_id']):
+                    res.append(org_uid)
                 elif not item:
-                    res.append(groupId)
+                    res.append(org_uid)
             else:
-                groupId = cfg._dataForCustomAdviserRowId(rowIdOrGroupId)['group']
+                # v.startswith(delayaware_row_id_prefix)
+                delayaware_row_id_prefix = DELAYAWARE_ROW_ID_PATTERN.format('')
+                row_id = v.replace(delayaware_row_id_prefix, '')
+                org_uid = cfg._dataForCustomAdviserRowId(row_id)['org']
                 # append it only if not already into res and if
                 # we have a 'row_id' for this adviser in adviceIndex
-                if item and groupId not in res and \
-                    (groupId in item.adviceIndex and
-                     item.adviceIndex[groupId]['row_id'] == rowIdOrGroupId):
-                    res.append(groupId)
+                if item and org_uid not in res and \
+                    (org_uid in item.adviceIndex and
+                     item.adviceIndex[org_uid]['row_id'] == row_id):
+                    res.append(org_uid)
                 elif not item:
-                    res.append(groupId)
+                    res.append(org_uid)
         # remove duplicates
         return list(set(res))
 

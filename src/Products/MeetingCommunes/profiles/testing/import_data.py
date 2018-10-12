@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
-from Products.PloneMeeting.profiles import GroupDescriptor
+from Products.PloneMeeting.profiles import OrgDescriptor
 from Products.PloneMeeting.profiles import ItemAnnexSubTypeDescriptor
 from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
 from Products.PloneMeeting.profiles import ItemTemplateDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
 from Products.PloneMeeting.profiles import MeetingUserDescriptor
-from Products.PloneMeeting.profiles import PloneGroupDescriptor
+from Products.PloneMeeting.profiles import PloneOrgDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
 from Products.PloneMeeting.profiles import PodTemplateDescriptor
 from Products.PloneMeeting.profiles import RecurringItemDescriptor
@@ -173,7 +173,7 @@ powerobserver1 = UserDescriptor('powerobserver1',
                                 email="powerobserver1@plonemeeting.org",
                                 fullname='M. Power Observer1')
 # powerobserver1 is 'power observer' because in the meeting-config-college '_powerobservers' group
-college_powerobservers = PloneGroupDescriptor('meeting-config-college_powerobservers',
+college_powerobservers = PloneOrgDescriptor('meeting-config-college_powerobservers',
                                               'meeting-config-college_powerobservers',
                                               [])
 powerobserver1.ploneGroups = [college_powerobservers, ]
@@ -185,7 +185,7 @@ restrictedpowerobserver1 = UserDescriptor('restrictedpowerobserver1',
                                           [],
                                           email="restrictedpowerobserver1@plonemeeting.org",
                                           fullname='M. Restricted Power Observer 1')
-college_restrictedpowerobservers = PloneGroupDescriptor('meeting-config-college_restrictedpowerobservers',
+college_restrictedpowerobservers = PloneOrgDescriptor('meeting-config-college_restrictedpowerobservers',
                                                         'meeting-config-college_restrictedpowerobservers',
                                                         [])
 restrictedpowerobserver1.ploneGroups = [college_restrictedpowerobservers, ]
@@ -193,12 +193,12 @@ restrictedpowerobserver2 = UserDescriptor('restrictedpowerobserver2',
                                           [],
                                           email="restrictedpowerobserver2@plonemeeting.org",
                                           fullname='M. Restricted Power Observer 2')
-council_restrictedpowerobservers = PloneGroupDescriptor('meeting-config-council_restrictedpowerobservers',
+council_restrictedpowerobservers = PloneOrgDescriptor('meeting-config-council_restrictedpowerobservers',
                                                         'meeting-config-council_restrictedpowerobservers',
                                                         [])
 restrictedpowerobserver2.ploneGroups = [council_restrictedpowerobservers, ]
 
-developers = GroupDescriptor('developers', 'Developers', 'Devel')
+developers = OrgDescriptor('developers', 'Developers', 'Devel')
 developers.creators.append(pmCreator1)
 developers.creators.append(pmCreator1b)
 developers.creators.append(pmManager)
@@ -215,7 +215,7 @@ setattr(developers, 'signatures', 'developers signatures')
 setattr(developers, 'echevinServices', 'developers')
 
 # give an advice on recurring items
-vendors = GroupDescriptor('vendors', 'Vendors', 'Devil')
+vendors = OrgDescriptor('vendors', 'Vendors', 'Devil')
 vendors.creators.append(pmCreator2)
 vendors.reviewers.append(pmReviewer2)
 vendors.observers.append(pmReviewer2)
@@ -230,7 +230,7 @@ vendors.observers.append(voter1)
 vendors.observers.append(voter2)
 
 # Add a vintage group
-endUsers = GroupDescriptor('endUsers', 'End users', 'EndUsers', active=False)
+endUsers = OrgDescriptor('endUsers', 'End users', 'EndUsers', active=False)
 
 pmManager_observer = MeetingUserDescriptor('pmManager',
                                            duty='Secrétaire de la Chancellerie',
@@ -250,7 +250,7 @@ budgetimpacteditor = UserDescriptor('budgetimpacteditor',
                                     [],
                                     email="budgetimpacteditor@plonemeeting.org",
                                     fullname='M. Budget Impact Editor')
-college_budgetimpacteditors = PloneGroupDescriptor('meeting-config-college_budgetimpacteditors',
+college_budgetimpacteditors = PloneOrgDescriptor('meeting-config-college_budgetimpacteditors',
                                                    'meeting-config-college_budgetimpacteditors',
                                                    [])
 budgetimpacteditor.ploneGroups = [college_budgetimpacteditors,

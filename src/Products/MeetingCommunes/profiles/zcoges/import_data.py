@@ -5,7 +5,7 @@ from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
 from Products.PloneMeeting.profiles import PodTemplateDescriptor
 from Products.PloneMeeting.profiles import UserDescriptor
-from Products.PloneMeeting.profiles import GroupDescriptor
+from Products.PloneMeeting.profiles import OrgDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
 
@@ -56,12 +56,12 @@ agentPers = UserDescriptor('agentPers', [], email="test@test.be", fullname="Agen
 chefPers = UserDescriptor('chefPers', [], email="test@test.be", fullname="Chef Personnel")
 chefCompta = UserDescriptor('chefCompta', [], email="test@test.be", fullname="Chef Comptabilité")
 
-groups = [GroupDescriptor('dirgen', 'Directeur Général', 'DG'),
-          GroupDescriptor('secretariat', 'Secrétariat communal', 'Secr'),
-          GroupDescriptor('informatique', 'Service informatique', 'Info'),
-          GroupDescriptor('personnel', 'Service du personnel', 'Pers'),
-          GroupDescriptor('dirfin', 'Directeur Financier', 'DF'),
-          GroupDescriptor('comptabilite', 'Service comptabilité', 'Compt')]
+groups = [OrgDescriptor('dirgen', 'Directeur Général', 'DG'),
+          OrgDescriptor('secretariat', 'Secrétariat communal', 'Secr'),
+          OrgDescriptor('informatique', 'Service informatique', 'Info'),
+          OrgDescriptor('personnel', 'Service du personnel', 'Pers'),
+          OrgDescriptor('dirfin', 'Directeur Financier', 'DF'),
+          OrgDescriptor('comptabilite', 'Service comptabilité', 'Compt')]
 
 # MeetingManager
 groups[0].creators.append(dgen)
@@ -222,6 +222,6 @@ coGestMeeting.itemTemplates = []
 
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(coGestMeeting, ),
-                                 groups=groups)
+                                 orgs=groups)
 data.enableUserPreferences = False
 # ------------------------------------------------------------------------------
