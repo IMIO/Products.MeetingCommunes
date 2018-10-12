@@ -11,6 +11,7 @@
 
 from Products.CMFCore.permissions import setDefaultRoles
 
+
 __author__ = """Gauthier Bastien <g.bastien@imio.be>, Stephan Geulette <s.geulette@imio.be>"""
 __docformat__ = 'plaintext'
 
@@ -54,3 +55,15 @@ FINANCE_ADVICE_LEGAL_TEXT = "<p>Attendu l'avis {0} du Directeur financier " \
 FINANCE_ADVICE_LEGAL_TEXT_NOT_GIVEN = "<p>Attendu l'absence d'avis du " \
     "Directeur financier rendu dans le délai prescrit à l'article L1124-40 " \
     "du Code de la démocratie locale et de la décentralisation;</p>"
+
+SAMPLE_TEXT = u"<p><strong>Lorem ipsum dolor sit amet</strong>, consectetur adipiscing elit. " \
+    u"Aliquam efficitur sapien quam, vitae auctor augue iaculis eget. <BR />Nulla blandit enim lectus. " \
+    u"Ut in nunc ligula. Nunc nec magna et mi dictum molestie eu vitae est.<BR />Vestibulum justo erat, " \
+    u"congue vel metus sed, condimentum vestibulum tortor. Sed nisi enim, posuere at cursus at, tincidunt " \
+    u"eu est. Proin rhoncus ultricies justo. Nunc finibus quam non dolor imperdiet, non aliquet mi tincidunt. " \
+    u"Aliquam at mauris suscipit, maximus purus at, dictum lectus.</p>" \
+    u"<p>Nunc faucibus sem eu congue varius. Vestibulum consectetur porttitor nisi. Phasellus ante nunc, " \
+    u"elementum et bibendum sit amet, tincidunt vitae est. Morbi in odio sagittis, convallis turpis a, " \
+    u"tristique quam. Vestibulum ut urna arcu. Etiam non odio ut felis porttitor elementum. Donec venenatis " \
+    u"porta purus et scelerisque. Nullam dapibus nec erat at pellentesque. Aliquam placerat nunc molestie " \
+    u"venenatis malesuada. Nam ac pretium justo, id imperdiet lacus.</p>"
