@@ -38,10 +38,6 @@
            factory="Products.MeetingCommunes.adapters.CustomMeeting"
            provides="Products.PloneMeeting.interfaces.IMeetingCustom"/>
 
-  <adapter for="Products.PloneMeeting.interfaces.IMeetingGroup"
-           factory="Products.MeetingCommunes.adapters.CustomMeetingGroup"
-           provides="Products.PloneMeeting.interfaces.IMeetingGroupCustom"/>
-  
   <adapter for="Products.PloneMeeting.interfaces.IMeetingConfig"
            factory="Products.MeetingCommunes.adapters.CustomMeetingConfig"
            provides="Products.PloneMeeting.interfaces.IMeetingConfigCustom"/>
