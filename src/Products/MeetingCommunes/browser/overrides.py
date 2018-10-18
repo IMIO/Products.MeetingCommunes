@@ -48,7 +48,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                 if advice['type'] == 'not_given' and exclude_not_given:
                     continue
                 data = self.context.getAdviceDataFor(
-                    self.real_context, adviser_uid=advice['id'], ordered=True)
+                    self.real_context, adviser_uid=advice['id'])
                 res.append(data)
         return res
 

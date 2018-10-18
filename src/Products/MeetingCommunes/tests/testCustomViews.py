@@ -118,7 +118,7 @@ class testCustomViews(MeetingCommunesTestCase):
         # result contains every informations getAdviceDataFor returns
         self.assertEqual(
             [(u'Developers', u'Not given yet'), (u'Vendors', u'Not given yet')],
-            [(res['name'], res['type_translated']) for res in result])
+            sorted([(res['name'], res['type_translated']) for res in result]))
 
         # add advice for 'developers'
         self.changeUser('pmAdviser1')
@@ -138,7 +138,7 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper.printFormatedAdvice(exclude_not_given=False)
         self.assertEqual(
             [(u'Developers', u'Positive'), (u'Vendors', u'Not given yet')],
-            [(res['name'], res['type_translated']) for res in result])
+            sorted([(res['name'], res['type_translated']) for res in result]))
 
     def _set_up_additional_finance_advisor_group(self,
                                                  new_group_name="New Group 1",
