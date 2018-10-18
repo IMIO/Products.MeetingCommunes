@@ -24,6 +24,7 @@
 from AccessControl import ClassSecurityInfo
 from AccessControl.class_init import InitializeClass
 from collections import OrderedDict
+from collective.contact.plonegroup.utils import get_organizations
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from plone import api
 from plone.memoize import ram
@@ -257,7 +258,7 @@ class CustomMeeting(Meeting):
            will be return with first element the number and second element, the item.
            In this case, the firstNumber value can be used.'''
         # The result is a list of lists, where every inner list contains:
-        # - at position 0: the category object (MeetingCategory or MeetingGroup)
+        # - at position 0: the category object (MeetingCategory or organization)
         # - at position 1 to n: the items in this category
         # If by_proposing_group is True, the structure is more complex.
         # listTypes is a list that can be filled with 'normal' and/or 'late'
@@ -278,7 +279,7 @@ class CustomMeeting(Meeting):
                 return 0
         res = []
         items = []
-        tool = getToolByName(self.context, 'portal_plonemeeting')
+        tool = api.portal.get_tool('portal_plonemeeting')
         # Retrieve the list of items
         for elt in itemUids:
             if elt == '':
@@ -287,7 +288,7 @@ class CustomMeeting(Meeting):
         items = self.context.getItems(uids=itemUids, listTypes=listTypes, ordered=True)
 
         if by_proposing_group:
-            groups = tool.getMeetingGroups()
+            groups = get_organizations()
         else:
             groups = None
         if items:
@@ -540,21 +541,6 @@ class CustomMeetingItem(MeetingItem):
                                               self.Description()))
             self.reindexObject()
     MeetingItem._initDecisionFieldIfEmpty = _initDecisionFieldIfEmpty
-
-    def adviceDelayIsTimedOutWithRowId(self, groupId, rowIds=[]):
-        ''' Check if advice with delay from a certain p_groupId and with
-            a row_id contained in p_rowIds is timed out.
-        '''
-        self = self.getSelf()
-        if self.getAdviceDataFor(self) and groupId in self.getAdviceDataFor(self):
-            adviceRowId = self.getAdviceDataFor(self, groupId)['row_id']
-        else:
-            return False
-
-        if not rowIds or adviceRowId in rowIds:
-            return self._adviceDelayIsTimedOut(groupId)
-        else:
-            return False
 
     def showFinanceAdviceTemplate(self):
         """ """

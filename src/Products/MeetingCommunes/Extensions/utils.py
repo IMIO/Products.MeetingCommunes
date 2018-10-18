@@ -1,30 +1,37 @@
 from AccessControl import Unauthorized
+from collective.contact.plonegroup.utils import get_organizations
+from collective.contact.plonegroup.utils import get_own_organization
+from plone import api
+from Products.CMFCore.exceptions import BadRequest
+from Products.CMFPlone.utils import normalizeString
+from Products.CMFPlone.utils import safe_unicode
+from Products.PloneMeeting.utils import org_id_to_uid
+
+import csv
 
 
-def export_meetinggroups(self):
+def export_orgs(self):
     """
-      Export the existing MeetingGroups informations as a dictionnary
+      Export the existing organizations informations as a dictionnary
     """
-    member = self.portal_membership.getAuthenticatedMember()
+    member = api.user.get_current()
     if not member.has_role('Manager'):
         raise Unauthorized('You must be a Manager to access this script !')
 
     if not hasattr(self, 'portal_plonemeeting'):
         return "PloneMeeting must be installed to run this script !"
 
-    pm = self.portal_plonemeeting
-
-    dict = {}
-    for mgr in pm.objectValues('MeetingGroup'):
-        dict[mgr.getId()] = (mgr.Title(), mgr.Description(), mgr.getAcronym())
-    return dict
+    data = {}
+    for org in get_organizations(only_selected=False):
+        data[org.getId()] = (org.Title(), org.Description(), org.get_acronym())
+    return data
 
 
-def import_meetinggroups(self, dict=None):
+def import_orgs(self, data=None):
     """
-      Import the MeetingGroups from the 'dict' dictionnaty received as parameter
+      Import the organizations from the 'data' dictionnaty received as parameter
     """
-    member = self.portal_membership.getAuthenticatedMember()
+    member = api.user.get_current()
     if not member.has_role('Manager'):
         raise Unauthorized('You must be a Manager to access this script !')
 
@@ -33,67 +40,20 @@ def import_meetinggroups(self, dict=None):
     if not hasattr(self, 'portal_plonemeeting'):
         return "PloneMeeting must be installed to run this script !"
 
-    pm = self.portal_plonemeeting
+    own_org = get_own_organization()
     out = []
-    data = eval(dict)
-    for elt in data:
-        if not hasattr(pm, elt):
-            groupId = pm.invokeFactory(type_name="MeetingGroup",
-                                       id=elt,
-                                       title=data[elt][0],
-                                       description=data[elt][2],
-                                       acronym=data[elt][1])
-            group = getattr(pm, groupId)
-            group.processForm()
-            out.append("MeetingGroup %s added" % elt)
+    data = eval(data)
+    for elt_id, elt_infos in data.items():
+        if elt_id not in own_org.objectIds():
+            api.content.create(container=own_org,
+                               type="organization",
+                               id=elt_id,
+                               title=elt_infos[0],
+                               description=elt_infos[1],
+                               acronym=elt_infos[2])
+            out.append("Organization %s added" % elt_id)
         else:
-            out.append("MeetingGroup %s already exists" % elt)
-    return '\n'.join(out)
-
-
-def import_meetingsGroups_from_csv(self, fname=None):
-    """
-      Import the MeetingGroups from the 'csv file' (fname received as parameter)
-    """
-    member = self.portal_membership.getAuthenticatedMember()
-    from Products.CMFPlone.utils import safe_unicode
-
-    if not member.has_role('Manager'):
-        raise Unauthorized('You must be a Manager to access this script !')
-
-    if not fname:
-        return "This script needs a 'fname' parameter"
-    if not hasattr(self, 'portal_plonemeeting'):
-        return "PloneMeeting must be installed to run this script !"
-
-    import csv
-    try:
-        file = open(fname, "rb")
-        reader = csv.DictReader(file)
-    except Exception, msg:
-        file.close()
-        return "Error with file : %s" % msg.value
-
-    out = []
-
-    pm = self.portal_plonemeeting
-    from Products.CMFPlone.utils import normalizeString
-
-    for row in reader:
-        group_title = safe_unicode(row['title'])
-        row_id = normalizeString(group_title, self)
-        if not hasattr(pm, row_id):
-            groupId = pm.invokeFactory(type_name="MeetingGroup", id=row_id, title=row['title'],
-                                       description=row['description'], acronym=row['acronym'],
-                                       givesMandatoryAdviceOn=row['givesMandatoryAdviceOn'])
-            group = getattr(pm, groupId)
-            group.processForm()
-            out.append("MeetingGroup %s added" % row_id)
-        else:
-            out.append("MeetingGroup %s already exists" % row_id)
-
-    file.close()
-
+            out.append("Organization %s already exists" % elt_id)
     return '\n'.join(out)
 
 
@@ -102,16 +62,16 @@ def import_meetingsUsersAndRoles_from_csv(self, fname=None):
       Import the users and attribute roles from the 'csv file' (fname received as parameter)
     """
 
-    member = self.portal_membership.getAuthenticatedMember()
+    member = api.user.get_current()
     if not member.has_role('Manager'):
         raise Unauthorized('You must be a Manager to access this script !')
 
     if not fname:
         return "This script needs a 'fname' parameter"
+
     if not hasattr(self, 'portal_plonemeeting'):
         return "PloneMeeting must be installed to run this script !"
 
-    import csv
     try:
         file = open(fname, "rb")
         reader = csv.DictReader(file)
@@ -121,15 +81,10 @@ def import_meetingsUsersAndRoles_from_csv(self, fname=None):
 
     out = []
 
-    from Products.CMFCore.exceptions import BadRequest
-    from Products.CMFCore.utils import getToolByName
-    from Products.CMFPlone.utils import normalizeString
-    from Products.CMFPlone.utils import safe_unicode
-
     acl = self.acl_users
-    pms = self.portal_membership
-    pgr = self.portal_groups
-    registration = getToolByName(self, 'portal_registration', None)
+    pms = api.portal.get_tool('portal_membership')
+    pgr = api.portal.get_tool('portal_groups')
+    registration = api.portal.get_tool('portal_registration')
     for row in reader:
         row_id = normalizeString(row['username'], self)
         # add users if not exist
@@ -146,19 +101,20 @@ def import_meetingsUsersAndRoles_from_csv(self, fname=None):
             out.append("User %s already exists" % row_id)
         # attribute roles
         group_title = safe_unicode(row['grouptitle'])
-        grouptitle = normalizeString(group_title, self)
-        groups = []
+        org_id = normalizeString(group_title, self)
+        org_uid = org_id_to_uid(org_id)
+        plone_groups = []
         if row['observers']:
-            groups.append(grouptitle + '_observers')
+            plone_groups.append(org_uid + '_observers')
         if row['creators']:
-            groups.append(grouptitle + '_creators')
+            plone_groups.append(org_uid + '_creators')
         if row['reviewers']:
-            groups.append(grouptitle + '_reviewers')
+            plone_groups.append(org_uid + '_reviewers')
         if row['advisers']:
-            groups.append(grouptitle + '_advisers')
-        for groupid in groups:
-            pgr.addPrincipalToGroup(row_id, groupid)
-            out.append("    -> Added in group '%s'" % groupid)
+            plone_groups.append(org_uid + '_advisers')
+        for plone_group_id in plone_groups:
+            pgr.addPrincipalToGroup(row_id, plone_group_id)
+            out.append("    -> Added in group '%s'" % plone_group_id)
 
     file.close()
 

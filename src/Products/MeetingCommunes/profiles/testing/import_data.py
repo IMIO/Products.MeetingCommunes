@@ -22,7 +22,26 @@ collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces
 collegeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
 collegeMeeting.itemDecidedStates = ['accepted', 'delayed', 'accepted_but_modified', 'pre_accepted']
 collegeMeeting.itemPositiveDecidedStates = ['accepted', 'accepted_but_modified']
+collegeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation']
+collegeMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
+collegeMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
+                                                              'item_transition': 'itemfreeze'},
 
+                                                             {'meeting_transition': 'decide',
+                                                              'item_transition': 'itemfreeze'},
+
+                                                             {'meeting_transition': 'publish_decisions',
+                                                              'item_transition': 'itemfreeze'},
+                                                             {'meeting_transition': 'publish_decisions',
+                                                              'item_transition': 'accept'},
+
+                                                             {'meeting_transition': 'close',
+                                                              'item_transition': 'itemfreeze'},
+                                                             {'meeting_transition': 'close',
+                                                              'item_transition': 'accept'},
+
+                                                             {'meeting_transition': 'backToCreated',
+                                                              'item_transition': 'backToPresented'},)
 
 # Conseil communal
 councilMeeting = deepcopy(pm_import_data.meetingPga)
@@ -33,14 +52,16 @@ councilMeeting.shortName = 'meeting-config-council'
 councilMeeting.id = 'meeting-config-council'
 councilMeeting.isDefault = False
 councilMeeting.shortName = 'Council'
-councilMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
-councilMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-councilMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
-councilMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
-councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
-councilMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
-councilMeeting.itemDecidedStates = ['accepted', 'delayed', 'accepted_but_modified', 'pre_accepted']
-councilMeeting.itemPositiveDecidedStates = ['accepted', 'accepted_but_modified']
+councilMeeting.itemWorkflow = collegeMeeting.itemWorkflow
+councilMeeting.meetingWorkflow = collegeMeeting.meetingWorkflow
+councilMeeting.itemConditionsInterface = collegeMeeting.itemConditionsInterface
+councilMeeting.itemActionsInterface = collegeMeeting.itemActionsInterface
+councilMeeting.meetingConditionsInterface = collegeMeeting.meetingConditionsInterface
+councilMeeting.meetingActionsInterface = collegeMeeting.meetingActionsInterface
+councilMeeting.itemDecidedStates = collegeMeeting.itemDecidedStates
+councilMeeting.itemPositiveDecidedStates = collegeMeeting.itemPositiveDecidedStates
+councilMeeting.meetingPowerObserversStates = collegeMeeting.meetingPowerObserversStates
+councilMeeting.onMeetingTransitionItemTransitionToTrigger = collegeMeeting.onMeetingTransitionItemTransitionToTrigger
 
 data = deepcopy(pm_import_data.data)
 data.meetingFolderTitle = 'Mes séances'
