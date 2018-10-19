@@ -672,9 +672,9 @@ class CustomMeetingConfig(MeetingConfig):
                              'v': [itemType, ]},
                             {'i': 'indexAdvisers',
                              'o': 'plone.app.querystring.operation.selection.is',
-                             'v': ['delay_real_group_id__unique_id_002',
-                                   'delay_real_group_id__unique_id_003',
-                                   'delay_real_group_id__unique_id_004']}
+                             'v': ['delay_row_id__unique_id_002',
+                                   'delay_row_id__unique_id_003',
+                                   'delay_row_id__unique_id_004']}
                         ],
                         'sort_on': u'created',
                         'sort_reversed': True,

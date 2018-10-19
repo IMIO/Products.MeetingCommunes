@@ -61,7 +61,35 @@ councilMeeting.meetingActionsInterface = collegeMeeting.meetingActionsInterface
 councilMeeting.itemDecidedStates = collegeMeeting.itemDecidedStates
 councilMeeting.itemPositiveDecidedStates = collegeMeeting.itemPositiveDecidedStates
 councilMeeting.meetingPowerObserversStates = collegeMeeting.meetingPowerObserversStates
-councilMeeting.onMeetingTransitionItemTransitionToTrigger = collegeMeeting.onMeetingTransitionItemTransitionToTrigger
+councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
+                                                              'item_transition': 'itemfreeze'},
+
+                                                             {'meeting_transition': 'publish',
+                                                              'item_transition': 'itemfreeze'},
+                                                             {'meeting_transition': 'publish',
+                                                              'item_transition': 'itempublish'},
+
+                                                             {'meeting_transition': 'decide',
+                                                              'item_transition': 'itemfreeze'},
+                                                             {'meeting_transition': 'decide',
+                                                              'item_transition': 'itempublish'},
+
+                                                             {'meeting_transition': 'publish_decisions',
+                                                              'item_transition': 'itemfreeze'},
+                                                             {'meeting_transition': 'publish_decisions',
+                                                              'item_transition': 'itempublish'},
+                                                             {'meeting_transition': 'publish_decisions',
+                                                              'item_transition': 'accept'},
+
+                                                             {'meeting_transition': 'close',
+                                                              'item_transition': 'itemfreeze'},
+                                                             {'meeting_transition': 'close',
+                                                              'item_transition': 'itempublish'},
+                                                             {'meeting_transition': 'close',
+                                                              'item_transition': 'accept'},
+
+                                                             {'meeting_transition': 'backToCreated',
+                                                              'item_transition': 'backToPresented'},)
 
 data = deepcopy(pm_import_data.data)
 data.meetingFolderTitle = 'Mes séances'

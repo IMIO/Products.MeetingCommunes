@@ -86,6 +86,10 @@ def isMeetingCommunesConfigureProfile(context):
         context.readDataFile("MeetingCommunes_sippt_marker.txt")
 
 
+def isNotMeetingCommunesExamplesFrProfile(context):
+    return context.readDataFile("MeetingCommunes_examples_fr_marker.txt") is None
+
+
 def isNotMeetingCommunesDemoProfile(context):
     return context.readDataFile("MeetingCommunes_demo_marker.txt") is None
 
@@ -171,7 +175,7 @@ def finalizeExampleInstance(context):
        Some parameters can not be handled by the PloneMeeting installation,
        so we handle this here
     """
-    if not isMeetingCommunesConfigureProfile(context):
+    if isNotMeetingCommunesDemoProfile(context) and isNotMeetingCommunesExamplesFrProfile(context):
         return
 
     # finalizeExampleInstance will behave differently if on
