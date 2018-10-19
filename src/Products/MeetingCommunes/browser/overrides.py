@@ -42,23 +42,14 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         ''' Printing Method use in templates :
             return formated advice'''
         res = []
-        keys = self.context.getAdvicesByType().keys()
-        for key in keys:
-            for advice in self.context.getAdvicesByType()[key]:
+        advices_by_type = self.context.getAdvicesByType()
+        for key in advices_by_type.keys():
+            for advice in advices_by_type[key]:
                 if advice['type'] == 'not_given' and exclude_not_given:
                     continue
-
-                comment = ''
-                type = key
-
-                if 'hidden_during_redaction' in advice and advice['hidden_during_redaction']:
-                    type = 'hidden_during_redaction'
-                elif advice['comment']:
-                    comment = advice['comment']
-
-                res.append({'type': self.translate(msgid=type, domain='PloneMeeting').encode('utf-8'),
-                            'name': advice['name'].encode('utf-8'),
-                            'comment': comment})
+                data = self.context.getAdviceDataFor(
+                    self.real_context, adviser_uid=advice['id'])
+                res.append(data)
         return res
 
     def printFinanceAdvice(self, cases, show_hidden=False):

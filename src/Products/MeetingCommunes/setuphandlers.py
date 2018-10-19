@@ -9,18 +9,21 @@
 # GNU General Public License (GPL)
 #
 
-import os
-import logging
+from collective.iconifiedcategory.utils import calculate_category_id
+from collective.iconifiedcategory.utils import get_config_root
 from DateTime import DateTime
 from plone import api
 from plone import namedfile
 from plone.app.textfield.value import RichTextValue
 from plone.dexterity.utils import createContentInContainer
-from collective.iconifiedcategory.utils import calculate_category_id
-from collective.iconifiedcategory.utils import get_config_root
 from Products.CMFPlone.utils import _createObjectByType
-from Products.PloneMeeting.exportimport.content import ToolInitializer
 from Products.MeetingCommunes.config import PROJECTNAME
+from Products.MeetingCommunes.config import SAMPLE_TEXT
+from Products.PloneMeeting.exportimport.content import ToolInitializer
+from Products.PloneMeeting.utils import org_id_to_uid
+import logging
+import os
+
 
 __author__ = """Gauthier Bastien <g.bastien@imio.be>, Stephan Geulette <s.geulette@imio.be>"""
 __docformat__ = 'plaintext'
@@ -75,13 +78,12 @@ def isMeetingCommunesConfigureProfile(context):
         context.readDataFile("MeetingCommunes_scresthome_marker.txt") or \
         context.readDataFile("MeetingCommunes_technicalcommittee_marker.txt") or \
         context.readDataFile("MeetingCommunes_remunarate_marker.txt") or \
-        context.readDataFile("MeetingCommunes_testing_marker.txt")  or \
+        context.readDataFile("MeetingCommunes_testing_marker.txt") or \
         context.readDataFile("MeetingCommunes_executive_marker.txt") or \
         context.readDataFile("MeetingCommunes_volonteers_marker.txt") or \
         context.readDataFile("MeetingCommunes_consultation_marker.txt") or \
         context.readDataFile("MeetingCommunes_cppt_marker.txt") or \
         context.readDataFile("MeetingCommunes_sippt_marker.txt")
-
 
 
 def isNotMeetingCommunesDemoProfile(context):
@@ -375,27 +377,24 @@ def addDemoData(context):
                                            to_print=False,
                                            confidential=False)
                         cpt += 1
-                    newItem.setOptionalAdvisers(('dirfin__rowid__unique_id_003', 'informatique'))
+                    newItem.setOptionalAdvisers(('{0}__rowid__unique_id_003'.format(org_id_to_uid('dirfin')),
+                                                 org_id_to_uid('informatique')))
                     newItem.at_post_create_script()
                     createContentInContainer(newItem,
                                              'meetingadvice',
-                                             **{'advice_group': 'informatique',
+                                             **{'advice_group': org_id_to_uid('informatique'),
                                                 'advice_type': u'positive',
-                                                'advice_comment': RichTextValue(u"<p><strong>Lorem ipsum dolor sit amet</strong>, consectetur adipiscing elit. Aliquam efficitur sapien quam, vitae auctor augue iaculis eget. <BR />Nulla blandit enim lectus. Ut in nunc ligula. Nunc nec magna et mi dictum molestie eu vitae est.<BR />Vestibulum justo erat, congue vel metus sed, condimentum vestibulum tortor. Sed nisi enim, posuere at cursus at, tincidunt eu est. Proin rhoncus ultricies justo. Nunc finibus quam non dolor imperdiet, non aliquet mi tincidunt. Aliquam at mauris suscipit, maximus purus at, dictum lectus.</p>"
-                                                                                "<p>Nunc faucibus sem eu congue varius. Vestibulum consectetur porttitor nisi. Phasellus ante nunc, elementum et bibendum sit amet, tincidunt vitae est. Morbi in odio sagittis, convallis turpis a, tristique quam. Vestibulum ut urna arcu. Etiam non odio ut felis porttitor elementum. Donec venenatis porta purus et scelerisque. Nullam dapibus nec erat at pellentesque. Aliquam placerat nunc molestie venenatis malesuada. Nam ac pretium justo, id imperdiet lacus.</p>"),
-                                                'advice_observations': RichTextValue(u"<p>Pellentesque ac ipsum suscipit, egestas lectus nec, mattis velit. In hac habitasse platea dictumst. Aenean vitae tortor viverra sapien mattis pretium. Pellentesque dapibus, tellus vel vulputate euismod, velit enim congue elit, vitae mollis arcu risus quis arcu. Aliquam non ante eleifend, sodales dolor at, ullamcorper nulla. Donec eget tellus a risus laoreet vestibulum sed id ante. Ut mauris magna, ultricies vel imperdiet sed, pulvinar vel nisl. Aliquam quis nisl quam. <BR />"
-                                                                                     "Morbi suscipit, tortor ullamcorper ultricies iaculis, quam mauris egestas sem, eu semper urna ante eget dolor. Phasellus sed rutrum est. Aliquam quis tincidunt ipsum. Phasellus sit amet maximus odio. Fusce quis accumsan magna. Donec iaculis pretium sodales.</p>")})
+                                                'advice_comment': RichTextValue(SAMPLE_TEXT),
+                                                'advice_observations': RichTextValue()})
                 if item['templateId'] == 'template5' and cfg.id == 'meeting-config-college':
-                    newItem.setOptionalAdvisers(('dirgen',))
+                    newItem.setOptionalAdvisers((org_id_to_uid('dirgen'), ))
                     newItem.at_post_create_script()
                     createContentInContainer(newItem,
                                              'meetingadvice',
-                                             **{'advice_group': 'dirgen',
+                                             **{'advice_group': org_id_to_uid('dirgen'),
                                                 'advice_type': u'negative',
-                                                'advice_comment': RichTextValue(u"<p><strong>Lorem ipsum dolor sit amet</strong>, consectetur adipiscing elit. Aliquam efficitur sapien quam, vitae auctor augue iaculis eget. <BR />Nulla blandit enim lectus. Ut in nunc ligula. Nunc nec magna et mi dictum molestie eu vitae est.<BR />Vestibulum justo erat, congue vel metus sed, condimentum vestibulum tortor. Sed nisi enim, posuere at cursus at, tincidunt eu est. Proin rhoncus ultricies justo. Nunc finibus quam non dolor imperdiet, non aliquet mi tincidunt. Aliquam at mauris suscipit, maximus purus at, dictum lectus.</p>"
-                                                                                "<p>Nunc faucibus sem eu congue varius. Vestibulum consectetur porttitor nisi. Phasellus ante nunc, elementum et bibendum sit amet, tincidunt vitae est. Morbi in odio sagittis, convallis turpis a, tristique quam. Vestibulum ut urna arcu. Etiam non odio ut felis porttitor elementum. Donec venenatis porta purus et scelerisque. Nullam dapibus nec erat at pellentesque. Aliquam placerat nunc molestie venenatis malesuada. Nam ac pretium justo, id imperdiet lacus.</p>"),
-                                                'advice_observations': RichTextValue(u"<p>Pellentesque ac ipsum suscipit, egestas lectus nec, mattis velit. In hac habitasse platea dictumst. Aenean vitae tortor viverra sapien mattis pretium. Pellentesque dapibus, tellus vel vulputate euismod, velit enim congue elit, vitae mollis arcu risus quis arcu. Aliquam non ante eleifend, sodales dolor at, ullamcorper nulla. Donec eget tellus a risus laoreet vestibulum sed id ante. Ut mauris magna, ultricies vel imperdiet sed, pulvinar vel nisl. Aliquam quis nisl quam. <BR />"
-                                                                                     "Morbi suscipit, tortor ullamcorper ultricies iaculis, quam mauris egestas sem, eu semper urna ante eget dolor. Phasellus sed rutrum est. Aliquam quis tincidunt ipsum. Phasellus sit amet maximus odio. Fusce quis accumsan magna. Donec iaculis pretium sodales.</p>")})
+                                                'advice_comment': RichTextValue(SAMPLE_TEXT),
+                                                'advice_observations': RichTextValue(SAMPLE_TEXT)})
 
                 newItem.reindexObject()
 

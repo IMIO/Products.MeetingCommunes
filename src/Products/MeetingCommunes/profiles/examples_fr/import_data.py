@@ -7,7 +7,6 @@ from Products.PloneMeeting.profiles import OrgDescriptor
 from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
 from Products.PloneMeeting.profiles import ItemTemplateDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
-from Products.PloneMeeting.profiles import MeetingUserDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
 from Products.PloneMeeting.profiles import PodTemplateDescriptor
 from Products.PloneMeeting.profiles import RecurringItemDescriptor
@@ -344,26 +343,26 @@ collegeMeeting.enableAdviceInvalidation = False
 collegeMeeting.itemAdviceInvalidateStates = []
 collegeMeeting.customAdvisers = [
     {'row_id': 'unique_id_001',
-     'group': 'comptabilite',
+     'org': 'comptabilite',
      'gives_auto_advice_on': 'item/getBudgetRelated',
      'for_item_created_from': today,
      'is_linked_to_previous_row': '0'},
     {'row_id': 'unique_id_002',
-     'group': 'dirfin',
+     'org': 'dirfin',
      'for_item_created_from': today,
      'delay': '5',
      'delay_left_alert': '2',
      'delay_label': 'Incidence financière >= 22.000€',
      'is_linked_to_previous_row': '0'},
     {'row_id': 'unique_id_003',
-     'group': 'dirfin',
+     'org': 'dirfin',
      'for_item_created_from': today,
      'delay': '10',
      'delay_left_alert': '4',
      'delay_label': 'Incidence financière >= 22.000€',
      'is_linked_to_previous_row': '1'},
     {'row_id': 'unique_id_004',
-     'group': 'dirfin',
+     'org': 'dirfin',
      'for_item_created_from': today,
      'delay': '20',
      'delay_left_alert': '4',
@@ -440,16 +439,20 @@ collegeMeeting.itemTemplates = [
         category='personnel',
         proposingGroup='secretariat',
         templateUsingGroups=['secretariat', 'dirgen', ],
-        decision="""<p>Vu la loi du 8 juillet 1976 organique des centres publics d'action sociale et plus particulièrement son article 111;</p>
-<p>Vu l'Arrêté du Gouvernement Wallon du 22 avril 2004 portant codification de la législation relative aux pouvoirs locaux tel que confirmé par le décret du 27 mai 2004 du Conseil régional wallon;</p>
-<p>Attendu que les décisions suivantes du Bureau permanent/du Conseil de l'Action sociale du XXX ont été reçues le XXX dans le cadre de la tutelle générale sur les centres publics d'action sociale :</p>
+        decision="""<p>Vu la loi du 8 juillet 1976 organique des centres publics d'action sociale
+ et plus particulièrement son article 111;</p>
+<p>Vu l'Arrêté du Gouvernement Wallon du 22 avril 2004 portant codification de la législation
+ relative aux pouvoirs locaux tel que confirmé par le décret du 27 mai 2004 du Conseil régional wallon;</p>
+<p>Attendu que les décisions suivantes du Bureau permanent/du Conseil de l'Action sociale du
+ XXX ont été reçues le XXX dans le cadre de la tutelle générale sur les centres publics d'action sociale :</p>
 <p>- ...;</p>
 <p>- ...;</p>
 <p>- ...</p>
 <p>Attendu que ces décisions sont conformes à la loi et à l'intérêt général;</p>
 <p>Déclare à l'unanimité que :</p>
 <p><strong>Article 1er :</strong></p>
-<p>Les décisions du Bureau permanent/Conseil de l'Action sociale visées ci-dessus sont conformes à la loi et à l'intérêt général et qu'il n'y a, dès lors, pas lieu de les annuler.</p>
+<p>Les décisions du Bureau permanent/Conseil de l'Action sociale visées ci-dessus sont conformes
+ à la loi et à l'intérêt général et qu'il n'y a, dès lors, pas lieu de les annuler.</p>
 <p><strong>Article 2 :</strong></p>
 <p>Copie de la présente délibération sera transmise au Bureau permanent/Conseil de l'Action sociale.</p>"""),
     ItemTemplateDescriptor(
@@ -461,16 +464,26 @@ collegeMeeting.itemTemplates = [
         templateUsingGroups=['personnel', ],
         decision="""
             <p>Vu la loi du 26 mai 2002 instituant le droit à l’intégration sociale;</p>
-<p>Vu la délibération du Conseil communal du 29 juin 2009 concernant le cahier spécial des charges relatif au marché de services portant sur le contrôle des agents communaux absents pour raisons médicales;</p>
-<p>Vu sa délibération du 17 décembre 2009 désignant le docteur XXX en qualité d’adjudicataire pour la mission de contrôle médical des agents de l’Administration communale;</p>
-<p>Vu également sa décision du 17 décembre 2009 d’opérer les contrôles médicaux de manière systématique et pour une période d’essai d’un trimestre;</p>
-<p>Attendu qu’un certificat médical a été  reçu le XXX concernant XXX la couvrant du XXX au XXX, avec la mention « XXX »;</p>
-<p>Attendu que le Docteur XXX a transmis au service du Personnel, par fax, le même jour à XXX le rapport de contrôle mentionnant l’absence de XXX ce XXX à XXX;</p>
-<p>Considérant que XXX avait été informée par le Service du Personnel de la mise en route du système de contrôle systématique que le médecin-contrôleur;</p>
-<p>Considérant qu’ayant été absent(e) pour maladie la semaine précédente elle avait reçu la visite du médecin-contrôleur;</p>
+<p>Vu la délibération du Conseil communal du 29 juin 2009 concernant le cahier spécial des
+ charges relatif au marché de services portant sur le contrôle des agents communaux absents pour raisons médicales;</p>
+<p>Vu sa délibération du 17 décembre 2009 désignant le docteur XXX en qualité d’adjudicataire
+ pour la mission de contrôle médical des agents de l’Administration communale;</p>
+<p>Vu également sa décision du 17 décembre 2009 d’opérer les contrôles médicaux de manière
+ systématique et pour une période d’essai d’un trimestre;</p>
+<p>Attendu qu’un certificat médical a été  reçu le XXX concernant XXX la couvrant du XXX au XXX,
+ avec la mention « XXX »;</p>
+<p>Attendu que le Docteur XXX a transmis au service du Personnel, par fax, le même jour à XXX le rapport de
+ contrôle mentionnant l’absence de XXX ce XXX à XXX;</p>
+<p>Considérant que XXX avait été informée par le Service du Personnel de la mise en route du système
+ de contrôle systématique que le médecin-contrôleur;</p>
+<p>Considérant qu’ayant été absent(e) pour maladie la semaine précédente elle avait reçu la visite du
+ médecin-contrôleur;</p>
 <p>DECIDE :</p>
-<p><strong>Article 1</strong> : De convoquer XXX devant  Monsieur le Secrétaire communal f.f. afin de lui rappeler ses obligations en la matière.</p>
-<p><strong>Article 2</strong> :  De prévenir XXX, qu’en cas de récidive, il sera proposé par le Secrétaire communal au Collège de transformer les jours de congés de maladie en absence injustifiée (retenue sur traitement avec application de la loi du 26 mai 2002 citée ci-dessus).</p>
+<p><strong>Article 1</strong> : De convoquer XXX devant  Monsieur le Secrétaire communal f.f. afin de lui
+ rappeler ses obligations en la matière.</p>
+<p><strong>Article 2</strong> :  De prévenir XXX, qu’en cas de récidive, il sera proposé par le Secrétaire
+ communal au Collège de transformer les jours de congés de maladie en absence injustifiée (retenue sur traitement
+ avec application de la loi du 26 mai 2002 citée ci-dessus).</p>
 <p><strong>Article 3</strong> : De charger le service du personnel du suivi de ce dossier.</p>"""),
     ItemTemplateDescriptor(
         id='template3',
@@ -479,20 +492,29 @@ collegeMeeting.itemTemplates = [
         category='personnel',
         proposingGroup='personnel',
         templateUsingGroups=['personnel', ],
-        decision="""<p>Considérant qu’il y a lieu de pourvoir au remplacement de Madame XXX, XXX bénéficiant d’une interruption de carrière pour convenances personnelles pour l’année scolaire 2009/2010. &nbsp;</p>
+        decision="""<p>Considérant qu’il y a lieu de pourvoir au remplacement de Madame XXX,
+ XXX bénéficiant d’une interruption de carrière pour convenances personnelles pour l’année scolaire
+ 2009/2010. &nbsp;</p>
 <p>Attendu qu’un appel public a été lancé au mois de mai dernier;</p>
-<p>Vu la circulaire N° 2772 de la Communauté Française&nbsp;du 29 juin 2009 concernant &nbsp;la gestion des carrières administrative et pécuniaire dans l’enseignement fondamental ordinaire et principalement le chapitre 3 relatif aux engagements temporaires pendant l’année scolaire 2009/2010;</p>
+<p>Vu la circulaire N° 2772 de la Communauté Française&nbsp;du 29 juin 2009 concernant &nbsp;la gestion des
+ carrières administrative et pécuniaire dans l’enseignement fondamental ordinaire et principalement le chapitre 3
+ relatif aux engagements temporaires pendant l’année scolaire 2009/2010;</p>
 <p>Vu la proposition du directeur concerné d’attribuer cet emploi à Monsieur XXX, titulaire des titres requis;</p>
-<p>Vu le décret de la Communauté Française du 13 juillet 1998 portant restructuration de l’enseignement&nbsp;maternel et primaire ordinaires avec effet au 1er octobre 1998;</p>
-<p>Vu la loi du 29 mai 1959 (Pacte scolaire) et les articles L1122-19 et L1213-1 du Code de la démocratie locale et de la décentralisation;</p>
+<p>Vu le décret de la Communauté Française du 13 juillet 1998 portant restructuration de l’enseignement&nbsp;maternel
+ et primaire ordinaires avec effet au 1er octobre 1998;</p>
+<p>Vu la loi du 29 mai 1959 (Pacte scolaire) et les articles L1122-19 et L1213-1 du Code de la démocratie locale et
+ de la décentralisation;</p>
 <p>Vu l’avis favorable de l’Echevin de l’Enseignement;</p>
 <p><b>DECIDE&nbsp;:</b><br>
 <b><br> Article 1<sup>er</sup></b> :</p>
-<p>Au scrutin secret et à l’unanimité, de désigner Monsieur XXX, né le XXX à XXX et domicilié à XXX, en qualité d’instituteur maternel temporaire mi-temps en remplacement de Madame XXX aux écoles communales fondamentales de Sambreville (section de XXX) du XXX au XXX.</p>
+<p>Au scrutin secret et à l’unanimité, de désigner Monsieur XXX, né le XXX à XXX et domicilié à XXX, en qualité
+ d’instituteur maternel temporaire mi-temps en remplacement de Madame XXX aux écoles communales fondamentales de
+ Sambreville (section de XXX) du XXX au XXX.</p>
 <p><b>Article 2</b> :</p>
 <p>L’horaire hebdomadaire de l’intéressé est fixé à 13 périodes.</p>
 <p><b>Article 3&nbsp;:</b></p>
-<p>La présente délibération sera soumise à la ratification du Conseil Communal. Elle sera transmise au Bureau Régional de l’Enseignement primaire et maternel, à l’Inspectrice Cantonale et à la direction concernée.</p>"""),
+<p>La présente délibération sera soumise à la ratification du Conseil Communal. Elle sera transmise au
+ Bureau Régional de l’Enseignement primaire et maternel, à l’Inspectrice Cantonale et à la direction concernée.</p>"""),
     ItemTemplateDescriptor(
         id='template4',
         title='Prestation réduite',
@@ -500,18 +522,28 @@ collegeMeeting.itemTemplates = [
         category='personnel',
         proposingGroup='personnel',
         templateUsingGroups=['personnel', ],
-        decision="""<p>Vu la loi de redressement du 22 janvier 1985 (article 99 et suivants) et de l’Arrêté Royal du 12 août 1991 (tel que modifié) relatifs à l’interruption de carrière professionnelle dans l’enseignement;</p>
-<p>Vu la lettre du XXX par laquelle Madame XXX, institutrice maternelle, sollicite le renouvellement pendant l’année scolaire 2009/2010 de son congé pour prestations réduites mi-temps pour convenances personnelles dont elle bénéficie depuis le 01 septembre 2006;</p>
+        decision="""<p>Vu la loi de redressement du 22 janvier 1985 (article 99 et suivants) et de l’Arrêté Royal du
+         12 août 1991 (tel que modifié) relatifs à l’interruption de carrière professionnelle dans l’enseignement;</p>
+<p>Vu la lettre du XXX par laquelle Madame XXX, institutrice maternelle, sollicite le renouvellement pendant l’année
+ scolaire 2009/2010 de son congé pour prestations réduites mi-temps pour convenances personnelles dont elle bénéficie
+ depuis le 01 septembre 2006;</p>
 <p>Attendu que le remplacement de l’intéressée&nbsp;est assuré pour la prochaine rentrée scolaire;</p>
-<p>Vu le décret de la Communauté Française du 13 juillet 1988 portant restructuration de l’enseignement maternel et primaire ordinaires avec effet au 1er octobre 1998;</p>
-<p>Vu la loi du 29 mai 1959 (Pacte Scolaire) et les articles L1122-19 et L1213-1 du code de la démocratie locale et de la décentralisation;</p>
+<p>Vu le décret de la Communauté Française du 13 juillet 1988 portant restructuration de l’enseignement maternel et
+ primaire ordinaires avec effet au 1er octobre 1998;</p>
+<p>Vu la loi du 29 mai 1959 (Pacte Scolaire) et les articles L1122-19 et L1213-1 du code de la démocratie locale et
+ de la décentralisation;</p>
 <p>Vu l’avis favorable de l’Echevin de l’Enseignement;</p>
 <p><b>DECIDE&nbsp;:</b><br><b><br> Article 1<sup>er</sup></b>&nbsp;:</p>
-<p>Au scrutin secret et à l’unanimité, d’accorder à Madame XXX le congé pour prestations réduites mi-temps sollicité pour convenances personnelles en qualité d’institutrice maternelle aux écoles communales fondamentales&nbsp;&nbsp;de Sambreville (section de XXX).</p>
+<p>Au scrutin secret et à l’unanimité, d’accorder à Madame XXX le congé pour prestations réduites mi-temps sollicité
+ pour convenances personnelles en qualité d’institutrice maternelle aux écoles communales
+ fondamentales&nbsp;&nbsp;de Sambreville (section de XXX).</p>
 <p><b>Article 2</b> :</p>
-<p>Une activité lucrative est autorisée durant ce congé qui est assimilé à une période d’activité de service, dans le respect de la réglementation relative au cumul.</p>
+<p>Une activité lucrative est autorisée durant ce congé qui est assimilé à une période d’activité de service, dans
+ le respect de la réglementation relative au cumul.</p>
 <p><b>Article 3&nbsp;:</b></p>
-<p>La présente délibération sera soumise pour accord au prochain Conseil, transmise au Bureau Régional de l’Enseignement primaire et maternel, à&nbsp;l’Inspectrice Cantonale, à la direction concernée et à l’intéressée.</p>"""),
+<p>La présente délibération sera soumise pour accord au prochain Conseil, transmise au Bureau Régional de
+ l’Enseignement primaire et maternel, à&nbsp;l’Inspectrice Cantonale, à la direction
+ concernée et à l’intéressée.</p>"""),
     ItemTemplateDescriptor(
         id='template5',
         title='Exemple modèle disponible pour tous',
@@ -646,26 +678,6 @@ councilMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                        groups[4].getIdSuffixed('reviewers')]
 councilMeeting.styleTemplates = councilStyleTemplate
 councilMeeting.podTemplates = councilTemplates
-
-bourgmestre_mu = MeetingUserDescriptor('bourgmestre',
-                                       duty='Bourgmestre',
-                                       usages=['assemblyMember', 'signer', 'asker', ],
-                                       signatureIsDefault=True)
-receveur_mu = MeetingUserDescriptor('receveur',
-                                    duty='Receveur communal',
-                                    usages=['assemblyMember', 'signer', 'asker', ])
-echevinPers_mu = MeetingUserDescriptor('echevinPers',
-                                       duty='Echevin GRH',
-                                       usages=['assemblyMember', 'asker', ])
-echevinTrav_mu = MeetingUserDescriptor('echevinTrav',
-                                       duty='Echevin Travaux',
-                                       usages=['assemblyMember', 'asker', ])
-dgen_mu = MeetingUserDescriptor('dgen',
-                                duty='Directeur Général',
-                                usages=['assemblyMember', 'signer', 'asker', ],
-                                signatureIsDefault=True)
-
-councilMeeting.meetingUsers = [bourgmestre_mu, receveur_mu, echevinPers_mu, echevinTrav_mu, dgen_mu]
 
 councilMeeting.recurringItems = [
     RecurringItemDescriptor(

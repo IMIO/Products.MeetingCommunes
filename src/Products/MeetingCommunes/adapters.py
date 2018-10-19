@@ -24,10 +24,10 @@
 from AccessControl import ClassSecurityInfo
 from AccessControl.class_init import InitializeClass
 from collections import OrderedDict
+from collective.contact.plonegroup.utils import get_organizations
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from plone import api
 from plone.memoize import ram
-from Products.Archetypes.atapi import DisplayList
 from Products.CMFCore.permissions import ReviewPortalContent
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.utils import getToolByName
@@ -44,14 +44,12 @@ from Products.PloneMeeting.indexes import DELAYAWARE_ROW_ID_PATTERN
 from Products.PloneMeeting.indexes import REAL_ORG_UID_PATTERN
 from Products.PloneMeeting.interfaces import IMeetingConfigCustom
 from Products.PloneMeeting.interfaces import IMeetingCustom
-from Products.PloneMeeting.interfaces import IMeetingGroupCustom
 from Products.PloneMeeting.interfaces import IMeetingItemCustom
 from Products.PloneMeeting.interfaces import IToolPloneMeetingCustom
 from Products.PloneMeeting.Meeting import Meeting
 from Products.PloneMeeting.Meeting import MeetingWorkflowActions
 from Products.PloneMeeting.Meeting import MeetingWorkflowConditions
 from Products.PloneMeeting.MeetingConfig import MeetingConfig
-from Products.PloneMeeting.MeetingGroup import MeetingGroup
 from Products.PloneMeeting.MeetingItem import MeetingItem
 from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowActions
 from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowConditions
@@ -100,14 +98,14 @@ class CustomMeeting(Meeting):
 
     def getPrintableItems(self, itemUids, listTypes=['normal'], ignore_review_states=[],
                           privacy='*', oralQuestion='both', toDiscuss='both', categories=[],
-                          excludedCategories=[], groupIds=[], excludedGroupIds=[],
+                          excludedCategories=[], org_uids=[], excludedGroupIds=[],
                           firstNumber=1, renumber=False):
         '''Returns a list of items.
            An extra list of review states to ignore can be defined.
            A privacy can also be given, and the fact that the item is an
            oralQuestion or not (or both). Idem with toDiscuss.
            Some specific categories can be given or some categories to exclude.
-           We can also receive in p_groupIds MeetingGroup ids to take into account.
+           We can also receive in p_groupIds organization uids to take into account.
            These 2 parameters are exclusive.  If renumber is True, a list of tuple
            will be return with first element the number and second element, the item.
            In this case, the firstNumber value can be used.'''
@@ -135,7 +133,7 @@ class CustomMeeting(Meeting):
                 continue
             elif categories and not obj.getCategory() in categories:
                 continue
-            elif groupIds and not obj.getProposingGroup() in groupIds:
+            elif org_uids and not obj.getProposingGroup() in org_uids:
                 continue
             elif excludedCategories and obj.getCategory() in excludedCategories:
                 continue
@@ -260,7 +258,7 @@ class CustomMeeting(Meeting):
            will be return with first element the number and second element, the item.
            In this case, the firstNumber value can be used.'''
         # The result is a list of lists, where every inner list contains:
-        # - at position 0: the category object (MeetingCategory or MeetingGroup)
+        # - at position 0: the category object (MeetingCategory or organization)
         # - at position 1 to n: the items in this category
         # If by_proposing_group is True, the structure is more complex.
         # listTypes is a list that can be filled with 'normal' and/or 'late'
@@ -281,7 +279,7 @@ class CustomMeeting(Meeting):
                 return 0
         res = []
         items = []
-        tool = getToolByName(self.context, 'portal_plonemeeting')
+        tool = api.portal.get_tool('portal_plonemeeting')
         # Retrieve the list of items
         for elt in itemUids:
             if elt == '':
@@ -290,7 +288,7 @@ class CustomMeeting(Meeting):
         items = self.context.getItems(uids=itemUids, listTypes=listTypes, ordered=True)
 
         if by_proposing_group:
-            groups = tool.getMeetingGroups()
+            groups = get_organizations()
         else:
             groups = None
         if items:
@@ -531,17 +529,6 @@ class CustomMeetingItem(MeetingItem):
         else:
             return None
 
-    def getEchevinsForProposingGroup(self):
-        '''Returns all echevins defined for the proposing group'''
-        res = []
-        tool = getToolByName(self.context, 'portal_plonemeeting')
-        # keep also inactive groups because this method is often used in the customAdviser
-        # TAL expression and a disabled MeetingGroup must still be taken into account
-        for group in tool.getMeetingGroups(onlyActive=False):
-            if self.context.getProposingGroup() in group.getEchevinServices():
-                res.append(group.getId())
-        return res
-
     def _initDecisionFieldIfEmpty(self):
         '''
           If decision field is empty, it will be initialized
@@ -555,21 +542,6 @@ class CustomMeetingItem(MeetingItem):
             self.reindexObject()
     MeetingItem._initDecisionFieldIfEmpty = _initDecisionFieldIfEmpty
 
-    def adviceDelayIsTimedOutWithRowId(self, groupId, rowIds=[]):
-        ''' Check if advice with delay from a certain p_groupId and with
-            a row_id contained in p_rowIds is timed out.
-        '''
-        self = self.getSelf()
-        if self.getAdviceDataFor(self) and groupId in self.getAdviceDataFor(self):
-            adviceRowId = self.getAdviceDataFor(self, groupId)['row_id']
-        else:
-            return False
-
-        if not rowIds or adviceRowId in rowIds:
-            return self._adviceDelayIsTimedOut(groupId)
-        else:
-            return False
-
     def showFinanceAdviceTemplate(self):
         """ """
         item = self.getSelf()
@@ -577,30 +549,6 @@ class CustomMeetingItem(MeetingItem):
         cfg = tool.getMeetingConfig(item)
         return bool(set(cfg.adapted().getUsedFinanceGroupIds(item)).
                     intersection(set(item.adviceIndex.keys())))
-
-
-class CustomMeetingGroup(MeetingGroup):
-    '''Adapter that adapts a meeting group implementing IMeetingGroup to the
-       interface IMeetingGroupCustom.'''
-
-    implements(IMeetingGroupCustom)
-    security = ClassSecurityInfo()
-
-    def __init__(self, item):
-        self.context = item
-
-    security.declarePublic('listEchevinServices')
-
-    def listEchevinServices(self):
-        '''Returns a list of groups that can be selected on an group (without isEchevin).'''
-        res = []
-        tool = getToolByName(self, 'portal_plonemeeting')
-        # Get every Plone group related to a MeetingGroup
-        for group in tool.getMeetingGroups():
-            res.append((group.id, group.getProperty('title')))
-
-        return DisplayList(tuple(res))
-    MeetingGroup.listEchevinServices = listEchevinServices
 
 
 class CustomMeetingConfig(MeetingConfig):
@@ -1122,7 +1070,6 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
 InitializeClass(CustomMeeting)
 InitializeClass(CustomMeetingItem)
 InitializeClass(CustomMeetingConfig)
-InitializeClass(CustomMeetingGroup)
 InitializeClass(MeetingCommunesWorkflowActions)
 InitializeClass(MeetingCommunesWorkflowConditions)
 InitializeClass(MeetingItemCommunesWorkflowActions)

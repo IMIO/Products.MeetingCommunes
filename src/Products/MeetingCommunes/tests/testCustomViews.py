@@ -22,14 +22,14 @@
 # 02110-1301, USA.
 #
 
-from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
-from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
-from Products.PloneMeeting.utils import getLastEvent
-
+from collective.contact.plonegroup.utils import get_plone_group_id
 from DateTime import DateTime
 from plone import api
 from plone.app.textfield import RichTextValue
 from plone.dexterity.utils import createContentInContainer
+from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
+from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
+from Products.PloneMeeting.utils import getLastEvent
 
 
 class testCustomViews(MeetingCommunesTestCase):
@@ -94,7 +94,7 @@ class testCustomViews(MeetingCommunesTestCase):
         # create an item and ask advice of 'vendors'
         self.changeUser('pmCreator1')
         item = self.create('MeetingItem')
-        item.setOptionalAdvisers(('vendors', 'developers',))
+        item.setOptionalAdvisers((self.vendors_uid, self.developers_uid,))
         item.at_post_edit_script()
         # an advice can be given when an item is 'proposed'
         self.proposeItem(item)
@@ -111,59 +111,51 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper.printFormatedAdvice()
         self.assertListEqual(result, [])
 
-        result = helper.printFormatedAdvice(True)
+        result = helper.printFormatedAdvice()
         self.assertListEqual(result, [])
 
-        result = helper.printFormatedAdvice(False)
-        self.assertListEqual(result,
-                             [{'type': helper.translate(msgid='not_given', domain='PloneMeeting').encode('utf-8'),
-                               'name': 'Vendors',
-                               'comment': ''},
-                              {'type': helper.translate(msgid='not_given', domain='PloneMeeting').encode('utf-8'),
-                               'name': 'Developers',
-                               'comment': ''}])
+        result = helper.printFormatedAdvice(exclude_not_given=False)
+        # result contains every informations getAdviceDataFor returns
+        self.assertEqual(
+            [(u'Developers', u'Not given yet'), (u'Vendors', u'Not given yet')],
+            sorted([(res['name'], res['type_translated']) for res in result]))
 
         # add advice for 'developers'
         self.changeUser('pmAdviser1')
         createContentInContainer(item,
                                  'meetingadvice',
-                                 **{'advice_group': 'developers',
+                                 **{'advice_group': self.developers_uid,
                                     'advice_type': u'positive',
                                     'advice_comment': RichTextValue(u'My comment')})
 
         result = helper.printFormatedAdvice()
-        self.assertListEqual(result,
-                             [{'type': helper.translate(msgid='positive', domain='PloneMeeting').encode('utf-8'),
-                               'name': 'Developers',
-                               'comment': 'My comment'}])
+        self.assertEqual(
+            [(u'Developers', u'Positive')],
+            [(res['name'], res['type_translated']) for res in result])
 
         self.assertListEqual(helper.printFormatedAdvice(), helper.printFormatedAdvice(True))
 
-        result = helper.printFormatedAdvice(False)
-        self.assertListEqual(result,
-                             [{'type': helper.translate(msgid='positive', domain='PloneMeeting').encode('utf-8'),
-                               'name': 'Developers',
-                               'comment': 'My comment'},
-                              {'type': helper.translate(msgid='not_given', domain='PloneMeeting').encode('utf-8'),
-                               'name': 'Vendors',
-                               'comment': ''}])
+        result = helper.printFormatedAdvice(exclude_not_given=False)
+        self.assertEqual(
+            [(u'Developers', u'Positive'), (u'Vendors', u'Not given yet')],
+            sorted([(res['name'], res['type_translated']) for res in result]))
 
     def _set_up_additional_finance_advisor_group(self,
                                                  new_group_name="New Group 1",
                                                  adviser_user_id='pmAdviserNG1'):
         self.changeUser('siteadmin')
         # create a new group and make sure every Plone groups are created
-        new_group = self.create('MeetingGroup', title=new_group_name, acronym='N.G.')
-
-        new_group.at_post_edit_script()
+        new_group = self.create('organization', title=new_group_name, acronym='N.G.')
+        new_group_uid = new_group.UID()
+        self._select_organization(new_group_uid)
 
         membershipTool = api.portal.get_tool('portal_membership')
         membershipTool.addMember(id=adviser_user_id, password='12345', roles=('Member',), domains=())
 
-        self._addPrincipalToGroup('pmAdviserNG1', new_group.getId() + '_advisers')
-        return new_group.getId()
+        self._addPrincipalToGroup('pmAdviserNG1', get_plone_group_id(new_group_uid, 'advisers'))
+        return new_group_uid
 
-    def _set_up_second_finance_adviser(self, adviser_group_id):
+    def _set_up_second_finance_adviser(self, adviser_group_uid):
         self.changeUser('siteadmin')
         today = DateTime().strftime('%Y/%m/%d')
         cfg = self.meetingConfig
@@ -171,65 +163,111 @@ class testCustomViews(MeetingCommunesTestCase):
         collection.setQuery(
             [{'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is', 'v': [cfg.getItemTypeName(), ]},
              {'i': 'indexAdvisers', 'o': 'plone.app.querystring.operation.selection.is',
-              'v': ['delay_real_group_id__unique_id_001', 'delay_real_group_id__unique_id_002']}], )
+              'v': ['delay_row_id__unique_id_001', 'delay_row_id__unique_id_002']}], )
 
         cfg.setCustomAdvisers((
-            {'row_id': 'unique_id_001', 'group': adviser_group_id, 'for_item_created_from': today, 'delay': '10',
-             'delay_left_alert': '4', 'delay_label': 'Finance advice 1', 'is_linked_to_previous_row': '0'},
-            {'row_id': 'unique_id_002', 'group': 'vendors', 'for_item_created_from': today, 'delay': '10',
-             'delay_left_alert': '4', 'delay_label': 'Finance advice 1', 'is_linked_to_previous_row': '0'},
-            {'row_id': 'unique_id_003', 'group': adviser_group_id, 'for_item_created_from': today, 'delay': '20',
-             'delay_left_alert': '4', 'delay_label': 'Finance advice 2', 'is_linked_to_previous_row': '1'},
-            {'row_id': 'unique_id_004', 'group': 'vendors', 'for_item_created_from': today, 'delay': '20',
-             'delay_left_alert': '4', 'delay_label': 'Finance advice 2', 'is_linked_to_previous_row': '1'},
-            {'row_id': 'unique_id_005', 'group': adviser_group_id, 'for_item_created_from': today, 'delay': '20',
-             'delay_left_alert': '4', 'delay_label': 'Not a finance advice', 'is_linked_to_previous_row': '0'},
-            {'row_id': 'unique_id_006', 'group': 'vendors', 'for_item_created_from': today, 'delay': '20',
-             'delay_left_alert': '4', 'delay_label': 'Not a finance advice', 'is_linked_to_previous_row': '0'},))
+            {'row_id': 'unique_id_001',
+             'org': adviser_group_uid,
+             'for_item_created_from': today,
+             'delay': '10',
+             'delay_left_alert': '4',
+             'delay_label': 'Finance advice 1',
+             'is_linked_to_previous_row': '0'},
+            {'row_id': 'unique_id_002',
+             'org': self.vendors_uid,
+             'for_item_created_from': today,
+             'delay': '10',
+             'delay_left_alert': '4',
+             'delay_label': 'Finance advice 1',
+             'is_linked_to_previous_row': '0'},
+            {'row_id': 'unique_id_003',
+             'org': adviser_group_uid,
+             'for_item_created_from': today,
+             'delay': '20',
+             'delay_left_alert': '4',
+             'delay_label': 'Finance advice 2',
+             'is_linked_to_previous_row': '1'},
+            {'row_id': 'unique_id_004',
+             'org': self.vendors_uid,
+             'for_item_created_from': today,
+             'delay': '20',
+             'delay_left_alert': '4',
+             'delay_label': 'Finance advice 2',
+             'is_linked_to_previous_row': '1'},
+            {'row_id': 'unique_id_005',
+             'org': adviser_group_uid,
+             'for_item_created_from': today,
+             'delay': '20',
+             'delay_left_alert': '4',
+             'delay_label': 'Not a finance advice',
+             'is_linked_to_previous_row': '0'},
+            {'row_id': 'unique_id_006',
+             'org': self.vendors_uid,
+             'for_item_created_from': today,
+             'delay': '20',
+             'delay_left_alert': '4',
+             'delay_label': 'Not a finance advice',
+             'is_linked_to_previous_row': '0'},))
 
         cfg.setItemAdviceStates(('itemcreated',))
         cfg.setItemAdviceEditStates(('itemcreated',))
         cfg.setItemAdviceViewStates(('itemcreated',))
 
-    def _give_advice(self, item, adviser_group_id, adviser_user_id, advice_id='meetingadvice'):
+    def _give_advice(self, item, adviser_group_uid, adviser_user_id, advice_id='meetingadvice'):
         self.changeUser(adviser_user_id)
         createContentInContainer(
             item, advice_id,
-            **{'advice_group': adviser_group_id,
+            **{'advice_group': adviser_group_uid,
                'advice_type': u'positive',
                'advice_hide_during_redaction': False,
                'advice_comment': RichTextValue(u'My comment')})
 
     def test_getItemAdviceTransmissionDate(self):
+        cfg = self.meetingConfig
         self.changeUser('siteadmin')
-        self.meetingConfig.powerAdvisersGroups = ('vendors',)
-        self.meetingConfig.setItemAdviceStates(('validated',))
-        self.meetingConfig.setItemAdviceEditStates(('validated',))
-        self.meetingConfig.setItemAdviceViewStates(('validated',))
+        cfg.powerAdvisersGroups = (self.vendors_uid,)
+        cfg.setItemAdviceStates(('validated',))
+        cfg.setItemAdviceEditStates(('validated',))
+        cfg.setItemAdviceViewStates(('validated',))
 
-        collection = getattr(self.meetingConfig.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID)
+        collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID)
         collection.setQuery(
             [{'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is',
-              'v': [self.meetingConfig.getItemTypeName(), ]},
+              'v': [cfg.getItemTypeName(), ]},
              {'i': 'indexAdvisers', 'o': 'plone.app.querystring.operation.selection.is',
               'v': []}], )
         today = DateTime().strftime('%Y/%m/%d')
-        self.meetingConfig.setCustomAdvisers((
-            {'row_id': 'unique_id_002', 'group': 'vendors', 'for_item_created_from': today, 'delay': '10',
-             'delay_left_alert': '4', 'delay_label': 'Finance advice 1', 'is_linked_to_previous_row': '0'},
-            {'row_id': 'unique_id_004', 'group': 'vendors', 'for_item_created_from': today, 'delay': '20',
-             'delay_left_alert': '4', 'delay_label': 'Finance advice 2', 'is_linked_to_previous_row': '1'},
-            {'row_id': 'unique_id_006', 'group': 'vendors', 'for_item_created_from': today, 'delay': '20',
-             'delay_left_alert': '4', 'delay_label': 'Not a finance advice', 'is_linked_to_previous_row': '0'},))
+        cfg.setCustomAdvisers((
+            {'row_id': 'unique_id_002',
+             'org': self.vendors_uid,
+             'for_item_created_from': today,
+             'delay': '10',
+             'delay_left_alert': '4',
+             'delay_label': 'Finance advice 1',
+             'is_linked_to_previous_row': '0'},
+            {'row_id': 'unique_id_004',
+             'org': self.vendors_uid,
+             'for_item_created_from': today,
+             'delay': '20',
+             'delay_left_alert': '4',
+             'delay_label': 'Finance advice 2',
+             'is_linked_to_previous_row': '1'},
+            {'row_id': 'unique_id_006',
+             'org': self.vendors_uid,
+             'for_item_created_from': today,
+             'delay': '20',
+             'delay_left_alert': '4',
+             'delay_label': 'Not a finance advice',
+             'is_linked_to_previous_row': '0'},))
 
         self.changeUser('pmCreator1')
 
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item = self.create('MeetingItem', **data)
-        item.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002'))
+        item.setOptionalAdvisers((self.developers_uid, '{0}__rowid__unique_id_002'.format(self.vendors_uid)))
         item.at_post_edit_script()
 
-        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        pod_template = cfg.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
         self.request.set('output_format', 'odt')
         view = item.restrictedTraverse('@@document-generation')
@@ -241,26 +279,26 @@ class testCustomViews(MeetingCommunesTestCase):
         # test no delay available
         collection.setQuery(
             [{'i': 'portal_type', 'o': 'plone.app.querystring.operation.selection.is',
-              'v': [self.meetingConfig.getItemTypeName(), ]},
+              'v': [cfg.getItemTypeName(), ]},
              {'i': 'indexAdvisers', 'o': 'plone.app.querystring.operation.selection.is',
-              'v': ['delay_real_group_id__unique_id_002']}], )
+              'v': ['delay_row_id__unique_id_002']}], )
         self.assertIsNone(helper._getItemAdviceTransmissionDate())
 
         # test delay started from WF
         self.changeUser('siteadmin')
         self.proposeItem(item)
-        self.meetingConfig.setItemAdviceStates(('proposed', 'validated',))
-        self.meetingConfig.setItemAdviceEditStates(('proposed', 'validated',))
-        self.meetingConfig.setItemAdviceViewStates(('proposed', 'validated',))
+        cfg.setItemAdviceStates(('proposed', 'validated',))
+        cfg.setItemAdviceEditStates(('proposed', 'validated',))
+        cfg.setItemAdviceViewStates(('proposed', 'validated',))
         self.assertEqual(helper._getItemAdviceTransmissionDate(), getLastEvent(item, 'propose')['time'])
 
         # test delay started regular way
-        self.meetingConfig.setItemAdviceStates(('validated',))
-        self.meetingConfig.setItemAdviceEditStates(('validated',))
-        self.meetingConfig.setItemAdviceViewStates(('validated',))
+        cfg.setItemAdviceStates(('validated',))
+        cfg.setItemAdviceEditStates(('validated',))
+        cfg.setItemAdviceViewStates(('validated',))
         self.validateItem(item)
         self.assertEqual(helper._getItemAdviceTransmissionDate(),
-                         item.getAdviceDataFor(item, 'vendors')['delay_started_on'])
+                         item.getAdviceDataFor(item, self.vendors_uid)['delay_started_on'])
 
     def handle_finance_cases(self, case_to_test, helper):
         cases = ['simple', 'legal_not_given', 'simple_not_given', 'legal', 'initiative']
@@ -279,17 +317,18 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertEqual(len(result), 2)
 
     def test_printFinanceAdvice_case_simple(self):
+        cfg = self.meetingConfig
         # creator for group 'developers'
         self.changeUser('pmCreator1')
         # create an item and ask the advice of group 'vendors'
-        new_group = self._set_up_additional_finance_advisor_group()
-        self._set_up_second_finance_adviser(new_group)
+        new_group_uid = self._set_up_additional_finance_advisor_group()
+        self._set_up_second_finance_adviser(new_group_uid)
 
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
         item1._update_after_edit()
 
-        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        pod_template = cfg.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
         self.request.set('output_format', 'odt')
         view = item1.restrictedTraverse('@@document-generation')
@@ -302,7 +341,7 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper.printFinanceAdvice(['simple'])
         self.assertEqual(result, [])
 
-        item1.setOptionalAdvisers(('vendors',))
+        item1.setOptionalAdvisers((self.vendors_uid,))
         item1._update_after_edit()
 
         # No advice given
@@ -312,23 +351,23 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertEqual(result, [])
 
         # 1 Advice given
-        self._give_advice(item1, 'vendors', 'pmReviewer2')
+        self._give_advice(item1, self.vendors_uid, 'pmReviewer2')
         result = helper.printFinanceAdvice('simple')
         self.assertEqual(len(result), 1)
         result = helper.printFinanceAdvice(['simple'])
         self.assertEqual(len(result), 1)
 
         self.changeUser('pmCreator1')
-        item1.setOptionalAdvisers((new_group, 'vendors', 'developers'))
+        item1.setOptionalAdvisers((new_group_uid, self.vendors_uid, self.developers_uid))
         item1._update_after_edit()
 
-        self._give_advice(item1, 'developers', 'pmAdviser1')
+        self._give_advice(item1, self.developers_uid, 'pmAdviser1')
         result = helper.printFinanceAdvice('simple')
         self.assertEqual(len(result), 1)
         result = helper.printFinanceAdvice(['simple'])
         self.assertEqual(len(result), 1)
 
-        self._give_advice(item1, new_group, 'pmAdviserNG1')
+        self._give_advice(item1, new_group_uid, 'pmAdviserNG1')
         result = helper.printFinanceAdvice('simple')
         self.assertEqual(len(result), 2)
         result = helper.printFinanceAdvice(['simple'])
@@ -338,17 +377,18 @@ class testCustomViews(MeetingCommunesTestCase):
         self.handle_finance_cases('simple', helper)
 
     def test_printFinanceAdvice_case_simple_not_given(self):
+        cfg = self.meetingConfig
         # creator for group 'developers'
         self.changeUser('pmCreator1')
 
-        new_group = self._set_up_additional_finance_advisor_group()
-        self._set_up_second_finance_adviser(new_group)
+        new_group_uid = self._set_up_additional_finance_advisor_group()
+        self._set_up_second_finance_adviser(new_group_uid)
 
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
         item1._update_after_edit()
 
-        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        pod_template = cfg.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
         self.request.set('output_format', 'odt')
         view = item1.restrictedTraverse('@@document-generation')
@@ -359,7 +399,7 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper.printFinanceAdvice('simple_not_given')
         self.assertEqual(result, [])
 
-        item1.setOptionalAdvisers(('vendors', new_group))
+        item1.setOptionalAdvisers((self.vendors_uid, new_group_uid))
         item1._update_after_edit()
 
         # No advice given
@@ -367,7 +407,7 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertEqual(len(result), 2)
 
         # 1 Advice given
-        self._give_advice(item1, 'vendors', 'pmReviewer2')
+        self._give_advice(item1, self.vendors_uid, 'pmReviewer2')
         result = helper.printFinanceAdvice('simple_not_given')
         self.assertEqual(len(result), 1)
 
@@ -381,18 +421,19 @@ class testCustomViews(MeetingCommunesTestCase):
         self.handle_finance_cases('simple_not_given', helper)
 
     def test_printFinanceAdvice_case_initiative(self):
-        new_group = self._set_up_additional_finance_advisor_group()
+        cfg = self.meetingConfig
+        new_group_uid = self._set_up_additional_finance_advisor_group()
 
-        self._set_up_second_finance_adviser(new_group)
-        self.meetingConfig.powerAdvisersGroups = (new_group, 'vendors',)
+        self._set_up_second_finance_adviser(new_group_uid)
+        cfg.powerAdvisersGroups = (new_group_uid, self.vendors_uid,)
 
         self.changeUser('pmCreator1')
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
-        item1.setOptionalAdvisers('developers')
+        item1.setOptionalAdvisers(self.developers_uid)
         item1._update_after_edit()
 
-        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        pod_template = cfg.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
         self.request.set('output_format', 'odt')
         view = item1.restrictedTraverse('@@document-generation')
@@ -401,15 +442,15 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper.printFinanceAdvice('initiative')
         self.assertEqual(result, [])
 
-        self._give_advice(item1, 'vendors', 'pmReviewer2')
+        self._give_advice(item1, self.vendors_uid, 'pmReviewer2')
         result = helper.printFinanceAdvice('initiative')
         self.assertEqual(len(result), 1)
 
-        self._give_advice(item1, 'developers', 'pmAdviser1')
+        self._give_advice(item1, self.developers_uid, 'pmAdviser1')
         result = helper.printFinanceAdvice('initiative')
         self.assertEqual(len(result), 1)
 
-        self._give_advice(item1, new_group, 'pmAdviserNG1')
+        self._give_advice(item1, new_group_uid, 'pmAdviserNG1')
         result = helper.printFinanceAdvice('initiative')
         self.assertEqual(len(result), 2)
 
@@ -424,18 +465,21 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertEqual(len(result), 1)
 
     def test_printFinanceAdvice_case_legal(self):
-        new_group = self._set_up_additional_finance_advisor_group()
+        cfg = self.meetingConfig
+        new_group_uid = self._set_up_additional_finance_advisor_group()
 
-        self._set_up_second_finance_adviser(new_group)
-        self.meetingConfig.powerAdvisersGroups = (new_group, 'vendors',)
+        self._set_up_second_finance_adviser(new_group_uid)
+        cfg.powerAdvisersGroups = (new_group_uid, self.vendors_uid,)
 
         self.changeUser('pmCreator1')
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
-        item1.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', new_group + '__rowid__unique_id_003'))
+        item1.setOptionalAdvisers((self.developers_uid,
+                                   self.vendors_uid + '__rowid__unique_id_002',
+                                   new_group_uid + '__rowid__unique_id_003'))
         item1._update_after_edit()
 
-        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        pod_template = cfg.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
         self.request.set('output_format', 'odt')
         view = item1.restrictedTraverse('@@document-generation')
@@ -444,11 +488,11 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper1.printFinanceAdvice('legal')
         self.assertEqual(result, [])
 
-        self._give_advice(item1, 'vendors', 'pmReviewer2')
+        self._give_advice(item1, self.vendors_uid, 'pmReviewer2')
         result = helper1.printFinanceAdvice('legal')
         self.assertEqual(len(result), 1)
 
-        self._give_advice(item1, new_group, 'pmAdviserNG1')
+        self._give_advice(item1, new_group_uid, 'pmAdviserNG1')
         result = helper1.printFinanceAdvice('legal')
         self.assertEqual(len(result), 2)
 
@@ -457,13 +501,14 @@ class testCustomViews(MeetingCommunesTestCase):
 
         # test with power observer
         self.changeUser('siteadmin')
-        self.meetingConfig.powerAdvisersGroups = (new_group, 'vendors',)
+        cfg.powerAdvisersGroups = (new_group_uid, self.vendors_uid,)
         self.changeUser('pmCreator1')
         item2 = self.create('MeetingItem', **data)
-        item2.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002',))
+        item2.setOptionalAdvisers((self.developers_uid,
+                                   self.vendors_uid + '__rowid__unique_id_002',))
         item2._update_after_edit()
 
-        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        pod_template = cfg.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
         self.request.set('output_format', 'odt')
         view = item2.restrictedTraverse('@@document-generation')
@@ -472,27 +517,30 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper2.printFinanceAdvice('legal')
         self.assertEqual(result, [])
 
-        self._give_advice(item2, 'vendors', 'pmReviewer2')
+        self._give_advice(item2, self.vendors_uid, 'pmReviewer2')
         result = helper2.printFinanceAdvice('legal')
         self.assertEqual(len(result), 1)
 
-        self._give_advice(item2, new_group, 'pmAdviserNG1')
+        self._give_advice(item2, new_group_uid, 'pmAdviserNG1')
         result = helper2.printFinanceAdvice('legal')
         self.assertEqual(len(result), 1)
 
     def test_printFinanceAdvice_case_legal_not_given(self):
-        new_group = self._set_up_additional_finance_advisor_group()
+        cfg = self.meetingConfig
+        new_group_uid = self._set_up_additional_finance_advisor_group()
 
-        self._set_up_second_finance_adviser(new_group)
-        self.meetingConfig.powerAdvisersGroups = (new_group, 'vendors',)
+        self._set_up_second_finance_adviser(new_group_uid)
+        cfg.powerAdvisersGroups = (new_group_uid, self.vendors_uid,)
 
         self.changeUser('pmCreator1')
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
-        item1.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002', new_group + '__rowid__unique_id_003'))
+        item1.setOptionalAdvisers((self.developers_uid,
+                                   self.vendors_uid + '__rowid__unique_id_002',
+                                   new_group_uid + '__rowid__unique_id_003'))
         item1._update_after_edit()
 
-        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        pod_template = cfg.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
         self.request.set('output_format', 'odt')
         view = item1.restrictedTraverse('@@document-generation')
@@ -502,11 +550,11 @@ class testCustomViews(MeetingCommunesTestCase):
 
         self.assertEqual(len(result), 2)
 
-        self._give_advice(item1, 'vendors', 'pmReviewer2')
+        self._give_advice(item1, self.vendors_uid, 'pmReviewer2')
         result = helper1.printFinanceAdvice('legal_not_given')
         self.assertEqual(len(result), 1)
 
-        self._give_advice(item1, new_group, 'pmAdviserNG1')
+        self._give_advice(item1, new_group_uid, 'pmAdviserNG1')
         result = helper1.printFinanceAdvice('legal_not_given')
         self.assertEqual(result, [])
 
@@ -519,7 +567,7 @@ class testCustomViews(MeetingCommunesTestCase):
 
         # remove the advice
         self.changeUser('pmAdviserNG1')
-        item1.restrictedTraverse('@@delete_givenuid')(item1.getAdviceObj(new_group).UID())
+        item1.restrictedTraverse('@@delete_givenuid')(item1.getAdviceObj(new_group_uid).UID())
         item1._update_after_edit()
         result = helper1.printFinanceAdvice('legal_not_given')
         self.assertEqual(len(result), 2)
@@ -529,13 +577,14 @@ class testCustomViews(MeetingCommunesTestCase):
 
         # test with power observer
         self.changeUser('siteadmin')
-        self.meetingConfig.powerAdvisersGroups = (new_group, 'vendors',)
+        cfg.powerAdvisersGroups = (new_group_uid, self.vendors_uid,)
         self.changeUser('pmCreator1')
         item2 = self.create('MeetingItem', **data)
-        item2.setOptionalAdvisers(('developers', 'vendors__rowid__unique_id_002',))
+        item2.setOptionalAdvisers((self.developers_uid,
+                                   self.vendors_uid + '__rowid__unique_id_002',))
         item2._update_after_edit()
 
-        pod_template = self.meetingConfig.podtemplates.itemTemplate
+        pod_template = cfg.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
         self.request.set('output_format', 'odt')
         view = item2.restrictedTraverse('@@document-generation')
@@ -544,17 +593,17 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper2.printFinanceAdvice('legal_not_given')
         self.assertEqual(len(result), 1)
 
-        self._give_advice(item2, 'vendors', 'pmReviewer2')
+        self._give_advice(item2, self.vendors_uid, 'pmReviewer2')
         result = helper2.printFinanceAdvice('legal_not_given')
         self.assertEqual(result, [])
 
-        self._give_advice(item2, new_group, 'pmAdviserNG1')
+        self._give_advice(item2, new_group_uid, 'pmAdviserNG1')
         result = helper2.printFinanceAdvice('legal_not_given')
         self.assertEqual(result, [])
 
     def test__filter_items(self):
-        self.changeUser('pmManager')
         cfg = self.meetingConfig
+        self.changeUser('pmManager')
         cfg.setUseGroupsAsCategories(False)
         cfg.setInsertingMethodsOnAddItem(
             ({'insertingMethod': 'on_categories', 'reverse': '0'},))
@@ -584,24 +633,28 @@ class testCustomViews(MeetingCommunesTestCase):
                                    excluded_values={})
         self.assertListEqual(res, items)
 
-        res = helper._filter_items(items,
-                                   included_values={},
-                                   excluded_values={'category':[i7.getCategory(theObject=True).Title()]})
+        res = helper._filter_items(
+            items,
+            included_values={},
+            excluded_values={'category': [i7.getCategory(theObject=True).Title()]})
         self.assertListEqual(res, items[0:-1])
 
-        res = helper._filter_items(items,
-                                   included_values={'category': [i5.getCategory(theObject=True).Title()]},
-                                   excluded_values={'category': [i7.getCategory(theObject=True).Title()]})
+        res = helper._filter_items(
+            items,
+            included_values={'category': [i5.getCategory(theObject=True).Title()]},
+            excluded_values={'category': [i7.getCategory(theObject=True).Title()]})
         self.assertListEqual(res, items[0:-1])
 
-        res = helper._filter_items(items,
-                                   included_values={'category': [i5.getCategory(theObject=True).Title()]},
-                                   excluded_values={})
+        res = helper._filter_items(
+            items,
+            included_values={'category': [i5.getCategory(theObject=True).Title()]},
+            excluded_values={})
         self.assertListEqual(res, items[0:-1])
 
-        res = helper._filter_items(items,
-                                   included_values={'category': [i5.getCategory(theObject=True).Title()]},
-                                   excluded_values={'category': [i5.getCategory(theObject=True).Title()]})
+        res = helper._filter_items(
+            items,
+            included_values={'category': [i5.getCategory(theObject=True).Title()]},
+            excluded_values={'category': [i5.getCategory(theObject=True).Title()]})
         self.assertListEqual(res, [])
 
     def test_get_grouped_items(self):
@@ -636,9 +689,10 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertListEqual(res, items)
 
         res = helper.get_grouped_items(itemUids, group_by='category')
-        self.assertListEqual(res,
-                             [[i5.getCategory(theObject=True).Title(), items[0:-1]],
-                             [i7.getCategory(theObject=True).Title(), [i7]]])
+        self.assertListEqual(
+            res,
+            [[i5.getCategory(theObject=True).Title(), items[0:-1]],
+             [i7.getCategory(theObject=True).Title(), [i7]]])
 
     def test_get_multiple_level_printing(self):
         self.changeUser('pmManager')

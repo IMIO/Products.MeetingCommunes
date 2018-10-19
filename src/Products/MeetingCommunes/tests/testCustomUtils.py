@@ -34,33 +34,33 @@ class testCustomUtils(MeetingCommunesTestCase):
 
     def setUp(self):
         MeetingCommunesTestCase.setUp(self)
-        # add the ExternalMethod export_meetinggroups in Zope
+        # add the ExternalMethod export_orgs in Zope
         manage_addExternalMethod(self.portal.aq_inner.aq_parent,
-                                 'export_meetinggroups',
+                                 'export_orgs',
                                  '',
                                  'Products.MeetingCommunes.utils',
-                                 'export_meetinggroups')
-        # add the ExternalMethod import_meetinggroups in Zope
+                                 'export_orgs')
+        # add the ExternalMethod import_orgs in Zope
         manage_addExternalMethod(self.portal.aq_inner.aq_parent,
-                                 'import_meetinggroups',
+                                 'import_orgs',
                                  '',
                                  'Products.MeetingCommunes.utils',
-                                 'import_meetinggroups')
+                                 'import_orgs')
 
-    def _exportMeetingGroups(self):
-        return self.portal.export_meetinggroups()
+    def _exportOrgs(self):
+        return self.portal.export_orgs()
 
-    def _importMeetingGroups(self, dict):
-        return self.portal.import_meetinggroups(dict=str(dict))
+    def _importOrgs(self, data):
+        return self.portal.import_orgs(data=str(data))
 
     def test_AccessToMethods(self):
         """
           Check that only Managers can access the methods
         """
-        self.assertRaises(Unauthorized, self._exportMeetingGroups)
-        self.assertRaises(Unauthorized, self._importMeetingGroups, {})
+        self.assertRaises(Unauthorized, self._exportOrgs)
+        self.assertRaises(Unauthorized, self._importOrgs, {})
 
-    def test_ExportMeetingGroups(self):
+    def test_ExportOrgs(self):
         """
           Check that calling this method returns the right content
         """
@@ -69,27 +69,27 @@ class testCustomUtils(MeetingCommunesTestCase):
             'vendors': ('Vendors', '', 'Devil'),
             'endUsers': ('End users', '', 'EndUsers'),
             'developers': ('Developers', '', 'Devel')}
-        res = self._exportMeetingGroups()
+        res = self._exportOrgs()
         self.assertEquals(expected, res)
 
-    def test_ImportMeetingGroups(self):
+    def test_ImportOrgs(self):
         """
-          Check that calling this method creates the MeetingGroups if not exist
+          Check that calling this method creates the organizations if not exist
         """
         self.changeUser('admin')
         # if we pass a dict containing the existing groups, it does nothing but
         # returning that the groups already exist
-        dict = self._exportMeetingGroups()
-        expected = 'MeetingGroup endUsers already exists\n' \
-                   'MeetingGroup vendors already exists\n' \
-                   'MeetingGroup developers already exists'
-        res = self._importMeetingGroups(dict)
+        data = self._exportOrgs()
+        expected = 'Organization endUsers already exists\n' \
+                   'Organization vendors already exists\n' \
+                   'Organization developers already exists'
+        res = self._importOrgs(data)
         self.assertEquals(expected, res)
-        # but it can also add a MeetingGroup if it does not exist
-        dict['newGroup'] = ('New group title', 'New group description', 'NGAcronym', 'python:False')
-        expected = 'MeetingGroup endUsers already exists\n' \
-                   'MeetingGroup vendors already exists\n' \
-                   'MeetingGroup newGroup added\n' \
-                   'MeetingGroup developers already exists'
-        res = self._importMeetingGroups(dict)
+        # but it can also add an organization if it does not exist
+        data['newGroup'] = ('New group title', 'New group description', 'NGAcronym', 'python:False')
+        expected = 'Organization endUsers already exists\n' \
+                   'Organization vendors already exists\n' \
+                   'Organization newGroup added\n' \
+                   'Organization developers already exists'
+        res = self._importOrgs(data)
         self.assertEquals(expected, res)

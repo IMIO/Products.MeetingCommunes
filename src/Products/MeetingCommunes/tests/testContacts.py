@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# File: testCustomMeetingGroup.py
+# File: testMeetingGroup.py
 #
 # Copyright (c) 2007-2013 by Imio.be
 #
@@ -23,14 +23,19 @@
 #
 
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
+from Products.PloneMeeting.tests.testContacts import testContacts as pmtc
 
 
-class testCustomMeetingGroup(MeetingCommunesTestCase):
-    '''Tests the MeetingGroup adapted methods.'''
+class testContacts(pmtc, MeetingCommunesTestCase):
+    '''Tests the contacts related methods.'''
 
-    def test_ListEchevinServices(self):
-        self.changeUser('admin')
-        from Products.Archetypes.atapi import DisplayList
-        les = DisplayList([('developers', u'Developers'), ('vendors', u'Vendors')])
-        meetingGroups = self.tool.objectValues('MeetingGroup')
-        self.assertEquals(meetingGroups[0].listEchevinServices(), les)
+    def setUp(self):
+        ''' '''
+        super(testContacts, self).setUp()
+
+
+def test_suite():
+    from unittest import TestSuite, makeSuite
+    suite = TestSuite()
+    suite.addTest(makeSuite(testContacts, prefix='test_pm_'))
+    return suite

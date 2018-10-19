@@ -25,6 +25,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Adapted profiles import_data to select 'description' in usedItemAttributes as MeetingItem.description
   is now an optional field
 - Fixed PODTemplateDescriptor definitions in various import_data.py to use correct field type
+- Use simpler way to define import_data of testing profile now available in PloneMeeting
+- Remove no more used (hopefuly...) CustomMeetingItem.adviceDelayIsTimedOutWithRowId method
+- Base MCItemDocumentGenerationHelperView.printFormatedAdvice on MeetingItem.getAdviceDataFor to avoid
+  rewriting code and to have every available data
 
 4.0 (2017-08-04)
 ----------------

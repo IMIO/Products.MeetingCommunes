@@ -98,19 +98,19 @@ class testCustomMeeting(MeetingCommunesTestCase):
         # add a Meeting and present several items in different categories
         self.changeUser('pmManager')
         i1 = self.create('MeetingItem', title='Item1')
-        i1.setProposingGroup('developers')
+        i1.setProposingGroup(self.developers_uid)
         i2 = self.create('MeetingItem', title='Item2')
-        i2.setProposingGroup('developers')
+        i2.setProposingGroup(self.developers_uid)
         i3 = self.create('MeetingItem', title='Item3')
-        i3.setProposingGroup('developers')
+        i3.setProposingGroup(self.developers_uid)
         i4 = self.create('MeetingItem', title='Item4')
-        i4.setProposingGroup('vendors')
+        i4.setProposingGroup(self.vendors_uid)
         i5 = self.create('MeetingItem', title='Item5')
-        i5.setProposingGroup('vendors')
+        i5.setProposingGroup(self.vendors_uid)
         i6 = self.create('MeetingItem', title='Item6')
-        i6.setProposingGroup('vendors')
+        i6.setProposingGroup(self.vendors_uid)
         i7 = self.create('MeetingItem', title='Item7')
-        i7.setProposingGroup('vendors')
+        i7.setProposingGroup(self.vendors_uid)
         items = (i1, i2, i3, i4, i5, i6, i7)
         m = self.create('Meeting', date='2007/12/11 09:00:00')
         # present every items in a meeting
@@ -122,10 +122,10 @@ class testCustomMeeting(MeetingCommunesTestCase):
         # we should have a list containing 3 lists, 1 list by category
         self.assertEquals(len(m.adapted().getPrintableItemsByCategory(itemUids)), 2)
         # the order and the type should be kept, the first element of inner list is a MeetingCategory
-        self.assertEquals(m.adapted().getPrintableItemsByCategory(itemUids)[0][0].getId(), 'developers')
-        self.assertEquals(m.adapted().getPrintableItemsByCategory(itemUids)[1][0].getId(), 'vendors')
-        self.assertEquals(m.adapted().getPrintableItemsByCategory(itemUids)[0][0].meta_type, 'MeetingGroup')
-        self.assertEquals(m.adapted().getPrintableItemsByCategory(itemUids)[1][0].meta_type, 'MeetingGroup')
+        self.assertEquals(m.adapted().getPrintableItemsByCategory(itemUids)[0][0], self.developers)
+        self.assertEquals(m.adapted().getPrintableItemsByCategory(itemUids)[1][0], self.vendors)
+        self.assertEquals(m.adapted().getPrintableItemsByCategory(itemUids)[0][0].portal_type, 'organization')
+        self.assertEquals(m.adapted().getPrintableItemsByCategory(itemUids)[1][0].portal_type, 'organization')
         # other element of the list are MeetingItems...
         self.assertEquals(m.adapted().getPrintableItemsByCategory(itemUids)[0][1].meta_type, 'MeetingItem')
         self.assertEquals(m.adapted().getPrintableItemsByCategory(itemUids)[0][2].meta_type, 'MeetingItem')
@@ -289,8 +289,8 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.assertEqual(api.content.get_state(cfg2.categories.marketing), 'inactive')
         self.assertFalse('marketing' in cat_empty_included)
         # but it includes categories that current is not in usingGroups
-        self.assertFalse('vendors_creators' in self.member.getGroups())
-        self.assertTrue('vendors' in cfg2.categories.subproducts.getUsingGroups())
+        self.assertFalse(self.vendors_creators in self.member.getGroups())
+        self.assertTrue(self.vendors_uid in cfg2.categories.subproducts.getUsingGroups())
         self.assertTrue('subproducts' in cat_empty_included)
 
     def test_InitializeDecisionField(self):
@@ -307,15 +307,15 @@ class testCustomMeeting(MeetingCommunesTestCase):
         # empty decision
         i1 = self.create('MeetingItem', title='Item1', description="<p>Description Item1</p>")
         i1.setDecision("")
-        i1.setProposingGroup('developers')
+        i1.setProposingGroup(self.developers_uid)
         # decision field is already filled
         i2 = self.create('MeetingItem', title='Item2', description="<p>Description Item2</p>")
         i2.setDecision("<p>Decision Item2</p>")
-        i2.setProposingGroup('developers')
+        i2.setProposingGroup(self.developers_uid)
         # create an item with the default Kupu empty value
         i3 = self.create('MeetingItem', title='Item3', description="<p>Description Item3</p>")
         i3.setDecision("<p>&nbsp;</p>")
-        i3.setProposingGroup('developers')
+        i3.setProposingGroup(self.developers_uid)
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
         # present every items in the meeting
         items = (i1, i2, i3)
