@@ -208,7 +208,6 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.do(meeting, 'decide')
         # check that a delayed item is duplicated
         self.assertEquals(len(item1.getBRefs('ItemPredecessor')), 0)
-        import ipdb; ipdb.set_trace()
         self.do(item1, 'delay')
         # the duplicated item has item3 as predecessor
         duplicatedItem = item1.getBRefs('ItemPredecessor')[0]
