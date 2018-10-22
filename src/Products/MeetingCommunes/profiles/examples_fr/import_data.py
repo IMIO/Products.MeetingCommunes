@@ -85,6 +85,13 @@ itemReport.pod_formats = ['odt', 'pdf', ]
 itemReport.pod_portal_types = ['MeetingItemCollege']
 itemReport.style_template = ['styles2']
 
+all_delib = PodTemplateDescriptor('all_delib', 'Toutes les délibérations')
+all_delib.odt_file = 'all_delib.odt'
+all_delib.pod_formats = ['odt', 'pdf', ]
+all_delib.pod_portal_types = ['MeetingCollege']
+all_delib.tal_condition = u'python:tool.isManager(here)'
+all_delib.merge_templates = [{'pod_context_name': u'delib', 'do_rendering': False, 'template': 'deliberation'}]
+
 dfAdviceTemplate = PodTemplateDescriptor('avis-df', 'Avis DF')
 dfAdviceTemplate.odt_file = 'avis-df.odt'
 dfAdviceTemplate.pod_formats = ['odt', 'pdf', ]
@@ -125,6 +132,14 @@ dashboardMeetingAssemblies.tal_condition = u'python:False'
 dashboardMeetingAssemblies.roles_bypassing_talcondition = set(['Manager', 'MeetingManager'])
 dashboardMeetingAssemblies.dashboard_collections_ids = ['searchalldecisions']
 
+dashboardPvs = PodTemplateDescriptor('all_pv', 'Tous les Procès-Verbaux', dashboard=True)
+dashboardPvs.odt_file = 'all_pv.odt'
+dashboardPvs.pod_formats = ['doc', 'pdf', ]
+dashboardMeetingAssemblies.tal_condition = u'python:False'
+dashboardPvs.roles_bypassing_talcondition = set(['Manager', 'MeetingManager'])
+dashboardPvs.dashboard_collections_ids = ['searchalldecisions']
+dashboardPvs.merge_templates = [{'pod_context_name': u'pv', 'do_rendering': False, 'template': 'pv'}]
+
 historyTemplate = PodTemplateDescriptor('historique', 'Historique')
 historyTemplate.odt_file = 'history.odt'
 historyTemplate.pod_formats = ['odt', 'pdf', ]
@@ -136,7 +151,7 @@ collegeTemplates = [agendaTemplate, agendaTemplateWithIndex,
                     itemTemplate, itemReport, dfAdviceTemplate,
                     dfAdvicesTemplate, dashboardTemplate,
                     dashboardTemplateOds, dashboardExportTemplate, dashboardDFTemplateOds,
-                    historyTemplate, dashboardMeetingAssemblies]
+                    historyTemplate, dashboardMeetingAssemblies, all_delib, dashboardPvs]
 
 # Pod templates ----------------------------------------------------------------
 agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
