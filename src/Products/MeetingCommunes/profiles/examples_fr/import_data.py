@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from DateTime import DateTime
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
-from Products.PloneMeeting.profiles import AnnexTypeDescriptor
+from Products.PloneMeeting.profiles import AnnexTypeDescriptor, StyleTemplateDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import OrgDescriptor
 from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
@@ -38,50 +38,70 @@ categories = [recurring,
               CategoryDescriptor('divers', 'Divers'),
               ]
 
+# Style Template ---------------------------------------------------------------
+stylesTemplate1 = StyleTemplateDescriptor('styles1', 'Default Styles')
+stylesTemplate1.odt_file = 'styles1.odt'
+
+stylesTemplate2 = StyleTemplateDescriptor('styles2', 'Extra Styles')
+stylesTemplate2.odt_file = 'styles2.odt'
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaTemplate.odt_file = 'oj.odt'
 agendaTemplate.pod_formats = ['odt', 'pdf', ]
 agendaTemplate.pod_portal_types = ['Meeting']
 agendaTemplate.tal_condition = u'python:tool.isManager(here)'
+agendaTemplate.style_template = ['styles1']
 
 agendaTemplateWithIndex = PodTemplateDescriptor('oj-tdm', 'Ordre du jour (Table des matières)')
 agendaTemplateWithIndex.odt_file = 'oj-avec-table-des-matieres.odt'
 agendaTemplateWithIndex.pod_formats = ['odt', 'pdf', ]
 agendaTemplateWithIndex.pod_portal_types = ['Meeting']
 agendaTemplateWithIndex.tal_condition = u'python:tool.isManager(here)'
+agendaTemplateWithIndex.style_template = ['styles1']
 
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsTemplate.odt_file = 'pv.odt'
 decisionsTemplate.pod_formats = ['odt', 'pdf', ]
 decisionsTemplate.pod_portal_types = ['Meeting']
 decisionsTemplate.tal_condition = u'python:tool.isManager(here)'
+decisionsTemplate.style_template = ['styles1']
 
 attendeesTemplate = PodTemplateDescriptor('attendees', 'Exemple assemblées')
 attendeesTemplate.odt_file = 'pv.odt'
 attendeesTemplate.pod_formats = ['odt', 'pdf', ]
 attendeesTemplate.pod_portal_types = ['Meeting']
 attendeesTemplate.tal_condition = u'python:tool.isManager(here, realManagers=True)'
+attendeesTemplate.style_template = ['styles1']
 
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemTemplate.odt_file = 'deliberation.odt'
 itemTemplate.pod_formats = ['odt', 'pdf', ]
 itemTemplate.pod_portal_types = ['MeetingItem']
+itemTemplate.style_template = ['styles1']
+
+itemReport = PodTemplateDescriptor('report', 'Rapport')
+itemReport.odt_file = 'report.odt'
+itemReport.pod_formats = ['odt', 'pdf', ]
+itemReport.pod_portal_types = ['MeetingItemCollege']
+itemReport.style_template = ['styles2']
 
 dfAdviceTemplate = PodTemplateDescriptor('avis-df', 'Avis DF')
 dfAdviceTemplate.odt_file = 'avis-df.odt'
 dfAdviceTemplate.pod_formats = ['odt', 'pdf', ]
 dfAdviceTemplate.pod_portal_types = ['MeetingItem']
 dfAdviceTemplate.tal_condition = u'python: context.adapted().showFinanceAdviceTemplate()'
+dfAdviceTemplate.style_template = ['styles1']
 
 dfAdvicesTemplate = PodTemplateDescriptor('synthese-avis-df-odt', 'Synthèse Avis DF', dashboard=True)
 dfAdvicesTemplate.odt_file = 'synthese-avis-df.odt'
 dfAdvicesTemplate.pod_formats = ['odt', 'pdf', ]
 dfAdvicesTemplate.dashboard_collections_ids = [FINANCE_ADVICES_COLLECTION_ID]
+dfAdvicesTemplate.style_template = ['styles1']
 
 dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif', dashboard=True)
 dashboardTemplate.odt_file = 'recapitulatif-tb.odt'
 dashboardTemplate.tal_condition = u'python: context.absolute_url().endswith("/searches_items")'
+dashboardTemplate.style_template = ['styles1']
 
 dashboardExportTemplate = PodTemplateDescriptor('export', 'Export', dashboard=True)
 dashboardExportTemplate.odt_file = 'dashboard.ods'
@@ -110,9 +130,10 @@ historyTemplate.odt_file = 'history.odt'
 historyTemplate.pod_formats = ['odt', 'pdf', ]
 historyTemplate.pod_portal_types = ['MeetingItem']
 
+collegeStyleTemplate = [stylesTemplate1, stylesTemplate2]
 collegeTemplates = [agendaTemplate, agendaTemplateWithIndex,
                     decisionsTemplate, attendeesTemplate,
-                    itemTemplate, dfAdviceTemplate,
+                    itemTemplate, itemReport, dfAdviceTemplate,
                     dfAdvicesTemplate, dashboardTemplate,
                     dashboardTemplateOds, dashboardExportTemplate, dashboardDFTemplateOds,
                     historyTemplate, dashboardMeetingAssemblies]
@@ -123,24 +144,29 @@ agendaCouncilTemplate.odt_file = 'council-oj.odt'
 agendaCouncilTemplate.pod_formats = ['odt', 'pdf', ]
 agendaCouncilTemplate.pod_portal_types = ['Meeting']
 agendaCouncilTemplate.tal_condition = u'python:tool.isManager(here)'
+agendaCouncilTemplate.style_template = ['styles1']
 
 decisionsCouncilTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsCouncilTemplate.odt_file = 'council-pv.odt'
 decisionsCouncilTemplate.pod_formats = ['odt', 'pdf', ]
 decisionsCouncilTemplate.pod_portal_types = ['Meeting']
 decisionsCouncilTemplate.tal_condition = u'python:tool.isManager(here)'
+decisionsCouncilTemplate.style_template = ['styles1']
 
 itemCouncilRapportTemplate = PodTemplateDescriptor('rapport', 'Rapport')
 itemCouncilRapportTemplate.odt_file = 'council-rapport.odt'
 itemCouncilRapportTemplate.pod_formats = ['odt', 'pdf', ]
 itemCouncilRapportTemplate.pod_portal_types = ['MeetingItem']
 itemCouncilRapportTemplate.tal_condition = u''
+itemCouncilRapportTemplate.style_template = ['styles1']
 
 itemCouncilTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemCouncilTemplate.odt_file = 'deliberation.odt'
 itemCouncilTemplate.pod_formats = ['odt', 'pdf', ]
 itemCouncilTemplate.pod_portal_types = ['MeetingItem']
+itemCouncilTemplate.style_template = ['styles1']
 
+councilStyleTemplate = [stylesTemplate1]
 councilTemplates = [agendaCouncilTemplate, decisionsCouncilTemplate,
                     itemCouncilRapportTemplate, itemCouncilTemplate,
                     dashboardTemplate, dashboardMeetingAssemblies]
@@ -378,6 +404,7 @@ collegeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                        groups[1].getIdSuffixed('reviewers'),
                                        groups[2].getIdSuffixed('reviewers'),
                                        groups[4].getIdSuffixed('reviewers')]
+collegeMeeting.styleTemplates = collegeStyleTemplate
 collegeMeeting.podTemplates = collegeTemplates
 collegeMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-council',
                                            'trigger_workflow_transitions_until': '__nothing__'}, ]
@@ -649,6 +676,7 @@ councilMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                        groups[1].getIdSuffixed('reviewers'),
                                        groups[2].getIdSuffixed('reviewers'),
                                        groups[4].getIdSuffixed('reviewers')]
+councilMeeting.styleTemplates = councilStyleTemplate
 councilMeeting.podTemplates = councilTemplates
 
 councilMeeting.recurringItems = [
