@@ -43,7 +43,7 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
         # move each value of echevinServices to groupsInCharge
         logger.info("Migrating MeetingGroup.echevinServices to MeetingGroup.groupsInCharge...")
         for mGroup in self.tool.objectValues('MeetingGroup'):
-            echevinServices = mGroup.getEchevinServices()
+            echevinServices = mGroup.echevinServices
             for echevinService in echevinServices:
                 otherMGroup = self.tool.get(echevinService)
                 if otherMGroup:
