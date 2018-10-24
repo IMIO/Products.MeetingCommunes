@@ -82,13 +82,13 @@ itemTemplate.style_template = ['styles1']
 itemReport = PodTemplateDescriptor('report', 'Rapport')
 itemReport.odt_file = 'report.odt'
 itemReport.pod_formats = ['odt', 'pdf', ]
-itemReport.pod_portal_types = ['MeetingItemCollege']
+itemReport.pod_portal_types = ['MeetingItem']
 itemReport.style_template = ['styles2']
 
 all_delib = PodTemplateDescriptor('all_delib', 'Toutes les délibérations')
 all_delib.odt_file = 'all_delib.odt'
 all_delib.pod_formats = ['odt', 'pdf', ]
-all_delib.pod_portal_types = ['MeetingCollege']
+all_delib.pod_portal_types = ['Meeting']
 all_delib.tal_condition = u'python:tool.isManager(here)'
 all_delib.merge_templates = [{'pod_context_name': u'delib', 'do_rendering': False, 'template': 'deliberation'}]
 
@@ -202,13 +202,13 @@ conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Co
 
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel")
 
-groups = [OrgDescriptor('dirgen', 'Directeur Général', 'DG'),
-          OrgDescriptor('secretariat', 'Secrétariat communal', 'Secr'),
-          OrgDescriptor('informatique', 'Service informatique', 'Info'),
-          OrgDescriptor('personnel', 'Service du personnel', 'Pers'),
-          OrgDescriptor('dirfin', 'Directeur Financier', 'DF'),
-          OrgDescriptor('comptabilite', 'Service comptabilité', 'Compt'),
-          OrgDescriptor('travaux', 'Service travaux', 'Trav'), ]
+groups = [OrgDescriptor('dirgen', 'Directeur Général', u'DG'),
+          OrgDescriptor('secretariat', 'Secrétariat communal', u'Secr'),
+          OrgDescriptor('informatique', 'Service informatique', u'Info'),
+          OrgDescriptor('personnel', 'Service du personnel', u'Pers'),
+          OrgDescriptor('dirfin', 'Directeur Financier', u'DF'),
+          OrgDescriptor('comptabilite', 'Service comptabilité', u'Compt'),
+          OrgDescriptor('travaux', 'Service travaux', u'Trav'), ]
 
 # MeetingManager
 groups[0].creators.append(dgen)

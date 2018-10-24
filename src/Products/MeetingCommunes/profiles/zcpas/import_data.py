@@ -125,15 +125,15 @@ echevinPers = UserDescriptor('echevinPers', [], email="test@test.be")
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be")
 conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Conseiller")
 
-groups = [OrgDescriptor('admingen', 'Administration générale', 'AdminGen'),
-          OrgDescriptor('aidefamilles', 'Aide aux familles', 'Aide'),
-          OrgDescriptor('comptabilite', 'Comptabilité', 'Compta'),
-          OrgDescriptor('informatique', 'Informatique', 'Info'),
-          OrgDescriptor('isp', 'Insertion socio-professionnelle', 'ISP'),
-          OrgDescriptor('dettes', 'Médiation de dettes', 'Dettes'),
-          OrgDescriptor('personnel', 'Personnel', 'Pers'),
-          OrgDescriptor('social', 'Social', 'Soc'),
-          OrgDescriptor('divers', 'Divers', 'Divers'), ]
+groups = [OrgDescriptor('admingen', 'Administration générale', u'AdminGen'),
+          OrgDescriptor('aidefamilles', 'Aide aux familles', u'Aide'),
+          OrgDescriptor('comptabilite', 'Comptabilité', u'Compta'),
+          OrgDescriptor('informatique', 'Informatique', u'Info'),
+          OrgDescriptor('isp', 'Insertion socio-professionnelle', u'ISP'),
+          OrgDescriptor('dettes', 'Médiation de dettes', u'Dettes'),
+          OrgDescriptor('personnel', 'Personnel', u'Pers'),
+          OrgDescriptor('social', 'Social', u'Soc'),
+          OrgDescriptor('divers', 'Divers', u'Divers'), ]
 # MeetingManager
 groups[0].creators.append(secretaire)
 groups[0].reviewers.append(secretaire)

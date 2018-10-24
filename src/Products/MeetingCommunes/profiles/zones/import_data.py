@@ -111,13 +111,13 @@ conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Co
 
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel")
 
-groups = [OrgDescriptor('commandant', 'Commandant de zone', 'CdZ'),
-          OrgDescriptor('secretariat', 'Secrétariat de zone', 'Secr'),
-          OrgDescriptor('informatique', 'Service informatique', 'Info'),
-          OrgDescriptor('personnel', 'Service du personnel', 'Pers'),
-          OrgDescriptor('dirfin', 'Directeur Financier', 'DF'),
-          OrgDescriptor('finances', 'Service finances', 'Fin'),
-          OrgDescriptor('travaux', 'Service travaux', 'Trav'), ]
+groups = [OrgDescriptor('commandant', 'Commandant de zone', u'CdZ'),
+          OrgDescriptor('secretariat', 'Secrétariat de zone', u'Secr'),
+          OrgDescriptor('informatique', 'Service informatique', u'Info'),
+          OrgDescriptor('personnel', 'Service du personnel', u'Pers'),
+          OrgDescriptor('dirfin', 'Directeur Financier', u'DF'),
+          OrgDescriptor('finances', 'Service finances', u'Fin'),
+          OrgDescriptor('travaux', 'Service travaux', u'Trav'), ]
 
 # MeetingManager
 groups[0].creators.append(dgen)
