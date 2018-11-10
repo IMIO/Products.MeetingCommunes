@@ -30,6 +30,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Base MCItemDocumentGenerationHelperView.printFormatedAdvice on MeetingItem.getAdviceDataFor to avoid
   rewriting code and to have every available data
 - Use simple profile import_data as base for every secondary profiles (zag, zbourgmestre, ...)
+- Adapted profiles import_data usedItemAttributes as MeetingItem.itemAssembly is no more an optional field
 
 4.0 (2017-08-04)
 ----------------
