@@ -4,8 +4,8 @@ Products.MeetingCommunes Changelog
 Older versions than 3.0 can be found at http://svn.communesplone.org/svn/communesplone/MeetingCommunes/tags/
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1 (unreleased)
-----------------
+4.1b1 (unreleased)
+------------------
 
 - Do not call at_post_edit_script directly anymore, use Meeting(Item)._update_after_edit
 - Adapted default 'deliberation.odt' to no more use global margin and integrate printAllAnnexes
