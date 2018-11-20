@@ -40,6 +40,7 @@ from Products.MeetingCommunes.interfaces import IMeetingCommunesWorkflowConditio
 from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowActions
 from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowConditions
 from Products.PloneMeeting.adapters import CompoundCriterionBaseAdapter
+from Products.PloneMeeting.adapters import query_user_groups_or_config_modified_cachekey
 from Products.PloneMeeting.indexes import DELAYAWARE_ROW_ID_PATTERN
 from Products.PloneMeeting.indexes import REAL_ORG_UID_PATTERN
 from Products.PloneMeeting.interfaces import IMeetingConfigCustom
@@ -680,7 +681,7 @@ class CustomMeetingConfig(MeetingConfig):
                         'sort_reversed': True,
                         'showNumberOfItems': False,
                         'tal_condition':
-                        "python: '%s_budgetimpacteditors' % cfg.getId() in tool.getPloneGroupsForUser() or "
+                        "python: '%s_budgetimpacteditors' % cfg.getId() in tool.get_plone_groups_for_user() or "
                         "tool.isManager(here)",
                         'roles_bypassing_talcondition': ['Manager', ]
                     }
@@ -941,7 +942,7 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
     def isFinancialUser(self):
         '''Is current user a financial user, so in groups FINANCE_GROUP_SUFFIXES.'''
         tool = api.portal.get_tool('portal_plonemeeting')
-        for groupId in tool.getPloneGroupsForUser():
+        for groupId in tool.get_plone_groups_for_user():
             for suffix in FINANCE_GROUP_SUFFIXES:
                 if groupId.endswith('_%s' % suffix):
                     return True
@@ -1080,17 +1081,13 @@ InitializeClass(CustomToolPloneMeeting)
 
 class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
 
-    def itemstocontrolcompletenessof_cachekey(method, self):
-        '''cachekey method for every CompoundCriterion adapters.'''
-        return str(self.request._debug)
-
     @property
-    @ram.cache(itemstocontrolcompletenessof_cachekey)
+    @ram.cache(query_user_groups_or_config_modified_cachekey)
     def query_itemstocontrolcompletenessof(self):
         '''Queries all items for which there is completeness to evaluate, so where completeness
            is not 'completeness_complete'.'''
         groupIds = []
-        userGroups = self.tool.getPloneGroupsForUser()
+        userGroups = self.tool.get_plone_groups_for_user()
         for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
             # only keep finance groupIds the current user is controller for
             if '%s_financialcontrollers' % financeGroup in userGroups:
@@ -1111,17 +1108,13 @@ class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
 
 class ItemsWithAdviceProposedToFinancialControllerAdapter(CompoundCriterionBaseAdapter):
 
-    def itemswithadviceproposedtofinancialcontroller_cachekey(method, self):
-        '''cachekey method for every CompoundCriterion adapters.'''
-        return str(self.request._debug)
-
     @property
-    @ram.cache(itemswithadviceproposedtofinancialcontroller_cachekey)
+    @ram.cache(query_user_groups_or_config_modified_cachekey)
     def query_itemswithadviceproposedtofinancialcontroller(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_controller'.
            We only return items for which completeness has been evaluated to 'complete'.'''
         groupIds = []
-        userGroups = self.tool.getPloneGroupsForUser()
+        userGroups = self.tool.get_plone_groups_for_user()
         for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
             # only keep finance groupIds the current user is controller for
             if '%s_financialcontrollers' % financeGroup in userGroups:
@@ -1137,17 +1130,13 @@ class ItemsWithAdviceProposedToFinancialControllerAdapter(CompoundCriterionBaseA
 
 class ItemsWithAdviceProposedToFinancialEditorAdapter(CompoundCriterionBaseAdapter):
 
-    def itemswithadviceproposedtofinancialeditor_cachekey(method, self):
-        '''cachekey method for every CompoundCriterion adapters.'''
-        return str(self.request._debug)
-
     @property
-    @ram.cache(itemswithadviceproposedtofinancialeditor_cachekey)
+    @ram.cache(query_user_groups_or_config_modified_cachekey)
     def query_itemswithadviceproposedtofinancialeditor(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_editor'.
            We only return items for which completeness has been evaluated to 'complete'.'''
         groupIds = []
-        userGroups = self.tool.getPloneGroupsForUser()
+        userGroups = self.tool.get_plone_groups_for_user()
         for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
             # only keep finance groupIds the current user is controller for
             if '%s_financialeditors' % financeGroup in userGroups:
@@ -1163,16 +1152,12 @@ class ItemsWithAdviceProposedToFinancialEditorAdapter(CompoundCriterionBaseAdapt
 
 class ItemsWithAdviceProposedToFinancialReviewerAdapter(CompoundCriterionBaseAdapter):
 
-    def itemswithadviceproposedtofinancialreviewer_cachekey(method, self):
-        '''cachekey method for every CompoundCriterion adapters.'''
-        return str(self.request._debug)
-
     @property
-    @ram.cache(itemswithadviceproposedtofinancialreviewer_cachekey)
+    @ram.cache(query_user_groups_or_config_modified_cachekey)
     def query_itemswithadviceproposedtofinancialreviewer(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_reviewer'.'''
         groupIds = []
-        userGroups = self.tool.getPloneGroupsForUser()
+        userGroups = self.tool.get_plone_groups_for_user()
         for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
             # only keep finance groupIds the current user is reviewer for
             if '%s_financialreviewers' % financeGroup in userGroups:
@@ -1186,16 +1171,12 @@ class ItemsWithAdviceProposedToFinancialReviewerAdapter(CompoundCriterionBaseAda
 
 class ItemsWithAdviceProposedToFinancialManagerAdapter(CompoundCriterionBaseAdapter):
 
-    def itemswithadviceproposedtofinancialmanager_cachekey(method, self):
-        '''cachekey method for every CompoundCriterion adapters.'''
-        return str(self.request._debug)
-
     @property
-    @ram.cache(itemswithadviceproposedtofinancialmanager_cachekey)
+    @ram.cache(query_user_groups_or_config_modified_cachekey)
     def query_itemswithadviceproposedtofinancialmanager(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_manager'.'''
         groupIds = []
-        userGroups = self.tool.getPloneGroupsForUser()
+        userGroups = self.tool.get_plone_groups_for_user()
         for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
             # only keep finance groupIds the current user is manager for
             if '%s_financialmanagers' % financeGroup in userGroups:

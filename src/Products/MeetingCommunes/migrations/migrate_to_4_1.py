@@ -72,9 +72,9 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
             cfg.customAdvisers = adapted_customAdvisers
         logger.info('Done.')
 
-    def run(self, step=None):
+    def run(self, step=None, profile_name=u'profile-Products.MeetingCommunes:default'):
         # change self.profile_name that is reinstalled at the beginning of the PM migration
-        self.profile_name = u'profile-Products.MeetingCommunes:default'
+        self.profile_name = profile_name
 
         # before anything, update the WF interfaces names
         self._updateWFInterfaceNames()

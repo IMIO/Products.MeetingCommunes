@@ -31,6 +31,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   rewriting code and to have every available data
 - Use simple profile import_data as base for every secondary profiles (zag, zbourgmestre, ...)
 - Adapted profiles import_data usedItemAttributes as MeetingItem.itemAssembly is no more an optional field
+- ToolPloneMeeting.getPloneGroupsForUser was renamed to ToolPloneMeeting.get_plone_groups_for_user
+- Use a better cachekey for finances advice related searches (cached as long as user/groups/cfg did not changed) 
 
 4.0 (2017-08-04)
 ----------------
