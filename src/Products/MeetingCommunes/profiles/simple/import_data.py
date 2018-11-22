@@ -55,7 +55,8 @@ simpleMeeting.usedItemAttributes = [
     'observations',
     'sendToAuthority',
     'toDiscuss',
-    'itemIsSigned', ]
+    'itemIsSigned',
+    'notes', ]
 simpleMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
 simpleMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
 simpleMeeting.meetingWorkflow = 'meetingcommunes_workflow'
