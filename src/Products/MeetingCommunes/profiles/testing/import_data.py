@@ -90,6 +90,7 @@ councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transitio
 
                                                              {'meeting_transition': 'backToCreated',
                                                               'item_transition': 'backToPresented'},)
+councilMeeting.podTemplates = []
 
 data = deepcopy(pm_import_data.data)
 data.meetingFolderTitle = 'Mes séances'
