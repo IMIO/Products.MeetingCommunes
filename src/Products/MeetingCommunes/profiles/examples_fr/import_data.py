@@ -74,6 +74,7 @@ attendeesTemplate.tal_condition = u'python:tool.isManager(here, realManagers=Tru
 attendeesTemplate.style_template = ['styles1']
 
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
+itemTemplate.is_reusable = True
 itemTemplate.odt_file = 'deliberation.odt'
 itemTemplate.pod_formats = ['odt', 'pdf', ]
 itemTemplate.pod_portal_types = ['MeetingItem']
@@ -152,39 +153,6 @@ collegeTemplates = [agendaTemplate, agendaTemplateWithIndex,
                     dfAdvicesTemplate, dashboardTemplate,
                     dashboardTemplateOds, dashboardExportTemplate, dashboardDFTemplateOds,
                     historyTemplate, dashboardMeetingAssemblies, all_delib, dashboardPvs]
-
-# Pod templates ----------------------------------------------------------------
-agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
-agendaCouncilTemplate.odt_file = 'council-oj.odt'
-agendaCouncilTemplate.pod_formats = ['odt', 'pdf', ]
-agendaCouncilTemplate.pod_portal_types = ['Meeting']
-agendaCouncilTemplate.tal_condition = u'python:tool.isManager(here)'
-agendaCouncilTemplate.style_template = ['styles1']
-
-decisionsCouncilTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
-decisionsCouncilTemplate.odt_file = 'council-pv.odt'
-decisionsCouncilTemplate.pod_formats = ['odt', 'pdf', ]
-decisionsCouncilTemplate.pod_portal_types = ['Meeting']
-decisionsCouncilTemplate.tal_condition = u'python:tool.isManager(here)'
-decisionsCouncilTemplate.style_template = ['styles1']
-
-itemCouncilRapportTemplate = PodTemplateDescriptor('rapport', 'Rapport')
-itemCouncilRapportTemplate.odt_file = 'council-rapport.odt'
-itemCouncilRapportTemplate.pod_formats = ['odt', 'pdf', ]
-itemCouncilRapportTemplate.pod_portal_types = ['MeetingItem']
-itemCouncilRapportTemplate.tal_condition = u''
-itemCouncilRapportTemplate.style_template = ['styles1']
-
-itemCouncilTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
-itemCouncilTemplate.odt_file = 'deliberation.odt'
-itemCouncilTemplate.pod_formats = ['odt', 'pdf', ]
-itemCouncilTemplate.pod_portal_types = ['MeetingItem']
-itemCouncilTemplate.style_template = ['styles1']
-
-councilStyleTemplate = [stylesTemplate1]
-councilTemplates = [agendaCouncilTemplate, decisionsCouncilTemplate,
-                    itemCouncilRapportTemplate, itemCouncilTemplate,
-                    dashboardTemplate, dashboardMeetingAssemblies]
 
 # Users and groups -------------------------------------------------------------
 dgen = UserDescriptor('dgen', [], email="test@test.be", fullname="Henry Directeur")
@@ -580,6 +548,40 @@ collegeMeeting.itemTemplates = [
 ]
 
 # Conseil communal
+# Pod templates ----------------------------------------------------------------
+agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
+agendaCouncilTemplate.odt_file = 'council-oj.odt'
+agendaCouncilTemplate.pod_formats = ['odt', 'pdf', ]
+agendaCouncilTemplate.pod_portal_types = ['Meeting']
+agendaCouncilTemplate.tal_condition = u'python:tool.isManager(here)'
+agendaCouncilTemplate.style_template = ['styles1']
+
+decisionsCouncilTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
+decisionsCouncilTemplate.odt_file = 'council-pv.odt'
+decisionsCouncilTemplate.pod_formats = ['odt', 'pdf', ]
+decisionsCouncilTemplate.pod_portal_types = ['Meeting']
+decisionsCouncilTemplate.tal_condition = u'python:tool.isManager(here)'
+decisionsCouncilTemplate.style_template = ['styles1']
+
+itemCouncilRapportTemplate = PodTemplateDescriptor('rapport', 'Rapport')
+itemCouncilRapportTemplate.odt_file = 'council-rapport.odt'
+itemCouncilRapportTemplate.pod_formats = ['odt', 'pdf', ]
+itemCouncilRapportTemplate.pod_portal_types = ['MeetingItem']
+itemCouncilRapportTemplate.tal_condition = u''
+itemCouncilRapportTemplate.style_template = ['styles1']
+
+itemCouncilTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
+itemCouncilTemplate.pod_template_to_use = {'cfg_id': collegeMeeting.id, 'template_id': itemTemplate.id}
+itemCouncilTemplate.pod_formats = ['odt', 'pdf', ]
+itemCouncilTemplate.pod_portal_types = ['MeetingItem']
+itemCouncilTemplate.style_template = ['styles1']
+
+councilStyleTemplate = [stylesTemplate1]
+
+councilTemplates = [agendaCouncilTemplate, decisionsCouncilTemplate,
+                    itemCouncilRapportTemplate, itemCouncilTemplate,
+                    dashboardTemplate, dashboardMeetingAssemblies]
+
 councilMeeting = MeetingConfigDescriptor(
     'meeting-config-council', 'Conseil Communal',
     'Conseil Communal')
