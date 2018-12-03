@@ -192,42 +192,45 @@ def finalizeExampleInstance(context):
     site = context.getSite()
 
     logStep("finalizeExampleInstance", context)
-    # add the test users 'dfin' and 'bourgmestre' to every '_powerobservers' groups
-    mTool = api.portal.get_tool('portal_membership')
-    groupsTool = api.portal.get_tool('portal_groups')
-    member = mTool.getMemberById(specialUserId)
-    for memberId in ('dfin', 'bourgmestre', ):
-        member = mTool.getMemberById(memberId)
+    # in some tests, meetingConfig1Id/meetingConfig2Id was changed
+    tool = site.portal_plonemeeting
+    if hasattr(tool, meetingConfig1Id) and hasattr(tool, meetingConfig2Id):
+        # add the test users 'dfin' and 'bourgmestre' to every '_powerobservers' groups
+        mTool = api.portal.get_tool('portal_membership')
+        groupsTool = api.portal.get_tool('portal_groups')
+        member = mTool.getMemberById(specialUserId)
+        for memberId in ('dfin', 'bourgmestre', ):
+            member = mTool.getMemberById(memberId)
+            if member:
+                groupsTool.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig1Id)
+                groupsTool.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
+        # add the test user 'conseiller' only to the 'meeting-config-council_powerobservers' group
+        member = mTool.getMemberById('conseiller')
         if member:
-            groupsTool.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig1Id)
             groupsTool.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
-    # add the test user 'conseiller' only to the 'meeting-config-council_powerobservers' group
-    member = mTool.getMemberById('conseiller')
-    if member:
-        groupsTool.addPrincipalToGroup(member.getId(), '%s_powerobservers' % meetingConfig2Id)
 
-    # add the test user 'dfin' and 'chefCompta' to the 'meeting-config-xxx_budgetimpacteditors' groups
-    for memberId in ('dfin', 'chefCompta', ):
-        member = mTool.getMemberById(memberId)
-        if member:
-            groupsTool.addPrincipalToGroup(memberId, '%s_budgetimpacteditors' % meetingConfig1Id)
-            groupsTool.addPrincipalToGroup(memberId, '%s_budgetimpacteditors' % meetingConfig2Id)
+        # add the test user 'dfin' and 'chefCompta' to the 'meeting-config-xxx_budgetimpacteditors' groups
+        for memberId in ('dfin', 'chefCompta', ):
+            member = mTool.getMemberById(memberId)
+            if member:
+                groupsTool.addPrincipalToGroup(memberId, '%s_budgetimpacteditors' % meetingConfig1Id)
+                groupsTool.addPrincipalToGroup(memberId, '%s_budgetimpacteditors' % meetingConfig2Id)
 
-    # add some topics to the portlet_todo
-    mc_college_or_bp = getattr(site.portal_plonemeeting, meetingConfig1Id)
-    mc_college_or_bp.setToDoListSearches(
-        [getattr(mc_college_or_bp.searches.searches_items, 'searchdecideditems').UID(),
-         getattr(mc_college_or_bp.searches.searches_items, 'searchallitemsincopy').UID(),
-         getattr(mc_college_or_bp.searches.searches_items, 'searchitemstoadvicewithdelay').UID(),
-         getattr(mc_college_or_bp.searches.searches_items, 'searchallitemstoadvice').UID(),
-         ])
+        # add some topics to the portlet_todo
+        mc_college_or_bp = getattr(tool, meetingConfig1Id)
+        mc_college_or_bp.setToDoListSearches(
+            [getattr(mc_college_or_bp.searches.searches_items, 'searchdecideditems').UID(),
+             getattr(mc_college_or_bp.searches.searches_items, 'searchallitemsincopy').UID(),
+             getattr(mc_college_or_bp.searches.searches_items, 'searchitemstoadvicewithdelay').UID(),
+             getattr(mc_college_or_bp.searches.searches_items, 'searchallitemstoadvice').UID(),
+             ])
 
-    # add some topics to the portlet_todo
-    mc_council_or_cas = getattr(site.portal_plonemeeting, meetingConfig2Id)
-    mc_council_or_cas.setToDoListSearches(
-        [getattr(mc_council_or_cas.searches.searches_items, 'searchdecideditems').UID(),
-         getattr(mc_council_or_cas.searches.searches_items, 'searchallitemsincopy').UID(),
-         ])
+        # add some topics to the portlet_todo
+        mc_council_or_cas = getattr(site.portal_plonemeeting, meetingConfig2Id)
+        mc_council_or_cas.setToDoListSearches(
+            [getattr(mc_council_or_cas.searches.searches_items, 'searchdecideditems').UID(),
+             getattr(mc_council_or_cas.searches.searches_items, 'searchallitemsincopy').UID(),
+             ])
 
     # finally, re-launch plonemeetingskin and MeetingCommunes skins step
     # because PM has been installed before the import_data profile and messed up skins layers
@@ -241,7 +244,7 @@ def addDemoData(context):
 
     site = context.getSite()
     tool = api.portal.get_tool('portal_plonemeeting')
-    cfg = getattr(tool, 'meeting-config-college')
+    cfg = tool.objectValues('MeetingConfig')[0]
     wfTool = api.portal.get_tool('portal_workflow')
     pTool = api.portal.get_tool('plone_utils')
     mTool = api.portal.get_tool('portal_membership')
@@ -365,7 +368,7 @@ def addDemoData(context):
                     wfTool.doActionFor(newItem, 'propose')
                 if item['review_state'] == 'validated':
                     wfTool.doActionFor(newItem, 'validate')
-                # add annexe and advise for one item in College
+                # add annexe and advice for one item in College
                 if item['templateId'] == 'template3' and cfg.id == 'meeting-config-college':
                     cpt = 1
                     annexes_config_root = get_config_root(newItem)
