@@ -7,8 +7,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1b2 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Fix profile, 'item_reference' was renamed to 'static_item_reference' for MeetingConfig.itemsListVisibleColumns
 
 4.1b1 (2018-12-04)
 ------------------
