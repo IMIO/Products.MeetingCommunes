@@ -29,12 +29,6 @@ annexeSeance = AnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', relatedTo=
 # Categories -------------------------------------------------------------------
 recurring = CategoryDescriptor('recurrents', 'Récurrents')
 categories = [recurring,
-              CategoryDescriptor('travaux', 'Travaux'),
-              CategoryDescriptor('urbanisme', 'Urbanisme'),
-              CategoryDescriptor('comptabilite', 'Comptabilité/Recettes'),
-              CategoryDescriptor('personnel', 'Personnel'),
-              CategoryDescriptor('population', 'Population/Etat-civil'),
-              CategoryDescriptor('locations', 'Locations'),
               CategoryDescriptor('divers', 'Divers'),
               ]
 

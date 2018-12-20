@@ -1,362 +1,53 @@
 # -*- coding: utf-8 -*-
-from Products.PloneMeeting.profiles import AnnexTypeDescriptor
-from Products.PloneMeeting.profiles import CategoryDescriptor
-from Products.PloneMeeting.profiles import OrgDescriptor
-from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
-from Products.PloneMeeting.profiles import MeetingConfigDescriptor
+
+from copy import deepcopy
+from Products.MeetingCommunes.profiles.examples_fr import import_data as examples_fr_import_data
+from Products.MeetingCommunes.profiles.examples_fr.import_data import conseiller
+from Products.PloneMeeting.profiles import patch_pod_templates
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
-from Products.PloneMeeting.profiles import PodTemplateDescriptor
-from Products.PloneMeeting.profiles import RecurringItemDescriptor
 from Products.PloneMeeting.profiles import UserDescriptor
 
-# File types -------------------------------------------------------------------
-annexe = ItemAnnexTypeDescriptor('annexe', 'Annexe', u'attach.png')
-annexeBudget = ItemAnnexTypeDescriptor('annexeBudget', 'Article Budgétaire', u'budget.png')
-annexeCahier = ItemAnnexTypeDescriptor('annexeCahier', 'Cahier des Charges', u'cahier.png')
-annexeDecision = ItemAnnexTypeDescriptor('annexeDecision', 'Annexe à la décision',
-                                         u'attach.png', relatedTo='item_decision')
-annexeAvis = AnnexTypeDescriptor('annexeAvis', 'Annexe à un avis',
-                                 u'attach.png', relatedTo='advice')
-annexeAvisLegal = AnnexTypeDescriptor('annexeAvisLegal', 'Extrait article de loi',
-                                      u'legalAdvice.png', relatedTo='advice')
-annexeSeance = AnnexTypeDescriptor('annexe', 'Annexe',
-                                   u'attach.png', relatedTo='meeting')
-
-# Categories -------------------------------------------------------------------
-categories = [CategoryDescriptor('recurrents', 'Récurrents'),
-              CategoryDescriptor('demissions', 'Démission(s)'),
-              CategoryDescriptor('designations', 'Désignation(s)'),
-              CategoryDescriptor('compte', 'Compte'),
-              CategoryDescriptor('budget', 'Budget'),
-              CategoryDescriptor('contentieux', 'Contentieux'),
-              CategoryDescriptor('eco-sociale', 'Economie sociale'),
-              CategoryDescriptor('aide-familles', "Service d'aide aux familles"),
-              CategoryDescriptor('marches-publics', 'Marchés publics'),
-              CategoryDescriptor('divers', 'Divers'), ]
-
-# Pod templates ----------------------------------------------------------------
-# BP
-agendaTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
-agendaTemplate.odt_file = '../../examples_fr/templates/oj.odt'
-agendaTemplate.pod_formats = ['odt', 'pdf', ]
-agendaTemplate.pod_portal_types = ['Meeting']
-agendaTemplate.tal_condition = u'python:tool.isManager(here)'
-
-decisionsTemplate = PodTemplateDescriptor('decisions', 'Procès-verbal')
-decisionsTemplate.odt_file = '../../examples_fr/templates/pv.odt'
-decisionsTemplate.pod_formats = ['odt', 'pdf', ]
-decisionsTemplate.pod_portal_types = ['Meeting']
-decisionsTemplate.tal_condition = u'python:tool.isManager(here)'
-
-itemTemplate = PodTemplateDescriptor('item', 'Délibération')
-itemTemplate.odt_file = '../../examples_fr/templates/deliberation.odt'
-itemTemplate.pod_formats = ['odt', 'pdf', ]
-itemTemplate.pod_portal_types = ['MeetingItem']
-itemTemplate.tal_condition = u''
-
-dashboardTemplate = PodTemplateDescriptor('recapitulatif', 'Récapitulatif', dashboard=True)
-dashboardTemplate.odt_file = '../../examples_fr/templates/recapitulatif-tb.odt'
-dashboardTemplate.tal_condition = u'python: context.absolute_url().endswith("/searches_items")'
-
-dashboardMeetingAssemblies = PodTemplateDescriptor('meeting-assemblies', 'Assemblée des séances', dashboard=True)
-dashboardMeetingAssemblies.odt_file = '../../examples_fr/templates/meeting_assemblies.odt'
-dashboardMeetingAssemblies.pod_formats = ['doc', 'pdf', ]
-dashboardMeetingAssemblies.tal_condition = u'python:False'
-dashboardMeetingAssemblies.roles_bypassing_talcondition = set(['Manager', 'MeetingManager'])
-dashboardMeetingAssemblies.dashboard_collections_ids = ['searchalldecisions']
-
-bpTemplates = [agendaTemplate, decisionsTemplate,
-               itemTemplate, dashboardTemplate, dashboardMeetingAssemblies]
-
-# CAS
-agendaCASTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
-agendaCASTemplate.odt_file = '../../examples_fr/templates/oj.odt'
-agendaCASTemplate.pod_formats = ['odt', 'pdf', ]
-agendaCASTemplate.pod_portal_types = ['Meeting']
-agendaCASTemplate.tal_condition = u'python:tool.isManager(here)'
-
-decisionsCASTemplate = PodTemplateDescriptor('decisions', 'Procès-verbal')
-decisionsCASTemplate.odt_file = '../../examples_fr/templates/pv.odt'
-decisionsCASTemplate.pod_formats = ['odt', 'pdf', ]
-decisionsCASTemplate.pod_portal_types = ['Meeting']
-decisionsCASTemplate.tal_condition = u'python:tool.isManager(here)'
-
-itemCASTemplate = PodTemplateDescriptor('item', 'Délibération')
-itemCASTemplate.odt_file = '../../examples_fr/templates/deliberation.odt'
-itemCASTemplate.pod_formats = ['odt', 'pdf', ]
-itemCASTemplate.pod_portal_types = ['MeetingItem']
-itemCASTemplate.tal_condition = u''
-
-casTemplates = [agendaCASTemplate, decisionsCASTemplate,
-                itemCASTemplate, dashboardTemplate, dashboardMeetingAssemblies]
-
-# Comitee
-agendaComiteeTemplate = PodTemplateDescriptor('agenda', 'Ordre du jour')
-agendaComiteeTemplate.odt_file = '../../examples_fr/templates/oj.odt'
-agendaComiteeTemplate.pod_formats = ['odt', 'pdf', ]
-agendaComiteeTemplate.pod_portal_types = ['Meeting']
-agendaComiteeTemplate.tal_condition = u'python:tool.isManager(here)'
-
-decisionsComiteeTemplate = PodTemplateDescriptor('decisions', 'Procès-verbal')
-decisionsComiteeTemplate.odt_file = '../../examples_fr/templates/pv.odt'
-decisionsComiteeTemplate.pod_formats = ['odt', 'pdf', ]
-decisionsComiteeTemplate.pod_portal_types = ['Meeting']
-decisionsComiteeTemplate.tal_condition = u'python:tool.isManager(here)'
-
-itemComiteeTemplate = PodTemplateDescriptor('item', 'Délibération')
-itemComiteeTemplate.odt_file = '../../examples_fr/templates/deliberation.odt'
-itemComiteeTemplate.pod_formats = ['odt', 'pdf', ]
-itemComiteeTemplate.pod_portal_types = ['MeetingItem']
-itemComiteeTemplate.tal_condition = u''
-
-comiteeTemplates = [agendaComiteeTemplate, decisionsComiteeTemplate,
-                    itemComiteeTemplate, dashboardTemplate]
 
 # Users and groups -------------------------------------------------------------
 president = UserDescriptor('president', [], email="test@test.be", fullname="Président")
-secretaire = UserDescriptor('secretaire', [], email="test@test.be")
-agentInfo = UserDescriptor('agentInfo', [], email="test@test.be")
-agentCompta = UserDescriptor('agentCompta', [], email="test@test.be")
-agentPers = UserDescriptor('agentPers', [], email="test@test.be")
-agentIsp = UserDescriptor('agentIsp', [], email="test@test.be")
-chefPers = UserDescriptor('chefPers', [], email="test@test.be")
-chefCompta = UserDescriptor('chefCompta', [], email="test@test.be")
-echevinPers = UserDescriptor('echevinPers', [], email="test@test.be")
-emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be")
-conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Conseiller")
-
-groups = [OrgDescriptor('admingen', 'Administration générale', u'AdminGen'),
-          OrgDescriptor('aidefamilles', 'Aide aux familles', u'Aide'),
-          OrgDescriptor('comptabilite', 'Comptabilité', u'Compta'),
-          OrgDescriptor('informatique', 'Informatique', u'Info'),
-          OrgDescriptor('isp', 'Insertion socio-professionnelle', u'ISP'),
-          OrgDescriptor('dettes', 'Médiation de dettes', u'Dettes'),
-          OrgDescriptor('personnel', 'Personnel', u'Pers'),
-          OrgDescriptor('social', 'Social', u'Soc'),
-          OrgDescriptor('divers', 'Divers', u'Divers'), ]
-# MeetingManager
-groups[0].creators.append(secretaire)
-groups[0].reviewers.append(secretaire)
-groups[0].observers.append(secretaire)
-groups[0].advisers.append(secretaire)
-
-groups[1].creators.append(secretaire)
-groups[1].reviewers.append(secretaire)
-groups[1].observers.append(secretaire)
-groups[1].advisers.append(secretaire)
-
-groups[2].creators.append(agentCompta)
-groups[2].creators.append(chefCompta)
-groups[2].creators.append(secretaire)
-groups[2].reviewers.append(chefCompta)
-groups[2].advisers.append(chefCompta)
-
-groups[3].creators.append(agentInfo)
-groups[3].creators.append(secretaire)
-groups[3].reviewers.append(agentInfo)
-groups[3].advisers.append(agentInfo)
-
-groups[4].creators.append(agentIsp)
-groups[4].creators.append(secretaire)
-groups[4].reviewers.append(agentIsp)
-groups[4].reviewers.append(secretaire)
-groups[4].advisers.append(agentIsp)
-
-groups[6].creators.append(agentPers)
-groups[6].creators.append(secretaire)
-groups[6].reviewers.append(chefPers)
-groups[6].reviewers.append(secretaire)
-groups[6].advisers.append(emetteuravisPers)
-groups[6].observers.append(echevinPers)
-
 
 # Meeting configurations -------------------------------------------------------
-# bp
-bpMeeting = MeetingConfigDescriptor(
-    'meeting-config-bp', 'Bureau permanent',
-    'Bureau permanent', isDefault=True)
-bpMeeting.meetingManagers = ['dgen', ]
+# BP
+bpMeeting = deepcopy(examples_fr_import_data.collegeMeeting)
+bpMeeting.id = 'meeting-config-bp'
+bpMeeting.title = 'Bureau permanent'
+bpMeeting.folderTitle = 'Bureau permanent'
+bpMeeting.shortName = 'bp'
 bpMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
                      'Charles Exemple - 1er Echevin,\n' \
                      'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
                      'Jacqueline Exemple, Responsable du CPAS'
-bpMeeting.signatures = 'Pierre Dupont,\nBourgmestre\nCharles Exemple,\n1er Echevin'
-bpMeeting.categories = categories
-bpMeeting.shortName = 'bp'
-bpMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
-                        annexeDecision, annexeAvis, annexeAvisLegal, annexeSeance]
-bpMeeting.usedItemAttributes = ['description', 'budgetInfos', 'observations', 'notes', 'inAndOutMoves']
-bpMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
-bpMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
-bpMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-bpMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
-bpMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
-bpMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
-bpMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
-bpMeeting.transitionsToConfirm = []
-bpMeeting.meetingTopicStates = ('created', 'frozen')
-bpMeeting.decisionTopicStates = ('decided', 'closed')
-bpMeeting.itemAdviceStates = ('validated',)
-bpMeeting.enforceAdviceMandatoriness = False
-bpMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
-                                        'reverse': '0'}, )
-bpMeeting.recordItemHistoryStates = []
-bpMeeting.maxShownMeetings = 5
-bpMeeting.maxDaysDecisions = 60
-bpMeeting.meetingAppDefaultView = 'searchmyitems'
-bpMeeting.useAdvices = True
+bpMeeting.signatures = 'Pierre Dupont,\nPrésident\nCharles Exemple,\nDirecteur Général'
 bpMeeting.selectableAdvisers = ['admingen', 'aidefamilles', 'comptabilite',
                                 'informatique', 'isp', 'dettes', 'personnel',
                                 'social', 'divers']
-bpMeeting.itemAdviceStates = ('validated',)
-bpMeeting.itemAdviceEditStates = ('validated',)
-bpMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',
-                                  'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
-bpMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-bpMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
-bpMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
-bpMeeting.useCopies = True
-bpMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
-                                  groups[1].getIdSuffixed('reviewers'),
-                                  groups[2].getIdSuffixed('reviewers'),
-                                  groups[4].getIdSuffixed('reviewers')]
-bpMeeting.podTemplates = bpTemplates
 bpMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-cas',
                                       'trigger_workflow_transitions_until': '__nothing__'}, ]
-bpMeeting.itemAutoSentToOtherMCStates = ('accepted', 'accepted_but_modified', )
-bpMeeting.recurringItems = [
-    # Agenda items
-    RecurringItemDescriptor(
-        id='recurringagenda1',
-        title='Approuve le procès-verbal de la séance antérieure',
-        description='Approuve le procès-verbal de la séance antérieure',
-        category='recurrents',
-        proposingGroup='admingen',
-        decision='Procès-verbal approuvé'), ]
+# use template file from profile examples_fr
+patch_pod_templates(bpMeeting.podTemplates, '../../examples_fr/templates/')
 
 # CAS
-casMeeting = MeetingConfigDescriptor(
-    'meeting-config-cas', "Conseil de l'Action Sociale",
-    "Conseil de l'Action Sociale", isDefault=False)
-casMeeting.meetingManagers = ['dgen', ]
+casMeeting = deepcopy(examples_fr_import_data.councilMeeting)
+casMeeting.id = 'meeting-config-cas'
+casMeeting.title = "Conseil de l'Action Sociale"
+casMeeting.folderTitle = "Conseil de l'Action Sociale"
+casMeeting.shortName = 'cas'
 casMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
                       'Charles Exemple - 1er Echevin,\n' \
                       'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
                       'Jacqueline Exemple, Responsable du CPAS'
-casMeeting.signatures = 'Pierre Dupont,\nBourgmestre\nCharles Exemple,\n1er Echevin'
-casMeeting.categories = categories
-casMeeting.shortName = 'cas'
-casMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
-                         annexeDecision, annexeAvis, annexeAvisLegal, annexeSeance]
-casMeeting.usedItemAttributes = ['description', 'budgetInfos', 'observations', 'notes', 'inAndOutMoves']
-casMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
-casMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
-casMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-casMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
-casMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
-casMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
-casMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
-casMeeting.transitionsToConfirm = []
-casMeeting.meetingTopicStates = ('created', 'frozen')
-casMeeting.decisionTopicStates = ('decided', 'closed')
-casMeeting.itemAdviceStates = ('validated',)
-casMeeting.enforceAdviceMandatoriness = False
-casMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
-                                         'reverse': '0'}, )
-casMeeting.recordItemHistoryStates = []
-casMeeting.maxShownMeetings = 5
-casMeeting.maxDaysDecisions = 60
-casMeeting.meetingAppDefaultView = 'searchmyitems'
-casMeeting.useAdvices = True
-casMeeting.selectableAdvisers = []
-casMeeting.itemAdviceStates = ('validated',)
-casMeeting.itemAdviceEditStates = ('validated',)
-casMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',
-                                   'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
-casMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-casMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
-casMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
-casMeeting.useCopies = True
-casMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
-                                   groups[1].getIdSuffixed('reviewers'),
-                                   groups[2].getIdSuffixed('reviewers'),
-                                   groups[4].getIdSuffixed('reviewers')]
-casMeeting.podTemplates = casTemplates
+casMeeting.signatures = 'Pierre Dupont,\nPrésident\nCharles Exemple,\nDirecteur Général'
+casMeeting.meetingConfigsToCloneTo = []
+# use template file from profile examples_fr
+patch_pod_templates(casMeeting.podTemplates, '../../examples_fr/templates/', bpMeeting.id)
 
-casMeeting.recurringItems = [
-    # Agenda items
-    RecurringItemDescriptor(
-        id='recurringagenda1',
-        title='Approuve le procès-verbal de la séance antérieure',
-        description='Approuve le procès-verbal de la séance antérieure',
-        category='recurrents',
-        proposingGroup='admingen',
-        decision='Procès-verbal approuvé'), ]
-
-# Comitee
-comiteeMeeting = MeetingConfigDescriptor(
-    'meeting-config-comitee', 'Comité de concertation Commune/CPAS',
-    'Comité de concertation Commune/CPAS', isDefault=False)
-comiteeMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
-                          'Charles Exemple - 1er Echevin,\n' \
-                          'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
-                          'Jacqueline Exemple, Responsable du CPAS'
-comiteeMeeting.signatures = 'Pierre Dupont,\nBourgmestre\nCharles Exemple,\n1er Echevin'
-comiteeMeeting.categories = categories
-comiteeMeeting.shortName = 'comitee'
-comiteeMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
-                             annexeDecision, annexeAvis, annexeAvisLegal]
-comiteeMeeting.usedItemAttributes = ['description', 'budgetInfos', 'observations', ]
-comiteeMeeting.usedMeetingAttributes = ['assembly', 'signatures', 'observations', 'place', ]
-comiteeMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
-comiteeMeeting.meetingWorkflow = 'meetingcommunes_workflow'
-comiteeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
-comiteeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
-comiteeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
-comiteeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
-comiteeMeeting.transitionsToConfirm = []
-comiteeMeeting.meetingTopicStates = ('created', 'frozen')
-comiteeMeeting.decisionTopicStates = ('decided', 'closed')
-comiteeMeeting.itemAdviceStates = ('validated',)
-comiteeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-comiteeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
-comiteeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
-comiteeMeeting.enforceAdviceMandatoriness = False
-comiteeMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
-                                             'reverse': '0'}, )
-comiteeMeeting.recordItemHistoryStates = []
-comiteeMeeting.maxShownMeetings = 5
-comiteeMeeting.maxDaysDecisions = 60
-comiteeMeeting.meetingAppDefaultView = 'searchmyitems'
-comiteeMeeting.itemDocFormats = ('odt', 'pdf')
-comiteeMeeting.meetingDocFormats = ('odt', 'pdf')
-comiteeMeeting.useAdvices = True
-comiteeMeeting.itemAdviceStates = ('validated',)
-comiteeMeeting.itemAdviceEditStates = ('validated',)
-comiteeMeeting.itemAdviceViewStates = ('validated', 'presented', 'itemfrozen', 'accepted',
-                                       'refused', 'accepted_but_modified', 'delayed', 'pre_accepted',)
-comiteeMeeting.useCopies = True
-comiteeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
-                                       groups[1].getIdSuffixed('reviewers'),
-                                       groups[2].getIdSuffixed('reviewers'),
-                                       groups[4].getIdSuffixed('reviewers')]
-comiteeMeeting.podTemplates = comiteeTemplates
-
-comiteeMeeting.recurringItems = [
-    # Agenda items
-    RecurringItemDescriptor(
-        id='recurringagenda1',
-        title='Approuve le procès-verbal de la séance antérieure',
-        description='Approuve le procès-verbal de la séance antérieure',
-        category='recurrents',
-        proposingGroup='admingen',
-        decision='Procès-verbal approuvé'), ]
-
-# global data
 data = PloneMeetingConfiguration(
     meetingFolderTitle='Mes séances',
-    meetingConfigs=(bpMeeting, casMeeting, comiteeMeeting,),
-    orgs=groups)
-data.enableUserPreferences = False
+    meetingConfigs=(bpMeeting, casMeeting, ),
+    orgs=examples_fr_import_data.groups)
 data.usersOutsideGroups = [president, conseiller]
-# ------------------------------------------------------------------------------
