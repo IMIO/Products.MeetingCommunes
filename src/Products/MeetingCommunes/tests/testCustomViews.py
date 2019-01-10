@@ -24,12 +24,12 @@
 
 from collective.contact.plonegroup.utils import get_plone_group_id
 from DateTime import DateTime
+from imio.history.utils import getLastWFAction
 from plone import api
 from plone.app.textfield import RichTextValue
 from plone.dexterity.utils import createContentInContainer
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
-from Products.PloneMeeting.utils import getLastEvent
 
 
 class testCustomViews(MeetingCommunesTestCase):
@@ -290,7 +290,8 @@ class testCustomViews(MeetingCommunesTestCase):
         cfg.setItemAdviceStates(('proposed', 'validated',))
         cfg.setItemAdviceEditStates(('proposed', 'validated',))
         cfg.setItemAdviceViewStates(('proposed', 'validated',))
-        self.assertEqual(helper._getItemAdviceTransmissionDate(), getLastEvent(item, 'propose')['time'])
+        self.assertEqual(helper._getItemAdviceTransmissionDate(),
+                         getLastWFAction(item, 'propose')['time'])
 
         # test delay started regular way
         cfg.setItemAdviceStates(('validated',))

@@ -8,18 +8,16 @@
 #
 
 from collections import OrderedDict
-
+from imio.history.interfaces import IImioHistory
+from imio.history.utils import getLastAction
+from imio.history.utils import getLastWFAction
+from plone import api
+from plone.api.validation import mutually_exclusive_parameters
+from Products.CMFPlone.utils import safe_unicode
 from Products.PloneMeeting.browser.views import FolderDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperView
-from Products.PloneMeeting.utils import getLastEvent
 from Products.PloneMeeting.utils import get_annexes
-
-from Products.CMFPlone.utils import safe_unicode
-from imio.history.interfaces import IImioHistory
-from imio.history.utils import getLastAction
-from plone import api
-from plone.api.validation import mutually_exclusive_parameters
 from zope.component import getAdapter
 
 
@@ -147,8 +145,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         if advice:
             return ('delay_infos' in advice and
                     'limit_date' in advice['delay_infos'] and
-                    self.display_date(date=advice['delay_infos']['limit_date'])) \
-                   or None
+                    self.display_date(date=advice['delay_infos']['limit_date'])) or None
 
         return None
 
@@ -208,7 +205,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             wf_present_transition.append('itemfreeze')
 
         for item_transition in wf_present_transition:
-            event = getLastEvent(self.context, item_transition)
+            event = getLastWFAction(self.context, item_transition)
             if event and 'review_state' in event and event['review_state'] in item_advice_states:
                 return event['time']
 
