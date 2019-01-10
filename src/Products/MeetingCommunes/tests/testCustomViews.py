@@ -611,6 +611,7 @@ class testCustomViews(MeetingCommunesTestCase):
         # adapt categories to have catid and item to have category
         for item in m.getItems(ordered=True):
             item.setCategory('development')
+            item._update_after_edit()
         # intel inside *Joke*
         i5 = self.create('MeetingItem', title='Item5')
         i5.setCategory('development')
@@ -667,6 +668,7 @@ class testCustomViews(MeetingCommunesTestCase):
         # adapt categories to have catid and item to have category
         for item in m.getItems(ordered=True):
             item.setCategory('development')
+            item._update_after_edit()
         # intel inside *Joke*
         i5 = self.create('MeetingItem', title='Item5')
         i5.setCategory('development')
@@ -704,6 +706,7 @@ class testCustomViews(MeetingCommunesTestCase):
         # adapt categories to have catid and item to have category
         for item in m.getItems(ordered=True):
             item.setCategory('development')
+            item._update_after_edit()
         # intel inside *Joke*
         i5 = self.create('MeetingItem', title='Item5')
         i5.setCategory('development')
