@@ -636,7 +636,7 @@ class CustomMeetingConfig(MeetingConfig):
                         'sort_on': u'created',
                         'sort_reversed': True,
                         'showNumberOfItems': False,
-                        'tal_condition': "python: not tool.userIsAmong(['reviewers'])",
+                        'tal_condition': "python: tool.userIsAmong(['creators']) and not tool.userIsAmong(['reviewers'])",
                         'roles_bypassing_talcondition': ['Manager', ]
                     }
                  ),
