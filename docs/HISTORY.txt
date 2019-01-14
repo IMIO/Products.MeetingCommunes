@@ -8,6 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 ------------------
 
 - Fix profile, 'item_reference' was renamed to 'static_item_reference' for MeetingConfig.itemsListVisibleColumns
+- Changed default tal_condition for searchproposeditems DashboardCollection to only display it if current user is a creator
+- Adapted code to user imio.history.utils.getLastWFAction instead Products.PloneMeeting.utils.getLastEvent
 
 4.1b1 (2018-12-04)
 ------------------
