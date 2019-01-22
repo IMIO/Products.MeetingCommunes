@@ -12,6 +12,9 @@ from Products.PloneMeeting.profiles import PodTemplateDescriptor
 from Products.PloneMeeting.profiles import RecurringItemDescriptor
 from Products.PloneMeeting.profiles import UserDescriptor
 
+import os
+
+
 today = DateTime().strftime('%Y/%m/%d')
 
 # Annex types -------------------------------------------------------------------
@@ -33,11 +36,13 @@ categories = [recurring,
               ]
 
 # Style Template ---------------------------------------------------------------
+templates_path = os.path.join(os.path.dirname(__file__), 'templates')
 stylesTemplate1 = StyleTemplateDescriptor('styles1', 'Default Styles')
-stylesTemplate1.odt_file = 'styles1.odt'
+stylesTemplate1.odt_file = os.path.join(templates_path, 'styles1.odt')
 
 stylesTemplate2 = StyleTemplateDescriptor('styles2', 'Extra Styles')
-stylesTemplate2.odt_file = 'styles2.odt'
+stylesTemplate2.odt_file = os.path.join(templates_path, 'styles2.odt')
+
 # Pod templates ----------------------------------------------------------------
 agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaTemplate.odt_file = 'oj.odt'
