@@ -244,12 +244,14 @@ collegeMeeting.certifiedSignatures = [
     {'signatureNumber': '1',
      'name': u'Mr Vraiment Présent',
      'function': u'Le Secrétaire communal',
+     'held_position': '_none_',
      'date_from': '',
      'date_to': '',
      },
     {'signatureNumber': '2',
      'name': u'Mr Charles Exemple',
      'function': u'Le Bourgmestre',
+     'held_position': '_none_',
      'date_from': '',
      'date_to': '',
      },
@@ -586,21 +588,18 @@ councilMeeting = MeetingConfigDescriptor(
     'meeting-config-council', 'Conseil Communal',
     'Conseil Communal')
 councilMeeting.meetingManagers = ['dgen', ]
-councilMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
-                          'Charles Exemple - 1er Echevin,\n' \
-                          'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
-                          'Jacqueline Exemple, Responsable du CPAS'
-councilMeeting.signatures = 'Le Secrétaire communal\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
 councilMeeting.certifiedSignatures = [
     {'signatureNumber': '1',
      'name': u'Mr Vraiment Présent',
      'function': u'Le Secrétaire communal',
+     'held_position': '_none_',
      'date_from': '',
      'date_to': '',
      },
     {'signatureNumber': '2',
      'name': u'Mr Charles Exemple',
      'function': u'Le Bourgmestre',
+     'held_position': '_none_',
      'date_from': '',
      'date_to': '',
      },
@@ -625,8 +624,11 @@ councilMeeting.usedItemAttributes = ['description',
 councilMeeting.usedMeetingAttributes = ['startDate',
                                         'midDate',
                                         'endDate',
-                                        'signatures',
-                                        'assembly',
+                                        'attendees',
+                                        'excused',
+                                        'absents',
+                                        'replacements',
+                                        'signatories',
                                         'place',
                                         'observations',
                                         'notes',
@@ -703,10 +705,34 @@ councilMeeting.recurringItems = [
         proposingGroup='secretariat',
         decision='Procès-verbal approuvé'), ]
 councilMeeting.itemTemplates = collegeMeeting.itemTemplates
+councilMeeting.addContactsCSV = True
 
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(collegeMeeting, councilMeeting),
                                  orgs=groups)
 data.enableUserPreferences = False
 data.usersOutsideGroups = [bourgmestre, conseiller]
-# ------------------------------------------------------------------------------
+data.directory_position_types = [
+    {'token': u'default',
+     'name': u'-'},
+    {'token': u'alderman',
+     'name': u'\xc9chevin|\xc9chevins|\xc9chevine|\xc9chevines'},
+    {'token': u'bourgmestre',
+     'name': u'Bourgmestre|Bourgmestres|Bourgmestre|Bourgmestres'},
+    {'token': u'bourgmestreff',
+     'name': u'Bourgmestre f.f.|Bourgmestres f.f.|Bourgmestre f.f.|Bourgmestres f.f.'},
+    {'token': u'president',
+     'name': u'Pr\xe9sident|Pr\xe9sidents|Pr\xe9sidente|Pr\xe9sidentes'},
+    {'token': u'bourgmestre-president',
+     'name': u'Bourgmestre - Pr\xe9sident|Bourgmestres - Pr\xe9sidents|'
+        u'Bourgmestre - Pr\xe9sidente|Bourgmestres - Pr\xe9sidentes'},
+    {'token': u'president-cpas',
+     'name': u'Pr\xe9sident du CPAS|Pr\xe9sidents du CPAS|Pr\xe9sidente du CPAS|Pr\xe9sidentes du CPAS'},
+    {'token': u'dg',
+     'name': u'Directeur G\xe9n\xe9ral|Directeurs G\xe9n\xe9raux|'
+        u'Directrice G\xe9n\xe9rale|Directrices G\xe9n\xe9rales'},
+    {'token': u'dgff',
+     'name': u'Directeur G\xe9n\xe9ral f.f.|Directeurs G\xe9n\xe9raux f.f.|'
+        u'Directrice G\xe9n\xe9rale f.f.|Directrices G\xe9n\xe9rales f.f.'},
+    {'token': u'df',
+     'name': u'Directeur Financier|Directeurs Financiers|Directrice Financi\xe8re|Directrices Financi\xe8res'}]

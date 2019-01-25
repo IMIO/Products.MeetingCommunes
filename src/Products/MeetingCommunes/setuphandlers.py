@@ -20,6 +20,7 @@ from Products.CMFPlone.utils import _createObjectByType
 from Products.MeetingCommunes.config import PROJECTNAME
 from Products.MeetingCommunes.config import SAMPLE_TEXT
 from Products.PloneMeeting.exportimport.content import ToolInitializer
+from Products.PloneMeeting.utils import cleanMemoize
 from Products.PloneMeeting.utils import org_id_to_uid
 import logging
 import os
@@ -331,6 +332,8 @@ def addDemoData(context):
     # login as 'dgen'
     mTool.createMemberArea('dgen')
     for cfg in tool.objectValues('MeetingConfig'):
+        # cleanMemoize so ToolPloneMeeting.getMeetingConfig returns the correct MeetingConfig
+        cleanMemoize(site)
         secrFolder = tool.getPloneMeetingFolder(cfg.getId(), 'dgen')
         # create meetings
         for date in dates:
