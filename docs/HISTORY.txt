@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 Older versions than 3.0 can be found at http://svn.communesplone.org/svn/communesplone/MeetingCommunes/tags/
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1b2 (unreleased)
+4.1b2 (2019-01-29)
 ------------------
 
 - Fix profile, 'item_reference' was renamed to 'static_item_reference' for MeetingConfig.itemsListVisibleColumns
