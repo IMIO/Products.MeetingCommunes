@@ -714,7 +714,7 @@ data.enableUserPreferences = False
 data.usersOutsideGroups = [bourgmestre, conseiller]
 data.directory_position_types = [
     {'token': u'default',
-     'name': u'-'},
+     'name': u'(Utiliser le champ "Intitul\xe9")'},
     {'token': u'alderman',
      'name': u'\xc9chevin|\xc9chevins|\xc9chevine|\xc9chevines'},
     {'token': u'bourgmestre',
@@ -722,7 +722,7 @@ data.directory_position_types = [
     {'token': u'bourgmestreff',
      'name': u'Bourgmestre f.f.|Bourgmestres f.f.|Bourgmestre f.f.|Bourgmestres f.f.'},
     {'token': u'president',
-     'name': u'Pr\xe9sident|Pr\xe9sidents|Pr\xe9sidente|Pr\xe9sidentes'},
+     'name': u'Pr\xe9sident|Pr\xe9sidents|Pr\xe9sidente|Prsidentes'},
     {'token': u'bourgmestre-president',
      'name': u'Bourgmestre - Pr\xe9sident|Bourgmestres - Pr\xe9sidents|'
         u'Bourgmestre - Pr\xe9sidente|Bourgmestres - Pr\xe9sidentes'},
