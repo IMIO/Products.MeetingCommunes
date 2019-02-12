@@ -222,7 +222,7 @@
   <genericsetup:upgradeStep
       title="Go to MeetingCommunes 4.1"
       description=""
-      source="4.0"
+      source="*"
       destination="4.1"
       handler="Products.MeetingCommunes.migrations.migrate_to_4_1.migrate"
       profile="Products.MeetingCommunes:default" />
