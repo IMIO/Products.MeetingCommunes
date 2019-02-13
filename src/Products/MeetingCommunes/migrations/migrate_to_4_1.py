@@ -3,7 +3,7 @@
 import logging
 from copy import deepcopy
 from Products.PloneMeeting.migrations.migrate_to_4_1 import Migrate_To_4_1 as PMMigrate_To_4_1
-
+from Products.MeetingCommunes.profiles.examples_fr.import_data import data
 logger = logging.getLogger('MeetingCommunes')
 
 
@@ -72,6 +72,13 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
             cfg.customAdvisers = adapted_customAdvisers
         logger.info('Done.')
 
+    def _defineDirectoryPositionTypes(self):
+        """Set default value for contacts directoryy 'position_types'."""
+        logger.info("Setting default value for contact.position_types...")
+        if self.portal.contacts.position_types == [{'token': 'default', 'name': u'D\xe9faut'}]:
+            self.portal.contacts.position_types = data.directory_position_types
+        logger.info('Done.')
+
     def run(self, step=None, profile_name=u'profile-Products.MeetingCommunes:default'):
         # change self.profile_name that is reinstalled at the beginning of the PM migration
         self.profile_name = profile_name
@@ -81,8 +88,10 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
 
         # call steps from Products.PloneMeeting
         PMMigrate_To_4_1.run(self, step=step)
+
         # now MeetingCommunes specific steps
-        logger.info('Migrating to MeetingCommunes 4.0...')
+        logger.info('Migrating to MeetingCommunes 4.1...')
+        self._defineDirectoryPositionTypes()
 
 
 # The migration function -------------------------------------------------------
