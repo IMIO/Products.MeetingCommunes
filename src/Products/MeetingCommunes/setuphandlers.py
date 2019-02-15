@@ -9,6 +9,7 @@
 # GNU General Public License (GPL)
 #
 
+from collections import OrderedDict
 from collective.iconifiedcategory.utils import calculate_category_id
 from collective.iconifiedcategory.utils import get_config_root
 from DateTime import DateTime
@@ -22,6 +23,7 @@ from Products.MeetingCommunes.config import SAMPLE_TEXT
 from Products.PloneMeeting.exportimport.content import ToolInitializer
 from Products.PloneMeeting.utils import cleanMemoize
 from Products.PloneMeeting.utils import org_id_to_uid
+
 import logging
 import os
 
@@ -331,10 +333,20 @@ def addDemoData(context):
              }
     # login as 'dgen'
     mTool.createMemberArea('dgen')
+
     for cfg in tool.objectValues('MeetingConfig'):
         # cleanMemoize so ToolPloneMeeting.getMeetingConfig returns the correct MeetingConfig
         cleanMemoize(site)
         secrFolder = tool.getPloneMeetingFolder(cfg.getId(), 'dgen')
+        # build attendees and signatories passed to Meeting._doUpdateContacts
+        # attendees OrderedDict([('uid1', 'attendee'), ('uid2', 'attendee'), ('uid3', 'absent')])
+        # signatories {'uid1': '1'}
+        attendees = OrderedDict()
+        signatories = {}
+        for hp_uid in cfg.getOrderedContacts():
+            attendees[hp_uid] = 'attendee'
+        signatories = {attendees.keys()[1]: '1',
+                       attendees.keys()[0]: '2'}
         # create meetings
         for date in dates:
             meetingId = secrFolder.invokeFactory(cfg.getMeetingTypeName(), id=date.strftime('%Y%m%d'))
@@ -342,6 +354,7 @@ def addDemoData(context):
             meeting.setDate(date)
             pTool.changeOwnershipOf(meeting, 'dgen')
             meeting.processForm()
+            meeting._doUpdateContacts(attendees=attendees, signatories=signatories)
             # -13 meeting is closed
             if date == today - 13:
                 wfTool.doActionFor(meeting, 'freeze')

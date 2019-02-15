@@ -276,8 +276,10 @@ collegeMeeting.usedItemAttributes = ['description',
                                      'otherMeetingConfigsClonableToPrivacy']
 collegeMeeting.usedMeetingAttributes = ['startDate',
                                         'endDate',
-                                        'signatures',
-                                        'assembly',
+                                        'attendees',
+                                        'excused',
+                                        'absents',
+                                        'signatories',
                                         'place',
                                         'observations',
                                         'notes',
@@ -548,6 +550,7 @@ collegeMeeting.itemTemplates = [
 <p><b>Article 3&nbsp;:</b></p>
 <p>...</p>"""),
 ]
+collegeMeeting.addContactsCSV = True
 
 # Conseil communal
 # Pod templates ----------------------------------------------------------------
@@ -627,7 +630,6 @@ councilMeeting.usedMeetingAttributes = ['startDate',
                                         'attendees',
                                         'excused',
                                         'absents',
-                                        'replacements',
                                         'signatories',
                                         'place',
                                         'observations',
@@ -705,7 +707,13 @@ councilMeeting.recurringItems = [
         proposingGroup='secretariat',
         decision='Procès-verbal approuvé'), ]
 councilMeeting.itemTemplates = collegeMeeting.itemTemplates
-councilMeeting.addContactsCSV = True
+councilMeeting.orderedContacts = ['ga-c-rard-bourgmestre/bourgmestre-mon-organisation',
+                                  'isabelle-daga/dg-mon-organisation',
+                                  'claudine-lapremiare/alderman-mon-organisation',
+                                  'bernardette-laseconde/alderman-mon-organisation',
+                                  'christian-letroisiame/alderman-mon-organisation',
+                                  'henri-quattre/alderman-mon-organisation',
+                                  'laurence-suivant/alderman-mon-organisation']
 
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(collegeMeeting, councilMeeting),
