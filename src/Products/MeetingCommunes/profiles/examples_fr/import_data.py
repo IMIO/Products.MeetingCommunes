@@ -743,4 +743,7 @@ data.directory_position_types = [
      'name': u'Directeur G\xe9n\xe9ral f.f.|Directeurs G\xe9n\xe9raux f.f.|'
         u'Directrice G\xe9n\xe9rale f.f.|Directrices G\xe9n\xe9rales f.f.'},
     {'token': u'df',
-     'name': u'Directeur Financier|Directeurs Financiers|Directrice Financi\xe8re|Directrices Financi\xe8res'}]
+     'name': u'Directeur Financier|Directeurs Financiers|Directrice Financi\xe8re|Directrices Financi\xe8res'},
+    {'token': u'dfff',
+     'name': u'Directeur Financier f.f.|Directeurs Financiers f.f.|'
+        u'Directrice Financi\xe8re f.f.|Directrices Financi\xe8res f.f.'}]
