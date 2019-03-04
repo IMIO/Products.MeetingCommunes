@@ -7,7 +7,7 @@ setup(name='Products.MeetingCommunes',
       version=version,
       description="Official meetings management for college and council of belgian"
       "communes (PloneMeeting extension profile)",
-      long_description=open("README.txt").read() + "\n" + open(os.path.join("docs", "HISTORY.txt")).read(),
+      long_description=open("README.rst").read() + "\n" + open("CHANGES.rst").read(),
       classifiers=["Programming Language :: Python", ],
       keywords='',
       author='',
