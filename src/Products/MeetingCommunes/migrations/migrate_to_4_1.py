@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 
-import logging
 from copy import deepcopy
-from Products.PloneMeeting.migrations.migrate_to_4_1 import Migrate_To_4_1 as PMMigrate_To_4_1
+from ftw.labels.interfaces import ILabelJar
+from Products.MeetingCommunes.profiles.examples_fr.import_data import collegeMeeting
 from Products.MeetingCommunes.profiles.examples_fr.import_data import data
+from Products.PloneMeeting.migrations.migrate_to_4_1 import Migrate_To_4_1 as PMMigrate_To_4_1
+
+import logging
+
+
 logger = logging.getLogger('MeetingCommunes')
 
 
-# The migration class ----------------------------------------------------------
 class Migrate_To_4_1(PMMigrate_To_4_1):
 
     def _updateWFInterfaceNames(self):
@@ -79,6 +83,15 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
             self.portal.contacts.position_types = data.directory_position_types
         logger.info('Done.')
 
+    def _defineDefaultFTWLabels(self):
+        """Define some default labels for ftw.labels."""
+        logger.info("Defining default ftw.labels labels...")
+        for cfg in self.tool.objectValues('MeetingConfig'):
+            jar_storage = ILabelJar(cfg).storage
+            if not jar_storage:
+                jar_storage.update(deepcopy(collegeMeeting.defaultLabels))
+        logger.info('Done.')
+
     def run(self, step=None, profile_name=u'profile-Products.MeetingCommunes:default'):
         # change self.profile_name that is reinstalled at the beginning of the PM migration
         self.profile_name = profile_name
@@ -92,13 +105,16 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4.1...')
         self._defineDirectoryPositionTypes()
+        self._defineDefaultFTWLabels()
 
 
 # The migration function -------------------------------------------------------
 def migrate(context):
     '''This migration function:
 
-       1) Reinstall Products.MeetingCommunes and execute the Products.PloneMeeting migration.
+       1) Reinstall Products.MeetingCommunes and execute the Products.PloneMeeting migration;
+       2) Define default values for 'contacts' directory.position_types;
+       3) Define default ftw.labels labels.
     '''
     migrator = Migrate_To_4_1(context)
     migrator.run()

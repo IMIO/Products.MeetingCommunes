@@ -311,6 +311,17 @@ collegeMeeting.recordItemHistoryStates = []
 collegeMeeting.maxShownMeetings = 5
 collegeMeeting.maxDaysDecisions = 60
 collegeMeeting.meetingAppDefaultView = 'searchmyitems'
+collegeMeeting.enableLabels = False
+collegeMeeting.defaultLabels = {
+    'a-delai': {'color': 'purple-light', 'label_id': 'a-delai', 'by_user': False, 'title': 'À délai'},
+    'attention': {'color': 'orange', 'label_id': 'attention', 'by_user': False, 'title': 'Attention'},
+    'en-attente': {'color': 'cadetblue', 'label_id': 'en-attente', 'by_user': False, 'title': 'En attente'},
+    'bloque': {'color': 'cornflowerblue', 'label_id': 'bloque', 'by_user': False, 'title': 'Bloqué'},
+    'ok': {'color': 'green-light', 'label_id': 'ok', 'by_user': False, 'title': 'OK'},
+    'lu': {'color': 'green', 'label_id': 'lu', 'by_user': True, 'title': 'Lu'},
+    'suivi': {'color': 'yellow', 'label_id': 'suivi', 'by_user': True, 'title': 'Suivi'},
+    'urgent': {'color': 'red', 'label_id': 'urgent', 'by_user': False, 'title': 'Urgent'},
+}
 collegeMeeting.useAdvices = True
 collegeMeeting.selectableAdvisers = ['comptabilite', 'dirfin', 'dirgen', 'informatique',
                                      'personnel', 'secretariat', 'travaux']

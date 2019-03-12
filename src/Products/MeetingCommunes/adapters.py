@@ -40,7 +40,7 @@ from Products.MeetingCommunes.interfaces import IMeetingCommunesWorkflowConditio
 from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowActions
 from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowConditions
 from Products.PloneMeeting.adapters import CompoundCriterionBaseAdapter
-from Products.PloneMeeting.adapters import query_user_groups_or_config_modified_cachekey
+from Products.PloneMeeting.adapters import query_user_groups_cachekey
 from Products.PloneMeeting.indexes import DELAYAWARE_ROW_ID_PATTERN
 from Products.PloneMeeting.indexes import REAL_ORG_UID_PATTERN
 from Products.PloneMeeting.interfaces import IMeetingConfigCustom
@@ -1083,7 +1083,7 @@ InitializeClass(CustomToolPloneMeeting)
 class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
 
     @property
-    @ram.cache(query_user_groups_or_config_modified_cachekey)
+    @ram.cache(query_user_groups_cachekey)
     def query_itemstocontrolcompletenessof(self):
         '''Queries all items for which there is completeness to evaluate, so where completeness
            is not 'completeness_complete'.'''
@@ -1110,7 +1110,7 @@ class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
 class ItemsWithAdviceProposedToFinancialControllerAdapter(CompoundCriterionBaseAdapter):
 
     @property
-    @ram.cache(query_user_groups_or_config_modified_cachekey)
+    @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceproposedtofinancialcontroller(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_controller'.
            We only return items for which completeness has been evaluated to 'complete'.'''
@@ -1132,7 +1132,7 @@ class ItemsWithAdviceProposedToFinancialControllerAdapter(CompoundCriterionBaseA
 class ItemsWithAdviceProposedToFinancialEditorAdapter(CompoundCriterionBaseAdapter):
 
     @property
-    @ram.cache(query_user_groups_or_config_modified_cachekey)
+    @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceproposedtofinancialeditor(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_editor'.
            We only return items for which completeness has been evaluated to 'complete'.'''
@@ -1154,7 +1154,7 @@ class ItemsWithAdviceProposedToFinancialEditorAdapter(CompoundCriterionBaseAdapt
 class ItemsWithAdviceProposedToFinancialReviewerAdapter(CompoundCriterionBaseAdapter):
 
     @property
-    @ram.cache(query_user_groups_or_config_modified_cachekey)
+    @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceproposedtofinancialreviewer(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_reviewer'.'''
         groupIds = []
@@ -1173,7 +1173,7 @@ class ItemsWithAdviceProposedToFinancialReviewerAdapter(CompoundCriterionBaseAda
 class ItemsWithAdviceProposedToFinancialManagerAdapter(CompoundCriterionBaseAdapter):
 
     @property
-    @ram.cache(query_user_groups_or_config_modified_cachekey)
+    @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceproposedtofinancialmanager(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_manager'.'''
         groupIds = []
