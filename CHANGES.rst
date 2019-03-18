@@ -7,8 +7,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1b3 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Hide 'searchvalidateditems' to power observers (restricted included)
 
 4.1b2 (2019-01-29)
 ------------------
