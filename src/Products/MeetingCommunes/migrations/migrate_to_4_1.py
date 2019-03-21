@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from copy import deepcopy
-from ftw.labels.interfaces import ILabelJar
 from Products.MeetingCommunes.profiles.examples_fr.import_data import collegeMeeting
 from Products.MeetingCommunes.profiles.examples_fr.import_data import data
 from Products.PloneMeeting.migrations.migrate_to_4_1 import Migrate_To_4_1 as PMMigrate_To_4_1
@@ -83,14 +82,9 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
             self.portal.contacts.position_types = data.directory_position_types
         logger.info('Done.')
 
-    def _defineDefaultFTWLabels(self):
-        """Define some default labels for ftw.labels."""
-        logger.info("Defining default ftw.labels labels...")
-        for cfg in self.tool.objectValues('MeetingConfig'):
-            jar_storage = ILabelJar(cfg).storage
-            if not jar_storage:
-                jar_storage.update(deepcopy(collegeMeeting.defaultLabels))
-        logger.info('Done.')
+    def _defaultFTWLabels(self):
+        """Return default FTW Labels, called by _initPersonalFTWLabels."""
+        return deepcopy(collegeMeeting.defaultLabels)
 
     def run(self, step=None, profile_name=u'profile-Products.MeetingCommunes:default'):
         # change self.profile_name that is reinstalled at the beginning of the PM migration
@@ -105,7 +99,6 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4.1...')
         self._defineDirectoryPositionTypes()
-        self._defineDefaultFTWLabels()
 
 
 # The migration function -------------------------------------------------------

@@ -6,9 +6,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 4.1b3 (unreleased)
 ------------------
-
+- Hide 'searchvalidateditems' to power observers (restricted included)
 - Updated decide_item_when_back_to_meeting_from_returned_to_proposing_group decided state to 'accept_but_modify' instead of 'accept' (from PloneMeeting)
-
 
 4.1b2 (2019-01-29)
 ------------------
