@@ -170,7 +170,7 @@ conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Co
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel")
 
 groups = [OrgDescriptor('dirgen', 'Directeur Général', u'DG'),
-          OrgDescriptor('secretariat', 'Secrétariat communal', u'Secr'),
+          OrgDescriptor('secretariat', 'Secrétariat Général', u'Secr', groups_in_charge=['dirgen']),
           OrgDescriptor('informatique', 'Service informatique', u'Info'),
           OrgDescriptor('personnel', 'Service du personnel', u'Pers'),
           OrgDescriptor('dirfin', 'Directeur Financier', u'DF'),
@@ -370,7 +370,17 @@ collegeMeeting.customAdvisers = [
      'delay': '20',
      'delay_left_alert': '4',
      'delay_label': 'Incidence financière >= 22.000€',
-     'is_linked_to_previous_row': '1'}, ]
+     'is_linked_to_previous_row': '1'},
+    {'row_id': 'unique_id_004',
+     'org': 'dirgen',
+     'gives_auto_advice_on': 'python: item.adapted().getGroupInCharge(fromOrgIfEmpty=True) == org_uid',
+     'gives_auto_advice_on_help_message': u'Le Directeur Général à la charge du group proposant du point',
+     'for_item_created_from': today,
+     'delay': '',
+     'delay_left_alert': '',
+     'delay_label': '',
+     'is_linked_to_previous_row': '0'},
+]
 collegeMeeting.itemPowerObserversStates = ('itemfrozen',
                                            'accepted',
                                            'delayed',
