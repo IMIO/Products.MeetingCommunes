@@ -137,10 +137,12 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         super(testWFAdaptations, self).test_pm_WFA_creator_edits_unless_closed()
 
     def test_pm_WFA_decide_item_when_back_to_meeting_from_returned_to_proposing_group(self):
-        from Products.MeetingCommunes.config \
-            import MC_ITEM_TRANSITION_WHEN_RETURNED_FROM_PROPOSING_GROUP_AFTER_CORRECTION as ITEM_TRANSITION
+        super(testWFAdaptations, self).test_pm_WFA_decide_item_when_back_to_meeting_from_returned_to_proposing_group()
+        self.changeUser('pmManager')
+        folder = self.getMeetingFolder()
+        item = folder.objectValues('MeetingItem')[0]
+        self.assertEquals('accepted_but_modified', item.queryState())
 
-        self._perform_WFA_decide_item_when_back_to_meeting_from_returned_to_proposing_group(ITEM_TRANSITION)
 
 def test_suite():
     from unittest import TestSuite, makeSuite
