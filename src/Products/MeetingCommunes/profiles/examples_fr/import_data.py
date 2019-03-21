@@ -301,7 +301,13 @@ collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IM
 collegeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
 collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
 collegeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
-collegeMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
+collegeMeeting.transitionsToConfirm = ('MeetingItem.accept_but_modify', 'MeetingItem.propose',
+                                       'MeetingItem.refuse', 'MeetingItem.backToItemCreated',
+                                       'MeetingItem.backToProposed',
+                                       'MeetingItem.backTo_itemfrozen_from_returned_to_proposing_group',
+                                       'MeetingItem.backTo_presented_from_returned_to_proposing_group',
+                                       'MeetingItem.delay', 'MeetingItem.backToValidated',
+                                       'MeetingItem.validate', 'MeetingItem.return_to_proposing_group')
 collegeMeeting.meetingTopicStates = ('created', 'frozen')
 collegeMeeting.decisionTopicStates = ('decided', 'closed')
 collegeMeeting.enforceAdviceMandatoriness = False
@@ -372,7 +378,10 @@ collegeMeeting.itemPowerObserversStates = ('itemfrozen',
                                            'accepted_but_modified',
                                            'pre_accepted')
 collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-collegeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
+collegeMeeting.workflowAdaptations = [
+    'no_publication', 'no_global_observation',
+    'return_to_proposing_group', 'refused',
+    'presented_item_back_to_itemcreated', 'presented_item_back_to_proposed']
 collegeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 collegeMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
@@ -659,7 +668,13 @@ councilMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IM
 councilMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
 councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
 councilMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
-councilMeeting.transitionsToConfirm = []
+councilMeeting.transitionsToConfirm = ('MeetingItem.accept_but_modify', 'MeetingItem.propose',
+                                       'MeetingItem.refuse', 'MeetingItem.backToItemCreated',
+                                       'MeetingItem.backToProposed',
+                                       'MeetingItem.backTo_itemfrozen_from_returned_to_proposing_group',
+                                       'MeetingItem.backTo_presented_from_returned_to_proposing_group',
+                                       'MeetingItem.delay', 'MeetingItem.backToValidated',
+                                       'MeetingItem.validate', 'MeetingItem.return_to_proposing_group')
 councilMeeting.meetingTopicStates = ('created', 'frozen')
 councilMeeting.decisionTopicStates = ('decided', 'closed')
 councilMeeting.itemAdviceStates = ('validated',)
@@ -677,7 +692,10 @@ councilMeeting.itemAdviceStates = ()
 councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
 councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-councilMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
+councilMeeting.workflowAdaptations = [
+    'no_publication', 'no_global_observation',
+    'return_to_proposing_group', 'refused',
+    'presented_item_back_to_itemcreated', 'presented_item_back_to_proposed']
 councilMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
                                                               'item_transition': 'itemfreeze'},
