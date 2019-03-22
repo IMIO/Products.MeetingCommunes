@@ -58,6 +58,13 @@ agendaTemplateWithIndex.pod_portal_types = ['Meeting']
 agendaTemplateWithIndex.tal_condition = u'python:tool.isManager(here)'
 agendaTemplateWithIndex.style_template = ['styles1']
 
+agendaTemplateWithAnnexes = PodTemplateDescriptor('oj-annexes', 'Ordre du jour (avec annexes)')
+agendaTemplateWithAnnexes.odt_file = 'oj-avec-annexes.odt'
+agendaTemplateWithAnnexes.pod_formats = ['odt', 'pdf', ]
+agendaTemplateWithAnnexes.pod_portal_types = ['Meeting']
+agendaTemplateWithAnnexes.tal_condition = u'python:tool.isManager(here)'
+agendaTemplateWithAnnexes.style_template = ['styles1']
+
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsTemplate.odt_file = 'pv.odt'
 decisionsTemplate.pod_formats = ['odt', 'pdf', ]
@@ -146,7 +153,7 @@ historyTemplate.pod_formats = ['odt', 'pdf', ]
 historyTemplate.pod_portal_types = ['MeetingItem']
 
 collegeStyleTemplate = [stylesTemplate1, stylesTemplate2]
-collegeTemplates = [agendaTemplate, agendaTemplateWithIndex,
+collegeTemplates = [agendaTemplate, agendaTemplateWithIndex, agendaTemplateWithAnnexes,
                     decisionsTemplate, attendeesTemplate,
                     itemTemplate, itemReport, dfAdviceTemplate,
                     dfAdvicesTemplate, dashboardTemplate,
@@ -273,7 +280,8 @@ collegeMeeting.usedItemAttributes = ['description',
                                      'notes',
                                      'marginalNotes',
                                      'inAndOutMoves',
-                                     'otherMeetingConfigsClonableToPrivacy']
+                                     'otherMeetingConfigsClonableToPrivacy',
+                                     'manuallyLinkedItems']
 collegeMeeting.usedMeetingAttributes = ['startDate',
                                         'endDate',
                                         'attendees',
@@ -653,7 +661,8 @@ councilMeeting.usedItemAttributes = ['description',
                                      'privacy',
                                      'notes',
                                      'marginalNotes',
-                                     'inAndOutMoves']
+                                     'inAndOutMoves',
+                                     'manuallyLinkedItems']
 councilMeeting.usedMeetingAttributes = ['startDate',
                                         'midDate',
                                         'endDate',

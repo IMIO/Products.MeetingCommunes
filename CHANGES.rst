@@ -11,6 +11,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - In profile 'examples_fr', enable WFAdaptations 'presented_item_back_to_itemcreated' and 'presented_item_back_to_proposed'
 - In profile 'examples_fr', enable relevant transitions to confirm
 - In profile 'examples_fr', enable 'groups_in_charge' for 'Secrétariat Général' and configure auto asked advice for it
+- In profile 'examples_fr', enable 'MeetingItem.manuallyLinkedItems' field
+- In profile 'examples_fr', enable 'Agenda with annexes' by default
 
 4.1b2 (2019-01-29)
 ------------------
