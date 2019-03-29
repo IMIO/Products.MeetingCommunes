@@ -80,22 +80,22 @@ simpleMeeting.itemAdviceViewStates = ('validated',
                                       'accepted_but_modified',
                                       'delayed',
                                       'pre_accepted',)
-simpleMeeting.itemPowerObserversStates = ('itemfrozen',
-                                          'accepted',
-                                          'accepted_but_modified',
-                                          'delayed',
-                                          'refused',
-                                          'returned_to_proposing_group',
-                                          'pre_accepted')
-simpleMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
-simpleMeeting.itemRestrictedPowerObserversStates = ('itemfrozen',
-                                                    'accepted',
-                                                    'accepted_but_modified',
-                                                    'delayed',
-                                                    'refused',
-                                                    'returned_to_proposing_group',
-                                                    'pre_accepted')
-simpleMeeting.meetingRestrictedPowerObserversStates = ('frozen', 'decided', 'closed')
+simpleMeeting.powerObservers = (
+    {'row_id': 'powerobservers',
+     'label': 'Super observateurs',
+     'item_states': ('itemfrozen',
+                     'accepted',
+                     'delayed',
+                     'refused',
+                     'accepted_but_modified',
+                     'pre_accepted'),
+     'meeting_states': ('frozen', 'decided', 'closed'),
+     'orderindex_': '1'},
+    {'row_id': 'restrictedpowerobservers',
+     'label': 'Super observateurs restreints',
+     'item_states': [],
+     'meeting_states': [],
+     'orderindex_': '2'})
 simpleMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 simpleMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
 simpleMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )

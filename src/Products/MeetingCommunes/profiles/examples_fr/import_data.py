@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+from copy import deepcopy
 from DateTime import DateTime
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.PloneMeeting.profiles import AnnexTypeDescriptor, StyleTemplateDescriptor
@@ -389,12 +391,28 @@ collegeMeeting.customAdvisers = [
      'delay_label': '',
      'is_linked_to_previous_row': '0'},
 ]
-collegeMeeting.itemPowerObserversStates = ('itemfrozen',
-                                           'accepted',
-                                           'delayed',
-                                           'refused',
-                                           'accepted_but_modified',
-                                           'pre_accepted')
+collegeMeeting.powerObservers = (
+    {'row_id': 'powerobservers',
+     'label': 'Super observateurs',
+     'item_states': ('itemfrozen',
+                     'accepted',
+                     'delayed',
+                     'refused',
+                     'accepted_but_modified',
+                     'pre_accepted'),
+     'meeting_states': ('frozen', 'decided', 'closed'),
+     'orderindex_': '1'},
+    {'row_id': 'restrictedpowerobservers',
+     'label': 'Super observateurs restreints',
+     'item_states': ('itemfrozen',
+                     'accepted',
+                     'delayed',
+                     'refused',
+                     'accepted_but_modified',
+                     'pre_accepted'),
+     'meeting_states': ('frozen', 'decided', 'closed'),
+     'orderindex_': '2'})
+
 collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 collegeMeeting.workflowAdaptations = [
     'no_publication', 'no_global_observation',
@@ -420,7 +438,6 @@ collegeMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transitio
                                                               'item_transition': 'itemfreeze'},
                                                              {'meeting_transition': 'close',
                                                               'item_transition': 'accept'},)
-collegeMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 collegeMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
 collegeMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 collegeMeeting.useCopies = True
@@ -731,11 +748,7 @@ councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transitio
                                                               'item_transition': 'itemfreeze'},
                                                              {'meeting_transition': 'close',
                                                               'item_transition': 'accept'},)
-councilMeeting.itemPowerObserversStates = ('itemfrozen',
-                                           'accepted', 'delayed',
-                                           'refused',
-                                           'accepted_but_modified', 'pre_accepted')
-councilMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
+councilMeeting.powerObservers = deepcopy(collegeMeeting.powerObservers)
 councilMeeting.powerAdvisersGroups = ()
 councilMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 councilMeeting.useCopies = True
