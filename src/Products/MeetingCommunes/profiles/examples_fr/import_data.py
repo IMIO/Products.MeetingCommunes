@@ -779,7 +779,6 @@ councilMeeting.orderedContacts = ['ga-c-rard-bourgmestre/bourgmestre-mon-organis
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(collegeMeeting, councilMeeting),
                                  orgs=groups)
-data.enableUserPreferences = False
 data.usersOutsideGroups = [bourgmestre, conseiller]
 data.directory_position_types = [
     {'token': u'default',

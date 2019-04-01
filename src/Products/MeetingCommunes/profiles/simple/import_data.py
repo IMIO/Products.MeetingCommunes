@@ -116,5 +116,4 @@ simpleMeeting.onMeetingTransitionItemTransitionToTrigger = (
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(simpleMeeting, ),
                                  orgs=[])
-data.enableUserPreferences = False
 # ------------------------------------------------------------------------------
