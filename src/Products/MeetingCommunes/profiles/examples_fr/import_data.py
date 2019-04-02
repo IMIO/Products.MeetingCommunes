@@ -417,7 +417,8 @@ collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_
 collegeMeeting.workflowAdaptations = [
     'no_publication', 'no_global_observation',
     'return_to_proposing_group', 'refused',
-    'presented_item_back_to_itemcreated', 'presented_item_back_to_proposed']
+    'presented_item_back_to_itemcreated', 'presented_item_back_to_proposed',
+    'only_creator_may_delete']
 collegeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 collegeMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
@@ -731,7 +732,8 @@ councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_
 councilMeeting.workflowAdaptations = [
     'no_publication', 'no_global_observation',
     'return_to_proposing_group', 'refused',
-    'presented_item_back_to_itemcreated', 'presented_item_back_to_proposed']
+    'presented_item_back_to_itemcreated', 'presented_item_back_to_proposed',
+    'only_creator_may_delete']
 councilMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
                                                               'item_transition': 'itemfreeze'},

@@ -97,7 +97,9 @@ simpleMeeting.powerObservers = (
      'meeting_states': [],
      'orderindex_': '2'})
 simpleMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-simpleMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
+simpleMeeting.workflowAdaptations = [
+    'no_publication', 'no_global_observation',
+    'return_to_proposing_group', 'refused', 'only_creator_may_delete']
 simpleMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 simpleMeeting.onMeetingTransitionItemTransitionToTrigger = (
     {'meeting_transition': 'freeze',
