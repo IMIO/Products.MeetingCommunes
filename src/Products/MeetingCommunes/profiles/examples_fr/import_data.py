@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+from copy import deepcopy
 from DateTime import DateTime
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.PloneMeeting.profiles import AnnexTypeDescriptor, StyleTemplateDescriptor
@@ -57,6 +59,13 @@ agendaTemplateWithIndex.pod_formats = ['odt', 'pdf', ]
 agendaTemplateWithIndex.pod_portal_types = ['Meeting']
 agendaTemplateWithIndex.tal_condition = u'python:tool.isManager(here)'
 agendaTemplateWithIndex.style_template = ['styles1']
+
+agendaTemplateWithAnnexes = PodTemplateDescriptor('oj-annexes', 'Ordre du jour (avec annexes)')
+agendaTemplateWithAnnexes.odt_file = 'oj-avec-annexes.odt'
+agendaTemplateWithAnnexes.pod_formats = ['odt', 'pdf', ]
+agendaTemplateWithAnnexes.pod_portal_types = ['Meeting']
+agendaTemplateWithAnnexes.tal_condition = u'python:tool.isManager(here)'
+agendaTemplateWithAnnexes.style_template = ['styles1']
 
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsTemplate.odt_file = 'pv.odt'
@@ -146,7 +155,7 @@ historyTemplate.pod_formats = ['odt', 'pdf', ]
 historyTemplate.pod_portal_types = ['MeetingItem']
 
 collegeStyleTemplate = [stylesTemplate1, stylesTemplate2]
-collegeTemplates = [agendaTemplate, agendaTemplateWithIndex,
+collegeTemplates = [agendaTemplate, agendaTemplateWithIndex, agendaTemplateWithAnnexes,
                     decisionsTemplate, attendeesTemplate,
                     itemTemplate, itemReport, dfAdviceTemplate,
                     dfAdvicesTemplate, dashboardTemplate,
@@ -170,7 +179,7 @@ conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Co
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel")
 
 groups = [OrgDescriptor('dirgen', 'Directeur Général', u'DG'),
-          OrgDescriptor('secretariat', 'Secrétariat communal', u'Secr'),
+          OrgDescriptor('secretariat', 'Secrétariat Général', u'Secr', groups_in_charge=['dirgen']),
           OrgDescriptor('informatique', 'Service informatique', u'Info'),
           OrgDescriptor('personnel', 'Service du personnel', u'Pers'),
           OrgDescriptor('dirfin', 'Directeur Financier', u'DF'),
@@ -273,7 +282,8 @@ collegeMeeting.usedItemAttributes = ['description',
                                      'notes',
                                      'marginalNotes',
                                      'inAndOutMoves',
-                                     'otherMeetingConfigsClonableToPrivacy']
+                                     'otherMeetingConfigsClonableToPrivacy',
+                                     'manuallyLinkedItems']
 collegeMeeting.usedMeetingAttributes = ['startDate',
                                         'endDate',
                                         'attendees',
@@ -301,7 +311,13 @@ collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IM
 collegeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
 collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
 collegeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
-collegeMeeting.transitionsToConfirm = ['MeetingItem.delay', ]
+collegeMeeting.transitionsToConfirm = ('MeetingItem.accept_but_modify', 'MeetingItem.propose',
+                                       'MeetingItem.refuse', 'MeetingItem.backToItemCreated',
+                                       'MeetingItem.backToProposed',
+                                       'MeetingItem.backTo_itemfrozen_from_returned_to_proposing_group',
+                                       'MeetingItem.backTo_presented_from_returned_to_proposing_group',
+                                       'MeetingItem.delay', 'MeetingItem.backToValidated',
+                                       'MeetingItem.validate', 'MeetingItem.return_to_proposing_group')
 collegeMeeting.meetingTopicStates = ('created', 'frozen')
 collegeMeeting.decisionTopicStates = ('decided', 'closed')
 collegeMeeting.enforceAdviceMandatoriness = False
@@ -364,15 +380,45 @@ collegeMeeting.customAdvisers = [
      'delay': '20',
      'delay_left_alert': '4',
      'delay_label': 'Incidence financière >= 22.000€',
-     'is_linked_to_previous_row': '1'}, ]
-collegeMeeting.itemPowerObserversStates = ('itemfrozen',
-                                           'accepted',
-                                           'delayed',
-                                           'refused',
-                                           'accepted_but_modified',
-                                           'pre_accepted')
+     'is_linked_to_previous_row': '1'},
+    {'row_id': 'unique_id_004',
+     'org': 'dirgen',
+     'gives_auto_advice_on': 'python: item.adapted().getGroupInCharge(fromOrgIfEmpty=True) == org_uid',
+     'gives_auto_advice_on_help_message': "Le groupe \xc3\xa9metteur d'avis est en charge du groupe proposant du point",
+     'for_item_created_from': today,
+     'delay': '',
+     'delay_left_alert': '',
+     'delay_label': '',
+     'is_linked_to_previous_row': '0'},
+]
+collegeMeeting.powerObservers = (
+    {'row_id': 'powerobservers',
+     'label': 'Super observateurs',
+     'item_states': ('itemfrozen',
+                     'accepted',
+                     'delayed',
+                     'refused',
+                     'accepted_but_modified',
+                     'pre_accepted'),
+     'meeting_states': ('frozen', 'decided', 'closed'),
+     'orderindex_': '1'},
+    {'row_id': 'restrictedpowerobservers',
+     'label': 'Super observateurs restreints',
+     'item_states': ('itemfrozen',
+                     'accepted',
+                     'delayed',
+                     'refused',
+                     'accepted_but_modified',
+                     'pre_accepted'),
+     'meeting_states': ('frozen', 'decided', 'closed'),
+     'orderindex_': '2'})
+
 collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-collegeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
+collegeMeeting.workflowAdaptations = [
+    'no_publication', 'no_global_observation',
+    'return_to_proposing_group', 'refused',
+    'presented_item_back_to_itemcreated', 'presented_item_back_to_proposed',
+    'only_creator_may_delete']
 collegeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 collegeMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
@@ -393,7 +439,6 @@ collegeMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transitio
                                                               'item_transition': 'itemfreeze'},
                                                              {'meeting_transition': 'close',
                                                               'item_transition': 'accept'},)
-collegeMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 collegeMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
 collegeMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 collegeMeeting.useCopies = True
@@ -634,7 +679,8 @@ councilMeeting.usedItemAttributes = ['description',
                                      'privacy',
                                      'notes',
                                      'marginalNotes',
-                                     'inAndOutMoves']
+                                     'inAndOutMoves',
+                                     'manuallyLinkedItems']
 councilMeeting.usedMeetingAttributes = ['startDate',
                                         'midDate',
                                         'endDate',
@@ -659,7 +705,13 @@ councilMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IM
 councilMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
 councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
 councilMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
-councilMeeting.transitionsToConfirm = []
+councilMeeting.transitionsToConfirm = ('MeetingItem.accept_but_modify', 'MeetingItem.propose',
+                                       'MeetingItem.refuse', 'MeetingItem.backToItemCreated',
+                                       'MeetingItem.backToProposed',
+                                       'MeetingItem.backTo_itemfrozen_from_returned_to_proposing_group',
+                                       'MeetingItem.backTo_presented_from_returned_to_proposing_group',
+                                       'MeetingItem.delay', 'MeetingItem.backToValidated',
+                                       'MeetingItem.validate', 'MeetingItem.return_to_proposing_group')
 councilMeeting.meetingTopicStates = ('created', 'frozen')
 councilMeeting.decisionTopicStates = ('decided', 'closed')
 councilMeeting.itemAdviceStates = ('validated',)
@@ -677,7 +729,11 @@ councilMeeting.itemAdviceStates = ()
 councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
 councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-councilMeeting.workflowAdaptations = ['no_publication', 'no_global_observation', 'return_to_proposing_group', 'refused']
+councilMeeting.workflowAdaptations = [
+    'no_publication', 'no_global_observation',
+    'return_to_proposing_group', 'refused',
+    'presented_item_back_to_itemcreated', 'presented_item_back_to_proposed',
+    'only_creator_may_delete']
 councilMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
                                                               'item_transition': 'itemfreeze'},
@@ -694,11 +750,7 @@ councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transitio
                                                               'item_transition': 'itemfreeze'},
                                                              {'meeting_transition': 'close',
                                                               'item_transition': 'accept'},)
-councilMeeting.itemPowerObserversStates = ('itemfrozen',
-                                           'accepted', 'delayed',
-                                           'refused',
-                                           'accepted_but_modified', 'pre_accepted')
-councilMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
+councilMeeting.powerObservers = deepcopy(collegeMeeting.powerObservers)
 councilMeeting.powerAdvisersGroups = ()
 councilMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 councilMeeting.useCopies = True
@@ -729,7 +781,6 @@ councilMeeting.orderedContacts = ['ga-c-rard-bourgmestre/bourgmestre-mon-organis
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(collegeMeeting, councilMeeting),
                                  orgs=groups)
-data.enableUserPreferences = False
 data.usersOutsideGroups = [bourgmestre, conseiller]
 data.directory_position_types = [
     {'token': u'default',

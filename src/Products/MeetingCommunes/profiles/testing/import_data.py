@@ -23,7 +23,6 @@ collegeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IM
 collegeMeeting.itemDecidedStates = ['accepted', 'delayed', 'accepted_but_modified', 'pre_accepted']
 collegeMeeting.itemPositiveDecidedStates = ['accepted', 'accepted_but_modified']
 collegeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation']
-collegeMeeting.meetingPowerObserversStates = ('frozen', 'decided', 'closed')
 collegeMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
                                                               'item_transition': 'itemfreeze'},
 
@@ -60,7 +59,6 @@ councilMeeting.meetingConditionsInterface = collegeMeeting.meetingConditionsInte
 councilMeeting.meetingActionsInterface = collegeMeeting.meetingActionsInterface
 councilMeeting.itemDecidedStates = collegeMeeting.itemDecidedStates
 councilMeeting.itemPositiveDecidedStates = collegeMeeting.itemPositiveDecidedStates
-councilMeeting.meetingPowerObserversStates = collegeMeeting.meetingPowerObserversStates
 councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
                                                               'item_transition': 'itemfreeze'},
 
