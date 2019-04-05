@@ -136,6 +136,13 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         self.meetingConfig = self.meetingConfig2
         super(testWFAdaptations, self).test_pm_WFA_creator_edits_unless_closed()
 
+    def test_pm_WFA_decide_item_when_back_to_meeting_from_returned_to_proposing_group(self):
+        super(testWFAdaptations, self).test_pm_WFA_decide_item_when_back_to_meeting_from_returned_to_proposing_group()
+        self.changeUser('pmManager')
+        folder = self.getMeetingFolder()
+        item = folder.objectValues('MeetingItem')[0]
+        self.assertEquals('accepted_but_modified', item.queryState())
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
