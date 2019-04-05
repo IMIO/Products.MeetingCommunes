@@ -15,6 +15,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - In profile 'examples_fr', enable 'Agenda with annexes' by default
 - Adapted code regarding MeetingConfig.powerObservers
 - Enabled wfAdaptation 'only_creator_may_delete' by default for profiles 'examples_fr' and 'simple'
+- Added JenkinsFile for CI triggers
 
 4.1b2 (2019-01-29)
 ------------------
