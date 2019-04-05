@@ -6,8 +6,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 4.1b3 (unreleased)
 ------------------
-
 - Hide 'searchvalidateditems' to power observers (restricted included)
+- Updated decide_item_when_back_to_meeting_from_returned_to_proposing_group decided state to 'accept_but_modify' instead of 'accept' (from PloneMeeting)
 - In profile 'examples_fr', enable WFAdaptations 'presented_item_back_to_itemcreated' and 'presented_item_back_to_proposed'
 - In profile 'examples_fr', enable relevant transitions to confirm
 - In profile 'examples_fr', enable 'groups_in_charge' for 'Secrétariat Général' and configure auto asked advice for it
