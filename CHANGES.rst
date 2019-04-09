@@ -16,6 +16,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Adapted code regarding MeetingConfig.powerObservers
 - Enabled wfAdaptation 'only_creator_may_delete' by default for profiles 'examples_fr' and 'simple'
 - Added JenkinsFile for CI triggers
+- PloneMeeting's MeetingWorkflowConditions was simplified, no need to redefine mayCorrect anymore
+- Give 'Review portal content' permission to MeetingManager in Meeting WF in state 'closed' as it is now possible for
+  MeetingManagers to correct a closed meeting depending on MeetingConfig.meetingPresentItemWhenNoCurrentMeetingStates
 
 4.1b2 (2019-01-29)
 ------------------
