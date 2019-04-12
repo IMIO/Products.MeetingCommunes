@@ -88,13 +88,6 @@ itemTemplate.pod_formats = ['odt', 'pdf', ]
 itemTemplate.pod_portal_types = ['MeetingItem']
 itemTemplate.style_template = ['styles1']
 
-itemTemplate_duplex = PodTemplateDescriptor('deliberation_duplex', 'Délibération (Recto/Verso)')
-itemTemplate_duplex.is_reusable = True
-itemTemplate_duplex.odt_file = 'deliberation_recto_verso.odt'
-itemTemplate_duplex.pod_formats = ['odt', 'pdf', ]
-itemTemplate_duplex.pod_portal_types = ['MeetingItem']
-itemTemplate_duplex.style_template = ['styles1']
-
 itemReport = PodTemplateDescriptor('report', 'Rapport')
 itemReport.odt_file = 'report.odt'
 itemReport.pod_formats = ['odt', 'pdf', ]
@@ -107,13 +100,6 @@ all_delib.pod_formats = ['odt', 'pdf', ]
 all_delib.pod_portal_types = ['Meeting']
 all_delib.tal_condition = u'python:tool.isManager(here)'
 all_delib.merge_templates = [{'pod_context_name': u'delib', 'do_rendering': False, 'template': 'deliberation'}]
-
-all_delib_duplex = PodTemplateDescriptor('all_delib_duplex', 'Toutes les délibérations (Recto/Verso)')
-all_delib_duplex.odt_file = 'all_delib_recto_verso.odt'
-all_delib_duplex.pod_formats = ['odt', 'pdf', ]
-all_delib_duplex.pod_portal_types = ['Meeting']
-all_delib_duplex.tal_condition = u'python:tool.isManager(here)'
-all_delib_duplex.merge_templates = [{'pod_context_name': u'delib', 'do_rendering': False, 'template': 'deliberation_duplex'}]
 
 dfAdviceTemplate = PodTemplateDescriptor('avis-df', 'Avis DF')
 dfAdviceTemplate.odt_file = 'avis-df.odt'
@@ -171,10 +157,10 @@ historyTemplate.pod_portal_types = ['MeetingItem']
 collegeStyleTemplate = [stylesTemplate1, stylesTemplate2]
 collegeTemplates = [agendaTemplate, agendaTemplateWithIndex, agendaTemplateWithAnnexes,
                     decisionsTemplate, attendeesTemplate,
-                    itemTemplate, itemTemplate_duplex, itemReport, dfAdviceTemplate,
+                    itemTemplate, itemReport, dfAdviceTemplate,
                     dfAdvicesTemplate, dashboardTemplate,
                     dashboardTemplateOds, dashboardExportTemplate, dashboardDFTemplateOds,
-                    historyTemplate, dashboardMeetingAssemblies, all_delib,all_delib_duplex, dashboardPvs]
+                    historyTemplate, dashboardMeetingAssemblies, all_delib, dashboardPvs]
 
 # Users and groups -------------------------------------------------------------
 dgen = UserDescriptor('dgen', [], email="test@test.be", fullname="Henry Directeur")
