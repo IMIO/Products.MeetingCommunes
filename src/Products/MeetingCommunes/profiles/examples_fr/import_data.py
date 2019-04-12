@@ -77,8 +77,8 @@ decisionsTemplate.style_template = ['styles1']
 attendeesTemplate = PodTemplateDescriptor('attendees', 'Exemple assemblées')
 attendeesTemplate.odt_file = 'attendees.odt'
 attendeesTemplate.pod_formats = ['odt', 'pdf', ]
-attendeesTemplate.pod_portal_types = ['Meeting']
-attendeesTemplate.tal_condition = u'python:tool.isManager(here, realManagers=True)'
+attendeesTemplate.pod_portal_types = ['Meeting', 'MeetingItem']
+attendeesTemplate.tal_condition = u'python:tool.isManager(here)'
 attendeesTemplate.style_template = ['styles1']
 
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
