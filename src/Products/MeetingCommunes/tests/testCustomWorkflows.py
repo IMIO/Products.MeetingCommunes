@@ -128,8 +128,15 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         # presented change into accepted
         self.assertEquals('accepted', wftool.getInfoFor(item7, 'review_state'))
 
+    def _transitions_for_observers(self, content_type='item'):
+        """ """
+        if content_type == 'item':
+            return ('prevalidate', 'validate', 'present')
+        else:
+            return ('freeze', 'decide', 'close')
+
     def test_pm_ObserversMayViewInEveryStates(self):
-        """A MeetingObserverLocal has every 'View' permissions."""
+        """A MeetingObserverLocal has every 'View' permissions in every states."""
         def _checkObserverMayView(item):
             """Log as 'pmObserver1' and check if he has every 'View' like permissions."""
             original_user_id = self.member.getId()
@@ -145,25 +152,19 @@ class testCustomWorkflows(MeetingCommunesTestCase):
             self.changeUser(original_user_id)
         # enable prevalidation
         cfg = self.meetingConfig
-        cfg.setWorkflowAdaptations(('pre_validation', ))
-        performWorkflowAdaptations(cfg, logger=pm_logger)
         self.changeUser('pmManager')
-        self._turnUserIntoPrereviewer(self.member)
+        if 'pre_validation' in cfg.listWorkflowAdaptations():
+            cfg.setWorkflowAdaptations(('pre_validation', ))
+            performWorkflowAdaptations(cfg, logger=pm_logger)
+            self._turnUserIntoPrereviewer(self.member)
         item = self.create('MeetingItem')
         item.setDecision(self.decisionText)
         meeting = self.create('Meeting', date=DateTime('2017/03/27'))
+        for transition in self._transitions_for_observers(content_type='item'):
+            _checkObserverMayView(item)
+            self.do(item, transition)
         _checkObserverMayView(item)
-        self.do(item, 'propose')
-        _checkObserverMayView(item)
-        self.do(item, 'prevalidate')
-        _checkObserverMayView(item)
-        self.do(item, 'validate')
-        _checkObserverMayView(item)
-        self.do(item, 'present')
-        _checkObserverMayView(item)
-        self.do(meeting, 'freeze')
-        _checkObserverMayView(item)
-        self.do(meeting, 'decide')
-        _checkObserverMayView(item)
-        self.do(meeting, 'close')
+        for transition in self._transitions_for_observers(content_type='meeting'):
+            _checkObserverMayView(item)
+            self.do(meeting, transition)
         _checkObserverMayView(item)
