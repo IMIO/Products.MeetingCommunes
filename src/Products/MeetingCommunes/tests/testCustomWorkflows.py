@@ -128,13 +128,6 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         # presented change into accepted
         self.assertEquals('accepted', wftool.getInfoFor(item7, 'review_state'))
 
-    def _transitions_for_observers(self, content_type='item'):
-        """ """
-        if content_type == 'item':
-            return ('prevalidate', 'validate', 'present')
-        else:
-            return ('freeze', 'decide', 'close')
-
     def test_pm_ObserversMayViewInEveryStates(self):
         """A MeetingObserverLocal has every 'View' permissions in every states."""
         def _checkObserverMayView(item):
@@ -160,11 +153,16 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         item = self.create('MeetingItem')
         item.setDecision(self.decisionText)
         meeting = self.create('Meeting', date=DateTime('2017/03/27'))
-        for transition in self._transitions_for_observers(content_type='item'):
+        for transition in self.TRANSITIONS_FOR_PRESENTING_ITEM_1:
             _checkObserverMayView(item)
-            self.do(item, transition)
+            if transition in self.transitions(item):
+                self.do(item, transition)
         _checkObserverMayView(item)
-        for transition in self._transitions_for_observers(content_type='meeting'):
+        for transition in self.TRANSITIONS_FOR_CLOSING_MEETING_1:
             _checkObserverMayView(item)
-            self.do(meeting, transition)
+            if transition in self.transitions(meeting):
+                self.do(meeting, transition)
         _checkObserverMayView(item)
+        # we check that item and meeting did their complete workflow
+        self.assertEqual(item.queryState(), 'accepted')
+        self.assertEqual(meeting.queryState(), 'closed')
