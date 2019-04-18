@@ -25,6 +25,12 @@ annexeBudget = ItemAnnexTypeDescriptor('annexeBudget', 'Article Budgétaire', u'
 annexeCahier = ItemAnnexTypeDescriptor('annexeCahier', 'Cahier des Charges', u'cahier.png')
 annexeDecision = ItemAnnexTypeDescriptor('annexeDecision', 'Annexe à la décision',
                                          u'attach.png', relatedTo='item_decision')
+annexeDecisionToSign = ItemAnnexTypeDescriptor('annexeDecisionToSign', 'Délibération à signer',
+                                               u'deliberation_to_sign.png', relatedTo='item_decision',
+                                               enabled=False)
+annexeDecisionSigned = ItemAnnexTypeDescriptor('annexeDecisionSigned', 'Délibération signée',
+                                               u'deliberation_signed.png', relatedTo='item_decision',
+                                               enabled=False)
 annexeAvis = AnnexTypeDescriptor('annexeAvis', 'Annexe à un avis',
                                  u'attach.png', relatedTo='advice')
 annexeAvisLegal = AnnexTypeDescriptor('annexeAvisLegal', 'Extrait article de loi',
@@ -248,11 +254,11 @@ collegeMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
                           'Charles Exemple - 1er Echevin,\n' \
                           'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
                           'Jacqueline Exemple, Responsable du CPAS'
-collegeMeeting.signatures = 'Le Secrétaire communal\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
+collegeMeeting.signatures = 'Le Directeur Général\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
 collegeMeeting.certifiedSignatures = [
     {'signatureNumber': '1',
      'name': u'Mr Vraiment Présent',
-     'function': u'Le Secrétaire communal',
+     'function': u'Le Directeur Général',
      'held_position': '_none_',
      'date_from': '',
      'date_to': '',
@@ -271,10 +277,11 @@ Place3\r"""
 collegeMeeting.categories = categories
 collegeMeeting.shortName = 'College'
 collegeMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
-                             annexeDecision, annexeAvis, annexeAvisLegal,
+                             annexeDecision, annexeDecisionToSign, annexeDecisionSigned,
+                             annexeAvis, annexeAvisLegal,
                              annexeSeance]
 collegeMeeting.usedItemAttributes = ['description',
-                                     'detailedDescription',
+                                     'motivation',
                                      'budgetInfos',
                                      'observations',
                                      'toDiscuss',
@@ -669,10 +676,11 @@ Place3\n\r"""
 councilMeeting.categories = categories
 councilMeeting.shortName = 'Council'
 councilMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
-                             annexeDecision, annexeAvis, annexeAvisLegal,
+                             annexeDecision, annexeDecisionToSign, annexeDecisionSigned,
+                             annexeAvis, annexeAvisLegal,
                              annexeSeance]
 councilMeeting.usedItemAttributes = ['description',
-                                     'detailedDescription',
+                                     'motivation',
                                      'oralQuestion',
                                      'itemInitiator',
                                      'observations',
@@ -694,7 +702,7 @@ councilMeeting.usedMeetingAttributes = ['startDate',
                                         'inAndOutMoves']
 councilMeeting.recordMeetingHistoryStates = []
 councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
-                                       'MeetingItem.detailedDescription',
+                                       'MeetingItem.motivation',
                                        'MeetingItem.decision',
                                        'MeetingItem.observations',
                                        'Meeting.observations', )
