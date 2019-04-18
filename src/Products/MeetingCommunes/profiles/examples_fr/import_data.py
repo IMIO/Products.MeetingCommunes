@@ -141,10 +141,16 @@ dashboardMeetingAssemblies.tal_condition = u'python:False'
 dashboardMeetingAssemblies.roles_bypassing_talcondition = set(['Manager', 'MeetingManager'])
 dashboardMeetingAssemblies.dashboard_collections_ids = ['searchalldecisions']
 
+dashboardMeetingAttendances = PodTemplateDescriptor('attendance-stats', 'Statistiques de présences', dashboard=True)
+dashboardMeetingAttendances.odt_file = 'attendance-stats.ods'
+dashboardMeetingAttendances.pod_formats = ['ods', 'xls']
+dashboardMeetingAttendances.tal_condition = u'python:False'
+dashboardMeetingAttendances.roles_bypassing_talcondition = set(['Manager', 'MeetingManager'])
+dashboardMeetingAttendances.dashboard_collections_ids = ['searchalldecisions']
+
 dashboardPvs = PodTemplateDescriptor('all_pv', 'Tous les Procès-Verbaux', dashboard=True)
 dashboardPvs.odt_file = 'all_pv.odt'
 dashboardPvs.pod_formats = ['doc', 'pdf', ]
-dashboardMeetingAssemblies.tal_condition = u'python:False'
 dashboardPvs.roles_bypassing_talcondition = set(['Manager', 'MeetingManager'])
 dashboardPvs.dashboard_collections_ids = ['searchalldecisions']
 dashboardPvs.merge_templates = [{'pod_context_name': u'pv', 'do_rendering': False, 'template': 'pv'}]
@@ -160,7 +166,7 @@ collegeTemplates = [agendaTemplate, agendaTemplateWithIndex, agendaTemplateWithA
                     itemTemplate, itemReport, dfAdviceTemplate,
                     dfAdvicesTemplate, dashboardTemplate,
                     dashboardTemplateOds, dashboardExportTemplate, dashboardDFTemplateOds,
-                    historyTemplate, dashboardMeetingAssemblies, all_delib, dashboardPvs]
+                    historyTemplate, dashboardMeetingAssemblies, dashboardMeetingAttendances, all_delib, dashboardPvs]
 
 # Users and groups -------------------------------------------------------------
 dgen = UserDescriptor('dgen', [], email="test@test.be", fullname="Henry Directeur")
@@ -641,7 +647,7 @@ councilStyleTemplate = [stylesTemplate1]
 
 councilTemplates = [agendaCouncilTemplate, decisionsCouncilTemplate,
                     itemCouncilRapportTemplate, itemCouncilTemplate,
-                    dashboardTemplate, dashboardMeetingAssemblies]
+                    dashboardTemplate, dashboardMeetingAssemblies, dashboardMeetingAttendances]
 
 councilMeeting = MeetingConfigDescriptor(
     'meeting-config-council', 'Conseil Communal',
