@@ -112,14 +112,18 @@ all_delib_duplex.odt_file = 'all_delib_recto_verso.odt'
 all_delib_duplex.pod_formats = ['odt', 'pdf', ]
 all_delib_duplex.pod_portal_types = ['Meeting']
 all_delib_duplex.tal_condition = u'python:tool.isManager(here)'
-all_delib_duplex.merge_templates = [{'pod_context_name': u'delib', 'do_rendering': False, 'template': 'deliberation_duplex'}]
+all_delib_duplex.merge_templates = [{'pod_context_name': u'delib',
+                                     'do_rendering': False,
+                                     'template': 'deliberation_duplex'}]
 
 all_delib = PodTemplateDescriptor('all_delib', 'Toutes les délibérations')
 all_delib.odt_file = 'all_delib.odt'
 all_delib.pod_formats = ['odt', 'pdf', ]
 all_delib.pod_portal_types = ['Meeting']
 all_delib.tal_condition = u'python:tool.isManager(here)'
-all_delib.merge_templates = [{'pod_context_name': u'delib', 'do_rendering': False, 'template': 'deliberation'}]
+all_delib.merge_templates = [{'pod_context_name': u'delib',
+                              'do_rendering': False,
+                              'template': 'deliberation'}]
 
 dfAdviceTemplate = PodTemplateDescriptor('avis-df', 'Avis DF')
 dfAdviceTemplate.odt_file = 'avis-df.odt'
@@ -154,14 +158,16 @@ dashboardDFTemplateOds.odt_file = 'synthese-df-tb.ods'
 dashboardDFTemplateOds.pod_formats = ['ods', 'xls', ]
 dashboardDFTemplateOds.dashboard_collections_ids = [FINANCE_ADVICES_COLLECTION_ID]
 
-dashboardMeetingAssemblies = PodTemplateDescriptor('meeting-assemblies', 'Assemblée des séances', dashboard=True)
+dashboardMeetingAssemblies = PodTemplateDescriptor(
+    'meeting-assemblies', 'Assemblée des séances', dashboard=True)
 dashboardMeetingAssemblies.odt_file = 'meeting_assemblies.odt'
 dashboardMeetingAssemblies.pod_formats = ['doc', 'pdf', ]
 dashboardMeetingAssemblies.tal_condition = u'python:False'
 dashboardMeetingAssemblies.roles_bypassing_talcondition = set(['Manager', 'MeetingManager'])
 dashboardMeetingAssemblies.dashboard_collections_ids = ['searchalldecisions']
 
-dashboardMeetingAttendances = PodTemplateDescriptor('attendance-stats', 'Statistiques de présences', dashboard=True)
+dashboardMeetingAttendances = PodTemplateDescriptor(
+    'attendance-stats', 'Statistiques de présences', dashboard=True)
 dashboardMeetingAttendances.odt_file = 'attendance-stats.ods'
 dashboardMeetingAttendances.pod_formats = ['ods', 'xls']
 dashboardMeetingAttendances.tal_condition = u'python:False'
@@ -186,7 +192,8 @@ collegeTemplates = [agendaTemplate, agendaTemplateWithIndex, agendaTemplateWithA
                     itemTemplate, itemTemplate_duplex, itemReport, dfAdviceTemplate,
                     dfAdvicesTemplate, dashboardTemplate,
                     dashboardTemplateOds, dashboardExportTemplate, dashboardDFTemplateOds,
-                    historyTemplate, dashboardMeetingAssemblies, dashboardMeetingAttendances, all_delib, all_delib_duplex, dashboardPvs]
+                    historyTemplate, dashboardMeetingAssemblies, dashboardMeetingAttendances,
+                    all_delib, all_delib_duplex, dashboardPvs]
 
 # Users and groups -------------------------------------------------------------
 dgen = UserDescriptor('dgen', [], email="test@test.be", fullname="Henry Directeur")
