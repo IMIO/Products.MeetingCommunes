@@ -23,6 +23,7 @@ collegeMeeting.signatures = ''
 collegeMeeting.selectableAdvisers = []
 collegeMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-zcouncil',
                                            'trigger_workflow_transitions_until': '__nothing__'}, ]
+collegeMeeting.addContactsCSV = False
 # use template file from profile examples_fr
 patch_pod_templates(collegeMeeting.podTemplates, '../../examples_fr/templates/')
 

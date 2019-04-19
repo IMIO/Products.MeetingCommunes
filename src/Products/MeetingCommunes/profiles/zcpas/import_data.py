@@ -28,6 +28,7 @@ bpMeeting.selectableAdvisers = ['admingen', 'aidefamilles', 'comptabilite',
                                 'social', 'divers']
 bpMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-cas',
                                       'trigger_workflow_transitions_until': '__nothing__'}, ]
+bpMeeting.addContactsCSV = False
 # use template file from profile examples_fr
 patch_pod_templates(bpMeeting.podTemplates, '../../examples_fr/templates/')
 

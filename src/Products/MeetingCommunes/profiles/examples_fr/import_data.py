@@ -25,12 +25,12 @@ annexeBudget = ItemAnnexTypeDescriptor('annexeBudget', 'Article Budgétaire', u'
 annexeCahier = ItemAnnexTypeDescriptor('annexeCahier', 'Cahier des Charges', u'cahier.png')
 annexeDecision = ItemAnnexTypeDescriptor('annexeDecision', 'Annexe à la décision',
                                          u'attach.png', relatedTo='item_decision')
-annexeDecisionToSign = ItemAnnexTypeDescriptor('annexeDecisionToSign', 'Délibération à signer',
-                                               u'deliberation_to_sign.png', relatedTo='item_decision',
-                                               enabled=False)
-annexeDecisionSigned = ItemAnnexTypeDescriptor('annexeDecisionSigned', 'Délibération signée',
-                                               u'deliberation_signed.png', relatedTo='item_decision',
-                                               enabled=False)
+annexeDecisionToSign = ItemAnnexTypeDescriptor(
+    'annexeDecisionToSign', 'Délibération à signer',
+    u'../../examples_fr/images/deliberation_to_sign.png', relatedTo='item_decision', enabled=False)
+annexeDecisionSigned = ItemAnnexTypeDescriptor(
+    'annexeDecisionSigned', 'Délibération signée',
+    u'../../examples_fr/images/deliberation_signed.png', relatedTo='item_decision', enabled=False)
 annexeAvis = AnnexTypeDescriptor('annexeAvis', 'Annexe à un avis',
                                  u'attach.png', relatedTo='advice')
 annexeAvisLegal = AnnexTypeDescriptor('annexeAvisLegal', 'Extrait article de loi',
