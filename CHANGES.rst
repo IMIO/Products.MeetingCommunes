@@ -20,6 +20,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Give 'Review portal content' permission to MeetingManager in Meeting WF in state 'closed' as it is now possible for
   MeetingManagers to correct a closed meeting depending on MeetingConfig.meetingPresentItemWhenNoCurrentMeetingStates
 - Make test test_pm_ObserversMayViewInEveryStates easier to override by plugins
+- Added standard install profile for city
 
 4.1b2 (2019-01-29)
 ------------------
