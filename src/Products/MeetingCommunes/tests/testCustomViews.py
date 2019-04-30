@@ -697,6 +697,28 @@ class testCustomViews(MeetingCommunesTestCase):
             [[i5.getCategory(theObject=True).Title(), items[0:-1]],
              [i7.getCategory(theObject=True).Title(), [i7]]])
 
+    #     self, itemUids, listTypes=['normal'],
+    #                           ignore_review_states=[], privacy='*'
+        res = helper.get_grouped_items(itemUids, group_by='category',
+                                       excluded_values={'category': i5.getCategory(theObject=True).Title()})
+        self.assertListEqual(
+            res,
+            [[i7.getCategory(theObject=True).Title(), [i7]]])
+
+        res = helper.get_grouped_items(itemUids, group_by='category',
+                                       included_values={'category': i7.getCategory(theObject=True).Title()})
+        self.assertListEqual(
+            res,
+            [[i7.getCategory(theObject=True).Title(), [i7]]])
+
+        self.freezeMeeting(m)
+        self.do(i7, 'backToPresented')
+        res = helper.get_grouped_items(itemUids, group_by='category', ignore_review_states=['itemfrozen'])
+        self.assertListEqual(
+            res,
+            [[i7.getCategory(theObject=True).Title(), [i7]]])
+
+
     def test_get_multiple_level_printing(self):
         self.changeUser('pmManager')
         cfg = self.meetingConfig
