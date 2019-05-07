@@ -2,6 +2,6 @@
 <metadata>
   <version>0.1</version>
   <dependencies>
-    <dependency>profile-Products.MeetingCommunes:examples_fr</dependency>
+    <dependency>profile-Products.MeetingCommunes:default</dependency>
   </dependencies>
 </metadata>

@@ -19,12 +19,10 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
 #
-# ------------------------------------------------------------------------------
 
 from AccessControl import ClassSecurityInfo
 from AccessControl.class_init import InitializeClass
 from collections import OrderedDict
-from collective.contact.plonegroup.utils import get_organizations
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from plone import api
 from plone.memoize import ram
