@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-import os
 
 version = '4.1b3.dev0'
 
@@ -20,15 +19,7 @@ setup(name='Products.MeetingCommunes',
       include_package_data=True,
       zip_safe=False,
       extras_require=dict(
-          test=['unittest2',
-                'zope.testing',
-                'plone.testing',
-                'plone.app.testing',
-                'plone.app.robotframework',
-                'Products.CMFPlacefulWorkflow',
-                'zope.testing',
-                'Products.PloneTestCase',
-                'Products.PloneMeeting[test]'],
+          test=['Products.PloneMeeting[test]'],
           templates=['Genshi', ]),
       install_requires=[
           'setuptools',
