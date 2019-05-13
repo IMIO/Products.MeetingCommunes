@@ -920,6 +920,8 @@ class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
     def query_itemstocontrolcompletenessof(self):
         '''Queries all items for which there is completeness to evaluate, so where completeness
            is not 'completeness_complete'.'''
+        if not self.cfg:
+            return {}
         groupIds = []
         userGroups = self.tool.get_plone_groups_for_user()
         for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
@@ -947,6 +949,8 @@ class ItemsWithAdviceProposedToFinancialControllerAdapter(CompoundCriterionBaseA
     def query_itemswithadviceproposedtofinancialcontroller(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_controller'.
            We only return items for which completeness has been evaluated to 'complete'.'''
+        if not self.cfg:
+            return {}
         groupIds = []
         userGroups = self.tool.get_plone_groups_for_user()
         for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
@@ -969,6 +973,8 @@ class ItemsWithAdviceProposedToFinancialEditorAdapter(CompoundCriterionBaseAdapt
     def query_itemswithadviceproposedtofinancialeditor(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_editor'.
            We only return items for which completeness has been evaluated to 'complete'.'''
+        if not self.cfg:
+            return {}
         groupIds = []
         userGroups = self.tool.get_plone_groups_for_user()
         for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
@@ -990,6 +996,8 @@ class ItemsWithAdviceProposedToFinancialReviewerAdapter(CompoundCriterionBaseAda
     @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceproposedtofinancialreviewer(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_reviewer'.'''
+        if not self.cfg:
+            return {}
         groupIds = []
         userGroups = self.tool.get_plone_groups_for_user()
         for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
@@ -1009,6 +1017,8 @@ class ItemsWithAdviceProposedToFinancialManagerAdapter(CompoundCriterionBaseAdap
     @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceproposedtofinancialmanager(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_manager'.'''
+        if not self.cfg:
+            return {}
         groupIds = []
         userGroups = self.tool.get_plone_groups_for_user()
         for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
