@@ -482,7 +482,7 @@ collegeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
                                        groups[4].getIdSuffixed('reviewers')]
 collegeMeeting.styleTemplates = collegeStyleTemplate
 collegeMeeting.podTemplates = collegeTemplates
-collegeMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-council',
+collegeMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'cfg2',
                                            'trigger_workflow_transitions_until': '__nothing__'}, ]
 collegeMeeting.itemAutoSentToOtherMCStates = ('accepted', 'accepted_but_modified', )
 collegeMeeting.recurringItems = [

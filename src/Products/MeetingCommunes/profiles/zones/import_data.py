@@ -21,7 +21,7 @@ collegeMeeting.shortName = 'ZCollege'
 collegeMeeting.assembly = ''
 collegeMeeting.signatures = ''
 collegeMeeting.selectableAdvisers = []
-collegeMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-zcouncil',
+collegeMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'cfg2',
                                            'trigger_workflow_transitions_until': '__nothing__'}, ]
 collegeMeeting.addContactsCSV = False
 # use template file from profile examples_fr

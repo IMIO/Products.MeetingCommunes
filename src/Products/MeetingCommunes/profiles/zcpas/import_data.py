@@ -26,7 +26,7 @@ bpMeeting.signatures = 'Pierre Dupont,\nPrésident\nCharles Exemple,\nDirecteur 
 bpMeeting.selectableAdvisers = ['admingen', 'aidefamilles', 'comptabilite',
                                 'informatique', 'isp', 'dettes', 'personnel',
                                 'social', 'divers']
-bpMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'meeting-config-cas',
+bpMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'cfg2',
                                       'trigger_workflow_transitions_until': '__nothing__'}, ]
 bpMeeting.addContactsCSV = False
 # use template file from profile examples_fr
