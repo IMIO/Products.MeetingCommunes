@@ -53,7 +53,6 @@ from Products.PloneMeeting.MeetingItem import MeetingItem
 from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowActions
 from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowConditions
 from Products.PloneMeeting.model import adaptations
-from Products.PloneMeeting.model.adaptations import WF_APPLIED
 from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
 from zope.interface import implements
 
@@ -821,7 +820,6 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
             # Delete state 'published'
             if 'itempublished' in wf.states:
                 wf.states.deleteStates(['itempublished'])
-            logger.info(WF_APPLIED % ("no_publication", meetingConfig.getId()))
             return True
         return False
 
