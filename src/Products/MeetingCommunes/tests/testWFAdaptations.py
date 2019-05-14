@@ -22,6 +22,7 @@
 # 02110-1301, USA.
 #
 
+from Products.PloneMeeting.tests.PloneMeetingTestCase import pm_logger
 from Products.PloneMeeting.tests.testWFAdaptations import testWFAdaptations as pmtwfa
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 
@@ -137,6 +138,11 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
         super(testWFAdaptations, self).test_pm_WFA_creator_edits_unless_closed()
 
     def test_pm_WFA_decide_item_when_back_to_meeting_from_returned_to_proposing_group(self):
+        cfg = self.meetingConfig
+        if 'decide_item_when_back_to_meeting_from_returned_to_proposing_group' not in cfg.listWorkflowAdaptations():
+            pm_logger.info('test_pm_WFA_decide_item_when_back_to_meeting_from_returned_to_proposing_group: '
+                           'Bypassing test as wfAdaptation is not available!')
+            return
         super(testWFAdaptations, self).test_pm_WFA_decide_item_when_back_to_meeting_from_returned_to_proposing_group()
         self.changeUser('pmManager')
         folder = self.getMeetingFolder()
