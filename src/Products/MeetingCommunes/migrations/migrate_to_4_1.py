@@ -43,8 +43,28 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
     def _hook_before_mgroups_to_orgs(self):
         """Migrate the MeetingGroup.echevinServices attribute to groupsInCharge before
            MeetingGroups are migrated to organizations."""
-        # move each value of echevinServices to groupsInCharge
         logger.info("Migrating MeetingGroup.echevinServices to MeetingGroup.groupsInCharge...")
+
+        def _adapt_expression(expr):
+            """ """
+            if 'getEchevinsForProposingGroup' in expr and \
+               (expr.startswith("python:'") or expr.startswith("python: '")):
+                expr = expr.replace(
+                    "python:'",
+                    "python:pm_utils.org_id_to_uid('")
+                expr = expr.replace(
+                    "python: '",
+                    "python:pm_utils.org_id_to_uid('")
+                expr = expr.replace(
+                    "' in item",
+                    "') == item")
+                expr = expr.replace(
+                    'item.adapted().getEchevinsForProposingGroup()',
+                    'item.getGroupInCharge(fromOrgIfEmpty=True)')
+            return expr
+
+        # move each value of echevinServices to groupsInCharge
+        # and migrate asCopyGroupOn
         for mGroup in self.tool.objectValues('MeetingGroup'):
             echevinServices = mGroup.echevinServices
             for echevinService in echevinServices:
@@ -53,6 +73,8 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
                     groupsInCharge = list(otherMGroup.getGroupsInCharge())
                     groupsInCharge.append(mGroup.getId())
                     otherMGroup.setGroupsInCharge(groupsInCharge)
+            # asCopyGroupOn
+            mGroup.setAsCopyGroupOn(_adapt_expression(mGroup.getAsCopyGroupOn()))
         # adapt customAdvisers
         for cfg in self.tool.objectValues('MeetingConfig'):
             customAdvisers = deepcopy(cfg.getCustomAdvisers())
@@ -60,16 +82,7 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
             for customAdviser in customAdvisers:
                 adapted_customAdviser = deepcopy(customAdviser)
                 gives_auto_advice_on = customAdviser['gives_auto_advice_on']
-                if 'getEchevinsForProposingGroup' in gives_auto_advice_on:
-                    gives_auto_advice_on = gives_auto_advice_on.replace(
-                        "python:'",
-                        "python:pm_utils.org_id_to_uid('")
-                    gives_auto_advice_on = gives_auto_advice_on.replace(
-                        "' in item",
-                        "') == item")
-                    gives_auto_advice_on = gives_auto_advice_on.replace(
-                        'item.adapted().getEchevinsForProposingGroup()',
-                        'item.getGroupInCharge(fromOrgIfEmpty=True)')
+                gives_auto_advice_on = _adapt_expression(gives_auto_advice_on)
                 adapted_customAdviser['gives_auto_advice_on'] = gives_auto_advice_on
                 adapted_customAdvisers.append(adapted_customAdviser)
             cfg.customAdvisers = adapted_customAdvisers
