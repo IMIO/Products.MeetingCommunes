@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 Older versions than 3.0 can be found at http://svn.communesplone.org/svn/communesplone/MeetingCommunes/tags/
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1b3 (unreleased)
+4.1b3 (2019-05-16)
 ------------------
 - Hide 'searchvalidateditems' to power observers (restricted included)
 - Updated decide_item_when_back_to_meeting_from_returned_to_proposing_group decided state to 'accept_but_modify' instead of 'accept' (from PloneMeeting)
