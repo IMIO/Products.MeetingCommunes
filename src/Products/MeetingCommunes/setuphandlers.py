@@ -121,7 +121,7 @@ def initializeTool(context):
     # PloneMeeting is no more a dependency to avoid
     # magic between quickinstaller and portal_setup
     # so install it manually
-    _installPloneMeeting(context)
+    _installPloneMeeting(context, site)
     return ToolInitializer(context, PROJECTNAME).run()
 
 
