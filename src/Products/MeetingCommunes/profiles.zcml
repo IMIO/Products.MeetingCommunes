@@ -98,8 +98,8 @@
 
   <genericsetup:registerProfile
    name="zones"
-   title="PloneMeeting / zones (police ou secours)"
-   description="PloneMeeting for zones (help or police) (Belgium)"
+   title="PloneMeeting / zones (Collège/Conseil de police, secours ou province)"
+   description="PloneMeeting for zones (police, help or provincial) (Belgium)"
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
