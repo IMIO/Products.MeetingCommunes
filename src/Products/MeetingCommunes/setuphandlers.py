@@ -130,11 +130,10 @@ def _reinstallPloneMeeting(context, site):
        like performWorkflowAdaptations for example.'''
 
     logStep("reinstallPloneMeeting", context)
-    _installPloneMeeting(context)
+    _installPloneMeeting(context, site)
 
 
-def _installPloneMeeting(context):
-    site = context.getSite()
+def _installPloneMeeting(context, site):
     profileId = u'profile-Products.PloneMeeting:default'
     site.portal_setup.runAllImportStepsFromProfile(profileId)
 
