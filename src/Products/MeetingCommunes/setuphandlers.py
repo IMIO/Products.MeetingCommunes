@@ -28,9 +28,6 @@ import logging
 import os
 
 
-__author__ = """Gauthier Bastien <g.bastien@imio.be>, Stephan Geulette <s.geulette@imio.be>"""
-__docformat__ = 'plaintext'
-
 logger = logging.getLogger('MeetingCommunes: setuphandlers')
 
 
@@ -55,9 +52,9 @@ def postInstall(context):
     logStep("postInstall", context)
     site = context.getSite()
     # need to reinstall PloneMeeting after reinstalling MC workflows to re-apply wfAdaptations
-    reinstallPloneMeeting(context, site)
-    showHomeTab(context, site)
-    reorderSkinsLayers(context, site)
+    _reinstallPloneMeeting(context, site)
+    _showHomeTab(context, site)
+    _reorderSkinsLayers(context, site)
 
 
 def logStep(method, context):
@@ -66,29 +63,29 @@ def logStep(method, context):
 
 
 def isMeetingCommunesConfigureProfile(context):
-    return context.readDataFile("MeetingCommunes_examples_fr_marker.txt") or \
-        context.readDataFile("MeetingCommunes_city_marker.txt") or \
-        context.readDataFile("MeetingCommunes_cpas_marker.txt") or \
-        context.readDataFile("MeetingCommunes_bourgmestre_marker.txt") or \
-        context.readDataFile("MeetingCommunes_codir_marker.txt") or \
-        context.readDataFile("MeetingCommunes_ca_marker.txt") or \
+    return context.readDataFile("MeetingCommunes_ag_marker.txt") or \
         context.readDataFile("MeetingCommunes_audit_marker.txt") or \
+        context.readDataFile("MeetingCommunes_bourgmestre_marker.txt") or \
+        context.readDataFile("MeetingCommunes_ca_marker.txt") or \
+        context.readDataFile("MeetingCommunes_city_marker.txt") or \
+        context.readDataFile("MeetingCommunes_codir_marker.txt") or \
         context.readDataFile("MeetingCommunes_coges_marker.txt") or \
-        context.readDataFile("MeetingCommunes_zones_marker.txt") or \
-        context.readDataFile("MeetingCommunes_ag_marker.txt") or \
-        context.readDataFile("MeetingCommunes_etat_major_marker.txt") or \
-        context.readDataFile("MeetingCommunes_coordinateOffice_marker.txt") or \
-        context.readDataFile("MeetingCommunes_negociation_marker.txt") or \
-        context.readDataFile("MeetingCommunes_wellbeing_marker.txt") or \
-        context.readDataFile("MeetingCommunes_scresthome_marker.txt") or \
-        context.readDataFile("MeetingCommunes_technicalcommittee_marker.txt") or \
-        context.readDataFile("MeetingCommunes_remunarate_marker.txt") or \
-        context.readDataFile("MeetingCommunes_testing_marker.txt") or \
-        context.readDataFile("MeetingCommunes_executive_marker.txt") or \
-        context.readDataFile("MeetingCommunes_volonteers_marker.txt") or \
         context.readDataFile("MeetingCommunes_consultation_marker.txt") or \
+        context.readDataFile("MeetingCommunes_coordinateOffice_marker.txt") or \
+        context.readDataFile("MeetingCommunes_cpas_marker.txt") or \
         context.readDataFile("MeetingCommunes_cppt_marker.txt") or \
-        context.readDataFile("MeetingCommunes_sippt_marker.txt")
+        context.readDataFile("MeetingCommunes_etat_major_marker.txt") or \
+        context.readDataFile("MeetingCommunes_examples_fr_marker.txt") or \
+        context.readDataFile("MeetingCommunes_executive_marker.txt") or \
+        context.readDataFile("MeetingCommunes_negociation_marker.txt") or \
+        context.readDataFile("MeetingCommunes_remunarate_marker.txt") or \
+        context.readDataFile("MeetingCommunes_scresthome_marker.txt") or \
+        context.readDataFile("MeetingCommunes_sippt_marker.txt") or \
+        context.readDataFile("MeetingCommunes_technicalcommittee_marker.txt") or \
+        context.readDataFile("MeetingCommunes_testing_marker.txt") or \
+        context.readDataFile("MeetingCommunes_volonteers_marker.txt") or \
+        context.readDataFile("MeetingCommunes_wellbeing_marker.txt") or \
+        context.readDataFile("MeetingCommunes_zones_marker.txt")
 
 
 def isNotMeetingCommunesExamplesFrProfile(context):
@@ -130,12 +127,9 @@ def initializeTool(context):
     return ToolInitializer(context, PROJECTNAME).run()
 
 
-def reinstallPloneMeeting(context, site):
+def _reinstallPloneMeeting(context, site):
     '''Reinstall PloneMeeting so after install methods are called and applied,
        like performWorkflowAdaptations for example.'''
-
-    if isNotMeetingCommunesProfile(context):
-        return
 
     logStep("reinstallPloneMeeting", context)
     _installPloneMeeting(context)
@@ -147,13 +141,10 @@ def _installPloneMeeting(context):
     site.portal_setup.runAllImportStepsFromProfile(profileId)
 
 
-def showHomeTab(context, site):
+def _showHomeTab(context, site):
     """
        Make sure the 'home' tab is shown...
     """
-    if isNotMeetingCommunesProfile(context):
-        return
-
     logStep("showHomeTab", context)
 
     index_html = getattr(site.portal_actions.portal_tabs, 'index_html', None)
@@ -163,14 +154,11 @@ def showHomeTab(context, site):
         logger.info("The 'Home' tab does not exist !!!")
 
 
-def reorderSkinsLayers(context, site):
+def _reorderSkinsLayers(context, site):
     """
        Re-apply MeetingCommunes skins.xml step as the reinstallation of
        MeetingCommunes and PloneMeeting changes the portal_skins layers order
     """
-    if isNotMeetingCommunesProfile(context) and not isMeetingCommunesConfigureProfile(context):
-        return
-
     logStep("reorderSkinsLayers", context)
     site.portal_setup.runImportStepFromProfile(u'profile-Products.MeetingCommunes:default', 'skins')
 
