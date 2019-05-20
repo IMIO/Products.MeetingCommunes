@@ -38,10 +38,8 @@ annexeAvisLegal = AnnexTypeDescriptor('annexeAvisLegal', 'Extrait article de loi
 annexeSeance = AnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', relatedTo='meeting')
 
 # Categories -------------------------------------------------------------------
-recurring = CategoryDescriptor('recurrents', 'Récurrents')
-categories = [recurring,
-              CategoryDescriptor('divers', 'Divers'),
-              ]
+categories = [CategoryDescriptor('recurrents', 'Récurrents'),
+              CategoryDescriptor('divers', 'Divers')]
 
 # Style Template ---------------------------------------------------------------
 templates_path = os.path.join(os.path.dirname(__file__), 'templates')
@@ -820,6 +818,8 @@ data.usersOutsideGroups = [bourgmestre, conseiller]
 data.directory_position_types = [
     {'token': u'default',
      'name': u'(Utiliser le champ "Intitul\xe9")'},
+    {'token': u'councilor',
+     'name': u'Administrateur|Administrateurs|Administratrice|Administratrices'},
     {'token': u'alderman',
      'name': u'\xc9chevin|\xc9chevins|\xc9chevine|\xc9chevines'},
     {'token': u'bourgmestre',
