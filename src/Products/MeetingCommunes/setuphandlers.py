@@ -105,7 +105,6 @@ def isMeetingCommunesMigrationProfile(context):
 
 
 def installMeetingCommunes(context):
-    """ Run the default profile"""
     if not isMeetingCommunesConfigureProfile(context):
         return
     logStep("installMeetingCommunes", context)
@@ -114,8 +113,7 @@ def installMeetingCommunes(context):
 
 
 def initializeTool(context):
-    '''Initialises the PloneMeeting tool based on information from the current
-       profile.'''
+    '''Initialises the PloneMeeting tool based on information from the current profile.'''
     if not isMeetingCommunesConfigureProfile(context):
         return
 
@@ -142,9 +140,7 @@ def _installPloneMeeting(context):
 
 
 def _showHomeTab(context, site):
-    """
-       Make sure the 'home' tab is shown...
-    """
+    """Make sure the 'home' tab is shown..."""
     logStep("showHomeTab", context)
 
     index_html = getattr(site.portal_actions.portal_tabs, 'index_html', None)
