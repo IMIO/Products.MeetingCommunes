@@ -3,12 +3,4 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:plone="http://namespaces.plone.org/plone">
 
-    <!-- the meetingadvice workflow conditions view -->
-    <browser:view
-        for="Products.PloneMeeting.content.advice.IMeetingAdvice"
-        name="advice-wf-conditions"
-        class=".views.AdviceWFConditionsView"
-        layer="Products.PloneMeeting.interfaces.IPloneMeetingLayer"
-        permission="zope2.View" />
-
 </configure>

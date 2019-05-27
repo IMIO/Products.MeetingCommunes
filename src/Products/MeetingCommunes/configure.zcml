@@ -30,6 +30,14 @@
            factory="Products.MeetingCommunes.adapters.MeetingCommunesWorkflowConditions"
            provides="Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions"/>
 
+  <adapter for="Products.PloneMeeting.content.advice.IMeetingAdvice"
+           factory="Products.MeetingCommunes.adapters.MeetingAdviceCommunesWorkflowActions"
+           provides="Products.MeetingCommunes.interfaces.IMeetingAdviceCommunesWorkflowActions"/>
+
+  <adapter for="Products.PloneMeeting.content.advice.IMeetingAdvice"
+           factory="Products.MeetingCommunes.adapters.MeetingAdviceCommunesWorkflowConditions"
+           provides="Products.MeetingCommunes.interfaces.IMeetingAdviceCommunesWorkflowConditions"/>
+
   <adapter for="Products.PloneMeeting.interfaces.IMeetingItem"
            factory="Products.MeetingCommunes.adapters.CustomMeetingItem"
            provides="Products.PloneMeeting.interfaces.IMeetingItemCustom"/>

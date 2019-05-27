@@ -213,7 +213,7 @@
              i18n:attributes="title">
   <action url="" icon="" category="workflow" i18n:translate="">backToAdviceInitialState</action>
   <guard>
-    <guard-expression>python: here.REQUEST.get('mayBackToAdviceInitialState', False)</guard-expression>
+    <guard-expression>python:here.wfConditions().mayBackToAdviceInitialState()</guard-expression>
   </guard>
  </transition>
  <transition transition_id="backToProposedToFinancialController"
@@ -225,7 +225,7 @@
              i18n:attributes="title">
   <action url="" icon="" category="workflow" i18n:translate="">backToProposedToFinancialController</action>
   <guard>
-    <guard-expression>python:here.restrictedTraverse('@@advice-wf-conditions').mayBackToProposedToFinancialController()</guard-expression>
+    <guard-expression>python:here.wfConditions().mayCorrect()</guard-expression>
   </guard>
  </transition>
  <transition transition_id="backToProposedToFinancialEditor"
@@ -237,7 +237,7 @@
              i18n:attributes="title">
   <action url="" icon="" category="workflow" i18n:translate="">backToProposedToFinancialEditor</action>
   <guard>
-    <guard-expression>python:here.restrictedTraverse('@@advice-wf-conditions').mayBackToProposedToFinancialEditor()</guard-expression>
+    <guard-expression>python:here.wfConditions().mayCorrect()</guard-expression>
   </guard>
  </transition>
  <transition transition_id="backToProposedToFinancialManager"
@@ -249,7 +249,7 @@
              i18n:attributes="title">
   <action url="" icon="" category="workflow" i18n:translate="">backToProposedToFinancialManager</action>
   <guard>
-    <guard-expression>python:here.restrictedTraverse('@@advice-wf-conditions').mayBackToProposedToFinancialManager()</guard-expression>
+    <guard-expression>python:here.wfConditions().mayCorrect()</guard-expression>
   </guard>
  </transition>
  <transition transition_id="backToProposedToFinancialReviewer"
@@ -261,7 +261,7 @@
              i18n:attributes="title">
   <action url="" icon="" category="workflow" i18n:translate="">backToProposedToFinancialReviewer</action>
   <guard>
-    <guard-expression>python:here.restrictedTraverse('@@advice-wf-conditions').mayBackToProposedToFinancialReviewer()</guard-expression>
+    <guard-expression>python:here.wfConditions().mayCorrect()</guard-expression>
   </guard>
  </transition>
  <transition transition_id="giveAdvice"
@@ -273,7 +273,7 @@
              i18n:attributes="title">
   <action url="" icon="" category="workflow" i18n:translate="">giveAdvice</action>
   <guard>
-    <guard-expression>python:here.REQUEST.get('mayGiveAdvice', False)</guard-expression>
+    <guard-expression>python:here.wfConditions().mayGiveAdvice()</guard-expression>
   </guard>
  </transition>
  <transition transition_id="proposeToFinancialEditor"
@@ -285,7 +285,7 @@
              i18n:attributes="title">
   <action url="" icon="" category="workflow" i18n:translate="">proposeToFinancialEditor</action>
   <guard>
-    <guard-expression>python:here.restrictedTraverse('@@advice-wf-conditions').mayProposeToFinancialEditor()</guard-expression>
+    <guard-expression>python:here.wfConditions().mayProposeToFinancialEditor()</guard-expression>
   </guard>
  </transition>
  <transition transition_id="proposeToFinancialManager"
@@ -297,7 +297,7 @@
              i18n:attributes="title">
   <action url="" icon="" category="workflow" i18n:translate="">proposeToFinancialManager</action>
   <guard>
-    <guard-expression>python:here.restrictedTraverse('@@advice-wf-conditions').mayProposeToFinancialManager()</guard-expression>
+    <guard-expression>python:here.wfConditions().mayProposeToFinancialManager()</guard-expression>
   </guard>
  </transition>
  <transition transition_id="proposeToFinancialReviewer"
@@ -309,7 +309,7 @@
              i18n:attributes="title">
   <action url="" icon="" category="workflow" i18n:translate="">proposeToFinancialReviewer</action>
   <guard>
-    <guard-expression>python:here.restrictedTraverse('@@advice-wf-conditions').mayProposeToFinancialReviewer()</guard-expression>
+    <guard-expression>python:here.wfConditions().mayProposeToFinancialReviewer()</guard-expression>
   </guard>
  </transition>
  <transition transition_id="signFinancialAdvice"
@@ -321,7 +321,7 @@
              i18n:attributes="title">
   <action url="" icon="" category="workflow" i18n:translate="">signFinancialAdvice</action>
   <guard>
-    <guard-expression>python:here.restrictedTraverse('@@advice-wf-conditions').maySignFinancialAdvice()</guard-expression>
+    <guard-expression>python:here.wfConditions().maySignFinancialAdvice()</guard-expression>
   </guard>
  </transition>
  <variable variable_id="action" for_catalog="False"

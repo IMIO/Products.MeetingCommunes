@@ -20,6 +20,8 @@
 # 02110-1301, USA.
 #
 
+from Products.PloneMeeting.content.advice import IMeetingAdviceWorkflowActions
+from Products.PloneMeeting.content.advice import IMeetingAdviceWorkflowConditions
 from Products.PloneMeeting.interfaces import IMeetingItemWorkflowConditions
 from Products.PloneMeeting.interfaces import IMeetingItemWorkflowActions
 from Products.PloneMeeting.interfaces import IMeetingWorkflowActions
@@ -29,52 +31,28 @@ from Products.PloneMeeting.interfaces import IMeetingWorkflowConditions
 class IMeetingCommunesWorkflowActions(IMeetingWorkflowActions):
     '''This interface represents a meeting as viewed by the specific meeting
        workflow that is defined in this MeetingCommunes product.'''
-    def doClose():
-        """
-          Triggered while doing the 'close' transition
-        """
     def doDecide():
         """
           Triggered while doing the 'decide' transition
         """
-    def doFreeze():
+    def doBackToPublished():
         """
-          Triggered while doing the 'freeze' transition
-        """
-    def doBackToCreated():
-        """
-          Triggered while doing the 'doBackToCreated' transition
+          Triggered while going back to the 'published' state
         """
 
 
 class IMeetingCommunesWorkflowConditions(IMeetingWorkflowConditions):
     '''This interface represents a meeting as viewed by the specific meeting
        workflow that is defined in this MeetingCommunes product.'''
-    def mayFreeze():
-        """
-          Guard for the 'freeze' transition
-        """
-    def mayClose():
-        """
-          Guard for the 'close' transitions
-        """
     def mayDecide():
         """
           Guard for the 'decide' transition
-        """
-    def mayChangeItemsOrder():
-        """
-          Check if the user may or not changes the order of the items on the meeting
         """
 
 
 class IMeetingItemCommunesWorkflowActions(IMeetingItemWorkflowActions):
     '''This interface represents a meeting item as viewed by the specific
        item workflow that is defined in this MeetingCommunes product.'''
-    def doPresent():
-        """
-          Triggered while doing the 'present' transition
-        """
     def doAcceptButModify():
         """
           Triggered while doing the 'accept_but_modify' transition
@@ -92,11 +70,15 @@ class IMeetingItemCommunesWorkflowConditions(IMeetingItemWorkflowConditions):
         """
           Guard for the 'decide' transition
         """
-    def isLateFor():
+    def mayPublish():
         """
-          is the MeetingItem considered as late
+          Guard for the 'publish' transition
         """
-    def mayFreeze():
-        """
-          Guard for the 'freeze' transition
-        """
+
+
+class IMeetingAdviceCommunesWorkflowActions(IMeetingAdviceWorkflowActions):
+    ''' '''
+
+
+class IMeetingAdviceCommunesWorkflowConditions(IMeetingAdviceWorkflowConditions):
+    ''' '''

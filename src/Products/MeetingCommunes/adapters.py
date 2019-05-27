@@ -33,12 +33,17 @@ from Products.MeetingCommunes import logger
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.config import FINANCE_GROUP_SUFFIXES
 from Products.MeetingCommunes.config import FINANCE_WAITING_ADVICES_STATES
+from Products.MeetingCommunes.config import POSITIVE_FINANCE_ADVICE_SIGNABLE_BY_REVIEWER
+from Products.MeetingCommunes.interfaces import IMeetingAdviceCommunesWorkflowActions
+from Products.MeetingCommunes.interfaces import IMeetingAdviceCommunesWorkflowConditions
 from Products.MeetingCommunes.interfaces import IMeetingCommunesWorkflowActions
 from Products.MeetingCommunes.interfaces import IMeetingCommunesWorkflowConditions
 from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowActions
 from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowConditions
 from Products.PloneMeeting.adapters import CompoundCriterionBaseAdapter
 from Products.PloneMeeting.adapters import query_user_groups_cachekey
+from Products.PloneMeeting.content.advice import MeetingAdviceWorkflowActions
+from Products.PloneMeeting.content.advice import MeetingAdviceWorkflowConditions
 from Products.PloneMeeting.indexes import DELAYAWARE_ROW_ID_PATTERN
 from Products.PloneMeeting.indexes import REAL_ORG_UID_PATTERN
 from Products.PloneMeeting.interfaces import IMeetingConfigCustom
@@ -54,6 +59,7 @@ from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowActions
 from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowConditions
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
+from Products.PloneMeeting.utils import duplicate_workflow
 from zope.interface import implements
 
 
@@ -65,6 +71,9 @@ if 'creator_initiated_decisions' in customwfAdaptations:
 # remove the 'archiving' as we do not handle archive in our wfs
 if 'archiving' in customwfAdaptations:
     customwfAdaptations.remove('archiving')
+# add the 'add_advicecreated_state' to the meetingadvicefinances_workflow
+customwfAdaptations.append('add_advicecreated_state')
+
 
 MeetingConfig.wfAdaptations = customwfAdaptations
 
@@ -655,6 +664,28 @@ class CustomMeetingConfig(MeetingConfig):
                     'not_required_finance']
         return []
 
+    def _updateMeetingAdvicePortalTypes(self):
+        '''Make sure we use a patched_ wokflow instead meetingadvicefinances_workflow.'''
+        fin_wf = 'meetingadvicefinances_workflow'
+        wfTool = api.portal.get_tool('portal_workflow')
+        if fin_wf in wfTool:
+            patched_fin_wf = 'patched_meetingadvicefinances_workflow'
+            duplicate_workflow(fin_wf, patched_fin_wf, portalTypeNames=['meetingadvicefinances'])
+
+    def _adviceConditionsInterfaceFor(self, advice_obj):
+        '''See doc in interfaces.py.'''
+        if advice_obj.portal_type == 'meetingadvicefinances':
+            return IMeetingAdviceCommunesWorkflowConditions.__identifier__
+        else:
+            return super(CustomMeetingConfig, self)._adviceConditionsInterfaceFor(advice_obj)
+
+    def _adviceActionsInterfaceFor(self, advice_obj):
+        '''See doc in interfaces.py.'''
+        if advice_obj.portal_type == 'meetingadvicefinances':
+            return IMeetingAdviceCommunesWorkflowActions.__identifier__
+        else:
+            return super(CustomMeetingConfig, self)._adviceActionsInterfaceFor(advice_obj)
+
 
 class MeetingCommunesWorkflowActions(MeetingWorkflowActions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
@@ -750,8 +781,116 @@ class MeetingItemCommunesWorkflowConditions(MeetingItemWorkflowConditions):
         res = False
         if _checkPermission(ReviewPortalContent, self.context):
             if self.context.hasMeeting() and \
-               (self.context.getMeeting().queryState() in ('published', 'decided', 'closed', 'decisions_published',)):
+               (self.context.getMeeting().queryState() in (
+                    'published', 'decided', 'closed', 'decisions_published',)):
                 res = True
+        return res
+
+
+class MeetingAdviceCommunesWorkflowActions(MeetingAdviceWorkflowActions):
+    ''' '''
+
+    implements(IMeetingAdviceCommunesWorkflowActions)
+    security = ClassSecurityInfo()
+
+    security.declarePrivate('doProposeToFinancialController')
+
+    def doProposeToFinancialController(self, stateChange):
+        ''' '''
+        pass
+
+    security.declarePrivate('doProposeToFinancialEditor')
+
+    def doProposeToFinancialEditor(self, stateChange):
+        ''' '''
+        pass
+
+    security.declarePrivate('doProposeToFinancialReviewer')
+
+    def doProposeToFinancialReviewer(self, stateChange):
+        ''' '''
+        pass
+
+    security.declarePrivate('doProposeToFinancialManager')
+
+    def doProposeToFinancialManager(self, stateChange):
+        ''' '''
+        pass
+
+    security.declarePrivate('doSignFinancialAdvice')
+
+    def doSignFinancialAdvice(self, stateChange):
+        ''' '''
+        pass
+
+
+class MeetingAdviceCommunesWorkflowConditions(MeetingAdviceWorkflowConditions):
+    ''' '''
+
+    implements(IMeetingAdviceCommunesWorkflowConditions)
+    security = ClassSecurityInfo()
+
+    security.declarePublic('mayProposeToFinancialController')
+
+    def mayProposeToFinancialController(self):
+        '''
+        '''
+        res = False
+        if _checkPermission(ReviewPortalContent, self.context):
+            res = True
+        return res
+
+    security.declarePublic('mayProposeToFinancialEditor')
+
+    def mayProposeToFinancialEditor(self):
+        '''
+        '''
+        res = False
+        if _checkPermission(ReviewPortalContent, self.context):
+            res = True
+        return res
+
+    security.declarePublic('mayProposeToFinancialReviewer')
+
+    def mayProposeToFinancialReviewer(self):
+        '''
+        '''
+        res = False
+        if _checkPermission(ReviewPortalContent, self.context):
+            res = True
+        return res
+
+    security.declarePublic('mayProposeToFinancialManager')
+
+    def mayProposeToFinancialManager(self):
+        '''A financial manager may send the advice to the financial manager
+           in any case (advice positive or negative) except if advice
+           is still 'asked_again'.'''
+        res = False
+        if _checkPermission(ReviewPortalContent, self.context) and \
+           not self.context.advice_type == 'asked_again':
+            res = True
+        return res
+
+    security.declarePublic('maySignFinancialAdvice')
+
+    def maySignFinancialAdvice(self):
+        '''A financial reviewer may sign the advice if it is 'positive_finance'
+           or 'not_required_finance', if not this will be the financial manager
+           that will be able to sign it.'''
+        res = False
+        if _checkPermission(ReviewPortalContent, self.context):
+            res = True
+            # if POSITIVE_FINANCES_ADVICE_SIGNABLE_BY_REVIEWER is True, it means
+            # that a finances reviewer may sign an item in place of the finances manager
+            # except if it is 'negative_finance'
+            if POSITIVE_FINANCE_ADVICE_SIGNABLE_BY_REVIEWER:
+                if self.context.advice_type == 'negative_finance' and \
+                   not self.context.queryState() == 'proposed_to_financial_manager':
+                    res = False
+            else:
+                if not self.context.queryState() == 'proposed_to_financial_manager':
+                    res = False
         return res
 
 
@@ -820,6 +959,20 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
             # Delete state 'published'
             if 'itempublished' in wf.states:
                 wf.states.deleteStates(['itempublished'])
+            return True
+        elif wfAdaptation == 'add_advicecreated_state':
+            # adapt WF, add new initial_state (and leading transitions)
+            patched_fin_wf = 'patched_meetingadvicefinances_workflow'
+            adaptations.addState(
+                wf_id=patched_fin_wf,
+                new_state_id='advicecreated',
+                permissions_cloned_state_id='proposed_to_financial_controller',
+                leading_transition_id=None,
+                back_transitions={'backToAdviceCreated': 'proposed_to_financial_controller'},
+                leaving_transition_id='proposeToFinancialController',
+                leaving_to_state_id='proposed_to_financial_controller',
+                existing_leaving_transition_ids=['giveAdvice'],
+                existing_back_transition_ids=['backToAdviceInitialState'])
             return True
         return False
 
@@ -903,6 +1056,8 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
 InitializeClass(CustomMeeting)
 InitializeClass(CustomMeetingItem)
 InitializeClass(CustomMeetingConfig)
+InitializeClass(MeetingAdviceCommunesWorkflowActions)
+InitializeClass(MeetingAdviceCommunesWorkflowConditions)
 InitializeClass(MeetingCommunesWorkflowActions)
 InitializeClass(MeetingCommunesWorkflowConditions)
 InitializeClass(MeetingItemCommunesWorkflowActions)
