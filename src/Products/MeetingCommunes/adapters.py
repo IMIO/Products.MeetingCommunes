@@ -60,6 +60,7 @@ from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowConditions
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
 from Products.PloneMeeting.utils import duplicate_workflow
+from zope.i18n import translate
 from zope.interface import implements
 
 
@@ -410,6 +411,20 @@ class CustomMeetingConfig(MeetingConfig):
 
     def __init__(self, item):
         self.context = item
+
+    def custom_validate_workflowAdaptations(self, values, added, removed):
+        '''Validate the removal of "add_advicecreated_state".'''
+        if 'add_advicecreated_state' in removed:
+            config = self.getSelf()
+            # check if some advices are in the 'advicecreated' state
+            catalog = api.portal.get_tool('portal_catalog')
+            tool = api.portal.get_tool('portal_plonemeeting')
+            if catalog(portal_type=tool.getAdvicePortalTypes(as_ids=True),
+                       review_state='advicecreated',
+                       getConfigId=config.getId()):
+                return translate('wa_removed_advicecreated_error',
+                                 domain='PloneMeeting',
+                                 context=config.REQUEST)
 
     security.declarePublic('getUsedFinanceGroupIds')
 

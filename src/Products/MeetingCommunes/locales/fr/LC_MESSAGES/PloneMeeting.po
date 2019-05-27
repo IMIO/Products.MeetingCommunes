@@ -127,3 +127,7 @@ msgstr "Points proposés"
 #. Default: "Validated items"
 msgid "searchvalidateditems"
 msgstr "Points validés"
+
+#. Default: "Add 'advice created' state in the finances advice workflow"
+msgid "wa_add_advicecreated_state"
+msgstr "Ajoute l'état \"En création\" pour les avis lors de l'utilisation du workflow \"meetingadvicefinances_workflow\""

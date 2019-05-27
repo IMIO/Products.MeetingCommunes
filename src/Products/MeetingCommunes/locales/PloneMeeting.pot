@@ -120,3 +120,7 @@ msgstr ""
 #. Default: "Financial managers"
 msgid "financialmanagers"
 msgstr ""
+
+#. Default: "Add 'advice created' state in the finances advice workflow"
+msgid "wa_add_advicecreated_state"
+msgstr ""

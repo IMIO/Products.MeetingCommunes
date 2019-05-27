@@ -126,3 +126,7 @@ msgstr "Proposed items"
 #. Default: "Validated items"
 msgid "searchvalidateditems"
 msgstr "Validated items"
+
+#. Default: "Add 'advice created' state in the finances advice workflow"
+msgid "wa_return_to_proposing_group_with_last_validation"
+msgstr ""
