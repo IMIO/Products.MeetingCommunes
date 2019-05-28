@@ -30,6 +30,7 @@ FINANCE_GROUP_SUFFIXES = ('financialcontrollers',
                           'financialreviewers',
                           'financialmanagers')
 FINANCE_STATE_TO_GROUPS_MAPPINGS = {
+    'advicecreated': 'financialprecontrollers',
     'proposed_to_financial_controller': 'financialcontrollers',
     'proposed_to_financial_editor': 'financialeditors',
     'proposed_to_financial_reviewer': 'financialreviewers',

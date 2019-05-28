@@ -13,6 +13,7 @@ from collections import OrderedDict
 from collective.iconifiedcategory.utils import calculate_category_id
 from collective.iconifiedcategory.utils import get_config_root
 from DateTime import DateTime
+from dexterity.localroles.utils import add_fti_configuration
 from plone import api
 from plone import namedfile
 from plone.app.textfield.value import RichTextValue
@@ -157,6 +158,21 @@ def _reorderSkinsLayers(context, site):
     """
     logStep("reorderSkinsLayers", context)
     site.portal_setup.runImportStepFromProfile(u'profile-Products.MeetingCommunes:default', 'skins')
+
+
+def _configureDexterityLocalRolesField():
+    """Configure field meetingadvice.advice_group for meetingadvicefinances."""
+    # meetingadvicefinances
+    roles_config = {'advice_group': {
+        'advice_given': {u'advisers': {'rel': '', 'roles': []}},
+        'advice_under_edit': {u'advisers': {'rel': '', 'roles': [u'Editor']}}}
+    }
+    msg = add_fti_configuration(portal_type='meetingadvicefinances',
+                                configuration=roles_config['advice_group'],
+                                keyname='advice_group',
+                                force=True)
+    if msg:
+        logger.warn(msg)
 
 
 def finalizeExampleInstance(context):
