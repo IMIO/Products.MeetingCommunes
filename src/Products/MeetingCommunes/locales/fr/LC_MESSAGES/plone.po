@@ -402,6 +402,14 @@ msgstr "Séance du SIPPT"
 msgid "Meetingvolonteers"
 msgstr "Séance de la Commission des Volontaires"
 
+#. Default: "Created"
+msgid "advicecreated"
+msgstr "En création"
+
+#. Default: "Back to 'Created'"
+msgid "backToAdviceCreated"
+msgstr "Remettre \"En création\""
+
 #. Default: "Send back to 'financial controller'"
 msgid "backToProposedToFinancialController"
 msgstr "Renvoyer au contrôleur financier"

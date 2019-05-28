@@ -502,3 +502,11 @@ msgstr ""
 #. Default: "MeetingItemRecurringsippt"
 msgid "MeetingItemRecurringsippt"
 msgstr ""
+
+#. Default: "Created"
+msgid "advicecreated"
+msgstr ""
+
+#. Default: "Back to 'Created'"
+msgid "backToAdviceCreated"
+msgstr ""
