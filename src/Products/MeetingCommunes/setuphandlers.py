@@ -13,6 +13,7 @@ from collections import OrderedDict
 from collective.iconifiedcategory.utils import calculate_category_id
 from collective.iconifiedcategory.utils import get_config_root
 from DateTime import DateTime
+from dexterity.localroles.utils import add_fti_configuration
 from plone import api
 from plone import namedfile
 from plone.app.textfield.value import RichTextValue
@@ -47,6 +48,9 @@ def updateRoleMappings(context):
 def postInstall(context):
     """Called as at the end of the setup process. """
     # the right place for your custom code
+    if isMeetingCommunesFinancesAdviceProfile(context):
+        _configureDexterityLocalRolesField()
+
     if isNotMeetingCommunesProfile(context):
         return
     logStep("postInstall", context)
@@ -94,6 +98,10 @@ def isNotMeetingCommunesExamplesFrProfile(context):
 
 def isNotMeetingCommunesDemoProfile(context):
     return context.readDataFile("MeetingCommunes_demo_marker.txt") is None
+
+
+def isMeetingCommunesFinancesAdviceProfile(context):
+    return context.readDataFile("MeetingCommunes_financesadvice_marker.txt")
 
 
 def isMeetingCommunesTestingProfile(context):
@@ -157,6 +165,36 @@ def _reorderSkinsLayers(context, site):
     """
     logStep("reorderSkinsLayers", context)
     site.portal_setup.runImportStepFromProfile(u'profile-Products.MeetingCommunes:default', 'skins')
+
+
+def _configureDexterityLocalRolesField():
+    """Configure field meetingadvice.advice_group for meetingadvicefinances."""
+    # meetingadvicefinances
+    roles_config = {
+        'advice_group': {
+            'advice_given': {
+                'advisers': {'roles': [], 'rel': ''}},
+            'advicecreated': {
+                u'financialprecontrollers': {'roles': [u'Editor', u'Reviewer'], 'rel': ''}},
+            'proposed_to_financial_controller': {
+                u'financialcontrollers': {'roles': [u'Editor', u'Reviewer'], 'rel': ''}},
+            'proposed_to_financial_editor': {
+                u'financialeditors': {'roles': [u'Editor', u'Reviewer'], 'rel': ''}},
+            'proposed_to_financial_manager': {
+                u'financialmanagers': {'roles': [u'Editor', u'Reviewer'], 'rel': ''}},
+            'financial_advice_signed': {
+                u'financialmanagers': {'roles': [u'Reviewer'], 'rel': ''}},
+            'proposed_to_financial_reviewer': {
+                u'financialreviewers': {'roles': [u'Editor', u'Reviewer'], 'rel': ''}
+            }
+        }
+    }
+    msg = add_fti_configuration(portal_type='meetingadvicefinances',
+                                configuration=roles_config['advice_group'],
+                                keyname='advice_group',
+                                force=True)
+    if msg:
+        logger.warn(msg)
 
 
 def finalizeExampleInstance(context):

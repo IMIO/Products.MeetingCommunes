@@ -681,11 +681,13 @@ class CustomMeetingConfig(MeetingConfig):
 
     def _updateMeetingAdvicePortalTypes(self):
         '''Make sure we use a patched_ wokflow instead meetingadvicefinances_workflow.'''
-        fin_wf = 'meetingadvicefinances_workflow'
-        wfTool = api.portal.get_tool('portal_workflow')
-        if fin_wf in wfTool:
-            patched_fin_wf = 'patched_meetingadvicefinances_workflow'
-            duplicate_workflow(fin_wf, patched_fin_wf, portalTypeNames=['meetingadvicefinances'])
+        config = self.getSelf()
+        if config.getId() == 'meeting-config-zcollege':
+            fin_wf = 'meetingadvicefinances_workflow'
+            wfTool = api.portal.get_tool('portal_workflow')
+            if fin_wf in wfTool:
+                patched_fin_wf = 'patched_meetingadvicefinances_workflow'
+                duplicate_workflow(fin_wf, patched_fin_wf, portalTypeNames=['meetingadvicefinances'])
 
     def _adviceConditionsInterfaceFor(self, advice_obj):
         '''See doc in interfaces.py.'''
@@ -921,7 +923,8 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
 
     def isFinancialUser_cachekey(method, self, brain=False):
         '''cachekey method for self.isFinancialUser.'''
-        return str(self.context.REQUEST._debug), self.context.REQUEST['AUTHENTICATED_USER']
+        tool = api.portal.get_tool('portal_plonemeeting')
+        return tool.get_plone_groups_for_user()
 
     security.declarePublic('isFinancialUser')
 
