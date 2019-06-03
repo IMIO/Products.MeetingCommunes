@@ -10,6 +10,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Adapted 'meetingadvicefinances_workflow' to use MeetingAdviceCommunesWorkflowActions/MeetingAdviceCommunesWorkflowConditions
   instead the '@@advice-wf-conditions' view
 - Added workflow adaptation for the meetingadvicefinances_workflow to add the 'advicecreated' intial state
+- Adapted finances advice workflow to use dexterity.localrolesfield
 
 4.1b3 (2019-05-16)
 ------------------
