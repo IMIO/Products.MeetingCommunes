@@ -680,9 +680,10 @@ class CustomMeetingConfig(MeetingConfig):
         return []
 
     def _updateMeetingAdvicePortalTypes(self):
-        '''Make sure we use a patched_ wokflow instead meetingadvicefinances_workflow.'''
+        '''Make sure we use a patched_ wokflow instead meetingadvicefinances_workflow
+           to apply advice related workflow adaptations.'''
         config = self.getSelf()
-        if config.getId() == 'meeting-config-zcollege':
+        if 'add_advicecreated_state' in config.getWorkflowAdaptations():
             fin_wf = 'meetingadvicefinances_workflow'
             wfTool = api.portal.get_tool('portal_workflow')
             if fin_wf in wfTool:
