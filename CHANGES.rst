@@ -1,7 +1,6 @@
 Products.MeetingCommunes Changelog
 ==================================
 
-Older versions than 3.0 can be found at http://svn.communesplone.org/svn/communesplone/MeetingCommunes/tags/
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 4.1rc1 (unreleased)
