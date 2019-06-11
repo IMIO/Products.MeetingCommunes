@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1rc1 (unreleased)
+4.1rc1 (2019-06-11)
 -------------------
 
 - Adapted 'meetingadvicefinances_workflow' to use MeetingAdviceCommunesWorkflowActions/MeetingAdviceCommunesWorkflowConditions
