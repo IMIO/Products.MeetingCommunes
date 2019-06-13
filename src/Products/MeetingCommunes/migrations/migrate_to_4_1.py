@@ -107,7 +107,7 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
         self._updateWFInterfaceNames()
 
         # call steps from Products.PloneMeeting
-        PMMigrate_To_4_1.run(self, step=step)
+        super(Migrate_To_4_1, self).run(step=step)
 
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4.1...')
