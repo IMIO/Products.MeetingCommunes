@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1rc2 (unreleased)
+4.1rc2 (2019-06-14)
 -------------------
 
 - Take into account new parameter extra_omitted passed to Migrate_To_4_1.run
