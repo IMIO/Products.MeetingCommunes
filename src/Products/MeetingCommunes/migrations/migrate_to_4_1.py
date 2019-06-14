@@ -99,7 +99,9 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
         """Return default FTW Labels, called by _initPersonalFTWLabels."""
         return deepcopy(collegeMeeting.defaultLabels)
 
-    def run(self, step=None, profile_name=u'profile-Products.MeetingCommunes:default'):
+    def run(self,
+            profile_name=u'profile-Products.MeetingCommunes:default',
+            extra_omitted=[]):
         # change self.profile_name that is reinstalled at the beginning of the PM migration
         self.profile_name = profile_name
 
@@ -107,7 +109,7 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
         self._updateWFInterfaceNames()
 
         # call steps from Products.PloneMeeting
-        super(Migrate_To_4_1, self).run(step=step)
+        super(Migrate_To_4_1, self).run(extra_omitted=extra_omitted)
 
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4.1...')

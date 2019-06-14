@@ -6,8 +6,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1rc2 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Take into account new parameter extra_omitted passed to Migrate_To_4_1.run
 
 4.1rc1 (2019-06-11)
 -------------------
