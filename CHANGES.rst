@@ -6,8 +6,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1rc3 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Added 'conseiller' and 'conseiller-president' in examples_fr import_data directory_position_types
 
 4.1rc2 (2019-06-14)
 -------------------
