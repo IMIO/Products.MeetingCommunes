@@ -818,7 +818,7 @@ data.usersOutsideGroups = [bourgmestre, conseiller]
 data.directory_position_types = [
     {'token': u'default',
      'name': u'(Utiliser le champ "Intitul\xe9")'},
-    {'token': u'councilor',
+    {'token': u'administrateur',
      'name': u'Administrateur|Administrateurs|Administratrice|Administratrices'},
     {'token': u'alderman',
      'name': u'\xc9chevin|\xc9chevins|\xc9chevine|\xc9chevines'},
@@ -827,10 +827,15 @@ data.directory_position_types = [
     {'token': u'bourgmestreff',
      'name': u'Bourgmestre f.f.|Bourgmestres f.f.|Bourgmestre f.f.|Bourgmestres f.f.'},
     {'token': u'president',
-     'name': u'Pr\xe9sident|Pr\xe9sidents|Pr\xe9sidente|Prsidentes'},
+     'name': u'Pr\xe9sident|Pr\xe9sidents|Pr\xe9sidente|Pr\xe9sidentes'},
     {'token': u'bourgmestre-president',
      'name': u'Bourgmestre - Pr\xe9sident|Bourgmestres - Pr\xe9sidents|'
         u'Bourgmestre - Pr\xe9sidente|Bourgmestres - Pr\xe9sidentes'},
+    {'token': u'conseiller',
+     'name': u'Conseiller|Conseillers|Conseillère|Conseillères'},
+    {'token': u'conseiller-president',
+     'name': u'Conseiller - Pr\xe9sident|Conseillers - Pr\xe9sidents|'
+        u'Conseillère - Pr\xe9sidente|Conseillères - Pr\xe9sidentes'},
     {'token': u'president-cpas',
      'name': u'Pr\xe9sident du CPAS|Pr\xe9sidents du CPAS|Pr\xe9sidente du CPAS|Pr\xe9sidentes du CPAS'},
     {'token': u'dg',
