@@ -6,7 +6,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1rc3 (unreleased)
 -------------------
 
-- Added 'conseiller' and 'conseiller-president' in examples_fr import_data directory_position_types
+- Added 'conseiller'i, 'depute' and 'conseiller-president' in examples_fr import_data directory_position_types
+- Added sample view.print_attendees_by_type(group_position_type=True, render_as_html=True, ignored_pos_type_ids=[]) to attendees POD template
+  to show how it works to display a single held_position label when no position_type is defined on some held_positions and we use group_position_type=True
 
 4.1rc2 (2019-06-14)
 -------------------
