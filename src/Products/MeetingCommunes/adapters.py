@@ -72,9 +72,9 @@ if 'creator_initiated_decisions' in customwfAdaptations:
 # remove the 'archiving' as we do not handle archive in our wfs
 if 'archiving' in customwfAdaptations:
     customwfAdaptations.remove('archiving')
-# add the 'add_advicecreated_state' to the meetingadvicefinances_workflow
-customwfAdaptations.append('add_advicecreated_state')
-
+# add finances advice related wfAdaptations
+customwfAdaptations.append('meetingadvicefinances_add_advicecreated_state')
+customwfAdaptations.append('meetingadvicefinances_controller_propose_to_manager')
 
 MeetingConfig.wfAdaptations = customwfAdaptations
 
@@ -418,8 +418,8 @@ class CustomMeetingConfig(MeetingConfig):
         self.context = item
 
     def custom_validate_workflowAdaptations(self, values, added, removed):
-        '''Validate the removal of "add_advicecreated_state".'''
-        if 'add_advicecreated_state' in removed:
+        '''Validate the removal of "meetingadvicefinances_add_advicecreated_state".'''
+        if 'meetingadvicefinances_add_advicecreated_state' in removed:
             config = self.getSelf()
             # check if some advices are in the 'advicecreated' state
             catalog = api.portal.get_tool('portal_catalog')
@@ -684,11 +684,17 @@ class CustomMeetingConfig(MeetingConfig):
                     'not_required_finance']
         return []
 
+    def _has_meetingadvicefinances_wf_adaptations(self):
+        '''Check if some meetingadvicefinances_workflow related WFAdaptations are enabled.'''
+        cfg = self.getSelf()
+        finadv_wfas = [wfa for wfa in cfg.getWorkflowAdaptations()
+                       if wfa.startswith('meetingadvicefinances_')]
+        return bool(finadv_wfas)
+
     def _updateMeetingAdvicePortalTypes(self):
         '''Make sure we use a patched_ wokflow instead meetingadvicefinances_workflow
            to apply advice related workflow adaptations.'''
-        config = self.getSelf()
-        if 'add_advicecreated_state' in config.getWorkflowAdaptations():
+        if self._has_meetingadvicefinances_wf_adaptations():
             fin_wf = 'meetingadvicefinances_workflow'
             wfTool = api.portal.get_tool('portal_workflow')
             if fin_wf in wfTool:
@@ -856,8 +862,7 @@ class MeetingAdviceCommunesWorkflowConditions(MeetingAdviceWorkflowConditions):
     security.declarePublic('mayProposeToFinancialController')
 
     def mayProposeToFinancialController(self):
-        '''
-        '''
+        ''' '''
         res = False
         if _checkPermission(ReviewPortalContent, self.context):
             res = True
@@ -866,8 +871,7 @@ class MeetingAdviceCommunesWorkflowConditions(MeetingAdviceWorkflowConditions):
     security.declarePublic('mayProposeToFinancialEditor')
 
     def mayProposeToFinancialEditor(self):
-        '''
-        '''
+        ''' '''
         res = False
         if _checkPermission(ReviewPortalContent, self.context):
             res = True
@@ -876,8 +880,7 @@ class MeetingAdviceCommunesWorkflowConditions(MeetingAdviceWorkflowConditions):
     security.declarePublic('mayProposeToFinancialReviewer')
 
     def mayProposeToFinancialReviewer(self):
-        '''
-        '''
+        ''' '''
         res = False
         if _checkPermission(ReviewPortalContent, self.context):
             res = True
@@ -946,6 +949,8 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
 
     def performCustomWFAdaptations(self, meetingConfig, wfAdaptation, logger, itemWorkflow, meetingWorkflow):
         """ """
+        wfTool = api.portal.get_tool('portal_workflow')
+        advicefin_wf = wfTool.getWorkflowById('patched_meetingadvicefinances_workflow')
         if wfAdaptation == 'no_publication':
             # we override the PloneMeeting's 'no_publication' wfAdaptation
             # First, update the meeting workflow
@@ -984,7 +989,7 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
             if 'itempublished' in wf.states:
                 wf.states.deleteStates(['itempublished'])
             return True
-        elif wfAdaptation == 'add_advicecreated_state':
+        elif wfAdaptation == 'meetingadvicefinances_add_advicecreated_state':
             # adapt WF, add new initial_state (and leading transitions)
             patched_fin_wf = 'patched_meetingadvicefinances_workflow'
             adaptations.addState(
@@ -998,6 +1003,11 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
                 existing_leaving_transition_ids=['giveAdvice'],
                 existing_back_transition_ids=['backToAdviceInitialState'])
             return True
+        elif wfAdaptation == 'meetingadvicefinances_controller_propose_to_manager':
+            # add the 'proposeToFinancialManager' transition from state 'proposed_to_financial_controller'
+            state = advicefin_wf.states['proposed_to_financial_controller']
+            if 'proposeToFinancialManager' not in state.transitions:
+                state.transitions = state.transitions + ('proposeToFinancialManager', )
         return False
 
     security.declarePublic('getSpecificAssemblyFor')

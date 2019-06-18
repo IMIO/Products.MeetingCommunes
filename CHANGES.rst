@@ -6,9 +6,13 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1rc3 (unreleased)
 -------------------
 
-- Added 'conseiller'i, 'depute' and 'conseiller-president' in examples_fr import_data directory_position_types
+- Added 'conseiller', 'depute' and 'conseiller-president' in examples_fr import_data directory_position_types
 - Added sample view.print_attendees_by_type(group_position_type=True, render_as_html=True, ignored_pos_type_ids=[]) to attendees POD template
   to show how it works to display a single held_position label when no position_type is defined on some held_positions and we use group_position_type=True
+- Added wfAdaptation 'meetingadvicefinances_controller_propose_to_manager' that adds transition from 'proposed_to_financial_controller'
+  to 'proposed_to_financial_manager'
+- Added helper method CustomMeetingConfig._has_meetingadvicefinances_wf_adaptations that returns True if some finances advice related
+  workflow adaptations are selected, this will trigger the fact that 'patched_meetingadvicefinances_workflow' is created
 
 4.1rc2 (2019-06-14)
 -------------------
