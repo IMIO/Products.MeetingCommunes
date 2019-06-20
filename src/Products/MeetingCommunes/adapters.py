@@ -22,6 +22,7 @@
 
 from AccessControl import ClassSecurityInfo
 from AccessControl.class_init import InitializeClass
+from appy.gen import No
 from collections import OrderedDict
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from plone import api
@@ -42,6 +43,7 @@ from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowActi
 from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowConditions
 from Products.PloneMeeting.adapters import CompoundCriterionBaseAdapter
 from Products.PloneMeeting.adapters import query_user_groups_cachekey
+from Products.PloneMeeting.config import PMMessageFactory as _
 from Products.PloneMeeting.content.advice import MeetingAdviceWorkflowActions
 from Products.PloneMeeting.content.advice import MeetingAdviceWorkflowConditions
 from Products.PloneMeeting.indexes import DELAYAWARE_ROW_ID_PATTERN
@@ -865,7 +867,16 @@ class MeetingAdviceCommunesWorkflowConditions(MeetingAdviceWorkflowConditions):
         ''' '''
         res = False
         if _checkPermission(ReviewPortalContent, self.context):
-            res = True
+            # if MeetingItem.completeness is used
+            # we may only propose if completeness is complete or not required
+            tool = api.portal.get_tool('portal_plonemeeting')
+            cfg = tool.getMeetingConfig(self.context)
+            if 'completeness' in cfg.getUsedItemAttributes() and \
+               self.context.getCompleteness() not in ('completeness_complete',
+                                                      'completeness_evaluation_not_required'):
+                res = No(_('completeness_not_complete'))
+            else:
+                res = True
         return res
 
     security.declarePublic('mayProposeToFinancialEditor')

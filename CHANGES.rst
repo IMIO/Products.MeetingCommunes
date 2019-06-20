@@ -13,6 +13,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   to 'proposed_to_financial_manager'
 - Added helper method CustomMeetingConfig._has_meetingadvicefinances_wf_adaptations that returns True if some finances advice related
   workflow adaptations are selected, this will trigger the fact that 'patched_meetingadvicefinances_workflow' is created
+- In financesadvice_workflow, Manage MeetingItem.completeness in mayProposeToFinancialController so an item that needs completeness evaluation
+  can not be proposed to financial controller
 
 4.1rc2 (2019-06-14)
 -------------------
