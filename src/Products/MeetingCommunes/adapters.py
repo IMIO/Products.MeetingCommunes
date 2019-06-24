@@ -446,10 +446,6 @@ class CustomMeetingConfig(MeetingConfig):
                 "Method 'getUsedFinanceGroupIds' could not find the '{0}' collection!".format(
                     FINANCE_ADVICES_COLLECTION_ID))
             return res
-        # if collection is not enabled, we just return an empty list
-        # for convenience, the collection is added to every MeetingConfig, even if not used
-        if not collection.enabled:
-            return res
         # get the indexAdvisers value defined on the collection
         # and find the relevant group, indexAdvisers form is :
         # 'delay_row_id__2014-04-16.9996934488', 'real_org_uid__[directeur-financier_UID]'
