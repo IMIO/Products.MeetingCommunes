@@ -23,11 +23,12 @@
 #
 
 from AccessControl import Unauthorized
-from zope.annotation import IAnnotations
+from DateTime import DateTime
 from Products.CMFCore.permissions import View
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testWorkflows import testWorkflows as pmtw
 from Products.PloneMeeting.utils import get_annexes
+from zope.annotation import IAnnotations
 
 
 class testWorkflows(MeetingCommunesTestCase, pmtw):
@@ -279,8 +280,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
                     proposingGroup=self.developers_uid,
                     meetingTransitionInsertingMe='decide')
         self.changeUser('pmManager')
-        # create a meeting without supplementary items, only the recurring items
-        meeting = self._createMeetingWithItems(withItems=False)
+        meeting = self.create('Meeting', date=DateTime('2019/06/25'))
         # The recurring items must have as owner the meeting creator
         for item in meeting.getItems():
             self.assertEquals(item.getOwner().getId(), 'pmManager')
