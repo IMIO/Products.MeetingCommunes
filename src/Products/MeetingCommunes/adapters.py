@@ -1090,7 +1090,7 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
                     if cfg.getItemGroupInChargeStates():
                         item._updateGroupInChargeLocalRoles()
                         item.reindexObjectSecurity()
-                    item.reindexObject(idxs=['getGroupInCharge'])
+                    item.reindexObject(idxs=['getGroupsInCharge'])
         logger.info('Done.')
 
 # ------------------------------------------------------------------------------

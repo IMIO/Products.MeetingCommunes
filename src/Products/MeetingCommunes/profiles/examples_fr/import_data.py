@@ -415,7 +415,7 @@ collegeMeeting.customAdvisers = [
      'is_linked_to_previous_row': '1'},
     {'row_id': 'unique_id_005',
      'org': 'dirgen',
-     'gives_auto_advice_on': 'python: item.adapted().getGroupInCharge(fromOrgIfEmpty=True) == org_uid',
+     'gives_auto_advice_on': 'python: item.getGroupsInCharge(fromOrgIfEmpty=True, first=True) == org_uid',
      'gives_auto_advice_on_help_message': "Le groupe \xc3\xa9metteur d'avis est en charge du groupe proposant du point",
      'for_item_created_from': today,
      'delay': '',

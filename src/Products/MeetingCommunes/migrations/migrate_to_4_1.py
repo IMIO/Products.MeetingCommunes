@@ -60,7 +60,7 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
                     "') == item")
                 expr = expr.replace(
                     'item.adapted().getEchevinsForProposingGroup()',
-                    'item.getGroupInCharge(fromOrgIfEmpty=True)')
+                    'item.getGroupsInCharge(fromOrgIfEmpty=True, first=True)')
             return expr
 
         # move each value of echevinServices to groupsInCharge

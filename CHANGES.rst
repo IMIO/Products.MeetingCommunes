@@ -15,6 +15,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   workflow adaptations are selected, this will trigger the fact that 'patched_meetingadvicefinances_workflow' is created
 - In financesadvice_workflow, Manage MeetingItem.completeness in mayProposeToFinancialController so an item that needs completeness evaluation
   can not be proposed to financial controller
+- Remove import_step calling setuphandlers.updateRoleMappings
+- Adapted code to use MeetingItem.getGroupsInCharge(first=True) instead MeetingItem.getGroupInCharge that was removed
 
 4.1rc2 (2019-06-14)
 -------------------
