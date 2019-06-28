@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1rc3 (unreleased)
+4.1rc3 (2019-06-28)
 -------------------
 
 - Added 'conseiller', 'depute' and 'conseiller-president' in examples_fr import_data directory_position_types
