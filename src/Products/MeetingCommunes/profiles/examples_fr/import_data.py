@@ -3,15 +3,16 @@
 from copy import deepcopy
 from DateTime import DateTime
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
-from Products.PloneMeeting.profiles import AnnexTypeDescriptor, StyleTemplateDescriptor
+from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
-from Products.PloneMeeting.profiles import OrgDescriptor
 from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
 from Products.PloneMeeting.profiles import ItemTemplateDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
+from Products.PloneMeeting.profiles import OrgDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
 from Products.PloneMeeting.profiles import PodTemplateDescriptor
 from Products.PloneMeeting.profiles import RecurringItemDescriptor
+from Products.PloneMeeting.profiles import StyleTemplateDescriptor
 from Products.PloneMeeting.profiles import UserDescriptor
 
 import os
