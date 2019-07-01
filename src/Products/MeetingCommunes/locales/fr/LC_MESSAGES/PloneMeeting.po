@@ -128,6 +128,10 @@ msgstr "Points proposés"
 msgid "searchvalidateditems"
 msgstr "Points validés"
 
-#. Default: "Add 'advice created' state in the finances advice workflow"
-msgid "wa_add_advicecreated_state"
+#. Default: "Finances advice: add advicecreated state"
+msgid "wa_meetingadvicefinances_add_advicecreated_state"
 msgstr "Ajoute l'état \"En création\" pour les avis lors de l'utilisation du workflow \"meetingadvicefinances_workflow\""
+
+#. Default: "Finances advice: add transition from financial controller to financial manager"
+msgid "wa_meetingadvicefinances_controller_propose_to_manager"
+msgstr "Ajoute la transition \"Proposer au Directeur financier\" depuis l'état \"Proposé au contrôleur financier\" pour les avis lors de l'utilisation du workflow \"meetingadvicefinances_workflow\""

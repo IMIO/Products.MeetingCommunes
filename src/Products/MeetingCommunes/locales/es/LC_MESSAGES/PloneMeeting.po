@@ -129,6 +129,10 @@ msgstr "los temas propuestos"
 msgid "searchvalidateditems"
 msgstr "los temas validados"
 
-#. Default: "Add 'advice created' state in the finances advice workflow"
-msgid "wa_add_advicecreated_state"
+#. Default: "Finances advice: add advicecreated state"
+msgid "wa_meetingadvicefinances_add_advicecreated_state"
+msgstr ""
+
+#. Default: "Finances advice: add transition from financial controller to financial manager"
+msgid "wa_meetingadvicefinances_controller_propose_to_manager"
 msgstr ""
