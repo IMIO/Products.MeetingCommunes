@@ -91,7 +91,8 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
     def _defineDirectoryPositionTypes(self):
         """Set default value for contacts directoryy 'position_types'."""
         logger.info("Setting default value for contact.position_types...")
-        if self.portal.contacts.position_types == [{'token': 'default', 'name': u'D\xe9faut'}]:
+        position_types = self.portal.contacts.position_types
+        if len(position_types) == 1 and position_types[0]['token'] == 'default':
             self.portal.contacts.position_types = data.directory_position_types
         logger.info('Done.')
 

@@ -6,8 +6,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1rc6 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Make sure to update contacts directory position_types if only the 'default' position type is defined while migrating to v4.1
 
 4.1rc5 (2019-07-01)
 -------------------
