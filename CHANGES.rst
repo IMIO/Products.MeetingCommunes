@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1rc5 (unreleased)
+4.1rc5 (2019-07-01)
 -------------------
 
 - Be defensive in CustomMeetingConfig.getUsedFinanceGroupIds if FINANCE_ADVICES_COLLECTION_ID does not have a
