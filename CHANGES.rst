@@ -6,8 +6,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1rc5 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Be defensive in CustomMeetingConfig.getUsedFinanceGroupIds if FINANCE_ADVICES_COLLECTION_ID does not have a
+  'indexAdvisers' filter or if 'indexAdvisers' filter is empty
 
 4.1rc4 (2019-07-01)
 -------------------

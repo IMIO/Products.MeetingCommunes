@@ -450,8 +450,13 @@ class CustomMeetingConfig(MeetingConfig):
         # and find the relevant group, indexAdvisers form is :
         # 'delay_row_id__2014-04-16.9996934488', 'real_org_uid__[directeur-financier_UID]'
         # it is either a customAdviser row_id or an organization uid
-        values = [term['v'] for term in collection.getRawQuery()
-                  if term['i'] == 'indexAdvisers'][0]
+        # do not break if no 'indexAdvisers' defined or empty 'indexAdvisers' defined
+        values = [term.get('v') for term in collection.getRawQuery()
+                  if term.get('v') and term['i'] == 'indexAdvisers']
+
+        # we get a list of advisers in values like [[v1, v2, v3]]
+        if values:
+            values = values[0]
 
         for v in values:
             real_org_uid_prefix = REAL_ORG_UID_PATTERN.format('')
