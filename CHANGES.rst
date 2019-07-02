@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1rc6 (unreleased)
+4.1rc6 (2019-07-02)
 -------------------
 
 - Make sure to update contacts directory position_types if only the 'default' position type is defined while migrating to v4.1
