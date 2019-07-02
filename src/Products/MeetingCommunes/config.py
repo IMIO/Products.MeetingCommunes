@@ -36,8 +36,8 @@ FINANCE_STATE_TO_GROUPS_MAPPINGS = {
     'proposed_to_financial_reviewer': 'financialreviewers',
     'proposed_to_financial_manager': 'financialmanagers', }
 
-# states in which the finance advice may be given
-FINANCE_WAITING_ADVICES_STATES = ['prevalidated_waiting_advices']
+# states in which the finance advice may be given, empty by default, made to be overrided
+FINANCE_WAITING_ADVICES_STATES = []
 
 # the id of the collection querying finance advices
 FINANCE_ADVICES_COLLECTION_ID = 'searchitemswithfinanceadvice'

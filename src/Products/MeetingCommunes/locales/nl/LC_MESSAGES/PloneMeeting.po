@@ -91,6 +91,10 @@ msgstr ""
 msgid "positive_with_remarks_finance"
 msgstr ""
 
+#. Default: "Advices advicecreated"
+msgid "searchadviceadvicecreated"
+msgstr ""
+
 #. Default: "Advices proposed to financial controller"
 msgid "searchadviceproposedtocontroller"
 msgstr ""

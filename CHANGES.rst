@@ -7,6 +7,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 -------------------
 
 - Make sure to update contacts directory position_types if only the 'default' position type is defined while migrating to v4.1
+- Added new finances advice search compoundcriterion adapter ItemsWithAdviceAdviceCreatedAdapter to search items having advice in state 'advicecreated'
+- When using MeetingItem.completeness, set automatically completeness to 'completeness_evaluation_asked_again' when advices are asked
+- Define config.FINANCE_WAITING_ADVICES_STATES=[] by default so it does not do anything if not overrided
 
 4.1rc5 (2019-07-01)
 -------------------

@@ -33,7 +33,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.MeetingCommunes import logger
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.config import FINANCE_GROUP_SUFFIXES
-from Products.MeetingCommunes.config import FINANCE_WAITING_ADVICES_STATES
 from Products.MeetingCommunes.config import POSITIVE_FINANCE_ADVICE_SIGNABLE_BY_REVIEWER
 from Products.MeetingCommunes.interfaces import IMeetingAdviceCommunesWorkflowActions
 from Products.MeetingCommunes.interfaces import IMeetingAdviceCommunesWorkflowConditions
@@ -593,6 +592,26 @@ class CustomMeetingConfig(MeetingConfig):
                             'roles_bypassing_talcondition': ['Manager', ]
                         }
                      ),
+                    # Items having advice in state 'advicecreated'
+                    ('searchadviceadvicecreated',
+                        {
+                            'subFolderId': 'searches_items',
+                            'active': True,
+                            'query':
+                            [
+                                {'i': 'CompoundCriterion',
+                                 'o': 'plone.app.querystring.operation.compound.is',
+                                 'v': 'items-with-advice-advicecreated'},
+                            ],
+                            'sort_on': u'created',
+                            'sort_reversed': True,
+                            'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
+                                             "tool.userIsAmong(['financialprecontrollers'])) "
+                                             "or (not here.REQUEST.get('fromPortletTodo', False) and "
+                                             "tool.adapted().isFinancialUser())",
+                            'roles_bypassing_talcondition': ['Manager', ]
+                        }
+                     ),
                     # Items having advice in state 'proposed_to_financial_controller'
                     ('searchadviceproposedtocontroller',
                         {
@@ -771,6 +790,43 @@ class MeetingItemCommunesWorkflowActions(MeetingItemWorkflowActions):
 
     implements(IMeetingItemCommunesWorkflowActions)
     security = ClassSecurityInfo()
+
+    def _doWaitAdvices(self):
+        '''When advices are asked again and we use MeetingItem.completeness field,
+           make sure the item completeness evaluation is asked again so advice is not
+           addable/editable when item come back again to this state.'''
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+        from Products.MeetingCommunes.config import FINANCE_WAITING_ADVICES_STATES
+        if 'completeness' in cfg.getUsedItemAttributes() and \
+           self.context.queryState() in FINANCE_WAITING_ADVICES_STATES:
+            wfTool = api.portal.get_tool('portal_workflow')
+            history = self.context.workflow_history[wfTool.getWorkflowsFor(self.context)[0].getId()][:-1]
+            for event in history:
+                if event['action'] in ['wait_advices_from_proposed', 'wait_advices_from_prevalidated']:
+                    changeCompleteness = self.context.restrictedTraverse('@@change-item-completeness')
+                    comment = translate('completeness_asked_again_by_app',
+                                        domain='PloneMeeting',
+                                        context=self.context.REQUEST)
+                    # change completeness even if current user is not able to set it to
+                    # 'completeness_evaluation_asked_again', here it is the application that set
+                    # it automatically
+                    changeCompleteness._changeCompleteness('completeness_evaluation_asked_again',
+                                                           bypassSecurityCheck=True,
+                                                           comment=comment)
+                    break
+
+    security.declarePrivate('doWait_advices_from_proposed')
+
+    def doWait_advices_from_proposed(self, stateChange):
+        """ """
+        self._doWaitAdvices()
+
+    security.declarePrivate('doWait_advices_from_prevalidated')
+
+    def doWait_advices_from_prevalidated(self, stateChange):
+        """ """
+        self._doWaitAdvices()
 
     security.declarePrivate('doAccept_but_modify')
 
@@ -1122,14 +1178,16 @@ class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
         if not self.cfg:
             return {}
         groupIds = []
-        userGroups = self.tool.get_plone_groups_for_user()
         for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
-            # only keep finance groupIds the current user is controller for
-            if '%s_financialcontrollers' % financeGroup in userGroups:
-                # advice not given yet
-                groupIds.append('delay__%s_advice_not_giveable' % financeGroup)
-                # advice was already given once and come back to the finance
-                groupIds.append('delay__%s_proposed_to_financial_controller' % financeGroup)
+            # advice not giveable
+            groupIds.append('delay__%s_advice_not_giveable' % financeGroup)
+            # advice was already given once and come back to the finance
+            # in it's initial state
+            wfTool = api.portal.get_tool('portal_workflow')
+            initial_state = wfTool.getWorkflowsFor('meetingadvicefinances')[0].initial_state
+            groupIds.append('delay__{0}_{1}'.format(financeGroup, initial_state))
+        # import FINANCE_WAITING_ADVICES_STATES as it could be monkeypatched
+        from Products.MeetingCommunes.config import FINANCE_WAITING_ADVICES_STATES
         return {'portal_type': {'query': self.cfg.getItemTypeName()},
                 'getCompleteness': {'query': ('completeness_not_yet_evaluated',
                                               'completeness_incomplete',
@@ -1141,91 +1199,80 @@ class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
     query = query_itemstocontrolcompletenessof
 
 
-class ItemsWithAdviceProposedToFinancialControllerAdapter(CompoundCriterionBaseAdapter):
+class BaseItemsWithAdviceAdapter(CompoundCriterionBaseAdapter):
+
+    def _query(self, suffix, advice_review_state):
+        ''' '''
+        if not self.cfg:
+            return {}
+        groupIds = []
+        for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
+            groupIds.append('delay__{0}_{1}'.format(financeGroup, advice_review_state))
+        # Create query parameters
+        return {'portal_type': {'query': self.cfg.getItemTypeName()},
+                'indexAdvisers': {'query': groupIds}}
+
+
+class ItemsWithAdviceAdviceCreatedAdapter(BaseItemsWithAdviceAdapter):
+
+    @property
+    @ram.cache(query_user_groups_cachekey)
+    def query_itemswithadviceadvicecreated(self):
+        '''Queries all items for which there is an advice in state 'advicecreated'.'''
+        query = self._query('financialprecontrollers', 'advicecreated')
+        return query
+
+    # we may not ram.cache methods in same file with same name...
+    query = query_itemswithadviceadvicecreated
+
+
+class ItemsWithAdviceProposedToFinancialControllerAdapter(BaseItemsWithAdviceAdapter):
 
     @property
     @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceproposedtofinancialcontroller(self):
-        '''Queries all items for which there is an advice in state 'proposed_to_financial_controller'.
-           We only return items for which completeness has been evaluated to 'complete'.'''
-        if not self.cfg:
-            return {}
-        groupIds = []
-        userGroups = self.tool.get_plone_groups_for_user()
-        for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
-            # only keep finance groupIds the current user is controller for
-            if '%s_financialcontrollers' % financeGroup in userGroups:
-                groupIds.append('delay__%s_proposed_to_financial_controller' % financeGroup)
-        # Create query parameters
-        return {'portal_type': {'query': self.cfg.getItemTypeName()},
-                'getCompleteness': {'query': 'completeness_complete'},
-                'indexAdvisers': {'query': groupIds}}
+        '''Queries all items for which there is an advice in state 'proposed_to_financial_controller'.'''
+        query = self._query('financialcontrollers', 'proposed_to_financial_controller')
+        return query
 
     # we may not ram.cache methods in same file with same name...
     query = query_itemswithadviceproposedtofinancialcontroller
 
 
-class ItemsWithAdviceProposedToFinancialEditorAdapter(CompoundCriterionBaseAdapter):
+class ItemsWithAdviceProposedToFinancialEditorAdapter(BaseItemsWithAdviceAdapter):
 
     @property
     @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceproposedtofinancialeditor(self):
-        '''Queries all items for which there is an advice in state 'proposed_to_financial_editor'.
-           We only return items for which completeness has been evaluated to 'complete'.'''
-        if not self.cfg:
-            return {}
-        groupIds = []
-        userGroups = self.tool.get_plone_groups_for_user()
-        for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
-            # only keep finance groupIds the current user is controller for
-            if '%s_financialeditors' % financeGroup in userGroups:
-                groupIds.append('delay__%s_proposed_to_financial_editor' % financeGroup)
-        # Create query parameters
-        return {'portal_type': {'query': self.cfg.getItemTypeName()},
-                'getCompleteness': {'query': 'completeness_complete'},
-                'indexAdvisers': {'query': groupIds}}
+        '''Queries all items for which there is an advice in state 'proposed_to_financial_editor'.'''
+        query = self._query('financialeditors', 'proposed_to_financial_editor')
+        return query
 
     # we may not ram.cache methods in same file with same name...
     query = query_itemswithadviceproposedtofinancialeditor
 
 
-class ItemsWithAdviceProposedToFinancialReviewerAdapter(CompoundCriterionBaseAdapter):
+class ItemsWithAdviceProposedToFinancialReviewerAdapter(BaseItemsWithAdviceAdapter):
 
     @property
     @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceproposedtofinancialreviewer(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_reviewer'.'''
-        if not self.cfg:
-            return {}
-        groupIds = []
-        userGroups = self.tool.get_plone_groups_for_user()
-        for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
-            # only keep finance groupIds the current user is reviewer for
-            if '%s_financialreviewers' % financeGroup in userGroups:
-                groupIds.append('delay__%s_proposed_to_financial_reviewer' % financeGroup)
-        return {'portal_type': {'query': self.cfg.getItemTypeName()},
-                'indexAdvisers': {'query': groupIds}}
+        query = self._query('financialreviewers', 'proposed_to_financial_reviewer')
+        return query
 
     # we may not ram.cache methods in same file with same name...
     query = query_itemswithadviceproposedtofinancialreviewer
 
 
-class ItemsWithAdviceProposedToFinancialManagerAdapter(CompoundCriterionBaseAdapter):
+class ItemsWithAdviceProposedToFinancialManagerAdapter(BaseItemsWithAdviceAdapter):
 
     @property
     @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceproposedtofinancialmanager(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_manager'.'''
-        if not self.cfg:
-            return {}
-        groupIds = []
-        userGroups = self.tool.get_plone_groups_for_user()
-        for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
-            # only keep finance groupIds the current user is manager for
-            if '%s_financialmanagers' % financeGroup in userGroups:
-                groupIds.append('delay__%s_proposed_to_financial_manager' % financeGroup)
-        return {'portal_type': {'query': self.cfg.getItemTypeName()},
-                'indexAdvisers': {'query': groupIds}}
+        query = self._query('financialmanagers', 'proposed_to_financial_manager')
+        return query
 
     # we may not ram.cache methods in same file with same name...
     query = query_itemswithadviceproposedtofinancialmanager

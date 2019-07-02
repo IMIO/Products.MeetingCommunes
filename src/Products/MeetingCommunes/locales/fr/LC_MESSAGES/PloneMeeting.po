@@ -94,6 +94,10 @@ msgstr "Avis finances favorable"
 msgid "positive_with_remarks_finance"
 msgstr "Avis finances favorable avec remarques"
 
+#. Default: "Advices advicecreated"
+msgid "searchadviceadvicecreated"
+msgstr "Avis finances en création"
+
 #. Default: "Advices proposed to financial controller"
 msgid "searchadviceproposedtocontroller"
 msgstr "Avis proposés au contrôleur financier"

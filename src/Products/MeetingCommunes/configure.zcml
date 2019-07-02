@@ -60,6 +60,10 @@
            provides="collective.compoundcriterion.interfaces.ICompoundCriterionFilter"
            name="items-to-control-completeness-of" />
   <adapter for="*"
+           factory="Products.MeetingCommunes.adapters.ItemsWithAdviceAdviceCreatedAdapter"
+           provides="collective.compoundcriterion.interfaces.ICompoundCriterionFilter"
+           name="items-with-advice-advicecreated" />
+  <adapter for="*"
            factory="Products.MeetingCommunes.adapters.ItemsWithAdviceProposedToFinancialControllerAdapter"
            provides="collective.compoundcriterion.interfaces.ICompoundCriterionFilter"
            name="items-with-advice-proposed-to-financial-controller" />
