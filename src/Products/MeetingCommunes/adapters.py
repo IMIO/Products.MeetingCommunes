@@ -73,10 +73,6 @@ if 'creator_initiated_decisions' in customwfAdaptations:
 # remove the 'archiving' as we do not handle archive in our wfs
 if 'archiving' in customwfAdaptations:
     customwfAdaptations.remove('archiving')
-# add finances advice related wfAdaptations
-customwfAdaptations.append('meetingadvicefinances_add_advicecreated_state')
-customwfAdaptations.append('meetingadvicefinances_controller_propose_to_manager')
-
 MeetingConfig.wfAdaptations = customwfAdaptations
 
 # states taken into account by the 'no_global_observation' wfAdaptation
@@ -1069,13 +1065,15 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
                 leaving_transition_id='proposeToFinancialController',
                 leaving_to_state_id='proposed_to_financial_controller',
                 existing_leaving_transition_ids=['giveAdvice'],
-                existing_back_transition_ids=['backToAdviceInitialState'])
+                existing_back_transition_ids=['backToAdviceInitialState'],
+                new_initial_state=True)
             return True
         elif wfAdaptation == 'meetingadvicefinances_controller_propose_to_manager':
             # add the 'proposeToFinancialManager' transition from state 'proposed_to_financial_controller'
             state = advicefin_wf.states['proposed_to_financial_controller']
             if 'proposeToFinancialManager' not in state.transitions:
                 state.transitions = state.transitions + ('proposeToFinancialManager', )
+            return True
         return False
 
     security.declarePublic('getSpecificAssemblyFor')
