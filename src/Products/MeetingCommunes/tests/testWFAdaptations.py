@@ -44,8 +44,6 @@ class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):
                            'hide_decisions_when_under_writing',
                            'items_come_validated',
                            'mark_not_applicable',
-                           'meetingadvicefinances_add_advicecreated_state',
-                           'meetingadvicefinances_controller_propose_to_manager',
                            'no_global_observation',
                            'no_proposal',
                            'no_publication',
