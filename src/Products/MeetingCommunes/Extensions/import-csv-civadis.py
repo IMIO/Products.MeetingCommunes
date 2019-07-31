@@ -80,13 +80,18 @@ class ImportCSV:
         self.groups = {}
         self._deactivated_recurring_items = []
 
+    def _check_file_exists(self, path):
+        _path = self.annex_dir_path + path
+        if not os.path.isfile(_path):
+            raise IOError(u"File not found {path}.".format(path=path))
+
     def add_annex(self, context, path, annex_type=None, annex_title=None, to_print=False, confidential=False):
         """Adds an annex to p_item.
            If no p_annexType is provided, self.annexFileType is used.
            If no p_annexTitle is specified, the predefined title of the annex type is used."""
+        self._check_file_exists(path)
+
         _path = self.annex_dir_path + path
-        if not os.path.isfile(_path):
-            raise IOError(u"File not found {path}.".format(path=path))
 
         if annex_type is None:
             annex_type = 'annexe'
@@ -198,11 +203,32 @@ class ImportCSV:
                     self.errors['item'].append(e.message)
                     logger.info(e.message)
 
-    def insert_and_close_meeting(self, member_folder, csv_meeting):
+    def _check_meeting_data(self, csv_meeting):
         if not csv_meeting.items:
             message = 'Meeting of {date} has no item. Skipping...'.format(date=csv_meeting.date)
             logger.info(message)
             self.errors['meeting'].append(message)
+            return False
+
+        try:
+            self._check_file_exists(csv_meeting.annex_oj)
+        except IOError:
+            message = 'Meeting of {date} has no OJ. Skipping...'.format(date=csv_meeting.date)
+            logger.info(message)
+            self.errors['meeting'].append(message)
+            return False
+
+        try:
+            self._check_file_exists(csv_meeting.annex_pv)
+        except IOError:
+            message = 'Meeting of {date} has no PV. Skipping...'.format(date=csv_meeting.date)
+            logger.info(message)
+            self.errors['meeting'].append(message)
+            return False
+        return True
+
+    def insert_and_close_meeting(self, member_folder, csv_meeting):
+        if not self._check_meeting_data(csv_meeting):
             return
 
         _id = 'meetingreprise.{date}'.format(date=csv_meeting.date)
@@ -235,11 +261,13 @@ class ImportCSV:
         logger.info('Created meeting of {date}'.format(date=meeting.Title()))
 
         inserted = self.add_annexe_to_object(meeting, csv_meeting.annex_oj, u'Ordre du jour')
+        # just in case
         if not inserted:
             meeting.setDescription(meeting.Description() +
                                    '<p>Fichier non trouvé : {oj}</p>'.format(oj=csv_meeting.annex_oj))
 
         inserted = self.add_annexe_to_object(meeting, csv_meeting.annex_pv, u'Procès verbal')
+        # just in case
         if not inserted:
             meeting.setDescription(meeting.Description() +
                                    '<p>Fichier non trouvé : {pv}</p>'.format(pv=csv_meeting.annex_pv))
@@ -287,6 +315,11 @@ class ImportCSV:
         if not inserted:
             item.setDescription(item.Description() +
                                 '<p>Fichier non trouvé : {annex}</p>'.format(annex=csv_item.annex_path))
+            decicion_path = csv_item.annex_path.replace('.DEL', '.DEC')
+            inserted = self.add_annexe_to_object(item, decicion_path, u'Décision')
+            if not inserted:
+                item.setDescription(item.Description() +
+                                    '<p>Fichier non trouvé : {annex}</p>'.format(annex=decicion_path))
         try:
             self.portal.portal_workflow.doActionFor(item, 'propose')
         except WorkflowException:
