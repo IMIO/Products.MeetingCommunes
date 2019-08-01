@@ -74,7 +74,7 @@ class ImportCSV:
         self.annex_dir_path = annex_dir_path
         self.default_group = default_group
         self.default_category = default_category
-        self.errors = {'io': [], 'item': [], 'meeting': []}
+        self.errors = {'io': [], 'item': [], 'meeting': [], 'item_without_annex': []}
         self.item_counter = 0
         self.meeting_counter = 0
         self.groups = {}
@@ -320,6 +320,9 @@ class ImportCSV:
             if not inserted:
                 item.setDescription(item.Description() +
                                     '<p>Fichier non trouvé : {annex}</p>'.format(annex=decicion_path))
+                self.errors['item_without_annex'].append(
+                        u'Item id: {id} has no annex (title: {title})'.format(id=csv_item.external_id,
+                                                                             title=csv_item.title))
         try:
             self.portal.portal_workflow.doActionFor(item, 'propose')
         except WorkflowException:
@@ -433,15 +436,18 @@ def import_data_from_csv(self,
     meeting_counter, item_counter, errors = import_csv.run()
     logger.info('Inserted {meeting} meetings and {item} meeting items.'.format(meeting=meeting_counter,
                                                                                item=item_counter))
-    logger.warning('{malforemed} meeting items were not created due to missing infos in csv :'.format(
-            malforemed=len(errors['item'])))
-    logger.warning(u'\n\t '.join(errors['item']))
+    logger.warning('{malforemed} meeting items were not created due to missing data in csv :\n{list}'.format(
+            malforemed=len(errors['item']),
+            list=u'\n\t '.join(errors['item'])))
 
-    logger.warning('{ioerr} errors occured while adding annexes :'.format(ioerr=len(errors['io'])))
-    logger.warning(u'\n\t '.join(errors['io']))
+    logger.warning('{ioerr} errors occured while adding annexes :\n{list}'.format(ioerr=len(errors['io']),
+                                                                                  list=u'\n\t '.join(errors['io'])))
 
-    logger.warning(u'\n\t '.join(errors['meeting']))
+    logger.warning('{meeting} meeting items have no annex :\n{list}'.format(meeting=len(errors['meeting']),
+                                                                            list=u'\n\t '.join(errors['meeting'])))
 
+    logger.warning('{items} meeting where skipped :\n{list}'.format(items=len(errors['item_without_annex']),
+                                                                    list=u'\n\t '.join(errors['item_without_annex'])))
     end_date = datetime.now()
     seconds = end_date - start_date
     seconds = seconds.seconds
