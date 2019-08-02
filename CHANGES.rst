@@ -7,6 +7,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 -------------------
 
 - When applying 'meetingadvicefinances_add_advicecreated_state' WF adaptation, set advicecreated state as new_initial_state
+- Adapted item workflow to use MeetingConfig.itemWFValidationLevels defined configuration
 
 4.1rc6 (2019-07-02)
 -------------------
