@@ -867,7 +867,7 @@
              before_script=""
              after_script=""
              i18n:attributes="title">
-  <action url="" icon="%(portal_url)s/propose.png" category="workflow" i18n:translate="">validate</action>
+  <action url="" icon="%(portal_url)s/validate.png" category="workflow" i18n:translate="">validate</action>
   <guard>
     <guard-expression>python:here.wfConditions().mayValidate()</guard-expression>
   </guard>
