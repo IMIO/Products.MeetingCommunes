@@ -2,17 +2,17 @@
 <dc-workflow workflow_id="meetingitemcommunes_workflow"
              title="meetingitemcommunes_workflow"
              state_variable="review_state"
-             initial_state="itemcreated"
+             initial_state="validated"
              xmlns:i18n="http://xml.zope.org/namespaces/i18n"
              i18n:domain="plone">
  <permission>Access contents information</permission>
- <permission>View</permission>
- <permission>Modify portal content</permission>
- <permission>PloneMeeting: Read decision</permission>
- <permission>PloneMeeting: Write decision</permission>
  <permission>PloneMeeting: Add annex</permission>
  <permission>Delete objects</permission>
+ <permission>Modify portal content</permission>
+ <permission>PloneMeeting: Read decision</permission>
  <permission>Review portal content</permission>
+ <permission>View</permission>
+ <permission>PloneMeeting: Write decision</permission>
  <permission>PloneMeeting: Add annexDecision</permission>
  <permission>PloneMeeting: Read item observations</permission>
  <permission>PloneMeeting: Write item MeetingManager reserved fields</permission>
@@ -242,81 +242,6 @@
    <permission-role>Manager</permission-role>
    <permission-role>Reader</permission-role>
    <permission-role>MeetingObserverGlobal</permission-role>
-  </permission-map>
- </state>
- <state state_id="itemcreated"
-        title="itemcreated"
-        i18n:attributes="title">
-  <exit-transition transition_id="validate"/>
-  <permission-map name="Access contents information"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reader</permission-role>
-  </permission-map>
-  <permission-map name="Delete objects"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Editor</permission-role>
-  </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Editor</permission-role>
-  </permission-map>
-  <permission-map name="PloneMeeting: Add annex"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Contributor</permission-role>
-  </permission-map>
-  <permission-map name="PloneMeeting: Add annexDecision"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Contributor</permission-role>
-  </permission-map>
-  <permission-map name="PloneMeeting: Read budget infos"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reader</permission-role>
-  </permission-map>
-  <permission-map name="PloneMeeting: Read decision"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reader</permission-role>
-  </permission-map>
-  <permission-map name="PloneMeeting: Read item observations"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reader</permission-role>
-  </permission-map>
-  <permission-map name="PloneMeeting: Write budget infos"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Editor</permission-role>
-   <permission-role>MeetingBudgetImpactEditor</permission-role>
-  </permission-map>
-  <permission-map name="PloneMeeting: Write decision"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Editor</permission-role>
-  </permission-map>
-  <permission-map name="PloneMeeting: Write item MeetingManager reserved fields"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
-  </permission-map>
-  <permission-map name="PloneMeeting: Write marginal notes"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Review portal content"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-  </permission-map>
-  <permission-map name="View"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reader</permission-role>
   </permission-map>
  </state>
  <state state_id="itemfrozen"
@@ -643,7 +568,6 @@
  <state state_id="validated"
         title="validated"
         i18n:attributes="title">
-  <exit-transition transition_id="backToItemCreated"/>
   <exit-transition transition_id="present"/>
   <permission-map name="Access contents information"
                   acquired="False">
@@ -738,18 +662,6 @@
   <action url="" icon="%(portal_url)s/accept_but_modify.png" category="workflow" i18n:translate="">accept_but_modify</action>
   <guard>
     <guard-expression>python:here.wfConditions().mayDecide()</guard-expression>
-  </guard>
- </transition>
- <transition transition_id="backToItemCreated"
-             title="backToItemCreated"
-             new_state="itemcreated"
-             trigger="USER"
-             before_script=""
-             after_script=""
-             i18n:attributes="title">
-  <action url="" icon="%(portal_url)s/backToItemCreated.png" category="workflow" i18n:translate="">backToItemCreated</action>
-  <guard>
-    <guard-expression>python:here.wfConditions().mayCorrect('itemcreated')</guard-expression>
   </guard>
  </transition>
  <transition transition_id="backToItemFrozen"
@@ -858,18 +770,6 @@
   <action url="" icon="%(portal_url)s/present.png" category="workflow" i18n:translate="">present</action>
   <guard>
     <guard-expression>python:here.wfConditions().mayPresent()</guard-expression>
-  </guard>
- </transition>
- <transition transition_id="validate"
-             title="validate"
-             new_state="validated"
-             trigger="USER"
-             before_script=""
-             after_script=""
-             i18n:attributes="title">
-  <action url="" icon="%(portal_url)s/validate.png" category="workflow" i18n:translate="">validate</action>
-  <guard>
-    <guard-expression>python:here.wfConditions().mayValidate()</guard-expression>
   </guard>
  </transition>
  <variable variable_id="action" for_catalog="False"
