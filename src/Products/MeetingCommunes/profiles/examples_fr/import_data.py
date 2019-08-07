@@ -448,9 +448,12 @@ collegeMeeting.powerObservers = (
 
 collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 collegeMeeting.workflowAdaptations = [
+    'apply_item_validation_levels',
     'no_publication', 'no_global_observation',
-    'return_to_proposing_group', 'refused',
-    'presented_item_back_to_itemcreated', 'presented_item_back_to_proposed',
+    'return_to_proposing_group',
+    'refused',
+    'presented_item_back_to_itemcreated',
+    'presented_item_back_to_proposed',
     'only_creator_may_delete']
 collegeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 collegeMeeting.onTransitionFieldTransforms = (
