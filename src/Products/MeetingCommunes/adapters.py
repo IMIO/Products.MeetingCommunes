@@ -24,7 +24,6 @@ from AccessControl import ClassSecurityInfo
 from AccessControl.class_init import InitializeClass
 from appy.gen import No
 from collections import OrderedDict
-from collective.contact.plonegroup.utils import get_organization
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from plone import api
 from plone.memoize import ram
@@ -41,6 +40,7 @@ from Products.MeetingCommunes.interfaces import IMeetingCommunesWorkflowActions
 from Products.MeetingCommunes.interfaces import IMeetingCommunesWorkflowConditions
 from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowActions
 from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowConditions
+from Products.MeetingCommunes.utils import finances_give_advice_states
 from Products.PloneMeeting.adapters import CompoundCriterionBaseAdapter
 from Products.PloneMeeting.adapters import query_user_groups_cachekey
 from Products.PloneMeeting.config import PMMessageFactory as _
@@ -762,9 +762,7 @@ class MeetingCommunesWorkflowActions(MeetingWorkflowActions):
            MeetingConfig.initItemDecisionIfEmptyOnDecide is True, we
            initialize the decision field with content of Title+Description
            if decision field is empty.'''
-        tool = getToolByName(self.context, 'portal_plonemeeting')
-        cfg = tool.getMeetingConfig(self.context)
-        if cfg.getInitItemDecisionIfEmptyOnDecide():
+        if self.cfg.getInitItemDecisionIfEmptyOnDecide():
             for item in self.context.getItems():
                 # If deliberation (motivation+decision) is empty,
                 # initialize it the decision field
@@ -804,11 +802,8 @@ class MeetingItemCommunesWorkflowActions(MeetingItemWorkflowActions):
         '''When advices are asked again and we use MeetingItem.completeness field,
            make sure the item completeness evaluation is asked again so advice is not
            addable/editable when item come back again to this state.'''
-        tool = api.portal.get_tool('portal_plonemeeting')
-        cfg = tool.getMeetingConfig(self.context)
-        from Products.MeetingCommunes.config import FINANCE_WAITING_ADVICES_STATES
-        if 'completeness' in cfg.getUsedItemAttributes() and \
-           self.context.queryState() in FINANCE_WAITING_ADVICES_STATES:
+        if 'completeness' in self.cfg.getUsedItemAttributes() and \
+           self.context.queryState() in finances_give_advice_states(self.cfg):
             wfTool = api.portal.get_tool('portal_workflow')
             history = self.context.workflow_history[wfTool.getWorkflowsFor(self.context)[0].getId()][:-1]
             for event in history:
@@ -1189,7 +1184,6 @@ class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
         if not self.cfg:
             return {}
         groupIds = []
-        review_states = []
         for financeGroupUID in self.cfg.adapted().getUsedFinanceGroupIds():
             # advice not giveable
             groupIds.append('delay__%s_advice_not_giveable' % financeGroupUID)
@@ -1198,9 +1192,7 @@ class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
             wfTool = api.portal.get_tool('portal_workflow')
             initial_state = wfTool.getWorkflowsFor('meetingadvicefinances')[0].initial_state
             groupIds.append('delay__{0}_{1}'.format(financeGroupUID, initial_state))
-            # get review_states in which advice is giveable by financeGroup
-            financeGroup = get_organization(financeGroupUID)
-            review_states.extend(financeGroup.get_item_advice_states(self.cfg))
+        review_states = finances_give_advice_states(self.cfg)
         return {'portal_type': {'query': self.cfg.getItemTypeName()},
                 'getCompleteness': {'query': ('completeness_not_yet_evaluated',
                                               'completeness_incomplete',

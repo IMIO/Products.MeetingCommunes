@@ -10,6 +10,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - In query_itemstocontrolcompletenessof, do not use the config.FINANCE_WAITING_ADVICES_STATES but compute the states in which advice
   can be given by finances groups
 - Override MeetingItem._adviceTypesForAdviser to manage finances specific advice types
+- Get rid of config.FINANCE_WAITING_ADVICES_STATES, get those states dynamically using utils.finances_give_advice_states
 
 4.1rc6 (2019-07-02)
 -------------------

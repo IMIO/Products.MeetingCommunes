@@ -258,6 +258,7 @@ class ImportCSV:
 
         # meeting.at_post_create_script()
         meeting.processForm(values={'dummy': None})
+        meeting.setCreationDate(tme)
         logger.info('Created meeting of {date}'.format(date=meeting.Title()))
 
         inserted = self.add_annexe_to_object(meeting, csv_meeting.annex_oj, u'Ordre du jour')
@@ -310,6 +311,7 @@ class ImportCSV:
         item.setDescription('<p>Créateur originel : {creator}</p>'.format(creator=csv_item.creator_id))
         # do not call item.at_post_create_script(). This would get only throuble with cancel quick edit in objects
         item.processForm(values={'dummy': None})
+        item.setCreationDate(tme)
 
         inserted = self.add_annexe_to_object(item, csv_item.annex_path, u'Délibération')
         if not inserted:
