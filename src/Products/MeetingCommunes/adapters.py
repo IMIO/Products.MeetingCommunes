@@ -404,6 +404,18 @@ class CustomMeetingItem(MeetingItem):
         item = self.getSelf()
         return item.getCompleteness() in ('completeness_complete', 'completeness_evaluation_not_required')
 
+    def _adviceTypesForAdviser(self, meeting_advice_portal_type):
+        """Return the advice types (positive, negative, ...) for given p_meeting_advice_portal_type.
+           By default we always use every MeetingConfig.usedAdviceTypes but this is useful
+           when using several portal_types for meetingadvice and some may use particular advice types."""
+        item = self.getSelf()
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(item)
+        if meeting_advice_portal_type == 'meetingadvice':
+            return [t for t in cfg.getUsedAdviceTypes() if not t.endswith('_finance')]
+        else:
+            return [t for t in cfg.getUsedAdviceTypes() if t.endswith('_finance')]
+
 
 class CustomMeetingConfig(MeetingConfig):
     '''Adapter that adapts a meetingConfig implementing IMeetingConfig to the
