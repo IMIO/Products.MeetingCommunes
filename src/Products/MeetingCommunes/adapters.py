@@ -24,6 +24,7 @@ from AccessControl import ClassSecurityInfo
 from AccessControl.class_init import InitializeClass
 from appy.gen import No
 from collections import OrderedDict
+from collective.contact.plonegroup.utils import get_organization
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from plone import api
 from plone.memoize import ram
@@ -1175,27 +1176,29 @@ class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
     @property
     @ram.cache(query_user_groups_cachekey)
     def query_itemstocontrolcompletenessof(self):
-        '''Queries all items for which there is completeness to evaluate, so where completeness
-           is not 'completeness_complete'.'''
+        '''Queries all items for which there is completeness to evaluate,
+           so where completeness is not 'completeness_complete'.'''
         if not self.cfg:
             return {}
         groupIds = []
-        for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
+        review_states = []
+        for financeGroupUID in self.cfg.adapted().getUsedFinanceGroupIds():
             # advice not giveable
-            groupIds.append('delay__%s_advice_not_giveable' % financeGroup)
+            groupIds.append('delay__%s_advice_not_giveable' % financeGroupUID)
             # advice was already given once and come back to the finance
             # in it's initial state
             wfTool = api.portal.get_tool('portal_workflow')
             initial_state = wfTool.getWorkflowsFor('meetingadvicefinances')[0].initial_state
-            groupIds.append('delay__{0}_{1}'.format(financeGroup, initial_state))
-        # import FINANCE_WAITING_ADVICES_STATES as it could be monkeypatched
-        from Products.MeetingCommunes.config import FINANCE_WAITING_ADVICES_STATES
+            groupIds.append('delay__{0}_{1}'.format(financeGroupUID, initial_state))
+            # get review_states in which advice is giveable by financeGroup
+            financeGroup = get_organization(financeGroupUID)
+            review_states.extend(financeGroup.get_item_advice_states(self.cfg))
         return {'portal_type': {'query': self.cfg.getItemTypeName()},
                 'getCompleteness': {'query': ('completeness_not_yet_evaluated',
                                               'completeness_incomplete',
                                               'completeness_evaluation_asked_again')},
                 'indexAdvisers': {'query': groupIds},
-                'review_state': {'query': FINANCE_WAITING_ADVICES_STATES}}
+                'review_state': {'query': tuple(set(review_states))}}
 
     # we may not ram.cache methods in same file with same name...
     query = query_itemstocontrolcompletenessof
