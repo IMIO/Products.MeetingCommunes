@@ -7,8 +7,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 -------------------
 
 - When applying 'meetingadvicefinances_add_advicecreated_state' WF adaptation, set advicecreated state as new_initial_state
-- In query_itemstocontrolcompletenessof, do not use the config.FINANCE_WAITING_ADVICES_STATES but compute the states in which advice
-  can be given by finances groups
+- Get rid of config.FINANCE_WAITING_ADVICES_STATES, get those states dynamically using utils.finances_give_advice_states
 
 4.1rc6 (2019-07-02)
 -------------------
