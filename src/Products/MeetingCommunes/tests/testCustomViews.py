@@ -21,7 +21,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
 #
-
+from Products.MeetingCommunes.browser.overrides import MCMeetingDocumentGenerationHelperView
 from collective.contact.plonegroup.utils import get_plone_group_id
 from DateTime import DateTime
 from imio.history.utils import getLastWFAction
@@ -659,6 +659,52 @@ class testCustomViews(MeetingCommunesTestCase):
             excluded_values={'category': [i5.getCategory(theObject=True).Title()]})
         self.assertListEqual(res, [])
 
+    def test__is_different_grouping_as_previous_item(self):
+        self.assertTrue(MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([], u'Brol'))
+        self.assertTrue(MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'']], u'Brol'))
+        self.assertFalse(MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([u'Brol'],
+                                                                                                       u'Brol'))
+        self.assertFalse(MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol']],
+                                                                                                       u'Brol'))
+        self.assertFalse(
+                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol1',
+                                                                                                [u'Brol2',
+                                                                                                 [u'brol3', []]]]],
+                                                                                              u'Brol1'))
+        self.assertTrue(
+                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol1',
+                                                                                                [u'Brol2',
+                                                                                                 [u'brol3',[]]]]],
+                                                                                              u'Brol2'))
+        self.assertTrue(
+                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol1',
+                                                                                                [u'Brol2',
+                                                                                                 [u'brol3', []]]]],
+                                                                                              u'brol3'))
+        self.assertTrue(
+                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol1',
+                                                                                                [u'Brol2',
+                                                                                                 [u'brol3', []]]]],
+                                                                                              u'Machin'))
+        self.assertFalse(
+                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol2',
+                                                                                                 [u'brol3', []]]],
+                                                                                              u'Brol2'))
+        self.assertTrue(
+                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol2',
+                                                                                               [u'brol3', []]]],
+                                                                                              u'brol3'))
+        self.assertTrue(
+                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol2',
+                                                                                               [u'brol3', []]]],
+                                                                                              u'truc'))
+        self.assertTrue(
+                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'brol3', []]],
+                                                                                              u'Brol3'))
+        self.assertFalse(
+                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'brol3', []]],
+                                                                                              u'brol3'))
+
     def test_get_grouped_items(self):
         self.changeUser('pmManager')
         cfg = self.meetingConfig
@@ -687,6 +733,7 @@ class testCustomViews(MeetingCommunesTestCase):
         helper = view.get_generation_context_helper()
         items = m.getItems(ordered=True)
         itemUids = [anItem.UID() for anItem in items]
+        self.maxDiff = None
 
         res = helper.get_grouped_items(itemUids)
         self.assertListEqual(res, items)
@@ -697,8 +744,24 @@ class testCustomViews(MeetingCommunesTestCase):
             [[i5.getCategory(theObject=True).Title(), items[0:-1]],
              [i7.getCategory(theObject=True).Title(), [i7]]])
 
-    #     self, itemUids, listTypes=['normal'],
-    #                           ignore_review_states=[], privacy='*'
+        res = helper.get_grouped_items(itemUids, group_by=['category'])
+        self.assertListEqual(
+                res,
+                [[i5.getCategory(theObject=True).Title(), items[0:-1]],
+                 [i7.getCategory(theObject=True).Title(), [i7]]])
+
+        res = helper.get_grouped_items(itemUids, group_by=['category', 'proposingGroup'])
+        self.assertListEqual(
+                res,
+                [[i5.getCategory(theObject=True).Title(),
+                  [u'Developers', [items[0]]],
+                  [u'Vendors', items[1:3]],
+                  [u'Developers', [items[3]]],
+                  [u'Vendors', [items[4]]],
+                  [u'Developers', [i5]]],
+                 [i7.getCategory(theObject=True).Title(),
+                  [i7.getProposingGroup(theObject=True).Title(),[i7]]]])
+
         res = helper.get_grouped_items(itemUids, group_by='category',
                                        excluded_values={'category': i5.getCategory(theObject=True).Title()})
         self.assertListEqual(
@@ -717,7 +780,6 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertListEqual(
             res,
             [[i7.getCategory(theObject=True).Title(), [i7]]])
-
 
     def test_get_multiple_level_printing(self):
         self.changeUser('pmManager')

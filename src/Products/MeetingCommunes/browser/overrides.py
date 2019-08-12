@@ -288,6 +288,17 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         else:
             raise AttributeError
 
+
+    @staticmethod
+    def _is_different_grouping_as_previous_item(node, value):
+        if len(node) == 0:
+            return True
+        grouping = node[-1]
+        if isinstance(grouping, list):
+            grouping = grouping[0]
+        return grouping != value
+
+
     def get_grouped_items(self, itemUids, listTypes=['normal'],
                           group_by=[], included_values={}, excluded_values={},
                           ignore_review_states=[], privacy='*'):
@@ -344,7 +355,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
             for group in group_by:
                 value = self._get_value(item, group)
 
-                if len(node) == 0 or node[-1][0] != value:
+                if self._is_different_grouping_as_previous_item(node, value):
                     node.append([value])
 
                 node = node[-1]
