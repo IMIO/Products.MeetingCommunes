@@ -411,10 +411,10 @@ class CustomMeetingItem(MeetingItem):
         item = self.getSelf()
         tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(item)
-        if meeting_advice_portal_type == 'meetingadvice':
-            return [t for t in cfg.getUsedAdviceTypes() if not t.endswith('_finance')]
-        else:
+        if meeting_advice_portal_type == 'meetingadvicefinances':
             return [t for t in cfg.getUsedAdviceTypes() if t.endswith('_finance')]
+        else:
+            return [t for t in cfg.getUsedAdviceTypes() if not t.endswith('_finance')]
 
 
 class CustomMeetingConfig(MeetingConfig):
@@ -426,20 +426,6 @@ class CustomMeetingConfig(MeetingConfig):
 
     def __init__(self, item):
         self.context = item
-
-    def custom_validate_workflowAdaptations(self, values, added, removed):
-        '''Validate the removal of "meetingadvicefinances_add_advicecreated_state".'''
-        if 'meetingadvicefinances_add_advicecreated_state' in removed:
-            config = self.getSelf()
-            # check if some advices are in the 'advicecreated' state
-            catalog = api.portal.get_tool('portal_catalog')
-            tool = api.portal.get_tool('portal_plonemeeting')
-            if catalog(portal_type=tool.getAdvicePortalTypes(as_ids=True),
-                       review_state='advicecreated',
-                       getConfigId=config.getId()):
-                return translate('wa_removed_advicecreated_error',
-                                 domain='PloneMeeting',
-                                 context=config.REQUEST)
 
     security.declarePublic('getUsedFinanceGroupIds')
 
@@ -723,7 +709,7 @@ class CustomMeetingConfig(MeetingConfig):
         return bool(finadv_wfas)
 
     def _updateMeetingAdvicePortalTypes(self):
-        '''Make sure we use a patched_ wokflow instead meetingadvicefinances_workflow
+        '''Make sure we use a patched_ wokflow instead 'base_wf' for eachmeetingadvicefinances_workflow
            to apply advice related workflow adaptations.'''
         if self._has_meetingadvicefinances_wf_adaptations():
             fin_wf = 'meetingadvicefinances_workflow'
@@ -1021,8 +1007,6 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
 
     def performCustomWFAdaptations(self, meetingConfig, wfAdaptation, logger, itemWorkflow, meetingWorkflow):
         """ """
-        wfTool = api.portal.get_tool('portal_workflow')
-        advicefin_wf = wfTool.getWorkflowById('patched_meetingadvicefinances_workflow')
         if wfAdaptation == 'no_publication':
             # we override the PloneMeeting's 'no_publication' wfAdaptation
             # First, update the meeting workflow
@@ -1061,11 +1045,15 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
             if 'itempublished' in wf.states:
                 wf.states.deleteStates(['itempublished'])
             return True
-        elif wfAdaptation == 'meetingadvicefinances_add_advicecreated_state':
+
+        return False
+
+    def performCustomAdviceWFAdaptations(self, meetingConfig, wfAdaptation, logger, advice_wf_id):
+        ''' '''
+        if wfAdaptation == 'add_advicecreated_state':
             # adapt WF, add new initial_state (and leading transitions)
-            patched_fin_wf = 'patched_meetingadvicefinances_workflow'
             adaptations.addState(
-                wf_id=patched_fin_wf,
+                wf_id=advice_wf_id,
                 new_state_id='advicecreated',
                 new_state_title='advicecreated',
                 permissions_cloned_state_id='proposed_to_financial_controller',
@@ -1080,11 +1068,28 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
                 existing_back_transition_ids=['backToAdviceInitialState'],
                 new_initial_state=True)
             return True
-        elif wfAdaptation == 'meetingadvicefinances_controller_propose_to_manager':
-            # add the 'proposeToFinancialManager' transition from state 'proposed_to_financial_controller'
-            state = advicefin_wf.states['proposed_to_financial_controller']
-            if 'proposeToFinancialManager' not in state.transitions:
-                state.transitions = state.transitions + ('proposeToFinancialManager', )
+        elif wfAdaptation == 'remove_proposed_to_financial_controller':
+            adaptations.removeState(wf_id=advice_wf_id,
+                                    state_id='proposed_to_financial_controller',
+                                    old_leading_transitions={
+                                        'backToAdviceInitialState':
+                                        'proposed_to_financial_editor'},
+                                    transitions_to_remove=[
+                                        'proposeToFinancialEditor',
+                                        'backToProposedToFinancialController'],
+                                    new_initial_state='proposed_to_financial_editor')
+            return True
+        elif wfAdaptation == 'remove_proposed_to_financial_editor':
+            adaptations.removeState(wf_id=advice_wf_id,
+                                    state_id='proposed_to_financial_editor',
+                                    old_leading_transitions={
+                                        'backToAdviceInitialState':
+                                        'proposed_to_financial_reviewer'},
+                                    transitions_to_remove=[
+                                        'proposeToFinancialEditor',
+                                        'backToProposedToFinancialController'],
+                                    new_initial_state='proposed_to_financial_editor')
+        elif wfAdaptation == 'remove_proposed_to_financial_reviewer':
             return True
         return False
 
