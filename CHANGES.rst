@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1rc7 (unreleased)
+4.1rc7 (2019-08-13)
 -------------------
 
 - When applying 'meetingadvicefinances_add_advicecreated_state' WF adaptation, set advicecreated state as new_initial_state
