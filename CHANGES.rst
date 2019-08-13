@@ -6,8 +6,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1rc8 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Fixed POD templates using oj-avec-annexes.odt that failed to render late items
 
 4.1rc7 (2019-08-13)
 -------------------
