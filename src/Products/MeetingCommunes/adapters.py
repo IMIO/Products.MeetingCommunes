@@ -1068,29 +1068,6 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
                 existing_back_transition_ids=['backToAdviceInitialState'],
                 new_initial_state=True)
             return True
-        elif wfAdaptation == 'remove_proposed_to_financial_controller':
-            adaptations.removeState(wf_id=advice_wf_id,
-                                    state_id='proposed_to_financial_controller',
-                                    old_leading_transitions={
-                                        'backToAdviceInitialState':
-                                        'proposed_to_financial_editor'},
-                                    transitions_to_remove=[
-                                        'proposeToFinancialEditor',
-                                        'backToProposedToFinancialController'],
-                                    new_initial_state='proposed_to_financial_editor')
-            return True
-        elif wfAdaptation == 'remove_proposed_to_financial_editor':
-            adaptations.removeState(wf_id=advice_wf_id,
-                                    state_id='proposed_to_financial_editor',
-                                    old_leading_transitions={
-                                        'backToAdviceInitialState':
-                                        'proposed_to_financial_reviewer'},
-                                    transitions_to_remove=[
-                                        'proposeToFinancialEditor',
-                                        'backToProposedToFinancialController'],
-                                    new_initial_state='proposed_to_financial_editor')
-        elif wfAdaptation == 'remove_proposed_to_financial_reviewer':
-            return True
         return False
 
     security.declarePublic('getSpecificAssemblyFor')

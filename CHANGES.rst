@@ -7,6 +7,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 -------------------
 
 - Fixed POD templates using oj-avec-annexes.odt that failed to render late items
+- Adapted item workflow to use MeetingConfig.itemWFValidationLevels defined configuration
+- Added new 'meetingadvice' related workflows : 'meetingadvicefinanceseditor_workflow' and 'meetingadvicefinancesmanager_workflow'
 
 4.1rc7 (2019-08-13)
 -------------------
@@ -16,7 +18,6 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   can be given by finances groups
 - Override MeetingItem._adviceTypesForAdviser to manage finances specific advice types
 - Get rid of config.FINANCE_WAITING_ADVICES_STATES, get those states dynamically using utils.finances_give_advice_states
-- Adapted item workflow to use MeetingConfig.itemWFValidationLevels defined configuration
 
 4.1rc6 (2019-07-02)
 -------------------
