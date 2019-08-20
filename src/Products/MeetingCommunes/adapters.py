@@ -727,7 +727,7 @@ class CustomMeetingConfig(MeetingConfig):
 
     def _adviceActionsInterfaceFor(self, advice_obj):
         '''See doc in interfaces.py.'''
-        if advice_obj.portal_type == 'meetingadvicefinances':
+        if advice_obj.portal_type.startswith('meetingadvicefinances'):
             return IMeetingAdviceCommunesWorkflowActions.__identifier__
         else:
             return super(CustomMeetingConfig, self)._adviceActionsInterfaceFor(advice_obj)
@@ -784,12 +784,20 @@ class MeetingItemCommunesWorkflowActions(MeetingItemWorkflowActions):
     implements(IMeetingItemCommunesWorkflowActions)
     security = ClassSecurityInfo()
 
+    def _will_ask_completeness_eval_again(self):
+        ''' '''
+        return 'completeness' in self.cfg.getUsedItemAttributes() and \
+            self.context.queryState() in finances_give_advice_states(self.cfg)
+
+    def _will_set_completeness_to_not_required(self):
+        ''' '''
+        return False
+
     def _doWaitAdvices(self):
         '''When advices are asked again and we use MeetingItem.completeness field,
            make sure the item completeness evaluation is asked again so advice is not
            addable/editable when item come back again to this state.'''
-        if 'completeness' in self.cfg.getUsedItemAttributes() and \
-           self.context.queryState() in finances_give_advice_states(self.cfg):
+        if self._will_ask_completeness_eval_again():
             wfTool = api.portal.get_tool('portal_workflow')
             history = self.context.workflow_history[wfTool.getWorkflowsFor(self.context)[0].getId()][:-1]
             for event in history:
@@ -805,28 +813,21 @@ class MeetingItemCommunesWorkflowActions(MeetingItemWorkflowActions):
                                                            bypassSecurityCheck=True,
                                                            comment=comment)
                     break
+        elif self._will_set_completeness_to_not_required():
+            changeCompleteness = self.context.restrictedTraverse('@@change-item-completeness')
+            comment = translate('completeness_set_to_not_required_by_app',
+                                domain='PloneMeeting',
+                                context=self.context.REQUEST)
+            # change completeness even if current user is not able to
+            changeCompleteness._changeCompleteness('completeness_evaluation_not_required',
+                                                   bypassSecurityCheck=True,
+                                                   comment=comment)
 
-    security.declarePrivate('doWait_advices_from_proposed')
+    security.declarePrivate('doWait_advices_from')
 
-    def doWait_advices_from_proposed(self, stateChange):
+    def doWait_advices_from(self, stateChange):
         """ """
         self._doWaitAdvices()
-
-    security.declarePrivate('doWait_advices_from_prevalidated')
-
-    def doWait_advices_from_prevalidated(self, stateChange):
-        """ """
-        self._doWaitAdvices()
-
-    security.declarePrivate('doAccept_but_modify')
-
-    def doAccept_but_modify(self, stateChange):
-        pass
-
-    security.declarePrivate('doPre_accept')
-
-    def doPre_accept(self, stateChange):
-        pass
 
 
 class MeetingItemCommunesWorkflowConditions(MeetingItemWorkflowConditions):

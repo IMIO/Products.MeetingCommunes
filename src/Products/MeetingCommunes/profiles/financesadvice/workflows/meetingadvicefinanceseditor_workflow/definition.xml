@@ -110,7 +110,7 @@
         title="proposed_to_financial_manager"
         i18n:attributes="title">
   <exit-transition transition_id="backToProposedToFinancialEditor"/>
-  <exit-transition transition_id="proposeToFinancialManager"/>
+  <exit-transition transition_id="signFinancialAdvice"/>
   <exit-transition transition_id="giveAdvice"/>
   <permission-map name="Access contents information"
                   acquired="True">
@@ -197,6 +197,18 @@
   <action url="" icon="" category="workflow" i18n:translate="">proposeToFinancialManager</action>
   <guard>
     <guard-expression>python:here.wfConditions().mayProposeToFinancialManager()</guard-expression>
+  </guard>
+ </transition>
+ <transition transition_id="signFinancialAdvice"
+             title="signFinancialAdvice"
+             new_state="financial_advice_signed"
+             trigger="USER"
+             before_script=""
+             after_script=""
+             i18n:attributes="title">
+  <action url="" icon="" category="workflow" i18n:translate="">signFinancialAdvice</action>
+  <guard>
+    <guard-expression>python:here.wfConditions().maySignFinancialAdvice()</guard-expression>
   </guard>
  </transition>
  <variable variable_id="action" for_catalog="False"
