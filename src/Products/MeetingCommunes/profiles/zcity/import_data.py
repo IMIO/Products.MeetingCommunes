@@ -334,3 +334,4 @@ data = PloneMeetingConfiguration(
     meetingConfigs=(collegeMeeting, councilMeeting, ),
     orgs=groups)
 data.usersOutsideGroups = []
+data.directory_position_types = list(examples_fr_import_data.data.directory_position_types)
