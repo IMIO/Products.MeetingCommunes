@@ -41,16 +41,25 @@ collegeMeeting.usedMeetingAttributes = ['startDate',
                                         'assembly',
                                         'signatures',
                                         'observations']
-collegeMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_list_type',
-                                             'reverse': '0'}, {'insertingMethod': 'on_proposing_groups',
-                                             'reverse': '0'})
-collegeMeeting.itemColumns = ['static_item_reference', 'Creator', 'CreationDate', 'ModificationDate', 'review_state',
-                              'getProposingGroup', 'advices', 'linkedMeetingDate', 'getPreferredMeetingDate', 'actions']
+collegeMeeting.insertingMethodsOnAddItem = (
+    {'insertingMethod': 'on_list_type', 'reverse': '0'},
+    {'insertingMethod': 'on_proposing_groups', 'reverse': '0'})
+collegeMeeting.itemColumns = ['static_item_reference',
+                              'Creator',
+                              'CreationDate',
+                              'ModificationDate',
+                              'review_state',
+                              'getProposingGroup',
+                              'advices',
+                              'linkedMeetingDate',
+                              'getPreferredMeetingDate',
+                              'actions']
 collegeMeeting.itemPositiveDecidedStates = ('accepted', 'accepted_but_modified')
-collegeMeeting.transitionsToConfirm = ('Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',
-                                       'MeetingItem.backToProposed', 'MeetingItem.backTo_itemfrozen_from_returned_to_proposing_group',
-                                       'MeetingItem.backTo_presented_from_returned_to_proposing_group', 'MeetingItem.delay',
-                                       'MeetingItem.backToValidated', 'MeetingItem.return_to_proposing_group')
+collegeMeeting.transitionsToConfirm = (
+    'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',
+    'MeetingItem.backToProposed', 'MeetingItem.backTo_itemfrozen_from_returned_to_proposing_group',
+    'MeetingItem.backTo_presented_from_returned_to_proposing_group', 'MeetingItem.delay',
+    'MeetingItem.backToValidated', 'MeetingItem.return_to_proposing_group')
 collegeMeeting.selectableAdvisers = []
 collegeMeeting.itemAdviceStates = ('proposed', 'validated', 'presented')
 collegeMeeting.itemAdviceEditStates = ('proposed', 'validated', 'presented')
@@ -138,16 +147,23 @@ collegeMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transitio
                                                              {'meeting_transition': 'close',
                                                               'item_transition': 'accept'},)
 collegeMeeting.selectableCopyGroups = []
-collegeMeeting.itemCopyGroupsStates = ('validated',
-                     'presented',
-                     'itemfrozen',
-                     'returned_to_proposing_group',
-                     'pre_accepted',
-                     'accepted',
-                     'accepted_but_modified',
-                     'delayed',
-                     'refused')
-collegeMeeting.itemManualSentToOtherMCStates = ('accepted', 'accepted_but_modified', 'pre_accepted', 'itemfrozen', 'presented', 'validated')
+collegeMeeting.itemCopyGroupsStates = (
+    'validated',
+    'presented',
+    'itemfrozen',
+    'returned_to_proposing_group',
+    'pre_accepted',
+    'accepted',
+    'accepted_but_modified',
+    'delayed',
+    'refused')
+collegeMeeting.itemManualSentToOtherMCStates = (
+    'accepted',
+    'accepted_but_modified',
+    'pre_accepted',
+    'itemfrozen',
+    'presented',
+    'validated')
 collegeMeeting.recurringItems = [
     RecurringItemDescriptor(
         id='recurringagenda1',
@@ -182,15 +198,25 @@ councilMeeting.usedMeetingAttributes = ['startDate',
                                         'assembly',
                                         'signatures',
                                         'observations']
-councilMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_list_type',
-                                             'reverse': '0'}, {'insertingMethod': 'on_proposing_groups',
-                                             'reverse': '0'})
-councilMeeting.itemColumns = ['static_item_reference', 'Creator', 'CreationDate', 'ModificationDate', 'review_state',
-                              'getProposingGroup', 'advices', 'linkedMeetingDate', 'getPreferredMeetingDate', 'actions']
-councilMeeting.transitionsToConfirm = ('Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',
-                                       'MeetingItem.backToProposed', 'MeetingItem.backTo_itemfrozen_from_returned_to_proposing_group',
-                                       'MeetingItem.backTo_presented_from_returned_to_proposing_group', 'MeetingItem.delay',
-                                       'MeetingItem.backToValidated', 'MeetingItem.return_to_proposing_group')
+councilMeeting.insertingMethodsOnAddItem = (
+    {'insertingMethod': 'on_list_type', 'reverse': '0'},
+    {'insertingMethod': 'on_proposing_groups', 'reverse': '0'})
+councilMeeting.itemColumns = [
+    'static_item_reference',
+    'Creator',
+    'CreationDate',
+    'ModificationDate',
+    'review_state',
+    'getProposingGroup',
+    'advices',
+    'linkedMeetingDate',
+    'getPreferredMeetingDate',
+    'actions']
+councilMeeting.transitionsToConfirm = (
+    'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',
+    'MeetingItem.backToProposed', 'MeetingItem.backTo_itemfrozen_from_returned_to_proposing_group',
+    'MeetingItem.backTo_presented_from_returned_to_proposing_group', 'MeetingItem.delay',
+    'MeetingItem.backToValidated', 'MeetingItem.return_to_proposing_group')
 councilMeeting.selectableAdvisers = []
 councilMeeting.itemAdviceStates = ('proposed', 'validated', 'presented')
 councilMeeting.itemAdviceEditStates = ('proposed', 'validated', 'presented')
@@ -267,26 +293,24 @@ councilMeeting.onTransitionFieldTransforms = (
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:<p>Le Collège décide de reporter le point.</p>"}
      ))
-councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                              'item_transition': 'itemfreeze'},
+councilMeeting.onMeetingTransitionItemTransitionToTrigger = (
+    {'meeting_transition': 'freeze', 'item_transition': 'itemfreeze'},
 
-                                                             {'meeting_transition': 'decide',
-                                                              'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'decide', 'item_transition': 'itemfreeze'},
 
-                                                             {'meeting_transition': 'close',
-                                                              'item_transition': 'itemfreeze'},
-                                                             {'meeting_transition': 'close',
-                                                              'item_transition': 'accept'},)
+    {'meeting_transition': 'close', 'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'close', 'item_transition': 'accept'},)
 councilMeeting.selectableCopyGroups = []
-councilMeeting.itemCopyGroupsStates = ('validated',
-                     'presented',
-                     'itemfrozen',
-                     'returned_to_proposing_group',
-                     'pre_accepted',
-                     'accepted',
-                     'accepted_but_modified',
-                     'delayed',
-                     'refused')
+councilMeeting.itemCopyGroupsStates = (
+    'validated',
+    'presented',
+    'itemfrozen',
+    'returned_to_proposing_group',
+    'pre_accepted',
+    'accepted',
+    'accepted_but_modified',
+    'delayed',
+    'refused')
 councilMeeting.itemManualSentToOtherMCStates = []
 councilMeeting.itemAutoSentToOtherMCStates = []
 councilMeeting.itemPositiveDecidedStates = ('accepted', 'accepted_but_modified')
