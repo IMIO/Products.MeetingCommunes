@@ -147,6 +147,8 @@ def import_meetingsCategories_from_csv(self, meeting_config='', isClassifier=Fal
     pm = self.portal_plonemeeting
     from Products.CMFPlone.utils import safe_unicode
     from Products.CMFPlone.utils import normalizeString
+    from Products.MeetingCommunes.config import PROJECTNAME
+    from Products.PloneMeeting.exportimport.content import ToolInitializer
     from Products.PloneMeeting.profiles import CategoryDescriptor
 
     meetingConfig = getattr(pm, meeting_config)
@@ -162,10 +164,10 @@ def import_meetingsCategories_from_csv(self, meeting_config='', isClassifier=Fal
             continue
         if not hasattr(catFolder, row_id):
             try:
-                catDescr = CategoryDescriptor(row_id, title=row['title'], description=row['description'],
-                                              active=row['actif'])
-                meetingConfig.addCategory(catDescr, classifier=isClassifier)
-
+                catDescr = CategoryDescriptor(row_id, title=row['title'])
+                context = self.portal_setup._getImportContext('Products.MeetingCommunes:zcity')
+                TI = ToolInitializer(context, PROJECTNAME)
+                TI.addCategory(cfg=meetingConfig, descr=catDescr, classifier=isClassifier)
                 cat = getattr(catFolder, row_id)
                 if cat:
                     cat.setCategoryId(row['categoryId'])
