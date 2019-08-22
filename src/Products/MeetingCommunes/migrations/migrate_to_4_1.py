@@ -112,6 +112,9 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
         # call steps from Products.PloneMeeting
         super(Migrate_To_4_1, self).run(extra_omitted=extra_omitted)
 
+        # run Products.PloneMeeting step to 4100
+        self.upgradeProfile('profile-Products.PloneMeeting:default')
+
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4.1...')
         self._defineDirectoryPositionTypes()
