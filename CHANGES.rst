@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1rc8 (unreleased)
+4.1rc8 (2019-08-23)
 -------------------
 
 - Fixed POD templates using oj-avec-annexes.odt that failed to render late items
