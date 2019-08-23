@@ -952,9 +952,11 @@ class MeetingAdviceCommunesWorkflowConditions(MeetingAdviceWorkflowConditions):
            in any case (advice positive or negative) except if advice
            is still 'asked_again'.'''
         res = False
-        if _checkPermission(ReviewPortalContent, self.context) and \
-           not self.context.advice_type == 'asked_again':
-            res = True
+        if _checkPermission(ReviewPortalContent, self.context):
+            if self.context.advice_type == 'asked_again':
+                res = No(_('still_asked_again'))
+            else:
+                res = True
         return res
 
     security.declarePublic('maySignFinancialAdvice')
