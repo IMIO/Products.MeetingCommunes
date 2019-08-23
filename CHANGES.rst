@@ -8,6 +8,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Fixed POD templates using oj-avec-annexes.odt that failed to render late items
 - In profile zcity, use same directory_position_types as in profile examples_fr
+- Run Products.PloneMeeting upgrade step to 4100 after upgraded to 4.1
 
 4.1rc7 (2019-08-13)
 -------------------
