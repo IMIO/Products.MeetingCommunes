@@ -3,12 +3,19 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1rc8 (unreleased)
+4.1rc9 (unreleased)
+-------------------
+
+- Use base implementation of MeetingWorkflowConditions.mayDecide as it does the same now (just check "Review portal content" permission
+- Adapted item workflow to use MeetingConfig.itemWFValidationLevels defined configuration
+- Added new 'meetingadvice' related workflows : 'meetingadvicefinanceseditor_workflow' and 'meetingadvicefinancesmanager_workflow'
+
+4.1rc8 (2019-08-23)
 -------------------
 
 - Fixed POD templates using oj-avec-annexes.odt that failed to render late items
-- Adapted item workflow to use MeetingConfig.itemWFValidationLevels defined configuration
-- Added new 'meetingadvice' related workflows : 'meetingadvicefinanceseditor_workflow' and 'meetingadvicefinancesmanager_workflow'
+- In profile zcity, use same directory_position_types as in profile examples_fr
+- Run Products.PloneMeeting upgrade step to 4100 after upgraded to 4.1
 
 4.1rc7 (2019-08-13)
 -------------------

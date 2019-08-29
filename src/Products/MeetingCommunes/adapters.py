@@ -768,14 +768,6 @@ class MeetingCommunesWorkflowConditions(MeetingWorkflowConditions):
     implements(IMeetingCommunesWorkflowConditions)
     security = ClassSecurityInfo()
 
-    security.declarePublic('mayDecide')
-
-    def mayDecide(self):
-        res = False
-        if _checkPermission(ReviewPortalContent, self.context):
-            res = True
-        return res
-
 
 class MeetingItemCommunesWorkflowActions(MeetingItemWorkflowActions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
