@@ -194,6 +194,13 @@
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
+  <genericsetup:registerProfile
+   name="zcommittee_advice"
+   title="PloneMeeting / Commission d'avis"
+   description="PloneMeeting for Advice Committee (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
   <genericsetup:upgradeStep
       title="Go to MeetingCommunes 4.1"
       description=""
