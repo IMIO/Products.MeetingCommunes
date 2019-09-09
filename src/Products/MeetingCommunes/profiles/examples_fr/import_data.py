@@ -857,3 +857,8 @@ data.directory_position_types = [
     {'token': u'depute',
      'name': u'Député|Députés|Députée|Députées'},
 ]
+contactsTemplate = PodTemplateDescriptor('contactsTemplate', 'Export organizations', dashboard=True)
+contactsTemplate.odt_file = 'organizations-export.ods'
+contactsTemplate.pod_formats = ['ods', 'xls', ]
+contactsTemplate.dashboard_collections_ids = ['all_orgs']
+data.contactsTemplates = [contactsTemplate]
