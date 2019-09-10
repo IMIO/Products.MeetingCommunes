@@ -777,28 +777,8 @@ councilMeeting.workflowAdaptations = [
     'presented_item_back_to_itemcreated', 'presented_item_back_to_proposed',
     'only_creator_may_delete']
 councilMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
-councilMeeting.onMeetingTransitionItemActionToExecute = (
-    {'meeting_transition': 'freeze',
-     'item_action': 'itemfreeze',
-     'tal_expression': ''},
-
-    {'meeting_transition': 'decide',
-     'item_action': 'itemfreeze',
-     'tal_expression': ''},
-
-    {'meeting_transition': 'publish_decisions',
-     'item_action': 'itemfreeze',
-     'tal_expression': ''},
-    {'meeting_transition': 'publish_decisions',
-     'item_action': 'accept',
-     'tal_expression': ''},
-
-    {'meeting_transition': 'close',
-     'item_action': 'itemfreeze',
-     'tal_expression': ''},
-    {'meeting_transition': 'close',
-     'item_action': 'accept',
-     'tal_expression': ''},)
+councilMeeting.onMeetingTransitionItemActionToExecute = deepcopy(
+    collegeMeeting.onMeetingTransitionItemActionToExecute)
 councilMeeting.powerObservers = deepcopy(collegeMeeting.powerObservers)
 councilMeeting.powerAdvisersGroups = ()
 councilMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
