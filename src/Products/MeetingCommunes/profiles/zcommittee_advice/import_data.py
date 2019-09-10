@@ -30,31 +30,31 @@ adviceMeeting.assemblyStaves = ''
 adviceMeeting.certifiedSignatures = []
 adviceMeeting.places = ''
 adviceMeeting.usedItemAttributes = ['description',
-                                     'motivation',
-                                     'inAndOutMoves',
-                                     'notes',
-                                     'observations',
-                                     'manuallyLinkedItems',
-                                     'otherMeetingConfigsClonableToPrivacy',
-                                     'sendToAuthority']
+                                    'motivation',
+                                    'inAndOutMoves',
+                                    'notes',
+                                    'observations',
+                                    'manuallyLinkedItems',
+                                    'otherMeetingConfigsClonableToPrivacy',
+                                    'sendToAuthority']
 adviceMeeting.usedMeetingAttributes = ['startDate',
-                                        'endDate',
-                                        'assembly',
-                                        'signatures',
-                                        'observations']
+                                       'endDate',
+                                       'assembly',
+                                       'signatures',
+                                       'observations']
 adviceMeeting.insertingMethodsOnAddItem = (
     {'insertingMethod': 'on_list_type', 'reverse': '0'},
     {'insertingMethod': 'on_proposing_groups', 'reverse': '0'})
 adviceMeeting.itemColumns = ['static_item_reference',
-                              'Creator',
-                              'CreationDate',
-                              'ModificationDate',
-                              'review_state',
-                              'getProposingGroup',
-                              'advices',
-                              'linkedMeetingDate',
-                              'getPreferredMeetingDate',
-                              'actions']
+                             'Creator',
+                             'CreationDate',
+                             'ModificationDate',
+                             'review_state',
+                             'getProposingGroup',
+                             'advices',
+                             'linkedMeetingDate',
+                             'getPreferredMeetingDate',
+                             'actions']
 adviceMeeting.itemPositiveDecidedStates = ('accepted', 'accepted_but_modified')
 adviceMeeting.transitionsToConfirm = (
     'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',
@@ -65,15 +65,15 @@ adviceMeeting.selectableAdvisers = []
 adviceMeeting.itemAdviceStates = ('proposed', 'validated', 'presented')
 adviceMeeting.itemAdviceEditStates = ('proposed', 'validated', 'presented')
 adviceMeeting.itemAdviceViewStates = ('proposed',
-                                       'validated',
-                                       'presented',
-                                       'itemfrozen',
-                                       'returned_to_proposing_group',
-                                       'pre_accepted',
-                                       'accepted',
-                                       'accepted_but_modified',
-                                       'refused',
-                                       'delayed')
+                                      'validated',
+                                      'presented',
+                                      'itemfrozen',
+                                      'returned_to_proposing_group',
+                                      'pre_accepted',
+                                      'accepted',
+                                      'accepted_but_modified',
+                                      'refused',
+                                      'delayed')
 adviceMeeting.usedAdviceTypes = ['asked_again', 'positive', 'positive_with_remarks', 'negative', 'nil', ]
 adviceMeeting.keepAccessToItemWhenAdviceIsGiven = True
 adviceMeeting.meetingConfigsToCloneTo = []
@@ -117,15 +117,15 @@ adviceMeeting.onTransitionFieldTransforms = (
       'tal_expression': "string:<p>Le Collège décide de reporter le point.</p>"}
      ))
 adviceMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                              'item_transition': 'itemfreeze'},
+                                                             'item_transition': 'itemfreeze'},
 
-                                                             {'meeting_transition': 'decide',
-                                                              'item_transition': 'itemfreeze'},
+                                                            {'meeting_transition': 'decide',
+                                                             'item_transition': 'itemfreeze'},
 
-                                                             {'meeting_transition': 'close',
-                                                              'item_transition': 'itemfreeze'},
-                                                             {'meeting_transition': 'close',
-                                                              'item_transition': 'accept'},)
+                                                            {'meeting_transition': 'close',
+                                                             'item_transition': 'itemfreeze'},
+                                                            {'meeting_transition': 'close',
+                                                             'item_transition': 'accept'},)
 adviceMeeting.selectableCopyGroups = []
 adviceMeeting.itemCopyGroupsStates = (
     'validated',
