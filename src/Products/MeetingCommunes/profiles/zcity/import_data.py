@@ -136,16 +136,21 @@ collegeMeeting.onTransitionFieldTransforms = (
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:<p>Le Collège décide de reporter le point.</p>"}
      ))
-collegeMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                              'item_transition': 'itemfreeze'},
+collegeMeeting.onMeetingTransitionItemActionToExecute = (
+    {'meeting_transition': 'freeze',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
 
-                                                             {'meeting_transition': 'decide',
-                                                              'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'decide',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
 
-                                                             {'meeting_transition': 'close',
-                                                              'item_transition': 'itemfreeze'},
-                                                             {'meeting_transition': 'close',
-                                                              'item_transition': 'accept'},)
+    {'meeting_transition': 'close',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
+    {'meeting_transition': 'close',
+     'item_action': 'accept',
+     'tal_expression': ''},)
 collegeMeeting.selectableCopyGroups = []
 collegeMeeting.itemCopyGroupsStates = (
     'validated',
@@ -293,13 +298,8 @@ councilMeeting.onTransitionFieldTransforms = (
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:<p>Le Collège décide de reporter le point.</p>"}
      ))
-councilMeeting.onMeetingTransitionItemTransitionToTrigger = (
-    {'meeting_transition': 'freeze', 'item_transition': 'itemfreeze'},
-
-    {'meeting_transition': 'decide', 'item_transition': 'itemfreeze'},
-
-    {'meeting_transition': 'close', 'item_transition': 'itemfreeze'},
-    {'meeting_transition': 'close', 'item_transition': 'accept'},)
+councilMeeting.onMeetingTransitionItemActionToExecute = deepcopy(
+    collegeMeeting.onMeetingTransitionItemActionToExecute)
 councilMeeting.selectableCopyGroups = []
 councilMeeting.itemCopyGroupsStates = (
     'validated',

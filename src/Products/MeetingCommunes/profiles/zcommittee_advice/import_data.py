@@ -116,16 +116,21 @@ adviceMeeting.onTransitionFieldTransforms = (
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:<p>Le Collège décide de reporter le point.</p>"}
      ))
-adviceMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                             'item_transition': 'itemfreeze'},
+adviceMeeting.onMeetingTransitionItemActionToExecute = (
+    {'meeting_transition': 'freeze',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
 
-                                                            {'meeting_transition': 'decide',
-                                                             'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'decide',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
 
-                                                            {'meeting_transition': 'close',
-                                                             'item_transition': 'itemfreeze'},
-                                                            {'meeting_transition': 'close',
-                                                             'item_transition': 'accept'},)
+    {'meeting_transition': 'close',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
+    {'meeting_transition': 'close',
+     'item_action': 'accept',
+     'tal_expression': ''},)
 adviceMeeting.selectableCopyGroups = []
 adviceMeeting.itemCopyGroupsStates = (
     'validated',

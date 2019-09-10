@@ -23,24 +23,32 @@ collegeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IM
 collegeMeeting.itemDecidedStates = ['accepted', 'delayed', 'accepted_but_modified', 'pre_accepted']
 collegeMeeting.itemPositiveDecidedStates = ['accepted', 'accepted_but_modified']
 collegeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation']
-collegeMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                              'item_transition': 'itemfreeze'},
+collegeMeeting.onMeetingTransitionItemActionToExecute = (
+    {'meeting_transition': 'freeze',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
 
-                                                             {'meeting_transition': 'decide',
-                                                              'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'decide',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
 
-                                                             {'meeting_transition': 'publish_decisions',
-                                                              'item_transition': 'itemfreeze'},
-                                                             {'meeting_transition': 'publish_decisions',
-                                                              'item_transition': 'accept'},
+    {'meeting_transition': 'publish_decisions',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
+    {'meeting_transition': 'publish_decisions',
+     'item_action': 'accept',
+     'tal_expression': ''},
 
-                                                             {'meeting_transition': 'close',
-                                                              'item_transition': 'itemfreeze'},
-                                                             {'meeting_transition': 'close',
-                                                              'item_transition': 'accept'},
+    {'meeting_transition': 'close',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
+    {'meeting_transition': 'close',
+     'item_action': 'accept',
+     'tal_expression': ''},
 
-                                                             {'meeting_transition': 'backToCreated',
-                                                              'item_transition': 'backToPresented'},)
+    {'meeting_transition': 'backToCreated',
+     'item_action': 'backToPresented',
+     'tal_expression': ''},)
 
 # Conseil communal
 councilMeeting = deepcopy(pm_import_data.meetingPga)
@@ -59,35 +67,48 @@ councilMeeting.meetingConditionsInterface = collegeMeeting.meetingConditionsInte
 councilMeeting.meetingActionsInterface = collegeMeeting.meetingActionsInterface
 councilMeeting.itemDecidedStates = collegeMeeting.itemDecidedStates
 councilMeeting.itemPositiveDecidedStates = collegeMeeting.itemPositiveDecidedStates
-councilMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                              'item_transition': 'itemfreeze'},
+councilMeeting.onMeetingTransitionItemActionToExecute = (
+    {'meeting_transition': 'freeze',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
 
-                                                             {'meeting_transition': 'publish',
-                                                              'item_transition': 'itemfreeze'},
-                                                             {'meeting_transition': 'publish',
-                                                              'item_transition': 'itempublish'},
+    {'meeting_transition': 'publish',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
+    {'meeting_transition': 'publish',
+     'item_action': 'itempublish',
+     'tal_expression': ''},
 
-                                                             {'meeting_transition': 'decide',
-                                                              'item_transition': 'itemfreeze'},
-                                                             {'meeting_transition': 'decide',
-                                                              'item_transition': 'itempublish'},
+    {'meeting_transition': 'decide',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
+    {'meeting_transition': 'decide',
+     'item_action': 'itempublish',
+     'tal_expression': ''},
 
-                                                             {'meeting_transition': 'publish_decisions',
-                                                              'item_transition': 'itemfreeze'},
-                                                             {'meeting_transition': 'publish_decisions',
-                                                              'item_transition': 'itempublish'},
-                                                             {'meeting_transition': 'publish_decisions',
-                                                              'item_transition': 'accept'},
+    {'meeting_transition': 'publish_decisions',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
+    {'meeting_transition': 'publish_decisions',
+     'item_action': 'itempublish',
+     'tal_expression': ''},
+    {'meeting_transition': 'publish_decisions',
+     'item_action': 'accept',
+     'tal_expression': ''},
 
-                                                             {'meeting_transition': 'close',
-                                                              'item_transition': 'itemfreeze'},
-                                                             {'meeting_transition': 'close',
-                                                              'item_transition': 'itempublish'},
-                                                             {'meeting_transition': 'close',
-                                                              'item_transition': 'accept'},
+    {'meeting_transition': 'close',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
+    {'meeting_transition': 'close',
+     'item_action': 'itempublish',
+     'tal_expression': ''},
+    {'meeting_transition': 'close',
+     'item_action': 'accept',
+     'tal_expression': ''},
 
-                                                             {'meeting_transition': 'backToCreated',
-                                                              'item_transition': 'backToPresented'},)
+    {'meeting_transition': 'backToCreated',
+     'item_action': 'backToPresented',
+     'tal_expression': ''},)
 councilMeeting.podTemplates = []
 
 data = deepcopy(pm_import_data.data)
