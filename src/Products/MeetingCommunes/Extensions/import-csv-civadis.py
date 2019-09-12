@@ -285,7 +285,8 @@ class ImportCSV:
             meeting.portal_workflow.doActionFor(meeting, 'close')
 
             for item in meeting.getItems():
-                item.setModificationDate(item.created())
+                item.setModificationDate(tme)
+                item.reindexObject()
 
             meeting.setModificationDate(tme)
 
