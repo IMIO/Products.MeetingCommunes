@@ -2,19 +2,18 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
-
-import io
-from datetime import datetime
-
 from backports import csv
-
-import transaction
+from collective.contact.plonegroup.utils import get_organizations
 from DateTime import DateTime
+from datetime import datetime
+from plone.app.querystring import queryparser
 from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFPlone.utils import safe_unicode
 from Products.PloneMeeting import logger
-from collective.contact.plonegroup.utils import get_organizations
-from plone.app.querystring import queryparser
+
+import io
+import transaction
+
 
 #  pip install backports.csv
 

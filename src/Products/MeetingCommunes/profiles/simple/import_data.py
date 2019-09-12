@@ -11,6 +11,7 @@ from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
 
+
 today = DateTime().strftime('%Y/%m/%d')
 
 # File types -------------------------------------------------------------------

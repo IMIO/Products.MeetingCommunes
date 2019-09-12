@@ -22,8 +22,8 @@
 # 02110-1301, USA.
 #
 
-from Products.PloneMeeting.tests.testSetup import testSetup as pmts
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
+from Products.PloneMeeting.tests.testSetup import testSetup as pmts
 
 
 class testSetup(MeetingCommunesTestCase, pmts):

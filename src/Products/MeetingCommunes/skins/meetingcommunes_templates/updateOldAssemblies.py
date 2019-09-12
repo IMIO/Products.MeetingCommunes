@@ -8,6 +8,7 @@
 
 from DateTime import DateTime
 
+
 brains = context.portal_catalog(meta_type='Meeting', getDate={'query': DateTime(maxDateTime), 'range': 'max'})
 
 for brain in brains:

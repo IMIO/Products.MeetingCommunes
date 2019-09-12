@@ -6,6 +6,7 @@ from Products.MeetingCommunes.profiles.examples_fr import import_data as example
 from Products.PloneMeeting.profiles import patch_pod_templates
 from Products.PloneMeeting.profiles import RecurringItemDescriptor
 
+
 today = DateTime().strftime('%Y/%m/%d')
 
 # Categories -------------------------------------------------------------------

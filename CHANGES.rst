@@ -3,10 +3,16 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1rc9 (unreleased)
+4.1rc10 (unreleased)
+--------------------
+
+- Nothing changed yet.
+
+
+4.1rc9 (2019-09-12)
 -------------------
 
-- Use base implementation of MeetingWorkflowConditions.mayDecide as it does the same now (just check "Review portal content" permission
+- Use base implementation of MeetingWorkflowConditions.mayDecide as it does the same now (just check "Review portal content" permission)
 - MeetingConfig.onMeetingTransitionItemTransitionToTrigger was moved to MeetingConfig.onMeetingTransitionItemActionToExecute, adapted code accordingly
 
 4.1rc8 (2019-08-23)
