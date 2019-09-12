@@ -20,10 +20,9 @@
 # 02110-1301, USA.
 #
 
-from Products.PloneMeeting.tests.PloneMeetingTestCase import PloneMeetingTestCase
-
 from Products.MeetingCommunes.testing import MC_TESTING_PROFILE_FUNCTIONAL
 from Products.MeetingCommunes.tests.helpers import MeetingCommunesTestingHelpers
+from Products.PloneMeeting.tests.PloneMeetingTestCase import PloneMeetingTestCase
 
 
 class MeetingCommunesTestCase(PloneMeetingTestCase, MeetingCommunesTestingHelpers):

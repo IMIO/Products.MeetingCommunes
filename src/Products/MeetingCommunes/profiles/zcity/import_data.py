@@ -5,8 +5,9 @@ from DateTime import DateTime
 from Products.MeetingCommunes.profiles.examples_fr import import_data as examples_fr_import_data
 from Products.PloneMeeting.profiles import OrgDescriptor
 from Products.PloneMeeting.profiles import patch_pod_templates
-from Products.PloneMeeting.profiles import RecurringItemDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
+from Products.PloneMeeting.profiles import RecurringItemDescriptor
+
 
 today = DateTime().strftime('%Y/%m/%d')
 

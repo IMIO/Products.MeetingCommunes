@@ -1,11 +1,12 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-from Products.CMFPlone.utils import normalizeString
 from DateTime import DateTime
-import transaction
-import os
+from Products.CMFPlone.utils import normalizeString
 from Products.PloneMeeting.interfaces import IAnnexable
+
+import os
+import transaction
 
 
 class TransformXmlToMeetingOrItem:
