@@ -5,8 +5,9 @@ from DateTime import DateTime
 from Products.MeetingCommunes.profiles.examples_fr import import_data as examples_fr_import_data
 from Products.PloneMeeting.profiles import OrgDescriptor
 from Products.PloneMeeting.profiles import patch_pod_templates
-from Products.PloneMeeting.profiles import RecurringItemDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
+from Products.PloneMeeting.profiles import RecurringItemDescriptor
+
 
 today = DateTime().strftime('%Y/%m/%d')
 
@@ -136,16 +137,21 @@ collegeMeeting.onTransitionFieldTransforms = (
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:<p>Le Collège décide de reporter le point.</p>"}
      ))
-collegeMeeting.onMeetingTransitionItemTransitionToTrigger = ({'meeting_transition': 'freeze',
-                                                              'item_transition': 'itemfreeze'},
+collegeMeeting.onMeetingTransitionItemActionToExecute = (
+    {'meeting_transition': 'freeze',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
 
-                                                             {'meeting_transition': 'decide',
-                                                              'item_transition': 'itemfreeze'},
+    {'meeting_transition': 'decide',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
 
-                                                             {'meeting_transition': 'close',
-                                                              'item_transition': 'itemfreeze'},
-                                                             {'meeting_transition': 'close',
-                                                              'item_transition': 'accept'},)
+    {'meeting_transition': 'close',
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
+    {'meeting_transition': 'close',
+     'item_action': 'accept',
+     'tal_expression': ''},)
 collegeMeeting.selectableCopyGroups = []
 collegeMeeting.itemCopyGroupsStates = (
     'validated',
@@ -293,13 +299,8 @@ councilMeeting.onTransitionFieldTransforms = (
       'field_name': 'MeetingItem.decision',
       'tal_expression': "string:<p>Le Collège décide de reporter le point.</p>"}
      ))
-councilMeeting.onMeetingTransitionItemTransitionToTrigger = (
-    {'meeting_transition': 'freeze', 'item_transition': 'itemfreeze'},
-
-    {'meeting_transition': 'decide', 'item_transition': 'itemfreeze'},
-
-    {'meeting_transition': 'close', 'item_transition': 'itemfreeze'},
-    {'meeting_transition': 'close', 'item_transition': 'accept'},)
+councilMeeting.onMeetingTransitionItemActionToExecute = deepcopy(
+    collegeMeeting.onMeetingTransitionItemActionToExecute)
 councilMeeting.selectableCopyGroups = []
 councilMeeting.itemCopyGroupsStates = (
     'validated',

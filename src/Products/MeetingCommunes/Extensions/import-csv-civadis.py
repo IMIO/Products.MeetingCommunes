@@ -2,23 +2,23 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
-
-import io
-import os
-from datetime import datetime
-
 from backports import csv
-
-import transaction
-from DateTime import DateTime
-from Products.CMFCore.WorkflowCore import WorkflowException
-from Products.CMFPlone.utils import safe_unicode
-from Products.PloneMeeting import logger
 from collective.contact.plonegroup.utils import get_organizations
-from collective.iconifiedcategory.utils import get_config_root, calculate_category_id
+from collective.iconifiedcategory.utils import calculate_category_id
+from collective.iconifiedcategory.utils import get_config_root
+from DateTime import DateTime
+from datetime import datetime
 from plone import namedfile
 from plone.app.querystring import queryparser
 from plone.dexterity.utils import createContentInContainer
+from Products.CMFCore.WorkflowCore import WorkflowException
+from Products.CMFPlone.utils import safe_unicode
+from Products.PloneMeeting import logger
+
+import io
+import os
+import transaction
+
 
 #  pip install backports.csv
 
@@ -285,11 +285,12 @@ class ImportCSV:
             meeting.portal_workflow.doActionFor(meeting, 'close')
 
             for item in meeting.getItems():
-                item.setModificationDate(item.created())
+                item.setModificationDate(tme)
+                item.reindexObject(idxs=['modified', 'ModificationDate'])
 
-            meeting.setModificationDate(tme)
+        meeting.setModificationDate(tme)
 
-        meeting.reindexObject()
+        meeting.reindexObject(idxs=['modified', 'ModificationDate'])
         self.meeting_counter += 1
         transaction.commit()
 

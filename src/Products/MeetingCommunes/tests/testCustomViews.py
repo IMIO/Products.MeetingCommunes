@@ -21,13 +21,13 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
 #
-from Products.MeetingCommunes.browser.overrides import MCMeetingDocumentGenerationHelperView
 from collective.contact.plonegroup.utils import get_plone_group_id
 from DateTime import DateTime
 from imio.history.utils import getLastWFAction
 from plone import api
 from plone.app.textfield import RichTextValue
 from plone.dexterity.utils import createContentInContainer
+from Products.MeetingCommunes.browser.overrides import MCMeetingDocumentGenerationHelperView
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 

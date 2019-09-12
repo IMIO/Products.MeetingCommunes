@@ -22,9 +22,9 @@
 # 02110-1301, USA.
 #
 
+from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.tests.PloneMeetingTestCase import pm_logger
 from Products.PloneMeeting.tests.testWFAdaptations import testWFAdaptations as pmtwfa
-from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 
 
 class testWFAdaptations(MeetingCommunesTestCase, pmtwfa):

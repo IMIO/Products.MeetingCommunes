@@ -11,6 +11,7 @@ from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
 from Products.PloneMeeting.profiles import MeetingConfigDescriptor
 from Products.PloneMeeting.profiles import PloneMeetingConfiguration
 
+
 today = DateTime().strftime('%Y/%m/%d')
 
 # File types -------------------------------------------------------------------
@@ -102,19 +103,28 @@ simpleMeeting.workflowAdaptations = [
     'no_publication', 'no_global_observation',
     'return_to_proposing_group', 'refused', 'only_creator_may_delete']
 simpleMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
-simpleMeeting.onMeetingTransitionItemTransitionToTrigger = (
+simpleMeeting.onMeetingTransitionItemActionToExecute = (
     {'meeting_transition': 'freeze',
-     'item_transition': 'itemfreeze'},
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
+
     {'meeting_transition': 'decide',
-     'item_transition': 'itemfreeze'},
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
+
     {'meeting_transition': 'publish_decisions',
-     'item_transition': 'itemfreeze'},
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
     {'meeting_transition': 'publish_decisions',
-     'item_transition': 'accept'},
+     'item_action': 'accept',
+     'tal_expression': ''},
+
     {'meeting_transition': 'close',
-     'item_transition': 'itemfreeze'},
+     'item_action': 'itemfreeze',
+     'tal_expression': ''},
     {'meeting_transition': 'close',
-     'item_transition': 'accept'},)
+     'item_action': 'accept',
+     'tal_expression': ''},)
 
 data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
                                  meetingConfigs=(simpleMeeting, ),
