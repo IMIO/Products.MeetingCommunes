@@ -3,14 +3,14 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1.1 (unreleased)
-------------------
-
-- Nothing changed yet.
-
-
-4.1 (2019-09-13)
+4.1 (unreleased)
 ----------------
+
+- Wrong release.
+
+
+4.1.dev0 (2019-09-13)
+---------------------
 
 - Fix modification date on imported meetings and items in import-csv-civadis.py
   [odelaere]
