@@ -342,7 +342,7 @@ class ImportCSV:
     def run(self):
         member = self.portal.portal_membership.getAuthenticatedMember()
         if not member.has_role('Manager'):
-            return 'You must be a Manager to access this script !'
+            raise ValueError('You must be a Manager to access this script !')
 
         # Load all csv into memory
         cfg_groups = get_organizations(only_selected=False)
@@ -446,15 +446,15 @@ def import_data_from_csv(self,
     logger.warning(u'{ioerr} errors occured while adding annexes :\n{list}'.format(ioerr=len(errors['io']),
                                                                                    list=u'\n\t '.join(errors['io'])))
 
-    logger.warning(u'{meeting} meeting items have no annex :\n{list}'.format(meeting=len(errors['meeting']),
+    logger.warning(u'{meeting} meetings where skipped because they have no annex or no items :\n{list}'.format(meeting=len(errors['meeting']),
                                                                              list=u'\n\t '.join(errors['meeting'])))
 
     without_annex = u'\n\t '.join(safe_unicode(errors['item_without_annex']))
-    logger.warning(u'{items} meeting where skipped :\n{list}'.format(items=len(errors['item_without_annex']),
+    logger.warning(u'{items} meeting items where skipped :\n{list}'.format(items=len(errors['item_without_annex']),
                                                                      list=without_annex))
     end_date = datetime.now()
     seconds = end_date - start_date
     seconds = seconds.seconds
     hours = seconds / 3600
     minutes = (seconds - hours * 3600) / 60
-    logger.info('Import finished in {0} seconds ({1} h {2} m).'.format(seconds, hours, minutes))
+    logger.info(u'Import finished in {0} seconds ({1} h {2} m).'.format(seconds, hours, minutes))
