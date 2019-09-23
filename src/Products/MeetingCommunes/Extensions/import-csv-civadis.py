@@ -342,7 +342,7 @@ class ImportCSV:
     def run(self):
         member = self.portal.portal_membership.getAuthenticatedMember()
         if not member.has_role('Manager'):
-            return 'You must be a Manager to access this script !'
+            raise ValueError('You must be a Manager to access this script !')
 
         # Load all csv into memory
         cfg_groups = get_organizations(only_selected=False)
@@ -437,23 +437,24 @@ def import_data_from_csv(self,
                            default_group,
                            default_category)
     meeting_counter, item_counter, errors = import_csv.run()
-    logger.info('Inserted {meeting} meetings and {item} meeting items.'.format(meeting=meeting_counter,
-                                                                               item=item_counter))
-    logger.warning('{malforemed} meeting items were not created due to missing data in csv :\n{list}'.format(
+    logger.info(u'Inserted {meeting} meetings and {item} meeting items.'.format(meeting=meeting_counter,
+                                                                                item=item_counter))
+    logger.warning(u'{malforemed} meeting items were not created due to missing data in csv :\n{list}'.format(
             malforemed=len(errors['item']),
             list=u'\n\t '.join(errors['item'])))
 
-    logger.warning('{ioerr} errors occured while adding annexes :\n{list}'.format(ioerr=len(errors['io']),
-                                                                                  list=u'\n\t '.join(errors['io'])))
+    logger.warning(u'{ioerr} errors occured while adding annexes :\n{list}'.format(ioerr=len(errors['io']),
+                                                                                   list=u'\n\t '.join(errors['io'])))
 
-    logger.warning('{meeting} meeting items have no annex :\n{list}'.format(meeting=len(errors['meeting']),
-                                                                            list=u'\n\t '.join(errors['meeting'])))
+    logger.warning(u'{meeting} meetings where skipped because they have no annex or no items :\n{list}'.format(meeting=len(errors['meeting']),
+                                                                             list=u'\n\t '.join(errors['meeting'])))
 
-    logger.warning('{items} meeting where skipped :\n{list}'.format(items=len(errors['item_without_annex']),
-                                                                    list=u'\n\t '.join(errors['item_without_annex'])))
+    without_annex = u'\n\t '.join(safe_unicode(errors['item_without_annex']))
+    logger.warning(u'{items} meeting items where skipped :\n{list}'.format(items=len(errors['item_without_annex']),
+                                                                     list=without_annex))
     end_date = datetime.now()
     seconds = end_date - start_date
     seconds = seconds.seconds
     hours = seconds / 3600
     minutes = (seconds - hours * 3600) / 60
-    logger.info('Import finished in {0} seconds ({1} h {2} m).'.format(seconds, hours, minutes))
+    logger.info(u'Import finished in {0} seconds ({1} h {2} m).'.format(seconds, hours, minutes))

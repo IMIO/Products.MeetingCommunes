@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '4.1rc10.dev0'
+version = '4.1'
 
 setup(name='Products.MeetingCommunes',
       version=version,
