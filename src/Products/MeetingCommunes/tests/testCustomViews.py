@@ -781,6 +781,21 @@ class testCustomViews(MeetingCommunesTestCase):
             res,
             [[i7.getCategory(theObject=True).Title(), [i7]]])
 
+        # 2 consecutive groupings of different levels have the same value
+        self.changeUser('siteadmin')
+        developpers = self.create('MeetingCategory', id="developers", title=u'Developers',
+                                  description=u'Developers topic', categoryId='developers')
+        self.changeUser('pmManager')
+        i5.setCategory('developers')
+        res = helper.get_grouped_items(itemUids, group_by=['proposingGroup', 'category'])
+        self.assertListEqual(
+                res,
+                [[u'Developers', [u'Development topics', [items[0]]]],
+                 [u'Vendors', [u'Development topics', items[1:3]]],
+                 [u'Developers', [u'Development topics', [items[3]]]],
+                 [u'Vendors', [u'Development topics', [items[4]]]],
+                 [u'Developers', [developpers.Title(), [i5]], [u'Research topics', [i7]]]])
+
     def test_get_multiple_level_printing(self):
         self.changeUser('pmManager')
         cfg = self.meetingConfig
