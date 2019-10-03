@@ -6,13 +6,12 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Call migration to Products.PloneMeeting 4100 and 4101 after applying migration to 4.1
 
 4.1 (2019-09-13)
 ----------------
 
-- Wrong release.
+- Wrong release
 
 
 4.1.dev0 (2019-09-13)
