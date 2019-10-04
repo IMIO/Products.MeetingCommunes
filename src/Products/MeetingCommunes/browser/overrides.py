@@ -294,13 +294,18 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
             return True
 
         i = 0
+        grouping = []
         while i <= level:
-            grouping = node[-1]
             if not isinstance(grouping, list):
                 return True
+            grouping = node[-1]
             i += 1
 
-        grouping_value = grouping[0]
+        if isinstance(grouping, list):
+            grouping_value = grouping[0]
+        else:
+            grouping_value = grouping
+
         return grouping_value != value
 
     def get_grouped_items(self, itemUids, listTypes=['normal'],
