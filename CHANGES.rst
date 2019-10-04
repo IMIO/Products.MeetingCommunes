@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1.1 (unreleased)
+4.1.1 (2019-10-04)
 ------------------
 
 - Call migration to Products.PloneMeeting 4100 and 4101 after applying migration to 4.1
