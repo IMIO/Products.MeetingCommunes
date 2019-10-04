@@ -6,7 +6,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Wrong release
 
 
 4.1.1 (2019-10-04)
