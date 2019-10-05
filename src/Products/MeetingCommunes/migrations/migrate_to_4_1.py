@@ -116,7 +116,7 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
 
         # execute upgrade to 4100 and 4101
         Migrate_To_4100(self.portal).run()
-        Migrate_To_4101(self.portal).run()
+        Migrate_To_4101(self.portal).run(from_migration_to_41=True)
 
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4.1...')
