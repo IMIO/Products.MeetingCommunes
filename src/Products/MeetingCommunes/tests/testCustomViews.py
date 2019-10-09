@@ -693,6 +693,9 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertFalse(
                 item_dghv._is_different_grouping_as_previous_item([[u'brol3', [u'truc1', []]]], u'brol3', 2))
 
+        self.assertTrue(
+                item_dghv._is_different_grouping_as_previous_item([[u'brol3', [u'truc1', []]]], u'truc1', 2))
+
     def test_get_grouped_items(self):
         self.changeUser('pmManager')
         cfg = self.meetingConfig
