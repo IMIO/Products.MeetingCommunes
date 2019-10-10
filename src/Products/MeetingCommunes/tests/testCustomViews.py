@@ -27,7 +27,7 @@ from imio.history.utils import getLastWFAction
 from plone import api
 from plone.app.textfield import RichTextValue
 from plone.dexterity.utils import createContentInContainer
-from Products.MeetingCommunes.browser.overrides import MCMeetingDocumentGenerationHelperView
+from Products.MeetingCommunes.browser.overrides import MCMeetingDocumentGenerationHelperView as item_dghv
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 
@@ -660,50 +660,41 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertListEqual(res, [])
 
     def test__is_different_grouping_as_previous_item(self):
-        self.assertTrue(MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([], u'Brol'))
-        self.assertTrue(MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'']], u'Brol'))
-        self.assertFalse(MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([u'Brol'],
-                                                                                                       u'Brol'))
-        self.assertFalse(MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol']],
-                                                                                                       u'Brol'))
+        self.assertTrue(item_dghv._is_different_grouping_as_previous_item([], u'Brol', 0))
+        self.assertTrue(item_dghv._is_different_grouping_as_previous_item([[u'']], u'Brol', 0))
+        self.assertFalse(item_dghv._is_different_grouping_as_previous_item([u'Brol'], u'Brol', 0))
+        self.assertFalse(item_dghv._is_different_grouping_as_previous_item([[u'Brol']], u'Brol', 0))
         self.assertFalse(
-                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol1',
-                                                                                                [u'Brol2',
-                                                                                                 [u'brol3', []]]]],
-                                                                                              u'Brol1'))
+                item_dghv._is_different_grouping_as_previous_item([[u'Brol1',
+                                                                    [u'Brol2', [u'brol3', []]]]], u'Brol1', 0))
         self.assertTrue(
-                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol1',
-                                                                                                [u'Brol2',
-                                                                                                 [u'brol3',[]]]]],
-                                                                                              u'Brol2'))
+                item_dghv._is_different_grouping_as_previous_item([[u'Brol1', [u'Brol2', [u'brol3', []]]]], u'Brol2',
+                                                                  0))
         self.assertTrue(
-                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol1',
-                                                                                                [u'Brol2',
-                                                                                                 [u'brol3', []]]]],
-                                                                                              u'brol3'))
+                item_dghv._is_different_grouping_as_previous_item([[u'Brol1',
+                                                                    [u'Brol2', [u'brol3', []]]]], u'brol3', 0))
         self.assertTrue(
-                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol1',
-                                                                                                [u'Brol2',
-                                                                                                 [u'brol3', []]]]],
-                                                                                              u'Machin'))
+                item_dghv._is_different_grouping_as_previous_item([[u'Brol1', [
+                        u'Brol2', [u'brol3', []]]]], u'Machin', 0))
         self.assertFalse(
-                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol2',
-                                                                                                 [u'brol3', []]]],
-                                                                                              u'Brol2'))
+                item_dghv._is_different_grouping_as_previous_item([[u'Brol2', [u'brol3', []]]], u'Brol2', 0))
         self.assertTrue(
-                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol2',
-                                                                                               [u'brol3', []]]],
-                                                                                              u'brol3'))
+                item_dghv._is_different_grouping_as_previous_item([[u'Brol2', [u'brol3', []]]], u'brol3', 0))
         self.assertTrue(
-                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'Brol2',
-                                                                                               [u'brol3', []]]],
-                                                                                              u'truc'))
+                item_dghv._is_different_grouping_as_previous_item([[u'Brol2', [u'brol3', []]]], u'truc', 0))
         self.assertTrue(
-                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'brol3', []]],
-                                                                                              u'Brol3'))
+                item_dghv._is_different_grouping_as_previous_item([[u'brol3', []]], u'Brol3', 0))
         self.assertFalse(
-                MCMeetingDocumentGenerationHelperView._is_different_grouping_as_previous_item([[u'brol3', []]],
-                                                                                              u'brol3'))
+                item_dghv._is_different_grouping_as_previous_item([[u'brol3', []]], u'brol3', 0))
+
+        self.assertFalse(
+                item_dghv._is_different_grouping_as_previous_item([[u'brol3', []]], u'brol3', 1))
+
+        self.assertFalse(
+                item_dghv._is_different_grouping_as_previous_item([[u'brol3', [u'truc1', []]]], u'brol3', 2))
+
+        self.assertTrue(
+                item_dghv._is_different_grouping_as_previous_item([[u'brol3', [u'truc1', []]]], u'truc1', 2))
 
     def test_get_grouped_items(self):
         self.changeUser('pmManager')
@@ -780,6 +771,21 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertListEqual(
             res,
             [[i7.getCategory(theObject=True).Title(), [i7]]])
+
+        # 2 consecutive groupings of different levels have the same value
+        self.changeUser('siteadmin')
+        developpers = self.create('MeetingCategory', id="developers", title=u'Developers',
+                                  description=u'Developers topic', categoryId='developers')
+        self.changeUser('pmManager')
+        i5.setCategory('developers')
+        res = helper.get_grouped_items(itemUids, group_by=['proposingGroup', 'category'])
+        self.assertListEqual(
+                res,
+                [[u'Developers', [u'Development topics', [items[0]]]],
+                 [u'Vendors', [u'Development topics', items[1:3]]],
+                 [u'Developers', [u'Development topics', [items[3]]]],
+                 [u'Vendors', [u'Development topics', [items[4]]]],
+                 [u'Developers', [developpers.Title(), [i5]], [u'Research topics', [i7]]]])
 
     def test_get_multiple_level_printing(self):
         self.changeUser('pmManager')

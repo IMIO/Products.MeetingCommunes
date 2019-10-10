@@ -4,6 +4,8 @@ from copy import deepcopy
 from Products.MeetingCommunes.profiles.examples_fr.import_data import collegeMeeting
 from Products.MeetingCommunes.profiles.examples_fr.import_data import data
 from Products.PloneMeeting.migrations.migrate_to_4_1 import Migrate_To_4_1 as PMMigrate_To_4_1
+from Products.PloneMeeting.migrations.migrate_to_4100 import Migrate_To_4100
+from Products.PloneMeeting.migrations.migrate_to_4101 import Migrate_To_4101
 
 import logging
 
@@ -112,8 +114,9 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
         # call steps from Products.PloneMeeting
         super(Migrate_To_4_1, self).run(extra_omitted=extra_omitted)
 
-        # run Products.PloneMeeting step to 4100
-        self.upgradeProfile('profile-Products.PloneMeeting:default')
+        # execute upgrade to 4100 and 4101
+        Migrate_To_4100(self.portal).run()
+        Migrate_To_4101(self.portal).run(from_migration_to_41=True)
 
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4.1...')

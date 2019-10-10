@@ -288,16 +288,25 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         else:
             raise AttributeError
 
-
     @staticmethod
-    def _is_different_grouping_as_previous_item(node, value):
+    def _is_different_grouping_as_previous_item(node, value, level):
         if len(node) == 0:
             return True
-        grouping = node[-1]
-        if isinstance(grouping, list):
-            grouping = grouping[0]
-        return grouping != value
 
+        i = 0
+        grouping = []
+        while i <= level:
+            if not isinstance(grouping, list):
+                return True
+            grouping = node[-1]
+            i += 1
+
+        if isinstance(grouping, list):
+            grouping_value = grouping[0]
+        else:
+            grouping_value = grouping
+
+        return grouping_value != value
 
     def get_grouped_items(self, itemUids, listTypes=['normal'],
                           group_by=[], included_values={}, excluded_values={},
@@ -351,16 +360,17 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         for item in items:
             # compute result keeping item original order and repeating groups if needed
             node = res
-
+            level = 0
             for group in group_by:
                 value = self._get_value(item, group)
 
-                if self._is_different_grouping_as_previous_item(node, value):
+                if self._is_different_grouping_as_previous_item(node, value, level):
                     node.append([value])
 
                 node = node[-1]
+                level += 1
 
-            if not isinstance(node[-1], (list)):
+            if not isinstance(node[-1], list):
                 node.append([])
 
             node[-1].append(item)
