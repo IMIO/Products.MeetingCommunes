@@ -169,6 +169,10 @@ msgstr ""
 msgid "MeetingItemRecurringZCouncil"
 msgstr ""
 
+#. Default: "MeetingItemRecurringadvice-committee"
+msgid "MeetingItemRecurringadvice-committee"
+msgstr ""
+
 #. Default: "Meeting item recurring BP"
 msgid "MeetingItemRecurringbp"
 msgstr ""
@@ -269,6 +273,10 @@ msgstr ""
 msgid "MeetingItemTemplateZCouncil"
 msgstr ""
 
+#. Default: "MeetingItemTemplateadvice-committee"
+msgid "MeetingItemTemplateadvice-committee"
+msgstr ""
+
 #. Default: "Meeting item template BP"
 msgid "MeetingItemTemplatebp"
 msgstr ""
@@ -311,6 +319,10 @@ msgstr ""
 
 #. Default: "MeetingItemZCouncil"
 msgid "MeetingItemZCouncil"
+msgstr ""
+
+#. Default: "MeetingItemadvice-committee"
+msgid "MeetingItemadvice-committee"
 msgstr ""
 
 #. Default: "Meeting item BP"
@@ -367,6 +379,10 @@ msgstr ""
 
 #. Default: "MeetingZCouncil"
 msgid "MeetingZCouncil"
+msgstr ""
+
+#. Default: "Meetingadvice-committee"
+msgid "Meetingadvice-committee"
 msgstr ""
 
 #. Default: "Meeting BP"

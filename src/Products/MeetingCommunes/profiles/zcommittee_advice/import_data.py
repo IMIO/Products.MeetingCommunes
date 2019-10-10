@@ -26,6 +26,7 @@ adviceMeeting.id = 'meeting-config-zadvice'
 adviceMeeting.title = "Comité d'avis"
 adviceMeeting.folderTitle = "Comité d'avis"
 adviceMeeting.shortName = 'advice-committee'
+adviceMeeting.isDefault = False
 adviceMeeting.assembly = ''
 adviceMeeting.assemblyStaves = ''
 adviceMeeting.certifiedSignatures = []

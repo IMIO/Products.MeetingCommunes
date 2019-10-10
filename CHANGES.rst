@@ -7,13 +7,12 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 ------------------
 
 - Update PODTemplates in examples_fr profile to uses new methods from PloneMeeting
-
+- Added missing portal_types translations for the zcommittee_advice profile, do not set it as default on install neither
 
 4.1.2 (2019-10-04)
 ------------------
 
 - Wrong release
-
 
 4.1.1 (2019-10-04)
 ------------------
@@ -24,7 +23,6 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 ----------------
 
 - Wrong release
-
 
 4.1.dev0 (2019-09-13)
 ---------------------
