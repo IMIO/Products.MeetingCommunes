@@ -6,7 +6,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Update PODTemplates in examples_fr profile to uses new methods from PloneMeeting
 
 
 4.1.2 (2019-10-04)
