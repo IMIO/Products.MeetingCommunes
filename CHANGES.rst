@@ -9,6 +9,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Update PODTemplates in examples_fr profile to uses new methods from PloneMeeting
 - Added missing portal_types translations for the zcommittee_advice profile, do not set it as default on install neither
 - Adapted workflowstate viewlet CSS regarding changes in plonetheme.imioapps
+- Added bourgmestreff-president in contact position types
 
 4.1.2 (2019-10-04)
 ------------------
