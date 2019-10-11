@@ -827,6 +827,9 @@ data.directory_position_types = [
     {'token': u'bourgmestre-president',
      'name': u'Bourgmestre - Pr\xe9sident|Bourgmestres - Pr\xe9sidents|'
         u'Bourgmestre - Pr\xe9sidente|Bourgmestres - Pr\xe9sidentes'},
+    {'token': u'bourgmestreff-president',
+     'name': u'Bourgmestre f.f. - Pr\xe9sident|Bourgmestres f.f. - Pr\xe9sidents|'
+        u'Bourgmestre f.f. - Pr\xe9sidente|Bourgmestres f.f. - Pr\xe9sidentes'},
     {'token': u'conseiller',
      'name': u'Conseiller|Conseillers|Conseillère|Conseillères'},
     {'token': u'conseiller-president',
