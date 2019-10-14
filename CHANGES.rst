@@ -3,6 +3,12 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
+4.1.4 (unreleased)
+------------------
+
+- Nothing changed yet.
+
+
 4.1.3 (2019-10-14)
 ------------------
 
