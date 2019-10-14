@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1.3 (unreleased)
+4.1.3 (2019-10-14)
 ------------------
 
 - Update PODTemplates in examples_fr profile to uses new methods from PloneMeeting
