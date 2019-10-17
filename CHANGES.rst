@@ -6,8 +6,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- The format of MeetingConfigDescriptor.defaultLabels changed, adapted import_data accordingly
 
 4.1.3 (2019-10-14)
 ------------------

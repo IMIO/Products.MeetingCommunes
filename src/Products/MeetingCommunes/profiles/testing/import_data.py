@@ -2,7 +2,6 @@
 
 from copy import deepcopy
 
-from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles.testing import import_data as pm_import_data
 
 
