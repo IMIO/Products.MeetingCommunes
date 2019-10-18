@@ -7,6 +7,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 ------------------
 
 - The format of MeetingConfigDescriptor.defaultLabels changed, adapted import_data accordingly
+- Launch Products.PloneMeeting upgrade step to 4102 in migration to v4.1
 
 4.1.3 (2019-10-14)
 ------------------
