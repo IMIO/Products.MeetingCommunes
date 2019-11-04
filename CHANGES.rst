@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1.4 (unreleased)
+4.1.4 (2019-11-04)
 ------------------
 
 - The format of MeetingConfigDescriptor.defaultLabels changed, adapted import_data accordingly
