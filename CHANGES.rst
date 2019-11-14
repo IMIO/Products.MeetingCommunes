@@ -6,8 +6,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Launch Products.PloneMeeting upgrade step to 4103 in migration to v4.1
 
 4.1.4 (2019-11-04)
 ------------------

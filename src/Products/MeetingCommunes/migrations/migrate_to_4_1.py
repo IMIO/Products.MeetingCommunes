@@ -7,6 +7,7 @@ from Products.PloneMeeting.migrations.migrate_to_4_1 import Migrate_To_4_1 as PM
 from Products.PloneMeeting.migrations.migrate_to_4100 import Migrate_To_4100
 from Products.PloneMeeting.migrations.migrate_to_4101 import Migrate_To_4101
 from Products.PloneMeeting.migrations.migrate_to_4102 import Migrate_To_4102
+from Products.PloneMeeting.migrations.migrate_to_4103 import Migrate_To_4103
 
 import logging
 
@@ -115,10 +116,11 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
         # call steps from Products.PloneMeeting
         super(Migrate_To_4_1, self).run(extra_omitted=extra_omitted)
 
-        # execute upgrade to 4100 and 4101
+        # execute upgrade steps in PM that were added after main upgrade to 4.1
         Migrate_To_4100(self.portal).run()
         Migrate_To_4101(self.portal).run(from_migration_to_41=True)
         Migrate_To_4102(self.portal).run()
+        Migrate_To_4103(self.portal).run()
 
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4.1...')
