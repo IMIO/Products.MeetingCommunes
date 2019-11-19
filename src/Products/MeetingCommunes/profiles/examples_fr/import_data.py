@@ -494,29 +494,29 @@ collegeMeeting.recurringItems = [
     RecurringItemDescriptor(
         id='recurringagenda1',
         title='Approuve le procès-verbal de la séance antérieure',
-        description='Approuve le procès-verbal de la séance antérieure',
+        description='<p>Approuve le procès-verbal de la séance antérieure</p>',
         category='recurrents',
         proposingGroup='secretariat',
-        decision='Procès-verbal approuvé'),
+        decision='<p>Procès-verbal approuvé</p>'),
     RecurringItemDescriptor(
         id='recurringofficialreport1',
         title='Autorise et signe les bons de commande de la semaine',
-        description='Autorise et signe les bons de commande de la semaine',
+        description='<p>Autorise et signe les bons de commande de la semaine</p>',
         category='recurrents',
         proposingGroup='secretariat',
-        decision='Bons de commande signés'),
+        decision='<p>Bons de commande signés</p>'),
     RecurringItemDescriptor(
         id='recurringofficialreport2',
         title='Ordonnance et signe les mandats de paiement de la semaine',
-        description='Ordonnance et signe les mandats de paiement de la semaine',
+        description='<p>Ordonnance et signe les mandats de paiement de la semaine</p>',
         category='recurrents',
         proposingGroup='secretariat',
-        decision='Mandats de paiement de la semaine approuvés'), ]
+        decision='<p>Mandats de paiement de la semaine approuvés</p>'), ]
 collegeMeeting.itemTemplates = [
     ItemTemplateDescriptor(
         id='template1',
         title='Tutelle CPAS',
-        description='Tutelle CPAS',
+        description='<p>Tutelle CPAS</p>',
         category='personnel',
         proposingGroup='secretariat',
         templateUsingGroups=['secretariat', 'dirgen', ],
@@ -539,7 +539,7 @@ collegeMeeting.itemTemplates = [
     ItemTemplateDescriptor(
         id='template2',
         title='Contrôle médical systématique agent contractuel',
-        description='Contrôle médical systématique agent contractuel',
+        description='<p>Contrôle médical systématique agent contractuel</p>',
         category='personnel',
         proposingGroup='personnel',
         templateUsingGroups=['personnel', ],
@@ -569,7 +569,7 @@ collegeMeeting.itemTemplates = [
     ItemTemplateDescriptor(
         id='template3',
         title='Engagement temporaire',
-        description='Engagement temporaire',
+        description='<p>Engagement temporaire</p>',
         category='personnel',
         proposingGroup='personnel',
         templateUsingGroups=['personnel', ],
@@ -599,7 +599,7 @@ collegeMeeting.itemTemplates = [
     ItemTemplateDescriptor(
         id='template4',
         title='Prestation réduite',
-        description='Prestation réduite',
+        description='<p>Prestation réduite</p>',
         category='personnel',
         proposingGroup='personnel',
         templateUsingGroups=['personnel', ],
@@ -628,7 +628,7 @@ collegeMeeting.itemTemplates = [
     ItemTemplateDescriptor(
         id='template5',
         title='Exemple modèle disponible pour tous',
-        description='Exemple modèle disponible pour tous',
+        description='<p>Exemple modèle disponible pour tous</p>',
         category='personnel',
         proposingGroup='',
         templateUsingGroups=[],
@@ -793,10 +793,10 @@ councilMeeting.recurringItems = [
     RecurringItemDescriptor(
         id='recurringagenda1',
         title='Approuve le procès-verbal de la séance antérieure',
-        description='Approuve le procès-verbal de la séance antérieure',
+        description='<p>Approuve le procès-verbal de la séance antérieure</p>',
         category='recurrents',
         proposingGroup='secretariat',
-        decision='Procès-verbal approuvé'), ]
+        decision='<p>Procès-verbal approuvé</p>'), ]
 councilMeeting.itemTemplates = collegeMeeting.itemTemplates
 councilMeeting.orderedContacts = ['ga-c-rard-bourgmestre/bourgmestre-mon-organisation',
                                   'isabelle-daga/dg-mon-organisation',
