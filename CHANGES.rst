@@ -6,8 +6,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Fixed CSS class regarding changes in imio.prettylink
 
 4.1.5 (2019-11-19)
 ------------------
