@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1.6 (unreleased)
+4.1.6 (2019-11-26)
 ------------------
 
 - Fixed CSS class regarding changes in imio.prettylink
