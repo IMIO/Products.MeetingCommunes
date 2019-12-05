@@ -6,8 +6,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Overrided print_deliberation to include specific content
 
 4.1.6 (2019-11-26)
 ------------------

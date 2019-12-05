@@ -50,6 +50,16 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                 res.append(data)
         return res
 
+    def print_deliberation(self,
+                           xhtmlContents=[],
+                           **kwargs):
+        '''Print the full item deliberation and includes specific content :
+           - finances advice;
+           - sendToAuthority.'''
+        result = super(MCItemDocumentGenerationHelperView, self).print_deliberation(
+            xhtmlContents, **kwargs)
+        return result
+
     def printFinanceAdvice(self, cases, show_hidden=False):
         """
         :param cases: collection containing either 'initiative', 'legal', 'simple' or 'not_given'
