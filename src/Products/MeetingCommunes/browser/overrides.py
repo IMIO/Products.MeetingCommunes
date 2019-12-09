@@ -18,6 +18,7 @@ from Products.PloneMeeting.browser.views import FolderDocumentGenerationHelperVi
 from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperView
 from Products.PloneMeeting.utils import get_annexes
+from Products.PloneMeeting.utils import get_person_from_userid
 from zope.component import getAdapter
 
 
@@ -56,9 +57,97 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         '''Print the full item deliberation and includes specific content :
            - finances advice;
            - sendToAuthority.'''
-        result = super(MCItemDocumentGenerationHelperView, self).print_deliberation(
-            xhtmlContents, **kwargs)
-        return result
+        if not xhtmlContents:
+            xhtmlContents = [
+                self.context.getMotivation(),
+                self.print_formatted_finance_advice(),
+                '<p>&nbsp;</p>',
+                self.context.getDecision()]
+        return self.printXhtml(
+            self.context,
+            xhtmlContents,
+            **kwargs)
+
+    def print_formatted_finance_advice(self,
+                                       used_cases=('initiative', 'legal', 'simple',
+                                                  'simple_not_given', 'legal_not_given'),
+                                       advices_formats=None):
+        """
+        Print the finance advices based on legal cases and a certain format.
+        :param used_cases: legal cases among 'initiative', 'legal', 'simple',
+                                                  'simple_not_given', 'legal_not_given
+        :param advices_formats: dict with the legal case a key and the pattern as value
+        :return: a string representing finance advices
+        """
+        if not advices_formats:
+            advices_formats = {
+                "simple":
+                    u"<p>Considérant l'avis {type_translated} {by} {adviser}"
+                    u"remis en date du {advice_given_on_localized},</p>",
+
+                "simple_not_given":
+                    u"<p>Considérant l'avis non rendu par {prefix} {adviser}</p>",
+
+                "legal":
+                    u"<p>Considérant la transmission du dossier {to} {adviser} "
+                    u"pour avis prealable en date du {item_transmitted_on_localized},</p>"
+                    u"<p>Considérant l'avis {type_translated} {by} {adviser} "
+                    u"remis en date du {advice_given_on_localized},</p>",
+
+                "legal_not_given":
+                    u"<p>Considérant la transmission du dossier {to} {adviser} "
+                    u"pour avis prealable en date du {item_transmitted_on_localized},</p>"
+                    u"<p>Considérant l'avis non rendu par {prefix} {adviser},</p>",
+
+                "initiative":
+                    u"<p>Considérant l'avis d'initiative {type_translated} {to} {adviser} "
+                    u"remis en date du {advice_given_on_localized},</p>"
+            }
+        formatted_finance_advice = ""
+        finances_advices = [self.printFinanceAdvice(case) for case in advices_formats.keys()]
+        for case, advices in zip(advices_formats.keys(), finances_advices):
+            if case not in used_cases:
+                continue
+            for advice in advices:
+                adviser = advice['name'] if advice['type'] == 'not_given' else \
+                    self.get_contact_infos(userid=advice['creator_id'])['held_position_label']
+                formatted_finance_advice += advices_formats[case].format(
+                    type_translated=advice["type_translated"].lower(),
+                    adviser=adviser,
+                    prefix=self._get_prefix_for_finance_advice('prefix', advice),
+                    to=self._get_prefix_for_finance_advice('to', advice),
+                    by=self._get_prefix_for_finance_advice('by', advice),
+                    item_transmitted_on_localized=advice["item_transmitted_on_localized"],
+                    advice_given_on_localized=advice["advice_given_on_localized"]
+                )
+        return formatted_finance_advice.encode('utf-8')
+
+    def _get_prefix_for_finance_advice(self, type, advice):
+        """
+        Return prefix for a given finance advise
+        :param type: type of prefix, must be among 'prefix', 'by', 'to'
+        :param advice: advice for which prefix must be
+        :return:
+        """
+        PREFIXS = {
+            ('prefix', 'M'): u'Le ',
+            ('prefix', 'F'): u'La ',
+            ('by', 'M'): u'du ',
+            ('by', 'F'): u'de la ',
+            ('to', 'M'): u'au ',
+            ('to', 'F'): u'à la ',
+        }
+
+        if advice['type'] == 'not_given' or not self.get_contact_infos(userid=advice['creator_id']):
+            # We can't bind the adviser with a contact's held position so we must guest the gender
+            if 'trice' in advice['name'].lower():
+                gender = 'F'
+            else:
+                gender = 'M'
+        else:  # we use the contact's gender
+            gender = get_person_from_userid(advice['creator_id']).gender
+
+        return PREFIXS[(type, gender)]
 
     def printFinanceAdvice(self, cases, show_hidden=False):
         """
