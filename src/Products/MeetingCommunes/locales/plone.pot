@@ -503,6 +503,22 @@ msgstr ""
 msgid "MeetingItemRecurringsippt"
 msgstr ""
 
+#. Default: "Meetingadvice-committee"
+msgid "Meetingadvice-committee"
+msgstr ""
+
+#. Default: "MeetingItemadvice-committee"
+msgid "MeetingItemadvice-committee"
+msgstr ""
+
+#. Default: "MeetingItemTemplateadvice-committee"
+msgid "MeetingItemTemplateadvice-committee"
+msgstr ""
+
+#. Default: "MeetingItemRecurringadvice-committee"
+msgid "MeetingItemRecurringadvice-committee"
+msgstr ""
+
 #. Default: "Created"
 msgid "advicecreated"
 msgstr ""

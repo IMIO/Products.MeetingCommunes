@@ -361,16 +361,15 @@ collegeMeeting.maxShownMeetings = 5
 collegeMeeting.maxDaysDecisions = 60
 collegeMeeting.meetingAppDefaultView = 'searchmyitems'
 collegeMeeting.enableLabels = False
-collegeMeeting.defaultLabels = {
-    'a-delai': {'color': 'purple-light', 'label_id': 'a-delai', 'by_user': False, 'title': 'À délai'},
-    'attention': {'color': 'orange', 'label_id': 'attention', 'by_user': False, 'title': 'Attention'},
-    'en-attente': {'color': 'cadetblue', 'label_id': 'en-attente', 'by_user': False, 'title': 'En attente'},
-    'bloque': {'color': 'cornflowerblue', 'label_id': 'bloque', 'by_user': False, 'title': 'Bloqué'},
-    'ok': {'color': 'green-light', 'label_id': 'ok', 'by_user': False, 'title': 'OK'},
-    'lu': {'color': 'green', 'label_id': 'lu', 'by_user': True, 'title': 'Lu'},
-    'suivi': {'color': 'yellow', 'label_id': 'suivi', 'by_user': True, 'title': 'Suivi'},
-    'urgent': {'color': 'red', 'label_id': 'urgent', 'by_user': False, 'title': 'Urgent'},
-}
+collegeMeeting.defaultLabels = [
+    {'color': 'purple-light', 'by_user': False, 'title': 'À délai'},
+    {'color': 'orange', 'by_user': False, 'title': 'Attention'},
+    {'color': 'cadetblue', 'by_user': False, 'title': 'En attente'},
+    {'color': 'cornflowerblue', 'by_user': False, 'title': 'Bloqué'},
+    {'color': 'green-light', 'by_user': False, 'title': 'OK'},
+    {'color': 'green', 'by_user': True, 'title': 'Lu'},
+    {'color': 'yellow', 'by_user': True, 'title': 'Suivi'},
+    {'color': 'red', 'by_user': False, 'title': 'Urgent'}]
 collegeMeeting.useAdvices = True
 collegeMeeting.selectableAdvisers = ['comptabilite', 'dirfin', 'dirgen', 'informatique',
                                      'personnel', 'secretariat', 'travaux']
@@ -498,29 +497,29 @@ collegeMeeting.recurringItems = [
     RecurringItemDescriptor(
         id='recurringagenda1',
         title='Approuve le procès-verbal de la séance antérieure',
-        description='Approuve le procès-verbal de la séance antérieure',
+        description='<p>Approuve le procès-verbal de la séance antérieure</p>',
         category='recurrents',
         proposingGroup='secretariat',
-        decision='Procès-verbal approuvé'),
+        decision='<p>Procès-verbal approuvé</p>'),
     RecurringItemDescriptor(
         id='recurringofficialreport1',
         title='Autorise et signe les bons de commande de la semaine',
-        description='Autorise et signe les bons de commande de la semaine',
+        description='<p>Autorise et signe les bons de commande de la semaine</p>',
         category='recurrents',
         proposingGroup='secretariat',
-        decision='Bons de commande signés'),
+        decision='<p>Bons de commande signés</p>'),
     RecurringItemDescriptor(
         id='recurringofficialreport2',
         title='Ordonnance et signe les mandats de paiement de la semaine',
-        description='Ordonnance et signe les mandats de paiement de la semaine',
+        description='<p>Ordonnance et signe les mandats de paiement de la semaine</p>',
         category='recurrents',
         proposingGroup='secretariat',
-        decision='Mandats de paiement de la semaine approuvés'), ]
+        decision='<p>Mandats de paiement de la semaine approuvés</p>'), ]
 collegeMeeting.itemTemplates = [
     ItemTemplateDescriptor(
         id='template1',
         title='Tutelle CPAS',
-        description='Tutelle CPAS',
+        description='<p>Tutelle CPAS</p>',
         category='personnel',
         proposingGroup='secretariat',
         templateUsingGroups=['secretariat', 'dirgen', ],
@@ -543,7 +542,7 @@ collegeMeeting.itemTemplates = [
     ItemTemplateDescriptor(
         id='template2',
         title='Contrôle médical systématique agent contractuel',
-        description='Contrôle médical systématique agent contractuel',
+        description='<p>Contrôle médical systématique agent contractuel</p>',
         category='personnel',
         proposingGroup='personnel',
         templateUsingGroups=['personnel', ],
@@ -573,7 +572,7 @@ collegeMeeting.itemTemplates = [
     ItemTemplateDescriptor(
         id='template3',
         title='Engagement temporaire',
-        description='Engagement temporaire',
+        description='<p>Engagement temporaire</p>',
         category='personnel',
         proposingGroup='personnel',
         templateUsingGroups=['personnel', ],
@@ -603,7 +602,7 @@ collegeMeeting.itemTemplates = [
     ItemTemplateDescriptor(
         id='template4',
         title='Prestation réduite',
-        description='Prestation réduite',
+        description='<p>Prestation réduite</p>',
         category='personnel',
         proposingGroup='personnel',
         templateUsingGroups=['personnel', ],
@@ -632,7 +631,7 @@ collegeMeeting.itemTemplates = [
     ItemTemplateDescriptor(
         id='template5',
         title='Exemple modèle disponible pour tous',
-        description='Exemple modèle disponible pour tous',
+        description='<p>Exemple modèle disponible pour tous</p>',
         category='personnel',
         proposingGroup='',
         templateUsingGroups=[],
@@ -797,10 +796,10 @@ councilMeeting.recurringItems = [
     RecurringItemDescriptor(
         id='recurringagenda1',
         title='Approuve le procès-verbal de la séance antérieure',
-        description='Approuve le procès-verbal de la séance antérieure',
+        description='<p>Approuve le procès-verbal de la séance antérieure</p>',
         category='recurrents',
         proposingGroup='secretariat',
-        decision='Procès-verbal approuvé'), ]
+        decision='<p>Procès-verbal approuvé</p>'), ]
 councilMeeting.itemTemplates = collegeMeeting.itemTemplates
 councilMeeting.orderedContacts = ['ga-c-rard-bourgmestre/bourgmestre-mon-organisation',
                                   'isabelle-daga/dg-mon-organisation',
@@ -830,6 +829,9 @@ data.directory_position_types = [
     {'token': u'bourgmestre-president',
      'name': u'Bourgmestre - Pr\xe9sident|Bourgmestres - Pr\xe9sidents|'
         u'Bourgmestre - Pr\xe9sidente|Bourgmestres - Pr\xe9sidentes'},
+    {'token': u'bourgmestreff-president',
+     'name': u'Bourgmestre f.f. - Pr\xe9sident|Bourgmestres f.f. - Pr\xe9sidents|'
+        u'Bourgmestre f.f. - Pr\xe9sidente|Bourgmestres f.f. - Pr\xe9sidentes'},
     {'token': u'conseiller',
      'name': u'Conseiller|Conseillers|Conseillère|Conseillères'},
     {'token': u'conseiller-president',

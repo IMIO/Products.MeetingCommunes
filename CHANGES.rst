@@ -3,17 +3,41 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1.3 (unreleased)
+4.1.7 (unreleased)
 ------------------
 
+- Overrided print_deliberation to include specific content
 - Adapted item workflow to use MeetingConfig.itemWFValidationLevels defined configuration
 - Added new 'meetingadvice' related workflows : 'meetingadvicefinanceseditor_workflow' and 'meetingadvicefinancesmanager_workflow'
+
+4.1.6 (2019-11-26)
+------------------
+
+- Fixed CSS class regarding changes in imio.prettylink
+
+4.1.5 (2019-11-19)
+------------------
+
+- Launch Products.PloneMeeting upgrade step to 4103 in migration to v4.1
+
+4.1.4 (2019-11-04)
+------------------
+
+- The format of MeetingConfigDescriptor.defaultLabels changed, adapted import_data accordingly
+- Launch Products.PloneMeeting upgrade step to 4102 in migration to v4.1
+
+4.1.3 (2019-10-14)
+------------------
+
+- Update PODTemplates in examples_fr profile to uses new methods from PloneMeeting
+- Added missing portal_types translations for the zcommittee_advice profile, do not set it as default on install neither
+- Adapted workflowstate viewlet CSS regarding changes in plonetheme.imioapps
+- Added bourgmestreff-president in contact position types
 
 4.1.2 (2019-10-04)
 ------------------
 
 - Wrong release
-
 
 4.1.1 (2019-10-04)
 ------------------
@@ -24,7 +48,6 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 ----------------
 
 - Wrong release
-
 
 4.1.dev0 (2019-09-13)
 ---------------------

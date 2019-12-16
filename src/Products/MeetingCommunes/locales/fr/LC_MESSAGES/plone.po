@@ -170,6 +170,10 @@ msgstr "Point récurrent Collège"
 msgid "MeetingItemRecurringZCouncil"
 msgstr "Point récurrent Conseil"
 
+#. Default: "MeetingItemRecurringadvice-committee"
+msgid "MeetingItemRecurringadvice-committee"
+msgstr "Point récurrent Comité d'avis"
+
 #. Default: "Meeting item recurring BP"
 msgid "MeetingItemRecurringbp"
 msgstr "Point récurrent Bureau Permanent"
@@ -270,6 +274,10 @@ msgstr "Modèle de point Collège"
 msgid "MeetingItemTemplateZCouncil"
 msgstr "Modèle de point Conseil"
 
+#. Default: "MeetingItemTemplateadvice-committee"
+msgid "MeetingItemTemplateadvice-committee"
+msgstr "Modèle de point Comité d'avis"
+
 #. Default: "Meeting item template BP"
 msgid "MeetingItemTemplatebp"
 msgstr "Modèle de point Bureau Permanent"
@@ -313,6 +321,10 @@ msgstr "Point Collège"
 #. Default: "MeetingItemZCouncil"
 msgid "MeetingItemZCouncil"
 msgstr "Point Conseil"
+
+#. Default: "MeetingItemadvice-committee"
+msgid "MeetingItemadvice-committee"
+msgstr "Point Comité d'avis"
 
 #. Default: "Meeting item BP"
 msgid "MeetingItembp"
@@ -369,6 +381,10 @@ msgstr "Séance Collège"
 #. Default: "MeetingZCouncil"
 msgid "MeetingZCouncil"
 msgstr "Séance Conseil"
+
+#. Default: "Meetingadvice-committee"
+msgid "Meetingadvice-committee"
+msgstr "Séance Comité d'avis"
 
 #. Default: "Meeting BP"
 msgid "Meetingbp"
