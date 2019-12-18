@@ -7,6 +7,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 ------------------
 
 - Overrided print_deliberation to include specific content
+- Reintegrated CustomMeeting.getPrintableItemsByCategory waiting for another solution to be able to print empty categories
 
 4.1.6 (2019-11-26)
 ------------------
