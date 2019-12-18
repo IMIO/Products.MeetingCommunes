@@ -54,33 +54,47 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
     def print_deliberation(self,
                            xhtmlContents=[],
                            **kwargs):
-        '''Print the full item deliberation and includes specific content :
-           - finances advice;
-           - sendToAuthority.'''
+        """
+        Print the full item deliberation and includes the finance advices
+        :param xhtmlContents: xhtmlContents to print, include 'finance_advices'
+        to specify where to put the finance advices.
+        :param kwargs: print_formatted_finance_advice and printXhtml kwargs
+        :return: xhtml str representing the full item deliberation
+        """
         if not xhtmlContents:
             xhtmlContents = [
                 self.context.getMotivation(),
-                self.print_formatted_finance_advice(),
-                '<p>&nbsp;</p>',
+                'finance_advice',
                 self.context.getDecision()]
+        xhtmlContents = [
+            self.print_formatted_finance_advice(
+                finance_advices_template=kwargs.pop('finance_advices_formats', None),
+                finance_used_cases=kwargs.pop('finance_used_cases', None)
+            )
+            if content == 'finance_advices' else content
+            for content in xhtmlContents
+        ]
+
         return self.printXhtml(
             self.context,
             xhtmlContents,
             **kwargs)
 
     def print_formatted_finance_advice(self,
-                                       used_cases=('initiative', 'legal', 'simple',
-                                                  'simple_not_given', 'legal_not_given'),
-                                       advices_formats=None):
+                                       finance_used_cases=None,
+                                       finance_advices_template=None):
         """
-        Print the finance advices based on legal cases and a certain format.
-        :param used_cases: legal cases among 'initiative', 'legal', 'simple',
+        Print the finance advices based on legal cases and a template.
+        :param finance_used_cases: legal cases among 'initiative', 'legal', 'simple',
                                                   'simple_not_given', 'legal_not_given
-        :param advices_formats: dict with the legal case a key and the pattern as value
-        :return: a string representing finance advices
+        :param finance_advices_template: dict with the legal case as key and the pattern as value
+        :return: a xhtml str representing finance advices
         """
-        if not advices_formats:
-            advices_formats = {
+        if not finance_used_cases:
+            finance_used_cases = ('initiative', 'legal', 'simple',
+                          'simple_not_given', 'legal_not_given')
+        if not finance_advices_template:
+            finance_advices_template = {
                 "simple":
                     u"<p>Considérant l'avis {type_translated} {by} {adviser}"
                     u"remis en date du {advice_given_on_localized},</p>",
@@ -104,14 +118,15 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                     u"remis en date du {advice_given_on_localized},</p>"
             }
         formatted_finance_advice = ""
-        finances_advices = [self.printFinanceAdvice(case) for case in advices_formats.keys()]
-        for case, advices in zip(advices_formats.keys(), finances_advices):
-            if case not in used_cases:
+        finances_advices = {case: self.printFinanceAdvice(case)
+                            for case in finance_advices_template.keys()}
+        for case, advices in finances_advices.items():
+            if case not in finance_used_cases:
                 continue
             for advice in advices:
                 adviser = advice['name'] if advice['type'] == 'not_given' else \
                     self.get_contact_infos(userid=advice['creator_id'])['held_position_label']
-                formatted_finance_advice += advices_formats[case].format(
+                formatted_finance_advice += finance_advices_template[case].format(
                     type_translated=advice["type_translated"].lower(),
                     adviser=adviser,
                     prefix=self._get_prefix_for_finance_advice('prefix', advice),
@@ -120,6 +135,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                     item_transmitted_on_localized=advice["item_transmitted_on_localized"],
                     advice_given_on_localized=advice["advice_given_on_localized"]
                 )
+
         return formatted_finance_advice.encode('utf-8')
 
     def _get_prefix_for_finance_advice(self, type, advice):
@@ -137,7 +153,6 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             ('to', 'M'): u'au ',
             ('to', 'F'): u'à la ',
         }
-
         if advice['type'] == 'not_given' or not self.get_contact_infos(userid=advice['creator_id']):
             # We can't bind the adviser with a contact's held position so we must guest the gender
             if 'trice' in advice['name'].lower():
