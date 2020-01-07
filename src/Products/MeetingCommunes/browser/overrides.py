@@ -52,7 +52,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         return res
 
     def print_deliberation(self,
-                           xhtmlContents=[],
+                           xhtmlContents=None,
                            **kwargs):
         """
         Print the full item deliberation and includes the finance advices
@@ -64,7 +64,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         if not xhtmlContents:
             xhtmlContents = [
                 self.context.getMotivation(),
-                'finance_advice',
+                'finance_advices',
                 self.context.getDecision()]
         xhtmlContents = [
             self.print_formatted_finance_advice(
@@ -96,7 +96,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         if not finance_advices_template:
             finance_advices_template = {
                 "simple":
-                    u"<p>Considérant l'avis {type_translated} {by} {adviser}"
+                    u"<p>Considérant l'avis {type_translated} {by} {adviser} "
                     u"remis en date du {advice_given_on_localized},</p>",
 
                 "simple_not_given":
@@ -124,8 +124,12 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             if case not in finance_used_cases:
                 continue
             for advice in advices:
-                adviser = advice['name'] if advice['type'] == 'not_given' else \
-                    self.get_contact_infos(userid=advice['creator_id'])['held_position_label']
+                if self.get_contact_infos(userid=advice['creator_id'])['held_position_label']:
+                    adviser = \
+                        self.get_contact_infos(userid=advice['creator_id'])['held_position_label']
+                else:
+                    adviser = advice['name']
+
                 formatted_finance_advice += finance_advices_template[case].format(
                     type_translated=advice["type_translated"].lower(),
                     adviser=adviser,
@@ -135,7 +139,6 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                     item_transmitted_on_localized=advice["item_transmitted_on_localized"],
                     advice_given_on_localized=advice["advice_given_on_localized"]
                 )
-
         return formatted_finance_advice.encode('utf-8')
 
     def _get_prefix_for_finance_advice(self, type, advice):
@@ -146,15 +149,16 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         :return:
         """
         PREFIXS = {
-            ('prefix', 'M'): u'Le ',
-            ('prefix', 'F'): u'La ',
-            ('by', 'M'): u'du ',
-            ('by', 'F'): u'de la ',
-            ('to', 'M'): u'au ',
-            ('to', 'F'): u'à la ',
+            ('prefix', 'M'): u'le',
+            ('prefix', 'F'): u'la',
+            ('by', 'M'): u'du',
+            ('by', 'F'): u'de la',
+            ('to', 'M'): u'au',
+            ('to', 'F'): u'à la',
         }
-        if advice['type'] == 'not_given' or not self.get_contact_infos(userid=advice['creator_id']):
-            # We can't bind the adviser with a contact's held position so we must guest the gender
+        if advice['type'] == 'not_given' \
+                or not self.get_contact_infos(userid=advice['creator_id'])['person']:
+            # We can't bind the adviser with a contact's person so we must guest the gender
             if 'trice' in advice['name'].lower():
                 gender = 'F'
             else:
