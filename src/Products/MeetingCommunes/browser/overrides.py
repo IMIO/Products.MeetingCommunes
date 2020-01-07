@@ -51,6 +51,16 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                 res.append(data)
         return res
 
+    def output_for_restapi(self):
+        ''' '''
+        result = super(MCItemDocumentGenerationHelperView, self).output_for_restapi()
+        #result['finance_advice_simple'] = self.printFinanceAdvice(cases=['simple'])
+        #result['finance_advice_legal'] = self.printFinanceAdvice(cases=['legal'])
+        #result['finance_advice_initiative'] = self.printFinanceAdvice(cases=['initiative'])
+        #result['finance_advice_legal_not_given'] = self.printFinanceAdvice(cases=['legal_not_given'])
+        #result['finance_advice_simple_not_given'] = self.printFinanceAdvice(cases=['simple_not_given'])
+        return result
+
     def print_deliberation(self,
                            xhtmlContents=None,
                            **kwargs):

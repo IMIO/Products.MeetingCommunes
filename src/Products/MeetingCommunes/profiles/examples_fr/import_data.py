@@ -163,7 +163,7 @@ dashboardMeetingAssemblies.odt_file = 'meeting_assemblies.odt'
 dashboardMeetingAssemblies.pod_formats = ['doc', 'pdf', ]
 dashboardMeetingAssemblies.tal_condition = u'python:False'
 dashboardMeetingAssemblies.roles_bypassing_talcondition = set(['Manager', 'MeetingManager'])
-dashboardMeetingAssemblies.dashboard_collections_ids = ['searchalldecisions']
+dashboardMeetingAssemblies.dashboard_collections_ids = ['searchallmeetings']
 
 dashboardMeetingAttendances = PodTemplateDescriptor(
     'attendance-stats', 'Statistiques de présences', dashboard=True)
@@ -171,13 +171,13 @@ dashboardMeetingAttendances.odt_file = 'attendance-stats.ods'
 dashboardMeetingAttendances.pod_formats = ['ods', 'xls']
 dashboardMeetingAttendances.tal_condition = u'python:False'
 dashboardMeetingAttendances.roles_bypassing_talcondition = set(['Manager', 'MeetingManager'])
-dashboardMeetingAttendances.dashboard_collections_ids = ['searchalldecisions']
+dashboardMeetingAttendances.dashboard_collections_ids = ['searchallmeetings']
 
 dashboardPvs = PodTemplateDescriptor('all_pv', 'Tous les Procès-Verbaux', dashboard=True)
 dashboardPvs.odt_file = 'all_pv.odt'
 dashboardPvs.pod_formats = ['doc', 'pdf', ]
 dashboardPvs.roles_bypassing_talcondition = set(['Manager', 'MeetingManager'])
-dashboardPvs.dashboard_collections_ids = ['searchalldecisions']
+dashboardPvs.dashboard_collections_ids = ['searchallmeetings']
 dashboardPvs.merge_templates = [{'pod_context_name': u'pv', 'do_rendering': False, 'template': 'pv'}]
 
 historyTemplate = PodTemplateDescriptor('historique', 'Historique')
