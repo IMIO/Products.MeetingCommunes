@@ -72,9 +72,6 @@ customwfAdaptations = list(MeetingConfig.wfAdaptations)
 # remove the 'creator_initiated_decisions' as this is always the case in our wfs
 if 'creator_initiated_decisions' in customwfAdaptations:
     customwfAdaptations.remove('creator_initiated_decisions')
-# remove the 'archiving' as we do not handle archive in our wfs
-if 'archiving' in customwfAdaptations:
-    customwfAdaptations.remove('archiving')
 MeetingConfig.wfAdaptations = customwfAdaptations
 
 # states taken into account by the 'no_global_observation' wfAdaptation
@@ -82,9 +79,6 @@ noGlobalObsStates = list(adaptations.noGlobalObsStates)
 noGlobalObsStates.append('accepted_but_modified')
 noGlobalObsStates.append('pre_accepted')
 adaptations.noGlobalObsStates = noGlobalObsStates
-
-adaptations.WF_NOT_CREATOR_EDITS_UNLESS_CLOSED = ('delayed', 'refused', 'accepted',
-                                                  'pre_accepted', 'accepted_but_modified')
 
 RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = {'meetingitemcommunes_workflow': 'meetingitemcommunes_workflow.validated'}
 adaptations.RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE
@@ -1156,49 +1150,6 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
             for suffix in FINANCE_GROUP_SUFFIXES:
                 if groupId.endswith('_%s' % suffix):
                     return True
-        return False
-
-    def performCustomWFAdaptations(self, meetingConfig, wfAdaptation, logger, itemWorkflow, meetingWorkflow):
-        """ """
-        if wfAdaptation == 'no_publication':
-            # we override the PloneMeeting's 'no_publication' wfAdaptation
-            # First, update the meeting workflow
-            wf = meetingWorkflow
-            # Delete transitions 'publish' and 'backToPublished'
-            for tr in ('publish', 'backToPublished'):
-                if tr in wf.transitions:
-                    wf.transitions.deleteTransitions([tr])
-            # Update connections between states and transitions
-            wf.states['frozen'].setProperties(
-                title='frozen', description='',
-                transitions=['backToCreated', 'decide'])
-            wf.states['decided'].setProperties(
-                title='decided', description='', transitions=['backToFrozen', 'close'])
-            # Delete state 'published'
-            if 'published' in wf.states:
-                wf.states.deleteStates(['published'])
-            # Then, update the item workflow.
-            wf = itemWorkflow
-            # Delete transitions 'itempublish' and 'backToItemPublished'
-            for tr in ('itempublish', 'backToItemPublished'):
-                if tr in wf.transitions:
-                    wf.transitions.deleteTransitions([tr])
-            # Update connections between states and transitions
-            wf.states['itemfrozen'].setProperties(
-                title='itemfrozen', description='',
-                transitions=['accept', 'accept_but_modify', 'delay', 'pre_accept', 'backToPresented'])
-            for decidedState in ['accepted', 'delayed', 'accepted_but_modified']:
-                wf.states[decidedState].setProperties(
-                    title=decidedState, description='',
-                    transitions=['backToItemFrozen', ])
-            wf.states['pre_accepted'].setProperties(
-                title='pre_accepted', description='',
-                transitions=['accept', 'accept_but_modify', 'backToItemFrozen'])
-            # Delete state 'published'
-            if 'itempublished' in wf.states:
-                wf.states.deleteStates(['itempublished'])
-            return True
-
         return False
 
     def performCustomAdviceWFAdaptations(self, meetingConfig, wfAdaptation, logger, advice_wf_id):
