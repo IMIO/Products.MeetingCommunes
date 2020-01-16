@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from Products.PloneMeeting.migrations.migrate_to_4_2 import Migrate_To_4_2 as PMMigrate_To_4_2
+from Products.PloneMeeting.migrations.migrate_to_4200 import Migrate_To_4200 as PMMigrate_To_4200
 
 import logging
 
@@ -8,7 +8,7 @@ import logging
 logger = logging.getLogger('MeetingCommunes')
 
 
-class Migrate_To_4_2(PMMigrate_To_4_2):
+class Migrate_To_4200(PMMigrate_To_4200):
 
     def _updateMeetingWFs(self):
         """meetingcommunes_workflow does not exist anymore, we use meeting_workflow."""
@@ -28,10 +28,10 @@ class Migrate_To_4_2(PMMigrate_To_4_2):
         self._updateMeetingWFs()
 
         # call steps from Products.PloneMeeting
-        super(Migrate_To_4_2, self).run(extra_omitted=extra_omitted)
+        super(Migrate_To_4200, self).run(extra_omitted=extra_omitted)
 
         # now MeetingCommunes specific steps
-        logger.info('Migrating to MeetingCommunes 4.2...')
+        logger.info('Migrating to MeetingCommunes 4200...')
 
 
 # The migration function -------------------------------------------------------
@@ -40,6 +40,6 @@ def migrate(context):
 
        1) Change MeetingConfig.meetingWorkflow to use meeting_workflow.
     '''
-    migrator = Migrate_To_4_2(context)
+    migrator = Migrate_To_4200(context)
     migrator.run()
     migrator.finish()
