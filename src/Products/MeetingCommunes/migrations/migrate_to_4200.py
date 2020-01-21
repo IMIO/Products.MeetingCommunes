@@ -44,7 +44,7 @@ class Migrate_To_4200(PMMigrate_To_4200):
                     keyToUse = key
             return keyToUse
 
-    def _changeWFUsedForItemAndMeeting(self):
+    def _adaptWFHistoryForItemsAndMeetings(self):
         """We use PM default WFs, no more meetingcommunes(item)_workflow..."""
         logger.info('Updating WF history items and meetings to use new WF id...')
         wfTool = api.portal.get_tool('portal_workflow')
@@ -80,14 +80,16 @@ class Migrate_To_4200(PMMigrate_To_4200):
 
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4200...')
-        self._changeWFUsedForItemAndMeeting()
+        self._adaptWFHistoryForItemsAndMeetings()
 
 
 # The migration function -------------------------------------------------------
 def migrate(context):
     '''This migration function:
 
-       1) Change MeetingConfig.meetingWorkflow to use meeting_workflow.
+       1) Change MeetingConfig.meetingWorkflow to use meeting_workflow/meetingitem_workflow;
+       2) Call PloneMeeting migration to 4200;
+       3) Adapt items and meetings workflow_history to reflect new defined workflow done in 1).
     '''
     migrator = Migrate_To_4200(context)
     migrator.run()

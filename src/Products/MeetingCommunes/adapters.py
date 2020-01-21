@@ -67,23 +67,6 @@ from zope.i18n import translate
 from zope.interface import implements
 
 
-# Names of available workflow adaptations.
-customwfAdaptations = list(MeetingConfig.wfAdaptations)
-# remove the 'creator_initiated_decisions' as this is always the case in our wfs
-if 'creator_initiated_decisions' in customwfAdaptations:
-    customwfAdaptations.remove('creator_initiated_decisions')
-MeetingConfig.wfAdaptations = customwfAdaptations
-
-# states taken into account by the 'no_global_observation' wfAdaptation
-noGlobalObsStates = list(adaptations.noGlobalObsStates)
-noGlobalObsStates.append('accepted_but_modified')
-noGlobalObsStates.append('pre_accepted')
-adaptations.noGlobalObsStates = noGlobalObsStates
-
-RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = {'meetingitemcommunes_workflow': 'meetingitemcommunes_workflow.validated'}
-adaptations.RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE
-
-
 class CustomMeeting(Meeting):
     '''Adapter that adapts a meeting implementing IMeeting to the
        interface IMeetingCustom.'''
