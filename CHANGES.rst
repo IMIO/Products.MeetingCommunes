@@ -7,6 +7,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 ------------------
 
 - Overrided print_deliberation to include specific content
+- Added MCItemDocumentGenerationHelperView.print_formatted_finance_advice to print finance advice
 - Reintegrated CustomMeeting.getPrintableItemsByCategory waiting for another solution to be able to print empty categories
 - Call migration to PloneMeeting 4104 in migration to MeetingCommunes 4.1
 - Adapted examples_fr import_data as 'searchalldecisions' was renamed to 'searchallmeetings'
