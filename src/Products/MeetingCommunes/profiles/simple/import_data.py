@@ -97,7 +97,6 @@ simpleMeeting.powerObservers = (
      'item_states': [],
      'meeting_states': [],
      'orderindex_': '2'})
-simpleMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 simpleMeeting.workflowAdaptations = [
     'apply_item_validation_levels',
     'no_publication', 'no_global_observation',

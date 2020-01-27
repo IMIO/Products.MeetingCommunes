@@ -55,7 +55,6 @@ collegeMeeting.itemColumns = ['static_item_reference',
                               'linkedMeetingDate',
                               'getPreferredMeetingDate',
                               'actions']
-collegeMeeting.itemPositiveDecidedStates = ('accepted', 'accepted_but_modified')
 collegeMeeting.transitionsToConfirm = (
     'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',
     'MeetingItem.backToProposed', 'MeetingItem.backTo_itemfrozen_from_returned_to_proposing_group',
@@ -314,7 +313,6 @@ councilMeeting.itemCopyGroupsStates = (
     'refused')
 councilMeeting.itemManualSentToOtherMCStates = []
 councilMeeting.itemAutoSentToOtherMCStates = []
-councilMeeting.itemPositiveDecidedStates = ('accepted', 'accepted_but_modified')
 
 councilMeeting.recurringItems = [
     RecurringItemDescriptor(

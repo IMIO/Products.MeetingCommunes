@@ -20,11 +20,8 @@ collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IM
 collegeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
 collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
 collegeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
-collegeMeeting.itemDecidedStates = ['accepted', 'delayed', 'accepted_but_modified', 'pre_accepted']
-collegeMeeting.itemPositiveDecidedStates = ['accepted', 'accepted_but_modified']
-collegeMeeting.workflowAdaptations = ['apply_item_validation_levels', 'delayed',
-                                      'no_publication', 'no_global_observation',
-                                      'pre_accepted', 'accepted_but_modified']
+collegeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation',
+                                      'pre_accepted', 'accepted_but_modified', 'delayed']
 # Conseil communal
 councilMeeting = deepcopy(pm_import_data.meetingPga)
 councilMeeting.id = 'meeting-config-council'
@@ -38,8 +35,6 @@ councilMeeting.itemConditionsInterface = collegeMeeting.itemConditionsInterface
 councilMeeting.itemActionsInterface = collegeMeeting.itemActionsInterface
 councilMeeting.meetingConditionsInterface = collegeMeeting.meetingConditionsInterface
 councilMeeting.meetingActionsInterface = collegeMeeting.meetingActionsInterface
-councilMeeting.itemDecidedStates = collegeMeeting.itemDecidedStates
-councilMeeting.itemPositiveDecidedStates = collegeMeeting.itemPositiveDecidedStates
 councilMeeting.podTemplates = []
 
 data = deepcopy(pm_import_data.data)

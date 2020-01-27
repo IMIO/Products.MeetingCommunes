@@ -445,7 +445,6 @@ collegeMeeting.powerObservers = (
      'meeting_states': ('frozen', 'decided', 'closed'),
      'orderindex_': '2'})
 
-collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 collegeMeeting.workflowAdaptations = [
     'apply_item_validation_levels',
     'no_publication', 'no_global_observation',
@@ -772,7 +771,6 @@ councilMeeting.useAdvices = False
 councilMeeting.itemAdviceStates = ()
 councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
-councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 councilMeeting.workflowAdaptations = [
     'no_publication', 'no_global_observation',
     'return_to_proposing_group', 'refused',

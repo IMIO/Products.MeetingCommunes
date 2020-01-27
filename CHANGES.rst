@@ -12,6 +12,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Adapted examples_fr import_data as 'searchalldecisions' was renamed to 'searchallmeetings'
 - Adapted item workflow to use MeetingConfig.itemWFValidationLevels defined configuration
 - Added new 'meetingadvice' related workflows : 'meetingadvicefinanceseditor_workflow' and 'meetingadvicefinancesmanager_workflow'
+- MeetingConfig.itemDecidedStates and MeetingConfig.itemPositiveDecidedStates fields were removed, adapted import_data files accordingly
 
 4.1.6 (2019-11-26)
 ------------------

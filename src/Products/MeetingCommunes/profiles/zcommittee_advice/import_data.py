@@ -57,7 +57,6 @@ adviceMeeting.itemColumns = ['static_item_reference',
                              'linkedMeetingDate',
                              'getPreferredMeetingDate',
                              'actions']
-adviceMeeting.itemPositiveDecidedStates = ('accepted', 'accepted_but_modified')
 adviceMeeting.transitionsToConfirm = (
     'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',
     'MeetingItem.backToProposed', 'MeetingItem.backTo_itemfrozen_from_returned_to_proposing_group',
