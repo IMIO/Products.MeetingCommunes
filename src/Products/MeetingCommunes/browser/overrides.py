@@ -62,32 +62,40 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         return result
 
     def print_deliberation(self,
-                           xhtmlContents=None,
+                           contents=None,
                            **kwargs):
         """
         Print the full item deliberation and includes the finance advices
-        :param xhtmlContents: xhtmlContents to print, include 'finance_advices'
+        :param contents: contents to print, include 'finance_advices'
         to specify where to put the finance advices.
         :param kwargs: print_formatted_finance_advice and printXhtml kwargs
         :return: xhtml str representing the full item deliberation
         """
-        if not xhtmlContents:
-            xhtmlContents = [
-                self.context.getMotivation(),
+        if not contents:
+            contents = (
+                'motivation',
                 'finance_advices',
-                self.context.getDecision()]
-        xhtmlContents = [
-            self.print_formatted_finance_advice(
-                finance_advices_template=kwargs.pop('finance_advices_formats', None),
-                finance_used_cases=kwargs.pop('finance_used_cases', None)
+                'decision'
             )
-            if content == 'finance_advices' else content
-            for content in xhtmlContents
-        ]
+        XhtmlContent = []
+        item = self.real_context
+
+        for content in contents:
+            if content == 'finance_advices':
+                XhtmlContent.append(self.print_formatted_finance_advice(
+                    finance_advices_template=kwargs.pop('finance_advices_formats', None),
+                    finance_used_cases=kwargs.pop('finance_used_cases', None)
+                ))
+            elif content in dir(item):
+                field = item.Schema().getField(content)  # get the field from the schema
+                content_accessor = getattr(item, field.accessor)  # get the accessor method from item
+                XhtmlContent.append(content_accessor())
+            else:
+                XhtmlContent.append(content)
 
         return self.printXhtml(
             self.context,
-            xhtmlContents,
+            xhtmlContents=XhtmlContent,
             **kwargs)
 
     def print_formatted_finance_advice(self,
