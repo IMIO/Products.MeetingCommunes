@@ -75,6 +75,10 @@ msgstr "Rédacteurs financiers"
 msgid "financialmanagers"
 msgstr "Directeurs financiers"
 
+#. Default: "Financial pre-controllers"
+msgid "financialprecontrollers"
+msgstr "Pré-contrôleurs financiers"
+
 #. Default: "Financial reviewers"
 msgid "financialreviewers"
 msgstr "Validateurs financiers"

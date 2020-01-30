@@ -1286,6 +1286,7 @@ class BaseItemsWithAdviceAdapter(CompoundCriterionBaseAdapter):
         groupIds = []
         for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
             groupIds.append('delay__{0}_{1}'.format(financeGroup, advice_review_state))
+            groupIds.append('{0}_{1}'.format(financeGroup, advice_review_state))
         # Create query parameters
         return {'portal_type': {'query': self.cfg.getItemTypeName()},
                 'indexAdvisers': {'query': groupIds}}

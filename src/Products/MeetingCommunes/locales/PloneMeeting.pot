@@ -109,6 +109,10 @@ msgstr ""
 msgid "not_required_finance"
 msgstr ""
 
+#. Default: "Financial pre-controllers"
+msgid "financialprecontrollers"
+msgstr ""
+
 #. Default: "Financial controllers"
 msgid "financialcontrollers"
 msgstr ""

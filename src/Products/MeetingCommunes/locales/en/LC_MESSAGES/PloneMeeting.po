@@ -75,6 +75,10 @@ msgstr ""
 msgid "financialmanagers"
 msgstr ""
 
+#. Default: "Financial pre-controllers"
+msgid "financialprecontrollers"
+msgstr ""
+
 #. Default: "Financial reviewers"
 msgid "financialreviewers"
 msgstr ""

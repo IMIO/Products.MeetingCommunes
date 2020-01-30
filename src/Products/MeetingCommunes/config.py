@@ -25,16 +25,11 @@ setDefaultRoles(DEFAULT_ADD_CONTENT_PERMISSION, ('Manager', 'Owner', 'Contributo
 product_globals = globals()
 
 # extra suffixes while using 'meetingadvicefinances_workflow'
-FINANCE_GROUP_SUFFIXES = ('financialcontrollers',
+FINANCE_GROUP_SUFFIXES = ('financialprecontrollers',
+                          'financialcontrollers',
                           'financialeditors',
                           'financialreviewers',
                           'financialmanagers')
-FINANCE_STATE_TO_GROUPS_MAPPINGS = {
-    'advicecreated': 'financialprecontrollers',
-    'proposed_to_financial_controller': 'financialcontrollers',
-    'proposed_to_financial_editor': 'financialeditors',
-    'proposed_to_financial_reviewer': 'financialreviewers',
-    'proposed_to_financial_manager': 'financialmanagers', }
 
 # the id of the collection querying finance advices
 FINANCE_ADVICES_COLLECTION_ID = 'searchitemswithfinanceadvice'
