@@ -20,8 +20,7 @@ collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IM
 collegeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
 collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
 collegeMeeting.meetingActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions'
-collegeMeeting.workflowAdaptations = ['no_publication', 'no_global_observation',
-                                      'pre_accepted', 'accepted_but_modified', 'delayed']
+collegeMeeting.workflowAdaptations = ['no_publication', 'pre_accepted', 'accepted_but_modified', 'delayed', 'refused']
 # Conseil communal
 councilMeeting = deepcopy(pm_import_data.meetingPga)
 councilMeeting.id = 'meeting-config-council'

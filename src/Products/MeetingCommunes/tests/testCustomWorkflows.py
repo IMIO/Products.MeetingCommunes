@@ -26,8 +26,6 @@ from DateTime import DateTime
 from Products.CMFCore.permissions import AccessContentsInformation
 from Products.CMFCore.permissions import View
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
-from Products.PloneMeeting.model.adaptations import performWorkflowAdaptations
-from Products.PloneMeeting.tests.PloneMeetingTestCase import pm_logger
 
 
 class testCustomWorkflows(MeetingCommunesTestCase):
@@ -51,28 +49,24 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         self.presentItem(item2)
         wftool = self.portal.portal_workflow
         # every presented items are in the 'presented' state
-        self.assertEquals('presented', wftool.getInfoFor(item1, 'review_state'))
-        self.assertEquals('presented', wftool.getInfoFor(item2, 'review_state'))
+        self.assertEqual('presented', wftool.getInfoFor(item1, 'review_state'))
+        self.assertEqual('presented', wftool.getInfoFor(item2, 'review_state'))
         # every items must be in the 'itemfrozen' state if we freeze the meeting
         self.freezeMeeting(meeting)
-        self.assertEquals('itemfrozen', wftool.getInfoFor(item1, 'review_state'))
-        self.assertEquals('itemfrozen', wftool.getInfoFor(item2, 'review_state'))
+        self.assertEqual('itemfrozen', wftool.getInfoFor(item1, 'review_state'))
+        self.assertEqual('itemfrozen', wftool.getInfoFor(item2, 'review_state'))
         # when an item is 'itemfrozen' it will stay itemfrozen if nothing
         # is defined in the meetingConfig.onMeetingTransitionItemActionToExecute
         self.meetingConfig.setOnMeetingTransitionItemActionToExecute([])
         self.backToState(meeting, 'created')
-        self.assertEquals('itemfrozen', wftool.getInfoFor(item1, 'review_state'))
-        self.assertEquals('itemfrozen', wftool.getInfoFor(item2, 'review_state'))
+        self.assertEqual('itemfrozen', wftool.getInfoFor(item1, 'review_state'))
+        self.assertEqual('itemfrozen', wftool.getInfoFor(item2, 'review_state'))
 
     def test_CloseMeeting(self):
         """
            When we close a meeting, every items are set to accepted if they are still
            not decided...
         """
-        # activate the 'refused' WFAdaptation
-        cfg = self.meetingConfig
-        cfg.setWorkflowAdaptations(('refused', ))
-        performWorkflowAdaptations(cfg, logger=pm_logger)
         # First, define recurring items in the meeting config
         self.changeUser('pmManager')
         # create a meeting (with 7 items)
@@ -110,23 +104,24 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         self.do(item5, 'refuse')
         self.do(item6, 'accept')
         # we close the meeting
+        import ipdb; ipdb.set_trace()
         self.do(meeting, 'close')
         # every items must be in the 'decided' state if we close the meeting
         wftool = self.portal.portal_workflow
         # itemfrozen change into accepted
-        self.assertEquals('accepted', wftool.getInfoFor(item1, 'review_state'))
+        self.assertEqual('accepted', wftool.getInfoFor(item1, 'review_state'))
         # delayed rest delayed (it's already a 'decide' state)
-        self.assertEquals('delayed', wftool.getInfoFor(item2, 'review_state'))
+        self.assertEqual('delayed', wftool.getInfoFor(item2, 'review_state'))
         # pre_accepted change into accepted
-        self.assertEquals('accepted', wftool.getInfoFor(item3, 'review_state'))
+        self.assertEqual('accepted', wftool.getInfoFor(item3, 'review_state'))
         # accepted_but_modified rest accepted_but_modified (it's already a 'decide' state)
-        self.assertEquals('accepted_but_modified', wftool.getInfoFor(item4, 'review_state'))
+        self.assertEqual('accepted_but_modified', wftool.getInfoFor(item4, 'review_state'))
         # refused rest refused (it's already a 'decide' state)
-        self.assertEquals('refused', wftool.getInfoFor(item5, 'review_state'))
+        self.assertEqual('refused', wftool.getInfoFor(item5, 'review_state'))
         # accepted rest accepted (it's already a 'decide' state)
-        self.assertEquals('accepted', wftool.getInfoFor(item6, 'review_state'))
+        self.assertEqual('accepted', wftool.getInfoFor(item6, 'review_state'))
         # presented change into accepted
-        self.assertEquals('accepted', wftool.getInfoFor(item7, 'review_state'))
+        self.assertEqual('accepted', wftool.getInfoFor(item7, 'review_state'))
 
     def test_pm_ObserversMayViewInEveryStates(self):
         """A MeetingObserverLocal has every 'View' permissions in every states."""
@@ -146,10 +141,8 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         # enable prevalidation
         cfg = self.meetingConfig
         self.changeUser('pmManager')
-        if 'pre_validation' in cfg.listWorkflowAdaptations():
-            cfg.setWorkflowAdaptations(('pre_validation', ))
-            performWorkflowAdaptations(cfg, logger=pm_logger)
-            self._turnUserIntoPrereviewer(self.member)
+        self._enablePrevalidation(cfg)
+        self._turnUserIntoPrereviewer(self.member)
         item = self.create('MeetingItem')
         item.setDecision(self.decisionText)
         meeting = self.create('Meeting', date=DateTime('2017/03/27'))
