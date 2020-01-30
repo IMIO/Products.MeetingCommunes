@@ -444,10 +444,11 @@ collegeMeeting.powerObservers = (
      'orderindex_': '2'})
 
 collegeMeeting.workflowAdaptations = [
-    'apply_item_validation_levels',
     'no_publication',
     'return_to_proposing_group',
     'refused',
+    'accepted_but_modified',
+    'pre_accepted',
     'presented_item_back_to_itemcreated',
     'presented_item_back_to_proposed',
     'only_creator_may_delete']
