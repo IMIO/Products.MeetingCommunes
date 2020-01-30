@@ -104,7 +104,6 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         self.do(item5, 'refuse')
         self.do(item6, 'accept')
         # we close the meeting
-        import ipdb; ipdb.set_trace()
         self.do(meeting, 'close')
         # every items must be in the 'decided' state if we close the meeting
         wftool = self.portal.portal_workflow
