@@ -51,7 +51,6 @@ class testCustomMeeting(MeetingCommunesTestCase):
         # fields will be initialized
         cfg.setInitItemDecisionIfEmptyOnDecide(True)
         # decide the meeting again
-        import ipdb; ipdb.set_trace()
         self.backToState(meeting, 'created')
         self.decideMeeting(meeting)
         # i1 should contains now the concatenation of title and description
