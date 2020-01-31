@@ -127,7 +127,7 @@ collegeMeeting.powerObservers = (
      'orderindex_': '2'})
 collegeMeeting.workflowAdaptations = [
     'no_publication', 'refused', 'accepted_but_modified', 'delayed',
-    'return_to_proposing_group', 'only_creator_may_delete']
+    'return_to_proposing_group', 'only_creator_may_delete', 'pre_accepted']
 collegeMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.motivation',

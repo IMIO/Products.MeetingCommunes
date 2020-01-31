@@ -449,6 +449,7 @@ collegeMeeting.workflowAdaptations = [
     'refused',
     'accepted_but_modified',
     'pre_accepted',
+    'delayed',
     'presented_item_back_to_itemcreated',
     'presented_item_back_to_proposed',
     'only_creator_may_delete']
@@ -768,13 +769,7 @@ councilMeeting.useAdvices = False
 councilMeeting.itemAdviceStates = ()
 councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
-councilMeeting.workflowAdaptations = [
-    'no_publication',
-    'return_to_proposing_group',
-    'refused',
-    'presented_item_back_to_itemcreated',
-    'presented_item_back_to_proposed',
-    'only_creator_may_delete']
+councilMeeting.workflowAdaptations = list(collegeMeeting.workflowAdaptations)
 councilMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 councilMeeting.onMeetingTransitionItemActionToExecute = deepcopy(
     collegeMeeting.onMeetingTransitionItemActionToExecute)
