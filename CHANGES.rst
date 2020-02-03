@@ -10,6 +10,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Reintegrated CustomMeeting.getPrintableItemsByCategory waiting for another solution to be able to print empty categories
 - Call migration to PloneMeeting 4104 in migration to MeetingCommunes 4.1
 - Adapted examples_fr import_data as 'searchalldecisions' was renamed to 'searchallmeetings'
+- Added parameter unrestricted=False to MCMeetingDocumentGenerationHelperView.get_grouped_items
+  so it is possible to get every items of a meeting, even items current user may not access
 
 4.1.6 (2019-11-26)
 ------------------

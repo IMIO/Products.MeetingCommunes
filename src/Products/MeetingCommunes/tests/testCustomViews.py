@@ -665,36 +665,36 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertFalse(item_dghv._is_different_grouping_as_previous_item([u'Brol'], u'Brol', 0))
         self.assertFalse(item_dghv._is_different_grouping_as_previous_item([[u'Brol']], u'Brol', 0))
         self.assertFalse(
-                item_dghv._is_different_grouping_as_previous_item([[u'Brol1',
-                                                                    [u'Brol2', [u'brol3', []]]]], u'Brol1', 0))
+            item_dghv._is_different_grouping_as_previous_item([[u'Brol1',
+                                                                [u'Brol2', [u'brol3', []]]]], u'Brol1', 0))
         self.assertTrue(
-                item_dghv._is_different_grouping_as_previous_item([[u'Brol1', [u'Brol2', [u'brol3', []]]]], u'Brol2',
-                                                                  0))
+            item_dghv._is_different_grouping_as_previous_item([[u'Brol1', [u'Brol2', [u'brol3', []]]]], u'Brol2',
+                                                              0))
         self.assertTrue(
-                item_dghv._is_different_grouping_as_previous_item([[u'Brol1',
-                                                                    [u'Brol2', [u'brol3', []]]]], u'brol3', 0))
+            item_dghv._is_different_grouping_as_previous_item([[u'Brol1',
+                                                                [u'Brol2', [u'brol3', []]]]], u'brol3', 0))
         self.assertTrue(
-                item_dghv._is_different_grouping_as_previous_item([[u'Brol1', [
-                        u'Brol2', [u'brol3', []]]]], u'Machin', 0))
+            item_dghv._is_different_grouping_as_previous_item([[u'Brol1', [
+                u'Brol2', [u'brol3', []]]]], u'Machin', 0))
         self.assertFalse(
-                item_dghv._is_different_grouping_as_previous_item([[u'Brol2', [u'brol3', []]]], u'Brol2', 0))
+            item_dghv._is_different_grouping_as_previous_item([[u'Brol2', [u'brol3', []]]], u'Brol2', 0))
         self.assertTrue(
-                item_dghv._is_different_grouping_as_previous_item([[u'Brol2', [u'brol3', []]]], u'brol3', 0))
+            item_dghv._is_different_grouping_as_previous_item([[u'Brol2', [u'brol3', []]]], u'brol3', 0))
         self.assertTrue(
-                item_dghv._is_different_grouping_as_previous_item([[u'Brol2', [u'brol3', []]]], u'truc', 0))
+            item_dghv._is_different_grouping_as_previous_item([[u'Brol2', [u'brol3', []]]], u'truc', 0))
         self.assertTrue(
-                item_dghv._is_different_grouping_as_previous_item([[u'brol3', []]], u'Brol3', 0))
+            item_dghv._is_different_grouping_as_previous_item([[u'brol3', []]], u'Brol3', 0))
         self.assertFalse(
-                item_dghv._is_different_grouping_as_previous_item([[u'brol3', []]], u'brol3', 0))
+            item_dghv._is_different_grouping_as_previous_item([[u'brol3', []]], u'brol3', 0))
 
         self.assertFalse(
-                item_dghv._is_different_grouping_as_previous_item([[u'brol3', []]], u'brol3', 1))
+            item_dghv._is_different_grouping_as_previous_item([[u'brol3', []]], u'brol3', 1))
 
         self.assertFalse(
-                item_dghv._is_different_grouping_as_previous_item([[u'brol3', [u'truc1', []]]], u'brol3', 2))
+            item_dghv._is_different_grouping_as_previous_item([[u'brol3', [u'truc1', []]]], u'brol3', 2))
 
         self.assertTrue(
-                item_dghv._is_different_grouping_as_previous_item([[u'brol3', [u'truc1', []]]], u'truc1', 2))
+            item_dghv._is_different_grouping_as_previous_item([[u'brol3', [u'truc1', []]]], u'truc1', 2))
 
     def test_get_grouped_items(self):
         self.changeUser('pmManager')
@@ -737,21 +737,21 @@ class testCustomViews(MeetingCommunesTestCase):
 
         res = helper.get_grouped_items(itemUids, group_by=['category'])
         self.assertListEqual(
-                res,
-                [[i5.getCategory(theObject=True).Title(), items[0:-1]],
-                 [i7.getCategory(theObject=True).Title(), [i7]]])
+            res,
+            [[i5.getCategory(theObject=True).Title(), items[0:-1]],
+             [i7.getCategory(theObject=True).Title(), [i7]]])
 
         res = helper.get_grouped_items(itemUids, group_by=['category', 'proposingGroup'])
         self.assertListEqual(
-                res,
-                [[i5.getCategory(theObject=True).Title(),
-                  [u'Developers', [items[0]]],
-                  [u'Vendors', items[1:3]],
-                  [u'Developers', [items[3]]],
-                  [u'Vendors', [items[4]]],
-                  [u'Developers', [i5]]],
-                 [i7.getCategory(theObject=True).Title(),
-                  [i7.getProposingGroup(theObject=True).Title(),[i7]]]])
+            res,
+            [[i5.getCategory(theObject=True).Title(),
+              [u'Developers', [items[0]]],
+              [u'Vendors', items[1:3]],
+              [u'Developers', [items[3]]],
+              [u'Vendors', [items[4]]],
+              [u'Developers', [i5]]],
+             [i7.getCategory(theObject=True).Title(),
+              [i7.getProposingGroup(theObject=True).Title(), [i7]]]])
 
         res = helper.get_grouped_items(itemUids, group_by='category',
                                        excluded_values={'category': i5.getCategory(theObject=True).Title()})
@@ -780,12 +780,54 @@ class testCustomViews(MeetingCommunesTestCase):
         i5.setCategory('developers')
         res = helper.get_grouped_items(itemUids, group_by=['proposingGroup', 'category'])
         self.assertListEqual(
-                res,
-                [[u'Developers', [u'Development topics', [items[0]]]],
-                 [u'Vendors', [u'Development topics', items[1:3]]],
-                 [u'Developers', [u'Development topics', [items[3]]]],
-                 [u'Vendors', [u'Development topics', [items[4]]]],
-                 [u'Developers', [developpers.Title(), [i5]], [u'Research topics', [i7]]]])
+            res,
+            [[u'Developers', [u'Development topics', [items[0]]]],
+             [u'Vendors', [u'Development topics', items[1:3]]],
+             [u'Developers', [u'Development topics', [items[3]]]],
+             [u'Vendors', [u'Development topics', [items[4]]]],
+             [u'Developers', [developpers.Title(), [i5]], [u'Research topics', [i7]]]])
+
+    def test_get_grouped_items_unrestricted(self):
+        self.changeUser('pmManager')
+        meeting = self._createMeetingWithItems()
+        view = meeting.restrictedTraverse('@@document-generation')
+        helper = view.get_generation_context_helper()
+        itemUids = [item.UID for item in meeting.getItems(ordered=True, theObjects=False)]
+        self.assertEqual(len(itemUids), 7)
+        self.assertEqual(len(helper.get_grouped_items(itemUids, unrestricted=False)), 7)
+        self.assertEqual(len(helper.get_grouped_items(itemUids, unrestricted=True)), 7)
+
+        # by default pmCreator1 may only get 'developers' items
+        self.changeUser('pmCreator1')
+        grouped_items = helper.get_grouped_items(
+            itemUids, group_by='proposingGroup', unrestricted=False)
+        self.assertEqual(len(grouped_items), 1)
+        self.assertEqual(grouped_items[0][0], u'Developers')
+        self.assertEqual(len(grouped_items[0][1]), 4)
+        # unrestricted, every items
+        unrestricted_grouped_items = helper.get_grouped_items(
+            itemUids, group_by='proposingGroup', unrestricted=True)
+        self.assertEqual(len(unrestricted_grouped_items), 2)
+        self.assertEqual(unrestricted_grouped_items[0][0], u'Developers')
+        self.assertEqual(len(unrestricted_grouped_items[0][1]), 4)
+        self.assertEqual(unrestricted_grouped_items[1][0], u'Vendors')
+        self.assertEqual(len(unrestricted_grouped_items[1][1]), 3)
+
+        # by default pmCreator2 may only get 'vendors' items
+        self.changeUser('pmCreator2')
+        grouped_items = helper.get_grouped_items(
+            itemUids, group_by='proposingGroup', unrestricted=False)
+        self.assertEqual(len(grouped_items), 1)
+        self.assertEqual(grouped_items[0][0], u'Vendors')
+        self.assertEqual(len(grouped_items[0][1]), 3)
+        # unrestricted, every items
+        unrestricted_grouped_items = helper.get_grouped_items(
+            itemUids, group_by='proposingGroup', unrestricted=True)
+        self.assertEqual(len(unrestricted_grouped_items), 2)
+        self.assertEqual(unrestricted_grouped_items[0][0], u'Developers')
+        self.assertEqual(len(unrestricted_grouped_items[0][1]), 4)
+        self.assertEqual(unrestricted_grouped_items[1][0], u'Vendors')
+        self.assertEqual(len(unrestricted_grouped_items[1][1]), 3)
 
     def test_get_multiple_level_printing(self):
         self.changeUser('pmManager')

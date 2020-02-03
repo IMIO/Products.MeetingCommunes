@@ -302,9 +302,9 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
             result.append(item)
         return result
 
-    def _get_value(self, item, value_name):
+    def _get_value(self, item, value_name, unrestricted=False):
         if hasattr(item, value_name):
-            return self.getDGHV(item).display(value_name)
+            return self.getDGHV(item).display(value_name, bypass_check_permission=unrestricted)
         else:
             raise AttributeError
 
@@ -330,7 +330,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
 
     def get_grouped_items(self, itemUids, listTypes=['normal'],
                           group_by=[], included_values={}, excluded_values={},
-                          ignore_review_states=[], privacy='*'):
+                          ignore_review_states=[], privacy='*', unrestricted=False):
 
         """
         :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
@@ -358,14 +358,14 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         if ignore_review_states:
             query['review_state'] = {'not': ignore_review_states}
 
-        brains = self.real_context.getItems(
+        items = self.real_context.getItems(
             uids=itemUids,
             listTypes=listTypes,
             ordered=True,
-            theObjects=False,
-            additional_catalog_query=query)
+            theObjects=True,
+            additional_catalog_query=query,
+            unrestricted=unrestricted)
 
-        items = [brain.getObject() for brain in brains]
         # because we can't assume included and excluded values are indexed in catalog.
         items = self._filter_items(items, included_values, excluded_values)
 
@@ -382,7 +382,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
             node = res
             level = 0
             for group in group_by:
-                value = self._get_value(item, group)
+                value = self._get_value(item, group, unrestricted)
 
                 if self._is_different_grouping_as_previous_item(node, value, level):
                     node.append([value])
@@ -400,7 +400,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
     def get_multiple_level_printing(self, itemUids, listTypes=['normal'],
                                     included_values={}, excluded_values={},
                                     ignore_review_states=[], privacy='*',
-                                    level_number=1, text_pattern='{0}'):
+                                    level_number=1, text_pattern='{0}', unrestricted=False):
         """
 
         :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
@@ -430,7 +430,8 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         res = OrderedDict()
         items = self.get_grouped_items(itemUids, listTypes=listTypes, group_by=[],
                                        included_values=included_values, excluded_values=excluded_values,
-                                       ignore_review_states=ignore_review_states, privacy=privacy)
+                                       ignore_review_states=ignore_review_states, privacy=privacy,
+                                       unrestricted=unrestricted)
         # now we construct tree structure
         for item in items:
             category = item.getCategory(theObject=True)
