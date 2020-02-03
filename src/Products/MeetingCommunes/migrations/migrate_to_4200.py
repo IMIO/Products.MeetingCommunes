@@ -67,12 +67,18 @@ class Migrate_To_4200(PMMigrate_To_4200):
                     break
         logger.info('Done.')
 
+    def _after_reinstall(self):
+        """Use hook after reinstall to adapt workflow_history."""
+        super(Migrate_To_4200, self)._after_reinstall()
+        self._adaptWFHistoryForItemsAndMeetings()
+
     def run(self,
             profile_name=u'profile-Products.MeetingCommunes:default',
             extra_omitted=[]):
         # change self.profile_name that is reinstalled at the beginning of the PM migration
         self.profile_name = profile_name
 
+        # fix used WFs before reinstalling
         self._fixUsedMeetingWFs()
 
         # call steps from Products.PloneMeeting
@@ -80,7 +86,6 @@ class Migrate_To_4200(PMMigrate_To_4200):
 
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4200...')
-        self._adaptWFHistoryForItemsAndMeetings()
 
 
 # The migration function -------------------------------------------------------
