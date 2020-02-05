@@ -3,6 +3,14 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
+
+4.2a1 (unreleased)
+------------------
+
+- Adapted item workflow to use MeetingConfig.itemWFValidationLevels defined configuration
+- Added new 'meetingadvice' related workflows : 'meetingadvicefinanceseditor_workflow' and 'meetingadvicefinancesmanager_workflow'
+- MeetingConfig.itemDecidedStates and MeetingConfig.itemPositiveDecidedStates fields were removed, adapted import_data files accordingly
+
 4.1.7 (unreleased)
 ------------------
 
@@ -12,9 +20,6 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Adapted examples_fr import_data as 'searchalldecisions' was renamed to 'searchallmeetings'
 - Added parameter unrestricted=False to MCMeetingDocumentGenerationHelperView.get_grouped_items
   so it is possible to get every items of a meeting, even items current user may not access
-- Adapted item workflow to use MeetingConfig.itemWFValidationLevels defined configuration
-- Added new 'meetingadvice' related workflows : 'meetingadvicefinanceseditor_workflow' and 'meetingadvicefinancesmanager_workflow'
-- MeetingConfig.itemDecidedStates and MeetingConfig.itemPositiveDecidedStates fields were removed, adapted import_data files accordingly
 
 4.1.6 (2019-11-26)
 ------------------
