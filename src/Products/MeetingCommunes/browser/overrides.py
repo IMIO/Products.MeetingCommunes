@@ -358,6 +358,10 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         if ignore_review_states:
             query['review_state'] = {'not': ignore_review_states}
 
+        # do not filter on selected itemUids when unrestricted=True
+        if unrestricted:
+            itemUids = []
+
         items = self.real_context.getItems(
             uids=itemUids,
             listTypes=listTypes,

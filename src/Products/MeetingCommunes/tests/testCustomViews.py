@@ -799,6 +799,7 @@ class testCustomViews(MeetingCommunesTestCase):
 
         # by default pmCreator1 may only get 'developers' items
         self.changeUser('pmCreator1')
+        itemUids = [item.UID for item in meeting.getItems(ordered=True, theObjects=False)]
         grouped_items = helper.get_grouped_items(
             itemUids, group_by='proposingGroup', unrestricted=False)
         self.assertEqual(len(grouped_items), 1)
@@ -815,6 +816,7 @@ class testCustomViews(MeetingCommunesTestCase):
 
         # by default pmCreator2 may only get 'vendors' items
         self.changeUser('pmCreator2')
+        itemUids = [item.UID for item in meeting.getItems(ordered=True, theObjects=False)]
         grouped_items = helper.get_grouped_items(
             itemUids, group_by='proposingGroup', unrestricted=False)
         self.assertEqual(len(grouped_items), 1)
