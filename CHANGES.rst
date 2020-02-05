@@ -10,6 +10,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Reintegrated CustomMeeting.getPrintableItemsByCategory waiting for another solution to be able to print empty categories
 - Call migration to PloneMeeting 4104 in migration to MeetingCommunes 4.1
 - Adapted examples_fr import_data as 'searchalldecisions' was renamed to 'searchallmeetings'
+- Added parameter unrestricted=False to MCMeetingDocumentGenerationHelperView.get_grouped_items
+  so it is possible to get every items of a meeting, even items current user may not access
 - Adapted item workflow to use MeetingConfig.itemWFValidationLevels defined configuration
 - Added new 'meetingadvice' related workflows : 'meetingadvicefinanceseditor_workflow' and 'meetingadvicefinancesmanager_workflow'
 - MeetingConfig.itemDecidedStates and MeetingConfig.itemPositiveDecidedStates fields were removed, adapted import_data files accordingly
