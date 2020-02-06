@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2a1 (unreleased)
+4.2a1 (2020-02-06)
 ------------------
 
 - Adapted item workflow to use MeetingConfig.itemWFValidationLevels defined configuration
