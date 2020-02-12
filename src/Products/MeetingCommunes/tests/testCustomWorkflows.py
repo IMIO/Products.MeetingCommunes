@@ -115,15 +115,15 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         wftool = self.portal.portal_workflow
         # itemfrozen change into accepted
         self.assertEquals('accepted', wftool.getInfoFor(item1, 'review_state'))
-        # delayed rest delayed (it's already a 'decide' state)
+        # delayed stays delayed (it's already a 'decide' state)
         self.assertEquals('delayed', wftool.getInfoFor(item2, 'review_state'))
         # pre_accepted change into accepted
         self.assertEquals('accepted', wftool.getInfoFor(item3, 'review_state'))
-        # accepted_but_modified rest accepted_but_modified (it's already a 'decide' state)
+        # accepted_but_modified stays accepted_but_modified (it's already a 'decide' state)
         self.assertEquals('accepted_but_modified', wftool.getInfoFor(item4, 'review_state'))
-        # refused rest refused (it's already a 'decide' state)
+        # refused stays refused (it's already a 'decide' state)
         self.assertEquals('refused', wftool.getInfoFor(item5, 'review_state'))
-        # accepted rest accepted (it's already a 'decide' state)
+        # accepted stays accepted (it's already a 'decide' state)
         self.assertEquals('accepted', wftool.getInfoFor(item6, 'review_state'))
         # presented change into accepted
         self.assertEquals('accepted', wftool.getInfoFor(item7, 'review_state'))
