@@ -287,11 +287,11 @@ class testCustomViews(MeetingCommunesTestCase):
         # test delay started from WF
         self.changeUser('siteadmin')
         self.proposeItem(item)
-        cfg.setItemAdviceStates(('proposed', 'validated',))
-        cfg.setItemAdviceEditStates(('proposed', 'validated',))
-        cfg.setItemAdviceViewStates(('proposed', 'validated',))
+        cfg.setItemAdviceStates((item.queryState(), 'validated',))
+        cfg.setItemAdviceEditStates((item.queryState(), 'validated',))
+        cfg.setItemAdviceViewStates((item.queryState(), 'validated',))
         self.assertEqual(helper._getItemAdviceTransmissionDate(),
-                         getLastWFAction(item, 'propose')['time'])
+                         getLastWFAction(item, self.get_transitions_for_proposing_item()[-1])['time'])
 
         # test delay started regular way
         cfg.setItemAdviceStates(('validated',))
