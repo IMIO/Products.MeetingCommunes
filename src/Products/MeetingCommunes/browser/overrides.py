@@ -18,6 +18,7 @@ from Products.PloneMeeting.browser.views import FolderDocumentGenerationHelperVi
 from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperView
 from Products.PloneMeeting.utils import get_annexes
+from Products.PloneMeeting.utils import get_person_from_userid
 from zope.component import getAdapter
 
 
@@ -61,14 +62,129 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         return result
 
     def print_deliberation(self,
-                           xhtmlContents=[],
+                           contents=None,
                            **kwargs):
-        '''Print the full item deliberation and includes specific content :
-           - finances advice;
-           - sendToAuthority.'''
-        result = super(MCItemDocumentGenerationHelperView, self).print_deliberation(
-            xhtmlContents, **kwargs)
-        return result
+        """
+        Print the full item deliberation and includes the finance advices
+        :param contents: contents to print, include 'finance_advices'
+        to specify where to put the finance advices.
+        :param kwargs: print_formatted_finance_advice and printXhtml kwargs
+        :return: xhtml str representing the full item deliberation
+        """
+        if not contents:
+            contents = (
+                'motivation',
+                'finance_advices',
+                'decision'
+            )
+        XhtmlContent = []
+        item = self.real_context
+
+        for content in contents:
+            if content == 'finance_advices':
+                XhtmlContent.append(self.print_formatted_finance_advice(
+                    finance_advices_template=kwargs.pop('finance_advices_formats', None),
+                    finance_used_cases=kwargs.pop('finance_used_cases', None)
+                ))
+            elif content in dir(item):
+                field = item.Schema().getField(content)  # get the field from the schema
+                content_accessor = getattr(item, field.accessor)  # get the accessor method from item
+                XhtmlContent.append(content_accessor())
+            else:
+                XhtmlContent.append(content)
+
+        return self.printXhtml(
+            self.context,
+            xhtmlContents=XhtmlContent,
+            **kwargs)
+
+    def print_formatted_finance_advice(self,
+                                       finance_used_cases=None,
+                                       finance_advices_template=None):
+        """
+        Print the finance advices based on legal cases and a template.
+        :param finance_used_cases: legal cases among 'initiative', 'legal', 'simple',
+                                                  'simple_not_given', 'legal_not_given
+        :param finance_advices_template: dict with the legal case as key and the pattern as value
+        :return: a xhtml str representing finance advices
+        """
+        if not finance_used_cases:
+            finance_used_cases = ('initiative', 'legal', 'simple',
+                          'simple_not_given', 'legal_not_given')
+        if not finance_advices_template:
+            finance_advices_template = {
+                "simple":
+                    u"<p>Considérant l'avis {type_translated} {by} {adviser} "
+                    u"remis en date du {advice_given_on_localized},</p>",
+
+                "simple_not_given":
+                    u"<p>Considérant l'avis non rendu par {prefix} {adviser}</p>",
+
+                "legal":
+                    u"<p>Considérant la transmission du dossier {to} {adviser} "
+                    u"pour avis prealable en date du {item_transmitted_on_localized},</p>"
+                    u"<p>Considérant l'avis {type_translated} {by} {adviser} "
+                    u"remis en date du {advice_given_on_localized},</p>",
+
+                "legal_not_given":
+                    u"<p>Considérant la transmission du dossier {to} {adviser} "
+                    u"pour avis prealable en date du {item_transmitted_on_localized},</p>"
+                    u"<p>Considérant l'avis non rendu par {prefix} {adviser},</p>",
+
+                "initiative":
+                    u"<p>Considérant l'avis d'initiative {type_translated} {to} {adviser} "
+                    u"remis en date du {advice_given_on_localized},</p>"
+            }
+        formatted_finance_advice = ""
+        finances_advices = {case: self.printFinanceAdvice(case)
+                            for case in finance_advices_template.keys()}
+        for case, advices in finances_advices.items():
+            if case not in finance_used_cases:
+                continue
+            for advice in advices:
+                if self.get_contact_infos(userid=advice['creator_id'])['held_position_label']:
+                    adviser = \
+                        self.get_contact_infos(userid=advice['creator_id'])['held_position_label']
+                else:
+                    adviser = advice['name']
+
+                formatted_finance_advice += finance_advices_template[case].format(
+                    type_translated=advice["type_translated"].lower(),
+                    adviser=adviser,
+                    prefix=self._get_prefix_for_finance_advice('prefix', advice),
+                    to=self._get_prefix_for_finance_advice('to', advice),
+                    by=self._get_prefix_for_finance_advice('by', advice),
+                    item_transmitted_on_localized=advice["item_transmitted_on_localized"],
+                    advice_given_on_localized=advice["advice_given_on_localized"]
+                )
+        return formatted_finance_advice.encode('utf-8')
+
+    def _get_prefix_for_finance_advice(self, type, advice):
+        """
+        Return prefix for a given finance advise
+        :param type: type of prefix, must be among 'prefix', 'by', 'to'
+        :param advice: advice for which prefix must be
+        :return:
+        """
+        PREFIXS = {
+            ('prefix', 'M'): u'le',
+            ('prefix', 'F'): u'la',
+            ('by', 'M'): u'du',
+            ('by', 'F'): u'de la',
+            ('to', 'M'): u'au',
+            ('to', 'F'): u'à la',
+        }
+        if advice['type'] == 'not_given' \
+                or not self.get_contact_infos(userid=advice['creator_id'])['person']:
+            # We can't bind the adviser with a contact's person so we must guest the gender
+            if 'trice' in advice['name'].lower():
+                gender = 'F'
+            else:
+                gender = 'M'
+        else:  # we use the contact's gender
+            gender = get_person_from_userid(advice['creator_id']).gender
+
+        return PREFIXS[(type, gender)]
 
     def printFinanceAdvice(self, cases, show_hidden=False):
         """
