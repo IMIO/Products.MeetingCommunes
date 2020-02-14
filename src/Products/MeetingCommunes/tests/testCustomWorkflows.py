@@ -105,7 +105,8 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         # change all items in all different state (except first who is in good state)
         self.backToState(item7, 'presented')
         self.do(item2, 'delay')
-        self.do(item3, 'pre_accept')
+        if 'pre_accept' in self.transitions(item3):
+            self.do(item3, 'pre_accept')
         self.do(item4, 'accept_but_modify')
         self.do(item5, 'refuse')
         self.do(item6, 'accept')
@@ -117,7 +118,7 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         self.assertEquals('accepted', wftool.getInfoFor(item1, 'review_state'))
         # delayed stays delayed (it's already a 'decide' state)
         self.assertEquals('delayed', wftool.getInfoFor(item2, 'review_state'))
-        # pre_accepted change into accepted
+        # pre_accepted change into accepted or item was accepted automatically from itemFrozen
         self.assertEquals('accepted', wftool.getInfoFor(item3, 'review_state'))
         # accepted_but_modified stays accepted_but_modified (it's already a 'decide' state)
         self.assertEquals('accepted_but_modified', wftool.getInfoFor(item4, 'review_state'))
