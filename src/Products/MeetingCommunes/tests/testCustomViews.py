@@ -152,7 +152,7 @@ class testCustomViews(MeetingCommunesTestCase):
         membershipTool = api.portal.get_tool('portal_membership')
         membershipTool.addMember(id=adviser_user_id, password='12345', roles=('Member',), domains=())
 
-        self._addPrincipalToGroup('pmAdviserNG1', get_plone_group_id(new_group_uid, 'advisers'))
+        self._addPrincipalToGroup(adviser_user_id, get_plone_group_id(new_group_uid, 'advisers'))
         return new_group_uid
 
     def _set_up_second_finance_adviser(self, adviser_group_uid):
@@ -287,11 +287,11 @@ class testCustomViews(MeetingCommunesTestCase):
         # test delay started from WF
         self.changeUser('siteadmin')
         self.proposeItem(item)
-        cfg.setItemAdviceStates(('proposed', 'validated',))
-        cfg.setItemAdviceEditStates(('proposed', 'validated',))
-        cfg.setItemAdviceViewStates(('proposed', 'validated',))
+        cfg.setItemAdviceStates((item.queryState(), 'validated',))
+        cfg.setItemAdviceEditStates((item.queryState(), 'validated',))
+        cfg.setItemAdviceViewStates((item.queryState(), 'validated',))
         self.assertEqual(helper._getItemAdviceTransmissionDate(),
-                         getLastWFAction(item, 'propose')['time'])
+                         getLastWFAction(item, self.get_transitions_for_proposing_item()[-1])['time'])
 
         # test delay started regular way
         cfg.setItemAdviceStates(('validated',))
@@ -658,6 +658,46 @@ class testCustomViews(MeetingCommunesTestCase):
             included_values={'category': [i5.getCategory(theObject=True).Title()]},
             excluded_values={'category': [i5.getCategory(theObject=True).Title()]})
         self.assertListEqual(res, [])
+
+    def test_print_formatted_finance_advice(self):
+        # Set up 2 finances advisors CFO and Vendors. See test_printFinanceAdvice.
+        cfg = self.meetingConfig
+        cfo_uid = self._set_up_additional_finance_advisor_group(
+            new_group_name="Chief Financial Officer",
+            adviser_user_id="CFOAdviser"
+        )
+
+        self._set_up_second_finance_adviser(cfo_uid)
+        cfg.powerAdvisersGroups = (cfo_uid, self.vendors_uid,)
+
+        self.changeUser('pmCreator1')
+        data = {'title': 'Item to advice', 'category': 'maintenance'}
+        item1 = self.create('MeetingItem', **data)
+        item1.setOptionalAdvisers((self.developers_uid,
+                                   self.vendors_uid + '__rowid__unique_id_002',
+                                   cfo_uid + '__rowid__unique_id_003'))
+        item1._update_after_edit()
+
+        pod_template = cfg.podtemplates.itemTemplate
+        self.request.set('template_uid', pod_template.UID())
+        self.request.set('output_format', 'odt')
+        view = item1.restrictedTraverse('@@document-generation')
+        view()
+
+        # No advice given
+        helper = view.get_generation_context_helper()
+        result = helper.print_formatted_finance_advice()
+        self.assertTrue('avis non rendu' in result and 'avis positive' not in result)
+
+        # One legal advice given
+        self._give_advice(item1, cfo_uid, "CFOAdviser")
+        result = helper.print_formatted_finance_advice()
+        self.assertTrue('avis non rendu' in result and 'avis positive' in result)
+
+        # Two legal advices given
+        self._give_advice(item1, self.vendors_uid, "pmReviewer2")
+        result = helper.print_formatted_finance_advice()
+        self.assertTrue('avis non rendu' not in result and 'avis positive' in result)
 
     def test__is_different_grouping_as_previous_item(self):
         self.assertTrue(item_dghv._is_different_grouping_as_previous_item([], u'Brol', 0))
