@@ -256,8 +256,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # we do the test for the council config
         # no recurring items defined...
         self.meetingConfig = getattr(self.tool, self.cfg2_id)
-        meeting = self.create('Meeting', date='2007/12/11 09:00:00')
-        self.assertEquals(len(meeting.getItems()), 0)
+        self._checkRecurringItemsCouncil()
 
     def _checkRecurringItemsCollege(self):
         '''Tests the recurring items system.'''
@@ -303,6 +302,10 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.decideMeeting(meeting)
         self.failUnless(len(meeting.getItems()) == 7)
         self.failUnless(len(meeting.getItems(listTypes=['late'])) == 3)
+
+    def _checkRecurringItemsCouncil(self):
+        meeting = self.create('Meeting', date='2007/12/11 09:00:00')
+        self.assertEquals(len(meeting.getItems()), 0)
 
     def test_pm_RemoveContainer(self):
         '''Run the test_pm_RemoveContainer from PloneMeeting.'''

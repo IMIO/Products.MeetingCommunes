@@ -291,7 +291,7 @@ class testCustomViews(MeetingCommunesTestCase):
         cfg.setItemAdviceEditStates((item.queryState(), 'validated',))
         cfg.setItemAdviceViewStates((item.queryState(), 'validated',))
         self.assertEqual(helper._getItemAdviceTransmissionDate(),
-                         getLastWFAction(item, self.get_transitions_for_proposing_item()[-1])['time'])
+                         getLastWFAction(item)['time'])
 
         # test delay started regular way
         cfg.setItemAdviceStates(('validated',))

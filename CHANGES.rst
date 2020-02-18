@@ -6,9 +6,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 4.2a2 (unreleased)
 ------------------
-
 - Nothing changed yet.
-
 
 4.2a1 (2020-02-06)
 ------------------
@@ -17,7 +15,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Added new 'meetingadvice' related workflows : 'meetingadvicefinanceseditor_workflow' and 'meetingadvicefinancesmanager_workflow'
 - MeetingConfig.itemDecidedStates and MeetingConfig.itemPositiveDecidedStates fields were removed, adapted import_data files accordingly
 
-4.1.7 (unreleased)
+4.1.7 (2020-02-18)
 ------------------
 
 - Overrided print_deliberation to include specific content
