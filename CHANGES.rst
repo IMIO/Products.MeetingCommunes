@@ -6,8 +6,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Added ICompoundCriterion adapter `all-items-to-control-completeness-of` based on `items-to-control-completeness-of but`
+  that will query every finances advice, not only delay aware advices
 
 4.1.7 (2020-02-18)
 ------------------
