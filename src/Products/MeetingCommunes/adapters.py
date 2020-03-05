@@ -1249,11 +1249,10 @@ InitializeClass(CustomToolPloneMeeting)
 
 class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
 
-    @property
-    @ram.cache(query_user_groups_cachekey)
-    def query_itemstocontrolcompletenessof(self):
-        '''Queries all items for which there is completeness to evaluate,
-           so where completeness is not 'completeness_complete'.'''
+    def _query(self, only_delay_advices=True):
+        '''Queries items for which there is completeness to evaluate,
+           so where completeness is not 'completeness_complete'.
+           If p_only_delay_advices=True, only return delay aware advices.'''
         if not self.cfg:
             return {}
         groupIds = []
@@ -1265,6 +1264,8 @@ class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
             wfTool = api.portal.get_tool('portal_workflow')
             initial_state = wfTool.getWorkflowsFor('meetingadvicefinances')[0].initial_state
             groupIds.append('delay__{0}_{1}'.format(financeGroupUID, initial_state))
+            if not only_delay_advices:
+                groupIds.append('real_org_uid__{0}_{1}'.format(financeGroupUID, initial_state))
         review_states = finances_give_advice_states(self.cfg)
         return {'portal_type': {'query': self.cfg.getItemTypeName()},
                 'getCompleteness': {'query': ('completeness_not_yet_evaluated',
@@ -1273,8 +1274,26 @@ class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
                 'indexAdvisers': {'query': groupIds},
                 'review_state': {'query': tuple(set(review_states))}}
 
+    @property
+    @ram.cache(query_user_groups_cachekey)
+    def query_itemstocontrolcompletenessof(self):
+        """ """
+        query = self._query()
+        return query
+
     # we may not ram.cache methods in same file with same name...
     query = query_itemstocontrolcompletenessof
+
+
+class AllItemsToControlCompletenessOfAdapter(ItemsToControlCompletenessOfAdapter):
+
+    @property
+    @ram.cache(query_user_groups_cachekey)
+    def query_allitemstocontrolcompletenessof(self):
+        ''' '''
+        return self._query(only_delay_advices=False)
+    # we may not ram.cache methods in same file with same name...
+    query = query_allitemstocontrolcompletenessof
 
 
 class BaseItemsWithAdviceAdapter(CompoundCriterionBaseAdapter):
