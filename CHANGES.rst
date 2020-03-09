@@ -9,6 +9,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Added ICompoundCriterion adapter `all-items-to-control-completeness-of` based on `items-to-control-completeness-of but`
   that will query every finances advice, not only delay aware advices
 - Updated styles1.odt to add CKEditor's styles
+- Added some more usecases with abbreviated firstname in attendees.odt
 
 4.1.7 (2020-02-18)
 ------------------
