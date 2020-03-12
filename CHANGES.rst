@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1.8 (unreleased)
+4.1.8 (2020-03-12)
 ------------------
 
 - Added ICompoundCriterion adapter `all-items-to-control-completeness-of` based on `items-to-control-completeness-of but`
