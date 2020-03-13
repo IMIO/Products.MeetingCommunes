@@ -6,8 +6,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.9 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Fixed `all-items-to-control-completeness-of` ICompoundCriterion adapter.
 
 4.1.8 (2020-03-12)
 ------------------

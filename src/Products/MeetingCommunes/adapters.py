@@ -1334,15 +1334,16 @@ class ItemsToControlCompletenessOfAdapter(CompoundCriterionBaseAdapter):
             return {}
         groupIds = []
         for financeGroupUID in self.cfg.adapted().getUsedFinanceGroupIds():
-            # advice not giveable
-            groupIds.append('delay__%s_advice_not_giveable' % financeGroupUID)
             # advice was already given once and come back to the finance
             # in it's initial state
             wfTool = api.portal.get_tool('portal_workflow')
             initial_state = wfTool.getWorkflowsFor('meetingadvicefinances')[0].initial_state
             groupIds.append('delay__{0}_{1}'.format(financeGroupUID, initial_state))
+            # advice not giveable
+            groupIds.append('delay__%s_advice_not_giveable' % financeGroupUID)
             if not only_delay_advices:
-                groupIds.append('real_org_uid__{0}_{1}'.format(financeGroupUID, initial_state))
+                groupIds.append('{0}_{1}'.format(financeGroupUID, initial_state))
+                groupIds.append('%s_advice_not_giveable' % financeGroupUID)
         review_states = finances_give_advice_states(self.cfg)
         return {'portal_type': {'query': self.cfg.getItemTypeName()},
                 'getCompleteness': {'query': ('completeness_not_yet_evaluated',
