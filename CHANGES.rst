@@ -7,6 +7,11 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2a4 (unreleased)
 ------------------
 
+- Merged changes from 4.1.9
+
+4.1.9 (2020-04-02)
+------------------
+
 - Fixed `all-items-to-control-completeness-of` ICompoundCriterion adapter.
 - Added some example regarding 'Non attendees' in attendees.odt template.
 

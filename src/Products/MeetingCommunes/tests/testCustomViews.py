@@ -961,6 +961,7 @@ class testCustomViews(MeetingCommunesTestCase):
         self.presentItem(create_and_validate_item('pmCreator1'))
         self.presentItem(test2)
 
+        self.changeUser('pmManager')
         self.freezeMeeting(meeting)
 
         test3 = create_and_validate_item('pmCreator1', meeting.UID())
