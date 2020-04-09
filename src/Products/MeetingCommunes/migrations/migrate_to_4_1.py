@@ -71,13 +71,14 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
         # move each value of echevinServices to groupsInCharge
         # and migrate asCopyGroupOn
         for mGroup in self.tool.objectValues('MeetingGroup'):
-            echevinServices = mGroup.echevinServices
-            for echevinService in echevinServices:
-                otherMGroup = self.tool.get(echevinService)
-                if otherMGroup:
-                    groupsInCharge = list(otherMGroup.getGroupsInCharge())
-                    groupsInCharge.append(mGroup.getId())
-                    otherMGroup.setGroupsInCharge(groupsInCharge)
+            if hasattr(mGroup, "echevinServices"):
+                echevinServices = mGroup.echevinServices
+                for echevinService in echevinServices:
+                    otherMGroup = self.tool.get(echevinService)
+                    if otherMGroup:
+                        groupsInCharge = list(otherMGroup.getGroupsInCharge())
+                        groupsInCharge.append(mGroup.getId())
+                        otherMGroup.setGroupsInCharge(groupsInCharge)
             # asCopyGroupOn
             mGroup.setAsCopyGroupOn(_adapt_expression(mGroup.getAsCopyGroupOn()))
         # adapt customAdvisers
