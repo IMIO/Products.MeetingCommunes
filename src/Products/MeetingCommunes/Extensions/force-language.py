@@ -6,6 +6,8 @@ from __future__ import print_function
 from datetime import datetime
 
 from Products.PloneMeeting import logger
+from Products.PloneMeeting.config import HAS_SOLR
+
 
 import transaction
 from plone.app.querystring import queryparser
@@ -17,20 +19,31 @@ class FixLanguage:
         self.item_counter = 0
         self.meeting_counter = 0
         self.odds = []
+        self.treated_count = {}
 
     def get_objects_to_correct(self):
-        catalog_query = [
-            {
-                "i": "meta_type",
-                "o": "plone.app.querystring.operation.selection.is",
-                "v": ["Meeting", "MeetingItem"],
-            },
-        ]
-        query = queryparser.parseFormquery(self.portal, catalog_query)
+        if HAS_SOLR:
+            # with solr, its possible to query on Language attribute
+            query = {'Language': {'not': ['fr', 'any']}, }
+        else:
+            catalog_query = [
+                {
+                    "i": "meta_type",
+                    "o": "plone.app.querystring.operation.selection.is",
+                    "v": ["Meeting", "MeetingItem"],
+                },
+            ]
+            query = queryparser.parseFormquery(self.portal, catalog_query)
         res = self.portal.portal_catalog(**query)
         return res
 
+    def commit_and_print_state(self):
+        transaction.commit()
+        message = "Transaction commited. {}".format(self.treated_count)
+        logger.info(message)
+
     def run(self, reindex_meetings, commit_threshold, target_lang):
+        counter = 0
         member = self.portal.portal_membership.getAuthenticatedMember()
         if not member.has_role("Manager"):
             return "You must be a Manager to access this script !"
@@ -43,7 +56,7 @@ class FixLanguage:
             else:
                 lang = brain.Language()
 
-            if lang != target_lang:
+            if lang not in (target_lang, 'any'):
                 if brain.meta_type == "Meeting":
                     self.meeting_counter += 1
                 elif brain.meta_type == "MeetingItem":
@@ -56,13 +69,15 @@ class FixLanguage:
                 obj.setLanguage("fr")
                 if brain.meta_type != "Meeting" or reindex_meetings:
                     obj.reindexObject()
+                if brain.meta_type not in self.treated_count:
+                    self.treated_count[brain.meta_type] = 1
+                else:
+                    self.treated_count[brain.meta_type] += 1
 
-                if (self.meeting_counter + self.item_counter) % commit_threshold == 0:
-                    transaction.commit()
-                    message = "Transaction commited. {} Meetings and {} MeetingItems fixed up to now.".format(
-                        self.meeting_counter, self.item_counter
-                    )
-                    logger.info(message)
+                counter += 1
+                if counter % commit_threshold == 0:
+                    self.commit_and_print_state()
+        self.commit_and_print_state()
 
 
 def fix_language(self, reindex_meetings=False, commit_threshold=1000, target_lang="fr"):
