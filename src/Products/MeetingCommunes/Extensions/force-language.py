@@ -71,7 +71,7 @@ class FixLanguage:
                     tme = obj.getModificationDate()
                     obj.reindexObject()
                     obj.setModificationDate(tme)
-                    obj.reindexObject(idxs=['modified', 'ModificationDate'])
+                    obj.reindexObject(idxs=['modified'])
                 if brain.meta_type not in self.treated_count:
                     self.treated_count[brain.meta_type] = 1
                 else:
