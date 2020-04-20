@@ -6,7 +6,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.10 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Added force-language external method.
+  [odelaere]
 
 
 4.1.9 (2020-04-02)
