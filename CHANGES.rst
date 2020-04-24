@@ -8,7 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Added force-language external method.
   [odelaere]
-
+- Call migration to PloneMeeting 4105 in migration to MeetingCommunes 4.1.
+  [gbastien]
 
 4.1.9 (2020-04-02)
 ------------------
