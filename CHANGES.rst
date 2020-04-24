@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1.10 (unreleased)
+4.1.10 (2020-04-24)
 -------------------
 
 - Added force-language external method.
