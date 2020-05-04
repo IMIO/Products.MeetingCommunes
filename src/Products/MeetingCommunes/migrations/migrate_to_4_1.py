@@ -9,6 +9,7 @@ from Products.PloneMeeting.migrations.migrate_to_4101 import Migrate_To_4101
 from Products.PloneMeeting.migrations.migrate_to_4102 import Migrate_To_4102
 from Products.PloneMeeting.migrations.migrate_to_4103 import Migrate_To_4103
 from Products.PloneMeeting.migrations.migrate_to_4104 import Migrate_To_4104
+from Products.PloneMeeting.migrations.migrate_to_4105 import Migrate_To_4105
 
 import logging
 
@@ -71,13 +72,14 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
         # move each value of echevinServices to groupsInCharge
         # and migrate asCopyGroupOn
         for mGroup in self.tool.objectValues('MeetingGroup'):
-            echevinServices = mGroup.echevinServices
-            for echevinService in echevinServices:
-                otherMGroup = self.tool.get(echevinService)
-                if otherMGroup:
-                    groupsInCharge = list(otherMGroup.getGroupsInCharge())
-                    groupsInCharge.append(mGroup.getId())
-                    otherMGroup.setGroupsInCharge(groupsInCharge)
+            if hasattr(mGroup, "echevinServices"):
+                echevinServices = mGroup.echevinServices
+                for echevinService in echevinServices:
+                    otherMGroup = self.tool.get(echevinService)
+                    if otherMGroup:
+                        groupsInCharge = list(otherMGroup.getGroupsInCharge())
+                        groupsInCharge.append(mGroup.getId())
+                        otherMGroup.setGroupsInCharge(groupsInCharge)
             # asCopyGroupOn
             mGroup.setAsCopyGroupOn(_adapt_expression(mGroup.getAsCopyGroupOn()))
         # adapt customAdvisers
@@ -123,6 +125,7 @@ class Migrate_To_4_1(PMMigrate_To_4_1):
         Migrate_To_4102(self.portal).run()
         Migrate_To_4103(self.portal).run()
         Migrate_To_4104(self.portal).run()
+        Migrate_To_4105(self.portal).run()
 
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4.1...')
