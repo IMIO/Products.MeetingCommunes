@@ -8,6 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Call migration to PloneMeeting 4107 in migration to MeetingCommunes 4.1.
   [gbastien]
+- Do not use relative path to define icon path of ItemAnnexTypeDescriptor.
+  [gbastien]
 
 4.1.11 (2020-05-14)
 -------------------
