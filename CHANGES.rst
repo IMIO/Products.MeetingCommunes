@@ -9,6 +9,22 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Merged changes from 4.1.9
 - Merged changes from 4.1.10
+- Merged changes from 4.1.11
+- Merged changes from 4.1.12
+
+4.1.12 (unreleased)
+-------------------
+
+- Call migration to PloneMeeting 4107 in migration to MeetingCommunes 4.1.
+  [gbastien]
+- Do not use relative path to define icon path of ItemAnnexTypeDescriptor.
+  [gbastien]
+
+4.1.11 (2020-05-14)
+-------------------
+
+- Call migration to PloneMeeting 4106 in migration to MeetingCommunes 4.1.
+  [gbastien]
 
 4.1.10 (2020-04-24)
 -------------------
