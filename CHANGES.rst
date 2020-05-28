@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1.12 (unreleased)
+4.1.12 (2020-05-28)
 -------------------
 
 - Call migration to PloneMeeting 4107 in migration to MeetingCommunes 4.1.
