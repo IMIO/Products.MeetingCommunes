@@ -354,6 +354,71 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         creator = api.user.get(self.real_context.Creator())
         return creator and creator.getProperty('fullname') or self.real_context.Creator()
 
+    def print_item_number_ordinal(self, ordinals=None):
+        """
+        Get the ordinal of the item number.
+        :param ordinals: ordinals to apply : {u'1': u'er', u'default': u'ème'} for french
+        :return: the ordinal of the item number
+        """
+        if not ordinals:
+            ordinals = {u'1': u'er', u'default': u'ème'}
+
+        item_number = self.real_context.getItemNumber(for_display=True)
+
+        return ordinals.get(item_number, ordinals['default'])
+
+    def item_number_to_letters(self, number):
+        string = ""
+        while number > 0:
+            number, remainder = divmod(number - 1, 26)
+            string = chr(97 + remainder) + string
+        return string
+
+    def print_item_number_with_sublevel(self, mode="alpha", num_format="{0}.{1}"):
+        """
+        Print the item number with sub-level number
+        which can be : simple number (mode=>None),
+        numeral adverb (mode=>"adverb") or alphabetical letter (mode=>"alpha")
+        :param mode: None, "alpha" or "adverb"
+        :param num_format: format of the printed number
+        :return: item number formatted
+        """
+        ADVERBS = {
+                      1: "bis",
+                      2: "ter",
+                      3: "quater",
+                      4: "quinquies",
+                      5: "sexies",
+                      6: "septies",
+                      7: "octies",
+                      8: "nonies",
+                      9: "decies",
+                      10: "undecies",
+                      11: "duodecies",
+                      12: "terdecies",
+                      13: "quaterdecies",
+                      14: "quinquies",
+                      15: "sexies",
+                      16: "septies",
+                      17: "octodecies",
+                      18: "novodecies",
+                      19: "vicies",
+                  }
+
+        item_number = self.real_context.getItemNumber()
+        first_part = int(item_number / 100)
+        second_part = item_number % 100
+        if second_part:
+            if mode == "alpha":
+                second_part = self.item_number_to_letters(second_part)
+            if mode == "adverb":
+                # lookup if there is an adverb in the mapping dict. If not, use the sub-level number
+                second_part = ADVERBS.get(second_part, second_part)
+
+            return num_format.format(first_part, second_part)
+        else:
+            return str(first_part)
+
     def print_item_number_within_category(self, listTypes=['normal', 'late'], default=''):
         res = default
 

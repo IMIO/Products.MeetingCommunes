@@ -989,3 +989,88 @@ class testCustomViews(MeetingCommunesTestCase):
 
         self.assertEquals(helper3.print_item_number_within_category(listTypes=['normal'], default='XXXX'), 'XXXX')
         self.assertEquals(helper4.print_item_number_within_category(listTypes=['normal'], default='ERROR'), 'ERROR')
+
+    def test_mc_print_item_number_with_sublevel(self):
+        expected_with_alpha = ["1",
+                            "1.a",
+                            "1.b",
+                            "1.c",
+                            "1.d",
+                            "1.e",
+                            "1.f",
+                            "1.g",
+                            "1.h",
+                            "1.i",
+                            "1.j",
+                            "1.k",
+                            "1.l",
+                            "1.m",
+                            "1.n",
+                            "1.o",
+                            "1.p",
+                            "1.q",
+                            "1.r",
+                            "1.s",
+                            "1.t",
+                            "1.u",
+                            "1.v",
+                            "1.w",
+                            "1.x",
+                            "1.y",
+                            "1.z",
+                            "1.aa",
+                            "1.ab",
+                            "2"]
+        expected_with_adverbs = ["1",
+                            "1/bis",
+                            "1/ter",
+                            "1/quater",
+                            "1/quinquies",
+                            "1/sexies",
+                            "1/septies",
+                            "1/octies",
+                            "1/nonies",
+                            "1/decies",
+                            "1/undecies",
+                            "1/duodecies",
+                            "1/terdecies",
+                            "1/quaterdecies",
+                            "1/quinquies",
+                            "1/sexies",
+                            "1/septies",
+                            "1/octodecies",
+                            "1/novodecies",
+                            "1/vicies",
+                            "1/20",
+                            "1/21",
+                            "1/22",
+                            "1/23",
+                            "1/24",
+                            "1/25",
+                            "1/26",
+                            "1/27",
+                            "1/28",
+                            "2"]
+
+        self.changeUser('pmManager')
+        meeting = self.create('Meeting', date=DateTime('2019/01/01'))
+        for i in range(101, 129):
+            item = self.create('MeetingItem')
+            self.presentItem(item)
+            item.setItemNumber(i)
+
+        for i, item in enumerate(meeting.getItems(ordered=True)):
+            view = item.restrictedTraverse('document-generation')
+            helper = view.get_generation_context_helper()
+            self.assertEquals(
+                helper.print_item_number_with_sublevel(mode="alpha"),
+                expected_with_alpha[i]
+            )
+            self.assertEquals(
+                helper.print_item_number_with_sublevel(mode="adverb", num_format="{0}/{1}"),
+                expected_with_adverbs[i]
+            )
+            self.assertEquals(
+                helper.print_item_number_with_sublevel(mode=None, num_format="{0}.{1}"),
+                item.getItemNumber(for_display=True)
+            )

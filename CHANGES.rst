@@ -6,7 +6,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.13 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Added some methods to print an item number in different ways.
+  [aduchene]
 
 
 4.1.12 (2020-05-28)
