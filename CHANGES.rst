@@ -6,15 +6,17 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.14 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Added `import_organizations_from_csv` to be able to import organizations from a CSV file.
+  [gbastien]
+- In `import_meetingsUsersAndRoles_from_csv` take into account `id` if given (fallback to normalized title if not)
+  and manage extra columns `groupsInCharge`, `usingGroups` and `actif` (WF state).
+  [gbastien]
 
 4.1.13 (2020-06-11)
 -------------------
 
 - Added some methods to print an item number in different ways.
   [aduchene]
-
 
 4.1.12 (2020-05-28)
 -------------------

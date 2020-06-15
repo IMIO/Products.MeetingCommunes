@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+
 from AccessControl import Unauthorized
 from collective.contact.plonegroup.utils import get_organizations
 from collective.contact.plonegroup.utils import get_own_organization
+from collective.contact.plonegroup.utils import select_organization
 from plone import api
 from Products.CMFCore.exceptions import BadRequest
 from Products.CMFPlone.utils import normalizeString
@@ -54,6 +57,62 @@ def import_orgs(self, data=None):
             out.append("Organization %s added" % elt_id)
         else:
             out.append("Organization %s already exists" % elt_id)
+    return '\n'.join(out)
+
+
+def import_organizations_from_csv(self, fname=None):
+    """
+      Import the oranizations from the 'csv file' (fname received as parameter)
+    """
+
+    member = api.user.get_current()
+    if not member.has_role('Manager'):
+        raise Unauthorized('You must be a Manager to access this script !')
+
+    if not fname:
+        return "This script needs a 'fname' parameter"
+
+    if not hasattr(self, 'portal_plonemeeting'):
+        return "PloneMeeting must be installed to run this script !"
+
+    file = None
+    try:
+        file = open(fname, "rb")
+        reader = csv.DictReader(file)
+    except Exception, msg:
+        if file:
+            file.close()
+        return "Error with file : %s" % msg.value
+
+    out = []
+
+    own_org = get_own_organization()
+    for row in reader:
+        data = {}
+        org_id = row['id'] or normalizeString(row['title'], self)
+        if org_id in own_org.objectIds():
+            out.append("Organization '%s' already exists and was not created!" % org_id)
+            continue
+        data['title'] = safe_unicode(row['title'])
+        data['description'] = safe_unicode(row['description'])
+        data['acronym'] = safe_unicode(row['acronym'])
+        # make sure these fields are not None
+        data['item_advice_states'] = []
+        data['item_advice_edit_states'] = []
+        data['item_advice_view_states'] = []
+        data['groups_in_charge'] = []
+        org = api.content.create(container=own_org,
+                                 type='organization',
+                                 id=org_id,
+                                 **data)
+        out.append("Organization '%s' is created" % org_id)
+        if row['plonegroup']:
+            org_uid = org.UID()
+            select_organization(org_uid)
+            out.append("Organization '%s (%s)' is selectd in plonegroup" % (org_id, org_uid))
+
+    file.close()
+
     return '\n'.join(out)
 
 
@@ -158,8 +217,8 @@ def import_meetingsCategories_from_csv(self, meeting_config='', isClassifier=Fal
         catFolder = meetingConfig.categories
 
     for row in reader:
-        rowid = safe_unicode(row['title'])
-        row_id = normalizeString(rowid, self)
+        title = safe_unicode(row['title'])
+        row_id = safe_unicode(row['id']) or normalizeString(title, self)
         if row_id == '':
             continue
         if not hasattr(catFolder, row_id):
@@ -171,6 +230,21 @@ def import_meetingsCategories_from_csv(self, meeting_config='', isClassifier=Fal
                 cat = getattr(catFolder, row_id)
                 if cat:
                     cat.setCategoryId(row['categoryId'])
+                    if row['groupsInCharge']:
+                        # we have organization ids separated with "|"
+                        groups_in_charge_ids = row['groupsInCharge'].split('|')
+                        groups_in_charge_uids = [org_id_to_uid(gic, ignore_underscore=True)
+                                                 for gic in groups_in_charge_ids]
+                        cat.setGroupsInCharge(groups_in_charge_uids)
+                    if row['usingGroups']:
+                        # we have organization ids separated with "|"
+                        using_groups_ids = row['usingGroups'].split('|')
+                        using_groups_uids = [org_id_to_uid(ug, ignore_underscore=True)
+                                             for ug in using_groups_ids]
+                        cat.setUsingGroups(using_groups_uids)
+                    if not row['actif']:
+                        # disable the MeetingCategory
+                        api.content.transition(cat, 'deactivate', comments='Deactivated during import')
                 out.append("Category (or Classifier) %s added" % row_id)
             except Exception, message:
                 out.append('error with %s - %s : %s' % (row_id, row['title'], message))
