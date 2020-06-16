@@ -11,6 +11,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - In `import_meetingsUsersAndRoles_from_csv` take into account `id` if given (fallback to normalized title if not)
   and manage extra columns `groupsInCharge`, `usingGroups` and `actif` (WF state).
   [gbastien]
+- Added more `position_types` by default (first alderman to sixth alderman) in `examples_fr` profile.
+  [gbastien]
 
 4.1.13 (2020-06-11)
 -------------------
