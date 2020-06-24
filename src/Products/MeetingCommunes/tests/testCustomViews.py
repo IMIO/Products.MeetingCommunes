@@ -989,3 +989,43 @@ class testCustomViews(MeetingCommunesTestCase):
 
         self.assertEquals(helper3.print_item_number_within_category(listTypes=['normal'], default='XXXX'), 'XXXX')
         self.assertEquals(helper4.print_item_number_within_category(listTypes=['normal'], default='ERROR'), 'ERROR')
+
+    def test_mc_print_item_number_with_sublevel(self):
+        expected_with_alpha = {100: "1",
+                               101: "1.a",
+                               102: "1.b",
+                               103: "1.c",
+                               127: "1.aa",
+                               128: "1.ab",
+                               200: "2"}
+
+        expected_with_adverbs = {100: "1",
+                                 101: "1/bis",
+                                 102: "1/ter",
+                                 103: "1/quater",
+                                 127: "1/27",
+                                 128: "1/28",
+                                 200: "2"}
+
+        self.changeUser('pmManager')
+        meeting = self.create('Meeting', date=DateTime('2020/06/10'))
+
+        for item_number in expected_with_alpha.keys():
+            item = self.create('MeetingItem')
+            self.presentItem(item)
+            item.setItemNumber(item_number)
+            view = item.restrictedTraverse('document-generation')
+            helper = view.get_generation_context_helper()
+
+            self.assertEquals(
+                helper.print_item_number_with_sublevel(mode="alpha"),
+                expected_with_alpha.get(item_number)
+            )
+            self.assertEquals(
+                helper.print_item_number_with_sublevel(mode="adverb", num_format="{0}/{1}"),
+                expected_with_adverbs.get(item_number)
+            )
+            self.assertEquals(
+                helper.print_item_number_with_sublevel(mode=None, num_format="{0}.{1}"),
+                item.getItemNumber(for_display=True)
+            )

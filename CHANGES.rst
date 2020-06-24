@@ -11,8 +11,26 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Merged changes from 4.1.10
 - Merged changes from 4.1.11
 - Merged changes from 4.1.12
+- Merged changes from 4.1.13
 
-4.1.12 (unreleased)
+4.1.14 (unreleased)
+-------------------
+
+- Added `import_organizations_from_csv` to be able to import organizations from a CSV file.
+  [gbastien]
+- In `import_meetingsUsersAndRoles_from_csv` take into account `id` if given (fallback to normalized title if not)
+  and manage extra columns `groupsInCharge`, `usingGroups` and `actif` (WF state).
+  [gbastien]
+- Added more `position_types` by default (first alderman to sixth alderman) in `examples_fr` profile.
+  [gbastien]
+
+4.1.13 (2020-06-11)
+-------------------
+
+- Added some methods to print an item number in different ways.
+  [aduchene]
+
+4.1.12 (2020-05-28)
 -------------------
 
 - Call migration to PloneMeeting 4107 in migration to MeetingCommunes 4.1.
