@@ -12,8 +12,15 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Merged changes from 4.1.11
 - Merged changes from 4.1.12
 - Merged changes from 4.1.13
+- Merged changes from 4.1.14
 
-4.1.14 (unreleased)
+4.1.15 (unreleased)
+-------------------
+
+- Nothing changed yet.
+
+
+4.1.14 (2020-06-24)
 -------------------
 
 - Added `import_organizations_from_csv` to be able to import organizations from a CSV file.
