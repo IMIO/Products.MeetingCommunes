@@ -58,6 +58,10 @@ msgstr "Séance du Conseil Communal"
 msgid "MeetingEM"
 msgstr "Séance de l'Etat-Major"
 
+#. Default: "MeetingExecutive"
+msgid "MeetingExecutive"
+msgstr "Séance Bureau exécutif"
+
 #. Default: "Meeting Item AG"
 msgid "MeetingItemAG"
 msgstr "Point AG"

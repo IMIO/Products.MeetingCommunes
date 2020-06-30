@@ -427,6 +427,10 @@ msgstr ""
 msgid "Meetingexecutive"
 msgstr ""
 
+#. Default: "MeetingExecutive"
+msgid "MeetingExecutive"
+msgstr ""
+
 #. Default: "MeetingItemexecutive"
 msgid "MeetingItemexecutive"
 msgstr ""

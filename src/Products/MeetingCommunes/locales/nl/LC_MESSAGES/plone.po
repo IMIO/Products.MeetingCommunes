@@ -57,6 +57,10 @@ msgstr "Gemeenteraadsvergadering"
 msgid "MeetingEM"
 msgstr ""
 
+#. Default: "MeetingExecutive"
+msgid "MeetingExecutive"
+msgstr ""
+
 #. Default: "Meeting Item AG"
 msgid "MeetingItemAG"
 msgstr ""
