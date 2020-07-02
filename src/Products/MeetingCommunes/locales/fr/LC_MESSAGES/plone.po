@@ -58,6 +58,10 @@ msgstr "Séance du Conseil Communal"
 msgid "MeetingEM"
 msgstr "Séance de l'Etat-Major"
 
+#. Default: "MeetingExecutive"
+msgid "MeetingExecutive"
+msgstr "Séance Bureau exécutif"
+
 #. Default: "Meeting Item AG"
 msgid "MeetingItemAG"
 msgstr "Point AG"
@@ -97,6 +101,10 @@ msgstr "Point Conseil Communal"
 #. Default: "Meeting Item EM"
 msgid "MeetingItemEM"
 msgstr "Point Etat-Major"
+
+#. Default: "MeetingItemExecutive"
+msgid "MeetingItemExecutive"
+msgstr "Point Bureau exécutif"
 
 #. Default: "MeetingItemNEGO"
 msgid "MeetingItemNEGO"
@@ -145,6 +153,10 @@ msgstr "Point récurrent Conseil Communal"
 #. Default: "Meeting Item Recurring EM"
 msgid "MeetingItemRecurringEM"
 msgstr "Point récurrent Etat-Major"
+
+#. Default: "MeetingItemRecurringExecutive"
+msgid "MeetingItemRecurringExecutive"
+msgstr "Point récurrent Bureau exécutif"
 
 #. Default: "MeetingItemRecurringNEGO"
 msgid "MeetingItemRecurringNEGO"
@@ -249,6 +261,10 @@ msgstr "Modèle de point Conseil Communal"
 #. Default: "Meeting Item Template EM"
 msgid "MeetingItemTemplateEM"
 msgstr "Modèle de point Etat-Major"
+
+#. Default: "MeetingItemTemplateExecutive"
+msgid "MeetingItemTemplateExecutive"
+msgstr "Modèle de point Bureau exécutif"
 
 #. Default: "MeetingItemTemplateNEGO"
 msgid "MeetingItemTemplateNEGO"

@@ -427,16 +427,32 @@ msgstr ""
 msgid "Meetingexecutive"
 msgstr ""
 
+#. Default: "MeetingExecutive"
+msgid "MeetingExecutive"
+msgstr ""
+
 #. Default: "MeetingItemexecutive"
 msgid "MeetingItemexecutive"
+msgstr ""
+
+#. Default: "MeetingItemExecutive"
+msgid "MeetingItemExecutive"
 msgstr ""
 
 #. Default: "MeetingItemTemplateexecutive"
 msgid "MeetingItemTemplateexecutive"
 msgstr ""
 
+#. Default: "MeetingItemTemplateExecutive"
+msgid "MeetingItemTemplateExecutive"
+msgstr ""
+
 #. Default: "MeetingItemRecurringexecutive"
 msgid "MeetingItemRecurringexecutive"
+msgstr ""
+
+#. Default: "MeetingItemRecurringExecutive"
+msgid "MeetingItemRecurringExecutive"
 msgstr ""
 
 #. Default: "Meetingvolonteers"

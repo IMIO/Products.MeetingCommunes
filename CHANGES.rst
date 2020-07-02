@@ -6,8 +6,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.15 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Fix tranlsation for 'MeetingExecutive'
+  [vpiret]
 
 4.1.14 (2020-06-24)
 -------------------
