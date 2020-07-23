@@ -8,6 +8,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Fix translations for `MeetingExecutive`.
   [vpiret]
+- Add BDC Profiles
+  [anuyens]
+- Add missing translations for MeetingAudit.
+  [anuyens]
 
 4.1.14 (2020-06-24)
 -------------------

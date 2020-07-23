@@ -22,6 +22,14 @@ msgstr ""
 msgid "MeetingAG"
 msgstr ""
 
+#. Default: "MeetingAudit"
+msgid "MeetingAudit"
+msgstr ""
+
+#. Default: "MeetingBDC"
+msgid "MeetingBDC"
+msgstr ""
+
 #. Default: "MeetingBourgmestre"
 msgid "MeetingBourgmestre"
 msgstr ""
@@ -64,6 +72,14 @@ msgstr ""
 
 #. Default: "Meeting Item AG"
 msgid "MeetingItemAG"
+msgstr ""
+
+#. Default: "MeetingItemAudit"
+msgid "MeetingItemAudit"
+msgstr ""
+
+#. Default: "MeetingItemBDC"
+msgid "MeetingItemBDC"
 msgstr ""
 
 #. Default: "MeetingItemBourgmestre"
@@ -116,6 +132,14 @@ msgstr ""
 
 #. Default: "Meeting Item Recurring AG"
 msgid "MeetingItemRecurringAG"
+msgstr ""
+
+#. Default: "MeetingItemRecurringAudit"
+msgid "MeetingItemRecurringAudit"
+msgstr ""
+
+#. Default: "MeetingItemRecurringBDC"
+msgid "MeetingItemRecurringBDC"
 msgstr ""
 
 #. Default: "MeetingItemRecurringBourgmestre"
@@ -224,6 +248,14 @@ msgstr ""
 
 #. Default: "Meeting Item Template AG"
 msgid "MeetingItemTemplateAG"
+msgstr ""
+
+#. Default: "MeetingItemTemplateAudit"
+msgid "MeetingItemTemplateAudit"
+msgstr ""
+
+#. Default: "MeetingItemTemplateBDC"
+msgid "MeetingItemTemplateBDC"
 msgstr ""
 
 #. Default: "MeetingItemTemplateBourgmestre"

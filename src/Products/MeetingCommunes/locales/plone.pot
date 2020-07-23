@@ -542,3 +542,35 @@ msgstr ""
 #. Default: "Back to 'Created'"
 msgid "backToAdviceCreated"
 msgstr ""
+
+#. Default: "MeetingAudit"
+msgid "MeetingAudit"
+msgstr ""
+
+#. Default: "MeetingItemAudit"
+msgid "MeetingItemAudit"
+msgstr ""
+
+#. Default: "MeetingItemTemplateAudit"
+msgid "MeetingItemTemplateAudit"
+msgstr ""
+
+#. Default: "MeetingItemRecurringAudit"
+msgid "MeetingItemRecurringAudit"
+msgstr ""
+
+#. Default: "MeetingBDC"
+msgid "MeetingBDC"
+msgstr ""
+
+#. Default: "MeetingItemBDC"
+msgid "MeetingItemBDC"
+msgstr ""
+
+#. Default: "MeetingItemTemplateBDC"
+msgid "MeetingItemTemplateBDC"
+msgstr ""
+
+#. Default: "MeetingItemRecurringBDC"
+msgid "MeetingItemRecurringBDC"
+msgstr ""

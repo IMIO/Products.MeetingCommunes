@@ -22,6 +22,14 @@ msgstr ""
 msgid "MeetingAG"
 msgstr "Séance de l'AG"
 
+#. Default: "MeetingAudit"
+msgid "MeetingAudit"
+msgstr "Séance du Comité d'Audit"
+
+#. Default: "MeetingBDC"
+msgid "MeetingBDC"
+msgstr "Séance pour les Bons de commande"
+
 #. Default: "MeetingBourgmestre"
 msgid "MeetingBourgmestre"
 msgstr "Séance du Bourgmestre"
@@ -65,6 +73,14 @@ msgstr "Séance Bureau exécutif"
 #. Default: "Meeting Item AG"
 msgid "MeetingItemAG"
 msgstr "Point AG"
+
+#. Default: "MeetingItemAudit"
+msgid "MeetingItemAudit"
+msgstr "Point Comité d'Audit"
+
+#. Default: "MeetingItemBDC"
+msgid "MeetingItemBDC"
+msgstr "Point Bons de commande"
 
 #. Default: "MeetingItemBourgmestre"
 msgid "MeetingItemBourgmestre"
@@ -117,6 +133,14 @@ msgstr "Point Comité de rémunération"
 #. Default: "Meeting Item Recurring AG"
 msgid "MeetingItemRecurringAG"
 msgstr "Point récurrent AG"
+
+#. Default: "MeetingItemRecurringAudit"
+msgid "MeetingItemRecurringAudit"
+msgstr "Point récurrent Comité d'Audit"
+
+#. Default: "MeetingItemRecurringBDC"
+msgid "MeetingItemRecurringBDC"
+msgstr "Points récurrent Bons de commande"
 
 #. Default: "MeetingItemRecurringBourgmestre"
 msgid "MeetingItemRecurringBourgmestre"
@@ -225,6 +249,14 @@ msgstr "Point Comité spécial de la maison de repos "
 #. Default: "Meeting Item Template AG"
 msgid "MeetingItemTemplateAG"
 msgstr "Modèle de point AG"
+
+#. Default: "MeetingItemTemplateAudit"
+msgid "MeetingItemTemplateAudit"
+msgstr "Modèle de point Comité d'Audit"
+
+#. Default: "MeetingItemTemplateBDC"
+msgid "MeetingItemTemplateBDC"
+msgstr "Modèle de point Bons de commande"
 
 #. Default: "MeetingItemTemplateBourgmestre"
 msgid "MeetingItemTemplateBourgmestre"
