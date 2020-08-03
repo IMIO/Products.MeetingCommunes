@@ -490,6 +490,14 @@ msgstr ""
 msgid "backToProposedToFinancialReviewer"
 msgstr ""
 
+#. Default: "Create an item CoDir from an item BP"
+msgid "create_to_codir_from_meeting-config-bp"
+msgstr ""
+
+#. Default: "Create an item CoDir from an item College"
+msgid "create_to_codir_from_meeting-config-college"
+msgstr ""
+
 #. Default: "Create an item CoGest from an item College"
 msgid "create_to_cogest_from_meeting-config-college"
 msgstr ""

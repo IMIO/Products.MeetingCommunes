@@ -12,6 +12,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [anuyens]
 - Add missing translations for MeetingAudit.
   [anuyens]
+- Added translations for actions `sent to` from `College/BP` to `CoDir`.
+  [gbastien]
 
 4.1.14 (2020-06-24)
 -------------------
