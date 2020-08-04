@@ -1,26 +1,4 @@
 # -*- coding: utf-8 -*-
-#
-# File: testWorkflows.py
-#
-# Copyright (c) 2007-2012 by CommunesPlone.org
-#
-# GNU General Public License (GPL)
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-# 02110-1301, USA.
-#
 
 from DateTime import DateTime
 from Products.CMFCore.permissions import AccessContentsInformation
@@ -51,18 +29,18 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         self.presentItem(item2)
         wftool = self.portal.portal_workflow
         # every presented items are in the 'presented' state
-        self.assertEquals('presented', wftool.getInfoFor(item1, 'review_state'))
-        self.assertEquals('presented', wftool.getInfoFor(item2, 'review_state'))
+        self.assertEqual('presented', wftool.getInfoFor(item1, 'review_state'))
+        self.assertEqual('presented', wftool.getInfoFor(item2, 'review_state'))
         # every items must be in the 'itemfrozen' state if we freeze the meeting
         self.freezeMeeting(meeting)
-        self.assertEquals('itemfrozen', wftool.getInfoFor(item1, 'review_state'))
-        self.assertEquals('itemfrozen', wftool.getInfoFor(item2, 'review_state'))
+        self.assertEqual('itemfrozen', wftool.getInfoFor(item1, 'review_state'))
+        self.assertEqual('itemfrozen', wftool.getInfoFor(item2, 'review_state'))
         # when an item is 'itemfrozen' it will stay itemfrozen if nothing
         # is defined in the meetingConfig.onMeetingTransitionItemActionToExecute
         self.meetingConfig.setOnMeetingTransitionItemActionToExecute([])
         self.backToState(meeting, 'created')
-        self.assertEquals('itemfrozen', wftool.getInfoFor(item1, 'review_state'))
-        self.assertEquals('itemfrozen', wftool.getInfoFor(item2, 'review_state'))
+        self.assertEqual('itemfrozen', wftool.getInfoFor(item1, 'review_state'))
+        self.assertEqual('itemfrozen', wftool.getInfoFor(item2, 'review_state'))
 
     def test_CloseMeeting(self):
         """
@@ -115,19 +93,19 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         # every items must be in the 'decided' state if we close the meeting
         wftool = self.portal.portal_workflow
         # itemfrozen change into accepted
-        self.assertEquals('accepted', wftool.getInfoFor(item1, 'review_state'))
+        self.assertEqual('accepted', wftool.getInfoFor(item1, 'review_state'))
         # delayed stays delayed (it's already a 'decide' state)
-        self.assertEquals('delayed', wftool.getInfoFor(item2, 'review_state'))
+        self.assertEqual('delayed', wftool.getInfoFor(item2, 'review_state'))
         # pre_accepted change into accepted or item was accepted automatically from itemFrozen
-        self.assertEquals('accepted', wftool.getInfoFor(item3, 'review_state'))
+        self.assertEqual('accepted', wftool.getInfoFor(item3, 'review_state'))
         # accepted_but_modified stays accepted_but_modified (it's already a 'decide' state)
-        self.assertEquals('accepted_but_modified', wftool.getInfoFor(item4, 'review_state'))
+        self.assertEqual('accepted_but_modified', wftool.getInfoFor(item4, 'review_state'))
         # refused stays refused (it's already a 'decide' state)
-        self.assertEquals('refused', wftool.getInfoFor(item5, 'review_state'))
+        self.assertEqual('refused', wftool.getInfoFor(item5, 'review_state'))
         # accepted stays accepted (it's already a 'decide' state)
-        self.assertEquals('accepted', wftool.getInfoFor(item6, 'review_state'))
+        self.assertEqual('accepted', wftool.getInfoFor(item6, 'review_state'))
         # presented change into accepted
-        self.assertEquals('accepted', wftool.getInfoFor(item7, 'review_state'))
+        self.assertEqual('accepted', wftool.getInfoFor(item7, 'review_state'))
 
     def test_pm_ObserversMayViewInEveryStates(self):
         """A MeetingObserverLocal has every 'View' permissions in every states."""

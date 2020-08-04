@@ -1,26 +1,4 @@
 # -*- coding: utf-8 -*-
-#
-# File: testWorkflows.py
-#
-# Copyright (c) 2007-2012 by CommunesPlone.org
-#
-# GNU General Public License (GPL)
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-# 02110-1301, USA.
-#
 
 from AccessControl import Unauthorized
 from DateTime import DateTime
@@ -128,7 +106,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
 
         # meeting may be closed or set back to frozen
         self.changeUser('pmManager')
-        self.assertEquals(self.transitions(meeting), ['backToFrozen', 'close'])
+        self.assertEqual(self.transitions(meeting), ['backToFrozen', 'close'])
         self.changeUser('pmManager')
         self.do(meeting, 'close')
 
@@ -208,21 +186,21 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         item2.setDecision(self.decisionText)
         self.do(meeting, 'decide')
         # check that a delayed item is duplicated
-        self.assertEquals(len(item1.getBRefs('ItemPredecessor')), 0)
+        self.assertEqual(len(item1.getBRefs('ItemPredecessor')), 0)
         self.do(item1, 'delay')
         # the duplicated item has item3 as predecessor
         duplicatedItem = item1.getBRefs('ItemPredecessor')[0]
-        self.assertEquals(duplicatedItem.getPredecessor().UID(), item1.UID())
+        self.assertEqual(duplicatedItem.getPredecessor().UID(), item1.UID())
         # when duplicated on delay, only normal annexes are kept, decision annexes are not
-        self.assertEquals(len(get_annexes(duplicatedItem, portal_types=('annex', ))), 1)
-        self.assertEquals(len(get_annexes(duplicatedItem, portal_types=('annexDecision', ))), 0)
+        self.assertEqual(len(get_annexes(duplicatedItem, portal_types=('annex', ))), 1)
+        self.assertEqual(len(get_annexes(duplicatedItem, portal_types=('annexDecision', ))), 0)
         self.addAnnex(item2, relatedTo='item_decision')
         self.failIf(len(self.transitions(meeting)) != 2)
         # When a meeting is closed, items without a decision are automatically 'accepted'
         self.do(meeting, 'close')
-        self.assertEquals(item2.queryState(), 'accepted')
+        self.assertEqual(item2.queryState(), 'accepted')
         # An already decided item keep his given decision
-        self.assertEquals(item1.queryState(), 'delayed')
+        self.assertEqual(item1.queryState(), 'delayed')
         # XXX added tests regarding ticket #5887
         # test back transitions
         self.changeUser('admin')
@@ -282,7 +260,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         meeting = self.create('Meeting', date=DateTime('2019/06/25'))
         # The recurring items must have as owner the meeting creator
         for item in meeting.getItems():
-            self.assertEquals(item.getOwner().getId(), 'pmManager')
+            self.assertEqual(item.getOwner().getId(), 'pmManager')
         # The meeting must contain recurring items : 2 defined and one added here above
         self.failUnless(len(meeting.getItems()) == 3)
         self.failIf(meeting.getItems(listTypes=['late']))
@@ -305,7 +283,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
 
     def _checkRecurringItemsCouncil(self):
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
-        self.assertEquals(len(meeting.getItems()), 0)
+        self.assertEqual(len(meeting.getItems()), 0)
 
     def test_pm_RemoveContainer(self):
         '''Run the test_pm_RemoveContainer from PloneMeeting.'''

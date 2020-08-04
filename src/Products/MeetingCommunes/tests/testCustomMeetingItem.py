@@ -1,26 +1,4 @@
 # -*- coding: utf-8 -*-
-#
-# File: testCustomMeetingItem.py
-#
-# Copyright (c) 2007-2013 by Imio.be
-#
-# GNU General Public License (GPL)
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-# 02110-1301, USA.
-#
 
 from DateTime import DateTime
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
@@ -80,38 +58,38 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.changeUser('pmManager')
         item = self.create('MeetingItem')
         # there are financeGroupIds
-        self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(), [self.developers_uid])
+        self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(), [self.developers_uid])
         # but not for item
-        self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(item), [])
+        self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [])
         self.assertFalse(item.adapted().showFinanceAdviceTemplate())
 
         # ask advice of another group
         item.setOptionalAdvisers((self.vendors_uid, ))
         item._update_after_edit()
         # no usedFinanceGroupId
-        self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(item), [])
+        self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [])
         self.assertFalse(item.adapted().showFinanceAdviceTemplate())
 
         # now ask advice of developers, considered as an non finance
         # advice as only customAdvisers are considered
         item.setOptionalAdvisers((self.developers_uid, ))
         item._update_after_edit()
-        self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(item), [])
+        self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [])
         self.assertFalse(item.adapted().showFinanceAdviceTemplate())
 
         # right ask a custom advice that is not a finance advice this time
         item.setOptionalAdvisers(('{0}__rowid__unique_id_003'.format(self.developers_uid), ))
         item._update_after_edit()
-        self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(item), [])
+        self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [])
         self.assertFalse(item.adapted().showFinanceAdviceTemplate())
 
         # finally ask a real finance advice, this time it will work
         item.setOptionalAdvisers(('{0}__rowid__unique_id_001'.format(self.developers_uid), ))
         item._update_after_edit()
-        self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(item), [self.developers_uid])
+        self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [self.developers_uid])
         self.assertTrue(item.adapted().showFinanceAdviceTemplate())
 
         # if the collection does not exist, [] is returned
         self.deleteAsManager(collection.UID())
-        self.assertEquals(cfg.adapted().getUsedFinanceGroupIds(item), [])
+        self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [])
         self.assertFalse(item.adapted().showFinanceAdviceTemplate())

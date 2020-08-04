@@ -53,11 +53,11 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.backToState(meeting, 'created')
         self.decideMeeting(meeting)
         # i1 should contains now the concatenation of title and description
-        self.assertEquals(i1.getDecision(keepWithNext=False), '<p>Item1</p><p>Description Item1</p>')
+        self.assertEqual(i1.getDecision(keepWithNext=False), '<p>Item1</p><p>Description Item1</p>')
         # i2 sould not have changed
-        self.assertEquals(i2.getDecision(keepWithNext=False), '<p>Decision Item2</p>')
+        self.assertEqual(i2.getDecision(keepWithNext=False), '<p>Decision Item2</p>')
         # i3 is initlaized because the decision field contained an empty_value
-        self.assertEquals(i3.getDecision(keepWithNext=False), '<p>Item3</p><p>Description Item3</p>')
+        self.assertEqual(i3.getDecision(keepWithNext=False), '<p>Item3</p><p>Description Item3</p>')
 
     def test_GetNumberOfItems(self):
         """
@@ -70,35 +70,36 @@ class testCustomMeeting(MeetingCommunesTestCase):
         meeting = self._createMeetingWithItems()
         orderedItems = meeting.getItems(ordered=True)
         # the meeting is created with 5 items
-        self.assertEquals(len(orderedItems), 5)
+        self.assertEqual(len(orderedItems), 5)
         itemUids = [item.UID() for item in orderedItems]
         # without parameters, every items are returned
-        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids), 5)
+        self.assertEqual(meeting.adapted().getNumberOfItems(itemUids), 5)
 
         # test the 'privacy' parameter
         # by default, 2 items are 'secret' and 3 are 'public'
         itemPrivacies = [item.getPrivacy() for item in orderedItems]
-        self.assertEquals(itemPrivacies.count('secret'), 2)
-        self.assertEquals(itemPrivacies.count('public'), 3)
+        self.assertEqual(itemPrivacies.count('secret'), 2)
+        self.assertEqual(itemPrivacies.count('public'), 3)
         # same using getNumberOfItems
-        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, privacy='secret'), 2)
-        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, privacy='public'), 3)
+        self.assertEqual(meeting.adapted().getNumberOfItems(itemUids, privacy='secret'), 2)
+        self.assertEqual(meeting.adapted().getNumberOfItems(itemUids, privacy='public'), 3)
 
         # test the 'categories' parameter
         # by default, 2 items are in the 'events' category,
         # 2 are in the 'development' category
         # 1 in the 'research' category
         itemCategories = [item.getCategory() for item in orderedItems]
-        self.assertEquals(itemCategories.count('events'), 2)
-        self.assertEquals(itemCategories.count('development'), 2)
-        self.assertEquals(itemCategories.count('research'), 1)
+        self.assertEqual(itemCategories.count('events'), 2)
+        self.assertEqual(itemCategories.count('development'), 2)
+        self.assertEqual(itemCategories.count('research'), 1)
         # same using getNumberOfItems
-        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, categories=['events', ]), 2)
-        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, categories=['development', ]), 2)
+        self.assertEqual(meeting.adapted().getNumberOfItems(itemUids, categories=['events', ]), 2)
+        self.assertEqual(meeting.adapted().getNumberOfItems(itemUids, categories=['development', ]), 2)
         # we can pass several categories
-        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids,
-                                                             categories=['dummycategory', 'research', 'development', ]),
-                          3)
+        self.assertEqual(
+            meeting.adapted().getNumberOfItems(
+                itemUids, categories=['dummycategory', 'research', 'development', ]),
+            3)
 
         # test the 'late' parameter
         # by default, no items are late so make 2 late items
@@ -113,20 +114,25 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.presentItem(item1)
         self.presentItem(item2)
         # now we have 4 normal items and 2 late items
-        self.assertEquals(len(meeting.getItems()), 5)
-        self.assertEquals(len(meeting.getItems(listTypes=['late'])), 2)
+        self.assertEqual(len(meeting.getItems()), 5)
+        self.assertEqual(len(meeting.getItems(listTypes=['late'])), 2)
         # same using getNumberOfItems
-        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, listTypes=['normal']), 3)
-        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, listTypes=['late']), 2)
+        self.assertEqual(meeting.adapted().getNumberOfItems(itemUids, listTypes=['normal']), 3)
+        self.assertEqual(meeting.adapted().getNumberOfItems(itemUids, listTypes=['late']), 2)
 
         # we can combinate parameters
         # we know that we have 2 late items that are using the 'development' category...
         lateItems = meeting.getItems(listTypes=['late'])
-        self.assertEquals(len(lateItems), 2)
-        self.assertEquals(lateItems[0].getCategory(), 'development')
-        self.assertEquals(lateItems[1].getCategory(), 'development')
-        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, categories=['development', ],
-                                                             listTypes=['late']), 2)
+        self.assertEqual(len(lateItems), 2)
+        self.assertEqual(lateItems[0].getCategory(), 'development')
+        self.assertEqual(lateItems[1].getCategory(), 'development')
+        self.assertEqual(
+            meeting.adapted().getNumberOfItems(
+                itemUids, categories=['development', ],
+                listTypes=['late']),
+            2)
         # we have so 0 normal item using the 'development' category
-        self.assertEquals(meeting.adapted().getNumberOfItems(itemUids, categories=['development', ],
-                                                             listTypes=['normal']), 0)
+        self.assertEqual(
+            meeting.adapted().getNumberOfItems(
+                itemUids, categories=['development', ], listTypes=['normal']),
+            0)
