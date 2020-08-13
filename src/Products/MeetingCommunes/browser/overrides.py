@@ -623,7 +623,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         # now we construct tree structure
         for item in items:
             category = item.getCategory(theObject=True)
-            category_id = category.getCategoryId()
+            category_id = category.category_id
             cats_ids = category_id.split('.')  # Exemple : A.1.2.4
             cats_descri = category.Description().split('|')  # Exemple : Organisation et structures|Secteur Hospitalier
             max_level = min(len(cats_ids), level_number)

@@ -23,8 +23,16 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.15 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Fix translations for `MeetingExecutive`.
+  [vpiret]
+- Add BDC Profiles
+  [anuyens]
+- Add missing translations for MeetingAudit.
+  [anuyens]
+- Added translations for actions `sent to` from `College/BP` to `CoDir`.
+  [gbastien]
+- Define style `page-break` in `deliberation.odt` POD template.
+  [gbastien]
 
 4.1.14 (2020-06-24)
 -------------------

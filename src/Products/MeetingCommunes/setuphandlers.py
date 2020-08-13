@@ -60,6 +60,7 @@ def logStep(method, context):
 def isMeetingCommunesConfigureProfile(context):
     return context.readDataFile("MeetingCommunes_ag_marker.txt") or \
         context.readDataFile("MeetingCommunes_audit_marker.txt") or \
+        context.readDataFile("MeetingCommunes_bdc_marker.txt") or \
         context.readDataFile("MeetingCommunes_bourgmestre_marker.txt") or \
         context.readDataFile("MeetingCommunes_ca_marker.txt") or \
         context.readDataFile("MeetingCommunes_city_marker.txt") or \

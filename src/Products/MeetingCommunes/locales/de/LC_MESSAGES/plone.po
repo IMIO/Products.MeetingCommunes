@@ -19,6 +19,14 @@ msgstr ""
 msgid "MeetingAG"
 msgstr ""
 
+#. Default: "MeetingAudit"
+msgid "MeetingAudit"
+msgstr ""
+
+#. Default: "MeetingBDC"
+msgid "MeetingBDC"
+msgstr ""
+
 #. Default: "MeetingBourgmestre"
 msgid "MeetingBourgmestre"
 msgstr ""
@@ -55,8 +63,20 @@ msgstr "Sitzung des Gemeinderats"
 msgid "MeetingEM"
 msgstr ""
 
+#. Default: "MeetingExecutive"
+msgid "MeetingExecutive"
+msgstr ""
+
 #. Default: "Meeting Item AG"
 msgid "MeetingItemAG"
+msgstr ""
+
+#. Default: "MeetingItemAudit"
+msgid "MeetingItemAudit"
+msgstr ""
+
+#. Default: "MeetingItemBDC"
+msgid "MeetingItemBDC"
 msgstr ""
 
 #. Default: "MeetingItemBourgmestre"
@@ -95,6 +115,10 @@ msgstr "TOP Rat"
 msgid "MeetingItemEM"
 msgstr ""
 
+#. Default: "MeetingItemExecutive"
+msgid "MeetingItemExecutive"
+msgstr ""
+
 #. Default: "MeetingItemNEGO"
 msgid "MeetingItemNEGO"
 msgstr ""
@@ -105,6 +129,14 @@ msgstr ""
 
 #. Default: "Meeting Item Recurring AG"
 msgid "MeetingItemRecurringAG"
+msgstr ""
+
+#. Default: "MeetingItemRecurringAudit"
+msgid "MeetingItemRecurringAudit"
+msgstr ""
+
+#. Default: "MeetingItemRecurringBDC"
+msgid "MeetingItemRecurringBDC"
 msgstr ""
 
 #. Default: "MeetingItemRecurringBourgmestre"
@@ -141,6 +173,10 @@ msgstr ""
 
 #. Default: "Meeting Item Recurring EM"
 msgid "MeetingItemRecurringEM"
+msgstr ""
+
+#. Default: "MeetingItemRecurringExecutive"
+msgid "MeetingItemRecurringExecutive"
 msgstr ""
 
 #. Default: "MeetingItemRecurringNEGO"
@@ -211,6 +247,14 @@ msgstr ""
 msgid "MeetingItemTemplateAG"
 msgstr ""
 
+#. Default: "MeetingItemTemplateAudit"
+msgid "MeetingItemTemplateAudit"
+msgstr ""
+
+#. Default: "MeetingItemTemplateBDC"
+msgid "MeetingItemTemplateBDC"
+msgstr ""
+
 #. Default: "MeetingItemTemplateBourgmestre"
 msgid "MeetingItemTemplateBourgmestre"
 msgstr ""
@@ -245,6 +289,10 @@ msgstr ""
 
 #. Default: "Meeting Item Template EM"
 msgid "MeetingItemTemplateEM"
+msgstr ""
+
+#. Default: "MeetingItemTemplateExecutive"
+msgid "MeetingItemTemplateExecutive"
 msgstr ""
 
 #. Default: "MeetingItemTemplateNEGO"
@@ -437,6 +485,14 @@ msgstr ""
 
 #. Default: "Send back to 'financial reviewer'"
 msgid "backToProposedToFinancialReviewer"
+msgstr ""
+
+#. Default: "Create an item CoDir from an item BP"
+msgid "create_to_codir_from_meeting-config-bp"
+msgstr ""
+
+#. Default: "Create an item CoDir from an item College"
+msgid "create_to_codir_from_meeting-config-college"
 msgstr ""
 
 #. Default: "Create an item CoGest from an item College"

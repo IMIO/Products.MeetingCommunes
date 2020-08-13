@@ -814,8 +814,8 @@ class testCustomViews(MeetingCommunesTestCase):
 
         # 2 consecutive groupings of different levels have the same value
         self.changeUser('siteadmin')
-        developpers = self.create('MeetingCategory', id="developers", title=u'Developers',
-                                  description=u'Developers topic', categoryId='developers')
+        developpers = self.create('meetingcategory', id="developers", title=u'Developers',
+                                  description=u'Developers topic', category_id='developers')
         self.changeUser('pmManager')
         i5.setCategory('developers')
         res = helper.get_grouped_items(itemUids, group_by=['proposingGroup', 'category'])
@@ -885,12 +885,12 @@ class testCustomViews(MeetingCommunesTestCase):
         # intel inside *Joke*
         i5 = self.create('MeetingItem', title='Item5')
         i5.setCategory('development')
-        i5.getCategory(theObject=True).setCategoryId('A.1.2.1.1')
-        i5.getCategory(theObject=True).setDescription('DESCRI1|DESCRI2|DESCRI3')
+        i5.getCategory(theObject=True).category_id = u'A.1.2.1.1'
+        i5.getCategory(theObject=True).description = u'DESCRI1|DESCRI2|DESCRI3'
         i7 = self.create('MeetingItem', title='Item7')
         i7.setCategory('research')
-        i7.getCategory(theObject=True).setCategoryId('B.1')
-        i7.getCategory(theObject=True).setDescription('')
+        i7.getCategory(theObject=True).category_id = u'B.1'
+        i7.getCategory(theObject=True).description = u''
         self.presentItem(i5)
         self.presentItem(i7)
         # create view obj
@@ -907,8 +907,8 @@ class testCustomViews(MeetingCommunesTestCase):
         items = m.getItems(ordered=True)
         itemUids = [anItem.UID() for anItem in items]
         ordered_dico = helper.get_multiple_level_printing(itemUids=itemUids, level_number=5)
-        self.assertEquals(len(ordered_dico), 7)
-        self.assertEquals(
+        self.assertEqual(len(ordered_dico), 7)
+        self.assertEqual(
             ordered_dico.items(),
             [('<h1>A</h1>', []),
              ('<h2>A.1. DESCRI1</h2>', []),
@@ -976,19 +976,19 @@ class testCustomViews(MeetingCommunesTestCase):
         self.presentItem(create_and_validate_item('pmCreator1', meeting.UID()))
         self.presentItem(test4)
 
-        self.assertEquals(helper1.print_item_number_within_category(), '4')
-        self.assertEquals(helper2.print_item_number_within_category(), '3')
-        self.assertEquals(helper3.print_item_number_within_category(), '6')
-        self.assertEquals(helper4.print_item_number_within_category(), '6')
+        self.assertEqual(helper1.print_item_number_within_category(), '4')
+        self.assertEqual(helper2.print_item_number_within_category(), '3')
+        self.assertEqual(helper3.print_item_number_within_category(), '6')
+        self.assertEqual(helper4.print_item_number_within_category(), '6')
 
-        self.assertEquals(helper3.print_item_number_within_category(listTypes=['late']), '1')
-        self.assertEquals(helper4.print_item_number_within_category(listTypes=['late']), '3')
+        self.assertEqual(helper3.print_item_number_within_category(listTypes=['late']), '1')
+        self.assertEqual(helper4.print_item_number_within_category(listTypes=['late']), '3')
 
-        self.assertEquals(helper3.print_item_number_within_category(listTypes=['normal']), '')
-        self.assertEquals(helper4.print_item_number_within_category(listTypes=['normal']), '')
+        self.assertEqual(helper3.print_item_number_within_category(listTypes=['normal']), '')
+        self.assertEqual(helper4.print_item_number_within_category(listTypes=['normal']), '')
 
-        self.assertEquals(helper3.print_item_number_within_category(listTypes=['normal'], default='XXXX'), 'XXXX')
-        self.assertEquals(helper4.print_item_number_within_category(listTypes=['normal'], default='ERROR'), 'ERROR')
+        self.assertEqual(helper3.print_item_number_within_category(listTypes=['normal'], default='XXXX'), 'XXXX')
+        self.assertEqual(helper4.print_item_number_within_category(listTypes=['normal'], default='ERROR'), 'ERROR')
 
     def test_mc_print_item_number_with_sublevel(self):
         expected_with_alpha = {100: "1",
@@ -1008,7 +1008,7 @@ class testCustomViews(MeetingCommunesTestCase):
                                  200: "2"}
 
         self.changeUser('pmManager')
-        meeting = self.create('Meeting', date=DateTime('2020/06/10'))
+        self.create('Meeting', date=DateTime('2020/06/10'))
 
         for item_number in expected_with_alpha.keys():
             item = self.create('MeetingItem')
@@ -1017,15 +1017,15 @@ class testCustomViews(MeetingCommunesTestCase):
             view = item.restrictedTraverse('document-generation')
             helper = view.get_generation_context_helper()
 
-            self.assertEquals(
+            self.assertEqual(
                 helper.print_item_number_with_sublevel(mode="alpha"),
                 expected_with_alpha.get(item_number)
             )
-            self.assertEquals(
+            self.assertEqual(
                 helper.print_item_number_with_sublevel(mode="adverb", num_format="{0}/{1}"),
                 expected_with_adverbs.get(item_number)
             )
-            self.assertEquals(
+            self.assertEqual(
                 helper.print_item_number_with_sublevel(mode=None, num_format="{0}.{1}"),
                 item.getItemNumber(for_display=True)
             )

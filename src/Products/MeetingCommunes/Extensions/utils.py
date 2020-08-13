@@ -229,22 +229,23 @@ def import_meetingsCategories_from_csv(self, meeting_config='', isClassifier=Fal
                 TI.addCategory(cfg=meetingConfig, descr=catDescr, classifier=isClassifier)
                 cat = getattr(catFolder, row_id)
                 if cat:
-                    cat.setCategoryId(row['categoryId'])
+                    cat.category_id = safe_unicode(row['categoryId'])
                     if row['groupsInCharge']:
                         # we have organization ids separated with "|"
                         groups_in_charge_ids = row['groupsInCharge'].split('|')
                         groups_in_charge_uids = [org_id_to_uid(gic, ignore_underscore=True)
                                                  for gic in groups_in_charge_ids]
-                        cat.setGroupsInCharge(groups_in_charge_uids)
+                        cat.groups_in_charge = groups_in_charge_uids
                     if row['usingGroups']:
                         # we have organization ids separated with "|"
                         using_groups_ids = row['usingGroups'].split('|')
                         using_groups_uids = [org_id_to_uid(ug, ignore_underscore=True)
                                              for ug in using_groups_ids]
-                        cat.setUsingGroups(using_groups_uids)
+                        cat.using_groups = using_groups_uids
                     if not row['actif']:
-                        # disable the MeetingCategory
-                        api.content.transition(cat, 'deactivate', comments='Deactivated during import')
+                        # disable the meetingcategory
+                        cat.enabled = False
+                    cat.reindexObject()
                 out.append("Category (or Classifier) %s added" % row_id)
             except Exception, message:
                 out.append('error with %s - %s : %s' % (row_id, row['title'], message))
