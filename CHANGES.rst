@@ -7,8 +7,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2a5 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Added translations for `completeness_not_complete` and `still_asked_again` WF transition button messages.
 
 4.2a4 (2020-06-24)
 ------------------
