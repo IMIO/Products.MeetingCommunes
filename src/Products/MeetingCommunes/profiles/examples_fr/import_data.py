@@ -856,6 +856,8 @@ data.directory_position_types = [
         u'Directrice Financière f.f.|Directrices Financières f.f.'},
     {'token': u'depute',
      'name': u'Député|Députés|Députée|Députées'},
+    {'token': u'secretaire',
+     'name': u'Secrétaire de séance|Secrétaires de séance|Secrétaire de séance|Secrétaires de séance'},
 ]
 contactsTemplate = PodTemplateDescriptor('contactsTemplate', 'Export organizations', dashboard=True)
 contactsTemplate.odt_file = 'organizations-export.ods'

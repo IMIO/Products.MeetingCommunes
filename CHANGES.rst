@@ -8,6 +8,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 ------------------
 
 - Added translations for `completeness_not_complete` and `still_asked_again` WF transition button messages.
+- Merged changes from 4.1.15
 
 4.2a4 (2020-06-24)
 ------------------
@@ -19,7 +20,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Merged changes from 4.1.13
 - Merged changes from 4.1.14
 
-4.1.15 (unreleased)
+4.1.15 (2020-08-21)
 -------------------
 
 - Fix translations for `MeetingExecutive`.
@@ -31,6 +32,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Added translations for actions `sent to` from `College/BP` to `CoDir`.
   [gbastien]
 - Define style `page-break` in `deliberation.odt` POD template.
+  [gbastien]
+- Added more `position_types` by default (secretaire) in `examples_fr` profile.
   [gbastien]
 
 4.1.14 (2020-06-24)
