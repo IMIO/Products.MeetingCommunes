@@ -51,6 +51,22 @@ msgstr "Ajouter un avis finances"
 msgid "cautious_finance"
 msgstr "Avis finances réservé"
 
+#. Default: "Check field completeness."
+msgid "completeness_not_complete"
+msgstr "Vérifiez le champ \"Complétude\" sur le point."
+
+#. Default: "Advice delay is still not started."
+msgid "finance_advice_delay_still_not_started"
+msgstr "Le délai pour rendre l'avis n'est pas encore démarré."
+
+#. Default: "Advice is still not giveable because item is not considered complete."
+msgid "finance_advice_not_giveable_because_item_not_complete"
+msgstr "Cet avis ne pourra être rendu que lorsque le point sera considéré 'complet'."
+
+#. Default: "Advice is suspended because it was sent back to proposing group."
+msgid "finance_advice_suspended_because_item_sent_back_to_proposing_group"
+msgstr "Cet avis est suspendu car le point a été renvoyé vers le groupe proposant."
+
 #. Default: "Financial controllers"
 msgid "financialcontrollers"
 msgstr "Contrôleurs financiers"
@@ -62,6 +78,10 @@ msgstr "Rédacteurs financiers"
 #. Default: "Financial managers"
 msgid "financialmanagers"
 msgstr "Directeurs financiers"
+
+#. Default: "Financial pre-controllers"
+msgid "financialprecontrollers"
+msgstr "Pré-contrôleurs financiers"
 
 #. Default: "Financial reviewers"
 msgid "financialreviewers"
@@ -131,6 +151,10 @@ msgstr "Points proposés"
 #. Default: "Validated items"
 msgid "searchvalidateditems"
 msgstr "Points validés"
+
+#. Default: "Advice type is still \"Asked again\"."
+msgid "still_asked_again"
+msgstr "Le type d'avis est toujours \"Demandé à nouveau\"."
 
 #. Default: "Finances advice: add advicecreated state"
 msgid "wa_meetingadvicefinances_add_advicecreated_state"

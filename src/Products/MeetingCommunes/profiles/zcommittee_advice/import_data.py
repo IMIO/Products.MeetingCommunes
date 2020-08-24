@@ -57,7 +57,6 @@ adviceMeeting.itemColumns = ['static_item_reference',
                              'linkedMeetingDate',
                              'getPreferredMeetingDate',
                              'actions']
-adviceMeeting.itemPositiveDecidedStates = ('accepted', 'accepted_but_modified')
 adviceMeeting.transitionsToConfirm = (
     'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',
     'MeetingItem.backToProposed', 'MeetingItem.backTo_itemfrozen_from_returned_to_proposing_group',
@@ -107,9 +106,6 @@ adviceMeeting.powerObservers = (
                      'refused'),
      'meeting_states': ('frozen', 'decided', 'closed'),
      'orderindex_': '2'})
-adviceMeeting.workflowAdaptations = [
-    'no_publication', 'no_global_observation', 'refused',
-    'return_to_proposing_group', 'only_creator_may_delete']
 adviceMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.motivation',

@@ -13,7 +13,8 @@ class testCustomMeeting(MeetingCommunesTestCase):
             Title+Description if the field is empty...
         """
         # make sure we are not hit by any other xhtmlTransformations
-        self.meetingConfig.setXhtmlTransformTypes(())
+        cfg = self.meetingConfig
+        cfg.setXhtmlTransformTypes(())
         # check that it works
         # check that if the field contains something, it is not intialized again
         self.changeUser('pmManager')
@@ -40,7 +41,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.assertTrue(i2.getDecision(keepWithNext=False) == '<p>Decision Item2</p>')
         self.assertTrue(i3.getDecision(keepWithNext=False) == '<p>&nbsp;</p>')
         # if cfg.initItemDecisionIfEmptyOnDecide is False, the decision field is not initialized
-        self.meetingConfig.setInitItemDecisionIfEmptyOnDecide(False)
+        cfg.setInitItemDecisionIfEmptyOnDecide(False)
         self.decideMeeting(meeting)
         self.assertTrue(i1.getDecision(keepWithNext=False) == "")
         self.assertTrue(i2.getDecision(keepWithNext=False), '<p>Decision Item2</p>')
@@ -48,7 +49,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.assertTrue(i3.getDecision(keepWithNext=False), '<p>&nbsp;</p>')
         # now if cfg.initItemDecisionIfEmptyOnDecide is True
         # fields will be initialized
-        self.meetingConfig.setInitItemDecisionIfEmptyOnDecide(True)
+        cfg.setInitItemDecisionIfEmptyOnDecide(True)
         # decide the meeting again
         self.backToState(meeting, 'created')
         self.decideMeeting(meeting)

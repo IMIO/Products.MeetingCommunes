@@ -109,6 +109,10 @@ msgstr ""
 msgid "not_required_finance"
 msgstr ""
 
+#. Default: "Financial pre-controllers"
+msgid "financialprecontrollers"
+msgstr ""
+
 #. Default: "Financial controllers"
 msgid "financialcontrollers"
 msgstr ""
@@ -131,4 +135,24 @@ msgstr ""
 
 #. Default: "Finances advice: add transition from financial controller to financial manager"
 msgid "wa_meetingadvicefinances_controller_propose_to_manager"
+msgstr ""
+
+#. Default: "Advice is still not giveable because item is not considered complete."
+msgid "finance_advice_not_giveable_because_item_not_complete"
+msgstr ""
+
+#. Default: "Advice is suspended because it was sent back to proposing group."
+msgid "finance_advice_suspended_because_item_sent_back_to_proposing_group"
+msgstr ""
+
+#. Default: "Advice delay is still not started."
+msgid "finance_advice_delay_still_not_started"
+msgstr ""
+
+#. Default: "Check field completeness."
+msgid "completeness_not_complete"
+msgstr ""
+
+#. Default: "Advice type is still \"Asked again\"."
+msgid "still_asked_again"
 msgstr ""

@@ -3,11 +3,22 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1.16 (unreleased)
--------------------
 
-- Nothing changed yet.
+4.2a5 (unreleased)
+------------------
 
+- Added translations for `completeness_not_complete` and `still_asked_again` WF transition button messages.
+- Merged changes from 4.1.15
+
+4.2a4 (2020-06-24)
+------------------
+
+- Merged changes from 4.1.9
+- Merged changes from 4.1.10
+- Merged changes from 4.1.11
+- Merged changes from 4.1.12
+- Merged changes from 4.1.13
+- Merged changes from 4.1.14
 
 4.1.15 (2020-08-21)
 -------------------
@@ -70,6 +81,11 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Fixed `all-items-to-control-completeness-of` ICompoundCriterion adapter.
 - Added some example regarding 'Non attendees' in attendees.odt template.
 
+4.2a3 (2020-03-13)
+------------------
+
+- Merged changes from 4.1.8
+
 4.1.8 (2020-03-12)
 ------------------
 
@@ -77,6 +93,18 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   that will query every finances advice, not only delay aware advices
 - Updated styles1.odt to add CKEditor's styles
 - Added some more usecases with abbreviated firstname in attendees.odt
+
+4.2a2 (2020-02-21)
+------------------
+
+- Merged changes from 4.1.x
+
+4.2a1 (2020-02-06)
+------------------
+
+- Adapted item workflow to use MeetingConfig.itemWFValidationLevels defined configuration
+- Added new 'meetingadvice' related workflows : 'meetingadvicefinanceseditor_workflow' and 'meetingadvicefinancesmanager_workflow'
+- MeetingConfig.itemDecidedStates and MeetingConfig.itemPositiveDecidedStates fields were removed, adapted import_data files accordingly
 
 4.1.7 (2020-02-18)
 ------------------

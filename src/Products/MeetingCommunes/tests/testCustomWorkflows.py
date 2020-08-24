@@ -4,8 +4,6 @@ from DateTime import DateTime
 from Products.CMFCore.permissions import AccessContentsInformation
 from Products.CMFCore.permissions import View
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
-from Products.PloneMeeting.model.adaptations import performWorkflowAdaptations
-from Products.PloneMeeting.tests.PloneMeetingTestCase import pm_logger
 
 
 class testCustomWorkflows(MeetingCommunesTestCase):
@@ -47,10 +45,6 @@ class testCustomWorkflows(MeetingCommunesTestCase):
            When we close a meeting, every items are set to accepted if they are still
            not decided...
         """
-        # activate the 'refused' WFAdaptation
-        cfg = self.meetingConfig
-        cfg.setWorkflowAdaptations(('refused', ))
-        performWorkflowAdaptations(cfg, logger=pm_logger)
         # First, define recurring items in the meeting config
         self.changeUser('pmManager')
         # create a meeting (with 7 items)
@@ -125,10 +119,8 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         # enable prevalidation
         cfg = self.meetingConfig
         self.changeUser('pmManager')
-        if 'pre_validation' in cfg.listWorkflowAdaptations():
-            cfg.setWorkflowAdaptations(('pre_validation', ))
-            performWorkflowAdaptations(cfg, logger=pm_logger)
-            self._turnUserIntoPrereviewer(self.member)
+        self._enablePrevalidation(cfg)
+        self._turnUserIntoPrereviewer(self.member)
         item = self.create('MeetingItem')
         item.setDecision(self.decisionText)
         meeting = self.create('Meeting', date=DateTime('2017/03/27'))

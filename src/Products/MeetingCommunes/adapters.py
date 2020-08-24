@@ -67,29 +67,6 @@ from zope.i18n import translate
 from zope.interface import implements
 
 
-# Names of available workflow adaptations.
-customwfAdaptations = list(MeetingConfig.wfAdaptations)
-# remove the 'creator_initiated_decisions' as this is always the case in our wfs
-if 'creator_initiated_decisions' in customwfAdaptations:
-    customwfAdaptations.remove('creator_initiated_decisions')
-# remove the 'archiving' as we do not handle archive in our wfs
-if 'archiving' in customwfAdaptations:
-    customwfAdaptations.remove('archiving')
-MeetingConfig.wfAdaptations = customwfAdaptations
-
-# states taken into account by the 'no_global_observation' wfAdaptation
-noGlobalObsStates = list(adaptations.noGlobalObsStates)
-noGlobalObsStates.append('accepted_but_modified')
-noGlobalObsStates.append('pre_accepted')
-adaptations.noGlobalObsStates = noGlobalObsStates
-
-adaptations.WF_NOT_CREATOR_EDITS_UNLESS_CLOSED = ('delayed', 'refused', 'accepted',
-                                                  'pre_accepted', 'accepted_but_modified')
-
-RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = {'meetingitemcommunes_workflow': 'meetingitemcommunes_workflow.itemcreated'}
-adaptations.RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE = RETURN_TO_PROPOSING_GROUP_STATE_TO_CLONE
-
-
 class CustomMeeting(Meeting):
     '''Adapter that adapts a meeting implementing IMeeting to the
        interface IMeetingCustom.'''
@@ -569,10 +546,10 @@ class CustomMeetingItem(MeetingItem):
         item = self.getSelf()
         tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(item)
-        if meeting_advice_portal_type == 'meetingadvice':
-            return [t for t in cfg.getUsedAdviceTypes() if not t.endswith('_finance')]
-        else:
+        if meeting_advice_portal_type == 'meetingadvicefinances':
             return [t for t in cfg.getUsedAdviceTypes() if t.endswith('_finance')]
+        else:
+            return [t for t in cfg.getUsedAdviceTypes() if not t.endswith('_finance')]
 
 
 class CustomMeetingConfig(MeetingConfig):
@@ -584,20 +561,6 @@ class CustomMeetingConfig(MeetingConfig):
 
     def __init__(self, item):
         self.context = item
-
-    def custom_validate_workflowAdaptations(self, values, added, removed):
-        '''Validate the removal of "meetingadvicefinances_add_advicecreated_state".'''
-        if 'meetingadvicefinances_add_advicecreated_state' in removed:
-            config = self.getSelf()
-            # check if some advices are in the 'advicecreated' state
-            catalog = api.portal.get_tool('portal_catalog')
-            tool = api.portal.get_tool('portal_plonemeeting')
-            if catalog(portal_type=tool.getAdvicePortalTypes(as_ids=True),
-                       review_state='advicecreated',
-                       getConfigId=config.getId()):
-                return translate('wa_removed_advicecreated_error',
-                                 domain='PloneMeeting',
-                                 context=config.REQUEST)
 
     security.declarePublic('getUsedFinanceGroupIds')
 
@@ -881,7 +844,7 @@ class CustomMeetingConfig(MeetingConfig):
         return bool(finadv_wfas)
 
     def _updateMeetingAdvicePortalTypes(self):
-        '''Make sure we use a patched_ wokflow instead meetingadvicefinances_workflow
+        '''Make sure we use a patched_ wokflow instead 'base_wf' for eachmeetingadvicefinances_workflow
            to apply advice related workflow adaptations.'''
         if self._has_meetingadvicefinances_wf_adaptations():
             fin_wf = 'meetingadvicefinances_workflow'
@@ -899,7 +862,7 @@ class CustomMeetingConfig(MeetingConfig):
 
     def _adviceActionsInterfaceFor(self, advice_obj):
         '''See doc in interfaces.py.'''
-        if advice_obj.portal_type == 'meetingadvicefinances':
+        if advice_obj.portal_type.startswith('meetingadvicefinances'):
             return IMeetingAdviceCommunesWorkflowActions.__identifier__
         else:
             return super(CustomMeetingConfig, self)._adviceActionsInterfaceFor(advice_obj)
@@ -948,12 +911,20 @@ class MeetingItemCommunesWorkflowActions(MeetingItemWorkflowActions):
     implements(IMeetingItemCommunesWorkflowActions)
     security = ClassSecurityInfo()
 
+    def _will_ask_completeness_eval_again(self):
+        ''' '''
+        return 'completeness' in self.cfg.getUsedItemAttributes() and \
+            self.context.queryState() in finances_give_advice_states(self.cfg)
+
+    def _will_set_completeness_to_not_required(self):
+        ''' '''
+        return False
+
     def _doWaitAdvices(self):
         '''When advices are asked again and we use MeetingItem.completeness field,
            make sure the item completeness evaluation is asked again so advice is not
            addable/editable when item come back again to this state.'''
-        if 'completeness' in self.cfg.getUsedItemAttributes() and \
-           self.context.queryState() in finances_give_advice_states(self.cfg):
+        if self._will_ask_completeness_eval_again():
             wfTool = api.portal.get_tool('portal_workflow')
             history = self.context.workflow_history[wfTool.getWorkflowsFor(self.context)[0].getId()][:-1]
             for event in history:
@@ -969,28 +940,21 @@ class MeetingItemCommunesWorkflowActions(MeetingItemWorkflowActions):
                                                            bypassSecurityCheck=True,
                                                            comment=comment)
                     break
+        elif self._will_set_completeness_to_not_required():
+            changeCompleteness = self.context.restrictedTraverse('@@change-item-completeness')
+            comment = translate('completeness_set_to_not_required_by_app',
+                                domain='PloneMeeting',
+                                context=self.context.REQUEST)
+            # change completeness even if current user is not able to
+            changeCompleteness._changeCompleteness('completeness_evaluation_not_required',
+                                                   bypassSecurityCheck=True,
+                                                   comment=comment)
 
-    security.declarePrivate('doWait_advices_from_proposed')
+    security.declarePrivate('doWait_advices_from')
 
-    def doWait_advices_from_proposed(self, stateChange):
+    def doWait_advices_from(self, stateChange):
         """ """
         self._doWaitAdvices()
-
-    security.declarePrivate('doWait_advices_from_prevalidated')
-
-    def doWait_advices_from_prevalidated(self, stateChange):
-        """ """
-        self._doWaitAdvices()
-
-    security.declarePrivate('doAccept_but_modify')
-
-    def doAccept_but_modify(self, stateChange):
-        pass
-
-    security.declarePrivate('doPre_accept')
-
-    def doPre_accept(self, stateChange):
-        pass
 
 
 class MeetingItemCommunesWorkflowConditions(MeetingItemWorkflowConditions):
@@ -1115,9 +1079,11 @@ class MeetingAdviceCommunesWorkflowConditions(MeetingAdviceWorkflowConditions):
            in any case (advice positive or negative) except if advice
            is still 'asked_again'.'''
         res = False
-        if _checkPermission(ReviewPortalContent, self.context) and \
-           not self.context.advice_type == 'asked_again':
-            res = True
+        if _checkPermission(ReviewPortalContent, self.context):
+            if self.context.advice_type == 'asked_again':
+                res = No(_('still_asked_again'))
+            else:
+                res = True
         return res
 
     security.declarePublic('maySignFinancialAdvice')
@@ -1169,68 +1135,25 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
                     return True
         return False
 
-    def performCustomWFAdaptations(self, meetingConfig, wfAdaptation, logger, itemWorkflow, meetingWorkflow):
-        """ """
-        wfTool = api.portal.get_tool('portal_workflow')
-        advicefin_wf = wfTool.getWorkflowById('patched_meetingadvicefinances_workflow')
-        if wfAdaptation == 'no_publication':
-            # we override the PloneMeeting's 'no_publication' wfAdaptation
-            # First, update the meeting workflow
-            wf = meetingWorkflow
-            # Delete transitions 'publish' and 'backToPublished'
-            for tr in ('publish', 'backToPublished'):
-                if tr in wf.transitions:
-                    wf.transitions.deleteTransitions([tr])
-            # Update connections between states and transitions
-            wf.states['frozen'].setProperties(
-                title='frozen', description='',
-                transitions=['backToCreated', 'decide'])
-            wf.states['decided'].setProperties(
-                title='decided', description='', transitions=['backToFrozen', 'close'])
-            # Delete state 'published'
-            if 'published' in wf.states:
-                wf.states.deleteStates(['published'])
-            # Then, update the item workflow.
-            wf = itemWorkflow
-            # Delete transitions 'itempublish' and 'backToItemPublished'
-            for tr in ('itempublish', 'backToItemPublished'):
-                if tr in wf.transitions:
-                    wf.transitions.deleteTransitions([tr])
-            # Update connections between states and transitions
-            wf.states['itemfrozen'].setProperties(
-                title='itemfrozen', description='',
-                transitions=['accept', 'accept_but_modify', 'delay', 'pre_accept', 'backToPresented'])
-            for decidedState in ['accepted', 'delayed', 'accepted_but_modified']:
-                wf.states[decidedState].setProperties(
-                    title=decidedState, description='',
-                    transitions=['backToItemFrozen', ])
-            wf.states['pre_accepted'].setProperties(
-                title='pre_accepted', description='',
-                transitions=['accept', 'accept_but_modify', 'backToItemFrozen'])
-            # Delete state 'published'
-            if 'itempublished' in wf.states:
-                wf.states.deleteStates(['itempublished'])
-            return True
-        elif wfAdaptation == 'meetingadvicefinances_add_advicecreated_state':
+    def performCustomAdviceWFAdaptations(self, meetingConfig, wfAdaptation, logger, advice_wf_id):
+        ''' '''
+        if wfAdaptation == 'add_advicecreated_state':
             # adapt WF, add new initial_state (and leading transitions)
-            patched_fin_wf = 'patched_meetingadvicefinances_workflow'
             adaptations.addState(
-                wf_id=patched_fin_wf,
+                wf_id=advice_wf_id,
                 new_state_id='advicecreated',
+                new_state_title='advicecreated',
                 permissions_cloned_state_id='proposed_to_financial_controller',
                 leading_transition_id=None,
-                back_transitions={'backToAdviceCreated': 'proposed_to_financial_controller'},
+                leading_transition_title=None,
+                back_transitions=[{'back_transition_id': 'backToAdviceCreated',
+                                   'back_transition_title': 'backToAdviceCreated',
+                                   'back_from_state_id': 'proposed_to_financial_controller'}],
                 leaving_transition_id='proposeToFinancialController',
                 leaving_to_state_id='proposed_to_financial_controller',
                 existing_leaving_transition_ids=['giveAdvice'],
                 existing_back_transition_ids=['backToAdviceInitialState'],
                 new_initial_state=True)
-            return True
-        elif wfAdaptation == 'meetingadvicefinances_controller_propose_to_manager':
-            # add the 'proposeToFinancialManager' transition from state 'proposed_to_financial_controller'
-            state = advicefin_wf.states['proposed_to_financial_controller']
-            if 'proposeToFinancialManager' not in state.transitions:
-                state.transitions = state.transitions + ('proposeToFinancialManager', )
             return True
         return False
 
@@ -1383,6 +1306,7 @@ class BaseItemsWithAdviceAdapter(CompoundCriterionBaseAdapter):
         groupIds = []
         for financeGroup in self.cfg.adapted().getUsedFinanceGroupIds():
             groupIds.append('delay__{0}_{1}'.format(financeGroup, advice_review_state))
+            groupIds.append('{0}_{1}'.format(financeGroup, advice_review_state))
         # Create query parameters
         return {'portal_type': {'query': self.cfg.getItemTypeName()},
                 'indexAdvisers': {'query': groupIds}}

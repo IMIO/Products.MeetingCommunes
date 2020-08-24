@@ -338,8 +338,6 @@ collegeMeeting.itemsListVisibleColumns = [
     u'getProposingGroup', u'advices', u'actions']
 collegeMeeting.xhtmlTransformFields = ()
 collegeMeeting.xhtmlTransformTypes = ()
-collegeMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
-collegeMeeting.meetingWorkflow = 'meetingcommunes_workflow'
 collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
 collegeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
 collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
@@ -445,11 +443,15 @@ collegeMeeting.powerObservers = (
      'meeting_states': ('frozen', 'decided', 'closed'),
      'orderindex_': '2'})
 
-collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 collegeMeeting.workflowAdaptations = [
-    'no_publication', 'no_global_observation',
-    'return_to_proposing_group', 'refused',
-    'presented_item_back_to_itemcreated', 'presented_item_back_to_proposed',
+    'no_publication',
+    'return_to_proposing_group',
+    'refused',
+    'accepted_but_modified',
+    'pre_accepted',
+    'delayed',
+    'presented_item_back_to_itemcreated',
+    'presented_item_back_to_proposed',
     'only_creator_may_delete']
 collegeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 collegeMeeting.onTransitionFieldTransforms = (
@@ -740,8 +742,6 @@ councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.observations',
                                        'Meeting.observations', )
 councilMeeting.xhtmlTransformTypes = ('removeBlanks',)
-councilMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
-councilMeeting.meetingWorkflow = 'meetingcommunes_workflow'
 councilMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
 councilMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
 councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
@@ -769,12 +769,7 @@ councilMeeting.useAdvices = False
 councilMeeting.itemAdviceStates = ()
 councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
-councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-councilMeeting.workflowAdaptations = [
-    'no_publication', 'no_global_observation',
-    'return_to_proposing_group', 'refused',
-    'presented_item_back_to_itemcreated', 'presented_item_back_to_proposed',
-    'only_creator_may_delete']
+councilMeeting.workflowAdaptations = list(collegeMeeting.workflowAdaptations)
 councilMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 councilMeeting.onMeetingTransitionItemActionToExecute = deepcopy(
     collegeMeeting.onMeetingTransitionItemActionToExecute)

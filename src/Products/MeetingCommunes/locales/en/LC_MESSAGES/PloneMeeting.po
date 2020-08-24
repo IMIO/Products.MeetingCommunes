@@ -51,6 +51,22 @@ msgstr ""
 msgid "cautious_finance"
 msgstr ""
 
+#. Default: "Check field completeness."
+msgid "completeness_not_complete"
+msgstr ""
+
+#. Default: "Advice delay is still not started."
+msgid "finance_advice_delay_still_not_started"
+msgstr ""
+
+#. Default: "Advice is still not giveable because item is not considered complete."
+msgid "finance_advice_not_giveable_because_item_not_complete"
+msgstr ""
+
+#. Default: "Advice is suspended because it was sent back to proposing group."
+msgid "finance_advice_suspended_because_item_sent_back_to_proposing_group"
+msgstr ""
+
 #. Default: "Financial controllers"
 msgid "financialcontrollers"
 msgstr ""
@@ -61,6 +77,10 @@ msgstr ""
 
 #. Default: "Financial managers"
 msgid "financialmanagers"
+msgstr ""
+
+#. Default: "Financial pre-controllers"
+msgid "financialprecontrollers"
 msgstr ""
 
 #. Default: "Financial reviewers"
@@ -130,6 +150,10 @@ msgstr "Proposed items"
 #. Default: "Validated items"
 msgid "searchvalidateditems"
 msgstr "Validated items"
+
+#. Default: "Advice type is still \"Asked again\"."
+msgid "still_asked_again"
+msgstr ""
 
 #. Default: "Finances advice: add advicecreated state"
 msgid "wa_meetingadvicefinances_add_advicecreated_state"

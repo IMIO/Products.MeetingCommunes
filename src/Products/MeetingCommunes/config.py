@@ -25,16 +25,11 @@ setDefaultRoles(DEFAULT_ADD_CONTENT_PERMISSION, ('Manager', 'Owner', 'Contributo
 product_globals = globals()
 
 # extra suffixes while using 'meetingadvicefinances_workflow'
-FINANCE_GROUP_SUFFIXES = ('financialcontrollers',
+FINANCE_GROUP_SUFFIXES = ('financialprecontrollers',
+                          'financialcontrollers',
                           'financialeditors',
                           'financialreviewers',
                           'financialmanagers')
-FINANCE_STATE_TO_GROUPS_MAPPINGS = {
-    'advicecreated': 'financialprecontrollers',
-    'proposed_to_financial_controller': 'financialcontrollers',
-    'proposed_to_financial_editor': 'financialeditors',
-    'proposed_to_financial_reviewer': 'financialreviewers',
-    'proposed_to_financial_manager': 'financialmanagers', }
 
 # the id of the collection querying finance advices
 FINANCE_ADVICES_COLLECTION_ID = 'searchitemswithfinanceadvice'
@@ -66,7 +61,3 @@ SAMPLE_TEXT = u"<p><strong>Lorem ipsum dolor sit amet</strong>, consectetur adip
     u"tristique quam. Vestibulum ut urna arcu. Etiam non odio ut felis porttitor elementum. Donec venenatis " \
     u"porta purus et scelerisque. Nullam dapibus nec erat at pellentesque. Aliquam placerat nunc molestie " \
     u"venenatis malesuada. Nam ac pretium justo, id imperdiet lacus.</p>"
-
-MC_ITEM_TRANSITION_WHEN_RETURNED_FROM_PROPOSING_GROUP_AFTER_CORRECTION = 'accept_but_modify'
-config.ITEM_TRANSITION_WHEN_RETURNED_FROM_PROPOSING_GROUP_AFTER_CORRECTION = \
-    MC_ITEM_TRANSITION_WHEN_RETURNED_FROM_PROPOSING_GROUP_AFTER_CORRECTION
