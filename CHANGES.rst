@@ -9,6 +9,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Added translations for `completeness_not_complete` and `still_asked_again` WF transition button messages.
 - Merged changes from 4.1.15
+- Adapted profile `zbdc` as `workflowAdaptations` changed.
 
 4.2a4 (2020-06-24)
 ------------------
