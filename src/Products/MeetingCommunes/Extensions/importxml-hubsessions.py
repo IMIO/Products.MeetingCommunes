@@ -1,14 +1,21 @@
 # coding=utf-8
+from abc import ABCMeta, abstractmethod
 import logging
 import requests
+from distutils.util import strtobool
+from datetime import datetime
+
+from Products.PloneMeeting.profiles import CategoryDescriptor
 from bs4 import BeautifulSoup
 
 from collective.contact.plonegroup.utils import get_own_organization, select_organization
 from imio.helpers.content import transitions
 from plone import api
 import transaction
+from zope.i18n import translate
 
 from Products.PloneMeeting import logger
+from Products.PloneMeeting.MeetingItem import MeetingItem
 from Products.PloneMeeting.utils import org_id_to_uid
 
 
@@ -17,25 +24,22 @@ from Products.PloneMeeting.utils import org_id_to_uid
 # Must
 # --------------------------------------------------------------------------------------------------
 # - Importer les séances (assemblée, signataires, ...) => OK
-# - Importer les points =>  En cours, presque terminé
+# - Importer les points =>  OK
 # - Importer les groupes proposants => OK
-# - Importer les catégories
+# - Importer les catégories => OK
+# - Importer les annexes
 #
 # --------------------------------------------------------------------------------------------------
 # Should
 # --------------------------------------------------------------------------------------------------
 # - Abstraire l'API d'HubSession pour que l'Importer puisse gérer d'autres sources de données
-# au travers d'une interface
+# au travers d'une interface => OK
 # - Ajouter les docstrings
 # - Vérifier pourquoi il y a parfois des
 # 'WARNING Transience Transient object container session_data max subobjects reached' du côté de HS
 # => OK, pas grave
 # - S'assurer que l'import est idempotent : CàD qu'on peut le faire tourner plusieurs fois d'affilés
 # sans erreurs/crashs
-# --------------------------------------------------------------------------------------------------
-# Could:
-# --------------------------------------------------------------------------------------------------
-#
 #
 # --------------------------------------------------------------------------------------------------
 # Won't:
@@ -45,7 +49,7 @@ from Products.PloneMeeting.utils import org_id_to_uid
 
 
 def import_data(
-    base_url="http://localhost:8080",
+    base_url="http://localhost:8090",
     user="admin",
     user_password="admin",
     meetingconfig_id="meeting-config-college",
@@ -55,7 +59,7 @@ def import_data(
         importer = HubSessionsXMLImporter(base_url, user, user_password, meetingconfig_id)
         importer.run()
         logger.info("Import finished - " + meetingconfig_id)
-        return 0
+        return "<h1>Success</h1>"
 
 
 class HubSessionsXMLImporter:
@@ -67,10 +71,12 @@ class HubSessionsXMLImporter:
         self.import_meetings()
 
     def import_meetings(self):
-        meetings_url = self.api.get_meeting_urls()
-        total = len(meetings_url)
-        for i, meeting_url in enumerate(meetings_url):
-            api_meeting = self.api.get_meeting(meeting_url)
+        meeting_ids = self.api.get_meeting_ids()
+        total = len(meeting_ids)
+        for i, meeting_id in enumerate(meeting_ids):
+            if i > 1:
+                return
+            api_meeting = self.api.get_meeting(meeting_id)
             creator_id = api_meeting["creator"]
             self._create_user_if_not_exists(creator_id)
 
@@ -82,9 +88,7 @@ class HubSessionsXMLImporter:
                 meeting_type = "MeetingCouncil"
 
             if not hasattr(member_folder, api_meeting["id"]):
-                member_folder.invokeFactory(
-                    type_name=meeting_type, id=api_meeting["id"], date=api_meeting["date"]
-                )
+                member_folder.invokeFactory(type_name=meeting_type, id=api_meeting["id"], date=api_meeting["date"])
                 meeting = getattr(member_folder, api_meeting["id"])
                 meeting.setCreators(creator_id)
                 meeting.at_post_create_script()
@@ -97,73 +101,83 @@ class HubSessionsXMLImporter:
             meeting.setAssemblyAbsents(api_meeting["assembly_absents"])
             meeting.setObservations(api_meeting["observations"])
             transaction.commit()
-            logger.info(
-                "{} - {}/{} imported - id : {}".format(
-                    meeting_type, i + 1, total, api_meeting["id"]
-                )
-            )
+            logger.info("{} - {}/{} imported - id : {}".format(meeting_type, i + 1, total, api_meeting["id"]))
             self.import_items(api_meeting, meeting_object=meeting)
 
             transitions(meeting, ("close",))
-            logger.info(
-                "{} - {}/{} closed - id : {}".format(meeting_type, i + 1, total, api_meeting["id"])
-            )
+            logger.info("{} - {}/{} closed - id : {}".format(meeting_type, i + 1, total, api_meeting["id"]))
 
     def import_items(self, api_meeting, meeting_object):
-        item_urls = api_meeting["items"]
-        total = len(item_urls)
-        api_items = [self.api.get_item(item_url) for item_url in item_urls]
+        meetingitem_ids = api_meeting["meetingitem_ids"]
+        total = len(meetingitem_ids)
+        api_meetingitems = [self.api.get_meetingitem(meetingitem_id) for meetingitem_id in meetingitem_ids]
 
         if self.meetingconfig_id == "meeting-config-college":
             item_type = "MeetingItemCollege"
         else:
             item_type = "MeetingItemCouncil"
 
-        for i, api_item in enumerate(api_items):
-            creator_id = api_item["creator"]
+        for i, api_meetingitem in enumerate(api_meetingitems):
+            creator_id = api_meetingitem["creator"]
             self._create_user_if_not_exists(creator_id)
-            self._create_organization_if_not_exists(api_item["proposing_group_id"])
+            self._create_organization_if_not_exists(api_meetingitem["proposing_group_id"])
+            self._create_category_if_not_exists(api_meetingitem["category_id"])
 
             member_folder = self._get_member_folder(creator_id)
 
-            if not hasattr(member_folder, api_item["id"]):
+            if not hasattr(member_folder, api_meetingitem["id"]):
                 member_folder.invokeFactory(
                     type_name=item_type,
-                    id=api_item["id"],
-                    title=api_item["title"],
+                    id=api_meetingitem["id"],
+                    title=api_meetingitem["title"],
                     date=api_meeting["created_at"],
                 )
-            item = getattr(member_folder, api_item["id"])
-            item.setProposingGroup(org_id_to_uid(api_item["proposing_group_id"]))
-            # TODO : set more fields
-            item.setDescription(api_item["description"])
-            item.setDecision(api_item["decision"])
+
+            item = getattr(member_folder, api_meetingitem["id"])  # type: MeetingItem
+            item.setCreationDate(api_meetingitem["created_at"])
+            item.setProposingGroup(org_id_to_uid(api_meetingitem["proposing_group_id"]))
+            item.setCategory(api_meetingitem["category_id"])
+            item.setDescription(api_meetingitem["description"])
+            item.setDecision(api_meetingitem["decision"])
+            item.setObservations(api_meetingitem["observations"])
             item.setCreators(creator_id)
             item.setPreferredMeeting(meeting_object.UID())
-
+            item.setBudgetRelated(api_meetingitem["budget_related"])
+            item.setBudgetInfos(api_meetingitem["budget_infos"])
             # Not sure why it is necessary
             # but it's very important to present the item in the correct meeting...
             api.portal.get().REQUEST["PUBLISHED"] = meeting_object
 
             transitions(item, ("propose", "validate", "present"))
 
-            logger.info(
-                "{} - {}/{} imported - id : {}".format(item_type, i + 1, total, api_item["id"])
-            )
+            logger.info("{} - {}/{} imported - id : {}".format(item_type, i + 1, total, api_meetingitem["id"]))
 
         transitions(meeting_object, ("freeze", "decide"))
 
-        for i, api_item in enumerate(api_items):
-            creator_id = api_item["creator"]
+        for i, api_meetingitem in enumerate(api_meetingitems):
+            creator_id = api_meetingitem["creator"]
             member_folder = self._get_member_folder(creator_id)
-            item = getattr(member_folder, api_item["id"])
-            transitions(item, ("accept",))  # TODO set correct state
-            logger.info(
-                "{} - {}/{} decided - id : {}".format(item_type, i + 1, total, api_item["id"])
-            )
+            item = getattr(member_folder, api_meetingitem["id"])
 
-    def _create_category_if_not_exists(self):
-        pass
+            transitions(item, ("accept",))  # TODO set correct state
+            item.setModificationDate(api_meetingitem["modified_at"])
+
+            logger.info("{} - {}/{} decided - id : {}".format(item_type, i + 1, total, api_meetingitem["id"]))
+
+    def _create_category_if_not_exists(self, category_id):
+        pm = api.portal.get_tool("portal_plonemeeting")
+        meeting_config = getattr(pm, self.meetingconfig_id)
+        category_folder = meeting_config.categories
+        if hasattr(category_folder, category_id):
+            return
+
+        api_category = self.api.get_category(category_id)
+
+        title = api_category["title"]
+        cat_descriptor = CategoryDescriptor(category_id, title=title)
+
+        cat = api.content.create(container=category_folder, type="meetingcategory", **cat_descriptor.getData())
+        cat.reindexObject()
 
     def _create_user_if_not_exists(self, user_id):
         acl = api.portal.get_tool("acl_users")
@@ -209,26 +223,46 @@ class HubSessionsXMLImporter:
         return member_folder
 
 
-class HubSessionsAPI:
+class IExternalAPI:
+    __metaclass__ = ABCMeta
+
+    @abstractmethod
+    def get_meeting_ids(self):
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_meeting(self, meeting_id):
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_meetingitem(self, meetingitem_id):
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_category(self, category_id):
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_user(self, user_id):
+        raise NotImplementedError
+
+
+class HubSessionsAPI(IExternalAPI):
     def __init__(self, base_url, user, user_password):
         self.base_url = base_url
         self.user = user
         self.user_password = user_password
 
-        self._pmuserid_hsuserid_mapping = self._get_pmuserid_hsuserid_mapping()
+        self._pm_userid_hs_userid_mapping = self._get_pm_userid_hs_userid_mapping()
+        self._pm_categoryid_hs_classifierid_mapping = self._get_pm_categoryid_hs_classifierid_mapping()
 
-    def get_meeting_urls(self):
+    def get_meeting_ids(self):
         meetings_xml = self._get_xml_content(
             self.base_url + "/config?do=searchAll&className=HubSessions_Meeting_Meeting&sortBy=date"
         )
-        meetings = [e.text for e in meetings_xml.xmlpythondata]
-        meetings.reverse()
-        return meetings
-
-    def get_users(self):
-        users_xml = self._get_xml_content(self.base_url + "/config/xml").hsconfig.users
-        users = [user.text for user in users_xml]
-        return users
+        meetings_ids = [meeting_url.text.split("/")[-2] for meeting_url in meetings_xml.xmlpythondata]
+        meetings_ids.reverse()
+        return meetings_ids
 
     def get_organization(self, org_id):
         xml = self._get_xml_content("{}/config/{}/xml".format(self.base_url, org_id)).hsgroup
@@ -236,7 +270,7 @@ class HubSessionsAPI:
         return group
 
     def get_user(self, user_id):
-        url = "{}/config/{}/xml".format(self.base_url, self._pmuserid_hsuserid_mapping[user_id])
+        url = "{}/config/{}/xml".format(self.base_url, self._pm_userid_hs_userid_mapping[user_id])
         xml = self._get_xml_content(url).hsuser
         user = {
             "id": xml.login.text,
@@ -245,40 +279,67 @@ class HubSessionsAPI:
         }
         return user
 
-    def get_meeting(self, url):
-        xml = self._get_xml_content(url).meeting
+    def get_meeting(self, meeting_id):
+        xml = self._get_xml_content(self.base_url + "/data/{}/xml".format(meeting_id)).meeting
         meeting = {
             "id": xml["id"],
             "creator": xml.creator.text,
             "created_at": xml.created.text,
             "date": xml.date.text,
-            "assembly": self._get_assembly(url),
-            "assembly_excused": self._get_assembly(url, status="excused"),
-            "assembly_absents": self._get_assembly(url, status="absent"),
-            "signatures": self._get_signatures(url),
+            "assembly": self._get_assembly(xml),
+            "assembly_excused": self._get_assembly(xml, status="excused"),
+            "assembly_absents": self._get_assembly(xml, status="absent"),
+            "signatures": self._get_signatures(xml),
             "observations": xml.observations.text,
-            "items": [item.text for item in xml.items],
+            "meetingitem_ids": [item_url.text.split("/")[-2] for item_url in xml.items],
             "annexes": [annexe.text for annexe in xml.annexes],
         }
 
         return meeting
 
-    def get_item(self, url):
-        xml = self._get_xml_content(url).item
+    def get_meetingitem(self, meetingitem_id):
+        xml = self._get_xml_content(self.base_url + "/data/{}/xml".format(meetingitem_id)).item
         item = {
             "id": xml["id"],
             "creator": xml.creator.text,
             "created_at": xml.created.text,
+            "modified_at": xml.modified.text,
             "title": xml.title.text,
             "proposing_group_id": xml.proposinggroup.text,
-            "category": xml.classifier.text,
-            "to_discuss": bool(xml.todiscuss.text),
+            "category_id": xml.classifier.text,
+            "to_discuss": strtobool(xml.todiscuss.text),
+            "budget_related": strtobool(xml.budgetrelated.text),
+            "budget_infos": self._get_budget_infos(xml),
+            "late": strtobool(xml.late.text),
             "description": xml.description.text,
             "detailed_description": xml.detaileddescription.text,
-            "observations": xml.observations.text,
+            "observations": self._get_item_observations(xml),
             "decision": xml.decision.text,
         }
+
         return item
+
+    def get_advice(self, item_id, advice_id):
+        xml = self._get_xml_content(self.base_url + "/data/{}/{}/xml".format(item_id, advice_id)).advice
+        advice = {
+            "id": xml["id"],
+            "creator": xml.creator.text,
+            "created_at": xml.created.text,
+            "modified_at": xml.modified.text,
+            "type": xml.advicetype.text,
+            "comment": xml.comment.text,
+        }
+        return advice
+
+    def get_category(self, category_id):
+        url = "{}/config/{}/xml".format(self.base_url, self._pm_categoryid_hs_classifierid_mapping[category_id])
+        xml = self._get_xml_content(url).category
+        category = {
+            "id": xml.categoryid.text,
+            "title": xml.title.text,
+            "description": xml.description.text
+        }
+        return category
 
     def _get_request(self, url):
         """ A generic GET request with basic http authentication """
@@ -290,8 +351,8 @@ class HubSessionsAPI:
         soup = BeautifulSoup(request.content, "lxml")
         return soup.html.body
 
-    def _get_assembly(self, url, status="attendee"):
-        participant_urls = [e.text for e in self._get_xml_content(url).meeting.participants]
+    def _get_assembly(self, meeting_xml, status="attendee"):
+        participant_urls = [e.text for e in meeting_xml.participants]
         assembly = u""
         LINE_FORMAT = u"{}, {} \n"
         for participant_url in participant_urls:
@@ -302,8 +363,8 @@ class HubSessionsAPI:
                 )
         return assembly[:-1]  # -1 so we don't have an useless newline
 
-    def _get_signatures(self, url):
-        participant_urls = [e.text for e in self._get_xml_content(url).meeting.participants]
+    def _get_signatures(self, meeting_xml):
+        participant_urls = [e.text for e in meeting_xml.participants]
         signatures = u""
         for participant_url in participant_urls:
             participant = self._get_xml_content(participant_url).participant
@@ -312,16 +373,64 @@ class HubSessionsAPI:
                 signatures += participant.duty.text + "\n"
         return signatures[:-1]  # -1 so we don't have an useless newline
 
-    def _get_pmuserid_hsuserid_mapping(self):
+    def _get_budget_infos(self, meetingitem_xml):
+        if strtobool(meetingitem_xml.budgetrelated.text):
+            return meetingitem_xml.budgetinfos.text
+        return None
+
+    def _get_item_observations(self, meetingitem_xml):
+        def _translate(text):
+            return translate(text, domain="PloneMeeting", context=api.portal.get().REQUEST)
+
+        def _pretty_date(date_str):
+            datetime_object = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S.%f GMT+2")
+            return datetime_object.strftime("%d/%m/%Y à %Hh%M").decode("utf-8")
+
+        ADVICE_FORMAT = u"""
+        <p>{creator} - <strong>avis: {type}</strong> - rendu le : {created_at}</p>
+        """
+        advices = [self.get_advice(meetingitem_xml["id"], advice_url.text.split("/")[-2]) for advice_url in meetingitem_xml.advices]
+        result = ""
+        if advices:
+            result += "<p>Avis rendus sur le point: </p>"
+            for advice in advices:
+                result += ADVICE_FORMAT.format(
+                    creator=self.get_user(advice["creator"])["fullname"],
+                    type=_translate(advice["type"]).lower(),
+                    created_at=_pretty_date(advice["created_at"]),
+                )
+                if advice.get("comment"):
+                    result += "<hr/>" + advice["comment"]
+        return result + meetingitem_xml.observations.text
+
+    def _get_user_urls(self):
+        users_xml = self._get_xml_content(self.base_url + "/config/xml").hsconfig.users
+        users = [user.text for user in users_xml]
+        return users
+
+    def _get_pm_userid_hs_userid_mapping(self):
         """
         In HubSession we access an user by his HS's specific user_id so we need a mapping to get
         a user by his PM's user id. We will use the login value as the PM user id.
         """
         mapping = {}
-        users = self.get_users()
+        users = self._get_user_urls()
         for user_url in users:
             user = self._get_xml_content(user_url).hsuser
             mapping[user.login.text] = user["id"]
+        return mapping
+
+    def _get_pm_categoryid_hs_classifierid_mapping(self):
+        """
+        In HubSession we access a category by his HS's specific category_id so we need a mapping to get
+        a category by his PM's category id. We will use the categoryId value as the PM category id.
+        """
+        mapping = {}
+        categories_urls_xml = self._get_xml_content(self.base_url + "/config/xml").hsconfig.classifiers
+        categories_urls = [category.text for category in categories_urls_xml]
+        for category_url in categories_urls:
+            category = self._get_xml_content(category_url).category
+            mapping[category.categoryid.text] = category["id"]
         return mapping
 
 
@@ -329,9 +438,10 @@ class SilentLogging:
     """
     Reduce logs verbosity
     Use it like this :
-    with SilentLogging((loggerA, loggerB)):
+    with SilentLogging(('loggerA', 'loggerB')):
         do_stuff()
     """
+
     def __init__(self, loggers, verbose=False):
         self.loggers = loggers
         self.verbose = verbose
