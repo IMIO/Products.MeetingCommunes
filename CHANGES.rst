@@ -7,8 +7,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b2 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Added collection `searchitemswithnofinanceadvice` that will use `CompoundCriterion` adapter
+  `items-with-negative-previous-index` to get items for which finances advice was not asked.
 
 4.2b1 (2020-08-24)
 ------------------

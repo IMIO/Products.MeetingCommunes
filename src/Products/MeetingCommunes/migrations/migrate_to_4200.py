@@ -81,6 +81,9 @@ class Migrate_To_4200(PMMigrate_To_4200):
         # fix used WFs before reinstalling
         self._fixUsedMeetingWFs()
 
+        # add new searches (searchitemswithnofinanceadvice)
+        self.addNewSearches()
+
         # call steps from Products.PloneMeeting
         super(Migrate_To_4200, self).run(extra_omitted=extra_omitted)
 

@@ -688,6 +688,29 @@ class CustomMeetingConfig(MeetingConfig):
                         'roles_bypassing_talcondition': ['Manager', ]
                     }
                  ),
+                # Items for which finance advices were not asked
+                ('searchitemswithnofinanceadvice',
+                    {
+                        'subFolderId': 'searches_items',
+                        'active': False,
+                        'query':
+                            [
+                                {'i': 'indexAdvisers',
+                                 'o': 'plone.app.querystring.operation.selection.is',
+                                 'v': ['delay_row_id__unique_id_002',
+                                       'delay_row_id__unique_id_003',
+                                       'delay_row_id__unique_id_004']},
+                                {'i': 'CompoundCriterion',
+                                 'o': 'plone.app.querystring.operation.compound.is',
+                                 'v': 'items-with-negative-previous-index'},
+                            ],
+                        'sort_on': u'created',
+                        'sort_reversed': True,
+                        'showNumberOfItems': False,
+                        'tal_condition': "",
+                        'roles_bypassing_talcondition': ['Manager', ]
+                    }
+                 ),
             ]
         )
         infos.update(extra_infos)
