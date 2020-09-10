@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b3 (unreleased)
+4.2b3 (2020-09-10)
 ------------------
 
 - Fixed `MCMeetingDocumentGenerationHelperView.get_grouped_items` when using
