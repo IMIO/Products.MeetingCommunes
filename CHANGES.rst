@@ -7,8 +7,14 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b3 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Fixed `MCMeetingDocumentGenerationHelperView.get_grouped_items` when using
+  `excluded_values/included_values` parameters together with `unrestricted=True`,
+  unrestricted was not propagated to sub methods giving nonsense results.
+  [gbastien]
+- Added parameter `additional_catalog_query={}` to
+  `MCMeetingDocumentGenerationHelperView.get_grouped_items` making it possible
+  to pass additional traditional portal_catalog query to filter items.
+  [gbastien]
 
 4.2b2 (2020-09-07)
 ------------------

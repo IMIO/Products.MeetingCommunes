@@ -870,6 +870,51 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertEqual(len(unrestricted_grouped_items[0][1]), 4)
         self.assertEqual(unrestricted_grouped_items[1][0], u'Vendors')
         self.assertEqual(len(unrestricted_grouped_items[1][1]), 3)
+        # when using included_values and excluded_values
+        # included_values
+        grouped_items = helper.get_grouped_items(
+            itemUids,
+            included_values={'proposingGroup': [self.vendors.Title()]},
+            unrestricted=True)
+        self.assertEqual([item.getProposingGroup() for item in grouped_items],
+                         [self.vendors_uid, self.vendors_uid, self.vendors_uid])
+        grouped_items = helper.get_grouped_items(
+            itemUids,
+            included_values={'proposingGroup': [self.developers.Title()]},
+            unrestricted=True)
+        self.assertEqual([item.getProposingGroup() for item in grouped_items],
+                         [self.developers_uid, self.developers_uid,
+                          self.developers_uid, self.developers_uid])
+        # excluded_values
+        grouped_items = helper.get_grouped_items(
+            itemUids,
+            excluded_values={'proposingGroup': [self.vendors.Title()]},
+            unrestricted=True)
+        self.assertEqual([item.getProposingGroup() for item in grouped_items],
+                         [self.developers_uid, self.developers_uid,
+                          self.developers_uid, self.developers_uid])
+        grouped_items = helper.get_grouped_items(
+            itemUids,
+            excluded_values={'proposingGroup': [self.developers.Title()]},
+            unrestricted=True)
+        self.assertEqual([item.getProposingGroup() for item in grouped_items],
+                         [self.vendors_uid, self.vendors_uid, self.vendors_uid])
+
+    def test_get_grouped_items_additional_catalog_query(self):
+        self.changeUser('pmManager')
+        meeting = self._createMeetingWithItems()
+        view = meeting.restrictedTraverse('@@document-generation')
+        helper = view.get_generation_context_helper()
+        itemUids = [item.UID for item in meeting.getItems(ordered=True, theObjects=False)]
+        grouped_items = helper.get_grouped_items(
+            itemUids, additional_catalog_query={})
+        self.assertEqual(len(grouped_items), 7)
+        grouped_items = helper.get_grouped_items(
+            itemUids, additional_catalog_query={'getProposingGroup': self.vendors_uid})
+        self.assertEqual(len(grouped_items), 3)
+        grouped_items = helper.get_grouped_items(
+            itemUids, additional_catalog_query={'getProposingGroup': self.developers_uid})
+        self.assertEqual(len(grouped_items), 4)
 
     def test_get_multiple_level_printing(self):
         self.changeUser('pmManager')
