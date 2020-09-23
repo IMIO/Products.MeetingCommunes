@@ -10,6 +10,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Simplified translation for `MeetingAdviceCommunesWorkflowConditions.mayProposeToFinancialManager`
   `No` message `still_asked_again`.
   [gbastien]
+- Fixed `contactsTemplate` dashboard POD template in `examples_fr` profile, set `use_objects=True`.
+  [gbastien]
+- Added default `directory_position_types` and `contactsTemplates` for `zcpas` profile.
+  [gbastien]
 
 4.2b3 (2020-09-10)
 ------------------
