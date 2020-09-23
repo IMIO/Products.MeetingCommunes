@@ -864,7 +864,10 @@ data.directory_position_types = [
     {'token': u'secretaire',
      'name': u'Secrétaire de séance|Secrétaires de séance|Secrétaire de séance|Secrétaires de séance'},
 ]
-contactsTemplate = PodTemplateDescriptor('contactsTemplate', 'Export organizations', dashboard=True)
+contactsTemplate = PodTemplateDescriptor('contactsTemplate',
+                                         'Export',
+                                         use_objects=True,
+                                         dashboard=True)
 contactsTemplate.odt_file = 'organizations-export.ods'
 contactsTemplate.pod_formats = ['ods', 'xls', ]
 contactsTemplate.dashboard_collections_ids = ['all_orgs']

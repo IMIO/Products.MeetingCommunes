@@ -6,8 +6,11 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.17 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Backport from 4.2.x:
+  Fixed `contactsTemplate` dashboard POD template in `examples_fr` profile, set `use_objects=True`.
+  [gbastien]
+  Added default `directory_position_types` and `contactsTemplates` for `zcpas` profile.
+  [gbastien]
 
 4.1.16 (2020-09-23)
 -------------------

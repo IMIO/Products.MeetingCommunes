@@ -52,3 +52,5 @@ data = PloneMeetingConfiguration(
     meetingConfigs=(bpMeeting, casMeeting, ),
     orgs=examples_fr_import_data.groups)
 data.usersOutsideGroups = [president, conseiller]
+data.directory_position_types = deepcopy(examples_fr_import_data.data.directory_position_types)
+data.contactsTemplates = deepcopy(examples_fr_import_data.data.contactsTemplates)
