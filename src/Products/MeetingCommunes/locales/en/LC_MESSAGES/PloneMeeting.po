@@ -29,7 +29,7 @@ msgstr "Meeting config Council"
 
 #. Default: "Finances advice"
 msgid "MeetingAdviceFinances"
-msgstr ""
+msgstr "Finances advice"
 
 #. Default: "Initialize the item decision when deciding meeting"
 msgid "MeetingCommunes_label_initItemDecisionIfEmptyOnDecide"
@@ -37,47 +37,47 @@ msgstr "Initialize the item decision when deciding meeting"
 
 #. Default: "Add a finances advice"
 msgid "add_new_meetingadvicefinances"
-msgstr ""
+msgstr "Add a finances advice"
 
 #. Default: "Cautious opinion"
 msgid "cautious_finance"
-msgstr ""
+msgstr "Cautious opinion"
 
 #. Default: "Check field completeness."
 msgid "completeness_not_complete"
-msgstr ""
+msgstr "Check field completeness."
 
 #. Default: "Advice delay is still not started."
 msgid "finance_advice_delay_still_not_started"
-msgstr ""
+msgstr "Advice delay is still not started."
 
 #. Default: "Advice is still not giveable because item is not considered complete."
 msgid "finance_advice_not_giveable_because_item_not_complete"
-msgstr ""
+msgstr "Advice is still not giveable because item is not considered complete."
 
 #. Default: "Advice is suspended because it was sent back to proposing group."
 msgid "finance_advice_suspended_because_item_sent_back_to_proposing_group"
-msgstr ""
+msgstr "Advice is suspended because it was sent back to proposing group."
 
 #. Default: "Financial controllers"
 msgid "financialcontrollers"
-msgstr ""
+msgstr "Financial controllers"
 
 #. Default: "Financial editors"
 msgid "financialeditors"
-msgstr ""
+msgstr "Financial editors"
 
 #. Default: "Financial managers"
 msgid "financialmanagers"
-msgstr ""
+msgstr "Financial managers"
 
 #. Default: "Financial pre-controllers"
 msgid "financialprecontrollers"
-msgstr ""
+msgstr "Financial pre-controllers"
 
 #. Default: "Financial reviewers"
 msgid "financialreviewers"
-msgstr ""
+msgstr "Financial reviewers"
 
 msgid "front_page_body"
 msgstr ""
@@ -88,55 +88,55 @@ msgstr "If you check this box, when a meeting will be decided, if an item does n
 
 #. Default: "Unfavorable opinion"
 msgid "negative_finance"
-msgstr ""
+msgstr "Unfavorable opinion"
 
 #. Default: "Not given opinion"
 msgid "not_given_finance"
-msgstr ""
+msgstr "Not given opinion"
 
 #. Default: "Not required opinion"
 msgid "not_required_finance"
-msgstr ""
+msgstr "Not required opinion"
 
 #. Default: "Favorable opinion"
 msgid "positive_finance"
-msgstr ""
+msgstr "Favorable opinion"
 
 #. Default: "Favorable opinion with remarks"
 msgid "positive_with_remarks_finance"
-msgstr ""
+msgstr "Favorable opinion with remarks"
 
 #. Default: "Advices advicecreated"
 msgid "searchadviceadvicecreated"
-msgstr ""
+msgstr "Advices advicecreated"
 
 #. Default: "Advices proposed to financial controller"
 msgid "searchadviceproposedtocontroller"
-msgstr ""
+msgstr "Advices proposed to financial controller"
 
 #. Default: "Advices proposed to financial editor"
 msgid "searchadviceproposedtoeditor"
-msgstr ""
+msgstr "Advices proposed to financial editor"
 
 #. Default: "Advices proposed to financial manager"
 msgid "searchadviceproposedtomanager"
-msgstr ""
+msgstr "Advices proposed to financial manager"
 
 #. Default: "Advices proposed to financial reviewer"
 msgid "searchadviceproposedtoreviewer"
-msgstr ""
+msgstr "Advices proposed to financial reviewer"
 
 #. Default: "Items to control completeness of"
 msgid "searchitemstocontrolcompletenessof"
-msgstr ""
+msgstr "Items to control completeness of"
 
 #. Default: "Synthesis finance advices"
 msgid "searchitemswithfinanceadvice"
-msgstr ""
+msgstr "Synthesis finance advices"
 
 #. Default: "Items with no finance advices"
 msgid "searchitemswithnofinanceadvice"
-msgstr ""
+msgstr "Items with no finance advices"
 
 # searches
 #. Default: "Proposed items"
@@ -147,14 +147,14 @@ msgstr "Proposed items"
 msgid "searchvalidateditems"
 msgstr "Validated items"
 
-#. Default: "Advice type is still \"Asked again\"."
+#. Default: "Please change value of field \"Advice type\" to anything else but \"Asked again\" to activate this action."
 msgid "still_asked_again"
-msgstr ""
+msgstr "Please change value of field \"Advice type\" to anything else but \"Asked again\" to activate this action."
 
 #. Default: "Finances advice: add advicecreated state"
 msgid "wa_meetingadvicefinances_add_advicecreated_state"
-msgstr ""
+msgstr "Finances advice: add advicecreated state"
 
 #. Default: "Finances advice: add transition from financial controller to financial manager"
 msgid "wa_meetingadvicefinances_controller_propose_to_manager"
-msgstr ""
+msgstr "Finances advice: add transition from financial controller to financial manager"

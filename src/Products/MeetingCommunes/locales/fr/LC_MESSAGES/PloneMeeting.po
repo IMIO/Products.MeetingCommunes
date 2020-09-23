@@ -148,9 +148,9 @@ msgstr "Points proposés"
 msgid "searchvalidateditems"
 msgstr "Points validés"
 
-#. Default: "Advice type is still \"Asked again\"."
+#. Default: "Please change value of field \"Advice type\" to anything else but \"Asked again\" to activate this action."
 msgid "still_asked_again"
-msgstr "Le type d'avis est toujours \"Demandé à nouveau\"."
+msgstr "Choisissez une autre valeur que \"Demandé à nouveau\" pour le champ \"Type d'avis\" pour activer cette action."
 
 #. Default: "Finances advice: add advicecreated state"
 msgid "wa_meetingadvicefinances_add_advicecreated_state"

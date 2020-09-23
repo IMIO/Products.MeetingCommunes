@@ -149,6 +149,6 @@ msgstr ""
 msgid "completeness_not_complete"
 msgstr ""
 
-#. Default: "Advice type is still \"Asked again\"."
+#. Default: "Please change value of field \"Advice type\" to anything else but \"Asked again\" to activate this action."
 msgid "still_asked_again"
 msgstr ""

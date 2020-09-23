@@ -7,8 +7,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b4 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Simplified translation for `MeetingAdviceCommunesWorkflowConditions.mayProposeToFinancialManager`
+  `No` message `still_asked_again`.
+  [gbastien]
 
 4.2b3 (2020-09-10)
 ------------------
