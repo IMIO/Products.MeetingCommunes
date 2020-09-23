@@ -6,8 +6,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.16 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Call migrations to PloneMeeting 4108, 4109, 4110, 4111 in migration to MeetingCommunes 4.1.
+  [gbastien]
 
 4.1.15 (2020-08-21)
 -------------------
