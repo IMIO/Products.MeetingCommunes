@@ -47,6 +47,10 @@ msgstr "Cautious opinion"
 msgid "completeness_not_complete"
 msgstr "Check field completeness."
 
+#. Default: "Completeness was set to \"Not required\" by the application."
+msgid "completeness_set_to_not_required_by_app"
+msgstr ""
+
 #. Default: "Advice delay is still not started."
 msgid "finance_advice_delay_still_not_started"
 msgstr "Advice delay is still not started."

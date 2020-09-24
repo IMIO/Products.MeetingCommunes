@@ -10,6 +10,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Simplified translation for `MeetingAdviceCommunesWorkflowConditions.mayProposeToFinancialManager`
   `No` message `still_asked_again`.
   [gbastien]
+- Added translation for `completeness_set_to_not_required_by_app`.
+  [gbastien]
 
 4.2b3 (2020-09-10)
 ------------------

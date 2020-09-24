@@ -152,3 +152,7 @@ msgstr ""
 #. Default: "Please change value of field \"Advice type\" to anything else but \"Asked again\" to activate this action."
 msgid "still_asked_again"
 msgstr ""
+
+#. Default: "Completeness was set to \"Not required\" by the application."
+msgid "completeness_set_to_not_required_by_app"
+msgstr ""
