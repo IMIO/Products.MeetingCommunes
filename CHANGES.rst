@@ -16,6 +16,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [gbastien]
 - Added translation for `completeness_set_to_not_required_by_app`.
   [gbastien]
+- Added collection `searchadvicesignedbymanager` using `CompoundCriterion` adapter
+  `items-with-advice-signed-by-financial-manager` to get items having finances advice
+  in state `financial_advice_signed`.
+  [gbastien]
 
 4.2b3 (2020-09-10)
 ------------------

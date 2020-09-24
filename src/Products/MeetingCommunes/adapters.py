@@ -845,6 +845,26 @@ class CustomMeetingConfig(MeetingConfig):
                             'roles_bypassing_talcondition': ['Manager', ]
                         }
                      ),
+                    # Items having advice in state 'financial_advice_signed'
+                    ('searchadvicesignedbymanager',
+                        {
+                            'subFolderId': 'searches_items',
+                            'active': True,
+                            'query':
+                            [
+                                {'i': 'CompoundCriterion',
+                                 'o': 'plone.app.querystring.operation.compound.is',
+                                 'v': 'items-with-advice-signed-by-financial-manager'},
+                            ],
+                            'sort_on': u'created',
+                            'sort_reversed': True,
+                            'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
+                                             "tool.userIsAmong(['financialmanagers'])) "
+                                             "or (not here.REQUEST.get('fromPortletTodo', False) and "
+                                             "tool.adapted().isFinancialUser())",
+                            'roles_bypassing_talcondition': ['Manager', ]
+                        }
+                     ),
                 ]
             )
             infos.update(financesadvice_infos)
@@ -1322,7 +1342,7 @@ class AllItemsToControlCompletenessOfAdapter(ItemsToControlCompletenessOfAdapter
 
 class BaseItemsWithAdviceAdapter(CompoundCriterionBaseAdapter):
 
-    def _query(self, suffix, advice_review_state):
+    def _query(self, advice_review_state):
         ''' '''
         if not self.cfg:
             return {}
@@ -1341,7 +1361,7 @@ class ItemsWithAdviceAdviceCreatedAdapter(BaseItemsWithAdviceAdapter):
     @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceadvicecreated(self):
         '''Queries all items for which there is an advice in state 'advicecreated'.'''
-        query = self._query('financialprecontrollers', 'advicecreated')
+        query = self._query('advicecreated')
         return query
 
     # we may not ram.cache methods in same file with same name...
@@ -1354,7 +1374,7 @@ class ItemsWithAdviceProposedToFinancialControllerAdapter(BaseItemsWithAdviceAda
     @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceproposedtofinancialcontroller(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_controller'.'''
-        query = self._query('financialcontrollers', 'proposed_to_financial_controller')
+        query = self._query('proposed_to_financial_controller')
         return query
 
     # we may not ram.cache methods in same file with same name...
@@ -1367,7 +1387,7 @@ class ItemsWithAdviceProposedToFinancialEditorAdapter(BaseItemsWithAdviceAdapter
     @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceproposedtofinancialeditor(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_editor'.'''
-        query = self._query('financialeditors', 'proposed_to_financial_editor')
+        query = self._query('proposed_to_financial_editor')
         return query
 
     # we may not ram.cache methods in same file with same name...
@@ -1380,7 +1400,7 @@ class ItemsWithAdviceProposedToFinancialReviewerAdapter(BaseItemsWithAdviceAdapt
     @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceproposedtofinancialreviewer(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_reviewer'.'''
-        query = self._query('financialreviewers', 'proposed_to_financial_reviewer')
+        query = self._query('proposed_to_financial_reviewer')
         return query
 
     # we may not ram.cache methods in same file with same name...
@@ -1393,8 +1413,21 @@ class ItemsWithAdviceProposedToFinancialManagerAdapter(BaseItemsWithAdviceAdapte
     @ram.cache(query_user_groups_cachekey)
     def query_itemswithadviceproposedtofinancialmanager(self):
         '''Queries all items for which there is an advice in state 'proposed_to_financial_manager'.'''
-        query = self._query('financialmanagers', 'proposed_to_financial_manager')
+        query = self._query('proposed_to_financial_manager')
         return query
 
     # we may not ram.cache methods in same file with same name...
     query = query_itemswithadviceproposedtofinancialmanager
+
+
+class ItemsWithAdviceSignedByFinancialManagerAdapter(BaseItemsWithAdviceAdapter):
+
+    @property
+    @ram.cache(query_user_groups_cachekey)
+    def query_itemswithadvicesignedbyfinancialmanager(self):
+        '''Queries all items for which there is an advice in state 'financial_advice_signed'.'''
+        query = self._query('financial_advice_signed')
+        return query
+
+    # we may not ram.cache methods in same file with same name...
+    query = query_itemswithadvicesignedbyfinancialmanager
