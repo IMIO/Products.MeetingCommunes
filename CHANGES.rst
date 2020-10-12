@@ -7,8 +7,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b5 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- By default use finance `advice_type` for every advice `portal_types`
+  that starts with `meetingadvicefinances`.
+  [gbastien]
 
 4.2b4 (2020-10-02)
 ------------------

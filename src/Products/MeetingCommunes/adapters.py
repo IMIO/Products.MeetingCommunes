@@ -546,7 +546,7 @@ class CustomMeetingItem(MeetingItem):
         item = self.getSelf()
         tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(item)
-        if meeting_advice_portal_type == 'meetingadvicefinances':
+        if meeting_advice_portal_type.startswith('meetingadvicefinances'):
             return [t for t in cfg.getUsedAdviceTypes() if t.endswith('_finance')]
         else:
             return [t for t in cfg.getUsedAdviceTypes() if not t.endswith('_finance')]
