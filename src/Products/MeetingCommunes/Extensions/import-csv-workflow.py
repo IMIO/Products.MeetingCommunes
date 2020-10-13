@@ -4,7 +4,7 @@
 from __future__ import print_function
 
 import re
-from os.path import isfile, join
+from os.path import isfile, join, exists
 
 from backports import csv
 
@@ -14,7 +14,7 @@ from collective.iconifiedcategory.utils import calculate_category_id
 from collective.iconifiedcategory.utils import get_config_root
 from DateTime import DateTime
 from datetime import datetime
-from plone import namedfile
+from plone import namedfile, api
 from plone.app.querystring import queryparser
 from plone.dexterity.utils import createContentInContainer
 from Products.CMFCore.WorkflowCore import WorkflowException
@@ -25,6 +25,77 @@ import io
 import os
 import transaction
 
+# see https://developer.mozilla.org/fr/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+content_types = {
+        ".aac": "audio/aac",
+        ".abw": "application/x-abiword",
+        ".arc": "application/octet-stream",
+        ".avi": "video/x-msvideo",
+        ".azw": "application/vnd.amazon.ebook",
+        ".bin": "application/octet-stream",
+        ".bmp": "image/bmp",
+        ".bz": "application/x-bzip",
+        ".bz2": "application/x-bzip2",
+        ".csh": "application/x-csh",
+        ".css": "text/css",
+        ".csv": "text/csv",
+        ".doc": "application/msword",
+        ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ".eot": "application/vnd.ms-fontobject",
+        ".epub": "application/epub+zip",
+        ".gif": "image/gif",
+        ".htm": "text/html",
+        ".html": "text/html",
+        ".ico": "image/x-icon",
+        ".ics": "text/calendar",
+        ".jar": "application/java-archive",
+        ".jpeg": "image/jpeg",
+        ".jpg": "image/jpeg",
+        ".js": "application/javascript",
+        ".json": "application/json",
+        ".mid": "audio/midi",
+        ".midi": "audio/midi",
+        ".mpeg": "video/mpeg",
+        ".mpkg": "application/vnd.apple.installer+xml",
+        ".odp": "application/vnd.oasis.opendocument.presentation",
+        ".ods": "application/vnd.oasis.opendocument.spreadsheet",
+        ".odt": "application/vnd.oasis.opendocument.text",
+        ".oga": "audio/ogg",
+        ".ogv": "video/ogg",
+        ".ogx": "application/ogg",
+        ".otf": "font/otf",
+        ".png": "image/png",
+        ".pdf": "application/pdf",
+        ".ppt": "application/vnd.ms-powerpoint",
+        ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        ".rar": "application/x-rar-compressed",
+        ".rtf": "application/rtf",
+        ".sh": "application/x-sh",
+        ".svg": "image/svg+xml",
+        ".swf": "application/x-shockwave-flash",
+        ".tar": "application/x-tar",
+        ".tif": "image/tiff",
+        ".tiff": "image/tiff",
+        ".ts": "application/typescript",
+        ".ttf": "font/ttf",
+        ".vsd": "application/vnd.visio",
+        ".wav": "audio/x-wav",
+        ".weba": "audio/webm",
+        ".webm": "video/webm",
+        ".webp": "image/webp",
+        ".woff": "font/woff",
+        ".woff2": "font/woff2",
+        ".xhtml": "application/xhtml+xml",
+        ".xls": "application/vnd.ms-excel",
+        ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        ".xml": "application/xml",
+        ".xul": "application/vnd.mozilla.xul+xml",
+        ".zip": "application/zip",
+        ".3gp": "video/3gpp",
+        ".3g2": "video/3gpp2",
+        ".7z": "application/x-7z-compressed",
+    }
+
 
 # Because we got an ugly csv with ugly formatting and a shit load of useless M$ formatting.
 def clean_xhtml(xhtml_value):
@@ -33,8 +104,11 @@ def clean_xhtml(xhtml_value):
     line = re.sub(r' ?class=".*?"', u"", line.strip())
     line = re.sub(r' ?lang=".*?"', u"", line.strip())
     line = re.sub(r"<font.*?>", u"", line.strip())
+    line = re.sub(r"<h\d*", u"<p", line.strip())
+    line = re.sub(r"</h\d*", u"</p", line.strip())
+
     line = line.replace(u"</font>", u"").strip()
-    line = line.replace(u"\u00A0", u"nbsp;").strip()
+    line = line.replace(u"\u00A0", u"&nbsp;").strip()
     line = line.replace(u"<o:p></o:p>", u"").strip()
     line = line.replace(u"<o:p>", u"<p>").strip()
     line = line.replace(u"</o:p>", u"</p>").strip()
@@ -85,7 +159,14 @@ class CSVMeetingItem:
         self.meeting_external_id = meeting_external_id
         self.beneficiary = beneficiary != u"NULL" and beneficiary or None
         path = "{}/{}".format(annexes_base_path, external_id)
-        self.annexes = [f for f in os.listdir(path) if isfile(join(path, f))]
+        if exists(path):
+            self.annexes = [
+                "{}/{}".format(path, f)
+                for f in os.listdir(path)
+                if isfile(join(path, f))
+            ]
+        else:
+            self.annexes = []
 
 
 class CSVMeeting:
@@ -123,10 +204,11 @@ class ImportCSV:
         self.groups = {}
         self._deactivated_recurring_items = []
 
-    def _check_file_exists(self, path):
-        _path = self.annex_dir_path + path
-        if not os.path.isfile(_path):
-            raise IOError(u"File not found {path}.".format(path=path))
+    # def _check_file_exists(self, path):
+    #     _path = path
+    #     if not os.path.isfile(_path):
+    #         raise IOError(u"File not found {path}.".format(path=_path))
+    #     return _path
 
     def add_annex(
         self,
@@ -140,9 +222,7 @@ class ImportCSV:
         """Adds an annex to p_item.
            If no p_annexType is provided, self.annexFileType is used.
            If no p_annexTitle is specified, the predefined title of the annex type is used."""
-        self._check_file_exists(path)
-
-        _path = self.annex_dir_path + path
+        # _path = self._check_file_exists(path)
 
         if annex_type is None:
             annex_type = "annexe"
@@ -152,20 +232,21 @@ class ImportCSV:
         annexes_config_root = get_config_root(context)
         annex_type_id = calculate_category_id(annexes_config_root.get(annex_type))
 
-        annex_content_type = "annex"
+        annex_portal_type = "annex"
+        file_ext = path[path.rindex("."):]
+        content_type = content_types[file_ext]
 
         the_annex = createContentInContainer(
             container=context,
-            portal_type=annex_content_type,
+            portal_type=annex_portal_type,
             title=annex_title or "Annex",
-            file=self._annex_file_content(_path),
+            file=self._annex_file_content(path),
             content_category=annex_type_id,
-            content_type="application/pdf",
-            contentType="application/pdf",
+            content_type=content_type,
+            contentType=content_type,
             to_print=to_print,
             confidential=confidential,
         )
-        the_annex.file.contentType = "application/pdf"
         return the_annex
 
     def object_already_exists(self, obj_id, portal_type):
@@ -242,12 +323,13 @@ class ImportCSV:
             decision=safe_unicode(csv_item[8].strip()),
             meeting_external_id=meeting_external_id,
             beneficiary=safe_unicode(csv_item[10].strip()),
-            annexes_base_path=self.annex_dir_path
+            annexes_base_path=self.annex_dir_path,
         )
         return item
 
     def load_items(self, delib_file, portaltype, meetings):
         logger.info("Load {0}".format(delib_file))
+        csv.field_size_limit(100000000)
         with io.open(delib_file, "r") as csvfile:
             reader = csv.reader(csvfile, delimiter=u";")
             for row in reader:
@@ -303,11 +385,7 @@ class ImportCSV:
         # meeting.at_post_create_script()
         meeting.processForm(values={"dummy": None})
         meeting.setCreationDate(DateTime(csv_meeting.created_on))
-        logger.info(
-            "Created meeting {id} {date}".format(
-                id=meeting.external_id, date=meeting.Title()
-            )
-        )
+        logger.info("Created meeting {id} {date}".format(id=_id, date=meeting.Title()))
 
         logger.info(
             "Adding {items} items to meeting of {date}".format(
@@ -357,10 +435,25 @@ class ImportCSV:
         item.setProposingGroup(
             self.get_matching_proposing_group(csv_item.proposing_group)
         )
-        item.setCreators(csv_item.creator_id)
+        user = api.user.get(csv_item.creator_id)
+        if user:
+            item.setCreators(user.id)
+        else:
+            item.setCreators("csvimport")
         item.setDescription(
-            "<p>Créateur originel : {creator}</p>".format(creator=csv_item.creator)
+            u"<p>Créateur originel : {creator}</p>".format(creator=csv_item.creator)
         )
+
+        item.setMotivation(csv_item.motivation)
+        item.setDecision(csv_item.decision)
+
+        if csv_item.beneficiary:
+            item.setDescription(
+                "{}{}".format(
+                    item.Description(),
+                    "<p>Bénéficiaire : {}</p>".format(csv_item.beneficiary),
+                )
+            )
         # do not call item.at_post_create_script(). This would get only throuble with cancel quick edit in objects
         item.processForm(values={"dummy": None})
         item.setCreationDate(tme)
@@ -368,9 +461,9 @@ class ImportCSV:
         if csv_item.annexes:
             for annex_file in csv_item.annexes:
                 # remove weird naming with double extension
-                annex_name = annex_file.replace(".doc.docx", "")
+                annex_name = annex_file.replace(".doc.docx", ".doc")
                 annex_name = annex_name[
-                    annex_name.rindex("/") + 1: annex_name.rindex(".")
+                    annex_name.rindex("/") + 1 : annex_name.rindex(".")
                 ]
                 inserted = self.add_annexe_to_object(
                     item, annex_file, safe_unicode(annex_name)
@@ -379,7 +472,9 @@ class ImportCSV:
                     item.setDescription(
                         "{}{}".format(
                             item.Description(),
-                            "<p>Fichier non trouvé : {}</p>".format(annex_file),
+                            "<p>Fichier non trouvé : {}</p>".format(
+                                annex_file[annex_file.rindex("/") + 1 :]
+                            ),
                         )
                     )
         else:
@@ -408,7 +503,7 @@ class ImportCSV:
         # Load all csv into memory
         cfg_groups = get_organizations(only_selected=False)
         for group in cfg_groups:
-            self.grp_id_mapping[group.id] = group
+            self.grp_id_mapping[group.UID()] = group
 
         logger.info("Load {0}".format(self.f_group_mapping))
         with io.open(self.f_group_mapping, "r") as csvfile:
@@ -420,11 +515,9 @@ class ImportCSV:
                 else:
                     self.groups[row[0].strip()] = self.default_group
 
-        meetings_college = {}
-        meetings_council = {}
-        logger.info("Load {0}".format(self.f_meetings))
+        meetings_cas = {}
         with io.open(self.f_meetings, "r") as csvfile:
-            reader = csv.reader(csvfile, delimiter=";")
+            reader = csv.reader(csvfile, delimiter=u";")
             # TypeSeance	DateSeance	OJ	PV
             for row in reader:
                 # Because numbers are not numbers but unicode chars...
@@ -438,26 +531,18 @@ class ImportCSV:
                     assembly=safe_unicode(row[3].strip()),
                 )
 
-                self.add_meeting_to_dict(meetings_council, meeting)
-        self.load_items(self.f_items, "MeetingItemcas", meetings_council)
+                self.add_meeting_to_dict(meetings_cas, meeting)
+        self.load_items(self.f_items, "MeetingItemcas", meetings_cas)
         # insert All
-        logger.info("Insert Objects to College")
-        self.disable_recurring_items("meeting-config-college")
+        logger.info("Insert Objects to CAS")
+        self.disable_recurring_items("meeting-config-cas")
         member_folder = self.portal.Members.csvimport.mymeetings.get(
-            "meeting-config-college"
+            "meeting-config-cas"
         )
-        for csv_meeting in meetings_college.values():
+        for csv_meeting in meetings_cas.values():
             self.insert_and_close_meeting(member_folder, csv_meeting)
-        self.re_enable_recurring_items("meeting-config-college")
 
-        logger.info("Insert Objects to Council")
-        self.disable_recurring_items("meeting-config-council")
-        member_folder = self.portal.Members.csvimport.mymeetings.get(
-            "meeting-config-council"
-        )
-        for csv_meeting in meetings_council.values():
-            self.insert_and_close_meeting(member_folder, csv_meeting)
-        self.re_enable_recurring_items("meeting-config-council")
+        self.re_enable_recurring_items("meeting-config-cas")
 
         return self.meeting_counter, self.item_counter, self.errors
 
