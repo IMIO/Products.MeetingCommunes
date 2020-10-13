@@ -57,6 +57,7 @@ content_types = {
         ".midi": "audio/midi",
         ".mpeg": "video/mpeg",
         ".mpkg": "application/vnd.apple.installer+xml",
+        ".msg": "application/vnd.ms-outlook",
         ".odp": "application/vnd.oasis.opendocument.presentation",
         ".ods": "application/vnd.oasis.opendocument.spreadsheet",
         ".odt": "application/vnd.oasis.opendocument.text",
