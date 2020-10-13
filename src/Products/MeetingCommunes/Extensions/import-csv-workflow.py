@@ -27,75 +27,75 @@ import transaction
 
 # see https://developer.mozilla.org/fr/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
 content_types = {
-        ".aac": "audio/aac",
-        ".abw": "application/x-abiword",
-        ".arc": "application/octet-stream",
-        ".avi": "video/x-msvideo",
-        ".azw": "application/vnd.amazon.ebook",
-        ".bin": "application/octet-stream",
-        ".bmp": "image/bmp",
-        ".bz": "application/x-bzip",
-        ".bz2": "application/x-bzip2",
-        ".csh": "application/x-csh",
-        ".css": "text/css",
-        ".csv": "text/csv",
-        ".doc": "application/msword",
-        ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        ".eot": "application/vnd.ms-fontobject",
-        ".epub": "application/epub+zip",
-        ".gif": "image/gif",
-        ".htm": "text/html",
-        ".html": "text/html",
-        ".ico": "image/x-icon",
-        ".ics": "text/calendar",
-        ".jar": "application/java-archive",
-        ".jpeg": "image/jpeg",
-        ".jpg": "image/jpeg",
-        ".js": "application/javascript",
-        ".json": "application/json",
-        ".mid": "audio/midi",
-        ".midi": "audio/midi",
-        ".mpeg": "video/mpeg",
-        ".mpkg": "application/vnd.apple.installer+xml",
-        ".msg": "application/vnd.ms-outlook",
-        ".odp": "application/vnd.oasis.opendocument.presentation",
-        ".ods": "application/vnd.oasis.opendocument.spreadsheet",
-        ".odt": "application/vnd.oasis.opendocument.text",
-        ".oga": "audio/ogg",
-        ".ogv": "video/ogg",
-        ".ogx": "application/ogg",
-        ".otf": "font/otf",
-        ".png": "image/png",
-        ".pdf": "application/pdf",
-        ".ppt": "application/vnd.ms-powerpoint",
-        ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-        ".rar": "application/x-rar-compressed",
-        ".rtf": "application/rtf",
-        ".sh": "application/x-sh",
-        ".svg": "image/svg+xml",
-        ".swf": "application/x-shockwave-flash",
-        ".tar": "application/x-tar",
-        ".tif": "image/tiff",
-        ".tiff": "image/tiff",
-        ".ts": "application/typescript",
-        ".ttf": "font/ttf",
-        ".vsd": "application/vnd.visio",
-        ".wav": "audio/x-wav",
-        ".weba": "audio/webm",
-        ".webm": "video/webm",
-        ".webp": "image/webp",
-        ".woff": "font/woff",
-        ".woff2": "font/woff2",
-        ".xhtml": "application/xhtml+xml",
-        ".xls": "application/vnd.ms-excel",
-        ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        ".xml": "application/xml",
-        ".xul": "application/vnd.mozilla.xul+xml",
-        ".zip": "application/zip",
-        ".3gp": "video/3gpp",
-        ".3g2": "video/3gpp2",
-        ".7z": "application/x-7z-compressed",
-    }
+    ".aac": "audio/aac",
+    ".abw": "application/x-abiword",
+    ".arc": "application/octet-stream",
+    ".avi": "video/x-msvideo",
+    ".azw": "application/vnd.amazon.ebook",
+    ".bin": "application/octet-stream",
+    ".bmp": "image/bmp",
+    ".bz": "application/x-bzip",
+    ".bz2": "application/x-bzip2",
+    ".csh": "application/x-csh",
+    ".css": "text/css",
+    ".csv": "text/csv",
+    ".doc": "application/msword",
+    ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ".eot": "application/vnd.ms-fontobject",
+    ".epub": "application/epub+zip",
+    ".gif": "image/gif",
+    ".htm": "text/html",
+    ".html": "text/html",
+    ".ico": "image/x-icon",
+    ".ics": "text/calendar",
+    ".jar": "application/java-archive",
+    ".jpeg": "image/jpeg",
+    ".jpg": "image/jpeg",
+    ".js": "application/javascript",
+    ".json": "application/json",
+    ".mid": "audio/midi",
+    ".midi": "audio/midi",
+    ".mpeg": "video/mpeg",
+    ".mpkg": "application/vnd.apple.installer+xml",
+    ".msg": "application/vnd.ms-outlook",
+    ".odp": "application/vnd.oasis.opendocument.presentation",
+    ".ods": "application/vnd.oasis.opendocument.spreadsheet",
+    ".odt": "application/vnd.oasis.opendocument.text",
+    ".oga": "audio/ogg",
+    ".ogv": "video/ogg",
+    ".ogx": "application/ogg",
+    ".otf": "font/otf",
+    ".png": "image/png",
+    ".pdf": "application/pdf",
+    ".ppt": "application/vnd.ms-powerpoint",
+    ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    ".rar": "application/x-rar-compressed",
+    ".rtf": "application/rtf",
+    ".sh": "application/x-sh",
+    ".svg": "image/svg+xml",
+    ".swf": "application/x-shockwave-flash",
+    ".tar": "application/x-tar",
+    ".tif": "image/tiff",
+    ".tiff": "image/tiff",
+    ".ts": "application/typescript",
+    ".ttf": "font/ttf",
+    ".vsd": "application/vnd.visio",
+    ".wav": "audio/x-wav",
+    ".weba": "audio/webm",
+    ".webm": "video/webm",
+    ".webp": "image/webp",
+    ".woff": "font/woff",
+    ".woff2": "font/woff2",
+    ".xhtml": "application/xhtml+xml",
+    ".xls": "application/vnd.ms-excel",
+    ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    ".xml": "application/xml",
+    ".xul": "application/vnd.mozilla.xul+xml",
+    ".zip": "application/zip",
+    ".3gp": "video/3gpp",
+    ".3g2": "video/3gpp2",
+    ".7z": "application/x-7z-compressed",
+}
 
 
 # Because we got an ugly csv with ugly formatting and a shit load of useless M$ formatting.
@@ -158,7 +158,7 @@ class CSVMeetingItem:
         self.motivation = clean_xhtml(motivation)
         self.decision = clean_xhtml(decision)
         self.meeting_external_id = meeting_external_id
-        self.beneficiary = beneficiary != u"NULL" and beneficiary or None
+        self.beneficiary = beneficiary != u"NULL" and safe_unicode(beneficiary) or None
         path = "{}/{}".format(annexes_base_path, external_id)
         if exists(path):
             self.annexes = [
@@ -234,7 +234,7 @@ class ImportCSV:
         annex_type_id = calculate_category_id(annexes_config_root.get(annex_type))
 
         annex_portal_type = "annex"
-        file_ext = path[path.rindex("."):]
+        file_ext = path[path.rindex(".") :].lower()
         content_type = content_types[file_ext]
 
         the_annex = createContentInContainer(
@@ -450,9 +450,9 @@ class ImportCSV:
 
         if csv_item.beneficiary:
             item.setDescription(
-                "{}{}".format(
-                    item.Description(),
-                    "<p>Bénéficiaire : {}</p>".format(csv_item.beneficiary),
+                u"{}{}".format(
+                    safe_unicode(item.Description()),
+                    u"<p>Bénéficiaire : {}</p>".format(csv_item.beneficiary),
                 )
             )
         # do not call item.at_post_create_script(). This would get only throuble with cancel quick edit in objects
@@ -466,6 +466,8 @@ class ImportCSV:
                 annex_name = annex_name[
                     annex_name.rindex("/") + 1 : annex_name.rindex(".")
                 ]
+                annex_name = annex_name.strip()
+                annex_name = annex_name.strip("-_")
                 inserted = self.add_annexe_to_object(
                     item, annex_file, safe_unicode(annex_name)
                 )
