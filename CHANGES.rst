@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b5 (unreleased)
+4.2b5 (2020-10-14)
 ------------------
 
 - By default use finance `advice_type` for every advice `portal_types`
