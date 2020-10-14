@@ -6,7 +6,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.18 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Added import script from Workflow Lux.
+  [odelaere]
 
 
 4.1.17 (2020-10-01)
