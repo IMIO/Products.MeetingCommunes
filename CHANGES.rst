@@ -6,8 +6,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.19 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Added `zcsss` profile to add CSSS MeetingConfig.
+  [gbastien]
 
 4.1.18 (2020-10-14)
 -------------------

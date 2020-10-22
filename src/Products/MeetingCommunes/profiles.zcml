@@ -181,6 +181,13 @@
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:registerProfile
+   name="zcsss"
+   title="PloneMeeting / CSSS"
+   description="PloneMeeting for csss (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
    name="zsippt"
    title="PloneMeeting / SIPPT"
    description="PloneMeeting for SIPPT (Belgium)"

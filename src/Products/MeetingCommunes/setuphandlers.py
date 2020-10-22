@@ -70,6 +70,7 @@ def isMeetingCommunesConfigureProfile(context):
         context.readDataFile("MeetingCommunes_coordinateOffice_marker.txt") or \
         context.readDataFile("MeetingCommunes_cpas_marker.txt") or \
         context.readDataFile("MeetingCommunes_cppt_marker.txt") or \
+        context.readDataFile("MeetingCommunes_csss_marker.txt") or \
         context.readDataFile("MeetingCommunes_etat_major_marker.txt") or \
         context.readDataFile("MeetingCommunes_examples_fr_marker.txt") or \
         context.readDataFile("MeetingCommunes_executive_marker.txt") or \
