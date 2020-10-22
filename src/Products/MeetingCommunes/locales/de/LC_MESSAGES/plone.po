@@ -39,6 +39,10 @@ msgstr ""
 msgid "MeetingCOGES"
 msgstr ""
 
+#. Default: "MeetingCSSS"
+msgid "MeetingCSSS"
+msgstr ""
+
 #. Default: "MeetingCT"
 msgid "MeetingCT"
 msgstr ""
@@ -89,6 +93,10 @@ msgstr ""
 
 #. Default: "MeetingItemCOGES"
 msgid "MeetingItemCOGES"
+msgstr ""
+
+#. Default: "MeetingItemCSSS"
+msgid "MeetingItemCSSS"
 msgstr ""
 
 #. Default: "MeetingItemCT"
@@ -149,6 +157,10 @@ msgstr ""
 
 #. Default: "MeetingItemRecurringCOGES"
 msgid "MeetingItemRecurringCOGES"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCSSS"
+msgid "MeetingItemRecurringCSSS"
 msgstr ""
 
 #. Default: "MeetingItemRecurringCT"
@@ -265,6 +277,10 @@ msgstr ""
 
 #. Default: "MeetingItemTemplateCOGES"
 msgid "MeetingItemTemplateCOGES"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCSSS"
+msgid "MeetingItemTemplateCSSS"
 msgstr ""
 
 #. Default: "MeetingItemTemplateCT"
