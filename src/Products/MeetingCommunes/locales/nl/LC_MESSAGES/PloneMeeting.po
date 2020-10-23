@@ -127,6 +127,10 @@ msgstr ""
 msgid "searchadviceproposedtoreviewer"
 msgstr ""
 
+#. Default: "Advices signed by financial manager"
+msgid "searchadvicesignedbymanager"
+msgstr ""
+
 #. Default: "Items to control completeness of"
 msgid "searchitemstocontrolcompletenessof"
 msgstr ""

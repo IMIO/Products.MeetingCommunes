@@ -81,6 +81,10 @@ msgstr ""
 msgid "searchadviceproposedtomanager"
 msgstr ""
 
+#. Default: "Advices signed by financial manager"
+msgid "searchadvicesignedbymanager"
+msgstr ""
+
 #. Default: "Unfavorable opinion"
 msgid "negative_finance"
 msgstr ""

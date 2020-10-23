@@ -9,6 +9,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Added `zcsss` profile to add CSSS MeetingConfig.
   [gbastien]
+- Added missing translation for `searchadvicesignedbymanager`.
+  [gbastien]
 
 4.2b5 (2020-10-14)
 ------------------

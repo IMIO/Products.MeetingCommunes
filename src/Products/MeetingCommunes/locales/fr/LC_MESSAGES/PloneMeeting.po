@@ -130,6 +130,10 @@ msgstr "Avis proposés au Directeur financier"
 msgid "searchadviceproposedtoreviewer"
 msgstr "Avis proposés au validateur financier"
 
+#. Default: "Advices signed by financial manager"
+msgid "searchadvicesignedbymanager"
+msgstr "Avis signés"
+
 #. Default: "Items to control completeness of"
 msgid "searchitemstocontrolcompletenessof"
 msgstr "Complétude à contrôler"

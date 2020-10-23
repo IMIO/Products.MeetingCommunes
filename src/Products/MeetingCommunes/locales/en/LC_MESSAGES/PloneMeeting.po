@@ -130,6 +130,10 @@ msgstr "Advices proposed to financial manager"
 msgid "searchadviceproposedtoreviewer"
 msgstr "Advices proposed to financial reviewer"
 
+#. Default: "Advices signed by financial manager"
+msgid "searchadvicesignedbymanager"
+msgstr ""
+
 #. Default: "Items to control completeness of"
 msgid "searchitemstocontrolcompletenessof"
 msgstr "Items to control completeness of"
