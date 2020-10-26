@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1.19 (unreleased)
+4.1.19 (2020-10-26)
 -------------------
 
 - Added `zcsss` profile to add CSSS MeetingConfig.
