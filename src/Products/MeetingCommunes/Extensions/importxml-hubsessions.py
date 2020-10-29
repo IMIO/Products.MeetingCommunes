@@ -28,6 +28,7 @@ from Products.PloneMeeting.utils import org_id_to_uid
 # - Importer les groupes proposants => OK
 # - Importer les catégories => OK
 # - Importer les annexes
+# - Garder le lien entre Collège et Conseil
 #
 # --------------------------------------------------------------------------------------------------
 # Should
