@@ -92,6 +92,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [gbastien]
 - Added more `position_types` by default (secretaire) in `examples_fr` profile.
   [gbastien]
+- Fixed a bug in `getPrintableItemsByCategory` (incorrect method call, categories are now in DX).
+  [aduchene]
 
 4.1.14 (2020-06-24)
 -------------------
