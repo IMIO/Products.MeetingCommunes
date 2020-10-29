@@ -7,7 +7,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 -------------------
 
 - Fixed a bug in `getPrintableItemsByCategory` (incorrect method call, categories are now in DX).
-  [aduchene]
+  [aduchene, gbastien]
 
 4.1.19 (2020-10-26)
 -------------------
