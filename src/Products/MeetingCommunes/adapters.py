@@ -244,7 +244,7 @@ class CustomMeeting(Meeting):
                 self.context)
             # onlySelectable = False will also return disabled categories...
             allCategories = [cat for cat in meetingConfig.getCategories(onlySelectable=False)
-                             if api.content.get_state(cat) == 'active']
+                             if cat.enabled]
             usedCategories = [elem[0] for elem in res]
             for cat in allCategories:
                 if cat not in usedCategories:
