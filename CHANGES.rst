@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1.20 (unreleased)
+4.1.20 (2020-10-29)
 -------------------
 
 - Fixed a bug in `getPrintableItemsByCategory` (incorrect method call, categories are now in DX).
