@@ -6,8 +6,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.21 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Added `testCustomMeeting.test_GetPrintableItemsByCategoryWithBothLateItems`,
+  moved from `Products.MeetingCharleroi`.
+  [gbastien]
 
 4.1.20 (2020-10-29)
 -------------------
