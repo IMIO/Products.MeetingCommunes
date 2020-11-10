@@ -147,11 +147,8 @@ class testCustomMeeting(MeetingCommunesTestCase):
         item2 = orderedItems[1]
         item3 = orderedItems[2]
         self.do(item1, 'backToValidated')
-        self.do(item1, 'backToProposed')
         self.do(item2, 'backToValidated')
-        self.do(item2, 'backToProposed')
         self.do(item3, 'backToValidated')
-        self.do(item3, 'backToProposed')
         self.freezeMeeting(meeting)
         item1.setPreferredMeeting(meeting.UID())
         item2.setPreferredMeeting(meeting.UID())
