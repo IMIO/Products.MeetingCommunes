@@ -12,6 +12,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Added `testCustomMeeting.test_GetPrintableItemsByCategoryWithBothLateItems`,
   moved from `Products.MeetingCharleroi`.
   [gbastien]
+- Added POD template that renders various votes on item.
+  [gbastien]
 
 4.2b6 (2020-10-27)
 ------------------

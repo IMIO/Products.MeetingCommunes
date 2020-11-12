@@ -86,6 +86,13 @@ attendeesTemplate.pod_portal_types = ['Meeting', 'MeetingItem']
 attendeesTemplate.tal_condition = u'python:tool.isManager(here)'
 attendeesTemplate.style_template = ['styles1']
 
+votesTemplate = PodTemplateDescriptor('votes', 'Votes')
+votesTemplate.odt_file = 'votes.odt'
+votesTemplate.pod_formats = ['odt', 'pdf', ]
+votesTemplate.pod_portal_types = ['MeetingItem']
+votesTemplate.tal_condition = u'python:tool.isManager(here)'
+votesTemplate.style_template = ['styles1']
+
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
 itemTemplate.is_reusable = True
 itemTemplate.odt_file = 'deliberation.odt'
@@ -187,7 +194,7 @@ historyTemplate.pod_portal_types = ['MeetingItem']
 
 collegeStyleTemplate = [stylesTemplate1, stylesTemplate2]
 collegeTemplates = [agendaTemplate, agendaTemplateWithIndex, agendaTemplateWithAnnexes,
-                    decisionsTemplate, attendeesTemplate,
+                    decisionsTemplate, attendeesTemplate, votesTemplate,
                     itemTemplate, itemTemplate_duplex, itemReport, dfAdviceTemplate,
                     dfAdvicesTemplate, dashboardTemplate,
                     dashboardTemplateOds, dashboardExportTemplate, dashboardDFTemplateOds,
