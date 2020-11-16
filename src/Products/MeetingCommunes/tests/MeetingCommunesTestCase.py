@@ -34,7 +34,7 @@ class MeetingCommunesTestCase(PloneMeetingTestCase, MeetingCommunesTestingHelper
     # by default, PloneMeeting's test file testPerformances.py and
     # testConversionWithDocumentViewer.py' are ignored, override the subproductIgnoredTestFiles
     # attribute to take these files into account
-    subproductIgnoredTestFiles = ['test_robot.py', 'testPerformances.py', 'testContacts.py', 'testVotes.py']
+    subproductIgnoredTestFiles = ['test_robot.py', 'testPerformances.py', 'testContacts.py']
 
     layer = MC_TESTING_PROFILE_FUNCTIONAL
 
