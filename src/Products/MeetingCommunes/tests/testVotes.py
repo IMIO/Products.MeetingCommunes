@@ -7,7 +7,7 @@ from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommun
 from Products.PloneMeeting.tests.testVotes import testVotes as pmtv
 
 
-class testViews(MeetingCommunesTestCase, pmtv):
+class testVotes(MeetingCommunesTestCase, pmtv):
     ''' '''
 
 
