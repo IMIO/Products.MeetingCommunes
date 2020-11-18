@@ -12,6 +12,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Added `testCustomMeeting.test_GetPrintableItemsByCategoryWithBothLateItems`,
   moved from `Products.MeetingCharleroi`.
   [gbastien]
+- Fixed `Migrate_To_4200`, call `addNewSearches` at the end because it needs
+  `_adaptWFHistoryForItemsAndMeetings` to have been called in the
+  `_after_reinstall` hook to have correct workflows.
+  [gbastien]
 
 4.2b6 (2020-10-27)
 ------------------
