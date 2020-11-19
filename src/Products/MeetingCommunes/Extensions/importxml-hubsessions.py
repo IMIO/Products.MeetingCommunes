@@ -19,35 +19,13 @@ from Products.PloneMeeting.MeetingItem import MeetingItem
 from Products.PloneMeeting.utils import org_id_to_uid
 
 
-# MoSCoW -- Import HubSessions
-# --------------------------------------------------------------------------------------------------
-# Must
-# --------------------------------------------------------------------------------------------------
+# Import HubSessions
 # - Importer les séances (assemblée, signataires, ...) => OK
 # - Importer les points =>  OK
 # - Importer les groupes proposants => OK
 # - Importer les catégories => OK
 # - Importer les annexes
 # - Garder le lien entre Collège et Conseil
-#
-# --------------------------------------------------------------------------------------------------
-# Should
-# --------------------------------------------------------------------------------------------------
-# - Abstraire l'API d'HubSession pour que l'Importer puisse gérer d'autres sources de données
-# au travers d'une interface => OK
-# - Ajouter les docstrings
-# - Vérifier pourquoi il y a parfois des
-# 'WARNING Transience Transient object container session_data max subobjects reached' du côté de HS
-# => OK, pas grave
-# - S'assurer que l'import est idempotent : CàD qu'on peut le faire tourner plusieurs fois d'affilés
-# sans erreurs/crashs
-#
-# --------------------------------------------------------------------------------------------------
-# Won't:
-# --------------------------------------------------------------------------------------------------
-# - Importer les participants dans les contacts
-#
-
 
 def import_data(
     base_url="http://localhost:8090",
