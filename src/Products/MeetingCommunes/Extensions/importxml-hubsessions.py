@@ -11,7 +11,7 @@ import transaction
 from Products.PloneMeeting import logger
 from Products.PloneMeeting.MeetingItem import MeetingItem
 from Products.PloneMeeting.profiles import CategoryDescriptor
-from Products.PloneMeeting.utils import org_id_to_uid
+from Products.PloneMeeting.utils import org_id_to_uid, normalize
 from bs4 import BeautifulSoup
 from collective.contact.plonegroup.utils import get_own_organization, select_organization
 from imio.helpers.content import transitions
@@ -248,6 +248,13 @@ class HubSessionsAPI(IExternalAPI):
         return group
 
     def get_user(self, user_id):
+        if user_id not in self._pm_categoryid_hs_classifierid_mapping.keys():
+            return {  # User has been deleted in HubSessions and we cannot find him.
+                "id": user_id,
+                "fullname": user_id,
+                "email": "noreply@imio.be"
+            }
+
         url = "{}/config/{}/xml".format(self.base_url, self._pm_userid_hs_userid_mapping[user_id])
         xml = self._get_xml_content(url).hsuser
         user = {
@@ -283,8 +290,8 @@ class HubSessionsAPI(IExternalAPI):
             "created_at": xml.created.text,
             "modified_at": xml.modified.text,
             "title": xml.title.text,
-            "proposing_group_id": strtoascii(xml.proposinggroup.text),
-            "category_id": strtoascii(xml.classifier.text),
+            "proposing_group_id": normalize(xml.proposinggroup.text),
+            "category_id": normalize(xml.classifier.text),
             "to_discuss": strtobool(xml.todiscuss.text),
             "budget_related": strtobool(xml.budgetrelated.text),
             "budget_infos": self._get_budget_infos(xml),
@@ -313,7 +320,7 @@ class HubSessionsAPI(IExternalAPI):
         url = "{}/config/{}/xml".format(self.base_url, self._pm_categoryid_hs_classifierid_mapping[category_id])
         xml = self._get_xml_content(url).category
         category = {
-            "id": strtoascii(xml.categoryid.text),
+            "id": normalize(xml.categoryid.text),
             "title": xml.title.text,
             "description": xml.description.text,
         }
@@ -414,12 +421,6 @@ class HubSessionsAPI(IExternalAPI):
             category = self._get_xml_content(category_url).category
             mapping[category.categoryid.text] = category["id"]
         return mapping
-
-
-def strtoascii(input_str):
-    nfkd_form = unicodedata.normalize("NFKD", input_str)
-    only_ascii = nfkd_form.encode("ASCII", "ignore")
-    return only_ascii
 
 
 class SilentLogging:
