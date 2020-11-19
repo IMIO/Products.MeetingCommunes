@@ -1,22 +1,22 @@
 # coding=utf-8
-from abc import ABCMeta, abstractmethod
 import logging
-import requests
-from distutils.util import strtobool
+import unicodedata
+from abc import ABCMeta, abstractmethod
 from datetime import datetime
 
-from Products.PloneMeeting.profiles import CategoryDescriptor
-from bs4 import BeautifulSoup
+from distutils.util import strtobool
 
+import requests
+import transaction
+from Products.PloneMeeting import logger
+from Products.PloneMeeting.MeetingItem import MeetingItem
+from Products.PloneMeeting.profiles import CategoryDescriptor
+from Products.PloneMeeting.utils import org_id_to_uid
+from bs4 import BeautifulSoup
 from collective.contact.plonegroup.utils import get_own_organization, select_organization
 from imio.helpers.content import transitions
 from plone import api
-import transaction
 from zope.i18n import translate
-
-from Products.PloneMeeting import logger
-from Products.PloneMeeting.MeetingItem import MeetingItem
-from Products.PloneMeeting.utils import org_id_to_uid
 
 
 # Import HubSessions
@@ -26,6 +26,7 @@ from Products.PloneMeeting.utils import org_id_to_uid
 # - Importer les catégories => OK
 # - Importer les annexes
 # - Garder le lien entre Collège et Conseil
+
 
 def import_data(
     base_url="http://localhost:8090",
@@ -145,7 +146,7 @@ class HubSessionsXMLImporter:
         pm = api.portal.get_tool("portal_plonemeeting")
         meeting_config = getattr(pm, self.meetingconfig_id)
         category_folder = meeting_config.categories
-        if hasattr(category_folder, category_id):
+        if category_id in category_folder.objectIds():
             return
 
         api_category = self.api.get_category(category_id)
@@ -282,8 +283,8 @@ class HubSessionsAPI(IExternalAPI):
             "created_at": xml.created.text,
             "modified_at": xml.modified.text,
             "title": xml.title.text,
-            "proposing_group_id": xml.proposinggroup.text,
-            "category_id": xml.classifier.text,
+            "proposing_group_id": strtoascii(xml.proposinggroup.text),
+            "category_id": strtoascii(xml.classifier.text),
             "to_discuss": strtobool(xml.todiscuss.text),
             "budget_related": strtobool(xml.budgetrelated.text),
             "budget_infos": self._get_budget_infos(xml),
@@ -312,9 +313,9 @@ class HubSessionsAPI(IExternalAPI):
         url = "{}/config/{}/xml".format(self.base_url, self._pm_categoryid_hs_classifierid_mapping[category_id])
         xml = self._get_xml_content(url).category
         category = {
-            "id": xml.categoryid.text,
+            "id": strtoascii(xml.categoryid.text),
             "title": xml.title.text,
-            "description": xml.description.text
+            "description": xml.description.text,
         }
         return category
 
@@ -367,7 +368,10 @@ class HubSessionsAPI(IExternalAPI):
         ADVICE_FORMAT = u"""
         <p>{creator} - <strong>avis: {type}</strong> - rendu le : {created_at}</p>
         """
-        advices = [self.get_advice(meetingitem_xml["id"], advice_url.text.split("/")[-2]) for advice_url in meetingitem_xml.advices]
+        advices = [
+            self.get_advice(meetingitem_xml["id"], advice_url.text.split("/")[-2])
+            for advice_url in meetingitem_xml.advices
+        ]
         result = ""
         if advices:
             result += "<p>Avis rendus sur le point: </p>"
@@ -410,6 +414,12 @@ class HubSessionsAPI(IExternalAPI):
             category = self._get_xml_content(category_url).category
             mapping[category.categoryid.text] = category["id"]
         return mapping
+
+
+def strtoascii(input_str):
+    nfkd_form = unicodedata.normalize("NFKD", input_str)
+    only_ascii = nfkd_form.encode("ASCII", "ignore")
+    return only_ascii
 
 
 class SilentLogging:
