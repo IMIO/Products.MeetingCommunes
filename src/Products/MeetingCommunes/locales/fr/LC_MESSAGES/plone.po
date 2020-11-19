@@ -42,6 +42,10 @@ msgstr "Séance du CA"
 msgid "MeetingCOGES"
 msgstr "Séance du Comité de Gestion"
 
+#. Default: "MeetingCSSS"
+msgid "MeetingCSSS"
+msgstr "Séance Comité Spécial du Service Social"
+
 #. Default: "MeetingCT"
 msgid "MeetingCT"
 msgstr "Séance de la Commission technique"
@@ -93,6 +97,10 @@ msgstr "Point CA"
 #. Default: "MeetingItemCOGES"
 msgid "MeetingItemCOGES"
 msgstr "Point Comité de Gestion"
+
+#. Default: "MeetingItemCSSS"
+msgid "MeetingItemCSSS"
+msgstr "Point Comité Spécial du Service Social"
 
 #. Default: "MeetingItemCT"
 msgid "MeetingItemCT"
@@ -153,6 +161,10 @@ msgstr "Point récurrent CA"
 #. Default: "MeetingItemRecurringCOGES"
 msgid "MeetingItemRecurringCOGES"
 msgstr "Point récurrent Comité de Gestion"
+
+#. Default: "MeetingItemRecurringCSSS"
+msgid "MeetingItemRecurringCSSS"
+msgstr "Point récurrent Comité Spécial du Service Social"
 
 #. Default: "MeetingItemRecurringCT"
 msgid "MeetingItemRecurringCT"
@@ -269,6 +281,10 @@ msgstr "Modèle de point CA"
 #. Default: "MeetingItemTemplateCOGES"
 msgid "MeetingItemTemplateCOGES"
 msgstr "Modèle de point Comité de Gestion"
+
+#. Default: "MeetingItemTemplateCSSS"
+msgid "MeetingItemTemplateCSSS"
+msgstr "Modèle de point Comité Spécial du Service Social"
 
 #. Default: "MeetingItemTemplateCT"
 msgid "MeetingItemTemplateCT"

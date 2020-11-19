@@ -70,6 +70,7 @@ def isMeetingCommunesConfigureProfile(context):
         context.readDataFile("MeetingCommunes_coordinateOffice_marker.txt") or \
         context.readDataFile("MeetingCommunes_cpas_marker.txt") or \
         context.readDataFile("MeetingCommunes_cppt_marker.txt") or \
+        context.readDataFile("MeetingCommunes_csss_marker.txt") or \
         context.readDataFile("MeetingCommunes_etat_major_marker.txt") or \
         context.readDataFile("MeetingCommunes_examples_fr_marker.txt") or \
         context.readDataFile("MeetingCommunes_executive_marker.txt") or \
@@ -168,18 +169,17 @@ def _configureDexterityLocalRolesField():
             'advice_given': {
                 'advisers': {'roles': [], 'rel': ''}},
             'advicecreated': {
-                u'financialprecontrollers': {'roles': [u'Editor', u'Reviewer'], 'rel': ''}},
+                u'financialprecontrollers': {'roles': [u'Editor', u'Reviewer', u'Contributor'], 'rel': ''}},
             'proposed_to_financial_controller': {
-                u'financialcontrollers': {'roles': [u'Editor', u'Reviewer'], 'rel': ''}},
+                u'financialcontrollers': {'roles': [u'Editor', u'Reviewer', u'Contributor'], 'rel': ''}},
             'proposed_to_financial_editor': {
-                u'financialeditors': {'roles': [u'Editor', u'Reviewer'], 'rel': ''}},
+                u'financialeditors': {'roles': [u'Editor', u'Reviewer', u'Contributor'], 'rel': ''}},
+            'proposed_to_financial_reviewer': {
+                u'financialreviewers': {'roles': [u'Editor', u'Reviewer', u'Contributor'], 'rel': ''}},
             'proposed_to_financial_manager': {
-                u'financialmanagers': {'roles': [u'Editor', u'Reviewer'], 'rel': ''}},
+                u'financialmanagers': {'roles': [u'Editor', u'Reviewer', u'Contributor'], 'rel': ''}},
             'financial_advice_signed': {
                 u'financialmanagers': {'roles': [u'Reviewer'], 'rel': ''}},
-            'proposed_to_financial_reviewer': {
-                u'financialreviewers': {'roles': [u'Editor', u'Reviewer'], 'rel': ''}
-            }
         }
     }
     msg = add_fti_configuration(portal_type='meetingadvicefinances',

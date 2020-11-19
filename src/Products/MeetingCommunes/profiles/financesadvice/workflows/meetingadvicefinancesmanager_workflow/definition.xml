@@ -1,305 +1,271 @@
 <?xml version="1.0"?>
-<dc-workflow workflow_id="meetingcommunes_workflow"
-             title="meetingcommunes_workflow"
+<dc-workflow workflow_id="meetingadvicefinancesmanager_workflow"
+             title="meetingadvicefinancesmanager_workflow"
              state_variable="review_state"
-             initial_state="created"
+             initial_state="proposed_to_financial_controller"
              xmlns:i18n="http://xml.zope.org/namespaces/i18n"
              i18n:domain="plone">
  <permission>View</permission>
  <permission>Access contents information</permission>
- <permission>Delete objects</permission>
  <permission>Modify portal content</permission>
  <permission>Review portal content</permission>
+ <permission>Delete objects</permission>
  <permission>PloneMeeting: Add annex</permission>
- <state state_id="closed"
-        title="closed"
+ <state state_id="advice_given"
+        title="advice_given"
         i18n:attributes="title">
-  <exit-transition transition_id="backToDecided"/>
+  <exit-transition transition_id="backToAdviceInitialState"/>
   <permission-map name="Access contents information"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
-   <permission-role>MeetingObserverGlobal</permission-role>
-   <permission-role>Reader</permission-role>
+                  acquired="True">
   </permission-map>
   <permission-map name="Delete objects"
                   acquired="False">
+   <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="Modify portal content"
                   acquired="False">
+   <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Add annex"
                   acquired="False">
+   <permission-role>Contributor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="Review portal content"
                   acquired="False">
+   <permission-role>Reviewer</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="View"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
-   <permission-role>MeetingObserverGlobal</permission-role>
-   <permission-role>Reader</permission-role>
+                  acquired="True">
   </permission-map>
  </state>
- <state state_id="created"
-        title="created"
+ <state state_id="financial_advice_signed"
+        title="financial_advice_signed"
         i18n:attributes="title">
-  <exit-transition transition_id="freeze"/>
+  <exit-transition transition_id="backToProposedToFinancialManager"/>
+  <exit-transition transition_id="giveAdvice"/>
   <permission-map name="Access contents information"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
-   <permission-role>MeetingObserverGlobal</permission-role>
-   <permission-role>Reader</permission-role>
+                  acquired="True">
   </permission-map>
   <permission-map name="Delete objects"
                   acquired="False">
+   <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="Modify portal content"
                   acquired="False">
+   <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Add annex"
                   acquired="False">
+   <permission-role>Contributor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="Review portal content"
                   acquired="False">
+   <permission-role>Reviewer</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="View"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
-   <permission-role>MeetingObserverGlobal</permission-role>
-   <permission-role>Reader</permission-role>
+                  acquired="True">
   </permission-map>
  </state>
- <state state_id="decided"
-        title="decided"
+ <state state_id="proposed_to_financial_controller"
+        title="proposed_to_financial_controller"
         i18n:attributes="title">
-  <exit-transition transition_id="backToPublished"/>
-  <exit-transition transition_id="close"/>
+  <exit-transition transition_id="giveAdvice"/>
+  <exit-transition transition_id="proposeToFinancialReviewer"/>
   <permission-map name="Access contents information"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
-   <permission-role>MeetingObserverGlobal</permission-role>
-   <permission-role>Reader</permission-role>
+                  acquired="True">
   </permission-map>
   <permission-map name="Delete objects"
                   acquired="False">
+   <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="Modify portal content"
                   acquired="False">
+   <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Add annex"
                   acquired="False">
+   <permission-role>Contributor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="Review portal content"
                   acquired="False">
+   <permission-role>Reviewer</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="View"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
-   <permission-role>MeetingObserverGlobal</permission-role>
-   <permission-role>Reader</permission-role>
+                  acquired="True">
   </permission-map>
  </state>
- <state state_id="frozen"
-        title="frozen"
+ <state state_id="proposed_to_financial_manager"
+        title="proposed_to_financial_manager"
         i18n:attributes="title">
-  <exit-transition transition_id="backToCreated"/>
-  <exit-transition transition_id="publish"/>
+  <exit-transition transition_id="signFinancialAdvice"/>
+  <exit-transition transition_id="giveAdvice"/>
+  <exit-transition transition_id="backToProposedToFinancialReviewer"/>
   <permission-map name="Access contents information"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
-   <permission-role>MeetingObserverGlobal</permission-role>
-   <permission-role>Reader</permission-role>
+                  acquired="True">
   </permission-map>
   <permission-map name="Delete objects"
                   acquired="False">
+   <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="Modify portal content"
                   acquired="False">
+   <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Add annex"
                   acquired="False">
+   <permission-role>Contributor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="Review portal content"
                   acquired="False">
+   <permission-role>Reviewer</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="View"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
-   <permission-role>MeetingObserverGlobal</permission-role>
-   <permission-role>Reader</permission-role>
+                  acquired="True">
   </permission-map>
  </state>
- <state state_id="published"
-        title="published"
+ <state state_id="proposed_to_financial_reviewer"
+        title="proposed_to_financial_reviewer"
         i18n:attributes="title">
-  <exit-transition transition_id="backToFrozen"/>
-  <exit-transition transition_id="decide"/>
+  <exit-transition transition_id="proposeToFinancialManager"/>
+  <exit-transition transition_id="backToProposedToFinancialController"/>
+  <exit-transition transition_id="giveAdvice"/>
   <permission-map name="Access contents information"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
-   <permission-role>MeetingObserverGlobal</permission-role>
-   <permission-role>Reader</permission-role>
+                  acquired="True">
   </permission-map>
   <permission-map name="Delete objects"
                   acquired="False">
+   <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="Modify portal content"
                   acquired="False">
+   <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="PloneMeeting: Add annex"
                   acquired="False">
+   <permission-role>Contributor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="Review portal content"
                   acquired="False">
+   <permission-role>Reviewer</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
   </permission-map>
   <permission-map name="View"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>MeetingManager</permission-role>
-   <permission-role>MeetingObserverGlobal</permission-role>
-   <permission-role>Reader</permission-role>
+                  acquired="True">
   </permission-map>
  </state>
- <transition transition_id="backToCreated"
-             title="backToCreated"
-             new_state="created"
+ <transition transition_id="backToAdviceInitialState"
+             title="backToAdviceInitialState"
+             new_state="proposed_to_financial_controller"
              trigger="USER"
              before_script=""
              after_script=""
              i18n:attributes="title">
-  <action url="" icon="" category="workflow" i18n:translate="">backToCreated</action>
+  <action url="" icon="" category="workflow" i18n:translate="">backToAdviceInitialState</action>
   <guard>
-    <guard-expression>python:here.wfConditions().mayCorrect('created')</guard-expression>
+    <guard-expression>python:here.wfConditions().mayBackToAdviceInitialState()</guard-expression>
   </guard>
  </transition>
- <transition transition_id="backToDecided"
-             title="backToDecided"
-             new_state="decided"
+ <transition transition_id="backToProposedToFinancialController"
+             title="backToProposedToFinancialController"
+             new_state="proposed_to_financial_controller"
              trigger="USER"
              before_script=""
              after_script=""
              i18n:attributes="title">
-  <action url="" icon="" category="workflow" i18n:translate="">backToDecided</action>
+  <action url="" icon="" category="workflow" i18n:translate="">backToProposedToFinancialController</action>
   <guard>
-    <guard-expression>python:here.wfConditions().mayCorrect('decided')</guard-expression>
+    <guard-expression>python:here.wfConditions().mayCorrect('proposed_to_financial_controller')</guard-expression>
   </guard>
  </transition>
- <transition transition_id="backToFrozen"
-             title="backToFrozen"
-             new_state="frozen"
+ <transition transition_id="backToProposedToFinancialManager"
+             title="backToProposedToFinancialManager"
+             new_state="proposed_to_financial_manager"
              trigger="USER"
              before_script=""
              after_script=""
              i18n:attributes="title">
-  <action url="" icon="" category="workflow" i18n:translate="">backToFrozen</action>
+  <action url="" icon="" category="workflow" i18n:translate="">backToProposedToFinancialManager</action>
   <guard>
-    <guard-expression>python:here.wfConditions().mayCorrect('frozen')</guard-expression>
+    <guard-expression>python:here.wfConditions().mayCorrect('proposed_to_financial_manager')</guard-expression>
   </guard>
  </transition>
- <transition transition_id="backToPublished"
-             title="backToPublished"
-             new_state="published"
+ <transition transition_id="backToProposedToFinancialReviewer"
+             title="backToProposedToFinancialReviewer"
+             new_state="proposed_to_financial_reviewer"
              trigger="USER"
              before_script=""
              after_script=""
              i18n:attributes="title">
-  <action url="" icon="" category="workflow" i18n:translate="">backToPublished</action>
+  <action url="" icon="" category="workflow" i18n:translate="">backToProposedToFinancialReviewer</action>
   <guard>
-    <guard-expression>python:here.wfConditions().mayCorrect('published')</guard-expression>
+    <guard-expression>python:here.wfConditions().mayCorrect('proposed_to_financial_reviewer')</guard-expression>
   </guard>
  </transition>
- <transition transition_id="close"
-             title="close"
-             new_state="closed"
+ <transition transition_id="giveAdvice"
+             title="giveAdvice"
+             new_state="advice_given"
              trigger="USER"
              before_script=""
              after_script=""
              i18n:attributes="title">
-  <action url="" icon="" category="workflow" i18n:translate="">close</action>
+  <action url="" icon="" category="workflow" i18n:translate="">giveAdvice</action>
   <guard>
-    <guard-expression>python:here.wfConditions().mayClose()</guard-expression>
+    <guard-expression>python:here.wfConditions().mayGiveAdvice()</guard-expression>
   </guard>
  </transition>
- <transition transition_id="decide"
-             title="decide"
-             new_state="decided"
+ <transition transition_id="proposeToFinancialManager"
+             title="proposeToFinancialManager"
+             new_state="proposed_to_financial_manager"
              trigger="USER"
              before_script=""
              after_script=""
              i18n:attributes="title">
-  <action url="" icon="" category="workflow" i18n:translate="">decide</action>
+  <action url="" icon="" category="workflow" i18n:translate="">proposeToFinancialManager</action>
   <guard>
-    <guard-expression>python:here.wfConditions().mayDecide()</guard-expression>
+    <guard-expression>python:here.wfConditions().mayProposeToFinancialManager()</guard-expression>
   </guard>
  </transition>
- <transition transition_id="freeze"
-             title="freeze"
-             new_state="frozen"
+ <transition transition_id="proposeToFinancialReviewer"
+             title="proposeToFinancialReviewer"
+             new_state="proposed_to_financial_reviewer"
              trigger="USER"
              before_script=""
              after_script=""
              i18n:attributes="title">
-  <action url="" icon="" category="workflow" i18n:translate="">freeze</action>
+  <action url="" icon="" category="workflow" i18n:translate="">proposeToFinancialReviewer</action>
   <guard>
-    <guard-expression>python:here.wfConditions().mayFreeze()</guard-expression>
+    <guard-expression>python:here.wfConditions().mayProposeToFinancialReviewer()</guard-expression>
   </guard>
  </transition>
- <transition transition_id="publish"
-             title="publish"
-             new_state="published"
+ <transition transition_id="signFinancialAdvice"
+             title="signFinancialAdvice"
+             new_state="financial_advice_signed"
              trigger="USER"
              before_script=""
              after_script=""
              i18n:attributes="title">
-  <action url="" icon="" category="workflow" i18n:translate="">publish</action>
+  <action url="" icon="" category="workflow" i18n:translate="">signFinancialAdvice</action>
   <guard>
-    <guard-expression>python:here.wfConditions().mayPublish()</guard-expression>
+    <guard-expression>python:here.wfConditions().maySignFinancialAdvice()</guard-expression>
   </guard>
  </transition>
  <variable variable_id="action" for_catalog="False"

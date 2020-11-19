@@ -582,3 +582,19 @@ msgstr ""
 #. Default: "MeetingItemRecurringBDC"
 msgid "MeetingItemRecurringBDC"
 msgstr ""
+
+#. Default: "MeetingCSSS"
+msgid "MeetingCSSS"
+msgstr ""
+
+#. Default: "MeetingItemCSSS"
+msgid "MeetingItemCSSS"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCSSS"
+msgid "MeetingItemTemplateCSSS"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCSSS"
+msgid "MeetingItemRecurringCSSS"
+msgstr ""

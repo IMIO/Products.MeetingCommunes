@@ -59,8 +59,6 @@ simpleMeeting.usedItemAttributes = [
     'itemIsSigned',
     'notes', ]
 simpleMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
-simpleMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
-simpleMeeting.meetingWorkflow = 'meetingcommunes_workflow'
 simpleMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
 simpleMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
 simpleMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
@@ -97,10 +95,9 @@ simpleMeeting.powerObservers = (
      'item_states': [],
      'meeting_states': [],
      'orderindex_': '2'})
-simpleMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 simpleMeeting.workflowAdaptations = [
-    'no_publication', 'no_global_observation',
-    'return_to_proposing_group', 'refused', 'only_creator_may_delete']
+    'no_publication', 'refused', 'accepted_but_modified', 'delayed',
+    'return_to_proposing_group', 'only_creator_may_delete', 'pre_accepted']
 simpleMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 simpleMeeting.onMeetingTransitionItemActionToExecute = (
     {'meeting_transition': 'freeze',

@@ -25,12 +25,8 @@ msgstr ""
 msgid "searchitemswithfinanceadvice"
 msgstr ""
 
-#. Default: "Alderman of the following services (departments)"
-msgid "MeetingCommunes_label_echevinServices"
-msgstr ""
-
-#. Default: "If the group is responsible of other groups, select them here above, either do not select any elements of the list."
-msgid "MeetingCommunes_descr_echevinServices"
+#. Default: "Items with no finance advices"
+msgid "searchitemswithnofinanceadvice"
 msgstr ""
 
 #portal_tabs
@@ -85,6 +81,10 @@ msgstr ""
 msgid "searchadviceproposedtomanager"
 msgstr ""
 
+#. Default: "Advices signed by financial manager"
+msgid "searchadvicesignedbymanager"
+msgstr ""
+
 #. Default: "Unfavorable opinion"
 msgid "negative_finance"
 msgstr ""
@@ -109,6 +109,10 @@ msgstr ""
 msgid "not_required_finance"
 msgstr ""
 
+#. Default: "Financial pre-controllers"
+msgid "financialprecontrollers"
+msgstr ""
+
 #. Default: "Financial controllers"
 msgid "financialcontrollers"
 msgstr ""
@@ -131,4 +135,28 @@ msgstr ""
 
 #. Default: "Finances advice: add transition from financial controller to financial manager"
 msgid "wa_meetingadvicefinances_controller_propose_to_manager"
+msgstr ""
+
+#. Default: "Advice is still not giveable because item is not considered complete."
+msgid "finance_advice_not_giveable_because_item_not_complete"
+msgstr ""
+
+#. Default: "Advice is suspended because it was sent back to proposing group."
+msgid "finance_advice_suspended_because_item_sent_back_to_proposing_group"
+msgstr ""
+
+#. Default: "Advice delay is still not started."
+msgid "finance_advice_delay_still_not_started"
+msgstr ""
+
+#. Default: "Check field completeness."
+msgid "completeness_not_complete"
+msgstr ""
+
+#. Default: "Please change value of field \"Advice type\" to anything else but \"Asked again\" to activate this action."
+msgid "still_asked_again"
+msgstr ""
+
+#. Default: "Completeness was set to \"Not required\" by the application."
+msgid "completeness_set_to_not_required_by_app"
 msgstr ""

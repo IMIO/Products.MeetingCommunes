@@ -1,4 +1,4 @@
-pmPipeline {
+pmDockerPipeline {
   profileName = 'communes'
   testSuiteName = 'testmc'
   unitTestParameter = ''

@@ -3,7 +3,88 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1.15 (unreleased)
+
+4.2b7 (2020-11-19)
+------------------
+
+- Fixed a bug in `getPrintableItemsByCategory` (incorrect method call, categories are now in DX).
+  [aduchene, gbastien]
+- Added `testCustomMeeting.test_GetPrintableItemsByCategoryWithBothLateItems`,
+  moved from `Products.MeetingCharleroi`.
+  [gbastien]
+- Fixed `Migrate_To_4200`, call `addNewSearches` at the end because it needs
+  `_adaptWFHistoryForItemsAndMeetings` to have been called in the
+  `_after_reinstall` hook to have correct workflows.
+  [gbastien]
+
+4.2b6 (2020-10-27)
+------------------
+
+- Added `zcsss` profile to add CSSS MeetingConfig.
+  [gbastien]
+- Added missing translation for `searchadvicesignedbymanager`.
+  [gbastien]
+
+4.2b5 (2020-10-14)
+------------------
+
+- By default use finance `advice_type` for every advice `portal_types`
+  that starts with `meetingadvicefinances`.
+  [gbastien]
+
+4.2b4 (2020-10-02)
+------------------
+
+- Simplified translation for `MeetingAdviceCommunesWorkflowConditions.mayProposeToFinancialManager`
+  `No` message `still_asked_again`.
+  [gbastien]
+- Fixed `contactsTemplate` dashboard POD template in `examples_fr` profile, set `use_objects=True`.
+  [gbastien]
+- Added default `directory_position_types` and `contactsTemplates` for `zcpas` profile.
+  [gbastien]
+- Added translation for `completeness_set_to_not_required_by_app`.
+  [gbastien]
+- Added collection `searchadvicesignedbymanager` using `CompoundCriterion` adapter
+  `items-with-advice-signed-by-financial-manager` to get items having finances advice
+  in state `financial_advice_signed`.
+  [gbastien]
+
+4.2b3 (2020-09-10)
+------------------
+
+- Fixed `MCMeetingDocumentGenerationHelperView.get_grouped_items` when using
+  `excluded_values/included_values` parameters together with `unrestricted=True`,
+  unrestricted was not propagated to sub methods giving nonsense results.
+  [gbastien]
+- Added parameter `additional_catalog_query={}` to
+  `MCMeetingDocumentGenerationHelperView.get_grouped_items` making it possible
+  to pass additional traditional portal_catalog query to filter items.
+  [gbastien]
+
+4.2b2 (2020-09-07)
+------------------
+
+- Added collection `searchitemswithnofinanceadvice` that will use `CompoundCriterion` adapter
+  `items-with-negative-previous-index` to get items for which finances advice was not asked.
+
+4.2b1 (2020-08-24)
+------------------
+
+- Added translations for `completeness_not_complete` and `still_asked_again` WF transition button messages.
+- Merged changes from 4.1.15
+- Adapted profile `zbdc` as `workflowAdaptations` changed.
+
+4.2a4 (2020-06-24)
+------------------
+
+- Merged changes from 4.1.9
+- Merged changes from 4.1.10
+- Merged changes from 4.1.11
+- Merged changes from 4.1.12
+- Merged changes from 4.1.13
+- Merged changes from 4.1.14
+
+4.1.15 (2020-08-21)
 -------------------
 
 - Fix translations for `MeetingExecutive`.
@@ -13,6 +94,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Add missing translations for MeetingAudit.
   [anuyens]
 - Added translations for actions `sent to` from `College/BP` to `CoDir`.
+  [gbastien]
+- Define style `page-break` in `deliberation.odt` POD template.
+  [gbastien]
+- Added more `position_types` by default (secretaire) in `examples_fr` profile.
   [gbastien]
 
 4.1.14 (2020-06-24)
@@ -60,6 +145,11 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Fixed `all-items-to-control-completeness-of` ICompoundCriterion adapter.
 - Added some example regarding 'Non attendees' in attendees.odt template.
 
+4.2a3 (2020-03-13)
+------------------
+
+- Merged changes from 4.1.8
+
 4.1.8 (2020-03-12)
 ------------------
 
@@ -67,6 +157,18 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   that will query every finances advice, not only delay aware advices
 - Updated styles1.odt to add CKEditor's styles
 - Added some more usecases with abbreviated firstname in attendees.odt
+
+4.2a2 (2020-02-21)
+------------------
+
+- Merged changes from 4.1.x
+
+4.2a1 (2020-02-06)
+------------------
+
+- Adapted item workflow to use MeetingConfig.itemWFValidationLevels defined configuration
+- Added new 'meetingadvice' related workflows : 'meetingadvicefinanceseditor_workflow' and 'meetingadvicefinancesmanager_workflow'
+- MeetingConfig.itemDecidedStates and MeetingConfig.itemPositiveDecidedStates fields were removed, adapted import_data files accordingly
 
 4.1.7 (2020-02-18)
 ------------------

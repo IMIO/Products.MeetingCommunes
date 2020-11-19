@@ -31,14 +31,6 @@ msgstr "Conseil Communal"
 msgid "MeetingAdviceFinances"
 msgstr "Avis finances"
 
-#. Default: "If the group is responsible of other groups, select them here above, either do not select any elements of the list."
-msgid "MeetingCommunes_descr_echevinServices"
-msgstr "Si ce groupe est responsable d'autres groupes, selectionnez les ci-dessous."
-
-#. Default: "Alderman of the following services (departments)"
-msgid "MeetingCommunes_label_echevinServices"
-msgstr "Echevin des services suivants"
-
 #. Default: "Initialize the item decision when deciding meeting"
 msgid "MeetingCommunes_label_initItemDecisionIfEmptyOnDecide"
 msgstr "Initialiser le champ décision des points lorsque la séance passe 'En rédaction du PV'?"
@@ -51,6 +43,26 @@ msgstr "Ajouter un avis finances"
 msgid "cautious_finance"
 msgstr "Avis finances réservé"
 
+#. Default: "Check field completeness."
+msgid "completeness_not_complete"
+msgstr "Vérifiez le champ \"Complétude\" sur le point."
+
+#. Default: "Completeness was set to \"Not required\" by the application."
+msgid "completeness_set_to_not_required_by_app"
+msgstr "La complétude a été définie à \"Évaluation non requise\" par l'application."
+
+#. Default: "Advice delay is still not started."
+msgid "finance_advice_delay_still_not_started"
+msgstr "Le délai pour rendre l'avis n'est pas encore démarré."
+
+#. Default: "Advice is still not giveable because item is not considered complete."
+msgid "finance_advice_not_giveable_because_item_not_complete"
+msgstr "Cet avis ne pourra être rendu que lorsque le point sera considéré 'complet'."
+
+#. Default: "Advice is suspended because it was sent back to proposing group."
+msgid "finance_advice_suspended_because_item_sent_back_to_proposing_group"
+msgstr "Cet avis est suspendu car le point a été renvoyé vers le groupe proposant."
+
 #. Default: "Financial controllers"
 msgid "financialcontrollers"
 msgstr "Contrôleurs financiers"
@@ -62,6 +74,10 @@ msgstr "Rédacteurs financiers"
 #. Default: "Financial managers"
 msgid "financialmanagers"
 msgstr "Directeurs financiers"
+
+#. Default: "Financial pre-controllers"
+msgid "financialprecontrollers"
+msgstr "Pré-contrôleurs financiers"
 
 #. Default: "Financial reviewers"
 msgid "financialreviewers"
@@ -114,6 +130,10 @@ msgstr "Avis proposés au Directeur financier"
 msgid "searchadviceproposedtoreviewer"
 msgstr "Avis proposés au validateur financier"
 
+#. Default: "Advices signed by financial manager"
+msgid "searchadvicesignedbymanager"
+msgstr "Avis signés"
+
 #. Default: "Items to control completeness of"
 msgid "searchitemstocontrolcompletenessof"
 msgstr "Complétude à contrôler"
@@ -123,6 +143,10 @@ msgstr "Complétude à contrôler"
 msgid "searchitemswithfinanceadvice"
 msgstr "Synthèse Avis DF"
 
+#. Default: "Items with no finance advices"
+msgid "searchitemswithnofinanceadvice"
+msgstr "Points sans avis DF"
+
 # searches
 #. Default: "Proposed items"
 msgid "searchproposeditems"
@@ -131,6 +155,10 @@ msgstr "Points proposés"
 #. Default: "Validated items"
 msgid "searchvalidateditems"
 msgstr "Points validés"
+
+#. Default: "Please change value of field \"Advice type\" to anything else but \"Asked again\" to activate this action."
+msgid "still_asked_again"
+msgstr "Choisissez une autre valeur que \"Demandé à nouveau\" pour le champ \"Type d'avis\" pour activer cette action."
 
 #. Default: "Finances advice: add advicecreated state"
 msgid "wa_meetingadvicefinances_add_advicecreated_state"

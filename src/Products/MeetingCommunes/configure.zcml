@@ -83,5 +83,9 @@
            factory="Products.MeetingCommunes.adapters.ItemsWithAdviceProposedToFinancialManagerAdapter"
            provides="collective.compoundcriterion.interfaces.ICompoundCriterionFilter"
            name="items-with-advice-proposed-to-financial-manager" />
+  <adapter for="*"
+           factory="Products.MeetingCommunes.adapters.ItemsWithAdviceSignedByFinancialManagerAdapter"
+           provides="collective.compoundcriterion.interfaces.ICompoundCriterionFilter"
+           name="items-with-advice-signed-by-financial-manager" />
 
 </configure>

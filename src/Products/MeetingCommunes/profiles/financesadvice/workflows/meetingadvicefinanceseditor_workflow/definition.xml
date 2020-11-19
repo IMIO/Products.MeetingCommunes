@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<dc-workflow workflow_id="meetingadvicefinances_workflow"
-             title="meetingadvicefinances_workflow"
+<dc-workflow workflow_id="meetingadvicefinanceseditor_workflow"
+             title="meetingadvicefinanceseditor_workflow"
              state_variable="review_state"
-             initial_state="proposed_to_financial_controller"
+             initial_state="proposed_to_financial_editor"
              xmlns:i18n="http://xml.zope.org/namespaces/i18n"
              i18n:domain="plone">
  <permission>View</permission>
@@ -74,44 +74,11 @@
                   acquired="True">
   </permission-map>
  </state>
- <state state_id="proposed_to_financial_controller"
-        title="proposed_to_financial_controller"
-        i18n:attributes="title">
-  <exit-transition transition_id="proposeToFinancialEditor"/>
-  <exit-transition transition_id="giveAdvice"/>
-  <permission-map name="Access contents information"
-                  acquired="True">
-  </permission-map>
-  <permission-map name="Delete objects"
-                  acquired="False">
-   <permission-role>Editor</permission-role>
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
-   <permission-role>Editor</permission-role>
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="PloneMeeting: Add annex"
-                  acquired="False">
-   <permission-role>Contributor</permission-role>
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Review portal content"
-                  acquired="False">
-   <permission-role>Reviewer</permission-role>
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="View"
-                  acquired="True">
-  </permission-map>
- </state>
  <state state_id="proposed_to_financial_editor"
         title="proposed_to_financial_editor"
         i18n:attributes="title">
-  <exit-transition transition_id="backToProposedToFinancialController"/>
-  <exit-transition transition_id="proposeToFinancialReviewer"/>
   <exit-transition transition_id="giveAdvice"/>
+  <exit-transition transition_id="proposeToFinancialReviewer"/>
   <permission-map name="Access contents information"
                   acquired="True">
   </permission-map>
@@ -142,10 +109,9 @@
  <state state_id="proposed_to_financial_manager"
         title="proposed_to_financial_manager"
         i18n:attributes="title">
-  <exit-transition transition_id="backToProposedToFinancialReviewer"/>
   <exit-transition transition_id="signFinancialAdvice"/>
-  <exit-transition transition_id="backToProposedToFinancialController"/>
   <exit-transition transition_id="giveAdvice"/>
+  <exit-transition transition_id="backToProposedToFinancialReviewer"/>
   <permission-map name="Access contents information"
                   acquired="True">
   </permission-map>
@@ -178,9 +144,7 @@
         i18n:attributes="title">
   <exit-transition transition_id="backToProposedToFinancialEditor"/>
   <exit-transition transition_id="proposeToFinancialManager"/>
-  <exit-transition transition_id="signFinancialAdvice"/>
   <exit-transition transition_id="giveAdvice"/>
-  <exit-transition transition_id="backToProposedToFinancialController"/>
   <permission-map name="Access contents information"
                   acquired="True">
   </permission-map>
@@ -210,7 +174,7 @@
  </state>
  <transition transition_id="backToAdviceInitialState"
              title="backToAdviceInitialState"
-             new_state="proposed_to_financial_controller"
+             new_state="proposed_to_financial_editor"
              trigger="USER"
              before_script=""
              after_script=""
@@ -218,18 +182,6 @@
   <action url="" icon="" category="workflow" i18n:translate="">backToAdviceInitialState</action>
   <guard>
     <guard-expression>python:here.wfConditions().mayBackToAdviceInitialState()</guard-expression>
-  </guard>
- </transition>
- <transition transition_id="backToProposedToFinancialController"
-             title="backToProposedToFinancialController"
-             new_state="proposed_to_financial_controller"
-             trigger="USER"
-             before_script=""
-             after_script=""
-             i18n:attributes="title">
-  <action url="" icon="" category="workflow" i18n:translate="">backToProposedToFinancialController</action>
-  <guard>
-    <guard-expression>python:here.wfConditions().mayCorrect()</guard-expression>
   </guard>
  </transition>
  <transition transition_id="backToProposedToFinancialEditor"
@@ -278,18 +230,6 @@
   <action url="" icon="" category="workflow" i18n:translate="">giveAdvice</action>
   <guard>
     <guard-expression>python:here.wfConditions().mayGiveAdvice()</guard-expression>
-  </guard>
- </transition>
- <transition transition_id="proposeToFinancialEditor"
-             title="proposeToFinancialEditor"
-             new_state="proposed_to_financial_editor"
-             trigger="USER"
-             before_script=""
-             after_script=""
-             i18n:attributes="title">
-  <action url="" icon="" category="workflow" i18n:translate="">proposeToFinancialEditor</action>
-  <guard>
-    <guard-expression>python:here.wfConditions().mayProposeToFinancialEditor()</guard-expression>
   </guard>
  </transition>
  <transition transition_id="proposeToFinancialManager"

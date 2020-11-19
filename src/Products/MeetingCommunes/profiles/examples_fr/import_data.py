@@ -336,10 +336,9 @@ collegeMeeting.availableItemsListVisibleColumns = [
 collegeMeeting.itemsListVisibleColumns = [
     u'static_item_reference', u'Creator', u'CreationDate', u'review_state',
     u'getProposingGroup', u'advices', u'actions']
+collegeMeeting.visibleFields = ['MeetingItem.annexes', 'MeetingItem.description', 'MeetingItem.decision']
 collegeMeeting.xhtmlTransformFields = ()
 collegeMeeting.xhtmlTransformTypes = ()
-collegeMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
-collegeMeeting.meetingWorkflow = 'meetingcommunes_workflow'
 collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
 collegeMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
 collegeMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
@@ -445,11 +444,15 @@ collegeMeeting.powerObservers = (
      'meeting_states': ('frozen', 'decided', 'closed'),
      'orderindex_': '2'})
 
-collegeMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
 collegeMeeting.workflowAdaptations = [
-    'no_publication', 'no_global_observation',
-    'return_to_proposing_group', 'refused',
-    'presented_item_back_to_itemcreated', 'presented_item_back_to_proposed',
+    'no_publication',
+    'return_to_proposing_group',
+    'refused',
+    'accepted_but_modified',
+    'pre_accepted',
+    'delayed',
+    'presented_item_back_to_itemcreated',
+    'presented_item_back_to_proposed',
     'only_creator_may_delete']
 collegeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 collegeMeeting.onTransitionFieldTransforms = (
@@ -740,8 +743,6 @@ councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.observations',
                                        'Meeting.observations', )
 councilMeeting.xhtmlTransformTypes = ('removeBlanks',)
-councilMeeting.itemWorkflow = 'meetingitemcommunes_workflow'
-councilMeeting.meetingWorkflow = 'meetingcommunes_workflow'
 councilMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
 councilMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
 councilMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'
@@ -759,6 +760,7 @@ councilMeeting.itemAdviceStates = ('validated',)
 councilMeeting.enforceAdviceMandatoriness = False
 councilMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
                                              'reverse': '0'}, )
+councilMeeting.visibleFields = ['MeetingItem.annexes', 'MeetingItem.description', 'MeetingItem.decision']
 councilMeeting.recordItemHistoryStates = []
 councilMeeting.maxShownMeetings = 5
 councilMeeting.maxDaysDecisions = 60
@@ -769,12 +771,7 @@ councilMeeting.useAdvices = False
 councilMeeting.itemAdviceStates = ()
 councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
-councilMeeting.itemDecidedStates = ['accepted', 'refused', 'delayed', 'accepted_but_modified', 'pre_accepted']
-councilMeeting.workflowAdaptations = [
-    'no_publication', 'no_global_observation',
-    'return_to_proposing_group', 'refused',
-    'presented_item_back_to_itemcreated', 'presented_item_back_to_proposed',
-    'only_creator_may_delete']
+councilMeeting.workflowAdaptations = list(collegeMeeting.workflowAdaptations)
 councilMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 councilMeeting.onMeetingTransitionItemActionToExecute = deepcopy(
     collegeMeeting.onMeetingTransitionItemActionToExecute)
@@ -861,9 +858,12 @@ data.directory_position_types = [
         u'Directrice Financière f.f.|Directrices Financières f.f.'},
     {'token': u'depute',
      'name': u'Député|Députés|Députée|Députées'},
+    {'token': u'secretaire',
+     'name': u'Secrétaire de séance|Secrétaires de séance|Secrétaire de séance|Secrétaires de séance'},
 ]
-contactsTemplate = PodTemplateDescriptor('contactsTemplate', 'Export organizations', dashboard=True)
+contactsTemplate = PodTemplateDescriptor('contactsTemplate', 'Export', dashboard=True)
 contactsTemplate.odt_file = 'organizations-export.ods'
+contactsTemplate.use_objects = True
 contactsTemplate.pod_formats = ['ods', 'xls', ]
 contactsTemplate.dashboard_collections_ids = ['all_orgs']
 data.contactsTemplates = [contactsTemplate]

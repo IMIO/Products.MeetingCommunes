@@ -55,7 +55,6 @@ collegeMeeting.itemColumns = ['static_item_reference',
                               'linkedMeetingDate',
                               'getPreferredMeetingDate',
                               'actions']
-collegeMeeting.itemPositiveDecidedStates = ('accepted', 'accepted_but_modified')
 collegeMeeting.transitionsToConfirm = (
     'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',
     'MeetingItem.backToProposed', 'MeetingItem.backTo_itemfrozen_from_returned_to_proposing_group',
@@ -127,8 +126,8 @@ collegeMeeting.powerObservers = (
      'meeting_states': ('frozen', 'decided', 'closed'),
      'orderindex_': '2'})
 collegeMeeting.workflowAdaptations = [
-    'no_publication', 'no_global_observation', 'refused',
-    'return_to_proposing_group', 'only_creator_may_delete']
+    'no_publication', 'refused', 'accepted_but_modified', 'delayed',
+    'return_to_proposing_group', 'only_creator_may_delete', 'pre_accepted']
 collegeMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.motivation',
@@ -288,9 +287,7 @@ councilMeeting.powerObservers = (
                      'refused'),
      'meeting_states': ('frozen', 'decided', 'closed'),
      'orderindex_': '2'})
-councilMeeting.workflowAdaptations = [
-    'no_publication', 'no_global_observation', 'refused',
-    'return_to_proposing_group', 'only_creator_may_delete']
+councilMeeting.workflowAdaptations = list(collegeMeeting.workflowAdaptations)
 councilMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.motivation',
@@ -314,7 +311,6 @@ councilMeeting.itemCopyGroupsStates = (
     'refused')
 councilMeeting.itemManualSentToOtherMCStates = []
 councilMeeting.itemAutoSentToOtherMCStates = []
-councilMeeting.itemPositiveDecidedStates = ('accepted', 'accepted_but_modified')
 
 councilMeeting.recurringItems = [
     RecurringItemDescriptor(
