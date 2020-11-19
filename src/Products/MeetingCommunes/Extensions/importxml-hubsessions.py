@@ -373,6 +373,9 @@ class HubSessionsAPI(IExternalAPI):
             datetime_object = datetime.strptime(date_str, "%Y/%m/%d %H:%M")
             return datetime_object.strftime("%d/%m/%Y à %Hh%M").decode("utf-8")
 
+        if not meetingitem_xml.advices:
+            return meetingitem_xml.observations.text
+
         ADVICE_FORMAT = u"""
         <p>{creator} - <strong>avis: {type}</strong> - rendu le : {created_at}</p>
         """
