@@ -72,6 +72,7 @@ class HubSessionsXMLImporter:
                 meeting.at_post_create_script()
             else:
                 meeting = getattr(member_folder, api_meeting["id"])
+                continue  # TODO : remove me
 
             meeting.setSignatures(api_meeting["signatures"])
             meeting.setAssembly(api_meeting["assembly"])
@@ -419,7 +420,7 @@ class HubSessionsAPI(IExternalAPI):
         categories_urls = [category.text for category in categories_urls_xml]
         for category_url in categories_urls:
             category = self._get_xml_content(category_url).category
-            mapping[category.categoryid.text] = category["id"]
+            mapping[normalize(category.categoryid.text)] = category["id"]
         return mapping
 
 
