@@ -360,10 +360,8 @@ class HubSessionsAPI(IExternalAPI):
             return translate(text, domain="PloneMeeting", context=api.portal.get().REQUEST)
 
         def _pretty_date(date_str):
-            try:
-                datetime_object = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S.%f GMT+2")
-            except ValueError:
-                datetime_object = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S GMT+2")
+            date_str = date_str[:15]  # We only care about the first 16 chars
+            datetime_object = datetime.strptime(date_str, "%Y/%m/%d %H:%M")
             return datetime_object.strftime("%d/%m/%Y à %Hh%M").decode("utf-8")
 
         ADVICE_FORMAT = u"""
