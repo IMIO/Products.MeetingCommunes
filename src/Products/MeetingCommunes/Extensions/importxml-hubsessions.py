@@ -53,8 +53,6 @@ class HubSessionsXMLImporter:
         meeting_ids = self.api.get_meeting_ids()
         total = len(meeting_ids)
         for i, meeting_id in enumerate(meeting_ids):
-            if i > 1:
-                return
             api_meeting = self.api.get_meeting(meeting_id)
             creator_id = api_meeting["creator"]
             self._create_user_if_not_exists(creator_id)
@@ -362,7 +360,10 @@ class HubSessionsAPI(IExternalAPI):
             return translate(text, domain="PloneMeeting", context=api.portal.get().REQUEST)
 
         def _pretty_date(date_str):
-            datetime_object = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S.%f GMT+2")
+            try:
+                datetime_object = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S.%f GMT+2")
+            except ValueError:
+                datetime_object = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S GMT+2")
             return datetime_object.strftime("%d/%m/%Y à %Hh%M").decode("utf-8")
 
         ADVICE_FORMAT = u"""
