@@ -9,6 +9,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Added POD template that renders various votes on item.
   [gbastien]
+- Do not more ignore testVotes when executing tests.
+  [gbastien]
 
 4.2b7 (2020-11-19)
 ------------------
