@@ -90,7 +90,7 @@ votesTemplate = PodTemplateDescriptor('votes', 'Votes')
 votesTemplate.odt_file = 'votes.odt'
 votesTemplate.pod_formats = ['odt', 'pdf', ]
 votesTemplate.pod_portal_types = ['MeetingItem']
-votesTemplate.tal_condition = u'python:tool.isManager(here)'
+votesTemplate.tal_condition = u'python:cfg.getUseVotes() and tool.isManager(here)'
 votesTemplate.style_template = ['styles1']
 
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
