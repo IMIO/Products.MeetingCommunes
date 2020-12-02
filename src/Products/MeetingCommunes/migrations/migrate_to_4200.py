@@ -81,11 +81,11 @@ class Migrate_To_4200(PMMigrate_To_4200):
         # fix used WFs before reinstalling
         self._fixUsedMeetingWFs()
 
-        # add new searches (searchitemswithnofinanceadvice)
-        self.addNewSearches()
-
         # call steps from Products.PloneMeeting
         super(Migrate_To_4200, self).run(extra_omitted=extra_omitted)
+
+        # add new searches (searchitemswithnofinanceadvice)
+        self.addNewSearches()
 
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4200...')
@@ -97,7 +97,9 @@ def migrate(context):
 
        1) Change MeetingConfig.meetingWorkflow to use meeting_workflow/meetingitem_workflow;
        2) Call PloneMeeting migration to 4200;
-       3) Adapt items and meetings workflow_history to reflect new defined workflow done in 1).
+       3) In _after_reinstall hook, adapt items and meetings workflow_history
+          to reflect new defined workflow done in 1);
+       4) Add new searches.
     '''
     migrator = Migrate_To_4200(context)
     migrator.run()

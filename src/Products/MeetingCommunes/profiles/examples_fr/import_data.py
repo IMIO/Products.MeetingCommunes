@@ -343,6 +343,7 @@ collegeMeeting.availableItemsListVisibleColumns = [
 collegeMeeting.itemsListVisibleColumns = [
     u'static_item_reference', u'Creator', u'CreationDate', u'review_state',
     u'getProposingGroup', u'advices', u'actions']
+collegeMeeting.visibleFields = ['MeetingItem.annexes', 'MeetingItem.description', 'MeetingItem.decision']
 collegeMeeting.xhtmlTransformFields = ()
 collegeMeeting.xhtmlTransformTypes = ()
 collegeMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
@@ -766,6 +767,7 @@ councilMeeting.itemAdviceStates = ('validated',)
 councilMeeting.enforceAdviceMandatoriness = False
 councilMeeting.insertingMethodsOnAddItem = ({'insertingMethod': 'on_proposing_groups',
                                              'reverse': '0'}, )
+councilMeeting.visibleFields = ['MeetingItem.annexes', 'MeetingItem.description', 'MeetingItem.decision']
 councilMeeting.recordItemHistoryStates = []
 councilMeeting.maxShownMeetings = 5
 councilMeeting.maxDaysDecisions = 60

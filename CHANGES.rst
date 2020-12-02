@@ -4,7 +4,13 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b7 (unreleased)
+4.2b8 (unreleased)
+------------------
+
+- Added POD template that renders various votes on item.
+  [gbastien]
+
+4.2b7 (2020-11-19)
 ------------------
 
 - Fixed a bug in `getPrintableItemsByCategory` (incorrect method call, categories are now in DX).
@@ -12,7 +18,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Added `testCustomMeeting.test_GetPrintableItemsByCategoryWithBothLateItems`,
   moved from `Products.MeetingCharleroi`.
   [gbastien]
-- Added POD template that renders various votes on item.
+- Fixed `Migrate_To_4200`, call `addNewSearches` at the end because it needs
+  `_adaptWFHistoryForItemsAndMeetings` to have been called in the
+  `_after_reinstall` hook to have correct workflows.
   [gbastien]
 
 4.2b6 (2020-10-27)
