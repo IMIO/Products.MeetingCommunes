@@ -816,7 +816,7 @@ data = PloneMeetingConfiguration(meetingFolderTitle='Mes séances',
 data.usersOutsideGroups = [bourgmestre, conseiller]
 data.directory_position_types = [
     {'token': u'default',
-     'name': u'(Utiliser le champ "Intitulé")'},
+     'name': u'(Utiliser le champ "Intitulé", non recommandé)'},
     {'token': u'administrateur',
      'name': u'Administrateur|Administrateurs|Administratrice|Administratrices'},
     {'token': u'alderman',
