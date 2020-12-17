@@ -45,8 +45,6 @@ from Products.MeetingCommunes.utils import finances_give_advice_states
 from Products.PloneMeeting.adapters import CompoundCriterionBaseAdapter
 from Products.PloneMeeting.adapters import query_user_groups_cachekey
 from Products.PloneMeeting.config import PMMessageFactory as _
-from Products.PloneMeeting.content.advice import MeetingAdviceWorkflowActions
-from Products.PloneMeeting.content.advice import MeetingAdviceWorkflowConditions
 from Products.PloneMeeting.indexes import DELAYAWARE_ROW_ID_PATTERN
 from Products.PloneMeeting.indexes import REAL_ORG_UID_PATTERN
 from Products.PloneMeeting.interfaces import IMeetingConfigCustom
@@ -54,8 +52,6 @@ from Products.PloneMeeting.interfaces import IMeetingCustom
 from Products.PloneMeeting.interfaces import IMeetingItemCustom
 from Products.PloneMeeting.interfaces import IToolPloneMeetingCustom
 from Products.PloneMeeting.Meeting import Meeting
-from Products.PloneMeeting.Meeting import MeetingWorkflowActions
-from Products.PloneMeeting.Meeting import MeetingWorkflowConditions
 from Products.PloneMeeting.MeetingConfig import MeetingConfig
 from Products.PloneMeeting.MeetingItem import MeetingItem
 from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowActions
@@ -63,6 +59,10 @@ from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowConditions
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
 from Products.PloneMeeting.utils import duplicate_workflow
+from Products.PloneMeeting.workflows.advice import MeetingAdviceWorkflowActions
+from Products.PloneMeeting.workflows.advice import MeetingAdviceWorkflowConditions
+from Products.PloneMeeting.workflows.meeting import MeetingWorkflowActions
+from Products.PloneMeeting.workflows.meeting import MeetingWorkflowConditions
 from zope.i18n import translate
 from zope.interface import implements
 
