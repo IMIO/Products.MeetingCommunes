@@ -932,12 +932,6 @@ class MeetingCommunesWorkflowActions(MeetingWorkflowActions):
                 # initialize it the decision field
                 item._initDecisionFieldIfEmpty()
 
-    security.declarePrivate('doBackToPublished')
-
-    def doBackToPublished(self, stateChange):
-        '''We do not impact items while going back from decided.'''
-        pass
-
 
 class MeetingCommunesWorkflowConditions(MeetingWorkflowConditions):
     '''Adapter that adapts a meeting item implementing IMeetingItem to the
