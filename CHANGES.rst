@@ -11,6 +11,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [gbastien]
 - Do no more ignore testVotes when executing tests.
   [gbastien]
+- Fixed demo profile, items containing annexes were broken because id is
+  changed after `categorized_elements` is updated.
+  [gbastien]
 
 4.2b7 (2020-11-19)
 ------------------
