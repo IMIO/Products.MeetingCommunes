@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b8 (unreleased)
+4.2b8 (2021-01-06)
 ------------------
 
 - Added POD template that renders various votes on item.
