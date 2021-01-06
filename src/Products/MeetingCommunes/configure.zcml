@@ -22,11 +22,11 @@
            factory="Products.MeetingCommunes.adapters.MeetingItemCommunesWorkflowConditions"
            provides="Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions"/>
 
-  <adapter for="Products.PloneMeeting.interfaces.IMeeting"
+  <adapter for="Products.PloneMeeting.content.meeting.IMeeting"
            factory="Products.MeetingCommunes.adapters.MeetingCommunesWorkflowActions"
            provides="Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowActions"/>
 
-  <adapter for="Products.PloneMeeting.interfaces.IMeeting"
+  <adapter for="Products.PloneMeeting.content.meeting.IMeeting"
            factory="Products.MeetingCommunes.adapters.MeetingCommunesWorkflowConditions"
            provides="Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions"/>
 
@@ -42,7 +42,7 @@
            factory="Products.MeetingCommunes.adapters.CustomMeetingItem"
            provides="Products.PloneMeeting.interfaces.IMeetingItemCustom"/>
 
-  <adapter for="Products.PloneMeeting.interfaces.IMeeting"
+  <adapter for="Products.PloneMeeting.content.meeting.IMeeting"
            factory="Products.MeetingCommunes.adapters.CustomMeeting"
            provides="Products.PloneMeeting.interfaces.IMeetingCustom"/>
 
