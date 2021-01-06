@@ -2,10 +2,6 @@
 #
 # File: setuphandlers.py
 #
-# Copyright (c) 2016 by Imio.be
-# Generator: ArchGenXML Version 2.7
-#            http://plone.org/products/archgenxml
-#
 # GNU General Public License (GPL)
 #
 
@@ -14,6 +10,7 @@ from collective.iconifiedcategory.utils import calculate_category_id
 from collective.iconifiedcategory.utils import get_config_root
 from DateTime import DateTime
 from dexterity.localroles.utils import add_fti_configuration
+from imio.helpers.content import normalize_name
 from plone import api
 from plone import namedfile
 from plone.app.textfield.value import RichTextValue
@@ -409,7 +406,9 @@ def addDemoData(context):
                         annex_file = namedfile.NamedBlobFile('Je suis le contenu du fichier',
                                                              filename=u'CV-0%s.txt' % (cpt))
                         annexTypeId = calculate_category_id(annexes_config_root.get(annexType))
+                        annex_id = normalize_name(site.REQUEST, annex_title)
                         api.content.create(container=newItem,
+                                           id=annex_id,
                                            type='annex',
                                            title=annex_title,
                                            file=annex_file,

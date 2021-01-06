@@ -4,12 +4,21 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b8 (unreleased)
+4.2b9 (unreleased)
+------------------
+
+- Nothing changed yet.
+
+
+4.2b8 (2021-01-06)
 ------------------
 
 - Added POD template that renders various votes on item.
   [gbastien]
 - Do no more ignore testVotes when executing tests.
+  [gbastien]
+- Fixed demo profile, items containing annexes were broken because id is
+  changed after `categorized_elements` is updated.
   [gbastien]
 
 4.2b7 (2020-11-19)
