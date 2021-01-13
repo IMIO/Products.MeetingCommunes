@@ -9,6 +9,11 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Added `testCustomMeeting.test_GetPrintableItemsByCategoryWithBothLateItems`,
   moved from `Products.MeetingCharleroi`.
   [gbastien]
+- Backport from 4.2.x:
+  Added 2 mores formatting examples for `view.print_attendees_by_type` in `attendees.odt` template
+  [aduchene]
+  Changed uppercases in example_fr profile for `directory_position_types`
+  [aduchene]
 
 4.1.20 (2020-10-29)
 -------------------

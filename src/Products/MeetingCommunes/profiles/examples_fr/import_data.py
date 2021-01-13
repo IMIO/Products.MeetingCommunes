@@ -210,8 +210,8 @@ conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Co
 
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel")
 
-groups = [OrgDescriptor('dirgen', 'Directeur Général', u'DG'),
-          OrgDescriptor('secretariat', 'Secrétariat Général', u'Secr', groups_in_charge=['dirgen']),
+groups = [OrgDescriptor('dirgen', 'Directeur général', u'DG'),
+          OrgDescriptor('secretariat', 'Secrétariat général', u'Secr', groups_in_charge=['dirgen']),
           OrgDescriptor('informatique', 'Service informatique', u'Info'),
           OrgDescriptor('personnel', 'Service du personnel', u'Pers'),
           OrgDescriptor('dirfin', 'Directeur Financier', u'DF'),
@@ -280,11 +280,11 @@ collegeMeeting.assembly = 'Pierre Dupont - Bourgmestre,\n' \
                           'Charles Exemple - 1er Echevin,\n' \
                           'Echevin Un, Echevin Deux, Echevin Trois - Echevins,\n' \
                           'Jacqueline Exemple, Responsable du CPAS'
-collegeMeeting.signatures = 'Le Directeur Général\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
+collegeMeeting.signatures = 'Le Directeur général\nPierre Dupont\nLe Bourgmestre\nCharles Exemple'
 collegeMeeting.certifiedSignatures = [
     {'signatureNumber': '1',
      'name': u'Mr Vraiment Présent',
-     'function': u'Le Directeur Général',
+     'function': u'Le Directeur général',
      'held_position': '_none_',
      'date_from': '',
      'date_to': '',
@@ -816,18 +816,18 @@ data.directory_position_types = [
     {'token': u'administrateur',
      'name': u'Administrateur|Administrateurs|Administratrice|Administratrices'},
     {'token': u'alderman',
-     'name': u'échevin|échevins|échevine|échevines'},
-    {'name': u'1er échevin|1er échevins|1ère échevine|1ère échevines',
+     'name': u'Échevin|Échevins|Échevine|Échevines'},
+    {'name': u'1er Échevin|1er Échevins|1ère Échevine|1ère Échevines',
      'token': u'alderman-1'},
-    {'name': u'2ème échevin|2èmes échevins|2ème échevine|2èmes échevines',
+    {'name': u'2ème Échevin|2èmes Échevins|2ème Échevine|2èmes Échevines',
      'token': u'alderman-2'},
-    {'name': u'3ème échevin|3èmes échevins|3ème échevine|3èmes échevines',
+    {'name': u'3ème Échevin|3èmes Échevins|3ème Échevine|3èmes Échevines',
      'token': u'alderman-3'},
-    {'name': u'4ème échevin|4èmes échevins|4ème échevine|4èmes échevines',
+    {'name': u'4ème Échevin|4èmes Échevins|4ème Échevine|4èmes Échevines',
      'token': u'alderman-4'},
-    {'name': u'5ème échevin|5èmes échevins|5ème échevine|5èmes échevines',
+    {'name': u'5ème Échevin|5èmes Échevins|5ème Échevine|5èmes Échevines',
      'token': u'alderman-5'},
-    {'name': u'6ème échevin|6èmes échevins|6ème échevine|6èmes échevines',
+    {'name': u'6ème Échevin|6èmes Échevins|6ème Échevine|6èmes Échevines',
      'token': u'alderman-6'},
     {'token': u'bourgmestre',
      'name': u'Bourgmestre|Bourgmestres|Bourgmestre|Bourgmestres'},
@@ -849,16 +849,16 @@ data.directory_position_types = [
     {'token': u'president-cpas',
      'name': u'Président du CPAS|Présidents du CPAS|Présidente du CPAS|Présidentes du CPAS'},
     {'token': u'dg',
-     'name': u'Directeur Général|Directeurs Généraux|'
-        u'Directrice Générale|Directrices Générales'},
+     'name': u'Directeur général|Directeurs généraux|'
+        u'Directrice générale|Directrices générales'},
     {'token': u'dgff',
-     'name': u'Directeur Général f.f.|Directeurs Généraux f.f.|'
-        u'Directrice Générale f.f.|Directrices Générales f.f.'},
+     'name': u'Directeur général f.f.|Directeurs généraux f.f.|'
+        u'Directrice générale f.f.|Directrices générales f.f.'},
     {'token': u'df',
-     'name': u'Directeur Financier|Directeurs Financiers|Directrice Financière|Directrices Financières'},
+     'name': u'Directeur financier|Directeurs financiers|Directrice financière|Directrices financières'},
     {'token': u'dfff',
-     'name': u'Directeur Financier f.f.|Directeurs Financiers f.f.|'
-        u'Directrice Financière f.f.|Directrices Financières f.f.'},
+     'name': u'Directeur financier f.f.|Directeurs financiers f.f.|'
+        u'Directrice financière f.f.|Directrices financières f.f.'},
     {'token': u'depute',
      'name': u'Député|Députés|Députée|Députées'},
     {'token': u'secretaire',
