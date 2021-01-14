@@ -7,8 +7,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b9 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Added 2 mores formatting examples for `view.print_attendees_by_type` in `attendees.odt` template
+  [aduchene]
+- Changed uppercases in example_fr profile for `directory_position_types`
+  [aduchene]
 
 4.2b8 (2021-01-06)
 ------------------
