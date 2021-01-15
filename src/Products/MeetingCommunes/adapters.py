@@ -1011,7 +1011,7 @@ class MeetingItemCommunesWorkflowConditions(MeetingItemWorkflowConditions):
         res = False
         meeting = self.context.getMeeting()
         if _checkPermission(ReviewPortalContent, self.context) and \
-           meeting and meeting.adapted().isDecided():
+           meeting and meeting.adapted().is_decided():
             res = True
         return res
 
@@ -1024,7 +1024,7 @@ class MeetingItemCommunesWorkflowConditions(MeetingItemWorkflowConditions):
         res = False
         if _checkPermission(ReviewPortalContent, self.context):
             if self.context.hasMeeting() and \
-               (self.context.getMeeting().queryState() in (
+               (self.context.getMeeting().query_state() in (
                     'published', 'decided', 'closed', 'decisions_published',)):
                 res = True
         return res
