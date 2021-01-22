@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from AccessControl import Unauthorized
-from DateTime import DateTime
 from Products.CMFCore.permissions import View
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testWorkflows import testWorkflows as pmtw
@@ -53,7 +52,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.failIf(self.hasPermission('PloneMeeting: Add annex', item1))
         # pmManager creates a meeting
         self.changeUser('pmManager')
-        meeting = self.create('Meeting', date='2007/12/11 09:00:00')
+        meeting = self.create('Meeting')
         self.addAnnex(item1, relatedTo='item_decision')
         # pmCreator2 creates and proposes an item
         self.changeUser('pmCreator2')
@@ -130,7 +129,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.failIf(self.transitions(item1))  # He may trigger no more action
         # pmManager creates a meeting
         self.changeUser('pmManager')
-        meeting = self.create('Meeting', date='2007/12/11 09:00:00')
+        meeting = self.create('Meeting')
         # The meetingManager can add a decision annex
         self.addAnnex(item1, relatedTo='item_decision')
         # pmCreator2 creates and proposes an item
@@ -257,7 +256,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
                     proposingGroup=self.developers_uid,
                     meetingTransitionInsertingMe='decide')
         self.changeUser('pmManager')
-        meeting = self.create('Meeting', date=DateTime('2019/06/25'))
+        meeting = self.create('Meeting')
         # The recurring items must have as owner the meeting creator
         for item in meeting.get_items():
             self.assertEqual(item.getOwner().getId(), 'pmManager')
@@ -282,7 +281,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.failUnless(len(meeting.get_items(list_types=['late'])) == 3)
 
     def _checkRecurringItemsCouncil(self):
-        meeting = self.create('Meeting', date='2007/12/11 09:00:00')
+        meeting = self.create('Meeting')
         self.assertEqual(len(meeting.get_items()), 0)
 
     def test_pm_RemoveContainer(self):
