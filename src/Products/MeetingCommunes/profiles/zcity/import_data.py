@@ -37,8 +37,8 @@ collegeMeeting.usedItemAttributes = ['description',
                                      'manuallyLinkedItems',
                                      'otherMeetingConfigsClonableToPrivacy',
                                      'sendToAuthority']
-collegeMeeting.usedMeetingAttributes = ['startDate',
-                                        'endDate',
+collegeMeeting.usedMeetingAttributes = ['start_date',
+                                        'end_date',
                                         'assembly',
                                         'signatures',
                                         'observations']
@@ -198,8 +198,8 @@ councilMeeting.usedItemAttributes = ['description',
                                      'manuallyLinkedItems',
                                      'privacy',
                                      'sendToAuthority']
-councilMeeting.usedMeetingAttributes = ['startDate',
-                                        'endDate',
+councilMeeting.usedMeetingAttributes = ['start_date',
+                                        'end_date',
                                         'assembly',
                                         'signatures',
                                         'observations']

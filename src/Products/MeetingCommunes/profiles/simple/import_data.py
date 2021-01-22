@@ -58,7 +58,7 @@ simpleMeeting.usedItemAttributes = [
     'toDiscuss',
     'itemIsSigned',
     'notes', ]
-simpleMeeting.usedMeetingAttributes = ['startDate', 'endDate', 'signatures', 'assembly', 'place', 'observations', ]
+simpleMeeting.usedMeetingAttributes = ['start_date', 'end_date', 'signatures', 'assembly', 'place', 'observations', ]
 simpleMeeting.itemConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowConditions'
 simpleMeeting.itemActionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingItemCommunesWorkflowActions'
 simpleMeeting.meetingConditionsInterface = 'Products.MeetingCommunes.interfaces.IMeetingCommunesWorkflowConditions'

@@ -39,8 +39,8 @@ adviceMeeting.usedItemAttributes = ['description',
                                     'manuallyLinkedItems',
                                     'otherMeetingConfigsClonableToPrivacy',
                                     'sendToAuthority']
-adviceMeeting.usedMeetingAttributes = ['startDate',
-                                       'endDate',
+adviceMeeting.usedMeetingAttributes = ['start_date',
+                                       'end_date',
                                        'assembly',
                                        'signatures',
                                        'observations']

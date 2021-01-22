@@ -324,8 +324,8 @@ collegeMeeting.usedItemAttributes = ['description',
                                      'inAndOutMoves',
                                      'otherMeetingConfigsClonableToPrivacy',
                                      'manuallyLinkedItems']
-collegeMeeting.usedMeetingAttributes = ['startDate',
-                                        'endDate',
+collegeMeeting.usedMeetingAttributes = ['start_date',
+                                        'end_date',
                                         'attendees',
                                         'excused',
                                         'absents',
@@ -333,7 +333,7 @@ collegeMeeting.usedMeetingAttributes = ['startDate',
                                         'place',
                                         'observations',
                                         'notes',
-                                        'inAndOutMoves']
+                                        'in_and_out_moves']
 collegeMeeting.recordMeetingHistoryStates = []
 collegeMeeting.itemColumns = ['Creator', 'CreationDate', 'ModificationDate', 'review_state',
                               'getProposingGroup', 'advices', 'linkedMeetingDate',
@@ -731,9 +731,9 @@ councilMeeting.usedItemAttributes = ['description',
                                      'marginalNotes',
                                      'inAndOutMoves',
                                      'manuallyLinkedItems']
-councilMeeting.usedMeetingAttributes = ['startDate',
-                                        'midDate',
-                                        'endDate',
+councilMeeting.usedMeetingAttributes = ['start_date',
+                                        'mid_date',
+                                        'end_date',
                                         'attendees',
                                         'excused',
                                         'absents',
@@ -742,7 +742,7 @@ councilMeeting.usedMeetingAttributes = ['startDate',
                                         'place',
                                         'observations',
                                         'notes',
-                                        'inAndOutMoves']
+                                        'in_and_out_moves']
 councilMeeting.recordMeetingHistoryStates = []
 councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.motivation',
