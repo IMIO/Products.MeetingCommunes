@@ -279,12 +279,12 @@ class ImportCSV:
         for csv_item in csv_meeting.items:
             self.insert_and_present_item(member_folder, csv_item)
 
-        if meeting.getItems():
+        if meeting.get_items():
             meeting.portal_workflow.doActionFor(meeting, 'freeze')
             meeting.portal_workflow.doActionFor(meeting, 'decide')
             meeting.portal_workflow.doActionFor(meeting, 'close')
 
-            for item in meeting.getItems():
+            for item in meeting.get_items():
                 item.setModificationDate(tme)
                 item.reindexObject(idxs=['modified', 'ModificationDate'])
 

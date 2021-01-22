@@ -11,6 +11,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [aduchene]
 - Changed uppercases in example_fr profile for `directory_position_types`
   [aduchene]
+- Adpated code and tests regarding fact that `Meeting` was moved from `AT` to `DX`.
+  [gbastien]
 
 4.2b8 (2021-01-06)
 ------------------

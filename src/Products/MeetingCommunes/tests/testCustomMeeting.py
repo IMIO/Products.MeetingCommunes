@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
+#
+# File: testCustomMeeting.py
+#
+# GNU General Public License (GPL)
+#
 
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 
 
-class testCustomMeeting(MeetingCommunesTestCase):
+class testCustomMeetingType(MeetingCommunesTestCase):
     """
         Tests the Meeting adapted methods
     """
@@ -31,7 +36,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         i3 = self.create('MeetingItem', title='Item3', description="<p>Description Item3</p>")
         i3.setDecision("<p>&nbsp;</p>")
         i3.setProposingGroup(self.developers_uid)
-        meeting = self.create('Meeting', date='2007/12/11 09:00:00')
+        meeting = self.create('Meeting')
         # present every items in the meeting
         items = (i1, i2, i3)
         for item in items:
@@ -69,7 +74,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.setMeetingConfig(self.meetingConfig2.getId())
         self.changeUser('pmManager')
         meeting = self._createMeetingWithItems()
-        orderedItems = meeting.getItems(ordered=True)
+        orderedItems = meeting.get_items(ordered=True)
         # the meeting is created with 5 items
         self.assertEqual(len(orderedItems), 5)
         itemUids = [item.UID() for item in orderedItems]
@@ -115,15 +120,15 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.presentItem(item1)
         self.presentItem(item2)
         # now we have 4 normal items and 2 late items
-        self.assertEqual(len(meeting.getItems()), 5)
-        self.assertEqual(len(meeting.getItems(listTypes=['late'])), 2)
+        self.assertEqual(len(meeting.get_items()), 5)
+        self.assertEqual(len(meeting.get_items(list_types=['late'])), 2)
         # same using getNumberOfItems
         self.assertEqual(meeting.adapted().getNumberOfItems(itemUids, listTypes=['normal']), 3)
         self.assertEqual(meeting.adapted().getNumberOfItems(itemUids, listTypes=['late']), 2)
 
         # we can combinate parameters
         # we know that we have 2 late items that are using the 'development' category...
-        lateItems = meeting.getItems(listTypes=['late'])
+        lateItems = meeting.get_items(list_types=['late'])
         self.assertEqual(len(lateItems), 2)
         self.assertEqual(lateItems[0].getCategory(), 'development')
         self.assertEqual(lateItems[1].getCategory(), 'development')
@@ -142,7 +147,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         self.changeUser('pmManager')
         self.setMeetingConfig(self.meetingConfig2.getId())
         meeting = self._createMeetingWithItems()
-        orderedItems = meeting.getItems(ordered=True)
+        orderedItems = meeting.get_items(ordered=True)
         item1 = orderedItems[0]
         item2 = orderedItems[1]
         item3 = orderedItems[2]
@@ -160,7 +165,7 @@ class testCustomMeeting(MeetingCommunesTestCase):
         # 2 lates development, 1 normal and 1 late events
         # and 1 normal research
         # build the list of uids
-        itemUids = [anItem.UID() for anItem in meeting.getItems(ordered=True)]
+        itemUids = [anItem.UID() for anItem in meeting.get_items(ordered=True)]
         # test on the meeting with listTypes=['late','normal']
         # Every items (normal and late) should be in the same category, in the good order
         self.assertEqual(

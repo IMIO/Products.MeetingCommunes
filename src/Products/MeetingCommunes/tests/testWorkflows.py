@@ -86,8 +86,8 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.do(item2, 'present')
         self.addAnnex(item2)
         # So now we should have 3 normal item (2 recurring + 1) and one late item in the meeting
-        self.failUnless(len(meeting.getItems()) == 4)
-        self.failUnless(len(meeting.getItems(listTypes='late')) == 1)
+        self.failUnless(len(meeting.get_items()) == 4)
+        self.failUnless(len(meeting.get_items(list_types='late')) == 1)
         self.changeUser('pmManager')
         item1.setDecision(self.decisionText)
 
@@ -165,8 +165,8 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.do(item2, 'present')
         self.addAnnex(item2)
         # So now I should have 1 normal item left and one late item in the meeting
-        self.failIf(len(meeting.getItems()) != 2)
-        self.failUnless(len(meeting.getItems(listTypes=['late'])) == 1)
+        self.failIf(len(meeting.get_items()) != 2)
+        self.failUnless(len(meeting.get_items(list_types=['late'])) == 1)
         # pmReviewer1 can not add an annex on item1 as it is frozen
         self.changeUser('pmReviewer1')
         self.assertRaises(Unauthorized, self.addAnnex, item1)
@@ -198,9 +198,9 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.failIf(len(self.transitions(meeting)) != 2)
         # When a meeting is closed, items without a decision are automatically 'accepted'
         self.do(meeting, 'close')
-        self.assertEqual(item2.queryState(), 'accepted')
+        self.assertEqual(item2.query_state(), 'accepted')
         # An already decided item keep his given decision
-        self.assertEqual(item1.queryState(), 'delayed')
+        self.assertEqual(item1.query_state(), 'delayed')
         # XXX added tests regarding ticket #5887
         # test back transitions
         self.changeUser('admin')
@@ -259,31 +259,31 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.changeUser('pmManager')
         meeting = self.create('Meeting', date=DateTime('2019/06/25'))
         # The recurring items must have as owner the meeting creator
-        for item in meeting.getItems():
+        for item in meeting.get_items():
             self.assertEqual(item.getOwner().getId(), 'pmManager')
         # The meeting must contain recurring items : 2 defined and one added here above
-        self.failUnless(len(meeting.getItems()) == 3)
-        self.failIf(meeting.getItems(listTypes=['late']))
+        self.failUnless(len(meeting.get_items()) == 3)
+        self.failIf(meeting.get_items(list_types=['late']))
         # After freeze, the meeting must have one recurring item more
         self.freezeMeeting(meeting)
-        self.failUnless(len(meeting.getItems()) == 4)
-        self.failUnless(len(meeting.getItems(listTypes=['late'])) == 1)
+        self.failUnless(len(meeting.get_items()) == 4)
+        self.failUnless(len(meeting.get_items(list_types=['late'])) == 1)
         # Back to created: rec item 2 is inserted
         self.backToState(meeting, 'created')
-        self.failUnless(len(meeting.getItems()) == 5)
-        self.failUnless(len(meeting.getItems(listTypes=['late'])) == 1)
+        self.failUnless(len(meeting.get_items()) == 5)
+        self.failUnless(len(meeting.get_items(list_types=['late'])) == 1)
         # Recurring items can be added twice...
         self.freezeMeeting(meeting)
-        self.failUnless(len(meeting.getItems()) == 6)
-        self.failUnless(len(meeting.getItems(listTypes=['late'])) == 2)
+        self.failUnless(len(meeting.get_items()) == 6)
+        self.failUnless(len(meeting.get_items(list_types=['late'])) == 2)
         # Decide the meeting, a third late item is added
         self.decideMeeting(meeting)
-        self.failUnless(len(meeting.getItems()) == 7)
-        self.failUnless(len(meeting.getItems(listTypes=['late'])) == 3)
+        self.failUnless(len(meeting.get_items()) == 7)
+        self.failUnless(len(meeting.get_items(list_types=['late'])) == 3)
 
     def _checkRecurringItemsCouncil(self):
         meeting = self.create('Meeting', date='2007/12/11 09:00:00')
-        self.assertEqual(len(meeting.getItems()), 0)
+        self.assertEqual(len(meeting.get_items()), 0)
 
     def test_pm_RemoveContainer(self):
         '''Run the test_pm_RemoveContainer from PloneMeeting.'''

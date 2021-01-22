@@ -9,7 +9,8 @@
 from DateTime import DateTime
 
 
-brains = context.portal_catalog(meta_type='Meeting', getDate={'query': DateTime(maxDateTime), 'range': 'max'})
+brains = context.portal_catalog(object_provides='Products.PloneMeeting.content.meeting.IMeeting',
+                                meeting_date={'query': DateTime(maxDateTime), 'range': 'max'})
 
 for brain in brains:
     meeting = brain.getObject()
@@ -17,10 +18,10 @@ for brain in brains:
     currentExcused = ''
     currentAbsents = ''
 
-    for item in meeting.getItems(uids=meeting.getRawItems(), ordered=True):
+    for item in meeting.get_items(ordered=True):
 
         # Presents
-        if item.getItemAssembly(real=True) == meeting.getAssembly():
+        if item.getItemAssembly(real=True) == meeting.get_assembly():
             currentAssembly = ''
         elif item.getItemAssembly(real=True) != currentAssembly:
             currentAssembly = item.getItemAssembly(real=True)
@@ -29,7 +30,7 @@ for brain in brains:
             item.setItemAssembly(currentAssembly)
 
         # Excused
-        if item.getItemAssemblyExcused(real=True) == meeting.getAssemblyExcused():
+        if item.getItemAssemblyExcused(real=True) == meeting.get_assembly_excused():
             currentExcused = ''
         elif item.getItemAssemblyExcused(real=True) != currentExcused:
             currentExcused = item.getItemAssemblyExcused(real=True)
@@ -38,7 +39,7 @@ for brain in brains:
             item.setItemAssemblyExcused(currentExcused)
 
         # Absents
-        if item.getItemAssemblyAbsents(real=True) == meeting.getAssemblyAbsents():
+        if item.getItemAssemblyAbsents(real=True) == meeting.get_assembly_absents():
             currentAbsents = ''
         elif item.getItemAssemblyAbsents(real=True) != currentAbsents:
             currentAbsents = item.getItemAssemblyAbsents(real=True)

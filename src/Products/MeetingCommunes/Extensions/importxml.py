@@ -15,6 +15,7 @@ from imio.helpers.cache import cleanRamCacheFor
 from plone import namedfile, api
 from plone.api import portal
 from plone.app.querystring import queryparser
+from plone.app.textfield.value import RichTextValue
 from plone.dexterity.utils import createContentInContainer
 
 """ Reprise des données ACROPOLE de chez Stesud
@@ -337,18 +338,15 @@ class TransformXmlToMeetingOrItem:
                 tme = DateTime(_date, datefmt='international')
                 meetingid = Memberfolder.invokeFactory(type_name=MeetingType, id=_id, date=tme)
                 meeting = getattr(Memberfolder, meetingid)
-                meeting.setSignatures(_signatures)
-                meeting.setAssembly(_presences)
-                meeting.setPlace(_place)
+                meeting.signatures = RichTextValue(_signatures)
+                meeting.assembly = RichTextValue(_presences)
+                meeting.place = _place
 
-                # meeting.at_post_create_script()
-                meeting.processForm(values={'dummy': None})
+                tme = DateTime(_startDate).asdatetime()
+                meeting.start_date = tme
 
-                tme = DateTime(_startDate)
-                meeting.setStartDate(tme)
-
-                tme = DateTime(_endDate)
-                meeting.setEndDate(tme)
+                tme = DateTime(_endDate).asdatetime()
+                meeting.end_date = tme
                 self.add_annexe_to_object(meeting, meetings, startPath, newPath, "pdfsSeanceLink", "pdfSeanceLink")
 
                 print('Inserting Items in Meetings %s' % meeting.Title())
@@ -357,7 +355,7 @@ class TransformXmlToMeetingOrItem:
                 self.__meetingList__.append(meeting)
 
                 # don't closed empty meeting
-                if meeting.getItems():
+                if meeting.get_items():
                     meeting.portal_workflow.doActionFor(meeting, 'freeze')
                     meeting.portal_workflow.doActionFor(meeting, 'decide')
                     try:
@@ -365,7 +363,7 @@ class TransformXmlToMeetingOrItem:
                     except:
                         pass  # publish state not use
                     meeting.portal_workflow.doActionFor(meeting, 'close')
-                    self.reset_items_modified_date(meeting.getItems())
+                    self.reset_items_modified_date(meeting.get_items())
                 else:
                     print('La seance %s est vide.' % meeting.Title().decode('utf-8'))
 
