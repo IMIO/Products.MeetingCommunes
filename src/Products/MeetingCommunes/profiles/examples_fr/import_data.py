@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+#
+# File: import_data.py
+#
+# GNU General Public License (GPL)
+#
 
 from copy import deepcopy
 from DateTime import DateTime

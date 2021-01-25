@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+#
+# File: testWorkflows.py
+#
+# GNU General Public License (GPL)
+#
 
 from AccessControl import Unauthorized
 from Products.CMFCore.permissions import View
