@@ -7,10 +7,15 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b9 (unreleased)
 ------------------
 
-- Added 2 mores formatting examples for `view.print_attendees_by_type` in `attendees.odt` template
+- Added 2 mores formatting examples for `view.print_attendees_by_type` in
+  `attendees.odt` template.
   [aduchene]
-- Changed uppercases in example_fr profile for `directory_position_types`
+- Changed uppercases in example_fr profile for `directory_position_types`.
   [aduchene]
+- Fixed `MeetingItemCommunesWorkflowActions._doWaitAdvices`, make sure
+  `MeetingItem.completeness` is set to `completeness_evaluation_asked_again`
+  when advices are asked for the second time (or more).
+  [gbastien]
 
 4.2b8 (2021-01-06)
 ------------------

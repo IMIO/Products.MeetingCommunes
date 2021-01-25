@@ -957,7 +957,9 @@ class MeetingItemCommunesWorkflowActions(MeetingItemWorkflowActions):
     def _will_ask_completeness_eval_again(self):
         ''' '''
         return 'completeness' in self.cfg.getUsedItemAttributes() and \
-            self.context.queryState() in finances_give_advice_states(self.cfg)
+            self.context.queryState() in finances_give_advice_states(self.cfg) and \
+            self.context.getCompleteness() in ['completeness_incomplete',
+                                               'completeness_evaluation_not_required']
 
     def _will_set_completeness_to_not_required(self):
         ''' '''
@@ -971,7 +973,8 @@ class MeetingItemCommunesWorkflowActions(MeetingItemWorkflowActions):
             wfTool = api.portal.get_tool('portal_workflow')
             history = self.context.workflow_history[wfTool.getWorkflowsFor(self.context)[0].getId()][:-1]
             for event in history:
-                if event['action'] in ['wait_advices_from_proposed', 'wait_advices_from_prevalidated']:
+                # set completeness to asked_again if it is not the first time that advices are asked
+                if event['action'] and event['action'].startswith('wait_advices_from_'):
                     changeCompleteness = self.context.restrictedTraverse('@@change-item-completeness')
                     comment = translate('completeness_asked_again_by_app',
                                         domain='PloneMeeting',
