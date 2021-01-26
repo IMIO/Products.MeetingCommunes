@@ -29,23 +29,27 @@ from zope.i18n import translate
 
 
 def import_data(
-    base_url="http://localhost:8090",
+    source_host="localhost",
+    source_port=8090,
     user="admin",
     user_password="admin",
     meetingconfig_id="meeting-config-college",
+    skip_existing=False,
     verbose=False,
 ):
     with SilentLogging(("collective.fingerpointing", "imio.helpers.content"), verbose):
-        importer = HubSessionsXMLImporter(base_url, user, user_password, meetingconfig_id)
+        source_url = "https://" + source_host + ":" + str(source_port)
+        importer = HubSessionsXMLImporter(source_url, user, user_password, meetingconfig_id, skip_existing)
         importer.run()
         logger.info("Import finished - " + meetingconfig_id)
         return "<h1>Success</h1>"
 
 
 class HubSessionsXMLImporter:
-    def __init__(self, base_url, user, user_password, meetingconfig_id):
+    def __init__(self, base_url, user, user_password, meetingconfig_id, skip_existing):
         self.api = HubSessionsAPI(base_url, user, user_password)
         self.meetingconfig_id = meetingconfig_id
+        self.skip_existing = skip_existing
 
     def run(self):
         self.import_meetings()
@@ -72,13 +76,13 @@ class HubSessionsXMLImporter:
                 meeting.at_post_create_script()
             else:
                 meeting = getattr(member_folder, api_meeting["id"])
-                continue  # TODO : remove me
 
-            meeting.setSignatures(api_meeting["signatures"])
-            meeting.setAssembly(api_meeting["assembly"])
-            meeting.setAssemblyExcused(api_meeting["assembly_excused"])
-            meeting.setAssemblyAbsents(api_meeting["assembly_absents"])
-            meeting.setObservations(api_meeting["observations"])
+            if not self.skip_existing:
+                meeting.setSignatures(api_meeting["signatures"])
+                meeting.setAssembly(api_meeting["assembly"])
+                meeting.setAssemblyExcused(api_meeting["assembly_excused"])
+                meeting.setAssemblyAbsents(api_meeting["assembly_absents"])
+                meeting.setObservations(api_meeting["observations"])
             transaction.commit()
             logger.info("{} - {}/{} imported - id : {}".format(meeting_type, i + 1, total, api_meeting["id"]))
             self.import_items(api_meeting, meeting_object=meeting)
@@ -111,6 +115,8 @@ class HubSessionsXMLImporter:
                     title=api_meetingitem["title"],
                     date=api_meeting["created_at"],
                 )
+            elif self.skip_existing:
+                continue
 
             item = getattr(member_folder, api_meetingitem["id"])  # type: MeetingItem
             item.setCreationDate(api_meetingitem["created_at"])
@@ -304,6 +310,18 @@ class HubSessionsAPI(IExternalAPI):
         }
 
         return item
+
+    def get_annexe(self, item_id, annexe_id):
+        xml = self._get_xml_content(self.base_url + "/data/{}/{}/xml".format(item_id, advice_id)).advice
+        advice = {
+            "id": xml["id"],
+            "creator": xml.creator.text,
+            "created_at": xml.created.text,
+            "modified_at": xml.modified.text,
+            "type": xml.advicetype.text,
+            "comment": xml.comment.text,
+        }
+        return advice
 
     def get_advice(self, item_id, advice_id):
         xml = self._get_xml_content(self.base_url + "/data/{}/{}/xml".format(item_id, advice_id)).advice
