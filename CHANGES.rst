@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b9 (unreleased)
+4.2b9 (2021-01-26)
 ------------------
 
 - Added 2 mores formatting examples for `view.print_attendees_by_type` in
