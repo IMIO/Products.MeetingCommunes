@@ -7,7 +7,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b10 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Added new external method to ease the switch to proposingGroupWithGroupInCharge.
+  [odelaere]
 
 
 4.2b9 (2021-01-26)
