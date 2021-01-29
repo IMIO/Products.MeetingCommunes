@@ -12,8 +12,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Backport from 4.2.x:
   Added 2 mores formatting examples for `view.print_attendees_by_type` in `attendees.odt` template
   [aduchene]
-  Changed uppercases in example_fr profile for `directory_position_types`
+- Changed uppercases in example_fr profile for `directory_position_types`
   [aduchene]
+- Added new external method to ease the switch to proposingGroupWithGroupInCharge.
+  [odelaere]
 
 4.1.20 (2020-10-29)
 -------------------
