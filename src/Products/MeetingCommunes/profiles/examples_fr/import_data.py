@@ -60,42 +60,42 @@ agendaTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaTemplate.odt_file = 'oj.odt'
 agendaTemplate.pod_formats = ['odt', 'pdf', ]
 agendaTemplate.pod_portal_types = ['Meeting']
-agendaTemplate.tal_condition = u'python:tool.isManager(here)'
+agendaTemplate.tal_condition = u'python:tool.isManager(cfg)'
 agendaTemplate.style_template = ['styles1']
 
 agendaTemplateWithIndex = PodTemplateDescriptor('oj-tdm', 'Ordre du jour (Table des matières)')
 agendaTemplateWithIndex.odt_file = 'oj-avec-table-des-matieres.odt'
 agendaTemplateWithIndex.pod_formats = ['odt', 'pdf', ]
 agendaTemplateWithIndex.pod_portal_types = ['Meeting']
-agendaTemplateWithIndex.tal_condition = u'python:tool.isManager(here)'
+agendaTemplateWithIndex.tal_condition = u'python:tool.isManager(cfg)'
 agendaTemplateWithIndex.style_template = ['styles1']
 
 agendaTemplateWithAnnexes = PodTemplateDescriptor('oj-annexes', 'Ordre du jour (avec annexes)')
 agendaTemplateWithAnnexes.odt_file = 'oj-avec-annexes.odt'
 agendaTemplateWithAnnexes.pod_formats = ['odt', 'pdf', ]
 agendaTemplateWithAnnexes.pod_portal_types = ['Meeting']
-agendaTemplateWithAnnexes.tal_condition = u'python:tool.isManager(here)'
+agendaTemplateWithAnnexes.tal_condition = u'python:tool.isManager(cfg)'
 agendaTemplateWithAnnexes.style_template = ['styles1']
 
 decisionsTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsTemplate.odt_file = 'pv.odt'
 decisionsTemplate.pod_formats = ['odt', 'pdf', ]
 decisionsTemplate.pod_portal_types = ['Meeting']
-decisionsTemplate.tal_condition = u'python:tool.isManager(here)'
+decisionsTemplate.tal_condition = u'python:tool.isManager(cfg)'
 decisionsTemplate.style_template = ['styles1']
 
 attendeesTemplate = PodTemplateDescriptor('attendees', 'Exemple assemblées')
 attendeesTemplate.odt_file = 'attendees.odt'
 attendeesTemplate.pod_formats = ['odt', 'pdf', ]
 attendeesTemplate.pod_portal_types = ['Meeting', 'MeetingItem']
-attendeesTemplate.tal_condition = u'python:tool.isManager(here)'
+attendeesTemplate.tal_condition = u'python:tool.isManager(cfg)'
 attendeesTemplate.style_template = ['styles1']
 
 votesTemplate = PodTemplateDescriptor('votes', 'Votes')
 votesTemplate.odt_file = 'votes.odt'
 votesTemplate.pod_formats = ['odt', 'pdf', ]
 votesTemplate.pod_portal_types = ['MeetingItem']
-votesTemplate.tal_condition = u'python:cfg.getUseVotes() and tool.isManager(here)'
+votesTemplate.tal_condition = u'python:cfg.getUseVotes() and tool.isManager(cfg)'
 votesTemplate.style_template = ['styles1']
 
 itemTemplate = PodTemplateDescriptor('deliberation', 'Délibération')
@@ -122,7 +122,7 @@ all_delib_duplex = PodTemplateDescriptor('all_delib_duplex', 'Toutes les délib�
 all_delib_duplex.odt_file = 'all_delib_recto_verso.odt'
 all_delib_duplex.pod_formats = ['odt', 'pdf', ]
 all_delib_duplex.pod_portal_types = ['Meeting']
-all_delib_duplex.tal_condition = u'python:tool.isManager(here)'
+all_delib_duplex.tal_condition = u'python:tool.isManager(cfg)'
 all_delib_duplex.merge_templates = [{'pod_context_name': u'delib',
                                      'do_rendering': False,
                                      'template': 'deliberation_duplex'}]
@@ -131,7 +131,7 @@ all_delib = PodTemplateDescriptor('all_delib', 'Toutes les délibérations')
 all_delib.odt_file = 'all_delib.odt'
 all_delib.pod_formats = ['odt', 'pdf', ]
 all_delib.pod_portal_types = ['Meeting']
-all_delib.tal_condition = u'python:tool.isManager(here)'
+all_delib.tal_condition = u'python:tool.isManager(cfg)'
 all_delib.merge_templates = [{'pod_context_name': u'delib',
                               'do_rendering': False,
                               'template': 'deliberation'}]
@@ -668,14 +668,14 @@ agendaCouncilTemplate = PodTemplateDescriptor('oj', 'Ordre du jour')
 agendaCouncilTemplate.odt_file = 'council-oj.odt'
 agendaCouncilTemplate.pod_formats = ['odt', 'pdf', ]
 agendaCouncilTemplate.pod_portal_types = ['Meeting']
-agendaCouncilTemplate.tal_condition = u'python:tool.isManager(here)'
+agendaCouncilTemplate.tal_condition = u'python:tool.isManager(cfg)'
 agendaCouncilTemplate.style_template = ['styles1']
 
 decisionsCouncilTemplate = PodTemplateDescriptor('pv', 'Procès-verbal')
 decisionsCouncilTemplate.odt_file = 'council-pv.odt'
 decisionsCouncilTemplate.pod_formats = ['odt', 'pdf', ]
 decisionsCouncilTemplate.pod_portal_types = ['Meeting']
-decisionsCouncilTemplate.tal_condition = u'python:tool.isManager(here)'
+decisionsCouncilTemplate.tal_condition = u'python:tool.isManager(cfg)'
 decisionsCouncilTemplate.style_template = ['styles1']
 
 itemCouncilRapportTemplate = PodTemplateDescriptor('rapport', 'Rapport')

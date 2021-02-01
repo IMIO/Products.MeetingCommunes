@@ -684,7 +684,7 @@ class CustomMeetingConfig(MeetingConfig):
                         'showNumberOfItems': False,
                         'tal_condition':
                         "python: '%s_budgetimpacteditors' % cfg.getId() in tool.get_plone_groups_for_user() or "
-                        "tool.isManager(here)",
+                        "tool.isManager(cfg)",
                         'roles_bypassing_talcondition': ['Manager', ]
                     }
                  ),
