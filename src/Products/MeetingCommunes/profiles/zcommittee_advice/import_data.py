@@ -54,8 +54,8 @@ adviceMeeting.itemColumns = ['static_item_reference',
                              'review_state',
                              'getProposingGroup',
                              'advices',
-                             'linkedMeetingDate',
-                             'getPreferredMeetingDate',
+                             'meeting_date',
+                             'preferred_meeting_date',
                              'actions']
 adviceMeeting.transitionsToConfirm = (
     'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',

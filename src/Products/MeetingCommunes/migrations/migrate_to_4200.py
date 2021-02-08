@@ -67,9 +67,8 @@ class Migrate_To_4200(PMMigrate_To_4200):
                     break
         logger.info('Done.')
 
-    def _after_reinstall(self):
-        """Use hook after reinstall to adapt workflow_history."""
-        super(Migrate_To_4200, self)._after_reinstall()
+    def _hook_before_meeting_to_dx(self):
+        """Adapt Meeting.workflow_history before migrating to DX."""
         self._adaptWFHistoryForItemsAndMeetings()
 
     def run(self,

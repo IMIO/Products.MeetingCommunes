@@ -52,8 +52,8 @@ collegeMeeting.itemColumns = ['static_item_reference',
                               'review_state',
                               'getProposingGroup',
                               'advices',
-                              'linkedMeetingDate',
-                              'getPreferredMeetingDate',
+                              'meeting_date',
+                              'preferred_meeting_date',
                               'actions']
 collegeMeeting.transitionsToConfirm = (
     'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',
@@ -214,8 +214,8 @@ councilMeeting.itemColumns = [
     'review_state',
     'getProposingGroup',
     'advices',
-    'linkedMeetingDate',
-    'getPreferredMeetingDate',
+    'meeting_date',
+    'preferred_meeting_date',
     'actions']
 councilMeeting.transitionsToConfirm = (
     'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',
