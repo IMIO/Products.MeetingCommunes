@@ -340,7 +340,7 @@ collegeMeeting.usedMeetingAttributes = ['start_date',
                                         'notes',
                                         'in_and_out_moves']
 collegeMeeting.itemColumns = ['Creator', 'CreationDate', 'ModificationDate', 'review_state',
-                              'getProposingGroup', 'advices', 'meeting_ate',
+                              'getProposingGroup', 'advices', 'meeting_date',
                               'getItemIsSigned', 'actions']
 collegeMeeting.availableItemsListVisibleColumns = [
     'Creator', 'CreationDate', 'getProposingGroup', 'advices', 'actions']
