@@ -62,7 +62,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # pmCreator2 creates and proposes an item
         self.changeUser('pmCreator2')
         item2 = self.create('MeetingItem', title='The second item',
-                            preferred_meeting_uid=meeting.UID())
+                            preferredMeeting=meeting.UID())
         self.do(item2, 'propose')
         # pmReviewer1 validates item1 and adds an annex to it
         self.changeUser('pmReviewer1')
@@ -140,7 +140,7 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # pmCreator2 creates and proposes an item
         self.changeUser('pmCreator2')
         item2 = self.create('MeetingItem', title='The second item',
-                            preferred_meeting_uid=meeting.UID())
+                            preferredMeeting=meeting.UID())
         self.do(item2, 'propose')
         # pmReviewer1 validates item1 and adds an annex to it
         self.changeUser('pmReviewer1')
