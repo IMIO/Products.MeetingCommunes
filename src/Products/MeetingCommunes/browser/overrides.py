@@ -54,11 +54,11 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
     def output_for_restapi(self):
         ''' '''
         result = super(MCItemDocumentGenerationHelperView, self).output_for_restapi()
-        #result['finance_advice_simple'] = self.printFinanceAdvice(cases=['simple'])
-        #result['finance_advice_legal'] = self.printFinanceAdvice(cases=['legal'])
-        #result['finance_advice_initiative'] = self.printFinanceAdvice(cases=['initiative'])
-        #result['finance_advice_legal_not_given'] = self.printFinanceAdvice(cases=['legal_not_given'])
-        #result['finance_advice_simple_not_given'] = self.printFinanceAdvice(cases=['simple_not_given'])
+        # result['finance_advice_simple'] = self.printFinanceAdvice(cases=['simple'])
+        # result['finance_advice_legal'] = self.printFinanceAdvice(cases=['legal'])
+        # result['finance_advice_initiative'] = self.printFinanceAdvice(cases=['initiative'])
+        # result['finance_advice_legal_not_given'] = self.printFinanceAdvice(cases=['legal_not_given'])
+        # result['finance_advice_simple_not_given'] = self.printFinanceAdvice(cases=['simple_not_given'])
         return result
 
     def print_deliberation(self,
@@ -109,8 +109,8 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         :return: a xhtml str representing finance advices
         """
         if not finance_used_cases:
-            finance_used_cases = ('initiative', 'legal', 'simple',
-                          'simple_not_given', 'legal_not_given')
+            finance_used_cases = (
+                'initiative', 'legal', 'simple', 'simple_not_given', 'legal_not_given')
         if not finance_advices_template:
             finance_advices_template = {
                 "simple":
@@ -388,26 +388,25 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         :return: item number formatted
         """
         ADVERBS = {
-                      1: "bis",
-                      2: "ter",
-                      3: "quater",
-                      4: "quinquies",
-                      5: "sexies",
-                      6: "septies",
-                      7: "octies",
-                      8: "nonies",
-                      9: "decies",
-                      10: "undecies",
-                      11: "duodecies",
-                      12: "terdecies",
-                      13: "quaterdecies",
-                      14: "quinquies",
-                      15: "sexies",
-                      16: "septies",
-                      17: "octodecies",
-                      18: "novodecies",
-                      19: "vicies",
-                  }
+            1: "bis",
+            2: "ter",
+            3: "quater",
+            4: "quinquies",
+            5: "sexies",
+            6: "septies",
+            7: "octies",
+            8: "nonies",
+            9: "decies",
+            10: "undecies",
+            11: "duodecies",
+            12: "terdecies",
+            13: "quaterdecies",
+            14: "quinquies",
+            15: "sexies",
+            16: "septies",
+            17: "octodecies",
+            18: "novodecies",
+            19: "vicies", }
 
         item_number = self.real_context.getItemNumber()
         first_part = int(item_number / 100)
@@ -459,18 +458,19 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
 class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView):
     """Specific printing methods used for meeting."""
 
-    def _is_in_value_dict(self, item, value_map={}):
+    def _is_in_value_dict(self, item, value_map={}, unrestricted=False):
         for key in value_map.keys():
-            if self._get_value(item, key) in value_map[key]:
+            if self._get_value(item, key, unrestricted) in value_map[key]:
                 return True
         return False
 
-    def _filter_items(self, items, included_values={}, excluded_values={}):
+    def _filter_items(self, items, included_values={}, excluded_values={}, unrestricted=False):
         """
         Filters the items based on included_values and excluded_values.
         :param items:
         :param included_values:
         :param excluded_values:
+        :param unrestricted:
         :return:
         """
         if not included_values and not excluded_values:
@@ -479,9 +479,9 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
 
         result = []
         for item in items:
-            if included_values and not self._is_in_value_dict(item, included_values):
+            if included_values and not self._is_in_value_dict(item, included_values, unrestricted):
                 continue
-            elif excluded_values and self._is_in_value_dict(item, excluded_values):
+            elif excluded_values and self._is_in_value_dict(item, excluded_values, unrestricted):
                 continue
             result.append(item)
         return result
@@ -514,7 +514,8 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
 
     def get_grouped_items(self, itemUids, listTypes=['normal'],
                           group_by=[], included_values={}, excluded_values={},
-                          ignore_review_states=[], privacy='*', unrestricted=False):
+                          ignore_review_states=[], privacy='*', unrestricted=False,
+                          additional_catalog_query={}):
 
         """
         :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
@@ -529,6 +530,9 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
                                                  'Service informatique',
                                                  'Service comptabilité']}
         :param privacy: can be '*' or 'public' or 'secret'
+        :param unrestricted: when True, will return every items, including no viewable ones
+        :param additional_catalog_query: additional classic portal_catalog query to filter out items
+                for example : {'getProposingGroup': proposing_group_uid}
 
         :return: a list of list of list ... (late or normal or both) items (depending on p_listTypes)
                  in the meeting order but wrapped in defined group_by if not empty.
@@ -536,7 +540,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         """
 
         # Retrieve the list of items
-        query = {}
+        query = additional_catalog_query.copy()
         if privacy != '*':
             query['privacy'] = privacy
         if ignore_review_states:
@@ -555,7 +559,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
             unrestricted=unrestricted)
 
         # because we can't assume included and excluded values are indexed in catalog.
-        items = self._filter_items(items, included_values, excluded_values)
+        items = self._filter_items(items, included_values, excluded_values, unrestricted)
 
         if not group_by:
             return items
@@ -611,6 +615,8 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
                           If we have A.1.1, normaly, we have in description this : subTitle1
                           If we have A.1, normaly, we have in description this : (we use Title)
                           The first value on id is keeping
+        :param unrestricted: when True, will return every items, including no viewable ones
+
         :return: a list with formated like this :
             [Title (with class H1...Hx, depending of level number x.x.x. in id), [items list of tuple :
             item with number (num, item)]]

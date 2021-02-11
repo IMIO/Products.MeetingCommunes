@@ -10,8 +10,18 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   moved from `Products.MeetingCharleroi`.
   [gbastien]
 - Backport from 4.2.x:
-  Added 2 mores formatting examples for `view.print_attendees_by_type` in `attendees.odt` template
-  [aduchene]
+
+  - Added 2 mores formatting examples for `view.print_attendees_by_type` in `attendees.odt` template
+    [aduchene]
+  - Fixed `MCMeetingDocumentGenerationHelperView.get_grouped_items` when using
+    `excluded_values/included_values` parameters together with `unrestricted=True`,
+    unrestricted was not propagated to sub methods giving nonsense results.
+    [gbastien]
+  - Added parameter `additional_catalog_query={}` to
+    `MCMeetingDocumentGenerationHelperView.get_grouped_items` making it possible
+    to pass additional traditional portal_catalog query to filter items.
+    [gbastien]
+
 - Changed uppercases in example_fr profile for `directory_position_types`
   [aduchene]
 - Added new external method to ease the switch to proposingGroupWithGroupInCharge.
