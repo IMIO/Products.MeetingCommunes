@@ -45,17 +45,13 @@ from Products.MeetingCommunes.utils import finances_give_advice_states
 from Products.PloneMeeting.adapters import CompoundCriterionBaseAdapter
 from Products.PloneMeeting.adapters import query_user_groups_cachekey
 from Products.PloneMeeting.config import PMMessageFactory as _
-from Products.PloneMeeting.content.advice import MeetingAdviceWorkflowActions
-from Products.PloneMeeting.content.advice import MeetingAdviceWorkflowConditions
 from Products.PloneMeeting.indexes import DELAYAWARE_ROW_ID_PATTERN
 from Products.PloneMeeting.indexes import REAL_ORG_UID_PATTERN
 from Products.PloneMeeting.interfaces import IMeetingConfigCustom
 from Products.PloneMeeting.interfaces import IMeetingCustom
 from Products.PloneMeeting.interfaces import IMeetingItemCustom
 from Products.PloneMeeting.interfaces import IToolPloneMeetingCustom
-from Products.PloneMeeting.Meeting import Meeting
-from Products.PloneMeeting.Meeting import MeetingWorkflowActions
-from Products.PloneMeeting.Meeting import MeetingWorkflowConditions
+from Products.PloneMeeting.content.meeting import Meeting
 from Products.PloneMeeting.MeetingConfig import MeetingConfig
 from Products.PloneMeeting.MeetingItem import MeetingItem
 from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowActions
@@ -63,6 +59,10 @@ from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowConditions
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
 from Products.PloneMeeting.utils import duplicate_workflow
+from Products.PloneMeeting.workflows.advice import MeetingAdviceWorkflowActions
+from Products.PloneMeeting.workflows.advice import MeetingAdviceWorkflowConditions
+from Products.PloneMeeting.workflows.meeting import MeetingWorkflowActions
+from Products.PloneMeeting.workflows.meeting import MeetingWorkflowConditions
 from zope.i18n import translate
 from zope.interface import implements
 
@@ -94,7 +94,7 @@ class CustomMeeting(Meeting):
            will be return with first element the number and second element, the item.
            In this case, the firstNumber value can be used.'''
         # We just filter ignore_review_states here and privacy and call
-        # getItems(uids), passing the correct uids and removing empty uids.
+        # get_items(uids), passing the correct uids and removing empty uids.
         # privacy can be '*' or 'public' or 'secret' or 'public_heading' or 'secret_heading'
         # oralQuestion can be 'both' or False or True
         # toDiscuss can be 'both' or 'False' or 'True'
@@ -107,7 +107,7 @@ class CustomMeeting(Meeting):
         uid_catalog = self.context.uid_catalog
         for itemUid in itemUids:
             obj = uid_catalog(UID=itemUid)[0].getObject()
-            if obj.queryState() in ignore_review_states:
+            if obj.query_state() in ignore_review_states:
                 continue
             elif not (privacy == '*' or obj.getPrivacy() == privacy):
                 continue
@@ -128,7 +128,7 @@ class CustomMeeting(Meeting):
         if not filteredItemUids:
             return []
         else:
-            items = self.context.getItems(uids=filteredItemUids, listTypes=listTypes, ordered=True)
+            items = self.context.get_items(uids=filteredItemUids, list_types=listTypes, ordered=True)
             if renumber:
                 # return a list of tuple with first element the number and second
                 # element the item itself
@@ -197,7 +197,7 @@ class CustomMeeting(Meeting):
             if elt == '':
                 itemUids.remove(elt)
 
-        items = self.context.getItems(uids=itemUids, listTypes=listTypes, ordered=True)
+        items = self.context.get_items(uids=itemUids, list_types=listTypes, ordered=True)
 
         if by_proposing_group:
             groups = get_organizations()
@@ -206,7 +206,7 @@ class CustomMeeting(Meeting):
         if items:
             for item in items:
                 # Check if the review_state has to be taken into account
-                if item.queryState() in ignore_review_states:
+                if item.query_state() in ignore_review_states:
                     continue
                 elif not (privacy == '*' or item.getPrivacy() == privacy):
                     continue
@@ -378,7 +378,7 @@ class CustomMeeting(Meeting):
         # sometimes, some empty elements are inserted in itemUids, remove them...
         itemUids = [itemUid for itemUid in itemUids if itemUid != '']
         if not categories and privacy == '*':
-            return len(self.context.getItems(uids=itemUids, listTypes=listTypes))
+            return len(self.context.get_items(uids=itemUids, list_types=listTypes))
         # Either, we will have to filter (privacy, categories, late)
         filteredItemUids = []
         uid_catalog = getToolByName(self.context, 'uid_catalog')
@@ -422,11 +422,11 @@ class CustomMeeting(Meeting):
             return catNum
 
         if not allItems and listTypes == ['late']:
-            items = self.context.getItems(uids=uids, listTypes=['late'], ordered=True)
+            items = self.context.get_items(uids=uids, list_types=['late'], ordered=True)
         elif not allItems and not listTypes == ['late']:
-            items = self.context.getItems(uids=uids, listTypes=['normal'], ordered=True)
+            items = self.context.get_items(uids=uids, list_types=['normal'], ordered=True)
         else:
-            items = self.context.getItems(uids=uids, ordered=True)
+            items = self.context.get_items(uids=uids, ordered=True)
         # res contains all items by category, the key of res is the category
         # number. Pay attention that the category number is obtain by extracting
         # the 2 first caracters of the categoryname, thus the categoryname must
@@ -684,7 +684,7 @@ class CustomMeetingConfig(MeetingConfig):
                         'showNumberOfItems': False,
                         'tal_condition':
                         "python: '%s_budgetimpacteditors' % cfg.getId() in tool.get_plone_groups_for_user() or "
-                        "tool.isManager(here)",
+                        "tool.isManager(cfg)",
                         'roles_bypassing_talcondition': ['Manager', ]
                     }
                  ),
@@ -927,16 +927,10 @@ class MeetingCommunesWorkflowActions(MeetingWorkflowActions):
            initialize the decision field with content of Title+Description
            if decision field is empty.'''
         if self.cfg.getInitItemDecisionIfEmptyOnDecide():
-            for item in self.context.getItems():
+            for item in self.context.get_items():
                 # If deliberation (motivation+decision) is empty,
                 # initialize it the decision field
                 item._initDecisionFieldIfEmpty()
-
-    security.declarePrivate('doBackToPublished')
-
-    def doBackToPublished(self, stateChange):
-        '''We do not impact items while going back from decided.'''
-        pass
 
 
 class MeetingCommunesWorkflowConditions(MeetingWorkflowConditions):
@@ -957,7 +951,7 @@ class MeetingItemCommunesWorkflowActions(MeetingItemWorkflowActions):
     def _will_ask_completeness_eval_again(self):
         ''' '''
         return 'completeness' in self.cfg.getUsedItemAttributes() and \
-            self.context.queryState() in finances_give_advice_states(self.cfg) and \
+            self.context.query_state() in finances_give_advice_states(self.cfg) and \
             self.context.getCompleteness() in ['completeness_incomplete',
                                                'completeness_evaluation_not_required']
 
@@ -1020,7 +1014,7 @@ class MeetingItemCommunesWorkflowConditions(MeetingItemWorkflowConditions):
         res = False
         meeting = self.context.getMeeting()
         if _checkPermission(ReviewPortalContent, self.context) and \
-           meeting and meeting.adapted().isDecided():
+           meeting and meeting.adapted().is_decided():
             res = True
         return res
 
@@ -1033,7 +1027,7 @@ class MeetingItemCommunesWorkflowConditions(MeetingItemWorkflowConditions):
         res = False
         if _checkPermission(ReviewPortalContent, self.context):
             if self.context.hasMeeting() and \
-               (self.context.getMeeting().queryState() in (
+               (self.context.getMeeting().query_state() in (
                     'published', 'decided', 'closed', 'decisions_published',)):
                 res = True
         return res
@@ -1146,10 +1140,10 @@ class MeetingAdviceCommunesWorkflowConditions(MeetingAdviceWorkflowConditions):
             # except if it is 'negative_finance'
             if POSITIVE_FINANCE_ADVICE_SIGNABLE_BY_REVIEWER:
                 if self.context.advice_type == 'negative_finance' and \
-                   not self.context.queryState() == 'proposed_to_financial_manager':
+                   not self.context.query_state() == 'proposed_to_financial_manager':
                     res = False
             else:
-                if not self.context.queryState() == 'proposed_to_financial_manager':
+                if not self.context.query_state() == 'proposed_to_financial_manager':
                     res = False
         return res
 

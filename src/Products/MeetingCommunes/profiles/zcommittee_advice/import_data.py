@@ -39,8 +39,8 @@ adviceMeeting.usedItemAttributes = ['description',
                                     'manuallyLinkedItems',
                                     'otherMeetingConfigsClonableToPrivacy',
                                     'sendToAuthority']
-adviceMeeting.usedMeetingAttributes = ['startDate',
-                                       'endDate',
+adviceMeeting.usedMeetingAttributes = ['start_date',
+                                       'end_date',
                                        'assembly',
                                        'signatures',
                                        'observations']
@@ -54,8 +54,8 @@ adviceMeeting.itemColumns = ['static_item_reference',
                              'review_state',
                              'getProposingGroup',
                              'advices',
-                             'linkedMeetingDate',
-                             'getPreferredMeetingDate',
+                             'meeting_date',
+                             'preferred_meeting_date',
                              'actions']
 adviceMeeting.transitionsToConfirm = (
     'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',

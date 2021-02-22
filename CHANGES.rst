@@ -23,6 +23,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   `MeetingItem.completeness` is set to `completeness_evaluation_asked_again`
   when advices are asked for the second time (or more).
   [gbastien]
+- Adpated code and tests regarding fact that `Meeting` was moved from `AT` to `DX`.
+  [gbastien]
 
 4.2b8 (2021-01-06)
 ------------------

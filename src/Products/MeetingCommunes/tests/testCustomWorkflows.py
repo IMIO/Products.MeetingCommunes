@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+#
+# File: testCustomWorkflows.py
+#
+# GNU General Public License (GPL)
+#
 
-from DateTime import DateTime
 from Products.CMFCore.permissions import AccessContentsInformation
 from Products.CMFCore.permissions import View
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
@@ -19,7 +23,7 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         # First, define recurring items in the meeting config
         self.changeUser('pmManager')
         # create a meeting
-        meeting = self.create('Meeting', date='2007/12/11 09:00:00')
+        meeting = self.create('Meeting')
         # create 2 items and present it to the meeting
         item1 = self.create('MeetingItem', title='The first item')
         self.presentItem(item1)
@@ -48,8 +52,7 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         # First, define recurring items in the meeting config
         self.changeUser('pmManager')
         # create a meeting (with 7 items)
-        meetingDate = DateTime().strftime('%y/%m/%d %H:%M:00')
-        meeting = self.create('Meeting', date=meetingDate)
+        meeting = self.create('Meeting')
         item1 = self.create('MeetingItem')  # id=o2
         item1.setProposingGroup(self.vendors_uid)
         item1.setAssociatedGroups((self.developers_uid,))
@@ -123,7 +126,7 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         self._turnUserIntoPrereviewer(self.member)
         item = self.create('MeetingItem')
         item.setDecision(self.decisionText)
-        meeting = self.create('Meeting', date=DateTime('2017/03/27'))
+        meeting = self.create('Meeting')
         for transition in self.TRANSITIONS_FOR_PRESENTING_ITEM_1:
             _checkObserverMayView(item)
             if transition in self.transitions(item):
@@ -135,5 +138,5 @@ class testCustomWorkflows(MeetingCommunesTestCase):
                 self.do(meeting, transition)
         _checkObserverMayView(item)
         # we check that item and meeting did their complete workflow
-        self.assertEqual(item.queryState(), 'accepted')
-        self.assertEqual(meeting.queryState(), 'closed')
+        self.assertEqual(item.query_state(), 'accepted')
+        self.assertEqual(meeting.query_state(), 'closed')

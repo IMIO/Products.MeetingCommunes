@@ -37,8 +37,8 @@ collegeMeeting.usedItemAttributes = ['description',
                                      'manuallyLinkedItems',
                                      'otherMeetingConfigsClonableToPrivacy',
                                      'sendToAuthority']
-collegeMeeting.usedMeetingAttributes = ['startDate',
-                                        'endDate',
+collegeMeeting.usedMeetingAttributes = ['start_date',
+                                        'end_date',
                                         'assembly',
                                         'signatures',
                                         'observations']
@@ -52,8 +52,8 @@ collegeMeeting.itemColumns = ['static_item_reference',
                               'review_state',
                               'getProposingGroup',
                               'advices',
-                              'linkedMeetingDate',
-                              'getPreferredMeetingDate',
+                              'meeting_date',
+                              'preferred_meeting_date',
                               'actions']
 collegeMeeting.transitionsToConfirm = (
     'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',
@@ -198,8 +198,8 @@ councilMeeting.usedItemAttributes = ['description',
                                      'manuallyLinkedItems',
                                      'privacy',
                                      'sendToAuthority']
-councilMeeting.usedMeetingAttributes = ['startDate',
-                                        'endDate',
+councilMeeting.usedMeetingAttributes = ['start_date',
+                                        'end_date',
                                         'assembly',
                                         'signatures',
                                         'observations']
@@ -214,8 +214,8 @@ councilMeeting.itemColumns = [
     'review_state',
     'getProposingGroup',
     'advices',
-    'linkedMeetingDate',
-    'getPreferredMeetingDate',
+    'meeting_date',
+    'preferred_meeting_date',
     'actions']
 councilMeeting.transitionsToConfirm = (
     'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',

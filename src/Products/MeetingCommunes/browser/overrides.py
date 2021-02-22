@@ -348,7 +348,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         return None
 
     def print_item_state(self):
-        return self.translate(self.real_context.queryState())
+        return self.translate(self.real_context.query_state())
 
     def print_creator_name(self):
         creator = api.user.get(self.real_context.Creator())
@@ -421,22 +421,22 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         else:
             return str(first_part)
 
-    def print_item_number_within_category(self, listTypes=['normal', 'late'], default=''):
+    def print_item_number_within_category(self, list_types=['normal', 'late'], default=''):
         res = default
 
         if self.real_context.hasMeeting() and \
-           self.real_context.getListType() in listTypes and \
+           self.real_context.getListType() in list_types and \
            self.real_context.getCategory():
             meeting = self.real_context.getMeeting()
             context_category = self.real_context.getCategory()
             context_uid = self.real_context.UID()
             count = 0
 
-            for brain in meeting.getItems(listTypes=listTypes,
-                                          ordered=True,
-                                          theObjects=False,
-                                          additional_catalog_query={'getCategory': context_category},
-                                          unrestricted=True):
+            for brain in meeting.get_items(list_types=list_types,
+                                           ordered=True,
+                                           the_objects=False,
+                                           additional_catalog_query={'getCategory': context_category},
+                                           unrestricted=True):
                 count += 1
                 if brain.UID == context_uid:
                     break
@@ -512,14 +512,14 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
 
         return grouping_value != value
 
-    def get_grouped_items(self, itemUids, listTypes=['normal'],
+    def get_grouped_items(self, itemUids, list_types=['normal'],
                           group_by=[], included_values={}, excluded_values={},
                           ignore_review_states=[], privacy='*', unrestricted=False,
                           additional_catalog_query={}):
 
         """
-        :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
-        :param group_by: is a list and each element can be either 'listTypes', 'category',
+        :param list_types: is a list that can be filled with 'normal' and/or 'late ...
+        :param group_by: is a list and each element can be either 'list_types', 'category',
                          'proposingGroup' or a field name as described in MeetingItem Schema
         :param included_values: a Map to filter the returned items regarding the value of a given field.
                 for example : {'proposingGroup':['Secrétariat communal',
@@ -534,7 +534,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         :param additional_catalog_query: additional classic portal_catalog query to filter out items
                 for example : {'getProposingGroup': proposing_group_uid}
 
-        :return: a list of list of list ... (late or normal or both) items (depending on p_listTypes)
+        :return: a list of list of list ... (late or normal or both) items (depending on p_list_types)
                  in the meeting order but wrapped in defined group_by if not empty.
         Every group condition defined increase the depth of this collection.
         """
@@ -550,11 +550,11 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         if unrestricted:
             itemUids = []
 
-        items = self.real_context.getItems(
+        items = self.real_context.get_items(
             uids=itemUids,
-            listTypes=listTypes,
+            list_types=list_types,
             ordered=True,
-            theObjects=True,
+            the_objects=True,
             additional_catalog_query=query,
             unrestricted=unrestricted)
 
@@ -589,13 +589,13 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
 
         return res
 
-    def get_multiple_level_printing(self, itemUids, listTypes=['normal'],
+    def get_multiple_level_printing(self, itemUids, list_types=['normal'],
                                     included_values={}, excluded_values={},
                                     ignore_review_states=[], privacy='*',
                                     level_number=1, text_pattern='{0}', unrestricted=False):
         """
 
-        :param listTypes: is a list that can be filled with 'normal' and/or 'late ...
+        :param list_types: is a list that can be filled with 'normal' and/or 'late ...
         :param included_values: a Map to filter the returned items regarding the value of a given field.
                 for example : {'proposingGroup':['Secrétariat communal',
                                                  'Service informatique',
@@ -622,7 +622,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
             item with number (num, item)]]
         """
         res = OrderedDict()
-        items = self.get_grouped_items(itemUids, listTypes=listTypes, group_by=[],
+        items = self.get_grouped_items(itemUids, list_types=list_types, group_by=[],
                                        included_values=included_values, excluded_values=excluded_values,
                                        ignore_review_states=ignore_review_states, privacy=privacy,
                                        unrestricted=unrestricted)

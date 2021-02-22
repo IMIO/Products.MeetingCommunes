@@ -1,26 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-# File: testCustomMeeting.py
-#
-# Copyright (c) 2007-2013 by Imio.be
+# File: testCustomViews.py
 #
 # GNU General Public License (GPL)
 #
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-# 02110-1301, USA.
-#
+
 from collective.contact.plonegroup.utils import get_plone_group_id
 from DateTime import DateTime
 from imio.history.utils import getLastWFAction
@@ -287,9 +271,9 @@ class testCustomViews(MeetingCommunesTestCase):
         # test delay started from WF
         self.changeUser('siteadmin')
         self.proposeItem(item)
-        cfg.setItemAdviceStates((item.queryState(), 'validated',))
-        cfg.setItemAdviceEditStates((item.queryState(), 'validated',))
-        cfg.setItemAdviceViewStates((item.queryState(), 'validated',))
+        cfg.setItemAdviceStates((item.query_state(), 'validated',))
+        cfg.setItemAdviceEditStates((item.query_state(), 'validated',))
+        cfg.setItemAdviceViewStates((item.query_state(), 'validated',))
         self.assertEqual(helper._getItemAdviceTransmissionDate(),
                          getLastWFAction(item)['time'])
 
@@ -610,7 +594,7 @@ class testCustomViews(MeetingCommunesTestCase):
             ({'insertingMethod': 'on_categories', 'reverse': '0'},))
         m = self._createMeetingWithItems()
         # adapt categories to have catid and item to have category
-        for item in m.getItems(ordered=True):
+        for item in m.get_items(ordered=True):
             item.setCategory('development')
             item._update_after_edit()
         # intel inside *Joke*
@@ -628,7 +612,7 @@ class testCustomViews(MeetingCommunesTestCase):
         view = m.restrictedTraverse('@@document-generation')
         view()
         helper = view.get_generation_context_helper()
-        items = m.getItems(ordered=True)
+        items = m.get_items(ordered=True)
 
         res = helper._filter_items(items,
                                    included_values={},
@@ -744,7 +728,7 @@ class testCustomViews(MeetingCommunesTestCase):
             ({'insertingMethod': 'on_categories', 'reverse': '0'},))
         m = self._createMeetingWithItems()
         # adapt categories to have catid and item to have category
-        for item in m.getItems(ordered=True):
+        for item in m.get_items(ordered=True):
             item.setCategory('development')
             item._update_after_edit()
         # intel inside *Joke*
@@ -762,7 +746,7 @@ class testCustomViews(MeetingCommunesTestCase):
         view = m.restrictedTraverse('@@document-generation')
         view()
         helper = view.get_generation_context_helper()
-        items = m.getItems(ordered=True)
+        items = m.get_items(ordered=True)
         itemUids = [anItem.UID() for anItem in items]
         self.maxDiff = None
 
@@ -832,14 +816,14 @@ class testCustomViews(MeetingCommunesTestCase):
         meeting = self._createMeetingWithItems()
         view = meeting.restrictedTraverse('@@document-generation')
         helper = view.get_generation_context_helper()
-        itemUids = [item.UID for item in meeting.getItems(ordered=True, theObjects=False)]
+        itemUids = [item.UID for item in meeting.get_items(ordered=True, the_objects=False)]
         self.assertEqual(len(itemUids), 7)
         self.assertEqual(len(helper.get_grouped_items(itemUids, unrestricted=False)), 7)
         self.assertEqual(len(helper.get_grouped_items(itemUids, unrestricted=True)), 7)
 
         # by default pmCreator1 may only get 'developers' items
         self.changeUser('pmCreator1')
-        itemUids = [item.UID for item in meeting.getItems(ordered=True, theObjects=False)]
+        itemUids = [item.UID for item in meeting.get_items(ordered=True, the_objects=False)]
         grouped_items = helper.get_grouped_items(
             itemUids, group_by='proposingGroup', unrestricted=False)
         self.assertEqual(len(grouped_items), 1)
@@ -856,7 +840,7 @@ class testCustomViews(MeetingCommunesTestCase):
 
         # by default pmCreator2 may only get 'vendors' items
         self.changeUser('pmCreator2')
-        itemUids = [item.UID for item in meeting.getItems(ordered=True, theObjects=False)]
+        itemUids = [item.UID for item in meeting.get_items(ordered=True, the_objects=False)]
         grouped_items = helper.get_grouped_items(
             itemUids, group_by='proposingGroup', unrestricted=False)
         self.assertEqual(len(grouped_items), 1)
@@ -905,7 +889,7 @@ class testCustomViews(MeetingCommunesTestCase):
         meeting = self._createMeetingWithItems()
         view = meeting.restrictedTraverse('@@document-generation')
         helper = view.get_generation_context_helper()
-        itemUids = [item.UID for item in meeting.getItems(ordered=True, theObjects=False)]
+        itemUids = [item.UID for item in meeting.get_items(ordered=True, the_objects=False)]
         grouped_items = helper.get_grouped_items(
             itemUids, additional_catalog_query={})
         self.assertEqual(len(grouped_items), 7)
@@ -924,7 +908,7 @@ class testCustomViews(MeetingCommunesTestCase):
             ({'insertingMethod': 'on_categories', 'reverse': '0'},))
         m = self._createMeetingWithItems()
         # adapt categories to have catid and item to have category
-        for item in m.getItems(ordered=True):
+        for item in m.get_items(ordered=True):
             item.setCategory('development')
             item._update_after_edit()
         # intel inside *Joke*
@@ -949,7 +933,7 @@ class testCustomViews(MeetingCommunesTestCase):
         # test on the meeting
         # we should have a ordereddic containing 3 lists, 6 list by category
         # build the list of uids
-        items = m.getItems(ordered=True)
+        items = m.get_items(ordered=True)
         itemUids = [anItem.UID() for anItem in items]
         ordered_dico = helper.get_multiple_level_printing(itemUids=itemUids, level_number=5)
         self.assertEqual(len(ordered_dico), 7)
@@ -992,7 +976,8 @@ class testCustomViews(MeetingCommunesTestCase):
             return view.get_generation_context_helper()
 
         self.changeUser('pmManager')
-        meeting = self.create('Meeting', date=DateTime('2015/12/12'))
+        meeting = self.create('Meeting')
+        meeting_uid = meeting.UID()
 
         test1 = create_and_validate_item('pmCreator1')
         helper1 = get_item_view(test1)
@@ -1009,16 +994,16 @@ class testCustomViews(MeetingCommunesTestCase):
         self.changeUser('pmManager')
         self.freezeMeeting(meeting)
 
-        test3 = create_and_validate_item('pmCreator1', meeting.UID())
+        test3 = create_and_validate_item('pmCreator1', meeting_uid)
         helper3 = get_item_view(test3)
-        test4 = create_and_validate_item('pmCreator2', meeting.UID())
+        test4 = create_and_validate_item('pmCreator2', meeting_uid)
         helper4 = get_item_view(test4)
 
         self.presentItem(test3)
-        self.presentItem(create_and_validate_item('pmCreator2', meeting.UID()))
-        self.presentItem(create_and_validate_item('pmCreator1', meeting.UID()))
-        self.presentItem(create_and_validate_item('pmCreator2', meeting.UID()))
-        self.presentItem(create_and_validate_item('pmCreator1', meeting.UID()))
+        self.presentItem(create_and_validate_item('pmCreator2', meeting_uid))
+        self.presentItem(create_and_validate_item('pmCreator1', meeting_uid))
+        self.presentItem(create_and_validate_item('pmCreator2', meeting_uid))
+        self.presentItem(create_and_validate_item('pmCreator1', meeting_uid))
         self.presentItem(test4)
 
         self.assertEqual(helper1.print_item_number_within_category(), '4')
@@ -1026,14 +1011,16 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertEqual(helper3.print_item_number_within_category(), '6')
         self.assertEqual(helper4.print_item_number_within_category(), '6')
 
-        self.assertEqual(helper3.print_item_number_within_category(listTypes=['late']), '1')
-        self.assertEqual(helper4.print_item_number_within_category(listTypes=['late']), '3')
+        self.assertEqual(helper3.print_item_number_within_category(list_types=['late']), '1')
+        self.assertEqual(helper4.print_item_number_within_category(list_types=['late']), '3')
 
-        self.assertEqual(helper3.print_item_number_within_category(listTypes=['normal']), '')
-        self.assertEqual(helper4.print_item_number_within_category(listTypes=['normal']), '')
+        self.assertEqual(helper3.print_item_number_within_category(list_types=['normal']), '')
+        self.assertEqual(helper4.print_item_number_within_category(list_types=['normal']), '')
 
-        self.assertEqual(helper3.print_item_number_within_category(listTypes=['normal'], default='XXXX'), 'XXXX')
-        self.assertEqual(helper4.print_item_number_within_category(listTypes=['normal'], default='ERROR'), 'ERROR')
+        self.assertEqual(helper3.print_item_number_within_category(
+            list_types=['normal'], default='XXXX'), 'XXXX')
+        self.assertEqual(helper4.print_item_number_within_category(
+            list_types=['normal'], default='ERROR'), 'ERROR')
 
     def test_mc_print_item_number_with_sublevel(self):
         expected_with_alpha = {100: "1",
@@ -1053,7 +1040,7 @@ class testCustomViews(MeetingCommunesTestCase):
                                  200: "2"}
 
         self.changeUser('pmManager')
-        self.create('Meeting', date=DateTime('2020/06/10'))
+        self.create('Meeting')
 
         for item_number in expected_with_alpha.keys():
             item = self.create('MeetingItem')

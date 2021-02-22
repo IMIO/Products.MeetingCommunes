@@ -8,7 +8,8 @@
 from collections import OrderedDict
 from collective.iconifiedcategory.utils import calculate_category_id
 from collective.iconifiedcategory.utils import get_config_root
-from DateTime import DateTime
+from datetime import datetime
+from datetime import timedelta
 from dexterity.localroles.utils import add_fti_configuration
 from imio.helpers.content import normalize_name
 from plone import api
@@ -279,8 +280,12 @@ def addDemoData(context):
     mTool.createMemberArea('agentInfo')
     mTool.createMemberArea('agentCompta')
     # create 5 meetings : 2 passed, 1 current and 2 future
-    today = DateTime()
-    dates = [today - 13, today - 6, today + 1, today + 8, today + 15]
+    today = datetime.now()
+    dates = [today - timedelta(days=13),
+             today - timedelta(days=6),
+             today + timedelta(days=1),
+             today + timedelta(days=8),
+             today + timedelta(days=15)]
 
     # items dict here : the key is the user we will create the item for
     # we use item templates so content is created for the demo
@@ -362,24 +367,25 @@ def addDemoData(context):
                        attendees.keys()[0]: '2'}
         # create meetings
         for date in dates:
-            meetingId = secrFolder.invokeFactory(cfg.getMeetingTypeName(), id=date.strftime('%Y%m%d'))
+            meetingId = secrFolder.invokeFactory(
+                cfg.getMeetingTypeName(),
+                id=date.strftime('%Y%m%d'),
+                date=date)
             meeting = getattr(secrFolder, meetingId)
-            meeting.setDate(date)
             pTool.changeOwnershipOf(meeting, 'dgen')
-            meeting.processForm()
-            meeting._doUpdateContacts(attendees=attendees, signatories=signatories)
+            meeting._do_update_contacts(attendees=attendees, signatories=signatories)
             # -13 meeting is closed
-            if date == today - 13:
+            if date == today - timedelta(days=13):
                 wfTool.doActionFor(meeting, 'freeze')
                 wfTool.doActionFor(meeting, 'decide')
                 wfTool.doActionFor(meeting, 'close')
             # -6 meeting is frozen
-            if date == today - 6:
+            if date == today - timedelta(days=6):
                 wfTool.doActionFor(meeting, 'freeze')
                 wfTool.doActionFor(meeting, 'decide')
             meeting.reindexObject()
 
-            for item in meeting.getItems():
+            for item in meeting.get_items():
                 pTool.changeOwnershipOf(item, 'dgen')
 
         # create items
