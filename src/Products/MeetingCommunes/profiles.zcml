@@ -83,6 +83,20 @@
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
   <genericsetup:registerProfile
+   name="zcodir_extended"
+   title="PloneMeeting / CoDir - extended"
+   description="PloneMeeting for CoDir - extended (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
+   name="zcodir_city_cpas"
+   title="PloneMeeting / CoDir - city/cpas"
+   description="PloneMeeting for CoDir - city/cpas (Belgium)"
+   provides="Products.GenericSetup.interfaces.EXTENSION"
+   for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+  <genericsetup:registerProfile
    name="zcoges"
    title="PloneMeeting / CoGes"
    description="PloneMeeting for CoGes (Belgium)"

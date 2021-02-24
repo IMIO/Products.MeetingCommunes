@@ -6,7 +6,16 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.22 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Backport from 4.2.x:
+
+  - Added new external method to ease the switch to proposingGroupWithGroupInCharge.
+    [odelaere]
+  - Added 2 new profiles `zcodir_extended` and `zcodir_city_cpas`.
+    [aduchene]
+  - Removed default values defined for DashboardCollections `FINANCE_ADVICES_COLLECTION_ID`
+    and `searchitemswithnofinanceadvice`, because if it does not exist in the
+    `MeetingConfig.customAdvisers`, it breaks the dashboards when applying the profile.
+    [gbastien]
 
 
 4.1.21 (2021-02-12)
