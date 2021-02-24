@@ -9,7 +9,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Added new external method to ease the switch to proposingGroupWithGroupInCharge.
   [odelaere]
-
+- Added 2 new profiles `zcodir_extended` and `zcodir_city_cpas`.
+  [aduchene]
 
 4.2b9 (2021-01-26)
 ------------------
