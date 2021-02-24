@@ -9,7 +9,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Added new external method to ease the switch to proposingGroupWithGroupInCharge.
   [odelaere]
-
+- Removed default values defined for DashboardCollections `FINANCE_ADVICES_COLLECTION_ID`
+  and `searchitemswithnofinanceadvice`, because if it does not exist in the
+  `MeetingConfig.customAdvisers`, it breaks the dashboards when applying the profile.
+  [gbastien]
 
 4.2b9 (2021-01-26)
 ------------------

@@ -675,9 +675,7 @@ class CustomMeetingConfig(MeetingConfig):
                              'v': [itemType, ]},
                             {'i': 'indexAdvisers',
                              'o': 'plone.app.querystring.operation.selection.is',
-                             'v': ['delay_row_id__unique_id_002',
-                                   'delay_row_id__unique_id_003',
-                                   'delay_row_id__unique_id_004']}
+                             'v': []}
                         ],
                         'sort_on': u'created',
                         'sort_reversed': True,
@@ -697,9 +695,7 @@ class CustomMeetingConfig(MeetingConfig):
                             [
                                 {'i': 'indexAdvisers',
                                  'o': 'plone.app.querystring.operation.selection.is',
-                                 'v': ['delay_row_id__unique_id_002',
-                                       'delay_row_id__unique_id_003',
-                                       'delay_row_id__unique_id_004']},
+                                 'v': []},
                                 {'i': 'CompoundCriterion',
                                  'o': 'plone.app.querystring.operation.compound.is',
                                  'v': 'items-with-negative-previous-index'},
