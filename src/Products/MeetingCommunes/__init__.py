@@ -24,26 +24,19 @@
 # 02110-1301, USA.
 #
 
-__author__ = """Gauthier Bastien <g.bastien@imio.be>, Stephan Geulette <s.geulette@imio.be>"""
-__docformat__ = 'plaintext'
-
-
-# There are three ways to inject custom code here:
-#
-#   - To set global configuration variables, create a file AppConfig.py.
-#       This will be imported in config.py, which in turn is imported in
-#       each generated class and in this file.
-#   - To perform custom initialisation after types have been registered,
-#       use the protected code section at the bottom of initialize().
-
-import logging
-logger = logging.getLogger('MeetingCommunes')
-logger.debug('Installing Product')
-
 from Products.CMFCore import DirectoryView
 from config import product_globals
 
+import logging
+
+logger = logging.getLogger('MeetingCommunes')
+logger.debug('Installing Product')
+
 DirectoryView.registerDirectory('skins', product_globals)
+
+__author__ = """Gauthier Bastien <g.bastien@imio.be>, Stephan Geulette <s.geulette@imio.be>"""
+__docformat__ = 'plaintext'
+
 
 import model.pm_updates  # noqa
 import adapters  # noqa

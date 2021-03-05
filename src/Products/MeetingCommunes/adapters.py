@@ -1062,7 +1062,7 @@ class MeetingAdviceCommunesWorkflowConditions(MeetingAdviceWorkflowConditions):
         cfg = tool.getMeetingConfig(self.context)
         res = True
         if 'completeness' in cfg.getUsedItemAttributes() and \
-           self.context.adapted()._is_complete():
+           not self.context.adapted()._is_complete():
             res = No(_('completeness_not_complete'))
         return res
 
