@@ -1,23 +1,6 @@
 # -*- coding: utf-8 -*-
-# ------------------------------------------------------------------------------
-# Copyright (c) 2017 by Imio.be
 #
 # GNU General Public License (GPL)
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-# 02110-1301, USA.
 #
 
 from AccessControl import ClassSecurityInfo
@@ -1072,22 +1055,24 @@ class MeetingAdviceCommunesWorkflowConditions(MeetingAdviceWorkflowConditions):
     implements(IMeetingAdviceCommunesWorkflowConditions)
     security = ClassSecurityInfo()
 
+    def _check_completeness(self):
+        """When MeetingItem.completeness is used, we may only propose
+           if completeness is complete or not required."""
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+        res = True
+        if 'completeness' in cfg.getUsedItemAttributes() and \
+           self.context.adapted()._is_complete():
+            res = No(_('completeness_not_complete'))
+        return res
+
     security.declarePublic('mayProposeToFinancialController')
 
     def mayProposeToFinancialController(self):
         ''' '''
         res = False
         if _checkPermission(ReviewPortalContent, self.context):
-            # if MeetingItem.completeness is used
-            # we may only propose if completeness is complete or not required
-            tool = api.portal.get_tool('portal_plonemeeting')
-            cfg = tool.getMeetingConfig(self.context)
-            if 'completeness' in cfg.getUsedItemAttributes() and \
-               self.context.getCompleteness() not in ('completeness_complete',
-                                                      'completeness_evaluation_not_required'):
-                res = No(_('completeness_not_complete'))
-            else:
-                res = True
+            res = self._check_completeness()
         return res
 
     security.declarePublic('mayProposeToFinancialEditor')
@@ -1096,7 +1081,7 @@ class MeetingAdviceCommunesWorkflowConditions(MeetingAdviceWorkflowConditions):
         ''' '''
         res = False
         if _checkPermission(ReviewPortalContent, self.context):
-            res = True
+            res = self._check_completeness()
         return res
 
     security.declarePublic('mayProposeToFinancialReviewer')
@@ -1105,7 +1090,7 @@ class MeetingAdviceCommunesWorkflowConditions(MeetingAdviceWorkflowConditions):
         ''' '''
         res = False
         if _checkPermission(ReviewPortalContent, self.context):
-            res = True
+            res = self._check_completeness()
         return res
 
     security.declarePublic('mayProposeToFinancialManager')

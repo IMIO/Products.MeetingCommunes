@@ -2,15 +2,10 @@
 #
 # File: config.py
 #
-# Copyright (c) 2016 by Imio.be
-# Generator: ArchGenXML Version 2.7
-#            http://plone.org/products/archgenxml
-#
 # GNU General Public License (GPL)
 #
 
 from Products.CMFCore.permissions import setDefaultRoles
-from Products.PloneMeeting import config
 
 
 __author__ = """Gauthier Bastien <g.bastien@imio.be>, Stephan Geulette <s.geulette@imio.be>"""
