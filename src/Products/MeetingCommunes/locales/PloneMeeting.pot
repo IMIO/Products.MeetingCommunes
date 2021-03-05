@@ -132,3 +132,7 @@ msgstr ""
 #. Default: "Finances advice: add transition from financial controller to financial manager"
 msgid "wa_meetingadvicefinances_controller_propose_to_manager"
 msgstr ""
+
+#. Default: "Check field completeness."
+msgid "completeness_not_complete"
+msgstr ""

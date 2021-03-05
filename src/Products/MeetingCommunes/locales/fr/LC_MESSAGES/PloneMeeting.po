@@ -51,6 +51,10 @@ msgstr "Ajouter un avis finances"
 msgid "cautious_finance"
 msgstr "Avis finances réservé"
 
+#. Default: "Check field completeness."
+msgid "completeness_not_complete"
+msgstr "Vérifiez le champ \"Complétude\" sur le point."
+
 #. Default: "Financial controllers"
 msgid "financialcontrollers"
 msgstr "Contrôleurs financiers"

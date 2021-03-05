@@ -51,6 +51,10 @@ msgstr ""
 msgid "cautious_finance"
 msgstr ""
 
+#. Default: "Check field completeness."
+msgid "completeness_not_complete"
+msgstr ""
+
 #. Default: "Financial controllers"
 msgid "financialcontrollers"
 msgstr ""
