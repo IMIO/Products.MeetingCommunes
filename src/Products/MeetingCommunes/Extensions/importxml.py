@@ -2,21 +2,23 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
-
-import csv
-import os
-from xml.dom.minidom import parse
-
-import transaction
+from collective.iconifiedcategory.utils import calculate_category_id
+from collective.iconifiedcategory.utils import get_config_root
 from DateTime import DateTime
-from Products.CMFPlone.utils import safe_unicode
-from collective.iconifiedcategory.utils import get_config_root, calculate_category_id
 from imio.helpers.cache import cleanRamCacheFor
-from plone import namedfile, api
+from plone import api
+from plone import namedfile
 from plone.api import portal
 from plone.app.querystring import queryparser
 from plone.app.textfield.value import RichTextValue
 from plone.dexterity.utils import createContentInContainer
+from Products.CMFPlone.utils import safe_unicode
+from xml.dom.minidom import parse
+
+import csv
+import os
+import transaction
+
 
 """ Reprise des données ACROPOLE de chez Stesud
 N'oubliez-pas de fusionner les 3 fichiers xmls afin d'en avoir qu'un seul...

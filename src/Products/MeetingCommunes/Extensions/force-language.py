@@ -2,15 +2,12 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
-
 from datetime import datetime
-
+from plone.app.querystring import queryparser
 from Products.PloneMeeting import logger
 from Products.PloneMeeting.config import HAS_SOLR
 
-
 import transaction
-from plone.app.querystring import queryparser
 
 
 class FixLanguage:

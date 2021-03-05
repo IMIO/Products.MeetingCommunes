@@ -2,14 +2,12 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
-
-from datetime import datetime
+from collective.contact.plonegroup.utils import get_organizations
 from copy import deepcopy
-
+from datetime import datetime
+from plone.app.querystring import queryparser
 from Products.PloneMeeting import logger
 
-from collective.contact.plonegroup.utils import get_organizations
-from plone.app.querystring import queryparser
 
 special_format = "{0}__groupincharge__{1}"
 
