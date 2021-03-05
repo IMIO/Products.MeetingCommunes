@@ -6,8 +6,11 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.23 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- When using finances advice workflows, WF `initial_state` may vary
+  (`advicecreated`, `proposed_to_financial_controller`, ...) so when using
+  completeness, check that item is complete until the
+  `mayProposeToFinancialReviewer` transition guard.
+  [gbastien]
 
 4.1.22 (2021-03-04)
 -------------------
