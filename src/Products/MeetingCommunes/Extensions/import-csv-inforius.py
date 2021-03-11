@@ -99,6 +99,7 @@ content_types = {
 
 college_meeting_type = 'MeetingCollege'
 council_meeting_type = 'MeetingCouncil'
+datetime_format = "%Y-%m-%d %H:%M:%S"
 
 
 # Because we got an ugly csv with ugly formatting and a shit load of useless M$ formatting.
@@ -136,7 +137,7 @@ class CSVMeetingItem:
         self.external_id = external_id
         self.title = safe_unicode(title)
         self.creator = creator
-        self.created_on = datetime.strptime(created_on, "%Y-%m-%d %H:%M:%S.%f")
+        self.created_on = datetime.strptime(created_on, datetime_format)
         self.proposing_group = service
         self.category = category
         self.motivation = clean_xhtml(motivation)
@@ -157,10 +158,10 @@ class CSVMeeting:
     # ID    Date    CreationDate    StartDate    EndDate    Assembly    Type
     def __init__(self, external_id, date, created_on, started_on, ended_on, assembly, type, annexes_dir):
         self.external_id = external_id
-        self.date = datetime.strptime(date, "%Y-%m-%d %H:%M:%S.%f")
-        self.created_on = datetime.strptime(created_on, "%Y-%m-%d %H:%M:%S.%f")
-        self.started_on = datetime.strptime(started_on, "%Y-%m-%d %H:%M:%S.%f")
-        self.ended_on = datetime.strptime(ended_on, "%Y-%m-%d %H:%M:%S.%f")
+        self.date = datetime.strptime(date, datetime_format)
+        self.created_on = datetime.strptime(created_on, datetime_format)
+        self.started_on = datetime.strptime(started_on, datetime_format)
+        self.ended_on = datetime.strptime(ended_on, datetime_format)
         self.assembly = assembly
         self.type = type
         if 'col' in type.lower():
@@ -189,7 +190,8 @@ class ImportCSV:
         f_group_mapping,
         f_items,
         f_meetings,
-        annex_dir_path,
+        meeting_annex_dir_path,
+        item_annex_dir_path,
         default_group,
         default_category=None,
     ):
@@ -198,7 +200,8 @@ class ImportCSV:
         self.f_group_mapping = f_group_mapping
         self.f_items = f_items
         self.f_meetings = f_meetings
-        self.annex_dir_path = annex_dir_path
+        self.meeting_annex_dir_path = meeting_annex_dir_path
+        self.item_annex_dir_path = item_annex_dir_path
         self.default_group = default_group
         self.default_category = default_category
         self.errors = {"io": [], "item": [], "meeting": [], "item_without_annex": []}
@@ -315,18 +318,21 @@ class ImportCSV:
                               motivation=safe_unicode(csv_item[6].strip()),
                               decision=safe_unicode(csv_item[7].strip()),
                               meeting_external_id=meeting_external_id,
-                              annexes_dir=self.annex_dir_path)
+                              annexes_dir=self.item_annex_dir_path)
 
         return item
 
-    def load_items(self, delib_file, portaltype, meetings):
+    def load_items(self, delib_file, meetings):
         logger.info("Load {0}".format(delib_file))
         csv.field_size_limit(100000000)
         with io.open(delib_file, "r") as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
+                if reader.line_num == 1:
+                    # skip header line
+                    continue
                 try:
-                    meeting_external_id = int(row[9].strip())
+                    meeting_external_id = int(row[8].strip())
                     if meeting_external_id not in meetings:
                         logger.info("Unknown meeting for item : {row}".format(row=row))
                     else:
@@ -507,9 +513,13 @@ class ImportCSV:
                     self.groups[row[0].strip()] = self.default_group
 
         meetings = {}
+        logger.info("Load {0}".format(self.f_meetings))
         with io.open(self.f_meetings, "r") as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
+                if reader.line_num == 1:
+                    # skip header line
+                    continue
                 # Because numbers are not numbers but unicode chars...
                 external_id = int(row[0].strip())
                 meeting = CSVMeeting(external_id=external_id,
@@ -517,9 +527,9 @@ class ImportCSV:
                                      created_on=row[2].strip(),
                                      started_on=row[3].strip(),
                                      ended_on=row[4].strip(),
-                                     assembly=row[5].strip(),
-                                     type=row[6].strip(),
-                                     annexes_dir=self.annex_dir_path)
+                                     assembly=safe_unicode(row[5].strip()),
+                                     type=safe_unicode(row[6].strip()),
+                                     annexes_dir=self.meeting_annex_dir_path)
 
                 self.add_meeting_to_dict(meetings, meeting)
         self.load_items(self.f_items, meetings)
@@ -528,12 +538,12 @@ class ImportCSV:
         logger.info("Inserting Objects")
 
         for csv_meeting in meetings.values():
-            if meeting.type == college_meeting_type:
+            if csv_meeting.portal_type == college_meeting_type:
                 self.insert_and_close_meeting(self.college_member_folder, csv_meeting)
-            elif meeting.type == council_meeting_type:
+            elif csv_meeting.portal_type == council_meeting_type:
                 self.insert_and_close_meeting(self.council_member_folder, csv_meeting)
             else:
-                raise NotImplementedError("Not managed meeting type '{}' for meeting id {}".format(meeting.type, meeting.external_id))
+                raise NotImplementedError(u"Not managed meeting type '{}' for meeting id {}".format(csv_meeting.type, meeting.external_id))
 
         self.re_enable_recurring_items()
 
@@ -558,8 +568,9 @@ def import_data_from_csv(
     f_group_mapping,
     f_items,
     f_meetings,
-    annex_dir_path,
     default_group,
+    meeting_annex_dir_path,
+    item_annex_dir_path,
     default_category=None,
 ):
     start_date = datetime.now()
@@ -568,7 +579,8 @@ def import_data_from_csv(
         f_group_mapping,
         f_items,
         f_meetings,
-        annex_dir_path,
+        meeting_annex_dir_path,
+        item_annex_dir_path,
         default_group,
         default_category,
     )
@@ -606,7 +618,9 @@ def import_data_from_csv(
     seconds = end_date - start_date
     seconds = seconds.seconds
     hours = seconds / 3600
-    minutes = (seconds - hours * 3600) / 60
+    left_sec = seconds - hours * 3600
+    minutes = left_sec / 60
+    left_sec = left_sec - minutes * 60
     logger.info(
-        u"Import finished in {0} seconds ({1} h {2} m).".format(seconds, hours, minutes)
+        u"Import finished in {0} seconds ({1} h {2} m {3} s).".format(seconds, hours, minutes, left_sec)
     )
