@@ -435,11 +435,10 @@ class ImportCSV:
         if annexes:
             for annex_file in annexes:
                 # remove weird naming with double extension
-                annex_name = annex_file.replace(".doc.docx", ".doc")
+                annex_name = annex_file.replace('\xc2\x82', 'é')
                 annex_name = annex_name[
                     annex_name.rindex("/") + 1 : annex_name.rindex(".")
                 ]
-                annex_name = safe_unicode(annex_name)
                 annex_name = annex_name.strip()
                 annex_name = annex_name.strip("-_")
                 inserted = self.add_annexe_to_object(
