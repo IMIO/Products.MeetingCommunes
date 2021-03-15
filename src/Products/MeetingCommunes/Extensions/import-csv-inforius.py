@@ -435,7 +435,7 @@ class ImportCSV:
         if annexes:
             for annex_file in annexes:
                 # remove weird naming with double extension
-                annex_name = annex_file.replace('\xc2\x82', 'é')
+                # annex_name = annex_file.replace('\xc2\x82', 'é')
                 annex_name = annex_name[
                     annex_name.rindex("/") + 1 : annex_name.rindex(".")
                 ]
