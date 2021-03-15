@@ -162,7 +162,7 @@ class CSVMeeting:
         self.created_on = datetime.strptime(created_on, datetime_format)
         self.started_on = datetime.strptime(started_on, datetime_format)
         self.ended_on = datetime.strptime(ended_on, datetime_format)
-        self.assembly = assembly
+        self.assembly = re.sub(r'<br.?\/>', '\n\r', assembly).strip()
         self.type = type
         if 'col' in type.lower():
             portal_type = college_meeting_type
@@ -287,9 +287,9 @@ class ImportCSV:
             annex_blob = namedfile.NamedBlobFile(annex_read, filename=name)
             return annex_blob
 
-    def add_annexe_to_object(self, obj, path, title):
+    def add_annexe_to_object(self, obj, path, title, confidential=False):
         try:
-            self.add_annex(obj, path, annex_title=title)
+            self.add_annex(obj, path, annex_title=title, confidential=confidential)
             return True
         except IOError as e:
             self.errors["io"].append(e.message)
@@ -392,7 +392,7 @@ class ImportCSV:
         logger.info("Created {type} {id} {date}".format(type=csv_meeting.portal_type, id=_id, date=meeting.Title()))
 
         if csv_meeting.annexes:
-            self.add_all_annexes_to_object(csv_meeting.annexes, meeting)
+            self.add_all_annexes_to_object(csv_meeting.annexes, meeting, confidential=True)
         else:
             meeting.setObservations(u"<p><strong>Cette séance n'a aucune annexe</strong></p>")
 
@@ -431,7 +431,7 @@ class ImportCSV:
             or self.default_group
         )
 
-    def add_all_annexes_to_object(self, annexes, obj):
+    def add_all_annexes_to_object(self, annexes, obj, confidential=False):
         if annexes:
             for annex_file in annexes:
                 # remove weird naming with double extension
@@ -439,10 +439,11 @@ class ImportCSV:
                 annex_name = annex_name[
                     annex_name.rindex("/") + 1 : annex_name.rindex(".")
                 ]
+                annex_name = safe_unicode(annex_name)
                 annex_name = annex_name.strip()
                 annex_name = annex_name.strip("-_")
                 inserted = self.add_annexe_to_object(
-                    obj, annex_file, safe_unicode(annex_name)
+                    obj, annex_file, safe_unicode(annex_name), confidential=confidential
                 )
                 if not inserted:
                     raise ValueError("Annex not inserted : {}".format(annex_file))
