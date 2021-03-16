@@ -9,7 +9,7 @@ config = deepcopy(simple_import_data.simpleMeeting)
 config.id = 'codir-extended'
 config.title = 'Comité de Direction étendu'
 config.folderTitle = 'Comité de Direction étendu'
-config.shortName = 'CoDir'
+config.shortName = 'CoDir étendu'
 
 data = PloneMeetingConfiguration(
     meetingFolderTitle='Mes séances',
