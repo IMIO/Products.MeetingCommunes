@@ -3,6 +3,7 @@
 
 from __future__ import print_function
 
+import re
 from datetime import datetime
 from copy import deepcopy
 
@@ -14,21 +15,22 @@ from collective.contact.plonegroup.utils import get_organizations
 special_format = "{0}__groupincharge__{1}"
 
 
-def set_default_in_charge_if_misssing(default_in_charge_uid, remove_certified_signatures=[]):
+def set_default_in_charge_if_misssing_and_fix_certified_sign(default_in_charge_uid, remove_certified_signatures=[], remove_certified_signatures_ignore_pattern=None):
     cfg_groups = get_organizations(only_selected=False)
-
     for group in cfg_groups:
         if not group.groups_in_charge:
             group.groups_in_charge = [default_in_charge_uid]
             logger.info(u"Added default group in charge to {}".format(group.title))
 
-        certified_signatures = []
-        for signature in group.certified_signatures:
-            if signature.get('signature_number') not in remove_certified_signatures:
-                certified_signatures.append(signature)
+        if not remove_certified_signatures_ignore_pattern or not re.match(remove_certified_signatures_ignore_pattern, group.Title()):
+            # the organisation members create items
+            certified_signatures = []
+            for signature in group.certified_signatures:
+                if signature.get('signature_number') not in remove_certified_signatures:
+                    certified_signatures.append(signature)
 
-        group.certified_signatures = certified_signatures
-        group.reindexObject()
+            group.certified_signatures = certified_signatures
+            group.reindexObject()
 
 
 def set_up_meeting_config_used_items_attributes(meeting_config):
@@ -45,7 +47,7 @@ def set_up_meeting_config_used_items_attributes(meeting_config):
 
 
 def initialize_proposingGroupWithGroupInCharge(
-    self, default_in_charge_uid, config_ids=[], ignore_if_others=[], remove_certified_signatures=[]
+    self, default_in_charge_uid, config_ids=[], ignore_if_others=[], remove_certified_signatures=[], remove_certified_signatures_ignore_pattern=None
 ):
     if not isinstance(remove_certified_signatures, list):
         remove_certified_signatures = [remove_certified_signatures]
@@ -53,7 +55,7 @@ def initialize_proposingGroupWithGroupInCharge(
     start_date = datetime.now()
     count_patched = 0
     count_global = 0
-    set_default_in_charge_if_misssing(default_in_charge_uid, remove_certified_signatures)
+    set_default_in_charge_if_misssing_and_fix_certified_sign(default_in_charge_uid, remove_certified_signatures, remove_certified_signatures_ignore_pattern)
 
     item_type_names = []
 
