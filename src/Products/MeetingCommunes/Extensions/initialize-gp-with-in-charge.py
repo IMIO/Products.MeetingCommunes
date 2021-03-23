@@ -14,14 +14,21 @@ from collective.contact.plonegroup.utils import get_organizations
 special_format = "{0}__groupincharge__{1}"
 
 
-def set_default_in_charge_if_misssing(default_in_charge_uid):
+def set_default_in_charge_if_misssing(default_in_charge_uid, remove_certified_signatures=[]):
     cfg_groups = get_organizations(only_selected=False)
 
     for group in cfg_groups:
         if not group.groups_in_charge:
             group.groups_in_charge = [default_in_charge_uid]
-            group.reindexObject()
             logger.info(u"Added default group in charge to {}".format(group.title))
+
+        certified_signatures = []
+        for signature in group.certified_signatures:
+            if signature.get('signature_number') not in remove_certified_signatures:
+                certified_signatures.append(signature)
+
+        group.certified_signatures = certified_signatures
+        group.reindexObject()
 
 
 def set_up_meeting_config_used_items_attributes(meeting_config):
@@ -38,12 +45,12 @@ def set_up_meeting_config_used_items_attributes(meeting_config):
 
 
 def initialize_proposingGroupWithGroupInCharge(
-    self, default_in_charge_uid, config_ids=[], ignore_if_others=[]
+    self, default_in_charge_uid, config_ids=[], ignore_if_others=[], remove_certified_signatures=[]
 ):
     start_date = datetime.now()
     count_patched = 0
     count_global = 0
-    set_default_in_charge_if_misssing(default_in_charge_uid)
+    set_default_in_charge_if_misssing(default_in_charge_uid, remove_certified_signatures)
 
     item_type_names = []
 
