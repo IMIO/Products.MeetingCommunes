@@ -47,6 +47,9 @@ def set_up_meeting_config_used_items_attributes(meeting_config):
 def initialize_proposingGroupWithGroupInCharge(
     self, default_in_charge_uid, config_ids=[], ignore_if_others=[], remove_certified_signatures=[]
 ):
+    if not isinstance(remove_certified_signatures, list):
+        remove_certified_signatures = [remove_certified_signatures]
+
     start_date = datetime.now()
     count_patched = 0
     count_global = 0
