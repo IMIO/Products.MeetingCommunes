@@ -65,6 +65,7 @@ content_types = {
     ".ogv": "video/ogg",
     ".ogx": "application/ogg",
     ".otf": "font/otf",
+    ".oxps": "application/oxps, application/vnd.ms-xpsdocument",
     ".png": "image/png",
     ".pdf": "application/pdf",
     ".ppt": "application/vnd.ms-powerpoint",
@@ -90,6 +91,7 @@ content_types = {
     ".xls": "application/vnd.ms-excel",
     ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     ".xml": "application/xml",
+    ".xps": "application/oxps, application/vnd.ms-xpsdocument",
     ".xul": "application/vnd.mozilla.xul+xml",
     ".zip": "application/zip",
     ".3gp": "video/3gpp",
@@ -193,7 +195,8 @@ class ImportCSV:
         meeting_annex_dir_path,
         item_annex_dir_path,
         default_group,
-        default_category=None,
+        default_category_college=None,
+        default_category_council=None,
     ):
         self.grp_id_mapping = {}
         self.portal = portal
@@ -203,7 +206,6 @@ class ImportCSV:
         self.meeting_annex_dir_path = meeting_annex_dir_path
         self.item_annex_dir_path = item_annex_dir_path
         self.default_group = default_group
-        self.default_category = default_category
         self.errors = {"io": [], "item": [], "meeting": [], "item_without_annex": []}
         self.item_counter = 0
         self.meeting_counter = 0
@@ -212,9 +214,11 @@ class ImportCSV:
 
         self.college_cfg = self.portal.portal_plonemeeting.get('meeting-config-college')
         self.college_member_folder = self.portal.Members.csvimport.mymeetings.get('meeting-config-college')
+        self.default_category_college = default_category_college
 
         self.council_cfg = self.portal.portal_plonemeeting.get('meeting-config-council')
         self.council_member_folder = self.portal.Members.csvimport.mymeetings.get('meeting-config-council')
+        self.default_category_council = default_category_council
 
     def add_annex(
         self,
@@ -436,8 +440,8 @@ class ImportCSV:
             for annex_file in annexes:
                 # remove weird naming with double extension
                 # annex_name = annex_file.replace('\xc2\x82', 'é')
-                annex_name = annex_name[
-                    annex_name.rindex("/") + 1 : annex_name.rindex(".")
+                annex_name = annex_file[
+                    annex_file.rindex("/") + 1: annex_file.rindex(".")
                 ]
                 annex_name = annex_name.strip()
                 annex_name = annex_name.strip("-_")
@@ -460,6 +464,12 @@ class ImportCSV:
         item.setProposingGroup(
             self.get_matching_proposing_group(csv_item.proposing_group)
         )
+
+        if csv_item.portal_type == self.college_cfg.getItemTypeName():
+            item.setCategory(self.default_category_college)
+        elif csv_item.portal_type == self.council_cfg.getItemTypeName():
+            item.setCategory(self.default_category_council)
+
         item.setCreators("csvimport")
         item.setDescription(
             u"<p>Créateur originel : {creator}</p>".format(creator=csv_item.creator)
@@ -571,7 +581,8 @@ def import_data_from_csv(
     default_group,
     meeting_annex_dir_path,
     item_annex_dir_path,
-    default_category=None,
+    default_category_college=None,
+    default_category_council=None,
 ):
     start_date = datetime.now()
     import_csv = ImportCSV(
@@ -582,7 +593,8 @@ def import_data_from_csv(
         meeting_annex_dir_path,
         item_annex_dir_path,
         default_group,
-        default_category,
+        default_category_college,
+        default_category_council,
     )
     meeting_counter, item_counter, errors = import_csv.run()
     logger.info(
