@@ -192,9 +192,9 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # check that a delayed item is duplicated
         self.assertEqual(len(item1.getBRefs('ItemPredecessor')), 0)
         self.do(item1, 'delay')
-        # the duplicated item has item3 as predecessor
-        duplicatedItem = item1.getBRefs('ItemPredecessor')[0]
-        self.assertEqual(duplicatedItem.getPredecessor().UID(), item1.UID())
+        # the duplicated item has item1 as predecessor
+        duplicatedItem = item1.get_successors()[0]
+        self.assertEqual(duplicatedItem.get_predecessor().UID(), item1.UID())
         # when duplicated on delay, only normal annexes are kept, decision annexes are not
         self.assertEqual(len(get_annexes(duplicatedItem, portal_types=('annex', ))), 1)
         self.assertEqual(len(get_annexes(duplicatedItem, portal_types=('annexDecision', ))), 0)
