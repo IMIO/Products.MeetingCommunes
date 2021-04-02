@@ -20,6 +20,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   completeness, check that item is complete until the
   `mayProposeToFinancialReviewer` transition guard.
   [gbastien]
+- Added `CustomMeetingConfig._setUsedFinanceGroupIds` to ease definition of
+  advisers value for the `FINANCE_ADVICES_COLLECTION_ID` collection.
+  [gbastien]
 
 4.2b9 (2021-01-26)
 ------------------

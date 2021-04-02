@@ -545,6 +545,14 @@ class CustomMeetingConfig(MeetingConfig):
     def __init__(self, item):
         self.context = item
 
+    def _setUsedFinanceGroupIds(self, values):
+        """Helper to set values for FINANCE_ADVICES_COLLECTION_ID collection."""
+        cfg = self.getSelf()
+        collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID, None)
+        query = collection.getQuery()
+        query[1]['v'] = values
+        collection.setQuery(query)
+
     security.declarePublic('getUsedFinanceGroupIds')
 
     def getUsedFinanceGroupIds(self, item=None):
