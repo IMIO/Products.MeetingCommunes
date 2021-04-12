@@ -3,7 +3,7 @@ Products.MeetingCommunes Changelog
 
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
-4.1.24 (unreleased)
+4.1.24 (2021-04-12)
 -------------------
 
 - Added External method to add default deliberation.be categories.
