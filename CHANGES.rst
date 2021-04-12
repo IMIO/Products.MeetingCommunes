@@ -6,7 +6,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.24 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Added External method to add default deliberation.be categories.
+  [odelaere]
 
 
 4.1.23 (2021-03-23)
