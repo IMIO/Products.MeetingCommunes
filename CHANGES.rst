@@ -6,7 +6,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.25 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Backport from 4.2.x:
+    - Added PORTAL_CATEGORIES in config.py
+    [odelaere]
 
 
 4.1.24 (2021-04-12)
