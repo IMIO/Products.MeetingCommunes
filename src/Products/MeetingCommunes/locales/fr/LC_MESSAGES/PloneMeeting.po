@@ -90,6 +90,14 @@ msgstr "<p>Avant de tester, nous vous recommandons de lire la <span class=\"link
 msgid "init_item_decision_if_empty_on_decide"
 msgstr "Si cette case est cochée, lorsqu'une séance passera 'En rédaction du PV', pour tous les points dont le champ 'Décision' est vide, ce champ sera automatiquement rempli avec une concaténation de ce qui est défini dans le titre et la description du point"
 
+#. Default: "Late (Not publishable)"
+msgid "list_type_latenotpublishable"
+msgstr "En retard (Non publiable)"
+
+#. Default: "Normal (Not publishable)"
+msgid "list_type_normalnotpublishable"
+msgstr "Normal (Non publiable)"
+
 #. Default: "Unfavorable opinion"
 msgid "negative_finance"
 msgstr "Avis finances défavorable"

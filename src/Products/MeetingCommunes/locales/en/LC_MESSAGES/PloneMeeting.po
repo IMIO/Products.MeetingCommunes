@@ -90,6 +90,14 @@ msgstr ""
 msgid "init_item_decision_if_empty_on_decide"
 msgstr "If you check this box, when a meeting will be decided, if an item does not have a decision defined, this decision will be automatically filled with title and description of the item"
 
+#. Default: "Late (Not publishable)"
+msgid "list_type_latenotpublishable"
+msgstr "Late (Not publishable)"
+
+#. Default: "Normal (Not publishable)"
+msgid "list_type_normalnotpublishable"
+msgstr "Normal (Not publishable)"
+
 #. Default: "Unfavorable opinion"
 msgid "negative_finance"
 msgstr "Unfavorable opinion"
