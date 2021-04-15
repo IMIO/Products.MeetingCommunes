@@ -17,7 +17,7 @@ def add_category(
 def add_lisTypes(portal, meeting_config_id="meeting-config-council"):
     meeting_config = portal.portal_plonemeeting.get(meeting_config_id)
     new_listTypes = []
-    for l_type in meeting_config.listTypes:
+    for l_type in meeting_config.getListTypes():
         new_listTypes.append(l_type)
 
         if l_type["identifier"] == "normal":
@@ -38,4 +38,4 @@ def add_lisTypes(portal, meeting_config_id="meeting-config-council"):
                 },
             )
 
-    meeting_config.listTypes = new_listTypes
+    meeting_config.setListTypes(new_listTypes)

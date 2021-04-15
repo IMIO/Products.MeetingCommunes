@@ -92,11 +92,11 @@ msgstr "Si cette case est cochée, lorsqu'une séance passera 'En rédaction du 
 
 #. Default: "Late (Not publishable)"
 msgid "list_type_latenotpublishable"
-msgstr "En retard (Non publiable)"
+msgstr "Point supplémentaire (Non publiable)"
 
 #. Default: "Normal (Not publishable)"
 msgid "list_type_normalnotpublishable"
-msgstr "Normal (Non publiable)"
+msgstr "Point normal (Non publiable)"
 
 #. Default: "Unfavorable opinion"
 msgid "negative_finance"
