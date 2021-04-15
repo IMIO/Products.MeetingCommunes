@@ -6,6 +6,7 @@
 #
 
 from Products.CMFCore.permissions import setDefaultRoles
+from Products.PloneMeeting.profiles import CategoryDescriptor
 
 
 __author__ = """Gauthier Bastien <g.bastien@imio.be>, Stephan Geulette <s.geulette@imio.be>"""
@@ -56,3 +57,35 @@ SAMPLE_TEXT = u"<p><strong>Lorem ipsum dolor sit amet</strong>, consectetur adip
     u"tristique quam. Vestibulum ut urna arcu. Etiam non odio ut felis porttitor elementum. Donec venenatis " \
     u"porta purus et scelerisque. Nullam dapibus nec erat at pellentesque. Aliquam placerat nunc molestie " \
     u"venenatis malesuada. Nam ac pretium justo, id imperdiet lacus.</p>"
+
+PORTAL_CATEGORIES = [
+    CategoryDescriptor("administration", "Administration générale"),
+    CategoryDescriptor("immo", "Affaires immobilières"),
+    CategoryDescriptor("espaces-publics", "Aménagement des espaces publics"),
+    CategoryDescriptor("batiments-communaux", "Bâtiments communaux"),
+    CategoryDescriptor("animaux", "Bien-être animal"),
+    CategoryDescriptor("communication", "Communication & Relations extérieures"),
+    CategoryDescriptor("cultes", "Cultes"),
+    CategoryDescriptor("culture", "Culture & Folklore"),
+    CategoryDescriptor("economie", "Développement économique & commercial"),
+    CategoryDescriptor("enseignement", "Enseignement"),
+    CategoryDescriptor("population", "État civil & Population"),
+    CategoryDescriptor("finances", "Finances"),
+    CategoryDescriptor("informatique", "Informatique"),
+    CategoryDescriptor("interculturalite", "Interculturalité & Égalité"),
+    CategoryDescriptor("jeunesse", "Jeunesse"),
+    CategoryDescriptor("logement", "Logement & Énergie"),
+    CategoryDescriptor("mobilite", "Mobilité"),
+    CategoryDescriptor("quartier", "Participation relation avec les quartiers"),
+    CategoryDescriptor("patrimoine", "Patrimoine"),
+    CategoryDescriptor("enfance", "Petite enfance"),
+    CategoryDescriptor("politique", "Politique générale"),
+    CategoryDescriptor("environnement", "Propreté & Environnement"),
+    CategoryDescriptor("sante", "Santé"),
+    CategoryDescriptor("securite", "Sécurité & Prévention"),
+    CategoryDescriptor("social", "Services sociaux"),
+    CategoryDescriptor("sport", "Sport"),
+    CategoryDescriptor("tourisme", "Tourisme"),
+    CategoryDescriptor("urbanisme", "Urbanisme & Aménagement du territoire"),
+    CategoryDescriptor("police", "Zone de police"),
+]

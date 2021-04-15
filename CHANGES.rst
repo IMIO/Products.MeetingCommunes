@@ -23,6 +23,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Added `CustomMeetingConfig._setUsedFinanceGroupIds` to ease definition of
   advisers value for the `FINANCE_ADVICES_COLLECTION_ID` collection.
   [gbastien]
+- Added PORTAL_CATEGORIES in config.py
+  [odelaere]
 
 4.2b9 (2021-01-26)
 ------------------
