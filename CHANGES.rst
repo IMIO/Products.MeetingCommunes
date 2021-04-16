@@ -7,10 +7,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 -------------------
 
 - Backport from 4.2.x:
-    - Added PORTAL_CATEGORIES in config.py
-    [odelaere]
-    - Added new listTypes normalnotpublishable and latenotpublishable used in portal. 
-    [odelaere]
+    - Added PORTAL_CATEGORIES in config.py [odelaere]
+    - Added new listTypes normalnotpublishable and latenotpublishable used in portal. [odelaere]
 
 
 4.1.24 (2021-04-12)
