@@ -14,7 +14,12 @@ def add_category(
         api.content.create(container=folder, type="meetingcategory", **data)
 
 
-def add_lisTypes(portal, meeting_config_id="meeting-config-council"):
+def add_lisTypes(
+    portal,
+    meeting_config_id="meeting-config-council",
+    label_normal="Point normal (Non publiable)",
+    label_late="Point supplémentaire (Non publiable)",
+):
     meeting_config = portal.portal_plonemeeting.get(meeting_config_id)
     new_listTypes = []
     for l_type in meeting_config.getListTypes():
@@ -24,7 +29,7 @@ def add_lisTypes(portal, meeting_config_id="meeting-config-council"):
             new_listTypes.append(
                 {
                     "identifier": "normalnotpublishable",
-                    "label": "normalnotpublishable",
+                    "label": label_normal,
                     "used_in_inserting_method": "0",
                 },
             )
@@ -33,7 +38,7 @@ def add_lisTypes(portal, meeting_config_id="meeting-config-council"):
             new_listTypes.append(
                 {
                     "identifier": "latenotpublishable",
-                    "label": "latenotpublishable",
+                    "label": label_late,
                     "used_in_inserting_method": "0",
                 },
             )

@@ -89,14 +89,6 @@ msgstr ""
 msgid "init_item_decision_if_empty_on_decide"
 msgstr ""
 
-#. Default: "Late (Not publishable)"
-msgid "list_type_latenotpublishable"
-msgstr ""
-
-#. Default: "Normal (Not publishable)"
-msgid "list_type_normalnotpublishable"
-msgstr ""
-
 #. Default: "Unfavorable opinion"
 msgid "negative_finance"
 msgstr ""
