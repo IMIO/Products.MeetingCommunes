@@ -16,6 +16,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Added External method to add default deliberation.be categories.
   [odelaere]
+- Added new listTypes normalnotpublishable and latenotpublishable used in portal.
+  [odelaere]
 
 
 4.1.23 (2021-03-23)
