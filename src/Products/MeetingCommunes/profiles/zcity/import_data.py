@@ -73,7 +73,7 @@ collegeMeeting.itemAdviceViewStates = ('proposed',
                                        'accepted_but_modified',
                                        'refused',
                                        'delayed')
-collegeMeeting.usedAdviceTypes = ['asked_again', 'positive', 'positive_with_remarks', 'negative', 'nil', ]
+collegeMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 collegeMeeting.keepAccessToItemWhenAdviceIsGiven = True
 # use template file from profile examples_fr
 patch_pod_templates(collegeMeeting.podTemplates, '../../examples_fr/templates/')
@@ -235,7 +235,7 @@ councilMeeting.itemAdviceViewStates = ('proposed',
                                        'accepted_but_modified',
                                        'refused',
                                        'delayed')
-councilMeeting.usedAdviceTypes = ['asked_again', 'positive', 'positive_with_remarks', 'negative', 'nil', ]
+councilMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 councilMeeting.keepAccessToItemWhenAdviceIsGiven = True
 # use template file from profile examples_fr
 patch_pod_templates(councilMeeting.podTemplates, '../../examples_fr/templates/', collegeMeeting.id)

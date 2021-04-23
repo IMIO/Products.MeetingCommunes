@@ -75,7 +75,7 @@ adviceMeeting.itemAdviceViewStates = ('proposed',
                                       'accepted_but_modified',
                                       'refused',
                                       'delayed')
-adviceMeeting.usedAdviceTypes = ['asked_again', 'positive', 'positive_with_remarks', 'negative', 'nil', ]
+adviceMeeting.usedAdviceTypes = ['positive', 'positive_with_remarks', 'negative', 'nil', ]
 adviceMeeting.keepAccessToItemWhenAdviceIsGiven = True
 adviceMeeting.meetingConfigsToCloneTo = []
 # use template file from profile examples_fr

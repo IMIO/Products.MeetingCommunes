@@ -27,6 +27,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [odelaere]
 - Added new listTypes normalnotpublishable and latenotpublishable used in portal.
   [odelaere]
+- Adapted `zcity/zcommittee_advice` profiles as advice type `asked_again` is no more optional.
+  [gbastien]
 
 4.2b9 (2021-01-26)
 ------------------
