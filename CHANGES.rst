@@ -29,6 +29,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [odelaere]
 - Adapted `zcity/zcommittee_advice` profiles as advice type `asked_again` is no more optional.
   [gbastien]
+- Added a new DashboardPODTemplate `export-users-groups.ods` in contacts directory.
+  [aduchene]
 
 4.2b9 (2021-01-26)
 ------------------

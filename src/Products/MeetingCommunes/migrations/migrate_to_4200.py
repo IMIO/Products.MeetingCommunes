@@ -2,6 +2,7 @@
 
 from DateTime import DateTime
 from plone import api
+from plone.namedfile import NamedBlobFile
 from Products.PloneMeeting.migrations.migrate_to_4200 import Migrate_To_4200 as PMMigrate_To_4200
 
 import logging
@@ -71,6 +72,37 @@ class Migrate_To_4200(PMMigrate_To_4200):
         """Adapt Meeting.workflow_history before migrating to DX."""
         self._adaptWFHistoryForItemsAndMeetings()
 
+    def _add_dashboard_pod_template_export_users_groups(self):
+        """Add the export users and groups DashboardPODTemplate in the contacts directory."""
+        logger.info("Adding 'Export users and groups' to 'contacts' directory...")
+        pod_template_id = 'export-users-groups'
+        contacts = self.portal.contacts
+        if pod_template_id in contacts.objectIds():
+            self._already_migrated()
+            return
+
+        profile_path = self.ps._getImportContext(self.profile_name)._profile_path
+        odt_path = profile_path + '/../examples_fr/templates/users-groups-export.ods'
+        odt_file = open(odt_path, 'rb')
+        odt_binary = odt_file.read()
+        odt_file.close()
+        data = {'title': 'Export utilisateurs et groupes',
+                'pod_formats': ['ods', 'xls'],
+                'dashboard_collections': contacts.get('orgs-searches').all_orgs.UID(),
+                'odt_file': NamedBlobFile(
+                    data=odt_binary,
+                    contentType='application/vnd.oasis.opendocument.text',
+                    filename=u'users-groups-export.ods'),
+                'use_objects': False,
+                }
+        pod_template = api.content.create(
+            id=pod_template_id,
+            type='DashboardPODTemplate',
+            container=contacts,
+            **data)
+        pod_template.reindexObject()
+        logger.info('Done.')
+
     def run(self,
             profile_name=u'profile-Products.MeetingCommunes:default',
             extra_omitted=[]):
@@ -79,6 +111,9 @@ class Migrate_To_4200(PMMigrate_To_4200):
 
         # fix used WFs before reinstalling
         self._fixUsedMeetingWFs()
+
+        # add a new DashboardPodTemplate in contacts directory
+        self._add_dashboard_pod_template_export_users_groups()
 
         # call steps from Products.PloneMeeting
         super(Migrate_To_4200, self).run(extra_omitted=extra_omitted)
