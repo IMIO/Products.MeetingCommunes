@@ -63,7 +63,7 @@ class CustomMeeting(Meeting):
     # Implements here methods that will be used by templates
     security.declarePublic('getPrintableItems')
 
-    def getPrintableItems(self, itemUids, listTypes=['normal'], ignore_review_states=[],
+    def getPrintableItems(self, itemUids, list_types=['normal'], ignore_review_states=[],
                           privacy='*', oralQuestion='both', toDiscuss='both', categories=[],
                           excludedCategories=[], org_uids=[], excludedGroupIds=[],
                           firstNumber=1, renumber=False):
@@ -111,7 +111,7 @@ class CustomMeeting(Meeting):
         if not filteredItemUids:
             return []
         else:
-            items = self.context.get_items(uids=filteredItemUids, list_types=listTypes, ordered=True)
+            items = self.context.get_items(uids=filteredItemUids, list_types=list_types, ordered=True)
             if renumber:
                 # return a list of tuple with first element the number and second
                 # element the item itself
@@ -125,14 +125,14 @@ class CustomMeeting(Meeting):
 
     security.declarePublic('getPrintableItemsByCategory')
 
-    def getPrintableItemsByCategory(self, itemUids=[], listTypes=['normal'],
+    def getPrintableItemsByCategory(self, itemUids=[], list_types=['normal'],
                                     ignore_review_states=[], by_proposing_group=False, group_prefixes={},
                                     privacy='*', oralQuestion='both', toDiscuss='both', categories=[],
                                     excludedCategories=[], groupIds=[], excludedGroupIds=[],
                                     firstNumber=1, renumber=False,
                                     includeEmptyCategories=False, includeEmptyGroups=False,
                                     forceCategOrderFromConfig=False):
-        '''Returns a list of (late or normal or both) items (depending on p_listTypes)
+        '''Returns a list of (late or normal or both) items (depending on p_list_types)
            ordered by category. Items being in a state whose name is in
            p_ignore_review_state will not be included in the result.
            If p_by_proposing_group is True, items are grouped by proposing group
@@ -156,7 +156,7 @@ class CustomMeeting(Meeting):
         # - at position 0: the category object (MeetingCategory or organization)
         # - at position 1 to n: the items in this category
         # If by_proposing_group is True, the structure is more complex.
-        # listTypes is a list that can be filled with 'normal' and/or 'late'
+        # list_types is a list that can be filled with 'normal' and/or 'late'
         # oralQuestion can be 'both' or False or True
         # toDiscuss can be 'both' or 'False' or 'True'
         # privacy can be '*' or 'public' or 'secret'
@@ -180,7 +180,7 @@ class CustomMeeting(Meeting):
             if elt == '':
                 itemUids.remove(elt)
 
-        items = self.context.get_items(uids=itemUids, list_types=listTypes, ordered=True)
+        items = self.context.get_items(uids=itemUids, list_types=list_types, ordered=True)
 
         if by_proposing_group:
             groups = get_organizations()
@@ -220,7 +220,7 @@ class CustomMeeting(Meeting):
                     res.append([currentCat])
                     self._insertItemInCategory(res[-1], item,
                                                by_proposing_group, group_prefixes, groups)
-        if forceCategOrderFromConfig or cmp(listTypes.sort(), ['late', 'normal']) == 0:
+        if forceCategOrderFromConfig or cmp(list_types.sort(), ['late', 'normal']) == 0:
             res.sort(cmp=_comp)
         if includeEmptyCategories:
             meetingConfig = tool.getMeetingConfig(
@@ -354,14 +354,14 @@ class CustomMeeting(Meeting):
 
     security.declarePublic('getNumberOfItems')
 
-    def getNumberOfItems(self, itemUids, privacy='*', categories=[], listTypes=['normal']):
+    def getNumberOfItems(self, itemUids, privacy='*', categories=[], list_types=['normal']):
         '''Returns the number of items depending on parameters.
            This is used in templates to know how many items of a particular kind exist and
            often used to determine the 'firstNumber' parameter of getPrintableItems/getPrintableItemsByCategory.'''
         # sometimes, some empty elements are inserted in itemUids, remove them...
         itemUids = [itemUid for itemUid in itemUids if itemUid != '']
         if not categories and privacy == '*':
-            return len(self.context.get_items(uids=itemUids, list_types=listTypes))
+            return len(self.context.get_items(uids=itemUids, list_types=list_types))
         # Either, we will have to filter (privacy, categories, late)
         filteredItemUids = []
         uid_catalog = getToolByName(self.context, 'uid_catalog')
@@ -371,14 +371,14 @@ class CustomMeeting(Meeting):
                 continue
             elif not (categories == [] or obj.getCategory() in categories):
                 continue
-            elif not obj.isLate() == bool(listTypes == ['late']):
+            elif not obj.isLate() == bool(list_types == ['late']):
                 continue
             filteredItemUids.append(itemUid)
         return len(filteredItemUids)
 
     security.declarePublic('getPrintableItemsByNumCategory')
 
-    def getPrintableItemsByNumCategory(self, listTypes=['normal'], uids=[],
+    def getPrintableItemsByNumCategory(self, list_types=['normal'], uids=[],
                                        catstoexclude=[], exclude=True, allItems=False):
         '''Returns a list of items ordered by category number. If there are many
            items by category, there is always only one category, even if the
@@ -404,9 +404,9 @@ class CustomMeeting(Meeting):
                     catNum = current_cat_id
             return catNum
 
-        if not allItems and listTypes == ['late']:
+        if not allItems and list_types == ['late']:
             items = self.context.get_items(uids=uids, list_types=['late'], ordered=True)
-        elif not allItems and not listTypes == ['late']:
+        elif not allItems and not list_types == ['late']:
             items = self.context.get_items(uids=uids, list_types=['normal'], ordered=True)
         else:
             items = self.context.get_items(uids=uids, ordered=True)
