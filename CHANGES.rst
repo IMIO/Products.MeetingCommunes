@@ -31,6 +31,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [gbastien]
 - Renamed parameter `listTypes` to `list_types` everywhere.
   [gbastien]
+- Moved some methods to snake_case : `printFinanceAdvice/print_finance_advice`,
+  `printAllAnnexes/print_all_annexes`, `printFormatedAdvice/print_formated_advice`.
+  [gbastien]
 
 4.2b9 (2021-01-26)
 ------------------
