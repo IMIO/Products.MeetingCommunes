@@ -6,7 +6,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.26 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Added import script for spi.
+  [odelaere]
 
 
 4.1.25 (2021-04-16)
