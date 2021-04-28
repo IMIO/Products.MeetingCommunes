@@ -123,8 +123,8 @@ class testCustomMeetingType(MeetingCommunesTestCase):
         self.assertEqual(len(meeting.get_items()), 5)
         self.assertEqual(len(meeting.get_items(list_types=['late'])), 2)
         # same using getNumberOfItems
-        self.assertEqual(meeting.adapted().getNumberOfItems(itemUids, listTypes=['normal']), 3)
-        self.assertEqual(meeting.adapted().getNumberOfItems(itemUids, listTypes=['late']), 2)
+        self.assertEqual(meeting.adapted().getNumberOfItems(itemUids, list_types=['normal']), 3)
+        self.assertEqual(meeting.adapted().getNumberOfItems(itemUids, list_types=['late']), 2)
 
         # we can combinate parameters
         # we know that we have 2 late items that are using the 'development' category...
@@ -135,12 +135,12 @@ class testCustomMeetingType(MeetingCommunesTestCase):
         self.assertEqual(
             meeting.adapted().getNumberOfItems(
                 itemUids, categories=['development', ],
-                listTypes=['late']),
+                list_types=['late']),
             2)
         # we have so 0 normal item using the 'development' category
         self.assertEqual(
             meeting.adapted().getNumberOfItems(
-                itemUids, categories=['development', ], listTypes=['normal']),
+                itemUids, categories=['development', ], list_types=['normal']),
             0)
 
     def test_GetPrintableItemsByCategoryWithBothLateItems(self):
@@ -166,63 +166,63 @@ class testCustomMeetingType(MeetingCommunesTestCase):
         # and 1 normal research
         # build the list of uids
         itemUids = [anItem.UID() for anItem in meeting.get_items(ordered=True)]
-        # test on the meeting with listTypes=['late','normal']
+        # test on the meeting with list_types=['late','normal']
         # Every items (normal and late) should be in the same category, in the good order
         self.assertEqual(
             meeting.adapted().getPrintableItemsByCategory(
-                itemUids, listTypes=['late', 'normal'])[0][0].getId(),
+                itemUids, list_types=['late', 'normal'])[0][0].getId(),
             'development')
         self.assertEqual(
             meeting.adapted().getPrintableItemsByCategory(
-                itemUids, listTypes=['late', 'normal'])[1][0].getId(),
+                itemUids, list_types=['late', 'normal'])[1][0].getId(),
             'events')
         self.assertEqual(
             meeting.adapted().getPrintableItemsByCategory(
-                itemUids, listTypes=['late', 'normal'])[2][0].getId(),
+                itemUids, list_types=['late', 'normal'])[2][0].getId(),
             'research')
         self.assertEqual(
             meeting.adapted().getPrintableItemsByCategory(
-                itemUids, listTypes=['late', 'normal'])[0][0].portal_type,
+                itemUids, list_types=['late', 'normal'])[0][0].portal_type,
             'meetingcategory')
         self.assertEqual(
             meeting.adapted().getPrintableItemsByCategory(
-                itemUids, listTypes=['late', 'normal'])[1][0].portal_type,
+                itemUids, list_types=['late', 'normal'])[1][0].portal_type,
             'meetingcategory')
         self.assertEqual(
             meeting.adapted().getPrintableItemsByCategory(
-                itemUids, listTypes=['late', 'normal'])[2][0].portal_type,
+                itemUids, list_types=['late', 'normal'])[2][0].portal_type,
             'meetingcategory')
         # the event category should have 2 items, research 1 and development 2 ( + 1 category element for each one)
         self.assertEqual(
             len(meeting.adapted().getPrintableItemsByCategory(
-                itemUids, listTypes=['late', 'normal'])[0]),
+                itemUids, list_types=['late', 'normal'])[0]),
             3)
         self.assertEqual(
             len(meeting.adapted().getPrintableItemsByCategory(
-                itemUids, listTypes=['late', 'normal'])[1]),
+                itemUids, list_types=['late', 'normal'])[1]),
             3)
         self.assertEqual(
             len(meeting.adapted().getPrintableItemsByCategory(
-                itemUids, listTypes=['late', 'normal'])[2]),
+                itemUids, list_types=['late', 'normal'])[2]),
             2)
         # other element of the list are MeetingItems...
         self.assertEqual(
             meeting.adapted().getPrintableItemsByCategory(
-                itemUids, listTypes=['late', 'normal'])[0][1].meta_type,
+                itemUids, list_types=['late', 'normal'])[0][1].meta_type,
             'MeetingItem')
         self.assertEqual(
             meeting.adapted().getPrintableItemsByCategory(
-                itemUids, listTypes=['late', 'normal'])[0][2].meta_type,
+                itemUids, list_types=['late', 'normal'])[0][2].meta_type,
             'MeetingItem')
         self.assertEqual(
             meeting.adapted().getPrintableItemsByCategory(
-                itemUids, listTypes=['late', 'normal'])[1][1].meta_type,
+                itemUids, list_types=['late', 'normal'])[1][1].meta_type,
             'MeetingItem')
         self.assertEqual(
             meeting.adapted().getPrintableItemsByCategory(
-                itemUids, listTypes=['late', 'normal'])[1][2].meta_type,
+                itemUids, list_types=['late', 'normal'])[1][2].meta_type,
             'MeetingItem')
         self.assertEqual(
             meeting.adapted().getPrintableItemsByCategory(
-                itemUids, listTypes=['late', 'normal'])[2][1].meta_type,
+                itemUids, list_types=['late', 'normal'])[2][1].meta_type,
             'MeetingItem')

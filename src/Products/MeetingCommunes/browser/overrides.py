@@ -25,7 +25,7 @@ from zope.component import getAdapter
 class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
     """Specific printing methods used for item."""
 
-    def printAllAnnexes(self, portal_types=['annex']):
+    def print_all_annexes(self, portal_types=['annex']):
         ''' Printing Method use in templates :
             return all viewable annexes for item '''
         res = []
@@ -37,7 +37,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                 url, safe_unicode(title)))
         return (u'\n'.join(res))
 
-    def printFormatedAdvice(self, exclude_not_given=True):
+    def print_formated_advice(self, exclude_not_given=True):
         ''' Printing Method use in templates :
             return formated advice'''
         res = []
@@ -54,11 +54,11 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
     def output_for_restapi(self):
         ''' '''
         result = super(MCItemDocumentGenerationHelperView, self).output_for_restapi()
-        # result['finance_advice_simple'] = self.printFinanceAdvice(cases=['simple'])
-        # result['finance_advice_legal'] = self.printFinanceAdvice(cases=['legal'])
-        # result['finance_advice_initiative'] = self.printFinanceAdvice(cases=['initiative'])
-        # result['finance_advice_legal_not_given'] = self.printFinanceAdvice(cases=['legal_not_given'])
-        # result['finance_advice_simple_not_given'] = self.printFinanceAdvice(cases=['simple_not_given'])
+        # result['finance_advice_simple'] = self.print_finance_advice(cases=['simple'])
+        # result['finance_advice_legal'] = self.print_finance_advice(cases=['legal'])
+        # result['finance_advice_initiative'] = self.print_finance_advice(cases=['initiative'])
+        # result['finance_advice_legal_not_given'] = self.print_finance_advice(cases=['legal_not_given'])
+        # result['finance_advice_simple_not_given'] = self.print_finance_advice(cases=['simple_not_given'])
         return result
 
     def print_deliberation(self,
@@ -136,7 +136,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                     u"remis en date du {advice_given_on_localized},</p>"
             }
         formatted_finance_advice = ""
-        finances_advices = {case: self.printFinanceAdvice(case)
+        finances_advices = {case: self.print_finance_advice(case)
                             for case in finance_advices_template.keys()}
         for case, advices in finances_advices.items():
             if case not in finance_used_cases:
@@ -186,7 +186,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
 
         return PREFIXS[(type, gender)]
 
-    def printFinanceAdvice(self, cases, show_hidden=False):
+    def print_finance_advice(self, cases, show_hidden=False):
         """
         :param cases: collection containing either 'initiative', 'legal', 'simple' or 'not_given'
                cases can also be a string in case a single case should be returned and for backward compatibility.

@@ -37,7 +37,7 @@ class testCustomViews(MeetingCommunesTestCase):
         view()
         helper = view.get_generation_context_helper()
         self.assertEqual(
-            helper.printAllAnnexes(),
+            helper.print_all_annexes(),
             u'<p><a href="{0}">Annex</a></p>\n'
             u'<p><a href="{1}">Annex 2</a></p>\n'
             u'<p><a href="{2}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a></p>'.format(
@@ -45,7 +45,7 @@ class testCustomViews(MeetingCommunesTestCase):
                 annex2.absolute_url(),
                 annex3.absolute_url()))
         self.assertEqual(
-            helper.printAllAnnexes(portal_types=('annexDecision',)),
+            helper.print_all_annexes(portal_types=('annexDecision',)),
             u'<p><a href="{0}">Annex decision 1</a></p>'.format(annexDecision1.absolute_url()))
 
     def test_print_methods(self):
@@ -73,7 +73,7 @@ class testCustomViews(MeetingCommunesTestCase):
         self.validateItem(item)
         self.assertEqual(helper.print_item_state(), u'Validated')
 
-    def test_printFormatedAdvice(self):
+    def test_print_formated_advice(self):
         # advice are addable/editable when item is 'proposed'
         # create an item and ask advice of 'vendors'
         self.changeUser('pmCreator1')
@@ -92,13 +92,13 @@ class testCustomViews(MeetingCommunesTestCase):
         view()
         helper = view.get_generation_context_helper()
 
-        result = helper.printFormatedAdvice()
+        result = helper.print_formated_advice()
         self.assertListEqual(result, [])
 
-        result = helper.printFormatedAdvice()
+        result = helper.print_formated_advice()
         self.assertListEqual(result, [])
 
-        result = helper.printFormatedAdvice(exclude_not_given=False)
+        result = helper.print_formated_advice(exclude_not_given=False)
         # result contains every informations getAdviceDataFor returns
         self.assertEqual(
             [(u'Developers', u'Not given yet'), (u'Vendors', u'Not given yet')],
@@ -112,14 +112,14 @@ class testCustomViews(MeetingCommunesTestCase):
                                     'advice_type': u'positive',
                                     'advice_comment': RichTextValue(u'My comment')})
 
-        result = helper.printFormatedAdvice()
+        result = helper.print_formated_advice()
         self.assertEqual(
             [(u'Developers', u'Positive')],
             [(res['name'], res['type_translated']) for res in result])
 
-        self.assertListEqual(helper.printFormatedAdvice(), helper.printFormatedAdvice(True))
+        self.assertListEqual(helper.print_formated_advice(), helper.print_formated_advice(True))
 
-        result = helper.printFormatedAdvice(exclude_not_given=False)
+        result = helper.print_formated_advice(exclude_not_given=False)
         self.assertEqual(
             [(u'Developers', u'Positive'), (u'Vendors', u'Not given yet')],
             sorted([(res['name'], res['type_translated']) for res in result]))
@@ -291,17 +291,17 @@ class testCustomViews(MeetingCommunesTestCase):
         other_cases.remove(case_to_test)
 
         for case in other_cases:
-            result = helper.printFinanceAdvice(case)
+            result = helper.print_finance_advice(case)
             self.assertListEqual(result, [])
-            result = helper.printFinanceAdvice([case])
+            result = helper.print_finance_advice([case])
             self.assertListEqual(result, [])
 
-        result = helper.printFinanceAdvice(other_cases)
+        result = helper.print_finance_advice(other_cases)
         self.assertEqual(result, [])
-        result = helper.printFinanceAdvice(cases)
+        result = helper.print_finance_advice(cases)
         self.assertEqual(len(result), 2)
 
-    def test_printFinanceAdvice_case_simple(self):
+    def test_print_finance_advice_case_simple(self):
         cfg = self.meetingConfig
         # creator for group 'developers'
         self.changeUser('pmCreator1')
@@ -321,25 +321,25 @@ class testCustomViews(MeetingCommunesTestCase):
         helper = view.get_generation_context_helper()
 
         # Advice not asked
-        result = helper.printFinanceAdvice('simple')
+        result = helper.print_finance_advice('simple')
         self.assertEqual(result, [])
-        result = helper.printFinanceAdvice(['simple'])
+        result = helper.print_finance_advice(['simple'])
         self.assertEqual(result, [])
 
         item1.setOptionalAdvisers((self.vendors_uid,))
         item1._update_after_edit()
 
         # No advice given
-        result = helper.printFinanceAdvice('simple')
+        result = helper.print_finance_advice('simple')
         self.assertEqual(result, [])
-        result = helper.printFinanceAdvice(['simple'])
+        result = helper.print_finance_advice(['simple'])
         self.assertEqual(result, [])
 
         # 1 Advice given
         self._give_advice(item1, self.vendors_uid, 'pmReviewer2')
-        result = helper.printFinanceAdvice('simple')
+        result = helper.print_finance_advice('simple')
         self.assertEqual(len(result), 1)
-        result = helper.printFinanceAdvice(['simple'])
+        result = helper.print_finance_advice(['simple'])
         self.assertEqual(len(result), 1)
 
         self.changeUser('pmCreator1')
@@ -347,21 +347,21 @@ class testCustomViews(MeetingCommunesTestCase):
         item1._update_after_edit()
 
         self._give_advice(item1, self.developers_uid, 'pmAdviser1')
-        result = helper.printFinanceAdvice('simple')
+        result = helper.print_finance_advice('simple')
         self.assertEqual(len(result), 1)
-        result = helper.printFinanceAdvice(['simple'])
+        result = helper.print_finance_advice(['simple'])
         self.assertEqual(len(result), 1)
 
         self._give_advice(item1, new_group_uid, 'pmAdviserNG1')
-        result = helper.printFinanceAdvice('simple')
+        result = helper.print_finance_advice('simple')
         self.assertEqual(len(result), 2)
-        result = helper.printFinanceAdvice(['simple'])
+        result = helper.print_finance_advice(['simple'])
         self.assertEqual(len(result), 2)
 
         # assert other cases
         self.handle_finance_cases('simple', helper)
 
-    def test_printFinanceAdvice_case_simple_not_given(self):
+    def test_print_finance_advice_case_simple_not_given(self):
         cfg = self.meetingConfig
         # creator for group 'developers'
         self.changeUser('pmCreator1')
@@ -381,31 +381,31 @@ class testCustomViews(MeetingCommunesTestCase):
         helper = view.get_generation_context_helper()
 
         # Advice not asked
-        result = helper.printFinanceAdvice('simple_not_given')
+        result = helper.print_finance_advice('simple_not_given')
         self.assertEqual(result, [])
 
         item1.setOptionalAdvisers((self.vendors_uid, new_group_uid))
         item1._update_after_edit()
 
         # No advice given
-        result = helper.printFinanceAdvice('simple_not_given')
+        result = helper.print_finance_advice('simple_not_given')
         self.assertEqual(len(result), 2)
 
         # 1 Advice given
         self._give_advice(item1, self.vendors_uid, 'pmReviewer2')
-        result = helper.printFinanceAdvice('simple_not_given')
+        result = helper.print_finance_advice('simple_not_given')
         self.assertEqual(len(result), 1)
 
         # remove the advice
         item1.restrictedTraverse('@@delete_givenuid')(item1.meetingadvice.UID())
         item1._update_after_edit()
-        result = helper.printFinanceAdvice('simple_not_given')
+        result = helper.print_finance_advice('simple_not_given')
         self.assertEqual(len(result), 2)
 
         # assert other cases
         self.handle_finance_cases('simple_not_given', helper)
 
-    def test_printFinanceAdvice_case_initiative(self):
+    def test_print_finance_advice_case_initiative(self):
         cfg = self.meetingConfig
         new_group_uid = self._set_up_additional_finance_advisor_group()
 
@@ -424,19 +424,19 @@ class testCustomViews(MeetingCommunesTestCase):
         view = item1.restrictedTraverse('@@document-generation')
         view()
         helper = view.get_generation_context_helper()
-        result = helper.printFinanceAdvice('initiative')
+        result = helper.print_finance_advice('initiative')
         self.assertEqual(result, [])
 
         self._give_advice(item1, self.vendors_uid, 'pmReviewer2')
-        result = helper.printFinanceAdvice('initiative')
+        result = helper.print_finance_advice('initiative')
         self.assertEqual(len(result), 1)
 
         self._give_advice(item1, self.developers_uid, 'pmAdviser1')
-        result = helper.printFinanceAdvice('initiative')
+        result = helper.print_finance_advice('initiative')
         self.assertEqual(len(result), 1)
 
         self._give_advice(item1, new_group_uid, 'pmAdviserNG1')
-        result = helper.printFinanceAdvice('initiative')
+        result = helper.print_finance_advice('initiative')
         self.assertEqual(len(result), 2)
 
         # assert other cases
@@ -446,10 +446,10 @@ class testCustomViews(MeetingCommunesTestCase):
         self.changeUser('pmReviewer2')
         item1.restrictedTraverse('@@delete_givenuid')(item1.meetingadvice.UID())
         item1._update_after_edit()
-        result = helper.printFinanceAdvice('initiative')
+        result = helper.print_finance_advice('initiative')
         self.assertEqual(len(result), 1)
 
-    def test_printFinanceAdvice_case_legal(self):
+    def test_print_finance_advice_case_legal(self):
         cfg = self.meetingConfig
         new_group_uid = self._set_up_additional_finance_advisor_group()
 
@@ -470,15 +470,15 @@ class testCustomViews(MeetingCommunesTestCase):
         view = item1.restrictedTraverse('@@document-generation')
         view()
         helper1 = view.get_generation_context_helper()
-        result = helper1.printFinanceAdvice('legal')
+        result = helper1.print_finance_advice('legal')
         self.assertEqual(result, [])
 
         self._give_advice(item1, self.vendors_uid, 'pmReviewer2')
-        result = helper1.printFinanceAdvice('legal')
+        result = helper1.print_finance_advice('legal')
         self.assertEqual(len(result), 1)
 
         self._give_advice(item1, new_group_uid, 'pmAdviserNG1')
-        result = helper1.printFinanceAdvice('legal')
+        result = helper1.print_finance_advice('legal')
         self.assertEqual(len(result), 2)
 
         # assert other cases
@@ -499,18 +499,18 @@ class testCustomViews(MeetingCommunesTestCase):
         view = item2.restrictedTraverse('@@document-generation')
         view()
         helper2 = view.get_generation_context_helper()
-        result = helper2.printFinanceAdvice('legal')
+        result = helper2.print_finance_advice('legal')
         self.assertEqual(result, [])
 
         self._give_advice(item2, self.vendors_uid, 'pmReviewer2')
-        result = helper2.printFinanceAdvice('legal')
+        result = helper2.print_finance_advice('legal')
         self.assertEqual(len(result), 1)
 
         self._give_advice(item2, new_group_uid, 'pmAdviserNG1')
-        result = helper2.printFinanceAdvice('legal')
+        result = helper2.print_finance_advice('legal')
         self.assertEqual(len(result), 1)
 
-    def test_printFinanceAdvice_case_legal_not_given(self):
+    def test_print_finance_advice_case_legal_not_given(self):
         cfg = self.meetingConfig
         new_group_uid = self._set_up_additional_finance_advisor_group()
 
@@ -531,30 +531,30 @@ class testCustomViews(MeetingCommunesTestCase):
         view = item1.restrictedTraverse('@@document-generation')
         view()
         helper1 = view.get_generation_context_helper()
-        result = helper1.printFinanceAdvice('legal_not_given')
+        result = helper1.print_finance_advice('legal_not_given')
 
         self.assertEqual(len(result), 2)
 
         self._give_advice(item1, self.vendors_uid, 'pmReviewer2')
-        result = helper1.printFinanceAdvice('legal_not_given')
+        result = helper1.print_finance_advice('legal_not_given')
         self.assertEqual(len(result), 1)
 
         self._give_advice(item1, new_group_uid, 'pmAdviserNG1')
-        result = helper1.printFinanceAdvice('legal_not_given')
+        result = helper1.print_finance_advice('legal_not_given')
         self.assertEqual(result, [])
 
         # remove the advice
         self.changeUser('pmReviewer2')
         item1.restrictedTraverse('@@delete_givenuid')(item1.meetingadvice.UID())
         item1._update_after_edit()
-        result = helper1.printFinanceAdvice('legal_not_given')
+        result = helper1.print_finance_advice('legal_not_given')
         self.assertEqual(len(result), 1)
 
         # remove the advice
         self.changeUser('pmAdviserNG1')
         item1.restrictedTraverse('@@delete_givenuid')(item1.getAdviceObj(new_group_uid).UID())
         item1._update_after_edit()
-        result = helper1.printFinanceAdvice('legal_not_given')
+        result = helper1.print_finance_advice('legal_not_given')
         self.assertEqual(len(result), 2)
 
         # assert other cases
@@ -575,15 +575,15 @@ class testCustomViews(MeetingCommunesTestCase):
         view = item2.restrictedTraverse('@@document-generation')
         view()
         helper2 = view.get_generation_context_helper()
-        result = helper2.printFinanceAdvice('legal_not_given')
+        result = helper2.print_finance_advice('legal_not_given')
         self.assertEqual(len(result), 1)
 
         self._give_advice(item2, self.vendors_uid, 'pmReviewer2')
-        result = helper2.printFinanceAdvice('legal_not_given')
+        result = helper2.print_finance_advice('legal_not_given')
         self.assertEqual(result, [])
 
         self._give_advice(item2, new_group_uid, 'pmAdviserNG1')
-        result = helper2.printFinanceAdvice('legal_not_given')
+        result = helper2.print_finance_advice('legal_not_given')
         self.assertEqual(result, [])
 
     def test__filter_items(self):
@@ -644,7 +644,7 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertListEqual(res, [])
 
     def test_print_formatted_finance_advice(self):
-        # Set up 2 finances advisors CFO and Vendors. See test_printFinanceAdvice.
+        # Set up 2 finances advisors CFO and Vendors. See test_print_finance_advice.
         cfg = self.meetingConfig
         cfo_uid = self._set_up_additional_finance_advisor_group(
             new_group_name="Chief Financial Officer",
