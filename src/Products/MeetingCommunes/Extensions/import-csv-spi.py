@@ -214,17 +214,19 @@ class ImportCSV:
             # )
         dictionary[meeting.external_id] = meeting
 
-    @staticmethod
-    def parse_and_clean_raw_csv_item(csv_item):
+    def parse_and_clean_raw_csv_item(self, csv_item, meetings):
         # Because numbers are not numbers but unicode chars...
-        external_id = int(csv_item[1].strip())
         meeting_external_id = int(csv_item[0].strip())
+        external_id = int(csv_item[1].strip())
+
+        if meeting_external_id not in meetings:
+            logger.info("Unknown meeting {} for item {}".format(meeting_external_id, external_id))
+            return None
 
         item = CSVMeetingItem(external_id=external_id,
                               title=safe_unicode(csv_item[2]),
                               decision=safe_unicode(csv_item[3].strip()),
                               meeting_external_id=meeting_external_id)
-
         return item
 
     def load_items(self, delib_file, meetings):
@@ -237,12 +239,9 @@ class ImportCSV:
                     # skip header line
                     continue
                 try:
-                    meeting_external_id = int(row[0].strip())
-                    if meeting_external_id not in meetings:
-                        logger.info("Unknown meeting for item : {row}".format(row=row))
-                    else:
-                        item = self.parse_and_clean_raw_csv_item(row)
-                        meeting = meetings[meeting_external_id]
+                    item = self.parse_and_clean_raw_csv_item(row, meetings)
+                    if item:
+                        meeting = meetings[item.meeting_external_id]
                         if meeting.portal_type == be_meeting_type:
                             portal_type = self.be_portal_type
                         elif meeting.portal_type == ca_meeting_type:
