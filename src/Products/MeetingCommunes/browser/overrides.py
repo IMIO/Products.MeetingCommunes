@@ -547,8 +547,13 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
             query['review_state'] = {'not': ignore_review_states}
 
         # do not filter on selected itemUids when unrestricted=True
+        # except if length itemUids < length all visible items
         if unrestricted:
-            itemUids = []
+            visible_items = self.real_context.get_items(
+                ordered=False, the_objects=False, additional_catalog_query=query)
+            if len(itemUids) == len(visible_items):
+                # items were not unselected
+                itemUids = []
 
         items = self.real_context.get_items(
             uids=itemUids,

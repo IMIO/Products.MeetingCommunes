@@ -34,6 +34,11 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Moved some methods to snake_case : `printFinanceAdvice/print_finance_advice`,
   `printAllAnnexes/print_all_annexes`, `printFormatedAdvice/print_formated_advice`.
   [gbastien]
+- Adapted behavior of `get_grouped_items` with `unrestricted=True` that originally
+  returned every items ignoring `itemUids`, it was not possible to print a subset
+  of items.  Now if length of `itemUids` is smaller than len of all visible items,
+  we only return these items.
+  [gbastien]
 
 4.2b9 (2021-01-26)
 ------------------

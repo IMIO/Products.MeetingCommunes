@@ -883,6 +883,22 @@ class testCustomViews(MeetingCommunesTestCase):
             unrestricted=True)
         self.assertEqual([item.getProposingGroup() for item in grouped_items],
                          [self.vendors_uid, self.vendors_uid, self.vendors_uid])
+        # itemUids, unrestricted will return everything unless len given itemUids
+        # is < every visible items meaining user filtered meeting in the UI
+        # when passing itemUids of every visible items, we get more
+        all_unrestricted_grouped_items = []
+        for pg_title, items in unrestricted_grouped_items:
+            all_unrestricted_grouped_items += items
+        self.assertEqual(len(itemUids), 3)
+        self.assertEqual(len(all_unrestricted_grouped_items), 7)
+        itemUids = [item.UID() for item in all_unrestricted_grouped_items[0:4]]
+        self.assertEqual(len(itemUids), 4)
+        unrestricted_grouped_items = helper.get_grouped_items(
+            itemUids, group_by='proposingGroup', unrestricted=True)
+        all_unrestricted_grouped_items = []
+        for pg_title, items in unrestricted_grouped_items:
+            all_unrestricted_grouped_items += items
+        self.assertEqual(len(all_unrestricted_grouped_items), 4)
 
     def test_get_grouped_items_additional_catalog_query(self):
         self.changeUser('pmManager')
