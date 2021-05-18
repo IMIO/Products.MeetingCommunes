@@ -959,12 +959,12 @@ class testCustomViews(MeetingCommunesTestCase):
         cfg = self.meetingConfig
         cfg.setUseGroupsAsCategories(True)
 
-        def create_and_validate_item(creator, preffered_meeting=None):
+        def create_and_validate_item(creator, preferred_meeting=None):
             self.changeUser(creator)
             item = self.create('MeetingItem')
             self.validateItem(item)
-            if preffered_meeting:
-                item.setPreferredMeeting(preffered_meeting)
+            if preferred_meeting:
+                item.setPreferredMeeting(preferred_meeting)
             return item
 
         def get_item_view(item):
