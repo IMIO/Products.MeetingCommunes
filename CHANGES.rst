@@ -8,6 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Added import script for spi.
   [odelaere]
+- Improved getNumberOfItems.
+  [odelaere]
 
 
 4.1.25 (2021-04-16)

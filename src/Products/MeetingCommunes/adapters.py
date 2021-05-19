@@ -377,27 +377,24 @@ class CustomMeeting(Meeting):
 
     security.declarePublic('getNumberOfItems')
 
-    def getNumberOfItems(self, itemUids, privacy='*', categories=[], listTypes=['normal']):
+    def getNumberOfItems(self, itemUids, privacy=['public', 'secret'], categories=[], classifiers=[], listTypes=['normal']):
         '''Returns the number of items depending on parameters.
            This is used in templates to know how many items of a particular kind exist and
            often used to determine the 'firstNumber' parameter of getPrintableItems/getPrintableItemsByCategory.'''
         # sometimes, some empty elements are inserted in itemUids, remove them...
-        itemUids = [itemUid for itemUid in itemUids if itemUid != '']
-        if not categories and privacy == '*':
-            return len(self.context.getItems(uids=itemUids, listTypes=listTypes))
-        # Either, we will have to filter (privacy, categories, late)
-        filteredItemUids = []
-        uid_catalog = getToolByName(self.context, 'uid_catalog')
-        for itemUid in itemUids:
-            obj = uid_catalog(UID=itemUid)[0].getObject()
-            if not (privacy == '*' or obj.getPrivacy() == privacy):
-                continue
-            elif not (categories == [] or obj.getCategory() in categories):
-                continue
-            elif not obj.isLate() == bool(listTypes == ['late']):
-                continue
-            filteredItemUids.append(itemUid)
-        return len(filteredItemUids)
+        additional_catalog_query = {
+            'privacy': privacy,
+        }
+        if categories:
+            additional_catalog_query['getCategory'] = categories
+        if classifiers:
+            additional_catalog_query['getRawClassifier'] = classifiers
+
+        items = self.getSelf().getItems(itemUids,
+                                        theObjects=False,
+                                        listTypes=listTypes,
+                                        additional_catalog_query=additional_catalog_query)
+        return len(items)
 
     security.declarePublic('getPrintableItemsByNumCategory')
 
