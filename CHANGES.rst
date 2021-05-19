@@ -39,6 +39,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   of items.  Now if length of `itemUids` is smaller than len of all visible items,
   we only return these items.
   [gbastien]
+- Adapted `MCItemDocumentGenerationHelperView.print_item_number_within_category`
+  as `MeetingItem.getCategory` does no more return the `proposingGroup` when
+  `MeetingConfig.useGroupsAsCategories` is True.
+  [gbastien]
 
 4.2b9 (2021-01-26)
 ------------------
