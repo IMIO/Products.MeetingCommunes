@@ -61,9 +61,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         # result['finance_advice_simple_not_given'] = self.print_finance_advice(cases=['simple_not_given'])
         return result
 
-    def print_deliberation(self,
-                           contents=None,
-                           **kwargs):
+    def print_full_deliberation(self, contents=None, **kwargs):
         """
         Print the full item deliberation and includes the finance advices
         :param contents: contents to print, include 'finance_advices'
@@ -424,18 +422,28 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
     def print_item_number_within_category(self, list_types=['normal', 'late'], default=''):
         res = default
 
+        tool = api.portal.get_tool('portal_plonemeeting')
+        cfg = tool.getMeetingConfig(self.context)
+        # proposingGroup
+        if cfg.getUseGroupsAsCategories():
+            catalog_index = 'getProposingGroup'
+            context_category = self.real_context.getProposingGroup()
+        else:
+            # category
+            catalog_index = 'getCategory'
+            context_category = self.real_context.getCategory()
+
         if self.real_context.hasMeeting() and \
            self.real_context.getListType() in list_types and \
-           self.real_context.getCategory():
+           context_category:
             meeting = self.real_context.getMeeting()
-            context_category = self.real_context.getCategory()
             context_uid = self.real_context.UID()
             count = 0
 
             for brain in meeting.get_items(list_types=list_types,
                                            ordered=True,
                                            the_objects=False,
-                                           additional_catalog_query={'getCategory': context_category},
+                                           additional_catalog_query={catalog_index: context_category},
                                            unrestricted=True):
                 count += 1
                 if brain.UID == context_uid:
@@ -547,8 +555,13 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
             query['review_state'] = {'not': ignore_review_states}
 
         # do not filter on selected itemUids when unrestricted=True
+        # except if length itemUids < length all visible items
         if unrestricted:
-            itemUids = []
+            visible_items = self.real_context.get_items(
+                ordered=False, the_objects=False, additional_catalog_query=query)
+            if len(itemUids) == len(visible_items):
+                # items were not unselected
+                itemUids = []
 
         items = self.real_context.get_items(
             uids=itemUids,

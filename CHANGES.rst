@@ -29,13 +29,28 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [odelaere]
 - Adapted `zcity/zcommittee_advice` profiles as advice type `asked_again` is no more optional.
   [gbastien]
-- Added a new DashboardPODTemplate `export-users-groups.ods` in contacts directory.
-  [aduchene]
 - Renamed parameter `listTypes` to `list_types` everywhere.
   [gbastien]
 - Moved some methods to snake_case : `printFinanceAdvice/print_finance_advice`,
   `printAllAnnexes/print_all_annexes`, `printFormatedAdvice/print_formated_advice`.
   [gbastien]
+- Adapted behavior of `get_grouped_items` with `unrestricted=True` that originally
+  returned every items ignoring `itemUids`, it was not possible to print a subset
+  of items.  Now if length of `itemUids` is smaller than len of all visible items,
+  we only return these items.
+  [gbastien]
+- Adapted `MCItemDocumentGenerationHelperView.print_item_number_within_category`
+  as `MeetingItem.getCategory` does no more return the `proposingGroup` when
+  `MeetingConfig.useGroupsAsCategories` is True.
+  [gbastien]
+- Renamed `MCItemDocumentGenerationHelperView.print_deliberation` to
+  `MCItemDocumentGenerationHelperView.print_full_deliberation` as
+  `print_deliberation` already exists in PloneMeeting and is used by
+  `ItemDocumentGenerationHelperView.deliberation_for_restapi`.
+  Added Migrate_To_4200._fixPODTemplatesInstructions to fix it in POD templates.
+  [gbastien]
+- Added a new DashboardPODTemplate `export-users-groups.ods` in contacts directory.
+  [aduchene]
 
 4.2b9 (2021-01-26)
 ------------------
