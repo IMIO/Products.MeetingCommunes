@@ -49,6 +49,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   `ItemDocumentGenerationHelperView.deliberation_for_restapi`.
   Added Migrate_To_4200._fixPODTemplatesInstructions to fix it in POD templates.
   [gbastien]
+- Added a new DashboardPODTemplate `export-users-groups.ods` in contacts directory.
+  [aduchene]
 
 4.2b9 (2021-01-26)
 ------------------
