@@ -61,9 +61,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         # result['finance_advice_simple_not_given'] = self.print_finance_advice(cases=['simple_not_given'])
         return result
 
-    def print_deliberation(self,
-                           contents=None,
-                           **kwargs):
+    def print_full_deliberation(self, contents=None, **kwargs):
         """
         Print the full item deliberation and includes the finance advices
         :param contents: contents to print, include 'finance_advices'

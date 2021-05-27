@@ -71,6 +71,17 @@ class Migrate_To_4200(PMMigrate_To_4200):
         """Adapt Meeting.workflow_history before migrating to DX."""
         self._adaptWFHistoryForItemsAndMeetings()
 
+    def _fixPODTemplatesInstructions(self):
+        '''Make some replace in POD templates to fit changes in code...'''
+        # for every POD templates
+        replacements = {'.print_deliberation(': '.print_full_deliberation(', }
+        # specific for Meeting POD Templates
+        meeting_replacements = {}
+        # specific for MeetingItem POD Templates
+        item_replacements = {}
+
+        self.updatePODTemplatesCode(replacements, meeting_replacements, item_replacements)
+
     def run(self,
             profile_name=u'profile-Products.MeetingCommunes:default',
             extra_omitted=[]):
@@ -85,6 +96,9 @@ class Migrate_To_4200(PMMigrate_To_4200):
 
         # add new searches (searchitemswithnofinanceadvice)
         self.addNewSearches()
+
+        # fix some instructions in POD templates
+        self._fixPODTemplatesInstructions()
 
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4200...')
