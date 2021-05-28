@@ -43,11 +43,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   as `MeetingItem.getCategory` does no more return the `proposingGroup` when
   `MeetingConfig.useGroupsAsCategories` is True.
   [gbastien]
-- Renamed `MCItemDocumentGenerationHelperView.print_deliberation` to
-  `MCItemDocumentGenerationHelperView.print_full_deliberation` as
-  `print_deliberation` already exists in PloneMeeting and is used by
-  `ItemDocumentGenerationHelperView.deliberation_for_restapi`.
-  Added Migrate_To_4200._fixPODTemplatesInstructions to fix it in POD templates.
+- Fixed signature of `MCItemDocumentGenerationHelperView.print_deliberation`.
   [gbastien]
 - Added a new DashboardPODTemplate `export-users-groups.ods` in contacts directory.
   [aduchene]

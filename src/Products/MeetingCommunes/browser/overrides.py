@@ -51,17 +51,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                 res.append(data)
         return res
 
-    def output_for_restapi(self):
-        ''' '''
-        result = super(MCItemDocumentGenerationHelperView, self).output_for_restapi()
-        # result['finance_advice_simple'] = self.print_finance_advice(cases=['simple'])
-        # result['finance_advice_legal'] = self.print_finance_advice(cases=['legal'])
-        # result['finance_advice_initiative'] = self.print_finance_advice(cases=['initiative'])
-        # result['finance_advice_legal_not_given'] = self.print_finance_advice(cases=['legal_not_given'])
-        # result['finance_advice_simple_not_given'] = self.print_finance_advice(cases=['simple_not_given'])
-        return result
-
-    def print_full_deliberation(self, contents=None, **kwargs):
+    def print_deliberation(self, xhtmlContents=[], **kwargs):
         """
         Print the full item deliberation and includes the finance advices
         :param contents: contents to print, include 'finance_advices'
@@ -69,31 +59,31 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         :param kwargs: print_formatted_finance_advice and printXhtml kwargs
         :return: xhtml str representing the full item deliberation
         """
-        if not contents:
+        if not xhtmlContents:
             contents = (
                 'motivation',
                 'finance_advices',
                 'decision'
             )
-        XhtmlContent = []
-        item = self.real_context
-
-        for content in contents:
-            if content == 'finance_advices':
-                XhtmlContent.append(self.print_formatted_finance_advice(
-                    finance_advices_template=kwargs.pop('finance_advices_formats', None),
-                    finance_used_cases=kwargs.pop('finance_used_cases', None)
-                ))
-            elif content in dir(item):
-                field = item.Schema().getField(content)  # get the field from the schema
-                content_accessor = getattr(item, field.accessor)  # get the accessor method from item
-                XhtmlContent.append(content_accessor())
-            else:
-                XhtmlContent.append(content)
+            item = self.real_context
+            for content in contents:
+                if content == 'finance_advices':
+                    xhtmlContents.append(self.print_formatted_finance_advice(
+                        finance_advices_template=kwargs.pop('finance_advices_formats', None),
+                        finance_used_cases=kwargs.pop('finance_used_cases', None)
+                    ))
+                elif content in dir(item):
+                    field = item.Schema().getField(content)  # get the field from the schema
+                    content_accessor = getattr(item, field.accessor)  # get the accessor method from item
+                    xhtmlContents.append(content_accessor())
+                else:
+                    xhtmlContents.append(content)
 
         return self.printXhtml(
             self.context,
-            xhtmlContents=XhtmlContent,
+            xhtmlContents=xhtmlContents,
+            image_src_to_paths=False,
+            image_src_to_data=True,
             **kwargs)
 
     def print_formatted_finance_advice(self,
