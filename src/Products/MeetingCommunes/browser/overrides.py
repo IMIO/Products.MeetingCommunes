@@ -66,6 +66,8 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                 'decision'
             )
             item = self.real_context
+            # build new list or it updates existing list
+            xhtmlContents = list(xhtmlContents)
             for content in contents:
                 if content == 'finance_advices':
                     xhtmlContents.append(self.print_formatted_finance_advice(
@@ -79,12 +81,8 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                 else:
                     xhtmlContents.append(content)
 
-        return self.printXhtml(
-            self.context,
-            xhtmlContents=xhtmlContents,
-            image_src_to_paths=False,
-            image_src_to_data=True,
-            **kwargs)
+        return super(MCItemDocumentGenerationHelperView, self).print_deliberation(
+            xhtmlContents, **kwargs)
 
     def print_formatted_finance_advice(self,
                                        finance_used_cases=None,
