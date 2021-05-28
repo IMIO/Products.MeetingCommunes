@@ -6,8 +6,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.27 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Backport from 4.2.x:
 
+  - Fixed signature of `MCItemDocumentGenerationHelperView.print_deliberation`.
+    [gbastien]
 
 4.1.26 (2021-05-20)
 -------------------
@@ -17,14 +19,12 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Improved getNumberOfItems.
   [odelaere]
 
-
 4.1.25 (2021-04-16)
 -------------------
 
 - Backport from 4.2.x:
     - Added PORTAL_CATEGORIES in config.py [odelaere]
     - Added new listTypes normalnotpublishable and latenotpublishable used in portal. [odelaere]
-
 
 4.1.24 (2021-04-12)
 -------------------
@@ -33,7 +33,6 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [odelaere]
 - Added new listTypes normalnotpublishable and latenotpublishable used in portal.
   [odelaere]
-
 
 4.1.23 (2021-03-23)
 -------------------
