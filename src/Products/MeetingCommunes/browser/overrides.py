@@ -67,7 +67,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             )
             item = self.real_context
             # build new list or it updates existing list
-            xhtmlContents = list(xhtmlContents)
+            xhtmlContents = []
             for content in contents:
                 if content == 'finance_advices':
                     xhtmlContents.append(self.print_formatted_finance_advice(
