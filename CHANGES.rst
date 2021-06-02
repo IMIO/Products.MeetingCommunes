@@ -6,7 +6,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.1.28 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Backport from 4.2.x:
+
+  - Added a new DashboardPODTemplate `export-users-groups.ods` in contacts directory.
+    [aduchene]
 
 
 4.1.27 (2021-05-31)
