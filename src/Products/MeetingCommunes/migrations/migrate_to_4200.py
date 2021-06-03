@@ -103,7 +103,7 @@ class Migrate_To_4200(PMMigrate_To_4200):
         pod_template.reindexObject()
         logger.info('Done.')
 
-    def _fixPODTemplatesInstructions(self):
+    def _mc_fixPODTemplatesInstructions(self):
         '''Make some replace in POD templates to fit changes in code...'''
         # for every POD templates
         replacements = {'.print_deliberation(': '.print_full_deliberation(', }
@@ -126,14 +126,14 @@ class Migrate_To_4200(PMMigrate_To_4200):
         # add a new DashboardPodTemplate in contacts directory
         self._add_dashboard_pod_template_export_users_groups()
 
+        # fix some instructions in POD templates
+        self._mc_fixPODTemplatesInstructions()
+
         # call steps from Products.PloneMeeting
         super(Migrate_To_4200, self).run(extra_omitted=extra_omitted)
 
         # add new searches (searchitemswithnofinanceadvice)
         self.addNewSearches()
-
-        # fix some instructions in POD templates
-        self._fixPODTemplatesInstructions()
 
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4200...')
