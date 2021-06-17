@@ -355,7 +355,7 @@ class CustomMeeting(Meeting):
     security.declarePublic('getNumberOfItems')
 
     def getNumberOfItems(self, itemUids, privacy=['public', 'secret'], categories=[], classifiers=[],
-                         listTypes=['normal']):
+                         list_types=['normal']):
         '''Returns the number of items depending on parameters.
            This is used in templates to know how many items of a particular kind exist and
            often used to determine the 'firstNumber' parameter of getPrintableItems/getPrintableItemsByCategory.'''
@@ -371,10 +371,10 @@ class CustomMeeting(Meeting):
         if classifiers:
             additional_catalog_query['getRawClassifier'] = classifiers
 
-        items = self.getSelf().getItems(itemUids,
-                                        theObjects=False,
-                                        listTypes=listTypes,
-                                        additional_catalog_query=additional_catalog_query)
+        items = self.getSelf().get_items(itemUids,
+                                         the_objects=False,
+                                         list_types=list_types,
+                                         additional_catalog_query=additional_catalog_query)
         return len(items)
 
     security.declarePublic('getPrintableItemsByNumCategory')
