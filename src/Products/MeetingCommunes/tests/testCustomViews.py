@@ -27,8 +27,10 @@ class testCustomViews(MeetingCommunesTestCase):
         self.changeUser('pmCreator1')
         item = self.create('MeetingItem')
         annex1 = self.addAnnex(item)
-        annex2 = self.addAnnex(item, annexTitle='Annex 2')
-        annex3 = self.addAnnex(item, annexTitle=u'Annex 3 with special characters h\xc3\xa9h\xc3\xa9')
+        annex2 = self.addAnnex(item, annexTitle='Annex 2', annexFile=self.annexFilePDF)
+        annex3 = self.addAnnex(item,
+                               annexTitle=u'Annex 3 with special characters h\xc3\xa9h\xc3\xa9',
+                               annexFile=self.annexFileCorruptedPDF)
         annexDecision1 = self.addAnnex(item, annexTitle='Annex decision 1', relatedTo='item_decision')
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
@@ -39,15 +41,40 @@ class testCustomViews(MeetingCommunesTestCase):
         helper = view.get_generation_context_helper()
         self.assertEqual(
             helper.print_all_annexes(),
-            u'<p><a href="{0}">Annex</a></p>\n'
-            u'<p><a href="{1}">Annex 2</a></p>\n'
-            u'<p><a href="{2}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a></p>'.format(
+            u'<p><a href="{0}">Annex</a>&nbsp;(txt)</p>\n'
+            u'<p><a href="{1}">Annex 2</a>&nbsp;(pdf)</p>\n'
+            u'<p><a href="{2}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;(pdf)</p>'.format(
                 annex1.absolute_url(),
                 annex2.absolute_url(),
                 annex3.absolute_url()))
         self.assertEqual(
+            helper.print_all_annexes(with_icon=True),
+            u'<p><a href="{0}">Annex</a>&nbsp;<img src="http://nohost/plone/txt.png"></img>&nbsp;(txt)</p>\n'
+            u'<p><a href="{1}">Annex 2</a>&nbsp;<img src="http://nohost/plone/pdf.png"></img>&nbsp;(pdf)</p>\n'
+            u'<p><a href="{2}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;<img src="http://nohost/plone/pdf.png"></img>&nbsp;(pdf)</p>'.format(
+                annex1.absolute_url(),
+                annex2.absolute_url(),
+                annex3.absolute_url()))
+        self.assertEqual(
+            helper.print_all_annexes(long_format=True),
+            u'<p><a href="{0}">Annex</a>&nbsp;FILE.txt</p>\n'
+            u'<p><a href="{1}">Annex 2</a>&nbsp;file_correct.pdf</p>\n'
+            u'<p><a href="{2}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;file_errorDuringConversion.pdf</p>'.format(
+                annex1.absolute_url(),
+                annex2.absolute_url(),
+                annex3.absolute_url()))
+        self.assertEqual(
+            helper.print_all_annexes(long_format=True, with_icon=True),
+            u'<p><a href="{0}">Annex</a>&nbsp;<img src="http://nohost/plone/txt.png"></img>&nbsp;FILE.txt</p>\n'
+            u'<p><a href="{1}">Annex 2</a>&nbsp;<img src="http://nohost/plone/pdf.png"></img>&nbsp;file_correct.pdf</p>\n'
+            u'<p><a href="{2}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;<img src="http://nohost/plone/pdf.png"></img>&nbsp;file_errorDuringConversion.pdf</p>'.format(
+                annex1.absolute_url(),
+                annex2.absolute_url(),
+                annex3.absolute_url()))
+
+        self.assertEqual(
             helper.print_all_annexes(portal_types=('annexDecision',)),
-            u'<p><a href="{0}">Annex decision 1</a></p>'.format(annexDecision1.absolute_url()))
+            u'<p><a href="{0}">Annex decision 1</a>&nbsp;(txt)</p>'.format(annexDecision1.absolute_url()))
 
     def test_print_methods(self):
         """Test various print methods :
