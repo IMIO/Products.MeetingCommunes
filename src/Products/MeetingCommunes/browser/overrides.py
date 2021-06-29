@@ -25,33 +25,39 @@ from zope.component import getAdapter
 class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
     """Specific printing methods used for item."""
 
-    def print_all_annexes(self, portal_types=['annex'], excludes={}, include_icon=False, long_format=False):
+    def print_all_annexes(self, portal_types=['annex'], filters={}, with_icon=False, long_format=False):
         """
         Printing Method use in templates :
         return all viewable annexes for item
-        @param: excludes is a dict of {"attribute" : value}.
-        It excludes the given value from the result.
+        @param: filters is a dict of {"attribute" : value}.
+        It excludes all non matching annex from the result.
         Example : {'confidential': True, 'publishable': False}
         possible keys are : 'confidential', 'to_print', 'to_sign' and 'publishable' (all are bool or None)
         """
         res = []
         annexes = get_annexes(self.context, portal_types=portal_types)
+        mimetypes_registry = self.portal.mimetypes_registry
         for annex in annexes:
-            for exclude in excludes:
-                if getattr(annex, exclude) == excludes[exclude]:
+            for attribute in filters:
+                if getattr(annex, attribute) != filters[attribute]:
                     break
             url = annex.absolute_url()
-            mime_type = self.portal.mimetypes_registry.lookup(annex.file.contentType)[0]
+            title = safe_unicode(cgi.escape(annex.Title()))
+            mime_type = mimetypes_registry.lookup(annex.file.contentType)[0]
             img = ''
-            extension = annex.file.filename.split(u'.')[-1]
-            # escape just in case there is no file extension
-            file_info = u'({0})'.format(safe_unicode(cgi.escape(extension)))
-            if include_icon:
+            # sometimes filename may be None
+            if annex.file.filename:
+                extension = annex.file.filename.split(u'.')[-1]
+                # escape just in case there is no file extension
+                file_info = u'({0})'.format(safe_unicode(cgi.escape(extension)))
+            else:
+                file_info = u'(???)'
+
+            if with_icon:
                 img = u'<img src="{0}/{1}"></img>&nbsp;'.format(self.portal.absolute_url(), mime_type.icon_path)
             if long_format:
                 file_info = safe_unicode(cgi.escape(annex.file.filename))
-            title = u'{0}&nbsp;{1}{2}'.format(safe_unicode(cgi.escape(annex.Title())), img, file_info)
-            res.append(u'<p><a href="{0}">{1}</a></p>'.format(url, title))
+            res.append(u'<p><a href="{0}">{1}</a>&nbsp;{2}{3}</p>'.format(url, title, img, file_info))
         return u'\n'.join(res)
 
     def print_formated_advice(self, exclude_not_given=True):
