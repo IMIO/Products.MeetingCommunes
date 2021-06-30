@@ -354,18 +354,15 @@ class CustomMeeting(Meeting):
 
     security.declarePublic('getNumberOfItems')
 
-    def getNumberOfItems(self, itemUids, privacy=['public', 'secret'], categories=[], classifiers=[],
+    def getNumberOfItems(self, itemUids, privacy=[], categories=[], classifiers=[],
                          list_types=['normal']):
         '''Returns the number of items depending on parameters.
            This is used in templates to know how many items of a particular kind exist and
            often used to determine the 'firstNumber' parameter of getPrintableItems/getPrintableItemsByCategory.'''
         # sometimes, some empty elements are inserted in itemUids, remove them...
-        if privacy == '*':
-            privacy = ['public', 'secret']
-
-        additional_catalog_query = {
-            'privacy': privacy,
-        }
+        additional_catalog_query = {}
+        if privacy:
+            additional_catalog_query['privacy'] = privacy
         if categories:
             additional_catalog_query['getCategory'] = categories
         if classifiers:
