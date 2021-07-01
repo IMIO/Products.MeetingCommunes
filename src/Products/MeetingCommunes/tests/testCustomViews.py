@@ -31,17 +31,29 @@ class testCustomViews(MeetingCommunesTestCase):
         self._enable_annex_config(item, param="signed")
         self._enable_annex_config(item, param="publishable")
         annex1 = self.addAnnex(item, to_print=True)
+        annex1_type_icon = u'<img src="{0}/{1}"></img>'.format(
+            self.portal.absolute_url(),
+            item.categorized_elements[annex1.UID()]['icon_url'])
         annex2 = self.addAnnex(item,
                                annexTitle='Annex 2',
                                annexFile=self.annexFilePDF,
                                to_print=True,
                                confidential=True)
+        annex2_type_icon = u'<img src="{0}/{1}"></img>'.format(
+            self.portal.absolute_url(),
+            item.categorized_elements[annex2.UID()]['icon_url'])
         annex3 = self.addAnnex(item,
                                annexTitle=u'Annex 3 with special characters h\xc3\xa9h\xc3\xa9',
                                annexFile=self.annexFileCorruptedPDF,
                                to_sign=True,
                                confidential=True)
+        annex3_type_icon = u'<img src="{0}/{1}"></img>'.format(
+            self.portal.absolute_url(),
+            item.categorized_elements[annex3.UID()]['icon_url'])
         annexDecision1 = self.addAnnex(item, annexTitle='Annex decision 1', relatedTo='item_decision')
+        annexDecision1_type_icon = u'<img src="{0}/{1}"></img>'.format(
+            self.portal.absolute_url(),
+            item.categorized_elements[annexDecision1.UID()]['icon_url'])
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
         self.request.set('template_uid', pod_template.UID())
@@ -51,51 +63,74 @@ class testCustomViews(MeetingCommunesTestCase):
         helper = view.get_generation_context_helper()
         self.assertEqual(
             helper.print_all_annexes(),
-            u'<p><a href="{0}">Annex</a>&nbsp;(txt)</p>\n'
-            u'<p><a href="{1}">Annex 2</a>&nbsp;(pdf)</p>\n'
-            u'<p><a href="{2}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;(pdf)</p>'.format(
+            u'<p>{0}&nbsp;<a href="{1}">Annex</a>&nbsp;(txt)</p>\n'
+            u'<p>{2}&nbsp;<a href="{3}">Annex 2</a>&nbsp;(pdf)</p>\n'
+            u'<p>{4}&nbsp;<a href="{5}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;(pdf)</p>'.format(
+                annex1_type_icon,
                 annex1.absolute_url(),
+                annex2_type_icon,
                 annex2.absolute_url(),
+                annex3_type_icon,
                 annex3.absolute_url()))
         self.assertEqual(
             helper.print_all_annexes(with_icon=True),
-            u'<p><a href="{0}">Annex</a>&nbsp;<img src="http://nohost/plone/txt.png"></img>&nbsp;(txt)</p>\n'
-            u'<p><a href="{1}">Annex 2</a>&nbsp;<img src="http://nohost/plone/pdf.png"></img>&nbsp;(pdf)</p>\n'
-            u'<p><a href="{2}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;<img src="http://nohost/plone/pdf.png"></img>&nbsp;(pdf)</p>'.format(
+            u'<p>{0}&nbsp;<a href="{1}">Annex</a>&nbsp;<img src="http://nohost/plone/txt.png"></img>&nbsp;(txt)</p>\n'
+            u'<p>{2}&nbsp;<a href="{3}">Annex 2</a>&nbsp;<img src="http://nohost/plone/pdf.png"></img>&nbsp;(pdf)</p>\n'
+            u'<p>{4}&nbsp;<a href="{5}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;'
+            u'<img src="http://nohost/plone/pdf.png"></img>&nbsp;(pdf)</p>'.format(
+                annex1_type_icon,
                 annex1.absolute_url(),
+                annex2_type_icon,
                 annex2.absolute_url(),
+                annex3_type_icon,
                 annex3.absolute_url()))
         self.assertEqual(
             helper.print_all_annexes(long_format=True),
-            u'<p><a href="{0}">Annex</a>&nbsp;FILE.txt</p>\n'
-            u'<p><a href="{1}">Annex 2</a>&nbsp;file_correct.pdf</p>\n'
-            u'<p><a href="{2}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;file_errorDuringConversion.pdf</p>'.format(
+            u'<p>{0}&nbsp;<a href="{1}">Annex</a>&nbsp;(txt)</p>\n'
+            u'<p><i><img src="http://nohost/plone/txt.png"></img>&nbsp;FILE.txt</i></p>\n'
+            u'<p>{2}&nbsp;<a href="{3}">Annex 2</a>&nbsp;(pdf)</p>\n'
+            u'<p><i><img src="http://nohost/plone/pdf.png"></img>&nbsp;file_correct.pdf</i></p>\n'
+            u'<p>{4}&nbsp;<a href="{5}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;(pdf)</p>\n'
+            u'<p><i><img src="http://nohost/plone/pdf.png"></img>&nbsp;file_errorDuringConversion.pdf</i></p>'.format(
+                annex1_type_icon,
                 annex1.absolute_url(),
+                annex2_type_icon,
                 annex2.absolute_url(),
+                annex3_type_icon,
                 annex3.absolute_url()))
         self.assertEqual(
             helper.print_all_annexes(long_format=True, with_icon=True),
-            u'<p><a href="{0}">Annex</a>&nbsp;<img src="http://nohost/plone/txt.png"></img>&nbsp;FILE.txt</p>\n'
-            u'<p><a href="{1}">Annex 2</a>&nbsp;<img src="http://nohost/plone/pdf.png"></img>&nbsp;file_correct.pdf</p>\n'
-            u'<p><a href="{2}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;<img src="http://nohost/plone/pdf.png"></img>&nbsp;file_errorDuringConversion.pdf</p>'.format(
+            u'<p>{0}&nbsp;<a href="{1}">Annex</a>&nbsp;(txt)</p>\n'
+            u'<p><i><img src="http://nohost/plone/txt.png"></img>&nbsp;FILE.txt</i></p>\n'
+            u'<p>{2}&nbsp;<a href="{3}">Annex 2</a>&nbsp;(pdf)</p>\n'
+            u'<p><i><img src="http://nohost/plone/pdf.png"></img>&nbsp;file_correct.pdf</i></p>\n'
+            u'<p>{4}&nbsp;<a href="{5}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;(pdf)</p>\n'
+            u'<p><i><img src="http://nohost/plone/pdf.png"></img>&nbsp;file_errorDuringConversion.pdf</i></p>'.format(
+                annex1_type_icon,
                 annex1.absolute_url(),
+                annex2_type_icon,
                 annex2.absolute_url(),
+                annex3_type_icon,
                 annex3.absolute_url()))
 
         self.assertEqual(
             helper.print_all_annexes(portal_types=('annexDecision',)),
-            u'<p><a href="{0}">Annex decision 1</a>&nbsp;(txt)</p>'.format(annexDecision1.absolute_url()))
+            u'<p>{0}&nbsp;<a href="{1}">Annex decision 1</a>&nbsp;(txt)</p>'.format(annexDecision1_type_icon,
+                                                                                    annexDecision1.absolute_url()))
 
         self.assertEqual(
             helper.print_all_annexes(portal_types=['annex', 'annexDecision'],
                                      filters={'confidential': True, 'to_sign': True}),
-            u'<p><a href="{0}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;(pdf)</p>'.format(
+            u'<p>{0}&nbsp;<a href="{1}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;(pdf)</p>'.format(
+                annex3_type_icon,
                 annex3.absolute_url()))
         self.assertEqual(
             helper.print_all_annexes(portal_types=['annex', 'annexDecision'], filters={'confidential': True}),
-            u'<p><a href="{0}">Annex 2</a>&nbsp;(pdf)</p>\n'
-            u'<p><a href="{1}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;(pdf)</p>'.format(
+            u'<p>{0}&nbsp;<a href="{1}">Annex 2</a>&nbsp;(pdf)</p>\n'
+            u'<p>{2}&nbsp;<a href="{3}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;(pdf)</p>'.format(
+                annex2_type_icon,
                 annex2.absolute_url(),
+                annex3_type_icon,
                 annex3.absolute_url()))
         self.assertEqual(
             helper.print_all_annexes(portal_types=['annex', 'annexDecision'], filters={'publishable': True}), u'')

@@ -54,7 +54,11 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             url = annex.absolute_url()
             title = safe_unicode(cgi.escape(annex.Title()))
             mime_type = mimetypes_registry.lookup(annex.file.contentType)[0]
-            img = ''
+            img = u'<img src="{0}/{1}"></img>'.format(self.portal.absolute_url(), mime_type.icon_path)
+            img_to_use = ''
+            annex_type_icon = u'<img src="{0}/{1}"></img>'.format(
+                self.portal.absolute_url(),
+                self.real_context.categorized_elements[annex.UID()]['icon_url'])
             # sometimes filename may be None
             if annex.file.filename:
                 extension = annex.file.filename.split(u'.')[-1]
@@ -63,11 +67,17 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             else:
                 file_info = u'(???)'
 
-            if with_icon:
-                img = u'<img src="{0}/{1}"></img>&nbsp;'.format(self.portal.absolute_url(), mime_type.icon_path)
+            if with_icon and not long_format:
+                img_to_use = u'{0}&nbsp;'.format(img)
+
+            res.append(u'<p>{0}&nbsp;<a href="{1}">{2}</a>&nbsp;{3}{4}</p>'.format(annex_type_icon,
+                                                                             url,
+                                                                             title,
+                                                                             img_to_use,
+                                                                             file_info))
             if long_format:
-                file_info = safe_unicode(cgi.escape(annex.file.filename))
-            res.append(u'<p><a href="{0}">{1}</a>&nbsp;{2}{3}</p>'.format(url, title, img, file_info))
+                file_name = safe_unicode(cgi.escape(annex.file.filename))
+                res.append(u'<p><i>{0}&nbsp;{1}</i></p>'.format(img, file_name))
         return u'\n'.join(res)
 
     def print_formated_advice(self, exclude_not_given=True):
