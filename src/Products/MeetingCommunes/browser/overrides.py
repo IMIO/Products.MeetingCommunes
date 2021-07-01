@@ -6,7 +6,6 @@
 #
 # GNU General Public License (GPL)
 #
-import cgi
 from collections import OrderedDict
 from imio.history.interfaces import IImioHistory
 from imio.history.utils import getLastAction
@@ -20,6 +19,8 @@ from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperV
 from Products.PloneMeeting.utils import get_annexes
 from Products.PloneMeeting.utils import get_person_from_userid
 from zope.component import getAdapter
+
+import cgi
 
 
 class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
