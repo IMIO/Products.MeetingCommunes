@@ -47,6 +47,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [gbastien]
 - Added a new DashboardPODTemplate `export-users-groups.ods` in contacts directory.
   [aduchene]
+- Improved CustomMeeting.getNumerOfItems using Meeting.getItems.
+  [odelaere]
 
 4.2b9 (2021-01-26)
 ------------------

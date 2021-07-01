@@ -107,6 +107,40 @@ class testCustomMeetingType(MeetingCommunesTestCase):
                 itemUids, categories=['dummycategory', 'research', 'development', ]),
             3)
 
+        # test the 'classifier' parameter
+        # by default, 2 items are in the 'classifier1' category,
+        # 2 are in the 'classifier2' category
+        # 1 in the 'classifier3' category
+        item_classifiers = [item.getClassifier() for item in orderedItems]
+        self.assertEqual(item_classifiers.count('classifier1'), 2)
+        self.assertEqual(item_classifiers.count('classifier2'), 2)
+        self.assertEqual(item_classifiers.count('classifier3'), 1)
+
+        # same using getNumberOfItems
+        self.assertEqual(meeting.adapted().getNumberOfItems(itemUids, classifiers=['classifier1', ]), 2)
+        self.assertEqual(meeting.adapted().getNumberOfItems(itemUids, classifiers=['classifier2', ]), 2)
+        # we can pass several classifiers
+        self.assertEqual(
+            meeting.adapted().getNumberOfItems(
+                itemUids, classifiers=['dummyclassifier', 'classifier2', 'classifier3', ]),
+            3)
+
+        # Mix multiple categories and classifiers
+        self.assertEqual(
+            meeting.adapted().getNumberOfItems(
+                itemUids,
+                categories=['research', ],
+                classifiers=['classifier3', ]
+            ),
+            1)
+
+        self.assertEqual(
+            meeting.adapted().getNumberOfItems(
+                itemUids,
+                categories=['dummycategory', 'research', 'development', ],
+                classifiers=['dummyclassifier', 'classifier2', 'classifier3', ]
+            ),
+            3)
         # test the 'late' parameter
         # by default, no items are late so make 2 late items
         # remove to items, freeze the meeting then add the items
