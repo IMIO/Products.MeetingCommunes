@@ -37,10 +37,19 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         res = []
         annexes = get_annexes(self.context, portal_types=portal_types)
         mimetypes_registry = self.portal.mimetypes_registry
+        if filters:
+            effective_annexes = []
+            for annex in annexes:
+                use_this_annex = True
+                for attribute in filters:
+                    if getattr(annex, attribute) != filters[attribute]:
+                        use_this_annex = False
+                        break
+                if use_this_annex:
+                    effective_annexes.append(annex)
+            annexes = effective_annexes
+
         for annex in annexes:
-            for attribute in filters:
-                if getattr(annex, attribute) != filters[attribute]:
-                    break
             url = annex.absolute_url()
             title = safe_unicode(cgi.escape(annex.Title()))
             mime_type = mimetypes_registry.lookup(annex.file.contentType)[0]

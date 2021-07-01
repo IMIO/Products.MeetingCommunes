@@ -26,11 +26,21 @@ class testCustomViews(MeetingCommunesTestCase):
         """ """
         self.changeUser('pmCreator1')
         item = self.create('MeetingItem')
-        annex1 = self.addAnnex(item)
-        annex2 = self.addAnnex(item, annexTitle='Annex 2', annexFile=self.annexFilePDF)
+        self._enable_annex_config(item, param="confidentiality")
+        self._enable_annex_config(item, param="to_be_printed")
+        self._enable_annex_config(item, param="signed")
+        self._enable_annex_config(item, param="publishable")
+        annex1 = self.addAnnex(item, to_print=True)
+        annex2 = self.addAnnex(item,
+                               annexTitle='Annex 2',
+                               annexFile=self.annexFilePDF,
+                               to_print=True,
+                               confidential=True)
         annex3 = self.addAnnex(item,
                                annexTitle=u'Annex 3 with special characters h\xc3\xa9h\xc3\xa9',
-                               annexFile=self.annexFileCorruptedPDF)
+                               annexFile=self.annexFileCorruptedPDF,
+                               to_sign=True,
+                               confidential=True)
         annexDecision1 = self.addAnnex(item, annexTitle='Annex decision 1', relatedTo='item_decision')
 
         pod_template = self.meetingConfig.podtemplates.itemTemplate
@@ -75,6 +85,20 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertEqual(
             helper.print_all_annexes(portal_types=('annexDecision',)),
             u'<p><a href="{0}">Annex decision 1</a>&nbsp;(txt)</p>'.format(annexDecision1.absolute_url()))
+
+        self.assertEqual(
+            helper.print_all_annexes(portal_types=['annex', 'annexDecision'],
+                                     filters={'confidential': True, 'to_sign': True}),
+            u'<p><a href="{0}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;(pdf)</p>'.format(
+                annex3.absolute_url()))
+        self.assertEqual(
+            helper.print_all_annexes(portal_types=['annex', 'annexDecision'], filters={'confidential': True}),
+            u'<p><a href="{0}">Annex 2</a>&nbsp;(pdf)</p>\n'
+            u'<p><a href="{1}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;(pdf)</p>'.format(
+                annex2.absolute_url(),
+                annex3.absolute_url()))
+        self.assertEqual(
+            helper.print_all_annexes(portal_types=['annex', 'annexDecision'], filters={'publishable': True}), u'')
 
     def test_print_methods(self):
         """Test various print methods :
