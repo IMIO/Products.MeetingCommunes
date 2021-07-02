@@ -53,9 +53,11 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         for annex in annexes:
             url = annex.absolute_url()
             title = safe_unicode(cgi.escape(annex.Title()))
-            mime_type = mimetypes_registry.lookup(annex.file.contentType)[0]
-            img = u'<img src="{0}/{1}"></img>'.format(self.portal.absolute_url(), mime_type.icon_path)
-            img_to_use = ''
+            file_type_icon = u''
+            if with_icon:
+                mime_type = mimetypes_registry.lookup(annex.file.contentType)[0]
+                file_type_icon = u'&nbsp;<img src="{0}/{1}"></img>'.format(self.portal.absolute_url(),
+                                                                           mime_type.icon_path)
             annex_type_icon = u'<img src="{0}/{1}"></img>'.format(
                 self.portal.absolute_url(),
                 self.real_context.categorized_elements[annex.UID()]['icon_url'])
@@ -63,21 +65,18 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             if annex.file.filename:
                 extension = annex.file.filename.split(u'.')[-1]
                 # escape just in case there is no file extension
-                file_info = u'({0})'.format(safe_unicode(cgi.escape(extension)))
+                file_info = u'&nbsp;({0})'.format(safe_unicode(cgi.escape(extension)))
             else:
-                file_info = u'(???)'
+                file_info = u'&nbsp;(???)'
 
-            if with_icon and not long_format:
-                img_to_use = u'{0}&nbsp;'.format(img)
-
-            res.append(u'<p>{0}&nbsp;<a href="{1}">{2}</a>&nbsp;{3}{4}</p>'.format(annex_type_icon,
-                                                                             url,
-                                                                             title,
-                                                                             img_to_use,
-                                                                             file_info))
+            res.append(u'<p>{0}&nbsp;<a href="{1}">{2}</a>{3}{4}</p>'.format(annex_type_icon,
+                                                                                   url,
+                                                                                   title,
+                                                                                   file_type_icon,
+                                                                                   file_info))
             if long_format:
                 file_name = safe_unicode(cgi.escape(annex.file.filename))
-                res.append(u'<p><i>{0}&nbsp;{1}</i></p>'.format(img, file_name))
+                res.append(u'<p><i>{0}</i></p>'.format(file_name))
         return u'\n'.join(res)
 
     def print_formated_advice(self, exclude_not_given=True):

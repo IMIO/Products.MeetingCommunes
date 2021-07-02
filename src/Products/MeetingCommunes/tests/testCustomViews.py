@@ -87,11 +87,11 @@ class testCustomViews(MeetingCommunesTestCase):
         self.assertEqual(
             helper.print_all_annexes(long_format=True),
             u'<p>{0}&nbsp;<a href="{1}">Annex</a>&nbsp;(txt)</p>\n'
-            u'<p><i><img src="http://nohost/plone/txt.png"></img>&nbsp;FILE.txt</i></p>\n'
+            u'<p><i>FILE.txt</i></p>\n'
             u'<p>{2}&nbsp;<a href="{3}">Annex 2</a>&nbsp;(pdf)</p>\n'
-            u'<p><i><img src="http://nohost/plone/pdf.png"></img>&nbsp;file_correct.pdf</i></p>\n'
+            u'<p><i>file_correct.pdf</i></p>\n'
             u'<p>{4}&nbsp;<a href="{5}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;(pdf)</p>\n'
-            u'<p><i><img src="http://nohost/plone/pdf.png"></img>&nbsp;file_errorDuringConversion.pdf</i></p>'.format(
+            u'<p><i>file_errorDuringConversion.pdf</i></p>'.format(
                 annex1_type_icon,
                 annex1.absolute_url(),
                 annex2_type_icon,
@@ -100,12 +100,13 @@ class testCustomViews(MeetingCommunesTestCase):
                 annex3.absolute_url()))
         self.assertEqual(
             helper.print_all_annexes(long_format=True, with_icon=True),
-            u'<p>{0}&nbsp;<a href="{1}">Annex</a>&nbsp;(txt)</p>\n'
-            u'<p><i><img src="http://nohost/plone/txt.png"></img>&nbsp;FILE.txt</i></p>\n'
-            u'<p>{2}&nbsp;<a href="{3}">Annex 2</a>&nbsp;(pdf)</p>\n'
-            u'<p><i><img src="http://nohost/plone/pdf.png"></img>&nbsp;file_correct.pdf</i></p>\n'
-            u'<p>{4}&nbsp;<a href="{5}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;(pdf)</p>\n'
-            u'<p><i><img src="http://nohost/plone/pdf.png"></img>&nbsp;file_errorDuringConversion.pdf</i></p>'.format(
+            u'<p>{0}&nbsp;<a href="{1}">Annex</a>&nbsp;<img src="http://nohost/plone/txt.png"></img>&nbsp;(txt)</p>\n'
+            u'<p><i>FILE.txt</i></p>\n'
+            u'<p>{2}&nbsp;<a href="{3}">Annex 2</a>&nbsp;<img src="http://nohost/plone/pdf.png"></img>&nbsp;(pdf)</p>\n'
+            u'<p><i>file_correct.pdf</i></p>\n'
+            u'<p>{4}&nbsp;<a href="{5}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;'
+            u'<img src="http://nohost/plone/pdf.png"></img>&nbsp;(pdf)</p>\n'
+            u'<p><i>file_errorDuringConversion.pdf</i></p>'.format(
                 annex1_type_icon,
                 annex1.absolute_url(),
                 annex2_type_icon,
