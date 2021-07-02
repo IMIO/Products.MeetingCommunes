@@ -6,7 +6,6 @@
 #
 # GNU General Public License (GPL)
 #
-
 from collections import OrderedDict
 from imio.history.interfaces import IImioHistory
 from imio.history.utils import getLastAction
@@ -21,21 +20,64 @@ from Products.PloneMeeting.utils import get_annexes
 from Products.PloneMeeting.utils import get_person_from_userid
 from zope.component import getAdapter
 
+import cgi
+
 
 class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
     """Specific printing methods used for item."""
 
-    def print_all_annexes(self, portal_types=['annex']):
-        ''' Printing Method use in templates :
-            return all viewable annexes for item '''
+    def print_all_annexes(self, portal_types=['annex'], filters={}, with_icon=False, with_filename=False):
+        """
+        Printing Method use in templates :
+        return all viewable annexes for item
+        @param: filters is a dict of {"attribute" : value}.
+        It excludes all non matching annex from the result.
+        Example : {'confidential': True, 'publishable': False}
+        possible keys are : 'confidential', 'to_print', 'to_sign' and 'publishable' (all are bool or None)
+        """
         res = []
         annexes = get_annexes(self.context, portal_types=portal_types)
+        mimetypes_registry = self.portal.mimetypes_registry
+        if filters:
+            effective_annexes = []
+            for annex in annexes:
+                use_this_annex = True
+                for attribute, value in filters.items():
+                    if getattr(annex, attribute) != value:
+                        use_this_annex = False
+                        break
+                if use_this_annex:
+                    effective_annexes.append(annex)
+            annexes = effective_annexes
+
         for annex in annexes:
             url = annex.absolute_url()
-            title = annex.Title().replace('&', '&amp;')
-            res.append(u'<p><a href="{0}">{1}</a></p>'.format(
-                url, safe_unicode(title)))
-        return (u'\n'.join(res))
+            title = safe_unicode(cgi.escape(annex.Title()))
+            file_type_icon = u''
+            if with_icon:
+                mime_type = mimetypes_registry.lookup(annex.file.contentType)[0]
+                file_type_icon = u'&nbsp;<img src="{0}/{1}"></img>'.format(self.portal.absolute_url(),
+                                                                           mime_type.icon_path)
+            annex_type_icon = u'<img src="{0}/{1}"></img>'.format(
+                self.portal.absolute_url(),
+                self.real_context.categorized_elements[annex.UID()]['icon_url'])
+            # sometimes filename may be None
+            if annex.file.filename:
+                extension = annex.file.filename.split(u'.')[-1]
+                # escape just in case there is no file extension
+                file_info = u'&nbsp;({0})'.format(safe_unicode(cgi.escape(extension)))
+            else:
+                file_info = u'&nbsp;(???)'
+
+            res.append(u'<p>{0}&nbsp;<a href="{1}">{2}</a>{3}{4}</p>'.format(annex_type_icon,
+                                                                                   url,
+                                                                                   title,
+                                                                                   file_type_icon,
+                                                                                   file_info))
+            if with_filename:
+                file_name = safe_unicode(cgi.escape(annex.file.filename))
+                res.append(u'<p><i>{0}</i></p>'.format(file_name))
+        return u'\n'.join(res)
 
     def print_formated_advice(self, exclude_not_given=True):
         ''' Printing Method use in templates :

@@ -49,6 +49,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [aduchene]
 - Improved CustomMeeting.getNumerOfItems using Meeting.getItems.
   [odelaere]
+- Improved MCItemDocumentGenerationHelperView.print_all_annexes with filters, icon, better escaping, etc.
+  [odelaere]
 
 4.2b9 (2021-01-26)
 ------------------
