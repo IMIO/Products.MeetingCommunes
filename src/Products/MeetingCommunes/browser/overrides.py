@@ -26,7 +26,7 @@ import cgi
 class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
     """Specific printing methods used for item."""
 
-    def print_all_annexes(self, portal_types=['annex'], filters={}, with_icon=False, long_format=False):
+    def print_all_annexes(self, portal_types=['annex'], filters={}, with_icon=False, with_filename=False):
         """
         Printing Method use in templates :
         return all viewable annexes for item
@@ -42,8 +42,8 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             effective_annexes = []
             for annex in annexes:
                 use_this_annex = True
-                for attribute in filters:
-                    if getattr(annex, attribute) != filters[attribute]:
+                for attribute, value in filters.items():
+                    if getattr(annex, attribute) != value:
                         use_this_annex = False
                         break
                 if use_this_annex:
@@ -74,7 +74,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                                                                                    title,
                                                                                    file_type_icon,
                                                                                    file_info))
-            if long_format:
+            if with_filename:
                 file_name = safe_unicode(cgi.escape(annex.file.filename))
                 res.append(u'<p><i>{0}</i></p>'.format(file_name))
         return u'\n'.join(res)

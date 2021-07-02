@@ -85,7 +85,7 @@ class testCustomViews(MeetingCommunesTestCase):
                 annex3_type_icon,
                 annex3.absolute_url()))
         self.assertEqual(
-            helper.print_all_annexes(long_format=True),
+            helper.print_all_annexes(with_filename=True),
             u'<p>{0}&nbsp;<a href="{1}">Annex</a>&nbsp;(txt)</p>\n'
             u'<p><i>FILE.txt</i></p>\n'
             u'<p>{2}&nbsp;<a href="{3}">Annex 2</a>&nbsp;(pdf)</p>\n'
@@ -99,7 +99,7 @@ class testCustomViews(MeetingCommunesTestCase):
                 annex3_type_icon,
                 annex3.absolute_url()))
         self.assertEqual(
-            helper.print_all_annexes(long_format=True, with_icon=True),
+            helper.print_all_annexes(with_filename=True, with_icon=True),
             u'<p>{0}&nbsp;<a href="{1}">Annex</a>&nbsp;<img src="http://nohost/plone/txt.png"></img>&nbsp;(txt)</p>\n'
             u'<p><i>FILE.txt</i></p>\n'
             u'<p>{2}&nbsp;<a href="{3}">Annex 2</a>&nbsp;<img src="http://nohost/plone/pdf.png"></img>&nbsp;(pdf)</p>\n'
