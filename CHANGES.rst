@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b10 (unreleased)
+4.2b10 (2021-07-16)
 -------------------
 
 - Added new external method to ease the switch to proposingGroupWithGroupInCharge.
