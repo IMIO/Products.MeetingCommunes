@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<layers>
+    <layer name="Products.MeetingCommunes.interfaces.IMeetingCommunesLayer"
+           interface="Products.MeetingCommunes.interfaces.IMeetingCommunesLayer" />
+</layers>

@@ -9,6 +9,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Updated avis-df.odt template to have default value.
   [aduchene]
+- Added a `IMeetingCommunesLayer BrowserLayer` so it is possible to override
+  PloneMeeting's documentgenerator views without using `overrides.zcml`.
+  [gbastien]
 
 4.2b10 (2021-07-16)
 -------------------

@@ -3,4 +3,28 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:plone="http://namespaces.plone.org/plone">
 
+    <!-- collective.documentgenerator helper view for MeetingItem -->
+    <browser:page
+        for="Products.PloneMeeting.interfaces.IMeetingItem"
+        class=".overrides.MCItemDocumentGenerationHelperView"
+        permission="zope2.View"
+        layer="Products.MeetingCommunes.interfaces.IMeetingCommunesLayer"
+        name="document_generation_helper_view" />
+
+    <!-- collective.documentgenerator helper view for Meeting -->
+    <browser:page
+        for="Products.PloneMeeting.content.meeting.IMeeting"
+        class=".overrides.MCMeetingDocumentGenerationHelperView"
+        permission="zope2.View"
+        layer="Products.MeetingCommunes.interfaces.IMeetingCommunesLayer"
+        name="document_generation_helper_view" />
+
+    <!-- collective.documentgenerator helper view for Folder -->
+    <browser:page
+        for="Products.ATContentTypes.interfaces.folder.IATBTreeFolder"
+        class=".overrides.MCFolderDocumentGenerationHelperView"
+        permission="zope2.View"
+        layer="Products.MeetingCommunes.interfaces.IMeetingCommunesLayer"
+        name="document_generation_helper_view" />
+
 </configure>

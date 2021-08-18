@@ -9,6 +9,7 @@ from Products.PloneMeeting.interfaces import IMeetingItemWorkflowActions
 from Products.PloneMeeting.interfaces import IMeetingItemWorkflowConditions
 from Products.PloneMeeting.interfaces import IMeetingWorkflowActions
 from Products.PloneMeeting.interfaces import IMeetingWorkflowConditions
+from Products.PloneMeeting.interfaces import IPloneMeetingLayer
 
 
 class IMeetingCommunesWorkflowActions(IMeetingWorkflowActions):
@@ -64,4 +65,7 @@ class IMeetingAdviceCommunesWorkflowActions(IMeetingAdviceWorkflowActions):
 
 
 class IMeetingAdviceCommunesWorkflowConditions(IMeetingAdviceWorkflowConditions):
+    ''' '''
+
+class IMeetingCommunesLayer(IPloneMeetingLayer):
     ''' '''
