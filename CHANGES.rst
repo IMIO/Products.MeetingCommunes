@@ -12,6 +12,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Added a `IMeetingCommunesLayer BrowserLayer` so it is possible to override
   PloneMeeting's documentgenerator views without using `overrides.zcml`.
   [gbastien]
+- Removed overrided method `CustomMeetingItem._is_complete` as it is the same
+  implementation in `Prodducts.PloneMeeting.MeetingItem`.
+  [gbastien]
 
 4.2b10 (2021-07-16)
 -------------------

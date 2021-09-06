@@ -515,11 +515,6 @@ class CustomMeetingItem(MeetingItem):
         return bool(set(cfg.adapted().getUsedFinanceGroupIds(item)).
                     intersection(set(item.adviceIndex.keys())))
 
-    def _is_complete(self):
-        """Is complete when using completeness."""
-        item = self.getSelf()
-        return item.getCompleteness() in ('completeness_complete', 'completeness_evaluation_not_required')
-
     def _adviceTypesForAdviser(self, meeting_advice_portal_type):
         """Return the advice types (positive, negative, ...) for given p_meeting_advice_portal_type.
            By default we always use every MeetingConfig.usedAdviceTypes but this is useful
@@ -1259,6 +1254,7 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
                         item.reindexObjectSecurity()
                     item.reindexObject(idxs=['getGroupsInCharge'])
         logger.info('Done.')
+
 
 # ------------------------------------------------------------------------------
 InitializeClass(CustomMeeting)
