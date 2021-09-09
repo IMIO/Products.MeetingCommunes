@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b11 (unreleased)
+4.2b11 (2021-09-09)
 -------------------
 
 - Updated avis-df.odt template to have default value.
