@@ -69,11 +69,12 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             else:
                 file_info = u'&nbsp;(???)'
 
-            res.append(u'<p>{0}&nbsp;<a href="{1}">{2}</a>{3}{4}</p>'.format(annex_type_icon,
-                                                                                   url,
-                                                                                   title,
-                                                                                   file_type_icon,
-                                                                                   file_info))
+            res.append(u'<p>{0}&nbsp;<a href="{1}">{2}</a>{3}{4}</p>'.format(
+                annex_type_icon,
+                url,
+                title,
+                file_type_icon,
+                file_info))
             if with_filename:
                 file_name = safe_unicode(cgi.escape(annex.file.filename))
                 res.append(u'<p><i>{0}</i></p>'.format(file_name))
