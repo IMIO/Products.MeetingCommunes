@@ -380,8 +380,8 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         return self.translate(self.real_context.query_state())
 
     def print_creator_name(self):
-        creator = api.user.get(self.real_context.Creator())
-        return creator and creator.getProperty('fullname') or self.real_context.Creator()
+        tool = api.portal.get_tool('portal_plonemeeting')
+        return tool.getUserName(self.real_context.Creator())
 
     def print_item_number_ordinal(self, ordinals={u'1': u'er', u'default': u'ème'}):
         """

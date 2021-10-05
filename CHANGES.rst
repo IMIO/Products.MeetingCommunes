@@ -7,8 +7,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b12 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- In `MCItemDocumentGenerationHelperView.print_creator_name` use
+  `ToolPloneMeeting.getUserName` instead `Member.getProperty`.
+  [gbastien]
 
 4.2b11 (2021-09-09)
 -------------------
