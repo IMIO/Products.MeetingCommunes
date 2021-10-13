@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b12 (unreleased)
+4.2b12 (2021-10-13)
 -------------------
 
 - In `MCItemDocumentGenerationHelperView.print_creator_name` use
