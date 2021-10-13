@@ -31,7 +31,7 @@ class testCustomViews(MeetingCommunesTestCase):
         self._enable_annex_config(item, param="signed")
         self._enable_annex_config(item, param="publishable")
         annex1 = self.addAnnex(item, to_print=True)
-        annex1_type_icon = u'<img src="{0}/{1}"></img>'.format(
+        annex1_type_icon = u'<img src="{0}/{1}"/>'.format(
             self.portal.absolute_url(),
             item.categorized_elements[annex1.UID()]['icon_url'])
         annex2 = self.addAnnex(item,
@@ -39,7 +39,7 @@ class testCustomViews(MeetingCommunesTestCase):
                                annexFile=self.annexFilePDF,
                                to_print=True,
                                confidential=True)
-        annex2_type_icon = u'<img src="{0}/{1}"></img>'.format(
+        annex2_type_icon = u'<img src="{0}/{1}"/>'.format(
             self.portal.absolute_url(),
             item.categorized_elements[annex2.UID()]['icon_url'])
         annex3 = self.addAnnex(item,
@@ -47,11 +47,11 @@ class testCustomViews(MeetingCommunesTestCase):
                                annexFile=self.annexFileCorruptedPDF,
                                to_sign=True,
                                confidential=True)
-        annex3_type_icon = u'<img src="{0}/{1}"></img>'.format(
+        annex3_type_icon = u'<img src="{0}/{1}"/>'.format(
             self.portal.absolute_url(),
             item.categorized_elements[annex3.UID()]['icon_url'])
         annexDecision1 = self.addAnnex(item, annexTitle='Annex decision 1', relatedTo='item_decision')
-        annexDecision1_type_icon = u'<img src="{0}/{1}"></img>'.format(
+        annexDecision1_type_icon = u'<img src="{0}/{1}"/>'.format(
             self.portal.absolute_url(),
             item.categorized_elements[annexDecision1.UID()]['icon_url'])
 
@@ -74,10 +74,10 @@ class testCustomViews(MeetingCommunesTestCase):
                 annex3.absolute_url()))
         self.assertEqual(
             helper.print_all_annexes(with_icon=True),
-            u'<p>{0}&nbsp;<a href="{1}">Annex</a>&nbsp;<img src="http://nohost/plone/txt.png"></img>&nbsp;(txt)</p>\n'
-            u'<p>{2}&nbsp;<a href="{3}">Annex 2</a>&nbsp;<img src="http://nohost/plone/pdf.png"></img>&nbsp;(pdf)</p>\n'
+            u'<p>{0}&nbsp;<a href="{1}">Annex</a>&nbsp;<img src="http://nohost/plone/txt.png"/>&nbsp;(txt)</p>\n'
+            u'<p>{2}&nbsp;<a href="{3}">Annex 2</a>&nbsp;<img src="http://nohost/plone/pdf.png"/>&nbsp;(pdf)</p>\n'
             u'<p>{4}&nbsp;<a href="{5}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;'
-            u'<img src="http://nohost/plone/pdf.png"></img>&nbsp;(pdf)</p>'.format(
+            u'<img src="http://nohost/plone/pdf.png"/>&nbsp;(pdf)</p>'.format(
                 annex1_type_icon,
                 annex1.absolute_url(),
                 annex2_type_icon,
@@ -100,12 +100,12 @@ class testCustomViews(MeetingCommunesTestCase):
                 annex3.absolute_url()))
         self.assertEqual(
             helper.print_all_annexes(with_filename=True, with_icon=True),
-            u'<p>{0}&nbsp;<a href="{1}">Annex</a>&nbsp;<img src="http://nohost/plone/txt.png"></img>&nbsp;(txt)</p>\n'
+            u'<p>{0}&nbsp;<a href="{1}">Annex</a>&nbsp;<img src="http://nohost/plone/txt.png"/>&nbsp;(txt)</p>\n'
             u'<p><i>FILE.txt</i></p>\n'
-            u'<p>{2}&nbsp;<a href="{3}">Annex 2</a>&nbsp;<img src="http://nohost/plone/pdf.png"></img>&nbsp;(pdf)</p>\n'
+            u'<p>{2}&nbsp;<a href="{3}">Annex 2</a>&nbsp;<img src="http://nohost/plone/pdf.png"/>&nbsp;(pdf)</p>\n'
             u'<p><i>file_correct.pdf</i></p>\n'
             u'<p>{4}&nbsp;<a href="{5}">Annex 3 with special characters h\xc3\xa9h\xc3\xa9</a>&nbsp;'
-            u'<img src="http://nohost/plone/pdf.png"></img>&nbsp;(pdf)</p>\n'
+            u'<img src="http://nohost/plone/pdf.png"/>&nbsp;(pdf)</p>\n'
             u'<p><i>file_errorDuringConversion.pdf</i></p>'.format(
                 annex1_type_icon,
                 annex1.absolute_url(),

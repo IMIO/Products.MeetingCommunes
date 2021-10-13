@@ -56,9 +56,9 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             file_type_icon = u''
             if with_icon:
                 mime_type = mimetypes_registry.lookup(annex.file.contentType)[0]
-                file_type_icon = u'&nbsp;<img src="{0}/{1}"></img>'.format(self.portal.absolute_url(),
+                file_type_icon = u'&nbsp;<img src="{0}/{1}"/>'.format(self.portal.absolute_url(),
                                                                            mime_type.icon_path)
-            annex_type_icon = u'<img src="{0}/{1}"></img>'.format(
+            annex_type_icon = u'<img src="{0}/{1}"/>'.format(
                 self.portal.absolute_url(),
                 self.real_context.categorized_elements[annex.UID()]['icon_url'])
             # sometimes filename may be None

@@ -7,8 +7,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b13 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Fixed `MCItemDocumentGenerationHelperView.print_all_annexes` to not return
+  `</img>` as `<img>` is a self closing tag.
+  [gbastien]
 
 4.2b12 (2021-10-13)
 -------------------
