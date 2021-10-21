@@ -10,6 +10,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Fixed `MCItemDocumentGenerationHelperView.print_all_annexes` to not return
   `</img>` as `<img>` is a self closing tag.
   [gbastien]
+- Fixed sample POD templates for meetings to use `view.print_value('date')`
+  instead `self.Title()`.
+  [gbastien]
 
 4.2b12 (2021-10-13)
 -------------------
