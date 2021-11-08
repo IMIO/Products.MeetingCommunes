@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b13 (unreleased)
+4.2b13 (2021-11-08)
 -------------------
 
 - Fixed `MCItemDocumentGenerationHelperView.print_all_annexes` to not return
