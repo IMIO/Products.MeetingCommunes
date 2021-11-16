@@ -738,10 +738,10 @@ class testCustomViews(MeetingCommunesTestCase):
             new_group_name="Chief Financial Officer",
             adviser_user_id="CFOAdviser"
         )
-
         self._set_up_second_finance_adviser(cfo_uid)
         cfg.powerAdvisersGroups = (cfo_uid, self.vendors_uid,)
 
+        # Item with legal advices (advices with delay)
         self.changeUser('pmCreator1')
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
@@ -770,6 +770,41 @@ class testCustomViews(MeetingCommunesTestCase):
         self._give_advice(item1, self.vendors_uid, "pmReviewer2")
         result = helper.print_formatted_finance_advice()
         self.assertTrue('avis non rendu' not in result and 'avis positive' in result)
+
+        # Item with simple advice
+        self.changeUser('pmCreator1')
+        data = {'title': 'Item with simple advice', 'category': 'maintenance'}
+        item2 = self.create('MeetingItem', **data)
+        item2.setOptionalAdvisers((self.vendors_uid,))
+        item2._update_after_edit()
+        view = item2.restrictedTraverse('@@document-generation')
+        view()
+        helper = view.get_generation_context_helper()
+
+        result = helper.print_formatted_finance_advice(finance_used_cases=("simple_not_given",))
+        self.assertTrue('avis non rendu' in result and 'avis positive' not in result)
+        self._give_advice(item2, self.vendors_uid, "pmReviewer2")
+        # Simple advice should not have delay_infos
+        self.assertDictEqual(item2.adviceIndex[self.vendors_uid]["delay_infos"], {})
+        result = helper.print_formatted_finance_advice()
+        self.assertTrue('avis positive' in result and "remis" in result)
+
+        # Item with initiative advice
+        self.changeUser('pmCreator1')
+        data = {'title': 'Item with initiative advice', 'category': 'maintenance'}
+        item3 = self.create('MeetingItem', **data)
+        item3._update_after_edit()
+        view = item3.restrictedTraverse('@@document-generation')
+        view()
+        helper = view.get_generation_context_helper()
+
+        result = helper.print_formatted_finance_advice()
+        self.assertEqual(result, "")
+        self._give_advice(item3, self.vendors_uid, "pmReviewer2")
+        # Initiative advice is 'not_asked'
+        self.assertTrue(item3.adviceIndex[self.vendors_uid]["not_asked"])
+        result = helper.print_formatted_finance_advice(finance_used_cases=("initiative",))
+        self.assertTrue('avis' in result and 'initiative' in result)
 
     def test__is_different_grouping_as_previous_item(self):
         self.assertTrue(item_dghv._is_different_grouping_as_previous_item([], u'Brol', 0))

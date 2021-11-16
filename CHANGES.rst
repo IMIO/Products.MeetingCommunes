@@ -7,7 +7,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b14 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Fixed print_formatted_finance_advice as it was not handling initiative advices properly.
+  [aduchene]
 
 
 4.2b13 (2021-11-08)
