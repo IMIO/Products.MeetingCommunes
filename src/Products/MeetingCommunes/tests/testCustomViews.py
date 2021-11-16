@@ -738,10 +738,10 @@ class testCustomViews(MeetingCommunesTestCase):
             new_group_name="Chief Financial Officer",
             adviser_user_id="CFOAdviser"
         )
-
         self._set_up_second_finance_adviser(cfo_uid)
         cfg.powerAdvisersGroups = (cfo_uid, self.vendors_uid,)
 
+        # Item with legal advices (advices with delay)
         self.changeUser('pmCreator1')
         data = {'title': 'Item to advice', 'category': 'maintenance'}
         item1 = self.create('MeetingItem', **data)
@@ -784,7 +784,6 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper.print_formatted_finance_advice()
         self.assertTrue('avis non rendu' in result and 'avis positive' not in result)
         self._give_advice(item2, self.vendors_uid, "pmReviewer2")
-        item2._update_after_edit()
         result = helper.print_formatted_finance_advice()
         self.assertTrue('avis positive' in result and "remis" in result)
 
@@ -802,8 +801,6 @@ class testCustomViews(MeetingCommunesTestCase):
         self._give_advice(item3, self.vendors_uid, "pmReviewer2")
         result = helper.print_formatted_finance_advice()
         self.assertTrue('avis' in result and 'initiative' in result)
-
-
 
     def test__is_different_grouping_as_previous_item(self):
         self.assertTrue(item_dghv._is_different_grouping_as_previous_item([], u'Brol', 0))
