@@ -771,6 +771,40 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper.print_formatted_finance_advice()
         self.assertTrue('avis non rendu' not in result and 'avis positive' in result)
 
+        # Item with simple advice
+        self.changeUser('pmCreator1')
+        data = {'title': 'Item with simple advice', 'category': 'maintenance'}
+        item2 = self.create('MeetingItem', **data)
+        item2.setOptionalAdvisers((self.vendors_uid,))
+        item2._update_after_edit()
+        view = item2.restrictedTraverse('@@document-generation')
+        view()
+        helper = view.get_generation_context_helper()
+
+        result = helper.print_formatted_finance_advice()
+        self.assertTrue('avis non rendu' in result and 'avis positive' not in result)
+        self._give_advice(item2, self.vendors_uid, "pmReviewer2")
+        item2._update_after_edit()
+        result = helper.print_formatted_finance_advice()
+        self.assertTrue('avis positive' in result and "remis" in result)
+
+        # Item with initiative advice
+        self.changeUser('pmCreator1')
+        data = {'title': 'Item with initiative advice', 'category': 'maintenance'}
+        item3 = self.create('MeetingItem', **data)
+        item3._update_after_edit()
+        view = item3.restrictedTraverse('@@document-generation')
+        view()
+        helper = view.get_generation_context_helper()
+
+        result = helper.print_formatted_finance_advice()
+        self.assertEqual(result, "")
+        self._give_advice(item3, self.vendors_uid, "pmReviewer2")
+        result = helper.print_formatted_finance_advice()
+        self.assertTrue('avis' in result and 'initiative' in result)
+
+
+
     def test__is_different_grouping_as_previous_item(self):
         self.assertTrue(item_dghv._is_different_grouping_as_previous_item([], u'Brol', 0))
         self.assertTrue(item_dghv._is_different_grouping_as_previous_item([[u'']], u'Brol', 0))
