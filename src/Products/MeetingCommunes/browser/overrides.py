@@ -128,8 +128,8 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             xhtmlContents, **kwargs)
 
     def print_formatted_finance_advice(self,
-                                       finance_used_cases=None,
-                                       finance_advices_template=None):
+                                       finance_used_cases=[],
+                                       finance_advices_template={}):
         """
         Print the finance advices based on legal cases and a template.
         :param finance_used_cases: legal cases among 'initiative', 'legal', 'simple',

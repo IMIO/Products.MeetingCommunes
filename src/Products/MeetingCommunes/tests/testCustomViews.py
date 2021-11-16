@@ -781,9 +781,11 @@ class testCustomViews(MeetingCommunesTestCase):
         view()
         helper = view.get_generation_context_helper()
 
-        result = helper.print_formatted_finance_advice()
+        result = helper.print_formatted_finance_advice(finance_used_cases=("simple_not_given",))
         self.assertTrue('avis non rendu' in result and 'avis positive' not in result)
         self._give_advice(item2, self.vendors_uid, "pmReviewer2")
+        # Simple advice should not have delay_infos
+        self.assertDictEqual(item2.adviceIndex[self.vendors_uid]["delay_infos"], {})
         result = helper.print_formatted_finance_advice()
         self.assertTrue('avis positive' in result and "remis" in result)
 
@@ -799,7 +801,9 @@ class testCustomViews(MeetingCommunesTestCase):
         result = helper.print_formatted_finance_advice()
         self.assertEqual(result, "")
         self._give_advice(item3, self.vendors_uid, "pmReviewer2")
-        result = helper.print_formatted_finance_advice()
+        # Initiative advice is 'not_asked'
+        self.assertTrue(item3.adviceIndex[self.vendors_uid]["not_asked"])
+        result = helper.print_formatted_finance_advice(finance_used_cases=("initiative",))
         self.assertTrue('avis' in result and 'initiative' in result)
 
     def test__is_different_grouping_as_previous_item(self):
