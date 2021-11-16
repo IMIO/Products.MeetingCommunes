@@ -183,8 +183,8 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                     prefix=self._get_prefix_for_finance_advice('prefix', advice),
                     to=self._get_prefix_for_finance_advice('to', advice),
                     by=self._get_prefix_for_finance_advice('by', advice),
-                    item_transmitted_on_localized=advice["item_transmitted_on_localized"],
-                    advice_given_on_localized=advice["advice_given_on_localized"]
+                    item_transmitted_on_localized=advice.get("item_transmitted_on_localized"),
+                    advice_given_on_localized=advice.get("advice_given_on_localized")
                 )
         return formatted_finance_advice.encode('utf-8')
 
