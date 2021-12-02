@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
-from Products.PloneMeeting.model.adaptations import performWorkflowAdaptations
-from Products.PloneMeeting.tests.PloneMeetingTestCase import pm_logger
 
 
 class testCustomWFAdaptations(MeetingCommunesTestCase):
@@ -23,7 +21,6 @@ class testCustomWFAdaptations(MeetingCommunesTestCase):
         self._meetingadvicefinances_add_advicecreated_state_inactive()
         cfg.setWorkflowAdaptations(('meetingadvicefinances_add_advicecreated_state', ))
         cfg.at_post_edit_script()
-        performWorkflowAdaptations(cfg, logger=pm_logger)
         self._meetingadvicefinances_add_advicecreated_state_active()
 
     def _meetingadvicefinances_add_advicecreated_state_inactive(self):
