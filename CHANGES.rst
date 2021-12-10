@@ -7,8 +7,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b15 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Added two examples in attendees.odt template.
+  [aduchene]
 
 4.2b14 (2021-11-26)
 -------------------
