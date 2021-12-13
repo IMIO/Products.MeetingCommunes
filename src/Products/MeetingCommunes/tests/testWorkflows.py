@@ -72,9 +72,9 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.changeUser('pmReviewer1')
         self.addAnnex(item1, relatedTo='item_decision')
         self.do(item1, 'validate')
-        # can add decision annex but not normal annex
+        # can not add decision annex or normal annex
         self.assertRaises(Unauthorized, self.addAnnex, item1)
-        self.addAnnex(item1, relatedTo='item_decision')
+        self.assertRaises(Unauthorized, self.addAnnex, item1, relatedTo='item_decision')
         # pmManager inserts item1 into the meeting and publishes it
         self.changeUser('pmManager')
         managerAnnex = self.addAnnex(item1)
@@ -153,18 +153,18 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # The reviewer can add a decision annex on proposed item
         self.addAnnex(item1, relatedTo='item_decision')
         self.do(item1, 'validate')
-        # can add decision annex but not normal annex
+        # can not add decision annex or normal annex
         self.assertRaises(Unauthorized, self.addAnnex, item1)
-        self.addAnnex(item1, relatedTo='item_decision')
+        self.assertRaises(Unauthorized, self.addAnnex, item1, relatedTo='item_decision')
         # pmManager inserts item1 into the meeting and freezes it
         self.changeUser('pmManager')
         managerAnnex = self.addAnnex(item1)
         self.portal.restrictedTraverse('@@delete_givenuid')(managerAnnex.UID())
         self.do(item1, 'present')
         self.changeUser('pmCreator1')
-        # can add decision annex but not normal annex
+        # can not add decision annex or normal annex
         self.assertRaises(Unauthorized, self.addAnnex, item1)
-        self.addAnnex(item1, relatedTo='item_decision')
+        self.assertRaises(Unauthorized, self.addAnnex, item1, relatedTo='item_decision')
         self.changeUser('pmManager')
         self.do(meeting, 'freeze')
         # pmReviewer2 validates item2
@@ -179,17 +179,17 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.failIf(len(meeting.get_items()) != 2)
         self.failUnless(len(meeting.get_items(list_types=['late'])) == 1)
         self.changeUser('pmReviewer1')
-        # can add decision annex but not normal annex
+        # can not add decision annex or normal annex
         self.assertRaises(Unauthorized, self.addAnnex, item1)
-        self.addAnnex(item1, relatedTo='item_decision')
+        self.assertRaises(Unauthorized, self.addAnnex, item1, relatedTo='item_decision')
         # pmManager adds a decision to item1 and publishes the meeting
         self.changeUser('pmManager')
         item1.setDecision(self.decisionText)
         self.do(meeting, 'publish')
         self.changeUser('pmReviewer2')
-        # can add decision annex but not normal annex
+        # can not add decision annex or normal annex
         self.assertRaises(Unauthorized, self.addAnnex, item2)
-        self.addAnnex(item2, relatedTo='item_decision')
+        self.assertRaises(Unauthorized, self.addAnnex, item2, relatedTo='item_decision')
         self.changeUser('pmReviewer1')
         self.assertRaises(Unauthorized, self.addAnnex, item2)
         self.assertRaises(Unauthorized, self.addAnnex, item2, relatedTo='item_decision')
