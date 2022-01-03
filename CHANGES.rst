@@ -9,13 +9,14 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Added two examples in attendees.odt template.
   [aduchene]
+- Fixed `council-rapport.odt`, `MeetingItem.listProposingGroups` does not exist anymore.
+  [gbastien]
 
 4.2b14 (2021-11-26)
 -------------------
 
 - Fixed print_formatted_finance_advice as it was not handling initiative advices properly.
   [aduchene]
-
 
 4.2b13 (2021-11-08)
 -------------------
