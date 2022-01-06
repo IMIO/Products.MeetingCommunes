@@ -7,8 +7,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b16 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Fixed `MeetingAdviceCommunesWorkflowConditions._check_completeness`, call
+  `_is_complete` on the parent (`MeetingItem`).
+  [gbastien]
 
 4.2b15 (2022-01-03)
 -------------------
