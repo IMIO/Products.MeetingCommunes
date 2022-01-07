@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b16 (unreleased)
+4.2b16 (2022-01-07)
 -------------------
 
 - Fixed `MeetingAdviceCommunesWorkflowConditions._check_completeness`, call
