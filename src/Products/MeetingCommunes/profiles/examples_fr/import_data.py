@@ -8,6 +8,7 @@
 from copy import deepcopy
 from DateTime import DateTime
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
+from Products.MeetingCommunes.config import PORTAL_CATEGORIES
 from Products.PloneMeeting.profiles import AnnexTypeDescriptor
 from Products.PloneMeeting.profiles import CategoryDescriptor
 from Products.PloneMeeting.profiles import ItemAnnexTypeDescriptor
@@ -44,8 +45,10 @@ annexeAvisLegal = AnnexTypeDescriptor('annexeAvisLegal', 'Extrait article de loi
 annexeSeance = AnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', relatedTo='meeting')
 
 # Categories -------------------------------------------------------------------
-categories = [CategoryDescriptor('recurrents', 'Récurrents'),
-              CategoryDescriptor('divers', 'Divers')]
+categories = PORTAL_CATEGORIES + [
+    CategoryDescriptor('recurrents', 'Récurrents'),
+    CategoryDescriptor('divers', 'Divers')
+]
 
 # Style Template ---------------------------------------------------------------
 templates_path = os.path.join(os.path.dirname(__file__), 'templates')
@@ -222,13 +225,16 @@ conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Co
 
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel")
 
-groups = [OrgDescriptor('dirgen', 'Directeur Général', u'DG'),
-          OrgDescriptor('secretariat', 'Secrétariat Général', u'Secr', groups_in_charge=['dirgen']),
-          OrgDescriptor('informatique', 'Service informatique', u'Info'),
-          OrgDescriptor('personnel', 'Service du personnel', u'Pers'),
+groups = [OrgDescriptor('bourgmestre', 'Bourgmestre', u'BG'),
+          OrgDescriptor('dirgen', 'Directeur Général', u'DG'),
+          OrgDescriptor('secretariat', 'Secrétariat Général', u'Secr', groups_in_charge=['bourgmestre']),
+          OrgDescriptor('informatique', 'Service informatique', u'Info', groups_in_charge=['bourgmestre']),
+          OrgDescriptor('echevinPers', 'Echevin du Personnel', u'EP'),
+          OrgDescriptor('personnel', 'Service du personnel', u'Pers', groups_in_charge=['echevinPers']),
           OrgDescriptor('dirfin', 'Directeur Financier', u'DF'),
-          OrgDescriptor('comptabilite', 'Service comptabilité', u'Compt'),
-          OrgDescriptor('travaux', 'Service travaux', u'Trav'), ]
+          OrgDescriptor('comptabilite', 'Service comptabilité', u'Compt', groups_in_charge=['echevinPers']),
+          OrgDescriptor('echevinTrav', 'Echevin du Travaux', u'ET'),
+          OrgDescriptor('travaux', 'Service travaux', u'Trav', groups_in_charge=['echevinTrav']), ]
 
 # MeetingManager
 groups[0].creators.append(dgen)
@@ -526,15 +532,8 @@ collegeMeeting.recurringItems = [
         category='recurrents',
         proposingGroup='secretariat',
         decision='<p>Mandats de paiement de la semaine approuvés</p>'), ]
-collegeMeeting.itemTemplates = [
-    ItemTemplateDescriptor(
-        id='template1',
-        title='Tutelle CPAS',
-        description='<p>Tutelle CPAS</p>',
-        category='divers',
-        proposingGroup='secretariat',
-        templateUsingGroups=['secretariat', 'dirgen', ],
-        decision="""<p>Vu la loi du 8 juillet 1976 organique des centres publics d'action sociale
+
+template1_decision="""<p>Vu la loi du 8 juillet 1976 organique des centres publics d'action sociale
  et plus particulièrement son article 111;</p>
 <p>Vu l'Arrêté du Gouvernement Wallon du 22 avril 2004 portant codification de la législation
  relative aux pouvoirs locaux tel que confirmé par le décret du 27 mai 2004 du Conseil régional wallon;</p>
@@ -549,15 +548,8 @@ collegeMeeting.itemTemplates = [
 <p>Les décisions du Bureau permanent/Conseil de l'Action sociale visées ci-dessus sont conformes
  à la loi et à l'intérêt général et qu'il n'y a, dès lors, pas lieu de les annuler.</p>
 <p><strong>Article 2 :</strong></p>
-<p>Copie de la présente délibération sera transmise au Bureau permanent/Conseil de l'Action sociale.</p>"""),
-    ItemTemplateDescriptor(
-        id='template2',
-        title='Contrôle médical systématique agent contractuel',
-        description='<p>Contrôle médical systématique agent contractuel</p>',
-        category='divers',
-        proposingGroup='personnel',
-        templateUsingGroups=['personnel', ],
-        decision="""
+<p>Copie de la présente délibération sera transmise au Bureau permanent/Conseil de l'Action sociale.</p>"""
+template2_decision="""
             <p>Vu la loi du 26 mai 2002 instituant le droit à l’intégration sociale;</p>
 <p>Vu la délibération du Conseil communal du 29 juin 2009 concernant le cahier spécial des
  charges relatif au marché de services portant sur le contrôle des agents communaux absents pour raisons médicales;</p>
@@ -579,15 +571,8 @@ collegeMeeting.itemTemplates = [
 <p><strong>Article 2</strong> :  De prévenir XXX, qu’en cas de récidive, il sera proposé par le Secrétaire
  communal au Collège de transformer les jours de congés de maladie en absence injustifiée (retenue sur traitement
  avec application de la loi du 26 mai 2002 citée ci-dessus).</p>
-<p><strong>Article 3</strong> : De charger le service du personnel du suivi de ce dossier.</p>"""),
-    ItemTemplateDescriptor(
-        id='template3',
-        title='Engagement temporaire',
-        description='<p>Engagement temporaire</p>',
-        category='divers',
-        proposingGroup='personnel',
-        templateUsingGroups=['personnel', ],
-        decision="""<p>Considérant qu’il y a lieu de pourvoir au remplacement de Madame XXX,
+<p><strong>Article 3</strong> : De charger le service du personnel du suivi de ce dossier.</p>"""
+template3_decision="""<p>Considérant qu’il y a lieu de pourvoir au remplacement de Madame XXX,
  XXX bénéficiant d’une interruption de carrière pour convenances personnelles pour l’année scolaire
  2009/2010. &nbsp;</p>
 <p>Attendu qu’un appel public a été lancé au mois de mai dernier;</p>
@@ -609,15 +594,8 @@ collegeMeeting.itemTemplates = [
 <p>L’horaire hebdomadaire de l’intéressé est fixé à 13 périodes.</p>
 <p><b>Article 3&nbsp;:</b></p>
 <p>La présente délibération sera soumise à la ratification du Conseil Communal. Elle sera transmise au
- Bureau Régional de l’Enseignement primaire et maternel, à l’Inspectrice Cantonale et à la direction concernée.</p>"""),
-    ItemTemplateDescriptor(
-        id='template4',
-        title='Prestation réduite',
-        description='<p>Prestation réduite</p>',
-        category='divers',
-        proposingGroup='personnel',
-        templateUsingGroups=['personnel', ],
-        decision="""<p>Vu la loi de redressement du 22 janvier 1985 (article 99 et suivants) et de l’Arrêté Royal du
+ Bureau Régional de l’Enseignement primaire et maternel, à l’Inspectrice Cantonale et à la direction concernée.</p>"""
+template4_decision="""<p>Vu la loi de redressement du 22 janvier 1985 (article 99 et suivants) et de l’Arrêté Royal du
          12 août 1991 (tel que modifié) relatifs à l’interruption de carrière professionnelle dans l’enseignement;</p>
 <p>Vu la lettre du XXX par laquelle Madame XXX, institutrice maternelle, sollicite le renouvellement pendant l’année
  scolaire 2009/2010 de son congé pour prestations réduites mi-temps pour convenances personnelles dont elle bénéficie
@@ -638,15 +616,8 @@ collegeMeeting.itemTemplates = [
 <p><b>Article 3&nbsp;:</b></p>
 <p>La présente délibération sera soumise pour accord au prochain Conseil, transmise au Bureau Régional de
  l’Enseignement primaire et maternel, à&nbsp;l’Inspectrice Cantonale, à la direction
- concernée et à l’intéressée.</p>"""),
-    ItemTemplateDescriptor(
-        id='template5',
-        title='Exemple modèle disponible pour tous',
-        description='<p>Exemple modèle disponible pour tous</p>',
-        category='divers',
-        proposingGroup='',
-        templateUsingGroups=[],
-        decision="""<p>Vu la loi du XXX;</p>
+ concernée et à l’intéressée.</p>"""
+template5_decision="""<p>Vu la loi du XXX;</p>
 <p>Vu ...;</p>
 <p>Attendu que ...;</p>
 <p>Vu le décret de la Communauté Française du ...;</p>
@@ -657,7 +628,49 @@ collegeMeeting.itemTemplates = [
 <p><b>Article 2</b> :</p>
 <p>...</p>
 <p><b>Article 3&nbsp;:</b></p>
-<p>...</p>"""),
+<p>...</p>"""
+
+collegeMeeting.itemTemplates = [
+    ItemTemplateDescriptor(
+        id='template1',
+        title='Tutelle CPAS',
+        description='<p>Tutelle CPAS</p>',
+        category='divers',
+        proposingGroup='secretariat',
+        templateUsingGroups=['secretariat', 'dirgen', ],
+        decision=template1_decision),
+    ItemTemplateDescriptor(
+        id='template2',
+        title='Contrôle médical systématique agent contractuel',
+        description='<p>Contrôle médical systématique agent contractuel</p>',
+        category='divers',
+        proposingGroup='personnel',
+        templateUsingGroups=['personnel', ],
+        decision=template2_decision),
+    ItemTemplateDescriptor(
+        id='template3',
+        title='Engagement temporaire',
+        description='<p>Engagement temporaire</p>',
+        category='divers',
+        proposingGroup='personnel',
+        templateUsingGroups=['personnel', ],
+        decision=template3_decision),
+    ItemTemplateDescriptor(
+        id='template4',
+        title='Prestation réduite',
+        description='<p>Prestation réduite</p>',
+        category='divers',
+        proposingGroup='personnel',
+        templateUsingGroups=['personnel', ],
+        decision=template4_decision),
+    ItemTemplateDescriptor(
+        id='template5',
+        title='Exemple modèle disponible pour tous',
+        description='<p>Exemple modèle disponible pour tous</p>',
+        category='divers',
+        proposingGroup='',
+        templateUsingGroups=[],
+        decision=template5_decision),
 ]
 collegeMeeting.addContactsCSV = True
 
@@ -726,6 +739,7 @@ councilMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
                              annexeAvis, annexeAvisLegal,
                              annexeSeance]
 councilMeeting.usedItemAttributes = ['description',
+                                     'proposingGroupWithGroupInCharge',
                                      'motivation',
                                      'oralQuestion',
                                      'itemInitiator',
@@ -747,6 +761,14 @@ councilMeeting.usedMeetingAttributes = ['start_date',
                                         'observations',
                                         'notes',
                                         'in_and_out_moves']
+councilMeeting.itemColumns = ['Creator', 'CreationDate', 'ModificationDate', 'review_state',
+                              'proposing_group_acronym', 'groups_in_charge_acronym', 'advices', 'meeting_date',
+                              'getItemIsSigned', 'actions']
+councilMeeting.availableItemsListVisibleColumns = [
+    'Creator', 'CreationDate', 'proposing_group_acronym', 'groups_in_charge_acronym', 'advices', 'actions']
+councilMeeting.itemsListVisibleColumns = [
+    u'static_item_reference', u'Creator', u'CreationDate', u'review_state',
+    u'proposing_group_acronym', u'groups_in_charge_acronym', u'advices', u'actions']
 councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.motivation',
                                        'MeetingItem.decision',
@@ -803,8 +825,59 @@ councilMeeting.recurringItems = [
         description='<p>Approuve le procès-verbal de la séance antérieure</p>',
         category='recurrents',
         proposingGroup='secretariat',
+        groupsInCharge=('bourgmestre',),
+        proposingGroupWithGroupInCharge='secretariat__groupincharge__bourgmestre',
         decision='<p>Procès-verbal approuvé</p>'), ]
-councilMeeting.itemTemplates = collegeMeeting.itemTemplates
+councilMeeting.itemTemplates = [
+    ItemTemplateDescriptor(
+        id='template1',
+        title='Tutelle CPAS',
+        description='<p>Tutelle CPAS</p>',
+        category='divers',
+        proposingGroup='secretariat',
+        groupsInCharge=('bourgmestre',),
+        proposingGroupWithGroupInCharge='secretariat__groupincharge__bourgmestre',
+        templateUsingGroups=['secretariat', 'dirgen', ],
+        decision=template1_decision),
+    ItemTemplateDescriptor(
+        id='template2',
+        title='Contrôle médical systématique agent contractuel',
+        description='<p>Contrôle médical systématique agent contractuel</p>',
+        category='divers',
+        proposingGroup='personnel',
+        groupsInCharge=('echevinPers',),
+        proposingGroupWithGroupInCharge='personnel__groupincharge__echevinPers',
+        templateUsingGroups=['personnel', ],
+        decision=template2_decision),
+    ItemTemplateDescriptor(
+        id='template3',
+        title='Engagement temporaire',
+        description='<p>Engagement temporaire</p>',
+        category='divers',
+        proposingGroup='personnel',
+        groupsInCharge=('echevinPers',),
+        proposingGroupWithGroupInCharge='personnel__groupincharge__echevinPers',
+        templateUsingGroups=['personnel', ],
+        decision=template3_decision),
+    ItemTemplateDescriptor(
+        id='template4',
+        title='Prestation réduite',
+        description='<p>Prestation réduite</p>',
+        category='divers',
+        proposingGroup='personnel',
+        groupsInCharge=('echevinPers',),
+        proposingGroupWithGroupInCharge='personnel__groupincharge__echevinPers',
+        templateUsingGroups=['personnel', ],
+        decision=template4_decision),
+    ItemTemplateDescriptor(
+        id='template5',
+        title='Exemple modèle disponible pour tous',
+        description='<p>Exemple modèle disponible pour tous</p>',
+        category='divers',
+        proposingGroup='',
+        templateUsingGroups=[],
+        decision=template5_decision),
+]
 councilMeeting.orderedContacts = ['ga-c-rard-bourgmestre/bourgmestre-mon-organisation',
                                   'isabelle-daga/dg-mon-organisation',
                                   'claudine-lapremiare/alderman-mon-organisation',
