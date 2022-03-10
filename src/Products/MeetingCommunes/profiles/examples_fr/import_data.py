@@ -47,7 +47,8 @@ annexeSeance = AnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', relatedTo=
 # Categories -------------------------------------------------------------------
 categories = PORTAL_CATEGORIES + [
     CategoryDescriptor('recurrents', 'Récurrents'),
-    CategoryDescriptor('divers', 'Divers')
+    CategoryDescriptor('divers', 'Divers'),
+    CategoryDescriptor('rh', 'Ressources Humaine'),
 ]
 
 # Style Template ---------------------------------------------------------------
@@ -236,58 +237,63 @@ groups = [OrgDescriptor('bourgmestre', 'Bourgmestre', u'BG'),
           OrgDescriptor('echevinTrav', 'Echevin du Travaux', u'ET'),
           OrgDescriptor('travaux', 'Service travaux', u'Trav', groups_in_charge=['echevinTrav']), ]
 
-# MeetingManager
-groups[0].creators.append(dgen)
-groups[0].reviewers.append(dgen)
-groups[0].observers.append(dgen)
-groups[0].advisers.append(dgen)
-
+# Bourgmestre
+groups[0].advisers.append(bourgmestre)
+# Directeur Général
 groups[1].creators.append(dgen)
 groups[1].reviewers.append(dgen)
 groups[1].observers.append(dgen)
 groups[1].advisers.append(dgen)
-
-groups[2].creators.append(agentInfo)
+# Secrétariat Général
 groups[2].creators.append(dgen)
-groups[2].reviewers.append(agentInfo)
 groups[2].reviewers.append(dgen)
-groups[2].observers.append(agentInfo)
-groups[2].advisers.append(agentInfo)
-
-groups[3].creators.append(agentPers)
-groups[3].observers.append(agentPers)
+groups[2].observers.append(dgen)
+groups[2].advisers.append(dgen)
+# Service informatique
+groups[3].creators.append(agentInfo)
 groups[3].creators.append(dgen)
+groups[3].reviewers.append(agentInfo)
 groups[3].reviewers.append(dgen)
-groups[3].creators.append(chefPers)
-groups[3].reviewers.append(chefPers)
-groups[3].observers.append(chefPers)
-groups[3].observers.append(echevinPers)
-groups[3].advisers.append(emetteuravisPers)
-
-groups[4].creators.append(dfin)
-groups[4].reviewers.append(dfin)
-groups[4].observers.append(dfin)
-groups[4].advisers.append(dfin)
-
-groups[5].creators.append(agentCompta)
-groups[5].creators.append(chefCompta)
-groups[5].creators.append(dfin)
+groups[3].observers.append(agentInfo)
+groups[3].advisers.append(agentInfo)
+# Echevin du Personnel
+groups[4].advisers.append(echevinPers)
+# Service du personnel
+groups[5].creators.append(agentPers)
+groups[5].observers.append(agentPers)
 groups[5].creators.append(dgen)
-groups[5].reviewers.append(chefCompta)
-groups[5].reviewers.append(dfin)
 groups[5].reviewers.append(dgen)
-groups[5].observers.append(agentCompta)
-groups[5].advisers.append(chefCompta)
-groups[5].advisers.append(dfin)
-
-groups[6].creators.append(agentTrav)
-groups[6].creators.append(dgen)
-groups[6].reviewers.append(agentTrav)
-groups[6].reviewers.append(dgen)
-groups[6].observers.append(agentTrav)
-groups[6].observers.append(echevinTrav)
-groups[6].advisers.append(agentTrav)
-
+groups[5].creators.append(chefPers)
+groups[5].reviewers.append(chefPers)
+groups[5].observers.append(chefPers)
+groups[5].observers.append(echevinPers)
+groups[5].advisers.append(emetteuravisPers)
+# Directeur Financier
+groups[6].creators.append(dfin)
+groups[6].reviewers.append(dfin)
+groups[6].observers.append(dfin)
+groups[6].advisers.append(dfin)
+# Service comptabilité
+groups[7].creators.append(agentCompta)
+groups[7].creators.append(chefCompta)
+groups[7].creators.append(dfin)
+groups[7].creators.append(dgen)
+groups[7].reviewers.append(chefCompta)
+groups[7].reviewers.append(dfin)
+groups[7].reviewers.append(dgen)
+groups[7].observers.append(agentCompta)
+groups[7].advisers.append(chefCompta)
+groups[7].advisers.append(dfin)
+# Echevin du Travaux
+groups[8].advisers.append(echevinTrav)
+# Service travaux
+groups[9].creators.append(agentTrav)
+groups[9].creators.append(dgen)
+groups[9].reviewers.append(agentTrav)
+groups[9].reviewers.append(dgen)
+groups[9].observers.append(agentTrav)
+groups[9].observers.append(echevinTrav)
+groups[9].advisers.append(agentTrav)
 # Meeting configurations -------------------------------------------------------
 # college
 collegeMeeting = MeetingConfigDescriptor(
@@ -501,10 +507,10 @@ collegeMeeting.onMeetingTransitionItemActionToExecute = (
 collegeMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
 collegeMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 collegeMeeting.useCopies = True
-collegeMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
-                                       groups[1].getIdSuffixed('reviewers'),
+collegeMeeting.selectableCopyGroups = [groups[1].getIdSuffixed('reviewers'),
                                        groups[2].getIdSuffixed('reviewers'),
-                                       groups[4].getIdSuffixed('reviewers')]
+                                       groups[3].getIdSuffixed('reviewers'),
+                                       groups[5].getIdSuffixed('reviewers')]
 collegeMeeting.styleTemplates = collegeStyleTemplate
 collegeMeeting.podTemplates = collegeTemplates
 collegeMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'cfg2',
@@ -761,11 +767,11 @@ councilMeeting.usedMeetingAttributes = ['start_date',
                                         'observations',
                                         'notes',
                                         'in_and_out_moves']
-councilMeeting.itemColumns = ['Creator', 'CreationDate', 'ModificationDate', 'review_state',
+councilMeeting.itemColumns = ['Creator', 'CreationDate', 'ModificationDate', 'review_state', 'getCategory',
                               'proposing_group_acronym', 'groups_in_charge_acronym', 'advices', 'meeting_date',
-                              'getItemIsSigned', 'actions']
+                              'actions']
 councilMeeting.availableItemsListVisibleColumns = [
-    'Creator', 'CreationDate', 'proposing_group_acronym', 'groups_in_charge_acronym', 'advices', 'actions']
+    'Creator', 'CreationDate', 'getCategory', 'proposing_group_acronym', 'groups_in_charge_acronym', 'advices', 'actions']
 councilMeeting.itemsListVisibleColumns = [
     u'static_item_reference', u'Creator', u'CreationDate', u'review_state',
     u'proposing_group_acronym', u'groups_in_charge_acronym', u'advices', u'actions']
@@ -811,10 +817,10 @@ councilMeeting.powerObservers = deepcopy(collegeMeeting.powerObservers)
 councilMeeting.powerAdvisersGroups = ()
 councilMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 councilMeeting.useCopies = True
-councilMeeting.selectableCopyGroups = [groups[0].getIdSuffixed('reviewers'),
-                                       groups[1].getIdSuffixed('reviewers'),
+councilMeeting.selectableCopyGroups = [groups[1].getIdSuffixed('reviewers'),
                                        groups[2].getIdSuffixed('reviewers'),
-                                       groups[4].getIdSuffixed('reviewers')]
+                                       groups[3].getIdSuffixed('reviewers'),
+                                       groups[5].getIdSuffixed('reviewers')]
 councilMeeting.styleTemplates = councilStyleTemplate
 councilMeeting.podTemplates = councilTemplates
 
@@ -824,8 +830,6 @@ councilMeeting.recurringItems = [
         title='Approuve le procès-verbal de la séance antérieure',
         description='<p>Approuve le procès-verbal de la séance antérieure</p>',
         category='recurrents',
-        proposingGroup='secretariat',
-        groupsInCharge=('bourgmestre',),
         proposingGroupWithGroupInCharge='secretariat__groupincharge__bourgmestre',
         decision='<p>Procès-verbal approuvé</p>'), ]
 councilMeeting.itemTemplates = [
@@ -833,9 +837,7 @@ councilMeeting.itemTemplates = [
         id='template1',
         title='Tutelle CPAS',
         description='<p>Tutelle CPAS</p>',
-        category='divers',
-        proposingGroup='secretariat',
-        groupsInCharge=('bourgmestre',),
+        category='politique',
         proposingGroupWithGroupInCharge='secretariat__groupincharge__bourgmestre',
         templateUsingGroups=['secretariat', 'dirgen', ],
         decision=template1_decision),
@@ -843,38 +845,34 @@ councilMeeting.itemTemplates = [
         id='template2',
         title='Contrôle médical systématique agent contractuel',
         description='<p>Contrôle médical systématique agent contractuel</p>',
-        category='divers',
-        proposingGroup='personnel',
-        groupsInCharge=('echevinPers',),
+        category='rh',
         proposingGroupWithGroupInCharge='personnel__groupincharge__echevinPers',
         templateUsingGroups=['personnel', ],
+        privacy='secret',
         decision=template2_decision),
     ItemTemplateDescriptor(
         id='template3',
         title='Engagement temporaire',
         description='<p>Engagement temporaire</p>',
-        category='divers',
-        proposingGroup='personnel',
-        groupsInCharge=('echevinPers',),
+        category='rh',
         proposingGroupWithGroupInCharge='personnel__groupincharge__echevinPers',
         templateUsingGroups=['personnel', ],
+        privacy='secret',
         decision=template3_decision),
     ItemTemplateDescriptor(
         id='template4',
         title='Prestation réduite',
         description='<p>Prestation réduite</p>',
-        category='divers',
-        proposingGroup='personnel',
-        groupsInCharge=('echevinPers',),
+        category='administration',
         proposingGroupWithGroupInCharge='personnel__groupincharge__echevinPers',
         templateUsingGroups=['personnel', ],
+        privacy='public',
         decision=template4_decision),
     ItemTemplateDescriptor(
         id='template5',
         title='Exemple modèle disponible pour tous',
         description='<p>Exemple modèle disponible pour tous</p>',
         category='divers',
-        proposingGroup='',
         templateUsingGroups=[],
         decision=template5_decision),
 ]

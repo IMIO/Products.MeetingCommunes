@@ -401,10 +401,12 @@ def addDemoData(context):
                                          newPortalType=cfg.getItemTypeName())
                 newItem.setTitle(item['title'])
                 newItem.setBudgetRelated(item['budgetRelated'])
-                if item['review_state'] in ['proposed', 'validated', ]:
+                if item['review_state'] == 'proposed':
                     wfTool.doActionFor(newItem, 'propose')
                 if item['review_state'] == 'validated':
-                    wfTool.doActionFor(newItem, 'validate')
+                    transitions = cfg.getTransitionsForPresentingAnItem(org_uid=newItem.getProposingGroup())
+                    for tr in transitions[:-1]:
+                        wfTool.doActionFor(newItem, tr)
                 # add annexe and advice for one item in College
                 if item['templateId'] == 'template3' and cfg.id == 'meeting-config-college':
                     cpt = 1
