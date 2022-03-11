@@ -7,8 +7,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b17 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Optimized POD template `meeting_assemblies.odt`, use `catalog` available by
+  default in the template context instead `self.portal_catalog`.
+  [gbastien]
 
 4.2b16 (2022-01-07)
 -------------------
