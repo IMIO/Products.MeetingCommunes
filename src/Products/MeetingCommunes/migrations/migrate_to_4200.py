@@ -4,6 +4,7 @@ from DateTime import DateTime
 from plone import api
 from plone.namedfile import NamedBlobFile
 from Products.PloneMeeting.migrations.migrate_to_4200 import Migrate_To_4200 as PMMigrate_To_4200
+from Products.PloneMeeting.migrations.migrate_to_4201 import Migrate_To_4201
 
 import logging
 
@@ -131,6 +132,9 @@ class Migrate_To_4200(PMMigrate_To_4200):
 
         # call steps from Products.PloneMeeting
         super(Migrate_To_4200, self).run(extra_omitted=extra_omitted)
+
+        # execute upgrade steps in PM that were added after main upgrade to 4200
+        Migrate_To_4201(self.portal).run(from_migration_to_4200=True)
 
         # add new searches (searchitemswithnofinanceadvice)
         self.addNewSearches()
