@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b17 (unreleased)
+4.2b17 (2022-03-22)
 -------------------
 
 - Optimized POD template `meeting_assemblies.odt`, use `catalog` available by
