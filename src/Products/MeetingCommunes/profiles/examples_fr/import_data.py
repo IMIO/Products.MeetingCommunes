@@ -226,74 +226,86 @@ conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Co
 
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel")
 
-groups = [OrgDescriptor('bourgmestre', 'Bourgmestre', u'BG'),
-          OrgDescriptor('dirgen', 'Directeur Général', u'DG'),
-          OrgDescriptor('secretariat', 'Secrétariat Général', u'Secr', groups_in_charge=['bourgmestre']),
-          OrgDescriptor('informatique', 'Service informatique', u'Info', groups_in_charge=['bourgmestre']),
-          OrgDescriptor('echevinPers', 'Echevin du Personnel', u'EP'),
-          OrgDescriptor('personnel', 'Service du personnel', u'Pers', groups_in_charge=['echevinPers']),
-          OrgDescriptor('dirfin', 'Directeur Financier', u'DF'),
-          OrgDescriptor('comptabilite', 'Service comptabilité', u'Compt', groups_in_charge=['echevinPers']),
-          OrgDescriptor('echevinTrav', 'Echevin du Travaux', u'ET'),
-          OrgDescriptor('travaux', 'Service travaux', u'Trav', groups_in_charge=['echevinTrav']), ]
-
 # Bourgmestre
-groups[0].advisers.append(bourgmestre)
+bourgmestre_org = OrgDescriptor('bourgmestre', 'Bourgmestre', u'BG')
+bourgmestre_org.advisers.append(bourgmestre)
 # Directeur Général
-groups[1].creators.append(dgen)
-groups[1].reviewers.append(dgen)
-groups[1].observers.append(dgen)
-groups[1].advisers.append(dgen)
+dirgen_org = OrgDescriptor('dirgen', 'Directeur Général', u'DG')
+dirgen_org.creators.append(dgen)
+dirgen_org.reviewers.append(dgen)
+dirgen_org.observers.append(dgen)
+dirgen_org.advisers.append(dgen)
 # Secrétariat Général
-groups[2].creators.append(dgen)
-groups[2].reviewers.append(dgen)
-groups[2].observers.append(dgen)
-groups[2].advisers.append(dgen)
+secretariat_org = OrgDescriptor('secretariat', 'Secrétariat Général', u'Secr', groups_in_charge=['bourgmestre'])
+secretariat_org.creators.append(dgen)
+secretariat_org.reviewers.append(dgen)
+secretariat_org.observers.append(dgen)
+secretariat_org.advisers.append(dgen)
 # Service informatique
-groups[3].creators.append(agentInfo)
-groups[3].creators.append(dgen)
-groups[3].reviewers.append(agentInfo)
-groups[3].reviewers.append(dgen)
-groups[3].observers.append(agentInfo)
-groups[3].advisers.append(agentInfo)
+informatique_org = OrgDescriptor('informatique', 'Service informatique', u'Info', groups_in_charge=['bourgmestre'])
+informatique_org.creators.append(agentInfo)
+informatique_org.creators.append(dgen)
+informatique_org.reviewers.append(agentInfo)
+informatique_org.reviewers.append(dgen)
+informatique_org.observers.append(agentInfo)
+informatique_org.advisers.append(agentInfo)
 # Echevin du Personnel
-groups[4].advisers.append(echevinPers)
+echevinPers_org = OrgDescriptor('echevinPers', 'Echevin du Personnel', u'EP')
+echevinPers_org.advisers.append(echevinPers)
 # Service du personnel
-groups[5].creators.append(agentPers)
-groups[5].observers.append(agentPers)
-groups[5].creators.append(dgen)
-groups[5].reviewers.append(dgen)
-groups[5].creators.append(chefPers)
-groups[5].reviewers.append(chefPers)
-groups[5].observers.append(chefPers)
-groups[5].observers.append(echevinPers)
-groups[5].advisers.append(emetteuravisPers)
+personnel_org = OrgDescriptor('personnel', 'Service du personnel', u'Pers', groups_in_charge=['echevinPers'])
+personnel_org.creators.append(agentPers)
+personnel_org.observers.append(agentPers)
+personnel_org.creators.append(dgen)
+personnel_org.reviewers.append(agentPers)
+personnel_org.reviewers.append(dgen)
+personnel_org.creators.append(chefPers)
+personnel_org.reviewers.append(chefPers)
+personnel_org.observers.append(chefPers)
+personnel_org.observers.append(echevinPers)
+personnel_org.advisers.append(emetteuravisPers)
 # Directeur Financier
-groups[6].creators.append(dfin)
-groups[6].reviewers.append(dfin)
-groups[6].observers.append(dfin)
-groups[6].advisers.append(dfin)
+dirfin_org = OrgDescriptor('dirfin', 'Directeur Financier', u'DF')
+dirfin_org.creators.append(dfin)
+dirfin_org.reviewers.append(dfin)
+dirfin_org.observers.append(dfin)
+dirfin_org.advisers.append(dfin)
 # Service comptabilité
-groups[7].creators.append(agentCompta)
-groups[7].creators.append(chefCompta)
-groups[7].creators.append(dfin)
-groups[7].creators.append(dgen)
-groups[7].reviewers.append(chefCompta)
-groups[7].reviewers.append(dfin)
-groups[7].reviewers.append(dgen)
-groups[7].observers.append(agentCompta)
-groups[7].advisers.append(chefCompta)
-groups[7].advisers.append(dfin)
+comptabilite_org = OrgDescriptor('comptabilite', 'Service comptabilité', u'Compta', groups_in_charge=['echevinPers'])
+comptabilite_org.creators.append(agentCompta)
+comptabilite_org.creators.append(chefCompta)
+comptabilite_org.creators.append(dfin)
+comptabilite_org.creators.append(dgen)
+comptabilite_org.reviewers.append(chefCompta)
+comptabilite_org.reviewers.append(dfin)
+comptabilite_org.reviewers.append(dgen)
+comptabilite_org.observers.append(agentCompta)
+comptabilite_org.advisers.append(chefCompta)
+comptabilite_org.advisers.append(dfin)
 # Echevin du Travaux
-groups[8].advisers.append(echevinTrav)
+echevinTrav_org = OrgDescriptor('echevinTrav', 'Echevin du Travaux', u'ET')
+echevinTrav_org.advisers.append(echevinTrav)
 # Service travaux
-groups[9].creators.append(agentTrav)
-groups[9].creators.append(dgen)
-groups[9].reviewers.append(agentTrav)
-groups[9].reviewers.append(dgen)
-groups[9].observers.append(agentTrav)
-groups[9].observers.append(echevinTrav)
-groups[9].advisers.append(agentTrav)
+travaux_org = OrgDescriptor('travaux', 'Service travaux', u'Trav', groups_in_charge=['echevinTrav'])
+travaux_org.creators.append(agentTrav)
+travaux_org.creators.append(dgen)
+travaux_org.reviewers.append(agentTrav)
+travaux_org.reviewers.append(dgen)
+travaux_org.observers.append(agentTrav)
+travaux_org.observers.append(echevinTrav)
+travaux_org.advisers.append(agentTrav)
+
+groups = [bourgmestre_org,
+          dirgen_org,
+          secretariat_org,
+          informatique_org,
+          echevinPers_org,
+          personnel_org,
+          dirfin_org,
+          comptabilite_org,
+          echevinTrav_org,
+          travaux_org, ]
+
 # Meeting configurations -------------------------------------------------------
 # college
 collegeMeeting = MeetingConfigDescriptor(
@@ -507,10 +519,10 @@ collegeMeeting.onMeetingTransitionItemActionToExecute = (
 collegeMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
 collegeMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 collegeMeeting.useCopies = True
-collegeMeeting.selectableCopyGroups = [groups[1].getIdSuffixed('reviewers'),
-                                       groups[2].getIdSuffixed('reviewers'),
-                                       groups[3].getIdSuffixed('reviewers'),
-                                       groups[5].getIdSuffixed('reviewers')]
+collegeMeeting.selectableCopyGroups = [dirgen_org.getIdSuffixed('reviewers'),
+                                       secretariat_org.getIdSuffixed('reviewers'),
+                                       informatique_org.getIdSuffixed('reviewers'),
+                                       personnel_org.getIdSuffixed('reviewers')]
 collegeMeeting.styleTemplates = collegeStyleTemplate
 collegeMeeting.podTemplates = collegeTemplates
 collegeMeeting.meetingConfigsToCloneTo = [{'meeting_config': 'cfg2',
@@ -755,6 +767,7 @@ councilMeeting.usedItemAttributes = ['description',
                                      'marginalNotes',
                                      'inAndOutMoves',
                                      'manuallyLinkedItems']
+
 councilMeeting.usedMeetingAttributes = ['start_date',
                                         'mid_date',
                                         'end_date',
@@ -767,13 +780,16 @@ councilMeeting.usedMeetingAttributes = ['start_date',
                                         'observations',
                                         'notes',
                                         'in_and_out_moves']
+
+councilMeeting.useGroupsAsCategories = False
+
 councilMeeting.itemColumns = ['Creator', 'CreationDate', 'ModificationDate', 'review_state', 'getCategory',
                               'proposing_group_acronym', 'groups_in_charge_acronym', 'advices', 'meeting_date',
                               'actions']
 councilMeeting.availableItemsListVisibleColumns = [
     'Creator', 'CreationDate', 'getCategory', 'proposing_group_acronym', 'groups_in_charge_acronym', 'advices', 'actions']
 councilMeeting.itemsListVisibleColumns = [
-    u'static_item_reference', u'Creator', u'CreationDate', u'review_state',
+    u'static_item_reference', u'Creator', u'CreationDate', u'review_state', u'getCategory',
     u'proposing_group_acronym', u'groups_in_charge_acronym', u'advices', u'actions']
 councilMeeting.xhtmlTransformFields = ('MeetingItem.description',
                                        'MeetingItem.motivation',
@@ -817,10 +833,10 @@ councilMeeting.powerObservers = deepcopy(collegeMeeting.powerObservers)
 councilMeeting.powerAdvisersGroups = ()
 councilMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
 councilMeeting.useCopies = True
-councilMeeting.selectableCopyGroups = [groups[1].getIdSuffixed('reviewers'),
-                                       groups[2].getIdSuffixed('reviewers'),
-                                       groups[3].getIdSuffixed('reviewers'),
-                                       groups[5].getIdSuffixed('reviewers')]
+councilMeeting.selectableCopyGroups = [dirgen_org.getIdSuffixed('reviewers'),
+                                       secretariat_org.getIdSuffixed('reviewers'),
+                                       informatique_org.getIdSuffixed('reviewers'),
+                                       personnel_org.getIdSuffixed('reviewers')]
 councilMeeting.styleTemplates = councilStyleTemplate
 councilMeeting.podTemplates = councilTemplates
 
@@ -829,7 +845,7 @@ councilMeeting.recurringItems = [
         id='recurringagenda1',
         title='Approuve le procès-verbal de la séance antérieure',
         description='<p>Approuve le procès-verbal de la séance antérieure</p>',
-        category='recurrents',
+        category='administration',
         proposingGroupWithGroupInCharge='secretariat__groupincharge__bourgmestre',
         decision='<p>Procès-verbal approuvé</p>'), ]
 councilMeeting.itemTemplates = [
