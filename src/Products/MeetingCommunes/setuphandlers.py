@@ -396,17 +396,18 @@ def addDemoData(context):
             for item in items[userId]:
                 # get the template then clone it
                 template = getattr(tool.getMeetingConfig(userFolder).itemtemplates, item['templateId'])
-                newItem = template.clone(newOwnerId=userId,
-                                         destFolder=userFolder,
-                                         newPortalType=cfg.getItemTypeName())
-                newItem.setTitle(item['title'])
-                newItem.setBudgetRelated(item['budgetRelated'])
-                if item['review_state'] == 'proposed':
-                    wfTool.doActionFor(newItem, 'propose')
+                with api.env.adopt_user(username=userId):
+                    tool.invalidateAllCache()
+                    newItem = template.clone(newOwnerId=userId,
+                                             destFolder=userFolder,
+                                             newPortalType=cfg.getItemTypeName())
+                    newItem.setTitle(item['title'])
+                    newItem.setBudgetRelated(item['budgetRelated'])
+                    if item['review_state'] == 'proposed':
+                        wfTool.doActionFor(newItem, 'propose')
+
                 if item['review_state'] == 'validated':
-                    transitions = cfg.getTransitionsForPresentingAnItem(org_uid=newItem.getProposingGroup())
-                    for tr in transitions[:-1]:
-                        wfTool.doActionFor(newItem, tr)
+                    wfTool.doActionFor(newItem, 'validate')
                 # add annexe and advice for one item in College
                 if item['templateId'] == 'template3' and cfg.id == 'meeting-config-college':
                     cpt = 1
