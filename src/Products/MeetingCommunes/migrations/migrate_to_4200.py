@@ -136,11 +136,11 @@ class Migrate_To_4200(PMMigrate_To_4200):
         # execute upgrade steps in PM that were added after main upgrade to 4200
         Migrate_To_4201(self.portal).run(from_migration_to_4200=True)
 
-        # add new searches (searchitemswithnofinanceadvice)
-        self.addNewSearches()
-
         # now MeetingCommunes specific steps
         logger.info('Migrating to MeetingCommunes 4200...')
+
+        # add new searches (searchitemswithnofinanceadvice)
+        self.addNewSearches()
 
 
 # The migration function -------------------------------------------------------
