@@ -118,29 +118,35 @@ class Migrate_To_4200(PMMigrate_To_4200):
     def run(self,
             profile_name=u'profile-Products.MeetingCommunes:default',
             extra_omitted=[]):
-        # change self.profile_name that is reinstalled at the beginning of the PM migration
-        self.profile_name = profile_name
 
-        # fix used WFs before reinstalling
-        self._fixUsedMeetingWFs()
+        if self.is_in_part('a'):  # main step
 
-        # add a new DashboardPodTemplate in contacts directory
-        self._add_dashboard_pod_template_export_users_groups()
+            # change self.profile_name that is reinstalled at the beginning of the PM migration
+            self.profile_name = profile_name
 
-        # fix some instructions in POD templates
-        self._mc_fixPODTemplatesInstructions()
+            # fix used WFs before reinstalling
+            self._fixUsedMeetingWFs()
+
+            # add a new DashboardPodTemplate in contacts directory
+            self._add_dashboard_pod_template_export_users_groups()
+
+            # fix some instructions in POD templates
+            self._mc_fixPODTemplatesInstructions()
 
         # call steps from Products.PloneMeeting
         super(Migrate_To_4200, self).run(extra_omitted=extra_omitted)
 
-        # execute upgrade steps in PM that were added after main upgrade to 4200
-        Migrate_To_4201(self.portal).run(from_migration_to_4200=True)
 
-        # now MeetingCommunes specific steps
-        logger.info('Migrating to MeetingCommunes 4200...')
+        if self.is_in_part('c'):  # last step
 
-        # add new searches (searchitemswithnofinanceadvice)
-        self.addNewSearches()
+            # execute upgrade steps in PM that were added after main upgrade to 4200
+            Migrate_To_4201(self.portal).run(from_migration_to_4200=True)
+
+            # now MeetingCommunes specific steps
+            logger.info('Migrating to MeetingCommunes 4200...')
+
+            # add new searches (searchitemswithnofinanceadvice)
+            self.addNewSearches()
 
 
 # The migration function -------------------------------------------------------

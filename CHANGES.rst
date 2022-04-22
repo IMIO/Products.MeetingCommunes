@@ -7,8 +7,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b18 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Take into account fact that `Migrate_To_4200` may be executed `by parts (a, b, c)`.
+  [gbastien]
 
 4.2b17 (2022-03-22)
 -------------------
