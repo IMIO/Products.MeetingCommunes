@@ -9,6 +9,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Take into account fact that `Migrate_To_4200` may be executed `by parts (a, b, c)`.
   [gbastien]
+- Do not redefine `MeetingItemCommunesWorkflowConditions.__init__` as parent
+  (`MeetingItemWorkflowConditions`) defines more.
+  [gbastien]
 
 4.2b17 (2022-03-22)
 -------------------

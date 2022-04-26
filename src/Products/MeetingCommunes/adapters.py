@@ -983,9 +983,6 @@ class MeetingItemCommunesWorkflowConditions(MeetingItemWorkflowConditions):
     implements(IMeetingItemCommunesWorkflowConditions)
     security = ClassSecurityInfo()
 
-    def __init__(self, item):
-        self.context = item  # Implements IMeetingItem
-
     security.declarePublic('mayDecide')
 
     def mayDecide(self):
