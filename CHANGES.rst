@@ -4,7 +4,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b18 (unreleased)
+4.2b18 (2022-04-28)
 -------------------
 
 - Take into account fact that `Migrate_To_4200` may be executed `by parts (a, b, c)`.
