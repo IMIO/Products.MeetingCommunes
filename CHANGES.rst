@@ -1,3 +1,4 @@
+
 Products.MeetingCommunes Changelog
 ==================================
 
@@ -7,7 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b19 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Adapt import-csv-inforius.py for MC 4.2.
+  [odelaere]
 
 
 4.2b18 (2022-04-28)

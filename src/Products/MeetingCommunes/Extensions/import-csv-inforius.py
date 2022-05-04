@@ -14,10 +14,11 @@ from collective.iconifiedcategory.utils import calculate_category_id
 from collective.iconifiedcategory.utils import get_config_root
 from DateTime import DateTime
 from datetime import datetime
+
+from imio.helpers.content import richtextval
 from plone import namedfile, api
 from plone.app.querystring import queryparser
 from plone.dexterity.utils import createContentInContainer
-from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFPlone.utils import safe_unicode
 from Products.PloneMeeting import logger
 
@@ -99,8 +100,6 @@ content_types = {
     ".7z": "application/x-7z-compressed",
 }
 
-college_meeting_type = 'MeetingCollege'
-council_meeting_type = 'MeetingCouncil'
 datetime_format = "%Y-%m-%d %H:%M:%S"
 
 
@@ -158,20 +157,13 @@ class CSVMeetingItem:
 
 class CSVMeeting:
     # ID    Date    CreationDate    StartDate    EndDate    Assembly    Type
-    def __init__(self, external_id, date, created_on, started_on, ended_on, assembly, type, annexes_dir):
+    def __init__(self, external_id, date, created_on, started_on, ended_on, assembly, portal_type, annexes_dir):
         self.external_id = external_id
         self.date = datetime.strptime(date, datetime_format)
         self.created_on = datetime.strptime(created_on, datetime_format)
         self.started_on = datetime.strptime(started_on, datetime_format)
         self.ended_on = datetime.strptime(ended_on, datetime_format)
         self.assembly = re.sub(r'<br.?\/>', '\n\r', assembly).strip()
-        self.type = type
-        if 'col' in type.lower():
-            portal_type = college_meeting_type
-        elif 'cons' in type.lower():
-            portal_type = council_meeting_type
-        else:
-            raise NotImplementedError("Unknown meeting type {}".format(type))
         self.portal_type = portal_type
         self.items = []
         path = "{}/{}".format(annexes_dir, external_id)
@@ -213,11 +205,15 @@ class ImportCSV:
         self._deactivated_recurring_items = []
 
         self.college_cfg = self.portal.portal_plonemeeting.get('meeting-config-college')
-        self.college_member_folder = self.portal.Members.csvimport.mymeetings.get('meeting-config-college')
+        if self.college_cfg is None:
+            self.college_cfg = self.portal.portal_plonemeeting.get('meeting-config-zcollege')
+        self.college_member_folder = self.portal.Members.csvimport.mymeetings.get(self.college_cfg.getId())
         self.default_category_college = default_category_college
 
         self.council_cfg = self.portal.portal_plonemeeting.get('meeting-config-council')
-        self.council_member_folder = self.portal.Members.csvimport.mymeetings.get('meeting-config-council')
+        if self.council_cfg is None:
+            self.council_cfg = self.portal.portal_plonemeeting.get('meeting-config-zcouncil')
+        self.council_member_folder = self.portal.Members.csvimport.mymeetings.get(self.council_cfg.getId())
         self.default_category_council = default_category_council
 
     def add_annex(
@@ -342,9 +338,9 @@ class ImportCSV:
                     else:
                         item = self.parse_and_clean_raw_csv_item(row)
                         meeting = meetings[meeting_external_id]
-                        if 'col' in meeting.type.lower():
+                        if meeting.portal_type == self.college_cfg.getMeetingTypeName():
                             portal_type = self.college_cfg.getItemTypeName()
-                        elif 'cons' in meeting.type.lower():
+                        elif meeting.portal_type == self.council_cfg.getMeetingTypeName():
                             portal_type = self.council_cfg.getItemTypeName()
                         else:
                             raise NotImplementedError("Unknown meeting type {}".format(type))
@@ -380,45 +376,46 @@ class ImportCSV:
             self.errors["meeting"].append(message)
             return
 
-        meeting_date = DateTime(csv_meeting.date)
+        meeting_date = csv_meeting.date
         meetingid = member_folder.invokeFactory(
             type_name=csv_meeting.portal_type, id=_id, date=meeting_date
         )
         meeting = getattr(member_folder, meetingid)
-        meeting.setSignatures("")
-        meeting.setAssembly(csv_meeting.assembly)
-        meeting.setDate(meeting_date)
-        meeting.setStartDate(DateTime(csv_meeting.started_on))
-        meeting.setEndDate(DateTime(csv_meeting.ended_on))
+        meeting.signatures = None
+        if csv_meeting.assembly:
+            meeting.assembly = richtextval(csv_meeting.assembly)
+        meeting.date = meeting_date
+        meeting.start_date = csv_meeting.started_on
+        meeting.end_date = csv_meeting.ended_on
 
-        meeting.processForm(values={"dummy": None})
         meeting.setCreationDate(DateTime(csv_meeting.created_on))
-        logger.info("Created {type} {id} {date}".format(type=csv_meeting.portal_type, id=_id, date=meeting.Title()))
+        logger.info(u"Created {type} {id} {date}".format(type=csv_meeting.portal_type, id=_id, date=meeting.title))
 
         if csv_meeting.annexes:
             self.add_all_annexes_to_object(csv_meeting.annexes, meeting, confidential=True)
         else:
-            meeting.setObservations(u"<p><strong>Cette séance n'a aucune annexe</strong></p>")
+            meeting.observations = u"<p><strong>Cette séance n'a aucune annexe</strong></p>"
 
         logger.info(
-            "Adding {items} items to {type} of {date}".format(
-                items=len(csv_meeting.items), type=csv_meeting.portal_type, date=meeting.Title()
+            u"Adding {items} items to {type} of {date}".format(
+                items=len(csv_meeting.items), type=csv_meeting.portal_type, date=meeting.title
             )
         )
+
         self.portal.REQUEST["PUBLISHED"] = meeting
         for csv_item in csv_meeting.items:
             self.insert_and_present_item(member_folder, csv_item)
 
-        if meeting.getItems():
+        if meeting.get_items():
             meeting.portal_workflow.doActionFor(meeting, "freeze")
             meeting.portal_workflow.doActionFor(meeting, "decide")
             meeting.portal_workflow.doActionFor(meeting, "close")
 
-            for item in meeting.getItems():
+            for item in meeting.get_items():
                 item.setModificationDate(meeting_date)
                 item.reindexObject(idxs=["modified"])
 
-        meeting.setModificationDate(meeting_date)
+        meeting.setModificationDate(DateTime(meeting_date))
 
         meeting.reindexObject(idxs=["modified"])
         self.meeting_counter += 1
@@ -461,13 +458,21 @@ class ImportCSV:
             title=csv_item.title,
         )
         item = getattr(member_folder, itemid)
+
+        if csv_item.portal_type == self.college_cfg.getItemTypeName():
+            item_meeting_cfg = self.college_cfg
+        elif csv_item.portal_type == self.council_cfg.getItemTypeName():
+            item_meeting_cfg = self.council_cfg
+        else:
+            raise ValueError('Impossible to determine MC for ' + csv_item.portal_type)
+
         item.setProposingGroup(
             self.get_matching_proposing_group(csv_item.proposing_group)
         )
 
-        if csv_item.portal_type == self.college_cfg.getItemTypeName():
+        if item_meeting_cfg.getId() == self.college_cfg.getId():
             item.setCategory(self.default_category_college)
-        elif csv_item.portal_type == self.council_cfg.getItemTypeName():
+        elif item_meeting_cfg.getId() == self.council_cfg.getId():
             item.setCategory(self.default_category_council)
 
         item.setCreators("csvimport")
@@ -489,16 +494,8 @@ class ImportCSV:
                 "{}{}".format(item.Description(), "<p><strong>Ce point n'a aucune annexe</strong></p>")
             )
 
-        try:
-            self.portal.portal_workflow.doActionFor(item, "propose")
-        except WorkflowException:
-            pass  # propose item is disabled
-        try:
-            self.portal.portal_workflow.doActionFor(item, "prevalidate")
-        except WorkflowException:
-            pass  # pre validation isn't used
-        self.portal.portal_workflow.doActionFor(item, "validate")
-        self.portal.portal_workflow.doActionFor(item, "present")
+        self.portal.portal_workflow.doActionFor(item, 'validate')
+        self.portal.portal_workflow.doActionFor(item, 'present')
         item.reindexObject()
         self.item_counter += 1
 
@@ -532,13 +529,21 @@ class ImportCSV:
                     continue
                 # Because numbers are not numbers but unicode chars...
                 external_id = int(row[0].strip())
+                csv_type = safe_unicode(row[6].strip()).lower()
+                if 'col' in csv_type:
+                    portal_type = self.college_cfg.getMeetingTypeName()
+                elif 'cons' in csv_type:
+                    portal_type = self.council_cfg.getMeetingTypeName()
+                else:
+                    raise NotImplementedError("Unknown meeting type {}".format(type))
+
                 meeting = CSVMeeting(external_id=external_id,
                                      date=row[1].strip(),
                                      created_on=row[2].strip(),
                                      started_on=row[3].strip(),
                                      ended_on=row[4].strip(),
                                      assembly=safe_unicode(row[5].strip()),
-                                     type=safe_unicode(row[6].strip()),
+                                     portal_type=portal_type,
                                      annexes_dir=self.meeting_annex_dir_path)
 
                 self.add_meeting_to_dict(meetings, meeting)
@@ -546,16 +551,18 @@ class ImportCSV:
         # insert All
         self.disable_recurring_items()
         logger.info("Inserting Objects")
-
-        for csv_meeting in meetings.values():
-            if csv_meeting.portal_type == college_meeting_type:
-                self.insert_and_close_meeting(self.college_member_folder, csv_meeting)
-            elif csv_meeting.portal_type == council_meeting_type:
-                self.insert_and_close_meeting(self.council_member_folder, csv_meeting)
-            else:
-                raise NotImplementedError(u"Not managed meeting type '{}' for meeting id {}".format(csv_meeting.type, meeting.external_id))
-
-        self.re_enable_recurring_items()
+        try:
+            for csv_meeting in meetings.values():
+                if csv_meeting.portal_type == self.college_cfg.getMeetingTypeName():
+                    self.insert_and_close_meeting(self.college_member_folder, csv_meeting)
+                elif csv_meeting.portal_type == self.council_cfg.getMeetingTypeName():
+                    self.insert_and_close_meeting(self.council_member_folder, csv_meeting)
+                else:
+                    raise NotImplementedError(u"Not managed meeting type '{}' for meeting id {}".format(csv_meeting.type, meeting.external_id))
+        finally:
+            tool = api.portal.get_tool('portal_plonemeeting')
+            self.re_enable_recurring_items()
+            tool.invalidateAllCache()
 
         return self.meeting_counter, self.item_counter, self.errors
 
