@@ -40,11 +40,14 @@ content_types = {
     ".csh": "application/x-csh",
     ".css": "text/css",
     ".csv": "text/csv",
+    ".djvu": "image/vnd.djvu",
     ".doc": "application/msword",
     ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     ".eot": "application/vnd.ms-fontobject",
     ".epub": "application/epub+zip",
     ".gif": "image/gif",
+    ".gpx": "application/gpx+xml",
+    ".heic": "image/heic",
     ".htm": "text/html",
     ".html": "text/html",
     ".ico": "image/x-icon",
@@ -54,6 +57,10 @@ content_types = {
     ".jpg": "image/jpeg",
     ".js": "application/javascript",
     ".json": "application/json",
+    ".log": "text/plain",
+    ".lnk": "application/octet-stream",
+    ".mht": "message/rfc822",
+    ".mhtml": "message/rfc822",
     ".mid": "audio/midi",
     ".midi": "audio/midi",
     ".mpeg": "video/mpeg",
@@ -62,6 +69,7 @@ content_types = {
     ".odp": "application/vnd.oasis.opendocument.presentation",
     ".ods": "application/vnd.oasis.opendocument.spreadsheet",
     ".odt": "application/vnd.oasis.opendocument.text",
+    ".oft": "application/vnd.ms-outlook",
     ".oga": "audio/ogg",
     ".ogv": "video/ogg",
     ".ogx": "application/ogg",
@@ -81,6 +89,7 @@ content_types = {
     ".tiff": "image/tiff",
     ".ts": "application/typescript",
     ".ttf": "font/ttf",
+    ".txt": "text/plain",
     ".vsd": "application/vnd.visio",
     ".wav": "audio/x-wav",
     ".weba": "audio/webm",
@@ -91,6 +100,7 @@ content_types = {
     ".xhtml": "application/xhtml+xml",
     ".xls": "application/vnd.ms-excel",
     ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    ".xlsm": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     ".xml": "application/xml",
     ".xps": "application/oxps, application/vnd.ms-xpsdocument",
     ".xul": "application/vnd.mozilla.xul+xml",
@@ -137,8 +147,8 @@ class CSVMeetingItem:
     def __init__(self, external_id, title, creator, created_on, service, category, motivation, decision, meeting_external_id, annexes_dir):
         self.external_id = external_id
         self.title = safe_unicode(title)
-        self.creator = creator
-        self.created_on = datetime.strptime(created_on, datetime_format)
+        self.creator = creator and creator or "INCONNU"
+        self.created_on = created_on and datetime.strptime(created_on, datetime_format) or None
         self.proposing_group = service
         self.category = category
         self.motivation = clean_xhtml(motivation)
@@ -325,6 +335,7 @@ class ImportCSV:
     def load_items(self, delib_file, meetings):
         logger.info("Load {0}".format(delib_file))
         csv.field_size_limit(100000000)
+        self.item_meeting_ids = []
         with io.open(delib_file, "r") as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
@@ -333,6 +344,9 @@ class ImportCSV:
                     continue
                 try:
                     meeting_external_id = int(row[8].strip())
+                    if meeting_external_id not in self.item_meeting_ids:
+                        self.item_meeting_ids.append(meeting_external_id)
+
                     if meeting_external_id not in meetings:
                         logger.info("Unknown meeting for item : {row}".format(row=row))
                     else:
@@ -345,6 +359,8 @@ class ImportCSV:
                         else:
                             raise NotImplementedError("Unknown meeting type {}".format(type))
                         item.portal_type = portal_type
+                        if not item.created_on:
+                            item.created_on = meeting.date
                         meeting.items.append(item)
                 except ValueError as e:
                     self.errors["item"].append(e.message)
@@ -535,7 +551,7 @@ class ImportCSV:
                 elif 'cons' in csv_type:
                     portal_type = self.council_cfg.getMeetingTypeName()
                 else:
-                    raise NotImplementedError("Unknown meeting type {}".format(type))
+                    continue
 
                 meeting = CSVMeeting(external_id=external_id,
                                      date=row[1].strip(),
@@ -610,7 +626,7 @@ def import_data_from_csv(
         )
     )
     logger.warning(
-        u"{malforemed} meeting items were not created due to missing data in csv :\n{list}".format(
+        u"{malforemed} meeting items were not created due to missing data in csv :\n\t{list}".format(
             malforemed=len(errors["item"]), list=u"\n\t ".join(errors["item"])
         )
     )
@@ -622,14 +638,14 @@ def import_data_from_csv(
     )
 
     logger.warning(
-        u"{meeting} meetings where skipped because they have no annex or no items :\n{list}".format(
+        u"{meeting} meetings where skipped because they have no annex or no items :\n\t{list}".format(
             meeting=len(errors["meeting"]), list=u"\n\t ".join(errors["meeting"])
         )
     )
 
     without_annex = u"\n\t ".join(safe_unicode(errors["item_without_annex"]))
     logger.warning(
-        u"{items} meeting items where skipped :\n{list}".format(
+        u"{items} meeting items where skipped :\n\t{list}".format(
             items=len(errors["item_without_annex"]), list=without_annex
         )
     )
