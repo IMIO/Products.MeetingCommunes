@@ -37,6 +37,7 @@ content_types = {
     ".bmp": "image/bmp",
     ".bz": "application/x-bzip",
     ".bz2": "application/x-bzip2",
+    ".col": "application/msword",
     ".csh": "application/x-csh",
     ".css": "text/css",
     ".csv": "text/csv",
@@ -404,7 +405,7 @@ class ImportCSV:
         meeting.start_date = csv_meeting.started_on
         meeting.end_date = csv_meeting.ended_on
 
-        meeting.setCreationDate(DateTime(csv_meeting.created_on))
+        meeting.creation_date = DateTime(csv_meeting.created_on)
         logger.info(u"Created {type} {id} {date}".format(type=csv_meeting.portal_type, id=_id, date=meeting.title))
 
         if csv_meeting.annexes:
