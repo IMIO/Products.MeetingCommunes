@@ -10,7 +10,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Adapt import-csv-inforius.py for MC 4.2.
   [odelaere]
-
+- Fixed `oj-avec-annexes.odt` (`imageOrientation` is now `image_orientation`).
+  [gbastien]
 
 4.2b18 (2022-04-28)
 -------------------
