@@ -3,6 +3,7 @@
 from DateTime import DateTime
 from plone import api
 from plone.namedfile import NamedBlobFile
+from persistent.mapping import PersistentMapping
 from Products.PloneMeeting.migrations.migrate_to_4200 import Migrate_To_4200 as PMMigrate_To_4200
 from Products.PloneMeeting.migrations.migrate_to_4201 import Migrate_To_4201
 
@@ -46,14 +47,18 @@ class Migrate_To_4200(PMMigrate_To_4200):
                     keyToUse = key
             return keyToUse
 
-    def _adaptWFHistoryForItemsAndMeetings(self):
-        """We use PM default WFs, no more meetingcommunes(item)_workflow..."""
+    def _adaptWFDataForItemsAndMeetings(self):
+        """We use PM default WFs, no more meetingcommunes(item)_workflow...
+           Adapt:
+           - workflow_history for items and meetings;
+           - takenOverByInfos for items."""
         logger.info('Updating WF history items and meetings to use new WF id...')
         wfTool = api.portal.get_tool('portal_workflow')
         catalog = api.portal.get_tool('portal_catalog')
         for cfg in self.tool.objectValues('MeetingConfig'):
             # this will call especially part where we duplicate WF and apply WFAdaptations
             cfg.registerPortalTypes()
+            itemWFId = cfg.getItemWorkflow()
             for brain in catalog(portal_type=(cfg.getItemTypeName(), cfg.getMeetingTypeName())):
                 itemOrMeeting = brain.getObject()
                 itemOrMeetingWFId = wfTool.getWorkflowsFor(itemOrMeeting)[0].getId()
@@ -67,11 +72,19 @@ class Migrate_To_4200(PMMigrate_To_4200):
                 else:
                     # already migrated
                     break
+                if itemOrMeeting.__class__.__name__ == 'MeetingItem':
+                    takenOverByInfos = itemOrMeeting.takenOverByInfos.copy()
+                    newTakenOverByInfos = PersistentMapping()
+                    for k, v in takenOverByInfos.items():
+                        wf_name, state = k.split('__wfstate__')
+                        newTakenOverByInfos['{0}__wfstate__{1}'.format(itemWFId, state)] = v
+                    if sorted(newTakenOverByInfos.keys()) != sorted(takenOverByInfos.keys()):
+                        itemOrMeeting.takenOverByInfos = newTakenOverByInfos
         logger.info('Done.')
 
     def _hook_before_meeting_to_dx(self):
-        """Adapt Meeting.workflow_history before migrating to DX."""
-        self._adaptWFHistoryForItemsAndMeetings()
+        """Adapt WF related stored data if items and meetings before migrating to DX."""
+        self._adaptWFDataForItemsAndMeetings()
 
     def _add_dashboard_pod_template_export_users_groups(self):
         """Add the export users and groups DashboardPODTemplate in the contacts directory."""
@@ -135,7 +148,6 @@ class Migrate_To_4200(PMMigrate_To_4200):
 
         # call steps from Products.PloneMeeting
         super(Migrate_To_4200, self).run(extra_omitted=extra_omitted)
-
 
         if self.is_in_part('c'):  # last step
 

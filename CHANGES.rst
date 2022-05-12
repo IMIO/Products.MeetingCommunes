@@ -12,6 +12,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [odelaere]
 - Fixed `oj-avec-annexes.odt` (`imageOrientation` is now `image_orientation`).
   [gbastien]
+- Extended `Migrate_To_4200._adaptWFHistoryForItemsAndMeetings` and renamed it to
+  `Migrate_To_4200._adaptWFDataForItemsAndMeetings` as it will also take care to
+  migrate `MeetingItem.takenOverByInfos` where the key contains the workflow name.
+  [gbastien]
 
 4.2b18 (2022-04-28)
 -------------------
