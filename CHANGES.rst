@@ -16,6 +16,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   `Migrate_To_4200._adaptWFDataForItemsAndMeetings` as it will also take care to
   migrate `MeetingItem.takenOverByInfos` where the key contains the workflow name.
   [gbastien]
+- Do not fail in `CustomMeetingConfig.getUsedFinanceGroupIds` if the collection
+  is not enabled, just log a message and return an empty result.
+  [gbastien]
 
 4.2b18 (2022-04-28)
 -------------------

@@ -558,6 +558,11 @@ class CustomMeetingConfig(MeetingConfig):
                 "Method 'getUsedFinanceGroupIds' could not find the '{0}' collection!".format(
                     FINANCE_ADVICES_COLLECTION_ID))
             return res
+        if collection.enabled is False:
+            logger.warn(
+                "Method 'getUsedFinanceGroupIds' returned [] because the '{0}' "
+                "collection is not enabled!".format(FINANCE_ADVICES_COLLECTION_ID))
+            return res
         # get the indexAdvisers value defined on the collection
         # and find the relevant group, indexAdvisers form is :
         # 'delay_row_id__2014-04-16.9996934488', 'real_org_uid__[directeur-financier_UID]'
