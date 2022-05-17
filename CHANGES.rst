@@ -5,8 +5,8 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b20 (unreleased)
---------------------
+4.2b20 (2022-05-17)
+-------------------
 
 - Redo release, zest.releaser had set version to 4.2b110...
   [gbastien]
