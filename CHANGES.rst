@@ -8,8 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b110 (unreleased)
 --------------------
 
-- Nothing changed yet.
-
+- Call migration to `PloneMeeting 4202` in migration to `MeetingCommunes 4200`.
+  [gbastien]
 
 4.2b19 (2022-05-16)
 -------------------
