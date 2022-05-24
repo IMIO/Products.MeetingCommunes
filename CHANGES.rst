@@ -8,7 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b21 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Add user FS in examples_fr profile.
+  [odelaere]
 
 
 4.2b20 (2022-05-17)
