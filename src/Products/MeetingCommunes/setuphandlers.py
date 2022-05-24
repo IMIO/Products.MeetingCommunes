@@ -5,23 +5,10 @@
 # GNU General Public License (GPL)
 #
 
-from collections import OrderedDict
-from collective.iconifiedcategory.utils import calculate_category_id
-from collective.iconifiedcategory.utils import get_config_root
-from datetime import datetime
-from datetime import timedelta
 from dexterity.localroles.utils import add_fti_configuration
-from imio.helpers.content import normalize_name
 from plone import api
-from plone import namedfile
-from plone.app.textfield.value import RichTextValue
-from plone.dexterity.utils import createContentInContainer
-from Products.CMFPlone.utils import _createObjectByType
 from Products.MeetingCommunes.config import PROJECTNAME
-from Products.MeetingCommunes.config import SAMPLE_TEXT
 from Products.PloneMeeting.exportimport.content import ToolInitializer
-from Products.PloneMeeting.utils import cleanMemoize
-from Products.PloneMeeting.utils import org_id_to_uid
 
 import logging
 import os
