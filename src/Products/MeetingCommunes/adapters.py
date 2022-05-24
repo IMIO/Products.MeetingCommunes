@@ -700,7 +700,7 @@ class CustomMeetingConfig(MeetingConfig):
         infos.update(extra_infos)
 
         # disable FINANCE_ADVICES_COLLECTION_ID excepted for 'meeting-config-college' and 'meeting-config-bp'
-        if cfg.getId() not in ('meeting-config-college', 'meeting-config-bp'):
+        if cfg.getId() not in ('meeting-config-college', 'meeting-config-zcollege', 'meeting-config-bp'):
             infos[FINANCE_ADVICES_COLLECTION_ID]['active'] = False
 
         # add some specific searches while using 'meetingadvicefinances'

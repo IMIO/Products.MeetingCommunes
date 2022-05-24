@@ -10,7 +10,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Add user FS in examples_fr profile.
   [odelaere]
-
+- By default enable the `FINANCE_ADVICES_COLLECTION_ID` collection
+  for `meeting-config-zcollege`.
+  [gbastien]
 
 4.2b20 (2022-05-17)
 -------------------
