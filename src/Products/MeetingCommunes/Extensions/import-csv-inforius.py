@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
+from distutils.log import error
 
 import re
 from os.path import isfile, join, exists
@@ -30,10 +31,8 @@ import transaction
 content_types = {
     ".aac": "audio/aac",
     ".abw": "application/x-abiword",
-    ".arc": "application/octet-stream",
     ".avi": "video/x-msvideo",
     ".azw": "application/vnd.amazon.ebook",
-    ".bin": "application/octet-stream",
     ".bmp": "image/bmp",
     ".bz": "application/x-bzip",
     ".bz2": "application/x-bzip2",
@@ -49,17 +48,13 @@ content_types = {
     ".gif": "image/gif",
     ".gpx": "application/gpx+xml",
     ".heic": "image/heic",
-    ".htm": "text/html",
-    ".html": "text/html",
     ".ico": "image/x-icon",
     ".ics": "text/calendar",
     ".jar": "application/java-archive",
     ".jpeg": "image/jpeg",
     ".jpg": "image/jpeg",
-    ".js": "application/javascript",
     ".json": "application/json",
     ".log": "text/plain",
-    ".lnk": "application/octet-stream",
     ".mht": "message/rfc822",
     ".mhtml": "message/rfc822",
     ".mid": "audio/midi",
@@ -82,7 +77,6 @@ content_types = {
     ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
     ".rar": "application/x-rar-compressed",
     ".rtf": "application/rtf",
-    ".sh": "application/x-sh",
     ".svg": "image/svg+xml",
     ".swf": "application/x-shockwave-flash",
     ".tar": "application/x-tar",
@@ -251,6 +245,15 @@ class ImportCSV:
 
         annex_portal_type = "annex"
         file_ext = path[path.rindex(".") :].lower()
+        if file_ext not in content_types:
+            message = u"Annex skipped because of unsupported file extension \"{}\" at path {}".format(
+                safe_unicode(file_ext),
+                safe_unicode(path)
+            )
+            self.errors["io"].append(message)
+            logger.warning(message)
+            return None
+
         content_type = content_types[file_ext]
 
         the_annex = createContentInContainer(
@@ -303,7 +306,7 @@ class ImportCSV:
             self.add_annex(obj, path, annex_title=title, confidential=confidential)
             return True
         except IOError as e:
-            self.errors["io"].append(e.message)
+            self.errors["io"].append(safe_unicode(e.message))
             logger.warning(e.message)
             return False
 
