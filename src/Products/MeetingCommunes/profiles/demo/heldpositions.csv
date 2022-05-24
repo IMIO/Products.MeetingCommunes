@@ -1,0 +1,9 @@
+"ID","ID PERS","ID ORGA","position_type","Intitulé","Début fonction","Fin fonction","Util adr parent","Rue","Numéro","Complément d'adresse","Code postal","Localité","Tél (1 numéro!)","Tél portable","Fax","Courriel","Site web","Région","Pays","usages","defaults","signature_number","UID"
+1,1,1,"bourgmestre",,,,,,,,,,,,,,,,,"present","assemblyMember",2,
+2,2,1,"dg",,,,,,,,,,,,,,,,,"present","assemblyMember",1,
+3,3,1,"alderman",,,,,,,,,,,,,,,,,"present","assemblyMember",,
+4,4,1,"alderman",,,,,,,,,,,,,,,,,"present","assemblyMember",,
+5,5,1,"alderman",,,,,,,,,,,,,,,,,"present","assemblyMember",,
+6,6,1,"alderman",,,,,,,,,,,,,,,,,"present","assemblyMember",,
+7,7,1,"alderman",,,,,,,,,,,,,,,,,"present","assemblyMember",,
+8,8,1,"df",,,,,,,,,,,,,,,,,,,,

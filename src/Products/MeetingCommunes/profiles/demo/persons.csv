@@ -1,0 +1,9 @@
+"ID","Nom","Prénom","Genre (M, F)","Civilité","Date naissance (AAAA/MM/JJ)","Util adr parent","Rue","Numéro","Complément d'adresse","Code postal","Localité","Tél","Tél portable","Fax","Courriel","Site web","Région","Pays","Numéro Interne","Plone user id","UID"
+1,"BOURGMESTRE","Gérard","M","Monsieur",,,,,,,,,,,,,,,,,
+2,"DÉGÉ","Isabelle","F","Madame",,,,,,,,,,,,,,,,,
+3,"LAPREMIÈRE","Claudine","F","Madame",,,,,,,,,,,,,,,,,
+4,"LASECONDE","Bernardette","F","Madame",,,,,,,,,,,,,,,,,
+5,"LETROISIÈME","Christian","M","Monsieur",,,,,,,,,,,,,,,,,
+6,"QUATTRE","Henri","M","Monsieur",,,,,,,,,,,,,,,,,
+7,"SUIVANT","Laurence","F","Madame",,,,,,,,,,,,,,,,,
+8,"DELAFINANCE","François","M","Monsieur",,,,,,,,,,,,,,,,"dfin",
