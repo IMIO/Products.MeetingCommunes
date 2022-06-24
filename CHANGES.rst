@@ -8,8 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b22 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Rename "Commission des volontaires" profile to "Bureau des volontaires".
+  [aduchene]
 
 4.2b21 (2022-06-14)
 -------------------
