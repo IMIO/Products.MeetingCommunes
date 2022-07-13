@@ -527,10 +527,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
 
     def _get_value(self, item, value_name, unrestricted=False):
         if hasattr(item, value_name):
-            if callable(getattr(item, value_name)):
-                return getattr(item, value_name)()
-            else:
-                return self.getDGHV(item).display(value_name, bypass_check_permission=unrestricted)
+            return self.getDGHV(item).display(value_name, bypass_check_permission=unrestricted)
         else:
             custom_func_name = '_group_by_' + value_name
             if hasattr(self, custom_func_name):
