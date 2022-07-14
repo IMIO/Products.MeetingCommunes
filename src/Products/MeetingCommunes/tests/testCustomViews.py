@@ -912,6 +912,25 @@ class testCustomViews(MeetingCommunesTestCase):
             res,
             [[i7.getCategory(theObject=True).Title(), [i7]]])
 
+        # using _group_by_ function instead of persistent values on items
+        res = helper.get_grouped_items(itemUids, group_by=['org_first_level_title'])
+        self.assertListEqual(
+            res,
+            [['Developers', [items[0]]],
+             ['Vendors', items[1:3]],
+             ['Developers', [items[3]]],
+             ['Vendors', [items[4]]],
+             ['Developers', items[5:7]]])
+
+        res = helper.get_grouped_items(itemUids, group_by=['org_first_level'])
+        self.assertListEqual(
+            res,
+            [[items[0].getProposingGroup(theObject=True), [items[0]]],
+             [items[1].getProposingGroup(theObject=True), items[1:3]],
+             [items[3].getProposingGroup(theObject=True), [items[3]]],
+             [items[4].getProposingGroup(theObject=True), [items[4]]],
+             [items[5].getProposingGroup(theObject=True), items[5:7]]])
+
         self.freezeMeeting(m)
         self.do(i7, 'backToPresented')
         res = helper.get_grouped_items(itemUids, group_by='category', ignore_review_states=['itemfrozen'])

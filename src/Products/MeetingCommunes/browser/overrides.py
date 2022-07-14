@@ -544,7 +544,7 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
     def _group_by_org_first_level_title(self, item):
         """Custom group_by to group elements by organization first level title,
            useful when using suborganizations"""
-        return self._group_by_org_first_level.Title()
+        return self._group_by_org_first_level(item).Title()
 
     @staticmethod
     def _is_different_grouping_as_previous_item(node, value, level):
