@@ -10,6 +10,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Rename "Commission des volontaires" profile to "Bureau des volontaires".
   [aduchene]
+- Add helper print method to be able to group by custom method instead of persistent value on item. This method must begin by "_group_by_"
 
 4.2b21 (2022-06-14)
 -------------------

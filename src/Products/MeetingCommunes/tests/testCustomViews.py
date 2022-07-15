@@ -934,6 +934,42 @@ class testCustomViews(MeetingCommunesTestCase):
              [u'Vendors', [u'Development topics', [items[4]]]],
              [u'Developers', [developpers.Title(), [i5]], [u'Research topics', [i7]]]])
 
+        # using _group_by_ function instead of persistent values on items
+        self.changeUser('siteadmin')
+        new_ss_org = self.create('organization', folder=self.developers, id='sous-org', title='Sous Org', acronym='SORG')
+        new_ss_org_uid = new_ss_org.UID()
+        self._select_organization(new_ss_org_uid)
+        items[3].setProposingGroup(new_ss_org_uid)
+        items[3]._update_after_edit()
+        self.changeUser('pmManager')
+        res = helper.get_grouped_items(itemUids, group_by=['org_first_level_title'])
+        self.assertListEqual(
+            res,
+            [['Developers', [items[0]]],
+             ['Vendors', items[1:3]],
+             ['Developers', [items[3]]],
+             ['Vendors', [items[4]]],
+             ['Developers', items[5:7]]])
+
+        res = helper.get_grouped_items(itemUids, group_by=['org_first_level'])
+        # the proposing group for item3 is "Sous org" but we group by org_first_level --> it's the "Developers" group
+        self.assertListEqual(
+            res,
+            [[items[0].getProposingGroup(theObject=True), [items[0]]],
+             [items[1].getProposingGroup(theObject=True), items[1:3]],
+             [items[0].getProposingGroup(theObject=True), [items[3]]],
+             [items[4].getProposingGroup(theObject=True), [items[4]]],
+             [items[5].getProposingGroup(theObject=True), items[5:7]]])
+
+        res = helper.get_grouped_items(itemUids, group_by=['proposingGroup'])
+        self.assertListEqual(
+            res,
+            [[u'Developers', [items[0]]],
+             [u'Vendors', items[1:3]],
+             [u'Developers / Sous Org', [items[3]]],
+             [u'Vendors', [items[4]]],
+             [u'Developers', items[5:7]]])
+
     def test_get_grouped_items_unrestricted(self):
         self.changeUser('pmManager')
         meeting = self._createMeetingWithItems()
