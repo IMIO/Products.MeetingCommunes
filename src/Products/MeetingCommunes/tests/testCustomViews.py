@@ -961,6 +961,15 @@ class testCustomViews(MeetingCommunesTestCase):
              [items[4].getProposingGroup(theObject=True), [items[4]]],
              [items[5].getProposingGroup(theObject=True), items[5:7]]])
 
+        res = helper.get_grouped_items(itemUids, group_by=['proposingGroup'])
+        self.assertListEqual(
+            res,
+            [[u'Developers', [items[0]]],
+             [u'Vendors', items[1:3]],
+             [u'Developers / Sous Org', [items[3]]],
+             [u'Vendors', [items[4]]],
+             [u'Developers', items[5:7]]])
+
     def test_get_grouped_items_unrestricted(self):
         self.changeUser('pmManager')
         meeting = self._createMeetingWithItems()
