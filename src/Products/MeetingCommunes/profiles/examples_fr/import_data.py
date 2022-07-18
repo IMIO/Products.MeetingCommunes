@@ -45,7 +45,7 @@ annexeAvisLegal = AnnexTypeDescriptor('annexeAvisLegal', 'Extrait article de loi
 annexeSeance = AnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', relatedTo='meeting')
 
 # Categories -------------------------------------------------------------------
-categories = PORTAL_CATEGORIES + [
+categories = [
     CategoryDescriptor('recurrents', 'Récurrents'),
     CategoryDescriptor('divers', 'Divers'),
     CategoryDescriptor('rh', 'Ressources Humaine'),
@@ -749,7 +749,7 @@ councilMeeting.certifiedSignatures = [
 councilMeeting.places = """Place1\n\r
 Place2\n\r
 Place3\n\r"""
-councilMeeting.categories = categories
+councilMeeting.categories = categories + PORTAL_CATEGORIES
 councilMeeting.shortName = 'Council'
 councilMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
                              annexeDecision, annexeDecisionToSign, annexeDecisionSigned,
