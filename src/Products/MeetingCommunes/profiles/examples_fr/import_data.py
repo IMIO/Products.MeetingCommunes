@@ -488,7 +488,6 @@ collegeMeeting.workflowAdaptations = [
     'presented_item_back_to_itemcreated',
     'presented_item_back_to_proposed',
     'only_creator_may_delete']
-collegeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 collegeMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.decision',
@@ -825,7 +824,6 @@ councilMeeting.itemAdviceStates = ()
 councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
 councilMeeting.workflowAdaptations = list(collegeMeeting.workflowAdaptations)
-councilMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 councilMeeting.onMeetingTransitionItemActionToExecute = deepcopy(
     collegeMeeting.onMeetingTransitionItemActionToExecute)
 councilMeeting.powerObservers = deepcopy(collegeMeeting.powerObservers)
