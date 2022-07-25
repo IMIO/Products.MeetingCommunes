@@ -910,6 +910,8 @@ class MeetingCommunesWorkflowActions(MeetingWorkflowActions):
            MeetingConfig.initItemDecisionIfEmptyOnDecide is True, we
            initialize the decision field with content of Title+Description
            if decision field is empty.'''
+        # call parent's doDecide
+        super(MeetingCommunesWorkflowActions, self).doDecide(stateChange)
         if self.cfg.getInitItemDecisionIfEmptyOnDecide():
             for item in self.context.get_items():
                 # If deliberation (motivation+decision) is empty,

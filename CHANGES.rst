@@ -15,6 +15,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [anuyens, gbastien]
 - Field `MeetingConfig.transitionsForPresentingAnItem` was removed, adapted profiles accordingly.
   [gbastien]
+- In `MeetingCommunesWorkflowActions.doDecide`, call parent's `doDecide`.
+  [gbastien]
 
 4.2b21 (2022-06-14)
 -------------------
