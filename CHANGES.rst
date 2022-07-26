@@ -17,6 +17,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [gbastien]
 - In `MeetingCommunesWorkflowActions.doDecide`, call parent's `doDecide`.
   [gbastien]
+- Call migrations to `PloneMeeting 4203 and 4204` in migration to `MeetingCommunes 4200`.
+  [gbastien]
 
 4.2b21 (2022-06-14)
 -------------------
