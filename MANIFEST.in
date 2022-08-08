@@ -15,3 +15,5 @@ graft src
 recursive-exclude src svnignore
 recursive-exclude src *.pyc
 recursive-exclude src *.log
+exclude .vscode
+exclude .vscode/settings.json

@@ -139,7 +139,7 @@ def clean_xhtml(xhtml_value):
 class CSVMeetingItem:
     annexFileTypeDecision = "annexeDecision"
     # ID    Title    Creator    CreationDate    ServiceID    CategoryID    Motivation    Decision    MeetingID
-    def __init__(self, external_id, title, creator, created_on, service, category, motivation, decision, meeting_external_id, annexes_dir):
+    def __init__(self, external_id, title, creator, created_on, service, category, motivation, decision, meeting_external_id, annexes_dir, classification=None, folder=None, sub_folder=None):
         self.external_id = external_id
         self.title = safe_unicode(title)
         self.creator = creator and creator or "INCONNU"
@@ -149,6 +149,9 @@ class CSVMeetingItem:
         self.motivation = clean_xhtml(motivation)
         self.decision = clean_xhtml(decision)
         self.meeting_external_id = meeting_external_id
+        self.classification = classification
+        self.folder = folder
+        self.sub_folder = sub_folder
         path = "{}/{}".format(annexes_dir, external_id)
         if exists(path):
             self.annexes = [
@@ -333,6 +336,12 @@ class ImportCSV:
                               decision=safe_unicode(csv_item[7].strip()),
                               meeting_external_id=meeting_external_id,
                               annexes_dir=self.item_annex_dir_path)
+        if len(csv_item) > 9:
+            item.classification = csv_item[9].strip()
+        if len(csv_item) > 10:
+            item.folder = csv_item[10].strip()
+        if len(csv_item) > 11:
+            item.sub_folder = csv_item[11].strip()
 
         return item
 
@@ -496,10 +505,14 @@ class ImportCSV:
             item.setCategory(self.default_category_council)
 
         item.setCreators("csvimport")
-        item.setDescription(
-            u"<p>Créateur originel : {creator}</p>".format(creator=csv_item.creator)
-        )
-
+        description = u"<p>Créateur originel : {}</p>".format(csv_item.creator)
+        if csv_item.classification:
+            description += u"<p>Classement : {}</p>".format(csv_item.classification)
+        if csv_item.folder:
+            description += u"<p>Farde : {}</p>".format(csv_item.folder)
+        if csv_item.sub_folder:
+            description += u"<p>Chemise : {}</p>".format(csv_item.sub_folder)
+        item.setDescription(description)
         item.setMotivation(csv_item.motivation)
         item.setDecision(csv_item.decision)
 

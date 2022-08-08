@@ -45,7 +45,7 @@ annexeAvisLegal = AnnexTypeDescriptor('annexeAvisLegal', 'Extrait article de loi
 annexeSeance = AnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', relatedTo='meeting')
 
 # Categories -------------------------------------------------------------------
-categories = PORTAL_CATEGORIES + [
+categories = [
     CategoryDescriptor('recurrents', 'Récurrents'),
     CategoryDescriptor('divers', 'Divers'),
     CategoryDescriptor('rh', 'Ressources Humaine'),
@@ -211,20 +211,19 @@ collegeTemplates = [agendaTemplate, agendaTemplateWithIndex, agendaTemplateWithA
                     all_delib, all_delib_duplex, dashboardPvs]
 
 # Users and groups -------------------------------------------------------------
-dgen = UserDescriptor('dgen', [], email="test@test.be", fullname="Henry Directeur")
-bourgmestre = UserDescriptor('bourgmestre', [], email="test@test.be", fullname="Pierre Bourgmestre")
-dfin = UserDescriptor('dfin', [], email="test@test.be", fullname="Directeur Financier")
-agentInfo = UserDescriptor('agentInfo', [], email="test@test.be", fullname="Agent Service Informatique")
-agentCompta = UserDescriptor('agentCompta', [], email="test@test.be", fullname="Agent Service Comptabilité")
-agentPers = UserDescriptor('agentPers', [], email="test@test.be", fullname="Agent Service du Personnel")
-agentTrav = UserDescriptor('agentTrav', [], email="test@test.be", fullname="Agent Travaux")
-chefPers = UserDescriptor('chefPers', [], email="test@test.be", fullname="Chef Personnel")
-chefCompta = UserDescriptor('chefCompta', [], email="test@test.be", fullname="Chef Comptabilité")
-echevinPers = UserDescriptor('echevinPers', [], email="test@test.be", fullname="Echevin du Personnel")
-echevinTrav = UserDescriptor('echevinTrav', [], email="test@test.be", fullname="Echevin des Travaux")
-conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Conseiller")
-
-emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel")
+dgen = UserDescriptor('dgen', [], email="test@test.be", fullname="Henry Directeur", create_member_area=True)
+bourgmestre = UserDescriptor('bourgmestre', [], email="test@test.be", fullname="Pierre Bourgmestre", create_member_area=True)
+dfin = UserDescriptor('dfin', [], email="test@test.be", fullname="Directeur Financier", create_member_area=True)
+agentInfo = UserDescriptor('agentInfo', [], email="test@test.be", fullname="Agent Service Informatique", create_member_area=True)
+agentCompta = UserDescriptor('agentCompta', [], email="test@test.be", fullname="Agent Service Comptabilité", create_member_area=True)
+agentPers = UserDescriptor('agentPers', [], email="test@test.be", fullname="Agent Service du Personnel", create_member_area=True)
+agentTrav = UserDescriptor('agentTrav', [], email="test@test.be", fullname="Agent Travaux", create_member_area=True)
+chefPers = UserDescriptor('chefPers', [], email="test@test.be", fullname="Chef Personnel", create_member_area=True)
+chefCompta = UserDescriptor('chefCompta', [], email="test@test.be", fullname="Chef Comptabilité", create_member_area=True)
+echevinPers = UserDescriptor('echevinPers', [], email="test@test.be", fullname="Echevin du Personnel", create_member_area=True)
+echevinTrav = UserDescriptor('echevinTrav', [], email="test@test.be", fullname="Echevin des Travaux", create_member_area=True)
+conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Conseiller", create_member_area=True)
+emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel", create_member_area=True)
 
 # Bourgmestre
 bourgmestre_org = OrgDescriptor('bourgmestre', 'Bourgmestre', u'BG')
@@ -489,7 +488,6 @@ collegeMeeting.workflowAdaptations = [
     'presented_item_back_to_itemcreated',
     'presented_item_back_to_proposed',
     'only_creator_may_delete']
-collegeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 collegeMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.decision',
@@ -750,7 +748,7 @@ councilMeeting.certifiedSignatures = [
 councilMeeting.places = """Place1\n\r
 Place2\n\r
 Place3\n\r"""
-councilMeeting.categories = categories
+councilMeeting.categories = categories + PORTAL_CATEGORIES
 councilMeeting.shortName = 'Council'
 councilMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
                              annexeDecision, annexeDecisionToSign, annexeDecisionSigned,
@@ -826,7 +824,6 @@ councilMeeting.itemAdviceStates = ()
 councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
 councilMeeting.workflowAdaptations = list(collegeMeeting.workflowAdaptations)
-councilMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 councilMeeting.onMeetingTransitionItemActionToExecute = deepcopy(
     collegeMeeting.onMeetingTransitionItemActionToExecute)
 councilMeeting.powerObservers = deepcopy(collegeMeeting.powerObservers)

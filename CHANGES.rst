@@ -5,11 +5,29 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b21 (unreleased)
+4.2b22 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Rename "Commission des volontaires" profile to "Bureau des volontaires".
+  [aduchene]
+- Add helper print method to be able to group by custom method instead of persistent value on item.
+  This method must begin by "_group_by_".
+  [anuyens, gbastien]
+- Field `MeetingConfig.transitionsForPresentingAnItem` was removed, adapted profiles accordingly.
+  [gbastien]
+- In `MeetingCommunesWorkflowActions.doDecide`, call parent's `doDecide`.
+  [gbastien]
+- Call migrations to `PloneMeeting 4203 and 4204` in migration to `MeetingCommunes 4200`.
+  [gbastien]
 
+4.2b21 (2022-06-14)
+-------------------
+
+- Add user FS in examples_fr profile.
+  [odelaere]
+- By default enable the `FINANCE_ADVICES_COLLECTION_ID` collection
+  for `meeting-config-zcollege`.
+  [gbastien]
 
 4.2b20 (2022-05-17)
 -------------------

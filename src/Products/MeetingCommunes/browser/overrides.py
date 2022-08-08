@@ -57,7 +57,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             if with_icon:
                 mime_type = mimetypes_registry.lookup(annex.file.contentType)[0]
                 file_type_icon = u'&nbsp;<img src="{0}/{1}"/>'.format(self.portal.absolute_url(),
-                                                                           mime_type.icon_path)
+                                                                      mime_type.icon_path)
             annex_type_icon = u'<img src="{0}/{1}"/>'.format(
                 self.portal.absolute_url(),
                 self.real_context.categorized_elements[annex.UID()]['icon_url'])
@@ -529,7 +529,22 @@ class MCMeetingDocumentGenerationHelperView(MeetingDocumentGenerationHelperView)
         if hasattr(item, value_name):
             return self.getDGHV(item).display(value_name, bypass_check_permission=unrestricted)
         else:
-            raise AttributeError
+            custom_func_name = '_group_by_' + value_name
+            if hasattr(self, custom_func_name):
+                return getattr(self, custom_func_name)(item)
+            else:
+                raise AttributeError
+
+    def _group_by_org_first_level(self, item):
+        """Custom group_by to group elements by organization first level,
+           useful when using suborganizations"""
+        org = item.getProposingGroup(theObject=True)
+        return org.get_organizations_chain()[1]
+
+    def _group_by_org_first_level_title(self, item):
+        """Custom group_by to group elements by organization first level title,
+           useful when using suborganizations"""
+        return self._group_by_org_first_level(item).Title()
 
     @staticmethod
     def _is_different_grouping_as_previous_item(node, value, level):
