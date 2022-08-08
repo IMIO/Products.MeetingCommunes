@@ -148,7 +148,7 @@ class testCustomMeetingType(MeetingCommunesTestCase):
         item2 = orderedItems[1]
         self.backToState(item1, 'proposed')
         self.backToState(item2, 'proposed')
-        self.freezeMeeting(meeting)
+        self.apply_meeting_transition_to_late_state(meeting)
         item1.setPreferredMeeting(meeting.UID())
         item2.setPreferredMeeting(meeting.UID())
         self.presentItem(item1)
