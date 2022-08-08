@@ -338,6 +338,10 @@ class ImportCSV:
                               annexes_dir=self.item_annex_dir_path)
         if len(csv_item) > 9:
             item.classification = csv_item[9].strip()
+            # This helps manage sensitive items in wrong service based on CDU code
+            if re.match(r'(2\.08|208).*', item.classification):
+                item.service = u"Sensible"
+
         if len(csv_item) > 10:
             item.folder = csv_item[10].strip()
         if len(csv_item) > 11:
