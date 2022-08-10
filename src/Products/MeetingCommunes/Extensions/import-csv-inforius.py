@@ -107,6 +107,7 @@ datetime_format = "%Y-%m-%d %H:%M:%S"
 
 cleaner = Cleaner(tags=['p', 'br', 'ul', 'ol', 'li', 'strong', 'u', 'em'], strip=True)
 
+commit_step = 10
 
 def clean_xhtml(html_value):
     xhtml = html_value.strip()
@@ -441,7 +442,8 @@ class ImportCSV:
 
         meeting.reindexObject(idxs=["modified"])
         self.meeting_counter += 1
-        transaction.commit()
+        if self.meeting_counter % commit_step == 0:
+            transaction.commit()
 
     def get_matching_proposing_group(self, csv_item):
         # avoid leak of sensitive HR topics
