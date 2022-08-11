@@ -105,9 +105,14 @@ content_types = {
 
 datetime_format = "%Y-%m-%d %H:%M:%S"
 
-cleaner = Cleaner(tags=['p', 'br', 'ul', 'ol', 'li', 'strong', 'u', 'em'], strip=True)
+cleaner = Cleaner(tags=['p', 'br', 'ul', 'ol', 'li', 'strong', 'u', 'em', 'sup', 'sub', 'a', 'img'
+                        'table', 'thead', 'tr', 'th', 'tbody', 'td'],
+                  attributes={'a': ['href', 'alt'],
+                              'img': ['src', 'alt', 'width', 'height']},
+                  strip=True)
 
 commit_step = 10
+
 
 def clean_xhtml(html_value):
     xhtml = html_value.strip()
@@ -115,8 +120,11 @@ def clean_xhtml(html_value):
         xhtml = u"<p>" + xhtml
     if not xhtml.endswith(u"</p>"):
         xhtml += u"</p>"
-    xhtml = xhtml.replace(u"\u00A0", u"&nbsp;").strip()
+    # replace multiple br
+    xhtml = xhtml.replace(u"\n", u"").strip()
+    xhtml = re.sub(r'<br.?>((\s|\n)*<br.?>)+', u'</p>\n<p>', xhtml)
     xhtml = xhtml.replace(u"&", u"&amp;").strip()
+    xhtml = xhtml.replace(u"\u00A0", u"&nbsp;").strip()
     xhtml = xhtml.replace(u"\u2022", u"*").strip()
     xhtml = xhtml.replace(u"\u25E6", u"*").strip()
     xhtml = xhtml.replace(u"\u2219", u"*").strip()
