@@ -19,6 +19,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [gbastien]
 - Call migrations to `PloneMeeting 4203 and 4204` in migration to `MeetingCommunes 4200`.
   [gbastien]
+- In migration to 4200, removed replace `print_deliberation` by
+  `print_full_deliberation` as this last method was removed.
+  [gbastien]
 
 4.2b21 (2022-06-14)
 -------------------

@@ -123,7 +123,7 @@ class Migrate_To_4200(PMMigrate_To_4200):
     def _mc_fixPODTemplatesInstructions(self):
         '''Make some replace in POD templates to fit changes in code...'''
         # for every POD templates
-        replacements = {'.print_deliberation(': '.print_full_deliberation(', }
+        replacements = {}
         # specific for Meeting POD Templates
         meeting_replacements = {}
         # specific for MeetingItem POD Templates
