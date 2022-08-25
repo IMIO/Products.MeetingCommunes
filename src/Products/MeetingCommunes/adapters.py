@@ -8,6 +8,8 @@ from AccessControl.class_init import InitializeClass
 from appy.gen import No
 from collections import OrderedDict
 from collective.contact.plonegroup.utils import get_organizations
+from imio.helpers.cache import get_cachekey_volatile
+from imio.helpers.cache import get_plone_groups_for_user
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from plone import api
 from plone.memoize import ram
@@ -669,7 +671,7 @@ class CustomMeetingConfig(MeetingConfig):
                         'sort_reversed': True,
                         'showNumberOfItems': False,
                         'tal_condition':
-                        "python: '%s_budgetimpacteditors' % cfg.getId() in tool.get_plone_groups_for_user() or "
+                        "python: '%s_budgetimpacteditors' % cfg.getId() in pm_utils.get_plone_groups_for_user() or "
                         "tool.isManager(cfg)",
                         'roles_bypassing_talcondition': ['Manager', ]
                     }
@@ -1145,16 +1147,14 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
 
     def isFinancialUser_cachekey(method, self, brain=False):
         '''cachekey method for self.isFinancialUser.'''
-        tool = api.portal.get_tool('portal_plonemeeting')
-        return tool.get_plone_groups_for_user()
+        return get_cachekey_volatile('_users_groups_value')
 
     security.declarePublic('isFinancialUser')
 
     @ram.cache(isFinancialUser_cachekey)
     def isFinancialUser(self):
         '''Is current user a financial user, so in groups FINANCE_GROUP_SUFFIXES.'''
-        tool = api.portal.get_tool('portal_plonemeeting')
-        for groupId in tool.get_plone_groups_for_user():
+        for groupId in get_plone_groups_for_user():
             for suffix in FINANCE_GROUP_SUFFIXES:
                 if groupId.endswith('_%s' % suffix):
                     return True

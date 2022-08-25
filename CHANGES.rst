@@ -22,6 +22,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - In migration to 4200, removed replace `print_deliberation` by
   `print_full_deliberation` as this last method was removed.
   [gbastien]
+- Adapted code now that we use `imio.helpers.cache.get_plone_groups_for_user`
+  instead `ToolPloneMeeting.get_plone_groups_for_user`.
+  [gbastien]
 
 4.2b21 (2022-06-14)
 -------------------
