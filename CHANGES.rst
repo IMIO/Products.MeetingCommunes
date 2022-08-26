@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b22 (unreleased)
+4.2b22 (2022-08-26)
 -------------------
 
 - Rename "Commission des volontaires" profile to "Bureau des volontaires".
