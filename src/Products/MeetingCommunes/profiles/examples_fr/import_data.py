@@ -226,10 +226,10 @@ conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Co
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel", create_member_area=True)
 
 # Bourgmestre
-bourgmestre_org = OrgDescriptor('bourgmestre', 'Bourgmestre', u'BG')
+bourgmestre_org = OrgDescriptor('bourgmestre', 'Bourgmestre', u'BG', groups_in_charge=['bourgmestre'])
 bourgmestre_org.advisers.append(bourgmestre)
 # Directeur Général
-dirgen_org = OrgDescriptor('dirgen', 'Directeur Général', u'DG')
+dirgen_org = OrgDescriptor('dirgen', 'Directeur Général', u'DG', groups_in_charge=['dirgen'])
 dirgen_org.creators.append(dgen)
 dirgen_org.reviewers.append(dgen)
 dirgen_org.observers.append(dgen)
