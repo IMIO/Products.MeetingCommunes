@@ -8,8 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b23 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Fixed `examples_fr` profile.
+  [gbastien]
 
 4.2b22 (2022-08-26)
 -------------------
