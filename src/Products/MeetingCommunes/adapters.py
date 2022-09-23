@@ -1145,13 +1145,8 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
     def __init__(self, item):
         self.context = item
 
-    def isFinancialUser_cachekey(method, self, brain=False):
-        '''cachekey method for self.isFinancialUser.'''
-        return get_cachekey_volatile('_users_groups_value')
-
     security.declarePublic('isFinancialUser')
 
-    @ram.cache(isFinancialUser_cachekey)
     def isFinancialUser(self):
         '''Is current user a financial user, so in groups FINANCE_GROUP_SUFFIXES.'''
         for groupId in get_plone_groups_for_user():

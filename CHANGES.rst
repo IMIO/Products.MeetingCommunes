@@ -8,8 +8,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b24 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Removed wrong ramcache cachekey for `CustomToolPloneMeeting.isFinancialUser`.
+  Removed ramcache decorator for it, finally useless.
+  [gbastien]
 
 4.2b23 (2022-09-22)
 -------------------
