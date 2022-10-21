@@ -8,8 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2b25 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Removed useless import of `get_cachekey_volatile` in `adapters.py`.
+  [gbastien]
 
 4.2b24 (2022-09-29)
 -------------------
