@@ -546,36 +546,55 @@ class CustomMeetingConfig(MeetingConfig):
         query[1]['v'] = values
         collection.setQuery(query)
 
+    def _get_finances_advices_collection(self, cfg):
+        """Return the FINANCE_ADVICES_COLLECTION_ID collection if enabled."""
+        collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID, None)
+        if not collection:
+            logger.warn(
+                "Method 'getUsedFinanceGroupIds' could not find the '{0}' collection!".format(
+                    FINANCE_ADVICES_COLLECTION_ID))
+            return
+        elif collection.enabled is False:
+            logger.warn(
+                "Method 'getUsedFinanceGroupIds' returned [] because the '{0}' "
+                "collection is not enabled!".format(FINANCE_ADVICES_COLLECTION_ID))
+            return
+        else:
+            return collection
+
     security.declarePublic('getUsedFinanceGroupIds')
 
     def getUsedFinanceGroupIds(self, item=None):
         """Possible finance advisers group ids are defined on
            the FINANCE_ADVICES_COLLECTION_ID collection."""
-        cfg = self.getSelf()
-        collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID, None)
-        res = []
-        if not collection:
-            logger.warn(
-                "Method 'getUsedFinanceGroupIds' could not find the '{0}' collection!".format(
-                    FINANCE_ADVICES_COLLECTION_ID))
-            return res
-        if collection.enabled is False:
-            logger.warn(
-                "Method 'getUsedFinanceGroupIds' returned [] because the '{0}' "
-                "collection is not enabled!".format(FINANCE_ADVICES_COLLECTION_ID))
-            return res
+        values = []
         # get the indexAdvisers value defined on the collection
         # and find the relevant group, indexAdvisers form is :
         # 'delay_row_id__2014-04-16.9996934488', 'real_org_uid__[directeur-financier_UID]'
         # it is either a customAdviser row_id or an organization uid
         # do not break if no 'indexAdvisers' defined or empty 'indexAdvisers' defined
-        values = [term.get('v') for term in collection.getRawQuery()
-                  if term.get('v') and term['i'] == 'indexAdvisers']
+        if item:
+            tool = api.portal.get_tool('portal_plonemeeting')
+            for adviser_id, advice_info in item.getAdviceDataFor(item).items():
+                cfg = tool.getMeetingConfig(advice_info.get('adviceHolder', item))
+                collection = self._get_finances_advices_collection(cfg)
+                new_values = [term.get('v') for term in collection.getRawQuery()
+                              if term.get('v') and term['i'] == 'indexAdvisers'] \
+                    if collection else []
+                # we get a list of advisers in values like [[v1, v2, v3]]
+                if new_values:
+                    values += new_values[0]
+        else:
+            cfg = self.getSelf()
+            collection = self._get_finances_advices_collection(cfg)
+            values = [term.get('v') for term in collection.getRawQuery()
+                      if term.get('v') and term['i'] == 'indexAdvisers'] \
+                if collection else []
+            # we get a list of advisers in values like [[v1, v2, v3]]
+            if values:
+                values = values[0]
 
-        # we get a list of advisers in values like [[v1, v2, v3]]
-        if values:
-            values = values[0]
-
+        res = []
         for v in values:
             real_org_uid_prefix = REAL_ORG_UID_PATTERN.format('')
             if v.startswith(real_org_uid_prefix):
