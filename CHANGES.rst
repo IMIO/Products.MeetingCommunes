@@ -10,6 +10,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Removed useless import of `get_cachekey_volatile` in `adapters.py`.
   [gbastien]
+- Fixed POD template `avis-df.odt` in `examples_fr` profile.
+  [gbastien]
 
 4.2b24 (2022-09-29)
 -------------------
