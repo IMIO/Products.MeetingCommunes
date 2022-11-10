@@ -87,6 +87,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         # but not for item
         self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [])
         self.assertFalse(item.adapted().showFinanceAdviceTemplate())
+        self.assertIsNone(item.adapted().getFinanceAdviceId())
 
         # ask advice of another group
         item.setOptionalAdvisers((self.vendors_uid, ))
@@ -94,6 +95,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         # no usedFinanceGroupId
         self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [])
         self.assertFalse(item.adapted().showFinanceAdviceTemplate())
+        self.assertIsNone(item.adapted().getFinanceAdviceId())
 
         # now ask advice of developers, considered as an non finance
         # advice as only customAdvisers are considered
@@ -101,12 +103,14 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         item._update_after_edit()
         self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [])
         self.assertFalse(item.adapted().showFinanceAdviceTemplate())
+        self.assertIsNone(item.adapted().getFinanceAdviceId())
 
         # right ask a custom advice that is not a finance advice this time
         item.setOptionalAdvisers(('{0}__rowid__unique_id_003'.format(self.developers_uid), ))
         item._update_after_edit()
         self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [])
         self.assertFalse(item.adapted().showFinanceAdviceTemplate())
+        self.assertIsNone(item.adapted().getFinanceAdviceId())
 
         # finally ask a real finance advice, this time it will work
         item.setOptionalAdvisers(('{0}__rowid__unique_id_001'.format(self.developers_uid), ))
@@ -114,24 +118,27 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item),
                          [self.developers_uid])
         self.assertTrue(item.adapted().showFinanceAdviceTemplate())
+        self.assertEqual(item.adapted().getFinanceAdviceId(), self.developers_uid)
 
         # when using inheritated advice, it works as well
         clonedItem = item.clone(setCurrentAsPredecessor=True, inheritAdvices=True)
         self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(clonedItem),
                          [self.developers_uid])
         self.assertTrue(clonedItem.adapted().showFinanceAdviceTemplate())
+        self.assertEqual(clonedItem.adapted().getFinanceAdviceId(), self.developers_uid)
 
         # and also when item sent to other MC and advice inheritated
         cfg.setItemManualSentToOtherMCStates(('itemcreated', ))
         cfg.setContentsKeptOnSentToOtherMC((u'advices', ))
         clonedItem.setOtherMeetingConfigsClonableTo((cfg2Id, ))
-        item._update_after_edit()
         clonedItem2 = clonedItem.cloneToOtherMeetingConfig(cfg2Id)
         self.assertEqual(cfg2.adapted().getUsedFinanceGroupIds(clonedItem2),
                          [self.developers_uid])
         self.assertTrue(clonedItem2.adapted().showFinanceAdviceTemplate())
+        self.assertEqual(clonedItem2.adapted().getFinanceAdviceId(), self.developers_uid)
 
         # if the collection does not exist, [] is returned
         self.deleteAsManager(collection.UID())
         self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [])
         self.assertFalse(item.adapted().showFinanceAdviceTemplate())
+        self.assertIsNone(item.adapted().getFinanceAdviceId())
