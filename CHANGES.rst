@@ -15,6 +15,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Make `CustomMeetingConfig.getUsedFinanceGroupIds` work with item sent to
   another MC with inheritated advices.
   [gbastien]
+- Advices is no more using Plone versioning, removed `repositorytool.xml`
+  from `financesadvice` profile (migration is managed by `Products.PloneMeeting`).
+  [gbastien]
 
 4.2b24 (2022-09-29)
 -------------------
