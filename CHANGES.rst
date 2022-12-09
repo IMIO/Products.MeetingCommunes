@@ -18,6 +18,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Advices is no more using Plone versioning, removed `repositorytool.xml`
   from `financesadvice` profile (migration is managed by `Products.PloneMeeting`).
   [gbastien]
+- Added collection `searchadvicesbacktoitemvalidationstates` using
+  `CompoundCriterion` adapter `items-with-advice-back-to-item-validation-states`
+  to get items having finances advice that are return in item validation states.
+  [gbastien]
 
 4.2b24 (2022-09-29)
 -------------------
