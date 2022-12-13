@@ -85,6 +85,10 @@ msgstr ""
 msgid "searchadvicesignedbymanager"
 msgstr ""
 
+#. Default: "Advices back to item validation states"
+msgid "searchadvicesbacktoitemvalidationstates"
+msgstr ""
+
 #. Default: "Unfavorable opinion"
 msgid "negative_finance"
 msgstr ""

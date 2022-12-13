@@ -869,6 +869,24 @@ class CustomMeetingConfig(MeetingConfig):
                             'roles_bypassing_talcondition': ['Manager', ]
                         }
                      ),
+                    # Items for which finance advice is asked and that is back
+                    # the the item validation states
+                    ('searchadvicesbacktoitemvalidationstates',
+                        {
+                            'subFolderId': 'searches_items',
+                            'active': True,
+                            'query':
+                            [
+                                {'i': 'CompoundCriterion',
+                                 'o': 'plone.app.querystring.operation.compound.is',
+                                 'v': 'items-with-advice-back-to-item-validation-states'},
+                            ],
+                            'sort_on': u'created',
+                            'sort_reversed': True,
+                            'tal_condition': "python: tool.adapted().isFinancialUser()",
+                            'roles_bypassing_talcondition': ['Manager', ]
+                        }
+                     ),
                 ]
             )
             infos.update(financesadvice_infos)
@@ -1427,3 +1445,38 @@ class ItemsWithAdviceSignedByFinancialManagerAdapter(BaseItemsWithAdviceAdapter)
 
     # we may not ram.cache methods in same file with same name...
     query = query_itemswithadvicesignedbyfinancialmanager
+
+
+class ItemsWithAdviceBackToItemValidationStatesAdapter(CompoundCriterionBaseAdapter):
+
+    @property
+    @ram.cache(query_user_groups_cachekey)
+    def query_itemswithadvicebacktoitemvalidationstates(self):
+        '''Queries all items for which there is a finance advice that already
+           pass by a state where advice was giveable but that was returned in
+           a state from MeetingConfig.itemWFValidationLevels.
+           This only work when MeetingConfig.keepAccessToItemWhenAdvice
+           is "was_giveable".'''
+        if not self.cfg:
+            return {}
+        groupIds = []
+        finance_org_uids = self.cfg.adapted().getUsedFinanceGroupIds()
+        for org_uid in finance_org_uids:
+            # delay given
+            groupIds.append('delay__{0}_advice_given'.format(org_uid))
+            # delay not given
+            groupIds.append('delay__{0}_advice_not_giveable'.format(org_uid))
+            # without delay given
+            groupIds.append('real_org_uid__{0}'.format(org_uid))
+            # without delay not_given
+            groupIds.append('real_org_uid__{0}__not_given'.format(org_uid))
+        # Create query parameters
+        return {'portal_type': {'query': self.cfg.getItemTypeName()},
+                'indexAdvisers': {'query': groupIds},
+                'review_state': {'query': self.cfg.getItemWFValidationLevels(
+                    data='state', only_enabled=True)},
+                'getProposingGroup': {'not': finance_org_uids},
+                }
+
+    # we may not ram.cache methods in same file with same name...
+    query = query_itemswithadvicebacktoitemvalidationstates
