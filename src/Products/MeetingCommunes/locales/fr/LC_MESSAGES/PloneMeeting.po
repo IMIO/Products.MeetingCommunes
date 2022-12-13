@@ -130,6 +130,10 @@ msgstr "Avis proposés au Directeur financier"
 msgid "searchadviceproposedtoreviewer"
 msgstr "Avis proposés au validateur financier"
 
+#. Default: "Advices back to item validation states"
+msgid "searchadvicesbacktoitemvalidationstates"
+msgstr "Avis renvoyés"
+
 #. Default: "Advices signed by financial manager"
 msgid "searchadvicesignedbymanager"
 msgstr "Avis signés"

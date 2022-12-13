@@ -869,6 +869,24 @@ class CustomMeetingConfig(MeetingConfig):
                             'roles_bypassing_talcondition': ['Manager', ]
                         }
                      ),
+                    # Items for which finance advice is asked and that is back
+                    # the the item validation states
+                    ('searchadvicesbacktoitemvalidationstates',
+                        {
+                            'subFolderId': 'searches_items',
+                            'active': True,
+                            'query':
+                            [
+                                {'i': 'CompoundCriterion',
+                                 'o': 'plone.app.querystring.operation.compound.is',
+                                 'v': 'items-with-advice-back-to-item-validation-states'},
+                            ],
+                            'sort_on': u'created',
+                            'sort_reversed': True,
+                            'tal_condition': "python: tool.adapted().isFinancialUser()",
+                            'roles_bypassing_talcondition': ['Manager', ]
+                        }
+                     ),
                 ]
             )
             infos.update(financesadvice_infos)

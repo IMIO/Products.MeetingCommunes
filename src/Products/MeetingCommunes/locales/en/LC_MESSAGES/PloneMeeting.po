@@ -49,7 +49,7 @@ msgstr "Check field completeness."
 
 #. Default: "Completeness was set to \"Not required\" by the application."
 msgid "completeness_set_to_not_required_by_app"
-msgstr ""
+msgstr "Completeness was set to \"Not required\" by the application."
 
 #. Default: "Advice delay is still not started."
 msgid "finance_advice_delay_still_not_started"
@@ -84,7 +84,7 @@ msgid "financialreviewers"
 msgstr "Financial reviewers"
 
 msgid "front_page_body"
-msgstr ""
+msgstr " "
 
 #. Default: "If you check this box, when a meeting will be decided, if an item does not have a decision defined, this decision will be automatically filled with title and description of the item"
 msgid "init_item_decision_if_empty_on_decide"
@@ -130,9 +130,13 @@ msgstr "Advices proposed to financial manager"
 msgid "searchadviceproposedtoreviewer"
 msgstr "Advices proposed to financial reviewer"
 
+#. Default: "Advices back to item validation states"
+msgid "searchadvicesbacktoitemvalidationstates"
+msgstr "Advices back to item validation states"
+
 #. Default: "Advices signed by financial manager"
 msgid "searchadvicesignedbymanager"
-msgstr ""
+msgstr "Advices signed by financial manager"
 
 #. Default: "Items to control completeness of"
 msgid "searchitemstocontrolcompletenessof"
