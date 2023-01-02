@@ -33,7 +33,7 @@ msgstr "Avis finances"
 
 #. Default: "Initialize the item decision when deciding meeting"
 msgid "MeetingCommunes_label_initItemDecisionIfEmptyOnDecide"
-msgstr "Initialiser le champ décision des points lorsque la séance passe 'En rédaction du PV'?"
+msgstr "Initialiser le champ décision des points lorsque la séance passe \"En rédaction du PV\"?"
 
 #. Default: "Add a finances advice"
 msgid "add_new_meetingadvicefinances"
@@ -57,7 +57,7 @@ msgstr "Le délai pour rendre l'avis n'est pas encore démarré."
 
 #. Default: "Advice is still not giveable because item is not considered complete."
 msgid "finance_advice_not_giveable_because_item_not_complete"
-msgstr "Cet avis ne pourra être rendu que lorsque le point sera considéré 'complet'."
+msgstr "Cet avis ne pourra être rendu que lorsque le point sera considéré \"complet\"."
 
 #. Default: "Advice is suspended because it was sent back to proposing group."
 msgid "finance_advice_suspended_because_item_sent_back_to_proposing_group"
@@ -88,7 +88,7 @@ msgstr "<p>Avant de tester, nous vous recommandons de lire la <span class=\"link
 
 #. Default: "If you check this box, when a meeting will be decided, if an item does not have a decision defined, this decision will be automatically filled with title and description of the item"
 msgid "init_item_decision_if_empty_on_decide"
-msgstr "Si cette case est cochée, lorsqu'une séance passera 'En rédaction du PV', pour tous les points dont le champ 'Décision' est vide, ce champ sera automatiquement rempli avec une concaténation de ce qui est défini dans le titre et la description du point"
+msgstr "Si cette case est cochée, lorsqu'une séance passera \"En rédaction du PV\", pour tous les points dont le champ \"Décision\" est vide, ce champ sera automatiquement rempli avec une concaténation de ce qui est défini dans le titre et la description du point"
 
 #. Default: "Unfavorable opinion"
 msgid "negative_finance"
