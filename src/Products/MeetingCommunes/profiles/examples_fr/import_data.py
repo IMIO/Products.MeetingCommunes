@@ -88,6 +88,13 @@ decisionsTemplate.pod_portal_types = ['Meeting']
 decisionsTemplate.tal_condition = u'python:tool.isManager(cfg)'
 decisionsTemplate.style_template = ['styles1']
 
+pubTemplate = PodTemplateDescriptor('publications', 'Publications (www.deliberations.be)')
+pubTemplate.odt_file = 'publications.odt'
+pubTemplate.pod_formats = ['odt', 'pdf', ]
+pubTemplate.pod_portal_types = ['Meeting']
+pubTemplate.tal_condition = u'python:tool.isManager(cfg)'
+pubTemplate.style_template = ['styles1']
+
 attendeesTemplate = PodTemplateDescriptor('attendees', 'Exemple assemblées')
 attendeesTemplate.odt_file = 'attendees.odt'
 attendeesTemplate.pod_formats = ['odt', 'pdf', ]
@@ -203,7 +210,8 @@ historyTemplate.pod_portal_types = ['MeetingItem']
 
 collegeStyleTemplate = [stylesTemplate1, stylesTemplate2]
 collegeTemplates = [agendaTemplate, agendaTemplateWithIndex, agendaTemplateWithAnnexes,
-                    decisionsTemplate, attendeesTemplate, votesTemplate,
+                    decisionsTemplate, pubTemplate,
+                    attendeesTemplate, votesTemplate,
                     itemTemplate, itemTemplate_duplex, itemReport, dfAdviceTemplate,
                     dfAdvicesTemplate, dashboardTemplate,
                     dashboardTemplateOds, dashboardExportTemplate, dashboardDFTemplateOds,
