@@ -456,7 +456,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
         # proposingGroup
-        if cfg.getUseGroupsAsCategories():
+        if 'category' not in cfg.getUsedItemAttributes():
             catalog_index = 'getProposingGroup'
             context_category = self.real_context.getProposingGroup()
         else:

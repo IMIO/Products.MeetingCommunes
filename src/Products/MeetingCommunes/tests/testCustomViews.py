@@ -677,7 +677,7 @@ class testCustomViews(MeetingCommunesTestCase):
     def test__filter_items(self):
         cfg = self.meetingConfig
         self.changeUser('pmManager')
-        cfg.setUseGroupsAsCategories(False)
+        self._enableField('category')
         cfg.setInsertingMethodsOnAddItem(
             ({'insertingMethod': 'on_categories', 'reverse': '0'},))
         m = self._createMeetingWithItems()
@@ -846,7 +846,7 @@ class testCustomViews(MeetingCommunesTestCase):
     def test_get_grouped_items(self):
         self.changeUser('pmManager')
         cfg = self.meetingConfig
-        cfg.setUseGroupsAsCategories(False)
+        self._enableField('category')
         cfg.setInsertingMethodsOnAddItem(
             ({'insertingMethod': 'on_categories', 'reverse': '0'},))
         m = self._createMeetingWithItems()
@@ -1076,7 +1076,7 @@ class testCustomViews(MeetingCommunesTestCase):
     def test_get_multiple_level_printing(self):
         self.changeUser('pmManager')
         cfg = self.meetingConfig
-        cfg.setUseGroupsAsCategories(False)
+        self._enableField('category')
         cfg.setInsertingMethodsOnAddItem(
             ({'insertingMethod': 'on_categories', 'reverse': '0'},))
         m = self._createMeetingWithItems()
@@ -1130,7 +1130,7 @@ class testCustomViews(MeetingCommunesTestCase):
 
     def test_print_item_number_within_category(self):
         cfg = self.meetingConfig
-        cfg.setUseGroupsAsCategories(True)
+        self._enableField('category', enable=False)
 
         def create_and_validate_item(creator, preferred_meeting=None):
             self.changeUser(creator)

@@ -763,6 +763,7 @@ councilMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
                              annexeAvis, annexeAvisLegal,
                              annexeSeance]
 councilMeeting.usedItemAttributes = ['description',
+                                     'category',
                                      'proposingGroupWithGroupInCharge',
                                      'motivation',
                                      'oralQuestion',
@@ -786,9 +787,6 @@ councilMeeting.usedMeetingAttributes = ['start_date',
                                         'observations',
                                         'notes',
                                         'in_and_out_moves']
-
-councilMeeting.useGroupsAsCategories = False
-
 councilMeeting.itemColumns = ['Creator', 'CreationDate', 'ModificationDate', 'review_state', 'getCategory',
                               'proposing_group_acronym', 'groups_in_charge_acronym', 'advices', 'meeting_date',
                               'actions']
