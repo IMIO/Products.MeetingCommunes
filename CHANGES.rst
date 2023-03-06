@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2 (unreleased)
+4.2 (2023-03-06)
 ----------------
 
 - Removed useless import of `get_cachekey_volatile` in `adapters.py`.
