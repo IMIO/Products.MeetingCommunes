@@ -5,7 +5,67 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2b21 (unreleased)
+4.2.1 (unreleased)
+------------------
+
+- Nothing changed yet.
+
+
+4.2 (2023-03-06)
+----------------
+
+- Removed useless import of `get_cachekey_volatile` in `adapters.py`.
+  [gbastien]
+- Fixed POD template `avis-df.odt` in `examples_fr` profile.
+  [gbastien]
+- Make `CustomMeetingConfig.getUsedFinanceGroupIds` work with item sent to
+  another MC with inheritated advices.
+  [gbastien]
+- Advices is no more using Plone versioning, removed `repositorytool.xml`
+  from `financesadvice` profile (migration is managed by `Products.PloneMeeting`).
+  [gbastien]
+- Added collection `searchadvicesbacktoitemvalidationstates` using
+  `CompoundCriterion` adapter `items-with-advice-back-to-item-validation-states`
+  to get items having finances advice that are return in item validation states.
+  [gbastien]
+- Adapted code regarding removal of `MeetingConfig.useGroupsAsCategories`.
+  [gbastien]
+
+4.2b24 (2022-09-29)
+-------------------
+
+- Removed wrong ramcache cachekey for `CustomToolPloneMeeting.isFinancialUser`.
+  Removed ramcache decorator for it, finally useless.
+  [gbastien]
+
+4.2b23 (2022-09-22)
+-------------------
+
+- Fixed `examples_fr` profile.
+  [gbastien]
+
+4.2b22 (2022-08-26)
+-------------------
+
+- Rename "Commission des volontaires" profile to "Bureau des volontaires".
+  [aduchene]
+- Add helper print method to be able to group by custom method instead of persistent value on item.
+  This method must begin by "_group_by_".
+  [anuyens, gbastien]
+- Field `MeetingConfig.transitionsForPresentingAnItem` was removed, adapted profiles accordingly.
+  [gbastien]
+- In `MeetingCommunesWorkflowActions.doDecide`, call parent's `doDecide`.
+  [gbastien]
+- Call migrations to `PloneMeeting 4203 and 4204` in migration to `MeetingCommunes 4200`.
+  [gbastien]
+- In migration to 4200, removed replace `print_deliberation` by
+  `print_full_deliberation` as this last method was removed.
+  [gbastien]
+- Adapted code now that we use `imio.helpers.cache.get_plone_groups_for_user`
+  instead `ToolPloneMeeting.get_plone_groups_for_user`.
+  [gbastien]
+
+4.2b21 (2022-06-14)
 -------------------
 
 - Add user FS in examples_fr profile.

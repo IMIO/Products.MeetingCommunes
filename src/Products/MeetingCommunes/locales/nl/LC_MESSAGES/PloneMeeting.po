@@ -127,6 +127,10 @@ msgstr ""
 msgid "searchadviceproposedtoreviewer"
 msgstr ""
 
+#. Default: "Advices back to item validation states"
+msgid "searchadvicesbacktoitemvalidationstates"
+msgstr ""
+
 #. Default: "Advices signed by financial manager"
 msgid "searchadvicesignedbymanager"
 msgstr ""

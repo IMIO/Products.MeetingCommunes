@@ -8,6 +8,7 @@ from AccessControl.class_init import InitializeClass
 from appy.gen import No
 from collections import OrderedDict
 from collective.contact.plonegroup.utils import get_organizations
+from imio.helpers.cache import get_plone_groups_for_user
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from plone import api
 from plone.memoize import ram
@@ -545,36 +546,55 @@ class CustomMeetingConfig(MeetingConfig):
         query[1]['v'] = values
         collection.setQuery(query)
 
+    def _get_finances_advices_collection(self, cfg):
+        """Return the FINANCE_ADVICES_COLLECTION_ID collection if enabled."""
+        collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID, None)
+        if not collection:
+            logger.warn(
+                "Method 'getUsedFinanceGroupIds' could not find the '{0}' collection!".format(
+                    FINANCE_ADVICES_COLLECTION_ID))
+            return
+        elif collection.enabled is False:
+            logger.warn(
+                "Method 'getUsedFinanceGroupIds' returned [] because the '{0}' "
+                "collection is not enabled!".format(FINANCE_ADVICES_COLLECTION_ID))
+            return
+        else:
+            return collection
+
     security.declarePublic('getUsedFinanceGroupIds')
 
     def getUsedFinanceGroupIds(self, item=None):
         """Possible finance advisers group ids are defined on
            the FINANCE_ADVICES_COLLECTION_ID collection."""
-        cfg = self.getSelf()
-        collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID, None)
-        res = []
-        if not collection:
-            logger.warn(
-                "Method 'getUsedFinanceGroupIds' could not find the '{0}' collection!".format(
-                    FINANCE_ADVICES_COLLECTION_ID))
-            return res
-        if collection.enabled is False:
-            logger.warn(
-                "Method 'getUsedFinanceGroupIds' returned [] because the '{0}' "
-                "collection is not enabled!".format(FINANCE_ADVICES_COLLECTION_ID))
-            return res
+        values = []
         # get the indexAdvisers value defined on the collection
         # and find the relevant group, indexAdvisers form is :
         # 'delay_row_id__2014-04-16.9996934488', 'real_org_uid__[directeur-financier_UID]'
         # it is either a customAdviser row_id or an organization uid
         # do not break if no 'indexAdvisers' defined or empty 'indexAdvisers' defined
-        values = [term.get('v') for term in collection.getRawQuery()
-                  if term.get('v') and term['i'] == 'indexAdvisers']
+        if item:
+            tool = api.portal.get_tool('portal_plonemeeting')
+            for adviser_id, advice_info in item.getAdviceDataFor(item).items():
+                cfg = tool.getMeetingConfig(advice_info.get('adviceHolder', item))
+                collection = self._get_finances_advices_collection(cfg)
+                new_values = [term.get('v') for term in collection.getRawQuery()
+                              if term.get('v') and term['i'] == 'indexAdvisers'] \
+                    if collection else []
+                # we get a list of advisers in values like [[v1, v2, v3]]
+                if new_values:
+                    values += new_values[0]
+        else:
+            cfg = self.getSelf()
+            collection = self._get_finances_advices_collection(cfg)
+            values = [term.get('v') for term in collection.getRawQuery()
+                      if term.get('v') and term['i'] == 'indexAdvisers'] \
+                if collection else []
+            # we get a list of advisers in values like [[v1, v2, v3]]
+            if values:
+                values = values[0]
 
-        # we get a list of advisers in values like [[v1, v2, v3]]
-        if values:
-            values = values[0]
-
+        res = []
         for v in values:
             real_org_uid_prefix = REAL_ORG_UID_PATTERN.format('')
             if v.startswith(real_org_uid_prefix):
@@ -669,7 +689,7 @@ class CustomMeetingConfig(MeetingConfig):
                         'sort_reversed': True,
                         'showNumberOfItems': False,
                         'tal_condition':
-                        "python: '%s_budgetimpacteditors' % cfg.getId() in tool.get_plone_groups_for_user() or "
+                        "python: '%s_budgetimpacteditors' % cfg.getId() in pm_utils.get_plone_groups_for_user() or "
                         "tool.isManager(cfg)",
                         'roles_bypassing_talcondition': ['Manager', ]
                     }
@@ -849,6 +869,24 @@ class CustomMeetingConfig(MeetingConfig):
                             'roles_bypassing_talcondition': ['Manager', ]
                         }
                      ),
+                    # Items for which finance advice is asked and that is back
+                    # the the item validation states
+                    ('searchadvicesbacktoitemvalidationstates',
+                        {
+                            'subFolderId': 'searches_items',
+                            'active': True,
+                            'query':
+                            [
+                                {'i': 'CompoundCriterion',
+                                 'o': 'plone.app.querystring.operation.compound.is',
+                                 'v': 'items-with-advice-back-to-item-validation-states'},
+                            ],
+                            'sort_on': u'created',
+                            'sort_reversed': True,
+                            'tal_condition': "python: tool.adapted().isFinancialUser()",
+                            'roles_bypassing_talcondition': ['Manager', ]
+                        }
+                     ),
                 ]
             )
             infos.update(financesadvice_infos)
@@ -910,6 +948,8 @@ class MeetingCommunesWorkflowActions(MeetingWorkflowActions):
            MeetingConfig.initItemDecisionIfEmptyOnDecide is True, we
            initialize the decision field with content of Title+Description
            if decision field is empty.'''
+        # call parent's doDecide
+        super(MeetingCommunesWorkflowActions, self).doDecide(stateChange)
         if self.cfg.getInitItemDecisionIfEmptyOnDecide():
             for item in self.context.get_items():
                 # If deliberation (motivation+decision) is empty,
@@ -1141,18 +1181,11 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
     def __init__(self, item):
         self.context = item
 
-    def isFinancialUser_cachekey(method, self, brain=False):
-        '''cachekey method for self.isFinancialUser.'''
-        tool = api.portal.get_tool('portal_plonemeeting')
-        return tool.get_plone_groups_for_user()
-
     security.declarePublic('isFinancialUser')
 
-    @ram.cache(isFinancialUser_cachekey)
     def isFinancialUser(self):
         '''Is current user a financial user, so in groups FINANCE_GROUP_SUFFIXES.'''
-        tool = api.portal.get_tool('portal_plonemeeting')
-        for groupId in tool.get_plone_groups_for_user():
+        for groupId in get_plone_groups_for_user():
             for suffix in FINANCE_GROUP_SUFFIXES:
                 if groupId.endswith('_%s' % suffix):
                     return True
@@ -1412,3 +1445,38 @@ class ItemsWithAdviceSignedByFinancialManagerAdapter(BaseItemsWithAdviceAdapter)
 
     # we may not ram.cache methods in same file with same name...
     query = query_itemswithadvicesignedbyfinancialmanager
+
+
+class ItemsWithAdviceBackToItemValidationStatesAdapter(CompoundCriterionBaseAdapter):
+
+    @property
+    @ram.cache(query_user_groups_cachekey)
+    def query_itemswithadvicebacktoitemvalidationstates(self):
+        '''Queries all items for which there is a finance advice that already
+           pass by a state where advice was giveable but that was returned in
+           a state from MeetingConfig.itemWFValidationLevels.
+           This only work when MeetingConfig.keepAccessToItemWhenAdvice
+           is "was_giveable".'''
+        if not self.cfg:
+            return {}
+        groupIds = []
+        finance_org_uids = self.cfg.adapted().getUsedFinanceGroupIds()
+        for org_uid in finance_org_uids:
+            # delay given
+            groupIds.append('delay__{0}_advice_given'.format(org_uid))
+            # delay not given
+            groupIds.append('delay__{0}_advice_not_giveable'.format(org_uid))
+            # without delay given
+            groupIds.append('real_org_uid__{0}'.format(org_uid))
+            # without delay not_given
+            groupIds.append('real_org_uid__{0}__not_given'.format(org_uid))
+        # Create query parameters
+        return {'portal_type': {'query': self.cfg.getItemTypeName()},
+                'indexAdvisers': {'query': groupIds},
+                'review_state': {'query': self.cfg.getItemWFValidationLevels(
+                    data='state', only_enabled=True)},
+                'getProposingGroup': {'not': finance_org_uids},
+                }
+
+    # we may not ram.cache methods in same file with same name...
+    query = query_itemswithadvicebacktoitemvalidationstates

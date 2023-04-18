@@ -264,7 +264,7 @@ msgstr "Point récurrent SIPPT"
 
 #. Default: "MeetingItemRecurringvolonteers"
 msgid "MeetingItemRecurringvolonteers"
-msgstr "Point récurrent Commission des volontaires"
+msgstr "Point récurrent Bureau des volontaires"
 
 #. Default: "MeetingItemSCRH"
 msgid "MeetingItemSCRH"
@@ -388,7 +388,7 @@ msgstr "Modèle de point  SIPPT"
 
 #. Default: "MeetingItemTemplatevolonteers"
 msgid "MeetingItemTemplatevolonteers"
-msgstr "Modèle de point Commission des volontaires"
+msgstr "Modèle de point Bureau des volontaires"
 
 #. Default: "MeetingItemWB"
 msgid "MeetingItemWB"
@@ -436,7 +436,7 @@ msgstr "Point SIPPT"
 
 #. Default: "MeetingItemvolonteers"
 msgid "MeetingItemvolonteers"
-msgstr "Point Commission des volontaires"
+msgstr "Point Bureau des volontaires"
 
 #. Default: "MeetingNEGO"
 msgid "MeetingNEGO"

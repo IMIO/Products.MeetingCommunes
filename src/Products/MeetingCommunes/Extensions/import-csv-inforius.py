@@ -3,37 +3,34 @@
 
 from __future__ import print_function
 
+import io
+import os
 import re
+from datetime import datetime
 from os.path import isfile, join, exists
 
-from backports import csv
+from Products.PloneMeeting import logger
+from bleach.sanitizer import Cleaner
 
+import transaction
+from DateTime import DateTime
+from Products.CMFPlone.utils import safe_unicode
+from backports import csv
 #  pip install backports.csv
 from collective.contact.plonegroup.utils import get_organizations
 from collective.iconifiedcategory.utils import calculate_category_id
 from collective.iconifiedcategory.utils import get_config_root
-from DateTime import DateTime
-from datetime import datetime
-
 from imio.helpers.content import richtextval
 from plone import namedfile, api
 from plone.app.querystring import queryparser
 from plone.dexterity.utils import createContentInContainer
-from Products.CMFPlone.utils import safe_unicode
-from Products.PloneMeeting import logger
-
-import io
-import os
-import transaction
 
 # see https://developer.mozilla.org/fr/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
 content_types = {
     ".aac": "audio/aac",
     ".abw": "application/x-abiword",
-    ".arc": "application/octet-stream",
     ".avi": "video/x-msvideo",
     ".azw": "application/vnd.amazon.ebook",
-    ".bin": "application/octet-stream",
     ".bmp": "image/bmp",
     ".bz": "application/x-bzip",
     ".bz2": "application/x-bzip2",
@@ -49,17 +46,13 @@ content_types = {
     ".gif": "image/gif",
     ".gpx": "application/gpx+xml",
     ".heic": "image/heic",
-    ".htm": "text/html",
-    ".html": "text/html",
     ".ico": "image/x-icon",
     ".ics": "text/calendar",
     ".jar": "application/java-archive",
     ".jpeg": "image/jpeg",
     ".jpg": "image/jpeg",
-    ".js": "application/javascript",
     ".json": "application/json",
     ".log": "text/plain",
-    ".lnk": "application/octet-stream",
     ".mht": "message/rfc822",
     ".mhtml": "message/rfc822",
     ".mid": "audio/midi",
@@ -82,7 +75,6 @@ content_types = {
     ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
     ".rar": "application/x-rar-compressed",
     ".rtf": "application/rtf",
-    ".sh": "application/x-sh",
     ".svg": "image/svg+xml",
     ".swf": "application/x-shockwave-flash",
     ".tar": "application/x-tar",
@@ -113,39 +105,41 @@ content_types = {
 
 datetime_format = "%Y-%m-%d %H:%M:%S"
 
+cleaner = Cleaner(tags=['p', 'br', 'ul', 'ol', 'li', 'strong', 'u', 'em', 'sup', 'sub', 'a', 'img'
+                        'table', 'thead', 'tr', 'th', 'tbody', 'td'],
+                  attributes={'a': ['href', 'alt'],
+                              'img': ['src', 'alt', 'width', 'height']},
+                  strip=True)
 
-# Because we got an ugly csv with ugly formatting and a shit load of useless M$ formatting.
-def clean_xhtml(xhtml_value):
-    line = re.sub(r"<!--.*?-->", u"", xhtml_value.strip())
-    line = re.sub(r' ?style=".*?"', u"", line.strip())
-    line = re.sub(r' ?class=".*?"', u"", line.strip())
-    line = re.sub(r' ?lang=".*?"', u"", line.strip())
-    line = re.sub(r"<font.*?>", u"", line.strip())
-    line = re.sub(r"<h\d*", u"<p", line.strip())
-    line = re.sub(r"</h\d*", u"</p", line.strip())
+commit_step = 10
 
-    line = line.replace(u"</font>", u"").strip()
-    line = line.replace(u"\u00A0", u"&nbsp;").strip()
-    line = line.replace(u"<o:p></o:p>", u"").strip()
-    line = line.replace(u"<o:p>", u"<p>").strip()
-    line = line.replace(u"</o:p>", u"</p>").strip()
-    line = line.replace(u"<div>", u"<p>").strip()
-    line = line.replace(u"</div>", u"</p>").strip()
-    line = line.replace(u"<p><br>", u"<p>").strip()
-    if not re.match(r"^<p.*?</p>$", line):
-        if line.endswith(u"<br>"):
-            line = line[:-4]
-        if line.startswith(u"<p"):
-            line = u"{}</p>".format(line)
-        else:
-            line = u"<p>{}</p>".format(line)
-    return line
+
+def clean_xhtml(html_value):
+    xhtml = html_value.strip()
+    if not xhtml.startswith(u"<p"):
+        xhtml = u"<p>" + xhtml
+    if not xhtml.endswith(u"</p>"):
+        xhtml += u"</p>"
+    # replace multiple br
+    xhtml = xhtml.replace(u"\n", u"").strip()
+    xhtml = re.sub(r'<br.?>((\s|\n)*<br.?>)+', u'</p>\n<p>', xhtml)
+    xhtml = xhtml.replace(u"&", u"&amp;").strip()
+    xhtml = xhtml.replace(u"\u00A0", u"&nbsp;").strip()
+    xhtml = xhtml.replace(u"\u2022", u"*").strip()
+    xhtml = xhtml.replace(u"\u25E6", u"*").strip()
+    xhtml = xhtml.replace(u"\u2219", u"*").strip()
+    xhtml = xhtml.replace(u"\u2023", u"*").strip()
+    xhtml = xhtml.replace(u"\u2043", u"*").strip()
+    xhtml = xhtml.replace(u"\00B7", u"*").strip()
+    cleaned = cleaner.clean(xhtml)
+    return cleaned
 
 
 class CSVMeetingItem:
     annexFileTypeDecision = "annexeDecision"
+
     # ID    Title    Creator    CreationDate    ServiceID    CategoryID    Motivation    Decision    MeetingID
-    def __init__(self, external_id, title, creator, created_on, service, category, motivation, decision, meeting_external_id, annexes_dir):
+    def __init__(self, external_id, title, creator, created_on, service, category, motivation, decision, meeting_external_id, annexes_dir, classification=None, folder=None, sub_folder=None):
         self.external_id = external_id
         self.title = safe_unicode(title)
         self.creator = creator and creator or "INCONNU"
@@ -155,6 +149,9 @@ class CSVMeetingItem:
         self.motivation = clean_xhtml(motivation)
         self.decision = clean_xhtml(decision)
         self.meeting_external_id = meeting_external_id
+        self.classification = classification
+        self.folder = folder
+        self.sub_folder = sub_folder
         path = "{}/{}".format(annexes_dir, external_id)
         if exists(path):
             self.annexes = [
@@ -198,6 +195,7 @@ class ImportCSV:
         meeting_annex_dir_path,
         item_annex_dir_path,
         default_group,
+        hr_group=None,
         default_category_college=None,
         default_category_council=None,
     ):
@@ -209,6 +207,7 @@ class ImportCSV:
         self.meeting_annex_dir_path = meeting_annex_dir_path
         self.item_annex_dir_path = item_annex_dir_path
         self.default_group = default_group
+        self.hr_group = hr_group
         self.errors = {"io": [], "item": [], "meeting": [], "item_without_annex": []}
         self.item_counter = 0
         self.meeting_counter = 0
@@ -251,6 +250,15 @@ class ImportCSV:
 
         annex_portal_type = "annex"
         file_ext = path[path.rindex(".") :].lower()
+        if file_ext not in content_types:
+            message = u"Annex skipped because of unsupported file extension \"{}\" at path {}".format(
+                safe_unicode(file_ext),
+                safe_unicode(path)
+            )
+            self.errors["io"].append(message)
+            logger.warning(message)
+            return None
+
         content_type = content_types[file_ext]
 
         the_annex = createContentInContainer(
@@ -303,7 +311,7 @@ class ImportCSV:
             self.add_annex(obj, path, annex_title=title, confidential=confidential)
             return True
         except IOError as e:
-            self.errors["io"].append(e.message)
+            self.errors["io"].append(safe_unicode(e.message))
             logger.warning(e.message)
             return False
 
@@ -330,6 +338,12 @@ class ImportCSV:
                               decision=safe_unicode(csv_item[7].strip()),
                               meeting_external_id=meeting_external_id,
                               annexes_dir=self.item_annex_dir_path)
+        if len(csv_item) > 9:
+            item.classification = csv_item[9].strip()
+        if len(csv_item) > 10:
+            item.folder = csv_item[10].strip()
+        if len(csv_item) > 11:
+            item.sub_folder = csv_item[11].strip()
 
         return item
 
@@ -436,12 +450,17 @@ class ImportCSV:
 
         meeting.reindexObject(idxs=["modified"])
         self.meeting_counter += 1
-        transaction.commit()
+        if self.meeting_counter % commit_step == 0:
+            transaction.commit()
 
-    def get_matching_proposing_group(self, proposing_group):
+    def get_matching_proposing_group(self, csv_item):
+        # avoid leak of sensitive HR topics
+        if self.hr_group and csv_item.classification and re.match(r'^2\.?08.*$', csv_item.classification):
+            return self.hr_group
+
         grp_id = (
-            proposing_group.strip() in self.groups
-            and self.groups[proposing_group.strip()]
+            csv_item.proposing_group.strip() in self.groups
+            and self.groups[csv_item.proposing_group.strip()]
         )
         return (
             grp_id in self.grp_id_mapping
@@ -484,7 +503,7 @@ class ImportCSV:
             raise ValueError('Impossible to determine MC for ' + csv_item.portal_type)
 
         item.setProposingGroup(
-            self.get_matching_proposing_group(csv_item.proposing_group)
+            self.get_matching_proposing_group(csv_item)
         )
 
         if item_meeting_cfg.getId() == self.college_cfg.getId():
@@ -493,10 +512,15 @@ class ImportCSV:
             item.setCategory(self.default_category_council)
 
         item.setCreators("csvimport")
-        item.setDescription(
-            u"<p>Créateur originel : {creator}</p>".format(creator=csv_item.creator)
-        )
-
+        description = u"<p>Service originel : {}</p>".format(csv_item.proposing_group)
+        description += u"<p>Créateur originel : {}</p>".format(csv_item.creator)
+        if csv_item.classification:
+            description += u"<p>Classement : {}</p>".format(csv_item.classification)
+        if csv_item.folder:
+            description += u"<p>Farde : {}</p>".format(csv_item.folder)
+        if csv_item.sub_folder:
+            description += u"<p>Chemise : {}</p>".format(csv_item.sub_folder)
+        item.setDescription(description)
         item.setMotivation(csv_item.motivation)
         item.setDecision(csv_item.decision)
 
@@ -603,6 +627,7 @@ def import_data_from_csv(
     f_items,
     f_meetings,
     default_group,
+    hr_group,
     meeting_annex_dir_path,
     item_annex_dir_path,
     default_category_college=None,
@@ -617,6 +642,7 @@ def import_data_from_csv(
         meeting_annex_dir_path,
         item_annex_dir_path,
         default_group,
+        hr_group,
         default_category_college,
         default_category_council,
     )

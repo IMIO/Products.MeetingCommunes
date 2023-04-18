@@ -175,7 +175,7 @@
 
   <genericsetup:registerProfile
    name="zcommittee_volonteers"
-   title="PloneMeeting / Commission des volontaires"
+   title="PloneMeeting / Bureau des volontaires"
    description="PloneMeeting for volonteers committee (Belgium)"
    provides="Products.GenericSetup.interfaces.EXTENSION"
    for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>

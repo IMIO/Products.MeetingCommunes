@@ -45,7 +45,7 @@ annexeAvisLegal = AnnexTypeDescriptor('annexeAvisLegal', 'Extrait article de loi
 annexeSeance = AnnexTypeDescriptor('annexe', 'Annexe', u'attach.png', relatedTo='meeting')
 
 # Categories -------------------------------------------------------------------
-categories = PORTAL_CATEGORIES + [
+categories = [
     CategoryDescriptor('recurrents', 'Récurrents'),
     CategoryDescriptor('divers', 'Divers'),
     CategoryDescriptor('rh', 'Ressources Humaine'),
@@ -87,6 +87,13 @@ decisionsTemplate.pod_formats = ['odt', 'pdf', ]
 decisionsTemplate.pod_portal_types = ['Meeting']
 decisionsTemplate.tal_condition = u'python:tool.isManager(cfg)'
 decisionsTemplate.style_template = ['styles1']
+
+pubTemplate = PodTemplateDescriptor('publications', 'Publications (www.deliberations.be)')
+pubTemplate.odt_file = 'publications.odt'
+pubTemplate.pod_formats = ['odt', 'pdf', ]
+pubTemplate.pod_portal_types = ['Meeting']
+pubTemplate.tal_condition = u'python:tool.isManager(cfg)'
+pubTemplate.style_template = ['styles1']
 
 attendeesTemplate = PodTemplateDescriptor('attendees', 'Exemple assemblées')
 attendeesTemplate.odt_file = 'attendees.odt'
@@ -203,7 +210,8 @@ historyTemplate.pod_portal_types = ['MeetingItem']
 
 collegeStyleTemplate = [stylesTemplate1, stylesTemplate2]
 collegeTemplates = [agendaTemplate, agendaTemplateWithIndex, agendaTemplateWithAnnexes,
-                    decisionsTemplate, attendeesTemplate, votesTemplate,
+                    decisionsTemplate, pubTemplate,
+                    attendeesTemplate, votesTemplate,
                     itemTemplate, itemTemplate_duplex, itemReport, dfAdviceTemplate,
                     dfAdvicesTemplate, dashboardTemplate,
                     dashboardTemplateOds, dashboardExportTemplate, dashboardDFTemplateOds,
@@ -226,10 +234,10 @@ conseiller = UserDescriptor('conseiller', [], email="test@test.be", fullname="Co
 emetteuravisPers = UserDescriptor('emetteuravisPers', [], email="test@test.be", fullname="Emetteur avis Personnel", create_member_area=True)
 
 # Bourgmestre
-bourgmestre_org = OrgDescriptor('bourgmestre', 'Bourgmestre', u'BG')
+bourgmestre_org = OrgDescriptor('bourgmestre', 'Bourgmestre', u'BG', groups_in_charge=['bourgmestre'])
 bourgmestre_org.advisers.append(bourgmestre)
 # Directeur Général
-dirgen_org = OrgDescriptor('dirgen', 'Directeur Général', u'DG')
+dirgen_org = OrgDescriptor('dirgen', 'Directeur Général', u'DG', groups_in_charge=['dirgen'])
 dirgen_org.creators.append(dgen)
 dirgen_org.reviewers.append(dgen)
 dirgen_org.observers.append(dgen)
@@ -488,7 +496,6 @@ collegeMeeting.workflowAdaptations = [
     'presented_item_back_to_itemcreated',
     'presented_item_back_to_proposed',
     'only_creator_may_delete']
-collegeMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 collegeMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
       'field_name': 'MeetingItem.decision',
@@ -749,13 +756,14 @@ councilMeeting.certifiedSignatures = [
 councilMeeting.places = """Place1\n\r
 Place2\n\r
 Place3\n\r"""
-councilMeeting.categories = categories
+councilMeeting.categories = categories + PORTAL_CATEGORIES
 councilMeeting.shortName = 'Council'
 councilMeeting.annexTypes = [annexe, annexeBudget, annexeCahier,
                              annexeDecision, annexeDecisionToSign, annexeDecisionSigned,
                              annexeAvis, annexeAvisLegal,
                              annexeSeance]
 councilMeeting.usedItemAttributes = ['description',
+                                     'category',
                                      'proposingGroupWithGroupInCharge',
                                      'motivation',
                                      'oralQuestion',
@@ -779,9 +787,6 @@ councilMeeting.usedMeetingAttributes = ['start_date',
                                         'observations',
                                         'notes',
                                         'in_and_out_moves']
-
-councilMeeting.useGroupsAsCategories = False
-
 councilMeeting.itemColumns = ['Creator', 'CreationDate', 'ModificationDate', 'review_state', 'getCategory',
                               'proposing_group_acronym', 'groups_in_charge_acronym', 'advices', 'meeting_date',
                               'actions']
@@ -825,7 +830,6 @@ councilMeeting.itemAdviceStates = ()
 councilMeeting.itemAdviceEditStates = ()
 councilMeeting.itemAdviceViewStates = ()
 councilMeeting.workflowAdaptations = list(collegeMeeting.workflowAdaptations)
-councilMeeting.transitionsForPresentingAnItem = ('propose', 'validate', 'present', )
 councilMeeting.onMeetingTransitionItemActionToExecute = deepcopy(
     collegeMeeting.onMeetingTransitionItemActionToExecute)
 councilMeeting.powerObservers = deepcopy(collegeMeeting.powerObservers)

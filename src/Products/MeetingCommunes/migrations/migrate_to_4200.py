@@ -7,6 +7,9 @@ from persistent.mapping import PersistentMapping
 from Products.PloneMeeting.migrations.migrate_to_4200 import Migrate_To_4200 as PMMigrate_To_4200
 from Products.PloneMeeting.migrations.migrate_to_4201 import Migrate_To_4201
 from Products.PloneMeeting.migrations.migrate_to_4202 import Migrate_To_4202
+from Products.PloneMeeting.migrations.migrate_to_4203 import Migrate_To_4203
+from Products.PloneMeeting.migrations.migrate_to_4204 import Migrate_To_4204
+from Products.PloneMeeting.migrations.migrate_to_4205 import Migrate_To_4205
 
 import logging
 
@@ -121,7 +124,7 @@ class Migrate_To_4200(PMMigrate_To_4200):
     def _mc_fixPODTemplatesInstructions(self):
         '''Make some replace in POD templates to fit changes in code...'''
         # for every POD templates
-        replacements = {'.print_deliberation(': '.print_full_deliberation(', }
+        replacements = {}
         # specific for Meeting POD Templates
         meeting_replacements = {}
         # specific for MeetingItem POD Templates
@@ -155,6 +158,9 @@ class Migrate_To_4200(PMMigrate_To_4200):
             # execute upgrade steps in PM that were added after main upgrade to 4200
             Migrate_To_4201(self.portal).run(from_migration_to_4200=True)
             Migrate_To_4202(self.portal).run(from_migration_to_4200=True)
+            Migrate_To_4203(self.portal).run(from_migration_to_4200=True)
+            Migrate_To_4204(self.portal).run(from_migration_to_4200=True)
+            Migrate_To_4205(self.portal).run(from_migration_to_4200=True)
 
             # now MeetingCommunes specific steps
             logger.info('Migrating to MeetingCommunes 4200...')
