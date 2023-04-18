@@ -37,6 +37,10 @@ msgstr ""
 msgid "MeetingCA"
 msgstr ""
 
+#. Default: "MeetingCAT4T"
+msgid "MeetingCAT4T"
+msgstr ""
+
 #. Default: "MeetingCOGES"
 msgid "MeetingCOGES"
 msgstr ""
@@ -91,6 +95,10 @@ msgstr ""
 
 #. Default: "MeetingItemCA"
 msgid "MeetingItemCA"
+msgstr ""
+
+#. Default: "MeetingItemCAT4T"
+msgid "MeetingItemCAT4T"
 msgstr ""
 
 #. Default: "MeetingItemCOGES"
@@ -155,6 +163,10 @@ msgstr ""
 
 #. Default: "MeetingItemRecurringCA"
 msgid "MeetingItemRecurringCA"
+msgstr ""
+
+#. Default: "MeetingItemRecurringCAT4T"
+msgid "MeetingItemRecurringCAT4T"
 msgstr ""
 
 #. Default: "MeetingItemRecurringCOGES"
@@ -275,6 +287,10 @@ msgstr ""
 
 #. Default: "MeetingItemTemplateCA"
 msgid "MeetingItemTemplateCA"
+msgstr ""
+
+#. Default: "MeetingItemTemplateCAT4T"
+msgid "MeetingItemTemplateCAT4T"
 msgstr ""
 
 #. Default: "MeetingItemTemplateCOGES"
