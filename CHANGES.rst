@@ -8,8 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Fixed `zbougmestre` profile `shortName` from wrong `AG` to `Bourgmestre`.
+  [gbastien]
 
 4.2 (2023-03-06)
 ----------------

@@ -9,7 +9,7 @@ config = deepcopy(simple_import_data.simpleMeeting)
 config.id = 'bourgmestre'
 config.title = 'Bourgmestre'
 config.folderTitle = 'Bourgmestre'
-config.shortName = 'AG'
+config.shortName = 'Bourgmestre'
 
 data = PloneMeetingConfiguration(
     meetingFolderTitle='Mes séances',
