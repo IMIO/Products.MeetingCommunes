@@ -15,7 +15,9 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
            that will return adviser ids used on the FINANCE_ADVICES_COLLECTION_ID
            collection, this is used in the adapted method 'showFinanceAdviceTemplate'.'''
         cfg = self.meetingConfig
+        cfg.setUseAdvices(True)
         cfg2 = self.meetingConfig2
+        cfg2.setUseAdvices(True)
         cfg2Id = cfg2.getId()
         collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID)
         # make sure collection is active
@@ -79,6 +81,21 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
              'delay_label': 'Not a finance advice',
              'is_linked_to_previous_row': '0'}, ]
         )
+        cfg2.setSelectableAdvisers((self.vendors_uid, self.developers_uid))
+        collection2 = getattr(cfg2.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID)
+        # make sure collection is active
+        collection2.enabled = True
+        collection2.reindexObject(idxs=['enabled'])
+        collection2.setQuery([
+            {'i': 'portal_type',
+             'o': 'plone.app.querystring.operation.selection.is',
+             'v': [cfg.getItemTypeName(), ]},
+            {'i': 'indexAdvisers',
+             'o': 'plone.app.querystring.operation.selection.is',
+             'v': ['delay_row_id__unique_id_001_2',
+                   'delay_row_id__unique_id_002_2',
+                   'real_org_uid__{0}'.format(self.developers_uid),]}
+        ], )
         # create an item without finance advice
         self.changeUser('pmManager')
         item = self.create('MeetingItem')
@@ -113,7 +130,9 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.assertIsNone(item.adapted().getFinanceAdviceId())
 
         # finally ask a real finance advice, this time it will work
-        item.setOptionalAdvisers(('{0}__rowid__unique_id_001'.format(self.developers_uid), ))
+        item.setOptionalAdvisers(
+            (self.vendors_uid,
+             '{0}__rowid__unique_id_001'.format(self.developers_uid), ))
         item._update_after_edit()
         self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item),
                          [self.developers_uid])
@@ -134,6 +153,14 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         clonedItem2 = clonedItem.cloneToOtherMeetingConfig(cfg2Id)
         self.assertEqual(cfg2.adapted().getUsedFinanceGroupIds(clonedItem2),
                          [self.developers_uid])
+        self.assertTrue(clonedItem2.adapted().showFinanceAdviceTemplate())
+        self.assertEqual(clonedItem2.adapted().getFinanceAdviceId(), self.developers_uid)
+        # remove inheritance for developers_uid
+        self.request['form.widgets.advice_uid'] = unicode(self.developers_uid, 'utf-8')
+        self.request['form.widgets.inherited_advice_action'] = 'ask_locally'
+        form = clonedItem2.restrictedTraverse('@@advice-remove-inheritance').form_instance
+        form.update()
+        form.handleSaveRemoveAdviceInheritance(form, None)
         self.assertTrue(clonedItem2.adapted().showFinanceAdviceTemplate())
         self.assertEqual(clonedItem2.adapted().getFinanceAdviceId(), self.developers_uid)
 

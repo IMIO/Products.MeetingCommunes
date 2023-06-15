@@ -8,8 +8,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Fixed `CustomMeetingConfig.getUsedFinanceGroupIds` to work when an item has
+  both inheritated and not inheritated advices, it was using the wrong
+  `MeetingConfig` in some cases.
+  [gbastien]
 
 4.2.1 (2023-05-31)
 ------------------
