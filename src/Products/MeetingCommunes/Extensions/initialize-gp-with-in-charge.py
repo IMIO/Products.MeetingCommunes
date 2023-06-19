@@ -2,15 +2,16 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
+from collective.contact.plonegroup.utils import get_organizations
+from copy import deepcopy
+from datetime import datetime
+from Products.Archetypes.event import ObjectEditedEvent
+from Products.PloneMeeting import logger
+from zope.event import notify
 
 import re
-from datetime import datetime
-from copy import deepcopy
-
-from Products.PloneMeeting import logger
-
 import transaction
-from collective.contact.plonegroup.utils import get_organizations
+
 
 special_format = "{0}__groupincharge__{1}"
 
@@ -33,17 +34,17 @@ def set_default_in_charge_if_misssing_and_fix_certified_sign(default_in_charge_u
         group.reindexObject()
 
 
-def set_up_meeting_config_used_items_attributes(meeting_config):
+def set_up_meeting_config_used_items_attributes(cfg):
     logger.info(
         "Activating proposingGroupWithGroupInCharge and disabling groupsInCharge"
     )
-    used_item_attributes = list(meeting_config.usedItemAttributes)
-    if u"proposingGroupWithGroupInCharge" not in meeting_config.usedItemAttributes:
+    used_item_attributes = list(cfg.getUsedItemAttributes())
+    if u"proposingGroupWithGroupInCharge" not in used_item_attributes:
         used_item_attributes.append(u"proposingGroupWithGroupInCharge")
     if u"groupsInCharge" in used_item_attributes:
         used_item_attributes.remove(u"groupsInCharge")
-    meeting_config.usedItemAttributes = tuple(used_item_attributes)
-    meeting_config.at_post_edit_script()
+    cfg.setUsedItemAttributes(tuple(used_item_attributes))
+    notify(ObjectEditedEvent(cfg))
 
 
 def initialize_proposingGroupWithGroupInCharge(
