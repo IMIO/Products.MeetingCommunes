@@ -8,8 +8,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Removed confusing `transition_done_descr` translations
+  (portal message displayed after a transition).
+  [gbastien]
 
 4.2.2 (2023-06-27)
 ------------------
