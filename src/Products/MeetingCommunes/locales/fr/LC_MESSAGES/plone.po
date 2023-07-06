@@ -506,6 +506,10 @@ msgstr "Renvoyer au Directeur financier"
 msgid "backToProposedToFinancialReviewer"
 msgstr "Renvoyer au validateur financier"
 
+#. Default: "Create an item Bourgmestre from an item College"
+msgid "create_to_bourgmestre_from_meeting-config-college"
+msgstr "Envoyer vers Bourgmestre"
+
 #. Default: "Create an item CoDir from an item BP"
 msgid "create_to_codir_from_meeting-config-bp"
 msgstr "Envoyer vers Comité de Direction"
