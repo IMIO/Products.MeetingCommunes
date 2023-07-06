@@ -14,6 +14,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Added translations for `create_to_bourgmestre_from_meeting-config-college`
   and `create_to_bourgmestre_from_meeting-config-college_comments`.
   [gbastien]
+- Updated link to the documentation.
+  [gbastien]
 
 4.2.2 (2023-06-27)
 ------------------
