@@ -8,8 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Updated `attendance-stats.ods`.
+  [gbastien]
 
 4.2.3 (2023-07-07)
 ------------------
