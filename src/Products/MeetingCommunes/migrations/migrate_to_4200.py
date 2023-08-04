@@ -10,6 +10,8 @@ from Products.PloneMeeting.migrations.migrate_to_4202 import Migrate_To_4202
 from Products.PloneMeeting.migrations.migrate_to_4203 import Migrate_To_4203
 from Products.PloneMeeting.migrations.migrate_to_4204 import Migrate_To_4204
 from Products.PloneMeeting.migrations.migrate_to_4205 import Migrate_To_4205
+from Products.PloneMeeting.migrations.migrate_to_4206 import Migrate_To_4206
+from Products.PloneMeeting.migrations.migrate_to_4207 import Migrate_To_4207
 
 import logging
 
@@ -161,6 +163,8 @@ class Migrate_To_4200(PMMigrate_To_4200):
             Migrate_To_4203(self.portal).run(from_migration_to_4200=True)
             Migrate_To_4204(self.portal).run(from_migration_to_4200=True)
             Migrate_To_4205(self.portal).run(from_migration_to_4200=True)
+            Migrate_To_4206(self.portal).run(from_migration_to_4200=True)
+            Migrate_To_4207(self.portal).run(from_migration_to_4200=True)
 
             # now MeetingCommunes specific steps
             logger.info('Migrating to MeetingCommunes 4200...')
@@ -175,9 +179,10 @@ def migrate(context):
 
        1) Change MeetingConfig.meetingWorkflow to use meeting_workflow/meetingitem_workflow;
        2) Call PloneMeeting migration to 4200;
-       3) In _after_reinstall hook, adapt items and meetings workflow_history
+       3) Call every PloneMeeting 420x upgrade steps;
+       4) In _after_reinstall hook, adapt items and meetings workflow_history
           to reflect new defined workflow done in 1);
-       4) Add new searches.
+       5) Add new searches.
     '''
     migrator = Migrate_To_4200(context)
     migrator.run()

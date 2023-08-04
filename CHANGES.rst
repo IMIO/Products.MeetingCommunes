@@ -5,12 +5,32 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.2 (unreleased)
+4.2.4 (unreleased)
 ------------------
 
+- Updated `attendance-stats.ods`.
+  [gbastien]
 - Fixed `CustomMeetingConfig.getUsedFinanceGroupIds` to work when an item has
   both inheritated and not inheritated advices, it was using the wrong
   `MeetingConfig` in some cases.
+  [gbastien]
+
+4.2.3 (2023-07-07)
+------------------
+
+- Removed confusing `transition_done_descr` translations
+  (portal message displayed after a transition).
+  [gbastien]
+- Added translations for `create_to_bourgmestre_from_meeting-config-college`
+  and `create_to_bourgmestre_from_meeting-config-college_comments`.
+  [gbastien]
+- Updated link to the documentation.
+  [gbastien]
+
+4.2.2 (2023-06-27)
+------------------
+
+- Call PloneMeeting migrations to 4206 and 4207 in MC migration to 4200.
   [gbastien]
 
 4.2.1 (2023-05-31)
