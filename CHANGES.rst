@@ -10,6 +10,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Updated `attendance-stats.ods`.
   [gbastien]
+- Fixed `CustomMeetingConfig.getUsedFinanceGroupIds` to work when an item has
+  both inheritated and not inheritated advices, it was using the wrong
+  `MeetingConfig` in some cases.
+  [gbastien]
 
 4.2.3 (2023-07-07)
 ------------------

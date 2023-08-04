@@ -567,7 +567,7 @@ class CustomMeetingConfig(MeetingConfig):
     def getUsedFinanceGroupIds(self, item=None):
         """Possible finance advisers group ids are defined on
            the FINANCE_ADVICES_COLLECTION_ID collection."""
-        values = []
+        values = {}
         # get the indexAdvisers value defined on the collection
         # and find the relevant group, indexAdvisers form is :
         # 'delay_row_id__2014-04-16.9996934488', 'real_org_uid__[directeur-financier_UID]'
@@ -582,20 +582,24 @@ class CustomMeetingConfig(MeetingConfig):
                               if term.get('v') and term['i'] == 'indexAdvisers'] \
                     if collection else []
                 # we get a list of advisers in values like [[v1, v2, v3]]
+                # we save cfg per value because we could have a mix of inheritated
+                # and not inheritated advices on item
                 if new_values:
-                    values += new_values[0]
+                    for new_value in new_values[0]:
+                        values[new_value] = cfg
         else:
             cfg = self.getSelf()
             collection = self._get_finances_advices_collection(cfg)
-            values = [term.get('v') for term in collection.getRawQuery()
-                      if term.get('v') and term['i'] == 'indexAdvisers'] \
+            new_values = [term.get('v') for term in collection.getRawQuery()
+                          if term.get('v') and term['i'] == 'indexAdvisers'] \
                 if collection else []
             # we get a list of advisers in values like [[v1, v2, v3]]
-            if values:
-                values = values[0]
+            if new_values:
+                for new_value in new_values[0]:
+                    values[new_value] = cfg
 
         res = []
-        for v in values:
+        for v, cfg in values.items():
             real_org_uid_prefix = REAL_ORG_UID_PATTERN.format('')
             if v.startswith(real_org_uid_prefix):
                 org_uid = v.replace(real_org_uid_prefix, '')

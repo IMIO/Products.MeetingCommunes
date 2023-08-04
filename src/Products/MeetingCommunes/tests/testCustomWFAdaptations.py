@@ -19,8 +19,7 @@ class testCustomWFAdaptations(MeetingCommunesTestCase):
         self.changeUser('siteadmin')
         # check while the wfAdaptation is not activated
         self._meetingadvicefinances_add_advicecreated_state_inactive()
-        cfg.setWorkflowAdaptations(('meetingadvicefinances_add_advicecreated_state', ))
-        cfg.at_post_edit_script()
+        self._activate_wfas(('meetingadvicefinances_add_advicecreated_state', ))
         self._meetingadvicefinances_add_advicecreated_state_active()
 
     def _meetingadvicefinances_add_advicecreated_state_inactive(self):
