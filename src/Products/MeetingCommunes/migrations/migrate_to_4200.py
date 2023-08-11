@@ -13,6 +13,7 @@ from Products.PloneMeeting.migrations.migrate_to_4205 import Migrate_To_4205
 from Products.PloneMeeting.migrations.migrate_to_4206 import Migrate_To_4206
 from Products.PloneMeeting.migrations.migrate_to_4207 import Migrate_To_4207
 from Products.PloneMeeting.migrations.migrate_to_4208 import Migrate_To_4208
+from Products.PloneMeeting.migrations.migrate_to_4209 import Migrate_To_4209
 
 import logging
 
@@ -167,6 +168,7 @@ class Migrate_To_4200(PMMigrate_To_4200):
             Migrate_To_4206(self.portal).run(from_migration_to_4200=True)
             Migrate_To_4207(self.portal).run(from_migration_to_4200=True)
             Migrate_To_4208(self.portal).run(from_migration_to_4200=True)
+            Migrate_To_4209(self.portal).run(from_migration_to_4200=True)
 
             # now MeetingCommunes specific steps
             logger.info('Migrating to MeetingCommunes 4200...')
