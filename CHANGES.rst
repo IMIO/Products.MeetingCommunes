@@ -18,6 +18,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [gbastien]
 - Call PloneMeeting migrations to 4209 in MC migration to 4200.
   [gbastien]
+- Adapted `examples_fr` import_data as `MeetingConfig.useCopies` was removed.
+  [gbastien]
 
 4.2.3 (2023-07-07)
 ------------------

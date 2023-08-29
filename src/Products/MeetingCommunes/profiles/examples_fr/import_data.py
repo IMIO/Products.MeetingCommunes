@@ -359,7 +359,8 @@ collegeMeeting.usedItemAttributes = ['description',
                                      'marginalNotes',
                                      'inAndOutMoves',
                                      'otherMeetingConfigsClonableToPrivacy',
-                                     'manuallyLinkedItems']
+                                     'manuallyLinkedItems',
+                                     'copyGroups']
 collegeMeeting.usedMeetingAttributes = ['start_date',
                                         'end_date',
                                         'attendees',
@@ -524,7 +525,6 @@ collegeMeeting.onMeetingTransitionItemActionToExecute = (
      'tal_expression': ''},)
 collegeMeeting.powerAdvisersGroups = ('dirgen', 'dirfin', )
 collegeMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
-collegeMeeting.useCopies = True
 collegeMeeting.selectableCopyGroups = [dirgen_org.getIdSuffixed('reviewers'),
                                        secretariat_org.getIdSuffixed('reviewers'),
                                        informatique_org.getIdSuffixed('reviewers'),
@@ -773,7 +773,8 @@ councilMeeting.usedItemAttributes = ['description',
                                      'notes',
                                      'marginalNotes',
                                      'inAndOutMoves',
-                                     'manuallyLinkedItems']
+                                     'manuallyLinkedItems',
+                                     'copyGroups']
 
 councilMeeting.usedMeetingAttributes = ['start_date',
                                         'mid_date',
@@ -835,7 +836,6 @@ councilMeeting.onMeetingTransitionItemActionToExecute = deepcopy(
 councilMeeting.powerObservers = deepcopy(collegeMeeting.powerObservers)
 councilMeeting.powerAdvisersGroups = ()
 councilMeeting.itemBudgetInfosStates = ('proposed', 'validated', 'presented')
-councilMeeting.useCopies = True
 councilMeeting.selectableCopyGroups = [dirgen_org.getIdSuffixed('reviewers'),
                                        secretariat_org.getIdSuffixed('reviewers'),
                                        informatique_org.getIdSuffixed('reviewers'),
