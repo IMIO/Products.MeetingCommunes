@@ -14,9 +14,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   both inheritated and not inheritated advices, it was using the wrong
   `MeetingConfig` in some cases.
   [gbastien]
-- Call PloneMeeting migrations to 4208 in MC migration to 4200.
+- Call `PloneMeeting` migration to `4208` in MC migration to `4200`.
   [gbastien]
-- Call PloneMeeting migrations to 4209 in MC migration to 4200.
+- Call `PloneMeeting` migration to `4209` in MC migration to `4200`.
   [gbastien]
 - Adapted `examples_fr` import_data as `MeetingConfig.useCopies` was removed.
   [gbastien]
