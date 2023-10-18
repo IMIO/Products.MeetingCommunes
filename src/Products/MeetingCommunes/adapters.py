@@ -905,23 +905,6 @@ class CustomMeetingConfig(MeetingConfig):
                     'not_required_finance']
         return []
 
-    def _has_meetingadvicefinances_wf_adaptations(self):
-        '''Check if some meetingadvicefinances_workflow related WFAdaptations are enabled.'''
-        cfg = self.getSelf()
-        finadv_wfas = [wfa for wfa in cfg.getWorkflowAdaptations()
-                       if wfa.startswith('meetingadvicefinances_')]
-        return bool(finadv_wfas)
-
-    def _updateMeetingAdvicePortalTypes(self):
-        '''Make sure we use a patched_ wokflow instead 'base_wf' for eachmeetingadvicefinances_workflow
-           to apply advice related workflow adaptations.'''
-        if self._has_meetingadvicefinances_wf_adaptations():
-            fin_wf = 'meetingadvicefinances_workflow'
-            wfTool = api.portal.get_tool('portal_workflow')
-            if fin_wf in wfTool:
-                patched_fin_wf = 'patched_meetingadvicefinances_workflow'
-                duplicate_workflow(fin_wf, patched_fin_wf, portalTypeNames=['meetingadvicefinances'])
-
     def _adviceConditionsInterfaceFor(self, advice_obj):
         '''See doc in interfaces.py.'''
         if advice_obj.portal_type == 'meetingadvicefinances':
@@ -1195,22 +1178,32 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
                     return True
         return False
 
-    def performCustomAdviceWFAdaptations(self, meetingConfig, wfAdaptation, logger, advice_wf_id):
+    def performCustomAdviceWFAdaptations(self, tool, wfAdaptation, logger, advice_wf_id):
         ''' '''
+        wf_tool = api.portal.get_tool('portal_workflow')
+        wf = wf_tool.getWorkflowById(advice_wf_id)
         if wfAdaptation == 'add_advicecreated_state':
             # adapt WF, add new initial_state (and leading transitions)
+            # state is added before intial_state that is like
+            # proposed_to_financial_controller or proposed_to_financial_manager
+            initial_state_id = wf.initial_state
+            LEAVING_TRANSITION_IDS = {
+                'proposed_to_financial_controller': 'proposeToFinancialController',
+                'proposed_to_financial_editor': 'proposeToFinancialEditor',
+                'proposed_to_financial_reviewer': 'proposeToFinancialReviewer',
+                'proposed_to_financial_manager': 'proposeToFinancialManager'}
             adaptations.addState(
                 wf_id=advice_wf_id,
                 new_state_id='advicecreated',
                 new_state_title='advicecreated',
-                permissions_cloned_state_id='proposed_to_financial_controller',
+                permissions_cloned_state_id='advice_given',
                 leading_transition_id=None,
                 leading_transition_title=None,
                 back_transitions=[{'back_transition_id': 'backToAdviceCreated',
                                    'back_transition_title': 'backToAdviceCreated',
-                                   'back_from_state_id': 'proposed_to_financial_controller'}],
-                leaving_transition_id='proposeToFinancialController',
-                leaving_to_state_id='proposed_to_financial_controller',
+                                   'back_from_state_id': initial_state_id}],
+                leaving_transition_id=LEAVING_TRANSITION_IDS[initial_state_id],
+                leaving_to_state_id=initial_state_id,
                 existing_leaving_transition_ids=['giveAdvice'],
                 existing_back_transition_ids=['backToAdviceInitialState'],
                 new_initial_state=True)

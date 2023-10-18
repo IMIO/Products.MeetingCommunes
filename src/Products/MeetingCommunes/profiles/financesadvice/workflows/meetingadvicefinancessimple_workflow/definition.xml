@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<dc-workflow workflow_id="meetingadvicesimple_workflow"
-             title="meetingadvicesimple_workflow"
+<dc-workflow workflow_id="meetingadvicefinancessimple_workflow"
+             title="meetingadvicefinancessimple_workflow"
              state_variable="review_state"
              initial_state="proposed_to_financial_manager"
              xmlns:i18n="http://xml.zope.org/namespaces/i18n"

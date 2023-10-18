@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<object name="meetingadvicefinances" meta_type="MeetingAdvice" i18n:domain="PloneMeeting"
+<object name="meetingadvicefinances" meta_type="Dexterity FTI" i18n:domain="PloneMeeting"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <property name="title" i18n:translate="">MeetingAdviceFinances</property>
  <property name="description" i18n:translate=""></property>
@@ -53,7 +53,7 @@
          i18n:attributes="title"
          action_id="annexes"
          category="object"
-         condition_expr="python: here.portal_plonemeeting.showAnnexesTab(here)"
+         condition_expr="python: portal.portal_plonemeeting.showAnnexesTab(here)"
          icon_expr=""
          url_expr="string:${object_url}/@@categorized-annexes"
          visible="True">
