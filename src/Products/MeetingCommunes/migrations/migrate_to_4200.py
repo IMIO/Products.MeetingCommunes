@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from DateTime import DateTime
+from persistent.mapping import PersistentMapping
 from plone import api
 from plone.namedfile import NamedBlobFile
-from persistent.mapping import PersistentMapping
 from Products.PloneMeeting.migrations.migrate_to_4200 import Migrate_To_4200 as PMMigrate_To_4200
 from Products.PloneMeeting.migrations.migrate_to_4201 import Migrate_To_4201
 from Products.PloneMeeting.migrations.migrate_to_4202 import Migrate_To_4202

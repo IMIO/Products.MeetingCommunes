@@ -515,18 +515,6 @@ class CustomMeetingItem(MeetingItem):
         return bool(set(cfg.adapted().getUsedFinanceGroupIds(item)).
                     intersection(set(item.adviceIndex.keys())))
 
-    def _adviceTypesForAdviser(self, meeting_advice_portal_type):
-        """Return the advice types (positive, negative, ...) for given p_meeting_advice_portal_type.
-           By default we always use every MeetingConfig.usedAdviceTypes but this is useful
-           when using several portal_types for meetingadvice and some may use particular advice types."""
-        item = self.getSelf()
-        tool = api.portal.get_tool('portal_plonemeeting')
-        cfg = tool.getMeetingConfig(item)
-        if meeting_advice_portal_type.startswith('meetingadvicefinances'):
-            return [t for t in cfg.getUsedAdviceTypes() if t.endswith('_finance')]
-        else:
-            return [t for t in cfg.getUsedAdviceTypes() if not t.endswith('_finance')]
-
 
 class CustomMeetingConfig(MeetingConfig):
     '''Adapter that adapts a meetingConfig implementing IMeetingConfig to the
@@ -896,15 +884,6 @@ class CustomMeetingConfig(MeetingConfig):
             infos.update(financesadvice_infos)
         return infos
 
-    def extraAdviceTypes(self):
-        '''See doc in interfaces.py.'''
-        typesTool = api.portal.get_tool('portal_types')
-        if 'meetingadvicefinances' in typesTool:
-            return ['positive_finance', 'positive_with_remarks_finance',
-                    'cautious_finance', 'negative_finance', 'not_given_finance',
-                    'not_required_finance']
-        return []
-
     def _adviceConditionsInterfaceFor(self, advice_obj):
         '''See doc in interfaces.py.'''
         if advice_obj.portal_type == 'meetingadvicefinances':
@@ -1167,6 +1146,20 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
 
     def __init__(self, item):
         self.context = item
+
+    def extraAdviceTypes(self):
+        '''See doc in interfaces.py.'''
+        typesTool = api.portal.get_tool('portal_types')
+        if 'meetingadvicefinances' in typesTool:
+            return ['positive_finance',
+                    'positive_with_remarks_finance',
+                    'cautious_finance',
+                    'negative_finance',
+                    'negative_with_remarks_finance',
+                    'not_given_finance',
+                    'not_required_finance',
+                    ]
+        return []
 
     security.declarePublic('isFinancialUser')
 
