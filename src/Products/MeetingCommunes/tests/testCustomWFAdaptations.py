@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from imio.helpers.content import get_vocab_values
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 
 
@@ -10,7 +11,8 @@ class testCustomWFAdaptations(MeetingCommunesTestCase):
         '''Test the workflowAdaptation 'meetingadvicefinances_add_advicecreated_state'.'''
         # ease override by subproducts
         cfg = self.meetingConfig
-        if 'meetingadvicefinances_add_advicecreated_state' not in cfg.listWorkflowAdaptations():
+        if 'meetingadvicefinances_add_advicecreated_state' not in \
+                get_vocab_values(cfg, 'WorkflowAdaptations'):
             return
         # apply the financesadvice profile so meetingadvicefinances portal_type is available
         self.portal.portal_setup.runAllImportStepsFromProfile(
