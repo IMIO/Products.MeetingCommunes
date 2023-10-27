@@ -5,11 +5,15 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.6 (unreleased)
-------------------
+4.2.6b1 (unreleased)
+--------------------
 
-- Nothing changed yet.
+- Adapted code now that custom advice portal_types is managed by
+  `ToolPloneMeeting.advisersConfig`:
 
+  - Added new advice finances WF `meetingadvicefinancessimple_workflow`;
+  - Fixed tests as `MeetingConfig.listWorkflowAdaptations` was removed.
+  [gbastien]
 
 4.2.5 (2023-10-27)
 ------------------
