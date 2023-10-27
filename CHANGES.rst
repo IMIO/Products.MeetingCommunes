@@ -13,6 +13,7 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
   - Added new advice finances WF `meetingadvicefinancessimple_workflow`;
   - Fixed tests as `MeetingConfig.listWorkflowAdaptations` was removed.
+
   [gbastien]
 
 4.2.5 (2023-10-27)
