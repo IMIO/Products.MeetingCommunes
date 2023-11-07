@@ -41,13 +41,15 @@ from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowActions
 from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowConditions
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
-from Products.PloneMeeting.utils import duplicate_workflow
 from Products.PloneMeeting.workflows.advice import MeetingAdviceWorkflowActions
 from Products.PloneMeeting.workflows.advice import MeetingAdviceWorkflowConditions
 from Products.PloneMeeting.workflows.meeting import MeetingWorkflowActions
 from Products.PloneMeeting.workflows.meeting import MeetingWorkflowConditions
 from zope.i18n import translate
 from zope.interface import implements
+
+
+ToolPloneMeeting.advice_wf_adaptations = ('add_advicecreated_state', )
 
 
 class CustomMeeting(Meeting):

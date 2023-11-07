@@ -1,9 +1,18 @@
+/* color on state red */
+div.viewlet_workflowstate span.state-advicecreated {
+    background-color: red;
+    border-color: red;
+}
+
 /* color on state blue */
 div.viewlet_workflowstate span.state-financial_advice_signed {
     background-color: blue;
     border-color: blue;
 }
+
+a.state-advicecreated {color: red !important;}
 a.state-financial_advice_signed {color: blue;}
+
 /* listType 'normalnotpublishable' */
 table#faceted_table.listing tr[class][class] td.meeting_item_listType_normalnotpublishable {
     background-color: orange;
