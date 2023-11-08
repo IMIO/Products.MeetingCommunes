@@ -18,10 +18,9 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
     def test_pm_FinancesAdvisersConfig(self):
         """Test concrete usecase with ToolPloneMeeting.advisersConfig and
            meetingadvicefinances portal_type and meetingadvicefinancessimple_workflow."""
-        # apply the financesadvice profile so meetingadvicefinances portal_type is available
+        # configure financesadvice so meetingadvicefinances portal_type is available
         # as well as the meetingadvicefinancessimple_workflow
-        self.portal.portal_setup.runAllImportStepsFromProfile(
-            'profile-Products.MeetingCommunes:financesadvice')
+        self._configureFinancesAdvice()
         cfg = self.meetingConfig
         cfg.setItemAdviceStates((self._stateMappingFor('itemcreated'), ))
         cfg.setItemAdviceEditStates((self._stateMappingFor('itemcreated'), ))
@@ -57,11 +56,14 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
             **{'advice_group': self.vendors_uid,
                'advice_type': u'positive_with_remarks',
                'advice_comment': richtextval(u'My comment')})
+        # dev_advice is a meetingadvice and use global config advice types
         self.assertEqual(
             get_vocab_values(
                 dev_advice,
                 'Products.PloneMeeting.content.advice.advice_type_vocabulary'),
-            ['positive', 'positive_with_remarks'])
+            ['positive', 'positive_with_remarks', 'negative', 'nil'])
+        # vendors_advice is a meetingadvicefinances and use what is defined in
+        # ToolPloneMeeting.advisersConfig.advice_types
         self.assertEqual(
             get_vocab_values(
                 vendors_advice,

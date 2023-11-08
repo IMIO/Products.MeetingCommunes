@@ -14,9 +14,8 @@ class testCustomWFAdaptations(MeetingCommunesTestCase):
         if 'meetingadvicefinances_add_advicecreated_state' not in \
                 get_vocab_values(cfg, 'WorkflowAdaptations'):
             return
-        # apply the financesadvice profile so meetingadvicefinances portal_type is available
-        self.portal.portal_setup.runAllImportStepsFromProfile(
-            'profile-Products.MeetingCommunes:financesadvice')
+
+        self._configureFinancesAdvice()
 
         self.changeUser('siteadmin')
         # check while the wfAdaptation is not activated

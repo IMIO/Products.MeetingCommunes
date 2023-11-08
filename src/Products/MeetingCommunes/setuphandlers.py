@@ -16,12 +16,14 @@ from plone import api
 from plone import namedfile
 from plone.app.textfield.value import RichTextValue
 from plone.dexterity.utils import createContentInContainer
+from Products.Archetypes.event import ObjectEditedEvent
 from Products.CMFPlone.utils import _createObjectByType
 from Products.MeetingCommunes.config import PROJECTNAME
 from Products.MeetingCommunes.config import SAMPLE_TEXT
 from Products.PloneMeeting.exportimport.content import ToolInitializer
 from Products.PloneMeeting.utils import cleanMemoize
 from Products.PloneMeeting.utils import org_id_to_uid
+from zope.event import notify
 
 import logging
 import os
@@ -39,6 +41,11 @@ def postInstall(context):
     # the right place for your custom code
     if isMeetingCommunesFinancesAdviceProfile(context):
         _configureDexterityLocalRolesField()
+        # update portal_types of every MeetingConfig so
+        # MeetingItem.allowed_content_types is updated
+        tool = api.portal.get_tool('portal_plonemeeting')
+        for cfg in tool.objectValues('MeetingConfig'):
+            notify(ObjectEditedEvent(cfg))
 
     if isNotMeetingCommunesProfile(context):
         return

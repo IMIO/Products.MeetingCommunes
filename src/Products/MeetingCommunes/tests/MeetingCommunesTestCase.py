@@ -23,3 +23,9 @@ class MeetingCommunesTestCase(PloneMeetingTestCase, MeetingCommunesTestingHelper
 
     cfg1_id = 'meeting-config-college'
     cfg2_id = 'meeting-config-council'
+
+    def _configureFinancesAdvice(self):
+        """ """
+        # apply the financesadvice profile so meetingadvicefinances portal_type is available
+        self.portal.portal_setup.runAllImportStepsFromProfile(
+            'profile-Products.MeetingCommunes:financesadvice')
