@@ -91,6 +91,10 @@ msgstr ""
 msgid "negative_finance"
 msgstr ""
 
+#. Default: "Unfavorable opinion with remarks"
+msgid "negative_with_remarks_finance"
+msgstr ""
+
 #. Default: "Not given opinion"
 msgid "not_given_finance"
 msgstr ""

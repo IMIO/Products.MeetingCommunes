@@ -94,6 +94,10 @@ msgstr "Si cette case est cochée, lorsqu'une séance passera \"En rédaction du
 msgid "negative_finance"
 msgstr "Avis finances défavorable"
 
+#. Default: "Unfavorable opinion with remarks"
+msgid "negative_with_remarks_finance"
+msgstr "Avis finances défavorable en l'état"
+
 #. Default: "Not given opinion"
 msgid "not_given_finance"
 msgstr "Avis finances non remis"
