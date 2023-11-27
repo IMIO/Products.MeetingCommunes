@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.6b3 (unreleased)
+4.2.6b3 (2023-11-27)
 --------------------
 
 - Added parameter `ignore_advice_hidden_during_redaction=False` to
