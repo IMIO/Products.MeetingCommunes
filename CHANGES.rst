@@ -8,8 +8,12 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.6b2 (unreleased)
 --------------------
 
-- Nothing changed yet.
-
+- Move back `add_advicecreated_state` advice WFA related code from `PloneMeeting`.
+  [gbastien]
+- Fixed `meetingadvicefinancs` `portal_type.allowed_content_types` install.
+  [gbastien]
+- Completed translations of finances advices types.
+  [gbastien]
 
 4.2.6b1 (2023-10-27)
 --------------------
