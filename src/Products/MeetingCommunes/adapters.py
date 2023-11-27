@@ -8,6 +8,7 @@ from AccessControl.class_init import InitializeClass
 from appy.gen import No
 from collections import OrderedDict
 from collective.contact.plonegroup.utils import get_organizations
+from collective.contact.plonegroup.utils import get_plone_group_id
 from imio.helpers.cache import get_plone_groups_for_user
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from plone import api
@@ -509,13 +510,24 @@ class CustomMeetingItem(MeetingItem):
             self.reindexObject()
     MeetingItem._initDecisionFieldIfEmpty = _initDecisionFieldIfEmpty
 
-    def showFinanceAdviceTemplate(self):
-        """ """
+    def showFinanceAdviceTemplate(self, ignore_advice_hidden_during_redaction=False):
+        """If ignore_advice_hidden_during_redaction=True, return False except if current
+           user is a Manager or member of the finances _advisers group."""
         item = self.getSelf()
         tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(item)
-        return bool(set(cfg.adapted().getUsedFinanceGroupIds(item)).
-                    intersection(set(item.adviceIndex.keys())))
+        res = False
+        isManager = tool.isManager(cfg)
+        user_groups = tool.get_plone_groups_for_user()
+        for adviser_uid in cfg.adapted().getUsedFinanceGroupIds(item):
+            if adviser_uid in item.adviceIndex:
+                if not ignore_advice_hidden_during_redaction or \
+                   isManager or \
+                   get_plone_group_id(adviser_uid, 'advisers') in user_groups or \
+                   item.adviceIndex[adviser_uid]['hidden_during_redaction'] is False:
+                    res = True
+                    break
+        return res
 
 
 class CustomMeetingConfig(MeetingConfig):

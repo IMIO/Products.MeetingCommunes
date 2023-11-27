@@ -8,8 +8,11 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.6b3 (unreleased)
 --------------------
 
-- Nothing changed yet.
-
+- Added parameter `ignore_advice_hidden_during_redaction=False` to
+  `CustomMeetingItem.showFinanceAdviceTemplate`, when `True`, this will hide
+  the POD template when advice is hidden during redaction except if member is
+  `MeetingManager` or in the advice `_advisers` group.
+  [gbastien]
 
 4.2.6b2 (2023-11-27)
 --------------------

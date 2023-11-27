@@ -3,6 +3,8 @@
 from DateTime import DateTime
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
+from plone.dexterity.utils import createContentInContainer
+from imio.helpers.content import richtextval
 
 
 class testCustomMeetingItem(MeetingCommunesTestCase):
@@ -58,6 +60,9 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
              'delay_label': 'Not a finance advice',
              'is_linked_to_previous_row': '0'}, ]
         )
+        cfg.setItemAdviceStates((self._stateMappingFor('itemcreated'), ))
+        cfg.setItemAdviceEditStates((self._stateMappingFor('itemcreated'), ))
+        cfg.setItemAdviceViewStates((self._stateMappingFor('itemcreated'), ))
         cfg2.setCustomAdvisers([
             {'row_id': 'unique_id_001_2',
              'org': self.developers_uid,
@@ -94,7 +99,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
              'o': 'plone.app.querystring.operation.selection.is',
              'v': ['delay_row_id__unique_id_001_2',
                    'delay_row_id__unique_id_002_2',
-                   'real_org_uid__{0}'.format(self.developers_uid),]}
+                   'real_org_uid__{0}'.format(self.developers_uid)]}
         ], )
         # create an item without finance advice
         self.changeUser('pmManager')
@@ -163,6 +168,30 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         form.handleSaveRemoveAdviceInheritance(form, None)
         self.assertTrue(clonedItem2.adapted().showFinanceAdviceTemplate())
         self.assertEqual(clonedItem2.adapted().getFinanceAdviceId(), self.developers_uid)
+
+        # showFinanceAdviceTemplate when ignore_advice_hidden_during_redaction=True
+        # will hide the document to people ouside _advisers group or not MeetingManagers
+        # add advice so it may be set hidden
+        self.changeUser('pmAdviser1')
+        self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [self.developers_uid])
+        createContentInContainer(
+            item,
+            item.adapted()._advicePortalTypeForAdviser(self.developers_uid),
+            **{'advice_group': self.developers_uid,
+               'advice_type': u'positive',
+               'advice_comment': richtextval(u'My comment'),
+               'advice_hide_during_redaction': True})
+        # advisers always True
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(False))
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(True))
+        # pmManager always True
+        self.changeUser('pmManager')
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(False))
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(True))
+        # proposingGroup member will only get True when advice is not hidden
+        self.changeUser('pmCreator1')
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(False))
+        self.assertFalse(item.adapted().showFinanceAdviceTemplate(True))
 
         # if the collection does not exist, [] is returned
         self.deleteAsManager(collection.UID())
