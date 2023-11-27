@@ -518,7 +518,7 @@ class CustomMeetingItem(MeetingItem):
         cfg = tool.getMeetingConfig(item)
         res = False
         isManager = tool.isManager(cfg)
-        user_groups = tool.get_plone_groups_for_user()
+        user_groups = get_plone_groups_for_user()
         for adviser_uid in cfg.adapted().getUsedFinanceGroupIds(item):
             if adviser_uid in item.adviceIndex:
                 if not ignore_advice_hidden_during_redaction or \

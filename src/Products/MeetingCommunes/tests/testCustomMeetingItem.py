@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from DateTime import DateTime
+from imio.helpers.content import richtextval
+from plone.dexterity.utils import createContentInContainer
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
-from plone.dexterity.utils import createContentInContainer
-from imio.helpers.content import richtextval
 
 
 class testCustomMeetingItem(MeetingCommunesTestCase):
@@ -174,7 +174,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         # add advice so it may be set hidden
         self.changeUser('pmAdviser1')
         self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [self.developers_uid])
-        createContentInContainer(
+        advice = createContentInContainer(
             item,
             item.adapted()._advicePortalTypeForAdviser(self.developers_uid),
             **{'advice_group': self.developers_uid,
@@ -192,6 +192,11 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.changeUser('pmCreator1')
         self.assertTrue(item.adapted().showFinanceAdviceTemplate(False))
         self.assertFalse(item.adapted().showFinanceAdviceTemplate(True))
+        # always True if advice not hidden
+        advice.advice_hide_during_redaction = False
+        item.update_local_roles()
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(False))
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(True))
 
         # if the collection does not exist, [] is returned
         self.deleteAsManager(collection.UID())
