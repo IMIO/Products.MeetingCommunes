@@ -3,7 +3,7 @@ div.viewlet_workflowstate span.state-financial_advice_signed {
     background-color: blue;
     border-color: blue;
 }
-a.state-financial_advice_signed {color: blue;}
+.state-financial_advice_signed {color: blue;}
 /* listType 'normalnotpublishable' */
 table#faceted_table.listing tr[class][class] td.meeting_item_listType_normalnotpublishable {
     background-color: orange;

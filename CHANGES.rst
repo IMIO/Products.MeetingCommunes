@@ -8,8 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- CSS, color in blue state `financial_advice_signed` in advice history.
+  [gbastien]
 
 4.2.5 (2023-10-27)
 ------------------
