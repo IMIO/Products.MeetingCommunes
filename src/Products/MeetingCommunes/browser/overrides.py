@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-# File: overrides.py
-#
-# Copyright (c) 2016 by Imio.be
-#
 # GNU General Public License (GPL)
 #
+
 from collections import OrderedDict
+from imio.helpers.content import get_user_fullname
 from imio.history.interfaces import IImioHistory
 from imio.history.utils import getLastAction
 from imio.history.utils import getLastWFAction
@@ -380,8 +378,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         return self.translate(self.real_context.query_state())
 
     def print_creator_name(self):
-        tool = api.portal.get_tool('portal_plonemeeting')
-        return tool.getUserName(self.real_context.Creator())
+        return get_user_fullname(self.real_context.Creator())
 
     def print_item_number_ordinal(self, ordinals={u'1': u'er', u'default': u'ème'}):
         """

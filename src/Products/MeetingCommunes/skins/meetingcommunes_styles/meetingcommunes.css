@@ -10,9 +10,8 @@ div.viewlet_workflowstate span.state-financial_advice_signed {
     border-color: blue;
 }
 
-a.state-advicecreated {color: red !important;}
-a.state-financial_advice_signed {color: blue;}
-
+.state-advicecreated {color: red !important;}
+.state-financial_advice_signed {color: blue;}
 /* listType 'normalnotpublishable' */
 table#faceted_table.listing tr[class][class] td.meeting_item_listType_normalnotpublishable {
     background-color: orange;

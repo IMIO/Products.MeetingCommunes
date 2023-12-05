@@ -673,7 +673,7 @@ class CustomMeetingConfig(MeetingConfig):
                         'sort_on': u'created',
                         'sort_reversed': True,
                         'showNumberOfItems': False,
-                        'tal_condition': "python: not tool.isPowerObserverForCfg(cfg)",
+                        'tal_condition': "python: not utils.isPowerObserverForCfg(cfg)",
                         'roles_bypassing_talcondition': ['Manager', ]
                     }
                  ),

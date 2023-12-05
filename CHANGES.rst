@@ -8,8 +8,13 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.6b4 (unreleased)
 --------------------
 
-- Nothing changed yet.
-
+- CSS, color in blue state `financial_advice_signed` in advice history.
+  [gbastien]
+- Adapted code as `ToolPloneMeeting.getUserName` is replaced by
+  `imio.helpers.content.get_user_fullname` and
+  `ToolPloneMeeting.isPowerObserverForCfg` is moved to
+  `utils.isPowerObserverForCfg`.
+  [gbastien]
 
 4.2.6b3 (2023-11-27)
 --------------------
