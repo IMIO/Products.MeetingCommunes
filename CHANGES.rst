@@ -15,6 +15,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   `ToolPloneMeeting.isPowerObserverForCfg` is moved to
   `utils.isPowerObserverForCfg`.
   [gbastien]
+- Added translations for the `add_advicecreated_state` WFA.
+  [gbastien]
 
 4.2.6b3 (2023-11-27)
 --------------------

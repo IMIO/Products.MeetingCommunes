@@ -168,9 +168,9 @@ msgstr "Points validés"
 msgid "still_asked_again"
 msgstr "Choisissez une autre valeur que \"Demandé à nouveau\" pour le champ \"Type d'avis\" pour activer cette action."
 
-#. Default: "Finances advice: add advicecreated state"
-msgid "wa_meetingadvicefinances_add_advicecreated_state"
-msgstr "Ajoute l'état \"En création\" pour les avis lors de l'utilisation du workflow \"meetingadvicefinances_workflow\""
+#. Default: "Add advicecreated state"
+msgid "wa_add_advicecreated_state"
+msgstr "Ajouter l'état initial \"En création\""
 
 #. Default: "Finances advice: add transition from financial controller to financial manager"
 msgid "wa_meetingadvicefinances_controller_propose_to_manager"

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from DateTime import DateTime
+from imio.helpers.content import get_vocab_values
 from imio.helpers.content import richtextval
 from plone.dexterity.utils import createContentInContainer
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
@@ -203,3 +204,25 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [])
         self.assertFalse(item.adapted().showFinanceAdviceTemplate())
         self.assertIsNone(item.adapted().getFinanceAdviceId())
+
+    def test_Get_advice_given_by(self):
+        '''Test the AdviceInfos.get_advice_given_by when using 'meetingadvicefinances' workflow.'''
+
+        # ease override by subproducts
+        if not self._check_wfa_available(['add_advicecreated_state'], related_to="MeetingAdvice"):
+            return
+
+        self._configureFinancesAdvice(enable_add_advicecreated=True)
+        item, advice = self._setupItemWithAdvice()
+        view = item.restrictedTraverse('@@advice-infos')
+        view(advice.advice_group, False, item.adapted().getCustomAdviceMessageFor(advice))
+        # advice did not reach final state, we do not know who gave it
+        self.assertIsNone(view.get_advice_given_by())
+        self.do(advice, "proposeToFinancialManager")
+        self.assertIsNone(view.get_advice_given_by())
+        self.do(advice, "signFinancialAdvice")
+        self.assertEqual(view.get_advice_given_by(), u'M. PMReviewer Two')
+        # still viewable after
+        self.validateItem(item)
+        self.assertFalse(item.adviceIndex[self.vendors_uid]['advice_editable'])
+        self.assertEqual(view.get_advice_given_by(), u'M. PMReviewer Two')
