@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.6b4 (unreleased)
+4.2.6b4 (2023-12-11)
 --------------------
 
 - CSS, color in blue state `financial_advice_signed` in advice history.
