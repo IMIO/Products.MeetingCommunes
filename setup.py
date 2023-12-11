@@ -2,7 +2,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-version = '4.2.6b4'
+version = '4.2.6b5.dev0'
 
 setup(
     name='Products.MeetingCommunes',
