@@ -15,6 +15,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   `ToolPloneMeeting.isPowerObserverForCfg` is moved to
   `utils.isPowerObserverForCfg`.
   [gbastien]
+- Every item related search (Collection) use `sort_on` `modified` instead `created`.
+  [gbastien]
 
 4.2.5 (2023-10-27)
 ------------------

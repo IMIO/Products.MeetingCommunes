@@ -646,7 +646,7 @@ class CustomMeetingConfig(MeetingConfig):
                              'o': 'plone.app.querystring.operation.selection.is',
                              'v': ['proposed']}
                         ],
-                        'sort_on': u'created',
+                        'sort_on': u'modified',
                         'sort_reversed': True,
                         'showNumberOfItems': False,
                         'tal_condition': "python: tool.userIsAmong(['creators']) " \
@@ -668,7 +668,7 @@ class CustomMeetingConfig(MeetingConfig):
                              'o': 'plone.app.querystring.operation.selection.is',
                              'v': ['validated']}
                         ],
-                        'sort_on': u'created',
+                        'sort_on': u'modified',
                         'sort_reversed': True,
                         'showNumberOfItems': False,
                         'tal_condition': "python: not utils.isPowerObserverForCfg(cfg)",
@@ -689,7 +689,7 @@ class CustomMeetingConfig(MeetingConfig):
                              'o': 'plone.app.querystring.operation.selection.is',
                              'v': []}
                         ],
-                        'sort_on': u'created',
+                        'sort_on': u'modified',
                         'sort_reversed': True,
                         'showNumberOfItems': False,
                         'tal_condition':
@@ -712,7 +712,7 @@ class CustomMeetingConfig(MeetingConfig):
                                  'o': 'plone.app.querystring.operation.compound.is',
                                  'v': 'items-with-negative-previous-index'},
                             ],
-                        'sort_on': u'created',
+                        'sort_on': u'modified',
                         'sort_reversed': True,
                         'showNumberOfItems': False,
                         'tal_condition': "",
@@ -744,7 +744,7 @@ class CustomMeetingConfig(MeetingConfig):
                                  'o': 'plone.app.querystring.operation.compound.is',
                                  'v': 'items-to-control-completeness-of'},
                             ],
-                            'sort_on': u'created',
+                            'sort_on': u'modified',
                             'sort_reversed': True,
                             'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
                                              "tool.userIsAmong(['financialcontrollers'])) "
@@ -764,7 +764,7 @@ class CustomMeetingConfig(MeetingConfig):
                                  'o': 'plone.app.querystring.operation.compound.is',
                                  'v': 'items-with-advice-advicecreated'},
                             ],
-                            'sort_on': u'created',
+                            'sort_on': u'modified',
                             'sort_reversed': True,
                             'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
                                              "tool.userIsAmong(['financialprecontrollers'])) "
@@ -784,7 +784,7 @@ class CustomMeetingConfig(MeetingConfig):
                                  'o': 'plone.app.querystring.operation.compound.is',
                                  'v': 'items-with-advice-proposed-to-financial-controller'},
                             ],
-                            'sort_on': u'created',
+                            'sort_on': u'modified',
                             'sort_reversed': True,
                             'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
                                              "tool.userIsAmong(['financialcontrollers'])) "
@@ -804,7 +804,7 @@ class CustomMeetingConfig(MeetingConfig):
                                  'o': 'plone.app.querystring.operation.compound.is',
                                  'v': 'items-with-advice-proposed-to-financial-editor'},
                             ],
-                            'sort_on': u'created',
+                            'sort_on': u'modified',
                             'sort_reversed': True,
                             'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
                                              "tool.userIsAmong(['financialeditors'])) "
@@ -824,7 +824,7 @@ class CustomMeetingConfig(MeetingConfig):
                                  'o': 'plone.app.querystring.operation.compound.is',
                                  'v': 'items-with-advice-proposed-to-financial-reviewer'},
                             ],
-                            'sort_on': u'created',
+                            'sort_on': u'modified',
                             'sort_reversed': True,
                             'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
                                              "tool.userIsAmong(['financialreviewers'])) "
@@ -844,7 +844,7 @@ class CustomMeetingConfig(MeetingConfig):
                                  'o': 'plone.app.querystring.operation.compound.is',
                                  'v': 'items-with-advice-proposed-to-financial-manager'},
                             ],
-                            'sort_on': u'created',
+                            'sort_on': u'modified',
                             'sort_reversed': True,
                             'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
                                              "tool.userIsAmong(['financialmanagers'])) "
@@ -864,7 +864,7 @@ class CustomMeetingConfig(MeetingConfig):
                                  'o': 'plone.app.querystring.operation.compound.is',
                                  'v': 'items-with-advice-signed-by-financial-manager'},
                             ],
-                            'sort_on': u'created',
+                            'sort_on': u'modified',
                             'sort_reversed': True,
                             'tal_condition': "python: (here.REQUEST.get('fromPortletTodo', False) and "
                                              "tool.userIsAmong(['financialmanagers'])) "
@@ -885,7 +885,7 @@ class CustomMeetingConfig(MeetingConfig):
                                  'o': 'plone.app.querystring.operation.compound.is',
                                  'v': 'items-with-advice-back-to-item-validation-states'},
                             ],
-                            'sort_on': u'created',
+                            'sort_on': u'modified',
                             'sort_reversed': True,
                             'tal_condition': "python: tool.adapted().isFinancialUser()",
                             'roles_bypassing_talcondition': ['Manager', ]
