@@ -8,8 +8,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.6b5 (unreleased)
 --------------------
 
-- Nothing changed yet.
-
+- Added translations for the `add_advicecreated_state` WFA.
+  [gbastien]
+- Every item related search (Collection) use `sort_on` `modified` instead `created`.
+  [gbastien]
 
 4.2.6b4 (2023-12-11)
 --------------------
@@ -20,8 +22,6 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   `imio.helpers.content.get_user_fullname` and
   `ToolPloneMeeting.isPowerObserverForCfg` is moved to
   `utils.isPowerObserverForCfg`.
-  [gbastien]
-- Added translations for the `add_advicecreated_state` WFA.
   [gbastien]
 
 4.2.6b3 (2023-11-27)
