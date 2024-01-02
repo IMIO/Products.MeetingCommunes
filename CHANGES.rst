@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.6b5 (unreleased)
+4.2.6b5 (2024-01-02)
 --------------------
 
 - Added translations for the `add_advicecreated_state` WFA.
