@@ -8,8 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.6b6 (unreleased)
 --------------------
 
-- Nothing changed yet.
-
+- Adapted code to use `imio.helpers.content.richtextval` instead `RichTextValue` when possible.
+  [gbastien]
 
 4.2.6b5 (2024-01-02)
 --------------------
