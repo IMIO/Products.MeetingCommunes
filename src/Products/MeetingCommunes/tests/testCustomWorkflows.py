@@ -5,9 +5,12 @@
 # GNU General Public License (GPL)
 #
 
+from imio.helpers.content import richtextval
+from plone.dexterity.utils import createContentInContainer
 from Products.CMFCore.permissions import AccessContentsInformation
 from Products.CMFCore.permissions import View
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
+from Products.PloneMeeting.utils import get_advice_alive_states
 
 
 class testCustomWorkflows(MeetingCommunesTestCase):
@@ -140,3 +143,45 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         # we check that item and meeting did their complete workflow
         self.assertEqual(item.query_state(), 'accepted')
         self.assertEqual(meeting.query_state(), 'closed')
+
+    def test_pm_AdviceCustomWorkflowAdviceAwareCorrectlyUpdated(self):
+        """When an advice aware advice using a custom workflow is in a custom review_state,
+           it is correctly updated by the night task."""
+        self._configureFinancesAdvice()
+        cfg = self.meetingConfig
+        cfg.setItemAdviceStates((self._stateMappingFor('itemcreated'), ))
+        cfg.setItemAdviceEditStates((self._stateMappingFor('itemcreated'), ))
+        cfg.setItemAdviceViewStates((self._stateMappingFor('itemcreated'), ))
+        cfg.setCustomAdvisers((
+            {'row_id': 'unique_id_001',
+             'org': self.vendors_uid,
+             'for_item_created_from': '2024/01/01',
+             'delay': '10',
+             'delay_left_alert': '4',
+             'delay_label': 'Finance advice',
+             'is_linked_to_previous_row': '0'}, ))
+        # create item and ask 2 advices
+        self.changeUser('pmCreator1')
+        item = self.create('MeetingItem',
+                           title="Item to advice",
+                           category='development',
+                           optionalAdvisers=('%s__rowid__unique_id_001' % self.vendors_uid, ))
+        self.changeUser('pmReviewer2')
+        vendors_advice = createContentInContainer(
+            item,
+            item.adapted()._advicePortalTypeForAdviser(self.vendors_uid),
+            **{'advice_group': self.vendors_uid,
+               'advice_type': u'positive_with_remarks',
+               'advice_comment': richtextval(u'My comment')})
+        # is delay aware
+        self.assertEqual(item.adviceIndex[self.vendors_uid]['delay'], '10')
+        # is in a custom review_state
+        self.assertEqual(vendors_advice.query_state(), 'proposed_to_financial_manager')
+        # is returned taken into account by @@update-delay-aware-advices query
+        self.changeUser('siteadmin')
+        query = self.portal.restrictedTraverse('@@update-delay-aware-advices')._computeQuery()
+        self.assertTrue(item.UID() in [brain.UID for brain in self.catalog(**query)])
+        # every not ended states are taken into account
+        self.assertEqual(
+            sorted(get_advice_alive_states()),
+            ['advice_under_edit', 'financial_advice_signed', 'proposed_to_financial_manager'])

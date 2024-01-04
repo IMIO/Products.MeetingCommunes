@@ -12,10 +12,9 @@ class testCustomWFAdaptations(MeetingCommunesTestCase):
         if not self._check_wfa_available(['add_advicecreated_state'], related_to='MeetingAdvice'):
             return
 
-        self._configureFinancesAdvice()
-
         self.changeUser('siteadmin')
         # check while the wfAdaptation is not activated
+        self._configureFinancesAdvice(configure_custom_advisers=False)
         self._add_advicecreated_state_inactive()
         # enable WFA and test
         self._configureFinancesAdvice(enable_add_advicecreated=True)
@@ -24,7 +23,7 @@ class testCustomWFAdaptations(MeetingCommunesTestCase):
     def _add_advicecreated_state_inactive(self):
         '''Tests when 'add_advicecreated_state' wfAdaptation is inactive.'''
         self.assertTrue('meetingadvicefinances_workflow' in self.wfTool)
-        self.assertFalse('patched_meetingadvicefinances_workflow' in self.wfTool)
+        self.assertFalse('meetingadvicefinances__meetingadvicefinancessimple_workflow' in self.wfTool)
 
     def _add_advicecreated_state_active(self):
         '''Tests when 'add_advicecreated_state' wfAdaptation is active.'''

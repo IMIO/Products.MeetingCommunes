@@ -25,16 +25,6 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
         cfg.setItemAdviceStates((self._stateMappingFor('itemcreated'), ))
         cfg.setItemAdviceEditStates((self._stateMappingFor('itemcreated'), ))
         cfg.setItemAdviceViewStates((self._stateMappingFor('itemcreated'), ))
-        self.tool.setAdvisersConfig(
-            ({'advice_types': ['positive',
-                               'positive_with_remarks'],
-              'base_wf': 'meetingadvicefinancessimple_workflow',
-              'default_advice_type': 'positive_with_remarks',
-              'org_uids': [self.vendors_uid],
-              'portal_type': 'meetingadvicefinances',
-              'show_advice_on_final_wf_transition': '1',
-              'wf_adaptations': []}, ))
-        self.tool.at_post_edit_script()
         # create item and ask 2 advices
         self.changeUser('pmCreator1')
         item = self.create('MeetingItem',
