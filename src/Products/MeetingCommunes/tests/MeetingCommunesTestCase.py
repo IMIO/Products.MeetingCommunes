@@ -36,7 +36,8 @@ class MeetingCommunesTestCase(PloneMeetingTestCase, MeetingCommunesTestingHelper
                  'org_uids': [self.vendors_uid],
                  'portal_type': 'meetingadvicefinances',
                  'show_advice_on_final_wf_transition': '1',
-                 'wf_adaptations': []}, )
+                 'wf_adaptations': [],
+                 'show_advice_on_final_wf_transition': '0'}, )
             if enable_add_advicecreated is True:
                 config[0]['wf_adaptations'] = ['add_advicecreated_state']
             self.tool.setAdvisersConfig(config)

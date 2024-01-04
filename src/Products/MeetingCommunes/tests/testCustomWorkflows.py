@@ -5,8 +5,7 @@
 # GNU General Public License (GPL)
 #
 
-from imio.helpers.content import richtextval
-from plone.dexterity.utils import createContentInContainer
+from datetime import timedelta
 from Products.CMFCore.permissions import AccessContentsInformation
 from Products.CMFCore.permissions import View
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
@@ -167,12 +166,14 @@ class testCustomWorkflows(MeetingCommunesTestCase):
                            category='development',
                            optionalAdvisers=('%s__rowid__unique_id_001' % self.vendors_uid, ))
         self.changeUser('pmReviewer2')
-        vendors_advice = createContentInContainer(
+        vendors_advice_portal_type = item.adapted()._advicePortalTypeForAdviser(self.vendors_uid)
+        cfg.setDefaultAdviceHiddenDuringRedaction([vendors_advice_portal_type])
+        vendors_advice = self.addAdvice(
             item,
-            item.adapted()._advicePortalTypeForAdviser(self.vendors_uid),
             **{'advice_group': self.vendors_uid,
                'advice_type': u'positive_with_remarks',
-               'advice_comment': richtextval(u'My comment')})
+               'advice_comment': u'My comment',
+               'advice_portal_type': vendors_advice_portal_type})
         # is delay aware
         self.assertEqual(item.adviceIndex[self.vendors_uid]['delay'], '10')
         # is in a custom review_state
@@ -185,3 +186,16 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         self.assertEqual(
             sorted(get_advice_alive_states()),
             ['advice_under_edit', 'financial_advice_signed', 'proposed_to_financial_manager'])
+        # check that @@pm-night-tasks does the job
+        # avoid failing test due to delay computation
+        self.tool.setHolidays([])
+        self.tool.setDelayUnavailableEndDays([])
+        self.tool.setWorkingDays(('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun', ))
+        self.tool.notifyModified()
+        # for now 10 days left
+        self.assertEqual(item.adviceIndex[self.vendors_uid]['delay_infos']['left_delay'], 10)
+        item.adviceIndex[self.vendors_uid]['delay_started_on'] = \
+                item.adviceIndex[self.vendors_uid]['delay_started_on'] - timedelta(1)
+        # after update by @@pm-night-tasks, 9 days left
+        self.portal.restrictedTraverse('@@pm-night-tasks')()
+        self.assertEqual(item.adviceIndex[self.vendors_uid]['delay_infos']['left_delay'], 9)

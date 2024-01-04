@@ -12,9 +12,9 @@ from datetime import datetime
 from datetime import timedelta
 from dexterity.localroles.utils import add_fti_configuration
 from imio.helpers.content import normalize_name
+from imio.helpers.content import richtextval
 from plone import api
 from plone import namedfile
-from plone.app.textfield.value import RichTextValue
 from plone.dexterity.utils import createContentInContainer
 from Products.Archetypes.event import ObjectEditedEvent
 from Products.CMFPlone.utils import _createObjectByType
@@ -441,8 +441,8 @@ def addDemoData(context):
                                              'meetingadvice',
                                              **{'advice_group': org_id_to_uid('informatique'),
                                                 'advice_type': u'positive',
-                                                'advice_comment': RichTextValue(SAMPLE_TEXT),
-                                                'advice_observations': RichTextValue()})
+                                                'advice_comment': richtextval(SAMPLE_TEXT),
+                                                'advice_observations': richtextval()})
                 if item['templateId'] == 'template5' and cfg.id == 'meeting-config-college':
                     newItem.setOptionalAdvisers((org_id_to_uid('dirgen'), ))
                     newItem.at_post_create_script()
@@ -450,8 +450,8 @@ def addDemoData(context):
                                              'meetingadvice',
                                              **{'advice_group': org_id_to_uid('dirgen'),
                                                 'advice_type': u'negative',
-                                                'advice_comment': RichTextValue(SAMPLE_TEXT),
-                                                'advice_observations': RichTextValue(SAMPLE_TEXT)})
+                                                'advice_comment': richtextval(SAMPLE_TEXT),
+                                                'advice_observations': richtextval(SAMPLE_TEXT)})
 
                 newItem.reindexObject()
 
