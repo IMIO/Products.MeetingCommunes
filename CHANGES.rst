@@ -59,6 +59,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   - Fixed tests as `MeetingConfig.listWorkflowAdaptations` was removed.
 
   [gbastien]
+- Added `Export users/groups` dashboard template for contacts in `examples_fr` profile.
+  [gbastien]
 
 4.2.5 (2023-10-27)
 ------------------
