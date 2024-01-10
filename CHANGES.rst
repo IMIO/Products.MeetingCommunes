@@ -19,6 +19,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   [gbastien]
 - Added `Export users/groups` dashboard template for contacts in `examples_fr` profile.
   [gbastien]
+- Updated `recapitulatif-tb.ods` to use `appy.pod` instruction `do cell from+ xhtml(...)`
+  instead `view.display_html_as_text`.
+  [gbastien]
 
 4.2.5 (2023-10-27)
 ------------------
