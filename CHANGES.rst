@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.6b6 (unreleased)
+4.2.6b6 (2024-01-11)
 --------------------
 
 - Adapted code to use `imio.helpers.content.richtextval` instead `RichTextValue` when possible.
