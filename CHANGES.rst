@@ -8,8 +8,11 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.6b7 (unreleased)
 --------------------
 
-- Nothing changed yet.
-
+- Added `test_pm_Show_advice_on_final_wf_transition_when_item_in_advice_not_giveable_state`
+  that will test that when item is set to a state in which advice is no more
+  editable, `advice.advice_hide_during_redaction` is not set back to `True`
+  if advice was not in it's workflow final state (when using advice custom workflow).
+  [gbastien]
 
 4.2.6b6 (2024-01-11)
 --------------------

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from DateTime import DateTime
-from imio.helpers.content import get_vocab_values
 from imio.helpers.content import richtextval
 from plone.dexterity.utils import createContentInContainer
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
