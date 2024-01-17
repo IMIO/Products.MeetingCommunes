@@ -66,14 +66,13 @@ class testToolPloneMeeting(MeetingCommunesTestCase, pmtt):
                 vendors_advice,
                 'Products.PloneMeeting.content.advice.advice_type_vocabulary'),
             ['positive', 'positive_with_remarks', 'negative'])
-        # when advice is given, it is automatically shown
+        # when advice is given, it is automatically shown when it reaches it's final wf state
         self.assertFalse(vendors_advice.advice_hide_during_redaction)
         vendors_advice.advice_hide_during_redaction = True
         item.update_local_roles()
         self.assertTrue(vendors_advice.advice_hide_during_redaction)
         self.assertTrue(item.adviceIndex[self.vendors_uid]['hidden_during_redaction'])
-        self.changeUser('pmCreator1')
-        self.proposeItem(item)
+        self.do(vendors_advice, 'signFinancialAdvice')
         self.assertFalse(vendors_advice.advice_hide_during_redaction)
         self.assertFalse(item.adviceIndex[self.vendors_uid]['hidden_during_redaction'])
 
