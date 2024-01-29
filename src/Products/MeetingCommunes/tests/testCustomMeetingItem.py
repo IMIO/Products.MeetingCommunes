@@ -6,6 +6,7 @@ from imio.history.utils import getLastWFAction
 from plone.dexterity.utils import createContentInContainer
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
+from Products.PloneMeeting.indexes import REAL_ORG_UID_PATTERN
 
 
 class testCustomMeetingItem(MeetingCommunesTestCase):
@@ -100,7 +101,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
              'o': 'plone.app.querystring.operation.selection.is',
              'v': ['delay_row_id__unique_id_001_2',
                    'delay_row_id__unique_id_002_2',
-                   'real_org_uid__{0}'.format(self.developers_uid)]}
+                   REAL_ORG_UID_PATTERN.format(self.developers_uid)]}
         ], )
         # create an item without finance advice
         self.changeUser('pmManager')
@@ -198,6 +199,27 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         item.update_local_roles()
         self.assertTrue(item.adapted().showFinanceAdviceTemplate(False))
         self.assertTrue(item.adapted().showFinanceAdviceTemplate(True))
+
+        # auto asked advice
+        custom_advisers = list(cfg.getCustomAdvisers()) + [{
+            'row_id': 'unique_id_004',
+            'org': self.vendors_uid,
+            'for_item_created_from': today,
+            'gives_auto_advice_on': 'python: True',
+            'gives_auto_advice_on_help_message': '',
+            'is_linked_to_previous_row': '0'}]
+        cfg.setCustomAdvisers(custom_advisers)
+        auto_item = self.create('MeetingItem')
+        self.assertTrue(self.vendors_uid in auto_item.adviceIndex)
+        # not a finance advice for now
+        self.assertFalse(auto_item.adapted().getFinanceAdviceId())
+        self.assertFalse(auto_item.adapted().showFinanceAdviceTemplate())
+        # make is recognized as finance advice
+        query = collection.query
+        query[1]['v'].append(REAL_ORG_UID_PATTERN.format(self.vendors_uid))
+        collection.setQuery(query)
+        self.assertEqual(auto_item.adapted().getFinanceAdviceId(), self.vendors_uid)
+        self.assertTrue(auto_item.adapted().showFinanceAdviceTemplate())
 
         # if the collection does not exist, [] is returned
         self.deleteAsManager(collection.UID())
