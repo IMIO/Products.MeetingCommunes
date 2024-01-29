@@ -611,7 +611,7 @@ class CustomMeetingConfig(MeetingConfig):
                 row_id = v.replace(delayaware_row_id_prefix, '')
                 org_uid = cfg._dataForCustomAdviserRowId(row_id)['org']
                 if not item or (org_uid in item.adviceIndex and
-                     item.adviceIndex[org_uid]['row_id'] == row_id):
+                                item.adviceIndex[org_uid]['row_id'] == row_id):
                     res.append(org_uid)
         # remove duplicates
         return list(set(res))
