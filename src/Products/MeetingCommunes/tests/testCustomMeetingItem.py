@@ -2,6 +2,7 @@
 
 from DateTime import DateTime
 from imio.helpers.content import richtextval
+from imio.history.utils import getLastWFAction
 from plone.dexterity.utils import createContentInContainer
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
@@ -225,3 +226,6 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.validateItem(item)
         self.assertFalse(item.adviceIndex[self.vendors_uid]['advice_editable'])
         self.assertEqual(view.get_advice_given_by(), u'M. PMReviewer Two')
+        # get_advice_given_on is the signFinancialAdvice date
+        self.assertEqual(view.obj.get_advice_given_on(),
+                         getLastWFAction(view.obj, 'signFinancialAdvice')['time'])

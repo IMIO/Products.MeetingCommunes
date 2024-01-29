@@ -13,6 +13,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   editable, `advice.advice_hide_during_redaction` is not set back to `True`
   if advice was not in it's workflow final state (when using advice custom workflow).
   [gbastien]
+- Adapted `test_Get_advice_given_by` to check that `get_advice_given_on` is
+  the advice WF `signFinancialAdvice` transition date when using a custom WF.
+  [gbastien]
 
 4.2.6b6 (2024-01-11)
 --------------------
