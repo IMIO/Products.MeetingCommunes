@@ -22,6 +22,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Updated `recapitulatif-tb.ods` to use `appy.pod` instruction `do cell from+ xhtml(...)`
   instead `view.display_html_as_text`.
   [gbastien]
+- Fixed `CustomMeetingConfig.getUsedFinanceGroupIds` that was not working
+  for auto asked advices.
+  [gbastien]
 
 4.2.5 (2023-10-27)
 ------------------

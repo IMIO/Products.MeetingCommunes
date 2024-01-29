@@ -603,10 +603,7 @@ class CustomMeetingConfig(MeetingConfig):
             real_org_uid_prefix = REAL_ORG_UID_PATTERN.format('')
             if v.startswith(real_org_uid_prefix):
                 org_uid = v.replace(real_org_uid_prefix, '')
-                # append it only if not already into res and if
-                # we have no 'row_id' for this adviser in adviceIndex
-                if item and org_uid not in res and \
-                   (org_uid in item.adviceIndex and not item.adviceIndex[org_uid]['row_id']):
+                if item and org_uid not in res and org_uid in item.adviceIndex:
                     res.append(org_uid)
                 elif not item:
                     res.append(org_uid)
