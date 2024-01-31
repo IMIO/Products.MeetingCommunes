@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.6b7 (unreleased)
+4.2.6b7 (2024-01-31)
 --------------------
 
 - Added `test_pm_Show_advice_on_final_wf_transition_when_item_in_advice_not_giveable_state`
