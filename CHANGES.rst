@@ -8,8 +8,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.6b8 (unreleased)
 --------------------
 
-- Nothing changed yet.
-
+- Added parameter `ignore_not_given_advice=False` to
+  `CustomMeetingItem.showFinanceAdviceTemplate`, when `True`, this will hide
+  the POD template when advice is `not_given` or `asked_again`.
+  [gbastien]
 
 4.2.6b7 (2024-01-31)
 --------------------

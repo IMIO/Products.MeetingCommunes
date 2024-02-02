@@ -28,6 +28,7 @@ from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowCond
 from Products.MeetingCommunes.utils import finances_give_advice_states
 from Products.PloneMeeting.adapters import CompoundCriterionBaseAdapter
 from Products.PloneMeeting.adapters import query_user_groups_cachekey
+from Products.PloneMeeting.config import NOT_GIVEN_ADVICE_VALUE
 from Products.PloneMeeting.config import PMMessageFactory as _
 from Products.PloneMeeting.content.meeting import Meeting
 from Products.PloneMeeting.indexes import DELAYAWARE_ROW_ID_PATTERN
@@ -510,9 +511,12 @@ class CustomMeetingItem(MeetingItem):
             self.reindexObject()
     MeetingItem._initDecisionFieldIfEmpty = _initDecisionFieldIfEmpty
 
-    def showFinanceAdviceTemplate(self, ignore_advice_hidden_during_redaction=False):
-        """If ignore_advice_hidden_during_redaction=True, return False except if current
-           user is a Manager or member of the finances _advisers group."""
+    def showFinanceAdviceTemplate(self,
+                                  ignore_advice_hidden_during_redaction=False,
+                                  ignore_not_given_advice=False):
+        """If p_ignore_advice_hidden_during_redaction=True, return False except if current
+           user is a Manager or member of the finances _advisers group.
+           If p_ignore_not_given_advice=True, return False if advice is not given."""
         item = self.getSelf()
         tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(item)
@@ -521,10 +525,12 @@ class CustomMeetingItem(MeetingItem):
         user_groups = get_plone_groups_for_user()
         for adviser_uid in cfg.adapted().getUsedFinanceGroupIds(item):
             if adviser_uid in item.adviceIndex:
-                if not ignore_advice_hidden_during_redaction or \
-                   isManager or \
-                   get_plone_group_id(adviser_uid, 'advisers') in user_groups or \
-                   item.adviceIndex[adviser_uid]['hidden_during_redaction'] is False:
+                if (not ignore_advice_hidden_during_redaction or
+                    isManager or
+                    get_plone_group_id(adviser_uid, 'advisers') in user_groups or
+                    item.adviceIndex[adviser_uid]['hidden_during_redaction'] is False) and \
+                        (not ignore_not_given_advice or item.adviceIndex[adviser_uid]['type']
+                         not in (NOT_GIVEN_ADVICE_VALUE, 'asked_again')):
                     res = True
                     break
         return res

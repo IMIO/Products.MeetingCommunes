@@ -171,6 +171,11 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.assertTrue(clonedItem2.adapted().showFinanceAdviceTemplate())
         self.assertEqual(clonedItem2.adapted().getFinanceAdviceId(), self.developers_uid)
 
+        # showFinanceAdviceTemplate when ignore_not_given_advice=True
+        # will hide the document if advice not given, for now advice not given
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(False, False))
+        self.assertFalse(item.adapted().showFinanceAdviceTemplate(False, True))
+
         # showFinanceAdviceTemplate when ignore_advice_hidden_during_redaction=True
         # will hide the document to people ouside _advisers group or not MeetingManagers
         # add advice so it may be set hidden
@@ -183,6 +188,10 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
                'advice_type': u'positive',
                'advice_comment': richtextval(u'My comment'),
                'advice_hide_during_redaction': True})
+        # ignore_not_given_advice=True, now advice is given
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(False, False))
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(False, True))
+        # ignore_advice_hidden_during_redaction
         # advisers always True
         self.assertTrue(item.adapted().showFinanceAdviceTemplate(False))
         self.assertTrue(item.adapted().showFinanceAdviceTemplate(True))
