@@ -6,6 +6,7 @@
 #
 
 from Products.CMFCore.permissions import setDefaultRoles
+from Products.PloneMeeting.config import ADVICE_STATES_MAPPING
 from Products.PloneMeeting.profiles import CategoryDescriptor
 
 
@@ -26,7 +27,14 @@ FINANCE_GROUP_SUFFIXES = ('financialprecontrollers',
                           'financialeditors',
                           'financialreviewers',
                           'financialmanagers')
-
+ADVICE_STATES_MAPPING.update(
+    {'advicecreated': 'financialprecontrollers',
+     'proposed_to_financial_controller': 'financialcontrollers',
+     'proposed_to_financial_editor': 'financialeditors',
+     'proposed_to_financial_reviewer': 'financialreviewers',
+     'proposed_to_financial_manager': 'financialmanagers',
+     'financial_advice_signed': 'financialmanagers',
+     })
 # the id of the collection querying finance advices
 FINANCE_ADVICES_COLLECTION_ID = 'searchitemswithfinanceadvice'
 

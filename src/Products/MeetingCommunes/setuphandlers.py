@@ -12,16 +12,18 @@ from datetime import datetime
 from datetime import timedelta
 from dexterity.localroles.utils import add_fti_configuration
 from imio.helpers.content import normalize_name
+from imio.helpers.content import richtextval
 from plone import api
 from plone import namedfile
-from plone.app.textfield.value import RichTextValue
 from plone.dexterity.utils import createContentInContainer
+from Products.Archetypes.event import ObjectEditedEvent
 from Products.CMFPlone.utils import _createObjectByType
 from Products.MeetingCommunes.config import PROJECTNAME
 from Products.MeetingCommunes.config import SAMPLE_TEXT
 from Products.PloneMeeting.exportimport.content import ToolInitializer
 from Products.PloneMeeting.utils import cleanMemoize
 from Products.PloneMeeting.utils import org_id_to_uid
+from zope.event import notify
 
 import logging
 import os
@@ -39,6 +41,11 @@ def postInstall(context):
     # the right place for your custom code
     if isMeetingCommunesFinancesAdviceProfile(context):
         _configureDexterityLocalRolesField()
+        # update portal_types of every MeetingConfig so
+        # MeetingItem.allowed_content_types is updated
+        tool = api.portal.get_tool('portal_plonemeeting')
+        for cfg in tool.objectValues('MeetingConfig'):
+            notify(ObjectEditedEvent(cfg))
 
     if isNotMeetingCommunesProfile(context):
         return
@@ -434,8 +441,8 @@ def addDemoData(context):
                                              'meetingadvice',
                                              **{'advice_group': org_id_to_uid('informatique'),
                                                 'advice_type': u'positive',
-                                                'advice_comment': RichTextValue(SAMPLE_TEXT),
-                                                'advice_observations': RichTextValue()})
+                                                'advice_comment': richtextval(SAMPLE_TEXT),
+                                                'advice_observations': richtextval()})
                 if item['templateId'] == 'template5' and cfg.id == 'meeting-config-college':
                     newItem.setOptionalAdvisers((org_id_to_uid('dirgen'), ))
                     newItem.at_post_create_script()
@@ -443,8 +450,8 @@ def addDemoData(context):
                                              'meetingadvice',
                                              **{'advice_group': org_id_to_uid('dirgen'),
                                                 'advice_type': u'negative',
-                                                'advice_comment': RichTextValue(SAMPLE_TEXT),
-                                                'advice_observations': RichTextValue(SAMPLE_TEXT)})
+                                                'advice_comment': richtextval(SAMPLE_TEXT),
+                                                'advice_observations': richtextval(SAMPLE_TEXT)})
 
                 newItem.reindexObject()
 

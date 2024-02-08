@@ -8,6 +8,7 @@ from AccessControl.class_init import InitializeClass
 from appy.gen import No
 from collections import OrderedDict
 from collective.contact.plonegroup.utils import get_organizations
+from collective.contact.plonegroup.utils import get_plone_group_id
 from imio.helpers.cache import get_plone_groups_for_user
 from imio.helpers.xhtml import xhtmlContentIsEmpty
 from plone import api
@@ -27,6 +28,7 @@ from Products.MeetingCommunes.interfaces import IMeetingItemCommunesWorkflowCond
 from Products.MeetingCommunes.utils import finances_give_advice_states
 from Products.PloneMeeting.adapters import CompoundCriterionBaseAdapter
 from Products.PloneMeeting.adapters import query_user_groups_cachekey
+from Products.PloneMeeting.config import NOT_GIVEN_ADVICE_VALUE
 from Products.PloneMeeting.config import PMMessageFactory as _
 from Products.PloneMeeting.content.meeting import Meeting
 from Products.PloneMeeting.indexes import DELAYAWARE_ROW_ID_PATTERN
@@ -41,13 +43,15 @@ from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowActions
 from Products.PloneMeeting.MeetingItem import MeetingItemWorkflowConditions
 from Products.PloneMeeting.model import adaptations
 from Products.PloneMeeting.ToolPloneMeeting import ToolPloneMeeting
-from Products.PloneMeeting.utils import duplicate_workflow
 from Products.PloneMeeting.workflows.advice import MeetingAdviceWorkflowActions
 from Products.PloneMeeting.workflows.advice import MeetingAdviceWorkflowConditions
 from Products.PloneMeeting.workflows.meeting import MeetingWorkflowActions
 from Products.PloneMeeting.workflows.meeting import MeetingWorkflowConditions
 from zope.i18n import translate
 from zope.interface import implements
+
+
+ToolPloneMeeting.advice_wf_adaptations = ('add_advicecreated_state', )
 
 
 class CustomMeeting(Meeting):
@@ -507,25 +511,29 @@ class CustomMeetingItem(MeetingItem):
             self.reindexObject()
     MeetingItem._initDecisionFieldIfEmpty = _initDecisionFieldIfEmpty
 
-    def showFinanceAdviceTemplate(self):
-        """ """
+    def showFinanceAdviceTemplate(self,
+                                  ignore_advice_hidden_during_redaction=False,
+                                  ignore_not_given_advice=False):
+        """If p_ignore_advice_hidden_during_redaction=True, return False except if current
+           user is a Manager or member of the finances _advisers group.
+           If p_ignore_not_given_advice=True, return False if advice is not given."""
         item = self.getSelf()
         tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(item)
-        return bool(set(cfg.adapted().getUsedFinanceGroupIds(item)).
-                    intersection(set(item.adviceIndex.keys())))
-
-    def _adviceTypesForAdviser(self, meeting_advice_portal_type):
-        """Return the advice types (positive, negative, ...) for given p_meeting_advice_portal_type.
-           By default we always use every MeetingConfig.usedAdviceTypes but this is useful
-           when using several portal_types for meetingadvice and some may use particular advice types."""
-        item = self.getSelf()
-        tool = api.portal.get_tool('portal_plonemeeting')
-        cfg = tool.getMeetingConfig(item)
-        if meeting_advice_portal_type.startswith('meetingadvicefinances'):
-            return [t for t in cfg.getUsedAdviceTypes() if t.endswith('_finance')]
-        else:
-            return [t for t in cfg.getUsedAdviceTypes() if not t.endswith('_finance')]
+        res = False
+        isManager = tool.isManager(cfg)
+        user_groups = get_plone_groups_for_user()
+        for adviser_uid in cfg.adapted().getUsedFinanceGroupIds(item):
+            if adviser_uid in item.adviceIndex:
+                if (not ignore_advice_hidden_during_redaction or
+                    isManager or
+                    get_plone_group_id(adviser_uid, 'advisers') in user_groups or
+                    item.adviceIndex[adviser_uid]['hidden_during_redaction'] is False) and \
+                        (not ignore_not_given_advice or item.adviceIndex[adviser_uid]['type']
+                         not in (NOT_GIVEN_ADVICE_VALUE, 'asked_again')):
+                    res = True
+                    break
+        return res
 
 
 class CustomMeetingConfig(MeetingConfig):
@@ -886,32 +894,6 @@ class CustomMeetingConfig(MeetingConfig):
             infos.update(financesadvice_infos)
         return infos
 
-    def extraAdviceTypes(self):
-        '''See doc in interfaces.py.'''
-        typesTool = api.portal.get_tool('portal_types')
-        if 'meetingadvicefinances' in typesTool:
-            return ['positive_finance', 'positive_with_remarks_finance',
-                    'cautious_finance', 'negative_finance', 'not_given_finance',
-                    'not_required_finance']
-        return []
-
-    def _has_meetingadvicefinances_wf_adaptations(self):
-        '''Check if some meetingadvicefinances_workflow related WFAdaptations are enabled.'''
-        cfg = self.getSelf()
-        finadv_wfas = [wfa for wfa in cfg.getWorkflowAdaptations()
-                       if wfa.startswith('meetingadvicefinances_')]
-        return bool(finadv_wfas)
-
-    def _updateMeetingAdvicePortalTypes(self):
-        '''Make sure we use a patched_ wokflow instead 'base_wf' for eachmeetingadvicefinances_workflow
-           to apply advice related workflow adaptations.'''
-        if self._has_meetingadvicefinances_wf_adaptations():
-            fin_wf = 'meetingadvicefinances_workflow'
-            wfTool = api.portal.get_tool('portal_workflow')
-            if fin_wf in wfTool:
-                patched_fin_wf = 'patched_meetingadvicefinances_workflow'
-                duplicate_workflow(fin_wf, patched_fin_wf, portalTypeNames=['meetingadvicefinances'])
-
     def _adviceConditionsInterfaceFor(self, advice_obj):
         '''See doc in interfaces.py.'''
         if advice_obj.portal_type == 'meetingadvicefinances':
@@ -1175,6 +1157,20 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
     def __init__(self, item):
         self.context = item
 
+    def extraAdviceTypes(self):
+        '''See doc in interfaces.py.'''
+        typesTool = api.portal.get_tool('portal_types')
+        if 'meetingadvicefinances' in typesTool:
+            return ['positive_finance',
+                    'positive_with_remarks_finance',
+                    'cautious_finance',
+                    'negative_finance',
+                    'negative_with_remarks_finance',
+                    'not_given_finance',
+                    'not_required_finance',
+                    ]
+        return []
+
     security.declarePublic('isFinancialUser')
 
     def isFinancialUser(self):
@@ -1185,22 +1181,32 @@ class CustomToolPloneMeeting(ToolPloneMeeting):
                     return True
         return False
 
-    def performCustomAdviceWFAdaptations(self, meetingConfig, wfAdaptation, logger, advice_wf_id):
+    def performCustomAdviceWFAdaptations(self, tool, wfAdaptation, logger, advice_wf_id):
         ''' '''
+        wf_tool = api.portal.get_tool('portal_workflow')
+        wf = wf_tool.getWorkflowById(advice_wf_id)
         if wfAdaptation == 'add_advicecreated_state':
             # adapt WF, add new initial_state (and leading transitions)
+            # state is added before intial_state that is like
+            # proposed_to_financial_controller or proposed_to_financial_manager
+            initial_state_id = wf.initial_state
+            LEAVING_TRANSITION_IDS = {
+                'proposed_to_financial_controller': 'proposeToFinancialController',
+                'proposed_to_financial_editor': 'proposeToFinancialEditor',
+                'proposed_to_financial_reviewer': 'proposeToFinancialReviewer',
+                'proposed_to_financial_manager': 'proposeToFinancialManager'}
             adaptations.addState(
                 wf_id=advice_wf_id,
                 new_state_id='advicecreated',
                 new_state_title='advicecreated',
-                permissions_cloned_state_id='proposed_to_financial_controller',
+                permissions_cloned_state_id='advice_given',
                 leading_transition_id=None,
                 leading_transition_title=None,
                 back_transitions=[{'back_transition_id': 'backToAdviceCreated',
                                    'back_transition_title': 'backToAdviceCreated',
-                                   'back_from_state_id': 'proposed_to_financial_controller'}],
-                leaving_transition_id='proposeToFinancialController',
-                leaving_to_state_id='proposed_to_financial_controller',
+                                   'back_from_state_id': initial_state_id}],
+                leaving_transition_id=LEAVING_TRANSITION_IDS[initial_state_id],
+                leaving_to_state_id=initial_state_id,
                 existing_leaving_transition_ids=['giveAdvice'],
                 existing_back_transition_ids=['backToAdviceInitialState'],
                 new_initial_state=True)

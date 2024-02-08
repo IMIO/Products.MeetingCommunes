@@ -6,31 +6,37 @@ from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommun
 class testCustomWFAdaptations(MeetingCommunesTestCase):
     ''' '''
 
-    def test_WFA_meetingadvicefinances_add_advicecreated_state(self):
-        '''Test the workflowAdaptation 'meetingadvicefinances_add_advicecreated_state'.'''
+    def test_WFA_add_advicecreated_state(self):
+        '''Test the workflowAdaptation 'add_advicecreated_state'.'''
         # ease override by subproducts
-        cfg = self.meetingConfig
-        if 'meetingadvicefinances_add_advicecreated_state' not in cfg.listWorkflowAdaptations():
+        if not self._check_wfa_available(['add_advicecreated_state'], related_to='MeetingAdvice'):
             return
-        # apply the financesadvice profile so meetingadvicefinances portal_type is available
-        self.portal.portal_setup.runAllImportStepsFromProfile(
-            'profile-Products.MeetingCommunes:financesadvice')
 
         self.changeUser('siteadmin')
         # check while the wfAdaptation is not activated
-        self._meetingadvicefinances_add_advicecreated_state_inactive()
-        self._activate_wfas(('meetingadvicefinances_add_advicecreated_state', ))
-        self._meetingadvicefinances_add_advicecreated_state_active()
+        self._configureFinancesAdvice(configure_custom_advisers=False)
+        self._add_advicecreated_state_inactive()
+        # enable WFA and test
+        self._configureFinancesAdvice(enable_add_advicecreated=True)
+        self._add_advicecreated_state_active()
 
-    def _meetingadvicefinances_add_advicecreated_state_inactive(self):
-        '''Tests while 'meetingadvicefinances_add_advicecreated_state' wfAdaptation is inactive.'''
+    def _add_advicecreated_state_inactive(self):
+        '''Tests when 'add_advicecreated_state' wfAdaptation is inactive.'''
         self.assertTrue('meetingadvicefinances_workflow' in self.wfTool)
-        self.assertFalse('patched_meetingadvicefinances_workflow' in self.wfTool)
+        self.assertFalse('meetingadvicefinances__meetingadvicefinancessimple_workflow' in self.wfTool)
 
-    def _meetingadvicefinances_add_advicecreated_state_active(self):
-        '''Tests while 'meetingadvicefinances_add_advicecreated_state' wfAdaptation is active.'''
+    def _add_advicecreated_state_active(self):
+        '''Tests when 'add_advicecreated_state' wfAdaptation is active.'''
+        # base WFs
         self.assertTrue('meetingadvicefinances_workflow' in self.wfTool)
-        self.assertTrue('patched_meetingadvicefinances_workflow' in self.wfTool)
-        fin_wf = self.wfTool.get('patched_meetingadvicefinances_workflow')
-        self.assertTrue('advicecreated' in fin_wf.states)
+        self.assertTrue('meetingadvicefinancessimple_workflow' in self.wfTool)
+        self.assertTrue('meetingadvicefinanceseditor_workflow' in self.wfTool)
+        self.assertTrue('meetingadvicefinancesmanager_workflow' in self.wfTool)
+        # new created WF
+        fin_wf = self.wfTool.get('meetingadvicefinances__meetingadvicefinancessimple_workflow')
         self.assertEqual(fin_wf.initial_state, 'advicecreated')
+        self.assertEqual(sorted(fin_wf.states),
+                         ['advice_given',
+                          'advicecreated',
+                          'financial_advice_signed',
+                          'proposed_to_financial_manager'])

@@ -5,8 +5,42 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.6 (unreleased)
-------------------
+4.2.6b8 (unreleased)
+--------------------
+
+- Added parameter `ignore_not_given_advice=False` to
+  `CustomMeetingItem.showFinanceAdviceTemplate`, when `True`, this will hide
+  the POD template when advice is `not_given` or `asked_again`.
+  [gbastien]
+
+4.2.6b7 (2024-01-31)
+--------------------
+
+- Added `test_pm_Show_advice_on_final_wf_transition_when_item_in_advice_not_giveable_state`
+  that will test that when item is set to a state in which advice is no more
+  editable, `advice.advice_hide_during_redaction` is not set back to `True`
+  if advice was not in it's workflow final state (when using advice custom workflow).
+  [gbastien]
+- Adapted `test_Get_advice_given_by` to check that `get_advice_given_on` is
+  the advice WF `signFinancialAdvice` transition date when using a custom WF.
+  [gbastien]
+
+4.2.6b6 (2024-01-11)
+--------------------
+
+- Adapted code to use `imio.helpers.content.richtextval` instead `RichTextValue` when possible.
+  [gbastien]
+
+4.2.6b5 (2024-01-02)
+--------------------
+
+- Added translations for the `add_advicecreated_state` WFA.
+  [gbastien]
+- Every item related search (Collection) use `sort_on` `modified` instead `created`.
+  [gbastien]
+
+4.2.6b4 (2023-12-11)
+--------------------
 
 - CSS, color in blue state `financial_advice_signed` in advice history.
   [gbastien]
@@ -15,7 +49,35 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
   `ToolPloneMeeting.isPowerObserverForCfg` is moved to
   `utils.isPowerObserverForCfg`.
   [gbastien]
-- Every item related search (Collection) use `sort_on` `modified` instead `created`.
+
+4.2.6b3 (2023-11-27)
+--------------------
+
+- Added parameter `ignore_advice_hidden_during_redaction=False` to
+  `CustomMeetingItem.showFinanceAdviceTemplate`, when `True`, this will hide
+  the POD template when advice is hidden during redaction except if member is
+  `MeetingManager` or in the advice `_advisers` group.
+  [gbastien]
+
+4.2.6b2 (2023-11-27)
+--------------------
+
+- Move back `add_advicecreated_state` advice WFA related code from `PloneMeeting`.
+  [gbastien]
+- Fixed `meetingadvicefinancs` `portal_type.allowed_content_types` install.
+  [gbastien]
+- Completed translations of finances advices types.
+  [gbastien]
+
+4.2.6b1 (2023-10-27)
+--------------------
+
+- Adapted code now that custom advice portal_types is managed by
+  `ToolPloneMeeting.advisersConfig`:
+
+  - Added new advice finances WF `meetingadvicefinancessimple_workflow`;
+  - Fixed tests as `MeetingConfig.listWorkflowAdaptations` was removed.
+
   [gbastien]
 - Added `Export users/groups` dashboard template for contacts in `examples_fr` profile.
   [gbastien]

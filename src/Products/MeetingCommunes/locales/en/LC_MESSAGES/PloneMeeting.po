@@ -94,6 +94,10 @@ msgstr "If you check this box, when a meeting will be decided, if an item does n
 msgid "negative_finance"
 msgstr "Unfavorable opinion"
 
+#. Default: "Unfavorable opinion with remarks"
+msgid "negative_with_remarks_finance"
+msgstr "Unfavorable opinion with remarks"
+
 #. Default: "Not given opinion"
 msgid "not_given_finance"
 msgstr "Not given opinion"
@@ -163,9 +167,9 @@ msgstr "Validated items"
 msgid "still_asked_again"
 msgstr "Please change value of field \"Advice type\" to anything else but \"Asked again\" to activate this action."
 
-#. Default: "Finances advice: add advicecreated state"
-msgid "wa_meetingadvicefinances_add_advicecreated_state"
-msgstr "Finances advice: add advicecreated state"
+#. Default: "Add advicecreated state"
+msgid "wa_add_advicecreated_state"
+msgstr ""
 
 #. Default: "Finances advice: add transition from financial controller to financial manager"
 msgid "wa_meetingadvicefinances_controller_propose_to_manager"

@@ -20,3 +20,24 @@ class MeetingCommunesTestCase(PloneMeetingTestCase, MeetingCommunesTestingHelper
 
     cfg1_id = 'meeting-config-college'
     cfg2_id = 'meeting-config-council'
+
+    def _configureFinancesAdvice(self, configure_custom_advisers=True, enable_add_advicecreated=False):
+        """ """
+        # apply the financesadvice profile so meetingadvicefinances portal_type is available
+        self.portal.portal_setup.runAllImportStepsFromProfile(
+            'profile-Products.MeetingCommunes:financesadvice')
+
+        if configure_custom_advisers is True:
+            config = (
+                {'advice_types': ['positive',
+                                  'positive_with_remarks'],
+                 'base_wf': 'meetingadvicefinancessimple_workflow',
+                 'default_advice_type': 'positive_with_remarks',
+                 'org_uids': [self.vendors_uid],
+                 'portal_type': 'meetingadvicefinances',
+                 'show_advice_on_final_wf_transition': '1',
+                 'wf_adaptations': [], }, )
+            if enable_add_advicecreated is True:
+                config[0]['wf_adaptations'] = ['add_advicecreated_state']
+            self.tool.setAdvisersConfig(config)
+            self.tool.at_post_edit_script()

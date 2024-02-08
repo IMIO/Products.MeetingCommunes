@@ -7,10 +7,10 @@
 
 from collective.contact.plonegroup.utils import get_plone_group_id
 from DateTime import DateTime
+from imio.helpers.content import richtextval
 from imio.history.utils import getLastWFAction
 from itertools import chain
 from plone import api
-from plone.app.textfield import RichTextValue
 from plone.dexterity.utils import createContentInContainer
 from Products.MeetingCommunes.browser.overrides import MCMeetingDocumentGenerationHelperView as item_dghv
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
@@ -198,7 +198,7 @@ class testCustomViews(MeetingCommunesTestCase):
                                  'meetingadvice',
                                  **{'advice_group': self.developers_uid,
                                     'advice_type': u'positive',
-                                    'advice_comment': RichTextValue(u'My comment')})
+                                    'advice_comment': richtextval(u'My comment')})
 
         result = helper.print_formated_advice()
         self.assertEqual(
@@ -292,7 +292,7 @@ class testCustomViews(MeetingCommunesTestCase):
             **{'advice_group': adviser_group_uid,
                'advice_type': u'positive',
                'advice_hide_during_redaction': False,
-               'advice_comment': RichTextValue(u'My comment')})
+               'advice_comment': richtextval(u'My comment')})
 
     def test_getItemAdviceTransmissionDate(self):
         cfg = self.meetingConfig

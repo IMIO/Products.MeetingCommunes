@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from DateTime import DateTime
+from imio.helpers.content import richtextval
+from imio.history.utils import getLastWFAction
+from plone.dexterity.utils import createContentInContainer
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.indexes import REAL_ORG_UID_PATTERN
@@ -59,6 +62,9 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
              'delay_label': 'Not a finance advice',
              'is_linked_to_previous_row': '0'}, ]
         )
+        cfg.setItemAdviceStates((self._stateMappingFor('itemcreated'), ))
+        cfg.setItemAdviceEditStates((self._stateMappingFor('itemcreated'), ))
+        cfg.setItemAdviceViewStates((self._stateMappingFor('itemcreated'), ))
         cfg2.setCustomAdvisers([
             {'row_id': 'unique_id_001_2',
              'org': self.developers_uid,
@@ -165,6 +171,44 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.assertTrue(clonedItem2.adapted().showFinanceAdviceTemplate())
         self.assertEqual(clonedItem2.adapted().getFinanceAdviceId(), self.developers_uid)
 
+        # showFinanceAdviceTemplate when ignore_not_given_advice=True
+        # will hide the document if advice not given, for now advice not given
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(False, False))
+        self.assertFalse(item.adapted().showFinanceAdviceTemplate(False, True))
+
+        # showFinanceAdviceTemplate when ignore_advice_hidden_during_redaction=True
+        # will hide the document to people ouside _advisers group or not MeetingManagers
+        # add advice so it may be set hidden
+        self.changeUser('pmAdviser1')
+        self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [self.developers_uid])
+        advice = createContentInContainer(
+            item,
+            item.adapted()._advicePortalTypeForAdviser(self.developers_uid),
+            **{'advice_group': self.developers_uid,
+               'advice_type': u'positive',
+               'advice_comment': richtextval(u'My comment'),
+               'advice_hide_during_redaction': True})
+        # ignore_not_given_advice=True, now advice is given
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(False, False))
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(False, True))
+        # ignore_advice_hidden_during_redaction
+        # advisers always True
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(False))
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(True))
+        # pmManager always True
+        self.changeUser('pmManager')
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(False))
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(True))
+        # proposingGroup member will only get True when advice is not hidden
+        self.changeUser('pmCreator1')
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(False))
+        self.assertFalse(item.adapted().showFinanceAdviceTemplate(True))
+        # always True if advice not hidden
+        advice.advice_hide_during_redaction = False
+        item.update_local_roles()
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(False))
+        self.assertTrue(item.adapted().showFinanceAdviceTemplate(True))
+
         # auto asked advice
         custom_advisers = list(cfg.getCustomAdvisers()) + [{
             'row_id': 'unique_id_004',
@@ -191,3 +235,28 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [])
         self.assertFalse(item.adapted().showFinanceAdviceTemplate())
         self.assertIsNone(item.adapted().getFinanceAdviceId())
+
+    def test_Get_advice_given_by(self):
+        '''Test the AdviceInfos.get_advice_given_by when using 'meetingadvicefinances' workflow.'''
+
+        # ease override by subproducts
+        if not self._check_wfa_available(['add_advicecreated_state'], related_to="MeetingAdvice"):
+            return
+
+        self._configureFinancesAdvice(enable_add_advicecreated=True)
+        item, advice = self._setupItemWithAdvice()
+        view = item.restrictedTraverse('@@advice-infos')
+        view(advice.advice_group, False, item.adapted().getCustomAdviceMessageFor(advice))
+        # advice did not reach final state, we do not know who gave it
+        self.assertIsNone(view.get_advice_given_by())
+        self.do(advice, "proposeToFinancialManager")
+        self.assertIsNone(view.get_advice_given_by())
+        self.do(advice, "signFinancialAdvice")
+        self.assertEqual(view.get_advice_given_by(), u'M. PMReviewer Two')
+        # still viewable after
+        self.validateItem(item)
+        self.assertFalse(item.adviceIndex[self.vendors_uid]['advice_editable'])
+        self.assertEqual(view.get_advice_given_by(), u'M. PMReviewer Two')
+        # get_advice_given_on is the signFinancialAdvice date
+        self.assertEqual(view.obj.get_advice_given_on(),
+                         getLastWFAction(view.obj, 'signFinancialAdvice')['time'])

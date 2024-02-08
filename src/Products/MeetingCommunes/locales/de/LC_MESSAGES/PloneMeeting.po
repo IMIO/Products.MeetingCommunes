@@ -93,6 +93,10 @@ msgstr ""
 msgid "negative_finance"
 msgstr ""
 
+#. Default: "Unfavorable opinion with remarks"
+msgid "negative_with_remarks_finance"
+msgstr ""
+
 #. Default: "Not given opinion"
 msgid "not_given_finance"
 msgstr ""
@@ -164,8 +168,8 @@ msgstr "validierte TOP"
 msgid "still_asked_again"
 msgstr ""
 
-#. Default: "Finances advice: add advicecreated state"
-msgid "wa_meetingadvicefinances_add_advicecreated_state"
+#. Default: "Add advicecreated state"
+msgid "wa_add_advicecreated_state"
 msgstr ""
 
 #. Default: "Finances advice: add transition from financial controller to financial manager"
