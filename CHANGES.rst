@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.6rc1 (unreleased)
+4.2.6rc1 (2024-02-08)
 ---------------------
 
 - Added parameter `ignore_not_given_advice=False` to
