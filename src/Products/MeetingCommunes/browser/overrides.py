@@ -4,6 +4,7 @@
 #
 
 from collections import OrderedDict
+from collective.contact.plonegroup.utils import get_person_from_userid
 from imio.helpers.content import get_user_fullname
 from imio.history.interfaces import IImioHistory
 from imio.history.utils import getLastAction
@@ -15,7 +16,6 @@ from Products.PloneMeeting.browser.views import FolderDocumentGenerationHelperVi
 from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperView
 from Products.PloneMeeting.utils import get_annexes
-from Products.PloneMeeting.utils import get_person_from_userid
 from zope.component import getAdapter
 
 import cgi

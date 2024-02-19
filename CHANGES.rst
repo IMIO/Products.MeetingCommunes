@@ -8,8 +8,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Import `get_person_from_userid` from `collective.contact.plonegroup.utils`
+  instead `Products.PloneMeeting.utils`.
+  [gbastien]
 
 4.2.6rc1 (2024-02-08)
 ---------------------
