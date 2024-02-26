@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.6 (unreleased)
+4.2.6 (2024-02-26)
 ------------------
 
 - Import `get_person_from_userid` from `collective.contact.plonegroup.utils`
