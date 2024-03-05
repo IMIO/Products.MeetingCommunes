@@ -246,7 +246,10 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self._configureFinancesAdvice(enable_add_advicecreated=True)
         item, advice = self._setupItemWithAdvice()
         view = item.restrictedTraverse('@@advice-infos')
-        view(advice.advice_group, False, item.adapted().getCustomAdviceMessageFor(advice))
+        view(advice.advice_group,
+             False,
+             item.adapted().getCustomAdviceMessageFor(
+                 item.adviceIndex[advice.advice_group]))
         # advice did not reach final state, we do not know who gave it
         self.assertIsNone(view.get_advice_given_by())
         self.do(advice, "proposeToFinancialManager")
