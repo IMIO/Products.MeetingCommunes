@@ -8,8 +8,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Fix template_path not used for some templates in `example_fr` profile. 
+  This prevented install from profiles located in other packages.
+  [aduchene]
 
 4.2.6 (2024-02-26)
 ------------------
