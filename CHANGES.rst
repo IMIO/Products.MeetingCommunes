@@ -11,6 +11,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Fix template_path not used for some templates in `example_fr` profile. 
   This prevented install from profiles located in other packages.
   [aduchene]
+- Removed translations for advice WFA
+  `meetingadvicefinances_controller_propose_to_manager` as it does not exist anymore.
+  [gbastien]
 
 4.2.6 (2024-02-26)
 ------------------

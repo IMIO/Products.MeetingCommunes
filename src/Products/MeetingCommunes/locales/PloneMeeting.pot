@@ -141,10 +141,6 @@ msgstr ""
 msgid "wa_add_advicecreated_state"
 msgstr ""
 
-#. Default: "Finances advice: add transition from financial controller to financial manager"
-msgid "wa_meetingadvicefinances_controller_propose_to_manager"
-msgstr ""
-
 #. Default: "Advice is still not giveable because item is not considered complete."
 msgid "finance_advice_not_giveable_because_item_not_complete"
 msgstr ""

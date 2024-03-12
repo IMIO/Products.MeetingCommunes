@@ -171,7 +171,3 @@ msgstr ""
 #. Default: "Add advicecreated state"
 msgid "wa_add_advicecreated_state"
 msgstr ""
-
-#. Default: "Finances advice: add transition from financial controller to financial manager"
-msgid "wa_meetingadvicefinances_controller_propose_to_manager"
-msgstr ""
