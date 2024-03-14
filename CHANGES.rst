@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.7 (unreleased)
+4.2.7 (2024-03-14)
 ------------------
 
 - Fix template_path not used for some templates in `example_fr` profile. 
