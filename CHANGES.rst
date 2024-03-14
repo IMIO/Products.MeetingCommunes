@@ -14,6 +14,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Removed translations for advice WFA
   `meetingadvicefinances_controller_propose_to_manager` as it does not exist anymore.
   [gbastien]
+- Fixed POD templates `deliberation.odt` and `deliberation_recto_verso.odt`,
+  `MeetingItem.getCertifiedSignatures` is no more an adaptable method
+  (removed `.adapted()`).
+  [gbastien]
 
 4.2.6 (2024-02-26)
 ------------------
