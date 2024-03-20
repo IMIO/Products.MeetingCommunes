@@ -8,8 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Fixed testing `import_data` configs title.
+  [gbastien]
 
 4.2.7 (2024-03-14)
 ------------------
