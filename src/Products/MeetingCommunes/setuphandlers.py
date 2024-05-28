@@ -416,7 +416,7 @@ def addDemoData(context):
                 if item['review_state'] == 'validated':
                     wfTool.doActionFor(newItem, 'validate')
                 # add annexe and advice for one item in College
-                if item['templateId'] == 'template3' and cfg.id == 'meeting-config-college':
+                if item['templateId'] == 'template3' and cfg.getId(True) == 'meeting-config-college':
                     cpt = 1
                     annexes_config_root = get_config_root(newItem)
                     for annexType in ('annexe', 'annexe', 'annexeBudget', 'annexeCahier'):
@@ -442,8 +442,8 @@ def addDemoData(context):
                                              **{'advice_group': org_id_to_uid('informatique'),
                                                 'advice_type': u'positive',
                                                 'advice_comment': richtextval(SAMPLE_TEXT),
-                                                'advice_observations': richtextval()})
-                if item['templateId'] == 'template5' and cfg.id == 'meeting-config-college':
+                                                'advice_observations': richtextval(SAMPLE_TEXT)})
+                if item['templateId'] == 'template5' and cfg.getId(True) == 'meeting-config-college':
                     newItem.setOptionalAdvisers((org_id_to_uid('dirgen'), ))
                     newItem.at_post_create_script()
                     createContentInContainer(newItem,

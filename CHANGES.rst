@@ -10,6 +10,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 
 - Fixed testing `import_data` configs title.
   [gbastien]
+- Fixed demo profile that was not correctly tested because `MeetingConfig` id
+  does not correspond in test.  Use `getId(True)` to get real mc id.
+  [gbastien]
 
 4.2.7 (2024-03-14)
 ------------------
