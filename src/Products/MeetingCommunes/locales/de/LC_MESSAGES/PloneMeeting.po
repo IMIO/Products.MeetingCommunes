@@ -17,15 +17,6 @@ msgstr ""
 "Language-name: Deutsch\n"
 "X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
 
-# portal_tabs
-#. Default: "Meeting config College"
-msgid "Meeting config College"
-msgstr ""
-
-#. Default: "Meeting config Council"
-msgid "Meeting config Council"
-msgstr ""
-
 #. Default: "Finances advice"
 msgid "MeetingAdviceFinances"
 msgstr ""
@@ -82,6 +73,7 @@ msgstr ""
 msgid "financialreviewers"
 msgstr ""
 
+#. Default: "Body"
 msgid "front_page_body"
 msgstr ""
 

@@ -13,6 +13,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 - Fixed demo profile that was not correctly tested because `MeetingConfig` id
   does not correspond in test.  Use `getId(True)` to get real mc id.
   [gbastien]
+- Removed every MeetingConfig portal_types related translations as all this is generated now.
+  [gbastien]
 
 4.2.7 (2024-03-14)
 ------------------

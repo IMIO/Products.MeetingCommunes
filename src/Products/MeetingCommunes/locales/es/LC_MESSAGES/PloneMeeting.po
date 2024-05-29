@@ -18,15 +18,6 @@ msgstr ""
 "Domain: PloneMeeting\n"
 "X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
 
-# portal_tabs
-#. Default: "Meeting config College"
-msgid "Meeting config College"
-msgstr ""
-
-#. Default: "Meeting config Council"
-msgid "Meeting config Council"
-msgstr ""
-
 #. Default: "Finances advice"
 msgid "MeetingAdviceFinances"
 msgstr ""
@@ -83,6 +74,7 @@ msgstr ""
 msgid "financialreviewers"
 msgstr ""
 
+#. Default: "Body"
 msgid "front_page_body"
 msgstr ""
 

@@ -18,15 +18,6 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "X-is-fallback-for: en-us en-ca\n"
 
-# portal_tabs
-#. Default: "Meeting config College"
-msgid "Meeting config College"
-msgstr "Meeting config College"
-
-#. Default: "Meeting config Council"
-msgid "Meeting config Council"
-msgstr "Meeting config Council"
-
 #. Default: "Finances advice"
 msgid "MeetingAdviceFinances"
 msgstr "Finances advice"
@@ -83,6 +74,7 @@ msgstr "Financial pre-controllers"
 msgid "financialreviewers"
 msgstr "Financial reviewers"
 
+#. Default: "Body"
 msgid "front_page_body"
 msgstr " "
 

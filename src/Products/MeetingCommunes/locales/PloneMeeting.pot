@@ -29,15 +29,7 @@ msgstr ""
 msgid "searchitemswithnofinanceadvice"
 msgstr ""
 
-#portal_tabs
-#. Default: "Meeting config College"
-msgid "Meeting config College"
-msgstr ""
-
-#. Default: "Meeting config Council"
-msgid "Meeting config Council"
-msgstr ""
-
+#. Default: "Body"
 msgid "front_page_body"
 msgstr ""
 
