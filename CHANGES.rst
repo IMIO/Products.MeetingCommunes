@@ -8,8 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.9 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Fixed typo in finances advice sentences (`prealable > préalable`).
+  [gbastien]
 
 4.2.8 (2024-06-10)
 ------------------
