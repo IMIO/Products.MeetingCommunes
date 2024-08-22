@@ -20,7 +20,7 @@ categories = []
 # Users and groups -------------------------------------------------------------
 # no user
 groups = [OrgDescriptor('dirgen', 'Directeur Général', u'DG'),
-          OrgDescriptor('secretariat', 'Secrétariat Général', u'Secr', groups_in_charge=['dirgen']),
+          OrgDescriptor('secretariat', 'Secrétariat Général', u'Secr'),
           OrgDescriptor('dirfin', 'Directeur Financier', u'DF'), ]
 
 # Meeting configurations -------------------------------------------------------
