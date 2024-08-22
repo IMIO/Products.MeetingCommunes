@@ -3,6 +3,7 @@
 from copy import deepcopy
 from DateTime import DateTime
 from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
+from Products.MeetingCommunes.config import PORTAL_CATEGORIES
 from Products.MeetingCommunes.profiles.examples_fr import import_data as examples_fr_import_data
 from Products.PloneMeeting.profiles import OrgDescriptor
 from Products.PloneMeeting.profiles import patch_pod_templates
@@ -209,7 +210,6 @@ collegeMeeting.customAdvisers = [
      'delay': '10',
      'delay_left_alert': '4',
      'delay_label': '≥ 30.000€',
-     'available_on': "python: item.REQUEST.get('managing_available_delays', False)",
      'is_linked_to_previous_row': '1'},
     {'row_id': 'unique_id_004',
      'org': 'dirfin',
@@ -387,7 +387,9 @@ councilMeeting.signatures = ''
 councilMeeting.assemblyStaves = ''
 councilMeeting.certifiedSignatures = []
 councilMeeting.places = ''
+councilMeeting.categories = PORTAL_CATEGORIES
 councilMeeting.usedItemAttributes = ['description',
+                                     'category',
                                      'copyGroups',
                                      'manuallyLinkedItems',
                                      'motivation',
@@ -442,10 +444,16 @@ councilMeeting.itemWFValidationLevels = (
      'enabled': '0',
      },
 )
+councilMeeting.transitionsToConfirm = (
+    'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',
+    'MeetingItem.backToProposed', 'MeetingItem.backTo_itemfrozen_from_returned_to_proposing_group',
+    'MeetingItem.backTo_presented_from_returned_to_proposing_group', 'MeetingItem.delay',
+    'MeetingItem.backToValidated', 'MeetingItem.return_to_proposing_group')
 councilMeeting.itemColumns = [
     'static_item_reference',
     'Creator',
     'CreationDate',
+    'getCategory',
     'ModificationDate',
     'review_state',
     'getProposingGroup',
@@ -453,21 +461,16 @@ councilMeeting.itemColumns = [
     'meeting_date',
     'preferred_meeting_date',
     'actions']
-councilMeeting.transitionsToConfirm = (
-    'Meeting.close', 'Meeting.backToDecided', 'MeetingItem.backToItemCreated', 'MeetingItem.refuse',
-    'MeetingItem.backToProposed', 'MeetingItem.backTo_itemfrozen_from_returned_to_proposing_group',
-    'MeetingItem.backTo_presented_from_returned_to_proposing_group', 'MeetingItem.delay',
-    'MeetingItem.backToValidated', 'MeetingItem.return_to_proposing_group')
 councilMeeting.availableItemsListVisibleColumns = [
-    'Creator', 'CreationDate', 'getProposingGroup', 'advices', 'actions']
+    'Creator', 'CreationDate', 'getCategory', 'getProposingGroup', 'advices', 'actions']
 councilMeeting.itemsListVisibleColumns = [
-    u'static_item_reference', u'Creator', u'CreationDate', u'review_state',
+    u'static_item_reference', u'Creator', u'CreationDate', u'review_state', u'getCategory',
     u'getProposingGroup', u'advices', u'actions']
 councilMeeting.enabledAnnexesBatchActions = ['delete', 'download-annexes']
-councilMeeting.dashboardItemsListingsFilters = ('c4', 'c6', 'c7', 'c8', 'c9', 'c10',
+councilMeeting.dashboardItemsListingsFilters = ('c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10',
                                               'c11', 'c13', 'c14', 'c15', 'c29', 'c32')
-councilMeeting.dashboardMeetingAvailableItemsFilters = ('c4', 'c11', 'c29', 'c32')
-councilMeeting.dashboardMeetingLinkedItemsFilters = ('c4', 'c6', 'c7', 'c11', 'c19', 'c29', 'c32')
+councilMeeting.dashboardMeetingAvailableItemsFilters = ('c4', 'c5', 'c11', 'c29', 'c32')
+councilMeeting.dashboardMeetingLinkedItemsFilters = ('c4', 'c5', 'c6', 'c7', 'c11', 'c19', 'c29', 'c32')
 councilMeeting.useAdvices = True
 councilMeeting.selectableAdvisers = []
 councilMeeting.itemAdviceStates = ('proposed', 'validated', 'presented')
@@ -504,7 +507,6 @@ councilMeeting.customAdvisers = [
      'delay': '10',
      'delay_left_alert': '4',
      'delay_label': '≥ 30.000€',
-     'available_on': "python: item.REQUEST.get('managing_available_delays', False)",
      'is_linked_to_previous_row': '1'},
     {'row_id': 'unique_id_004',
      'org': 'dirfin',
@@ -515,31 +517,7 @@ councilMeeting.customAdvisers = [
      'available_on': "python: item.REQUEST.get('managing_available_delays', False)",
      'is_linked_to_previous_row': '1'},
 ]
-councilMeeting.powerObservers = (
-    {'row_id': 'powerobservers',
-     'label': 'Super observateurs',
-     'item_states': ('validated',
-                     'presented',
-                     'itemfrozen',
-                     'returned_to_proposing_group',
-                     'pre_accepted',
-                     'accepted',
-                     'accepted_but_modified',
-                     'delayed',
-                     'refused'),
-     'meeting_states': ('created', 'frozen', 'decided', 'closed'),
-     'orderindex_': '1'},
-    {'row_id': 'restrictedpowerobservers',
-     'label': 'Super observateurs restreints',
-     'item_states': ('itemfrozen',
-                     'returned_to_proposing_group',
-                     'pre_accepted',
-                     'accepted',
-                     'accepted_but_modified',
-                     'delayed',
-                     'refused'),
-     'meeting_states': ('frozen', 'decided', 'closed'),
-     'orderindex_': '2'})
+councilMeeting.powerObservers = deepcopy(collegeMeeting.powerObservers)
 councilMeeting.workflowAdaptations = list(collegeMeeting.workflowAdaptations)
 councilMeeting.onTransitionFieldTransforms = (
     ({'transition': 'delay',
@@ -572,7 +550,7 @@ councilMeeting.recurringItems = [
         id='recurringagenda1',
         title='Approuve le procès-verbal de la séance précédente',
         description='',
-        category='recurrents',
+        category='administration',
         proposingGroup='dirgen',
         decision='Procès-verbal approuvé'), ]
 councilMeeting.itemTemplates = []
