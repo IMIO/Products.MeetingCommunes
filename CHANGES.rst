@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.9 (unreleased)
+4.2.9 (2024-09-25)
 ------------------
 
 - Fixed typo in finances advice sentences (`prealable > préalable`).
