@@ -8,8 +8,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.10 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Adapted `zcity` profile so `annexeDecisionToSign` and `annexeDecisionSigned`
+  annex types are already configured by default.
+  [gbastien]
 
 4.2.9 (2024-09-25)
 ------------------
