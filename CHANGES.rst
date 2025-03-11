@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.11 (unreleased)
+4.2.11 (2025-03-11)
 -------------------
 
 - Adapted `zcity` profile to use `contactsTemplates` from `examples_fr` profile.
