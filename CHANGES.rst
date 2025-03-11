@@ -8,8 +8,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.11 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Adapted `zcity` profile to use `contactsTemplates` from `examples_fr` profile.
+  [gbastien]
 
 4.2.10 (2024-11-07)
 -------------------

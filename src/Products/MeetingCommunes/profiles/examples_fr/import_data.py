@@ -973,14 +973,14 @@ data.directory_position_types = [
      'name': u'Secrétaire de séance|Secrétaires de séance|Secrétaire de séance|Secrétaires de séance'},
 ]
 contactsTemplate = PodTemplateDescriptor('contactsTemplate', 'Export', dashboard=True)
-# use relative path so it works with subprofiles (zcpas, ...)
+# use absolute path so it works with subprofiles (zcpas, ...)
 contactsTemplate.odt_file = os.path.join(templates_path, 'organizations-export.ods')
 contactsTemplate.use_objects = True
 contactsTemplate.pod_formats = ['xlsx']
 contactsTemplate.dashboard_collections_ids = ['all_orgs']
 
 usersAndGroupsTemplate = PodTemplateDescriptor('usersAndGroupsTemplate', 'Export utilisateurs/groupes', dashboard=True)
-# use relative path so it works with subprofiles (zcpas, ...)
+# use absolute path so it works with subprofiles (zcpas, ...)
 usersAndGroupsTemplate.odt_file = os.path.join(templates_path, 'users-groups-export.ods')
 usersAndGroupsTemplate.use_objects = True
 usersAndGroupsTemplate.pod_formats = ['xlsx']
