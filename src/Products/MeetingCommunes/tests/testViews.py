@@ -2,32 +2,56 @@
 #
 # File: testViews.py
 #
-# Copyright (c) 2007-2015 by Imio.be
-#
 # GNU General Public License (GPL)
 #
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-# 02110-1301, USA.
-#
 
+from DateTime import DateTime
+from Products.MeetingCommunes.config import DEFAULT_FINANCE_ADVICES_TEMPLATE
+from Products.MeetingCommunes.config import FINANCE_ADVICES_COLLECTION_ID
 from Products.MeetingCommunes.tests.MeetingCommunesTestCase import MeetingCommunesTestCase
 from Products.PloneMeeting.tests.testViews import testViews as pmtv
 
 
 class testViews(MeetingCommunesTestCase, pmtv):
     ''' '''
+
+    def test_pm_deliberation_for_restapi(self):
+        """Complete test as we have additional data."""
+        item, view, helper, data = super(testViews, self).test_pm_deliberation_for_restapi()
+        self.assertEqual(data["deliberation_finance_advice"], "")
+        # add a financial advice
+        cfg = self.meetingConfig
+        cfg.setItemAdviceStates((self._stateMappingFor('itemcreated'), ))
+        cfg.setItemAdviceEditStates((self._stateMappingFor('itemcreated'), ))
+        cfg.setItemAdviceViewStates((self._stateMappingFor('itemcreated'), ))
+        cfg.setCustomAdvisers(
+            [{'row_id': 'unique_id_123',
+              'org': self.vendors_uid,
+              'gives_auto_advice_on': '',
+              'for_item_created_from': '2016/08/08',
+              'delay': '5',
+              'delay_label': ''}, ])
+        collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID)
+        collection.setQuery([
+            {'i': 'portal_type',
+             'o': 'plone.app.querystring.operation.selection.is',
+             'v': [cfg.getItemTypeName(), ]},
+            {'i': 'indexAdvisers',
+             'o': 'plone.app.querystring.operation.selection.is',
+             'v': ['delay_row_id__unique_id_123']}
+        ], )
+        item.setOptionalAdvisers((
+            '{0}__rowid__unique_id_123'.format(self.vendors_uid), ))
+        item._update_after_edit()
+        data = helper.deliberation_for_restapi()
+        self.assertEqual(
+            data["deliberation_finance_advice"],
+            DEFAULT_FINANCE_ADVICES_TEMPLATE["legal_not_given"].format(
+                to="au",
+                adviser="Vendors",
+                item_transmitted_on_localized=
+                    item.restrictedTraverse('@@plone').toLocalizedTime(DateTime()),
+                prefix="le").encode('utf-8'))
 
 
 def test_suite():

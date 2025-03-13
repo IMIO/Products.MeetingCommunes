@@ -16,6 +16,7 @@ from Products.PloneMeeting.browser.views import FolderDocumentGenerationHelperVi
 from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperView
 from Products.PloneMeeting.utils import get_annexes
+from Products.MeetingCommunes.config import DEFAULT_FINANCE_ADVICES_TEMPLATE
 from zope.component import getAdapter
 
 import cgi
@@ -92,6 +93,16 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
                 res.append(data)
         return res
 
+    def deliberation_for_restapi(self, deliberation_types=[]):
+        """
+         Complete to add MC usecases.
+        """
+        result = super(MCItemDocumentGenerationHelperView, self).deliberation_for_restapi(
+            deliberation_types)
+        if not deliberation_types or "deliberation_finance_advice" in deliberation_types:
+            result['deliberation_finance_advice'] = self.print_formatted_finance_advice()
+        return result
+
     def print_deliberation(self, xhtmlContents=[], **kwargs):
         """
         Print the full item deliberation and includes the finance advices
@@ -126,7 +137,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             xhtmlContents, **kwargs)
 
     def print_formatted_finance_advice(self,
-                                       finance_used_cases=[],
+                                       finance_used_cases=(),
                                        finance_advices_template={}):
         """
         Print the finance advices based on legal cases and a template.
@@ -136,32 +147,9 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         :return: a xhtml str representing finance advices
         """
         if not finance_used_cases:
-            finance_used_cases = (
-                'initiative', 'legal', 'simple', 'simple_not_given', 'legal_not_given')
+            finance_used_cases = ('initiative', 'legal', 'simple', 'simple_not_given', 'legal_not_given')
         if not finance_advices_template:
-            finance_advices_template = {
-                "simple":
-                    u"<p>Considérant l'avis {type_translated} {by} {adviser} "
-                    u"remis en date du {advice_given_on_localized},</p>",
-
-                "simple_not_given":
-                    u"<p>Considérant l'avis non rendu par {prefix} {adviser}</p>",
-
-                "legal":
-                    u"<p>Considérant la transmission du dossier {to} {adviser} "
-                    u"pour avis préalable en date du {item_transmitted_on_localized},</p>"
-                    u"<p>Considérant l'avis {type_translated} {by} {adviser} "
-                    u"remis en date du {advice_given_on_localized},</p>",
-
-                "legal_not_given":
-                    u"<p>Considérant la transmission du dossier {to} {adviser} "
-                    u"pour avis préalable en date du {item_transmitted_on_localized},</p>"
-                    u"<p>Considérant l'avis non rendu par {prefix} {adviser},</p>",
-
-                "initiative":
-                    u"<p>Considérant l'avis d'initiative {type_translated} {to} {adviser} "
-                    u"remis en date du {advice_given_on_localized},</p>"
-            }
+            finance_advices_template = DEFAULT_FINANCE_ADVICES_TEMPLATE
         formatted_finance_advice = ""
         finances_advices = {case: self.print_finance_advice(case)
                             for case in finance_advices_template.keys()}
@@ -193,7 +181,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         :param advice: advice for which prefix must be
         :return:
         """
-        PREFIXS = {
+        prefixes = {
             ('prefix', 'M'): u'le',
             ('prefix', 'F'): u'la',
             ('by', 'M'): u'du',
@@ -211,7 +199,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         else:  # we use the contact's gender
             gender = get_person_from_userid(advice['creator_id']).gender
 
-        return PREFIXS[(type, gender)]
+        return prefixes[(type, gender)]
 
     def print_finance_advice(self, cases, show_hidden=False):
         """
@@ -413,7 +401,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         :param num_format: format of the printed number
         :return: item number formatted
         """
-        ADVERBS = {
+        adverbs = {
             1: "bis",
             2: "ter",
             3: "quater",
@@ -441,7 +429,7 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             if mode == "alpha":
                 second_part = self.item_number_to_letters(second_part)
             if mode == "adverb":
-                second_part = ADVERBS.get(second_part, second_part)
+                second_part = adverbs.get(second_part, second_part)
 
             return num_format.format(first_part, second_part)
         else:

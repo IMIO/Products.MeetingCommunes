@@ -8,8 +8,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.12 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Added possibility to get generated finance advice for restapi in
+  new key `deliberation_finance_advice`
+  [gbastien]
 
 4.2.11 (2025-03-11)
 -------------------

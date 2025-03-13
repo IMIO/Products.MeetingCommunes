@@ -54,6 +54,30 @@ FINANCE_ADVICE_LEGAL_TEXT_NOT_GIVEN = "<p>Attendu l'absence d'avis du " \
     "Directeur financier rendu dans le délai prescrit à l'article L1124-40 " \
     "du Code de la démocratie locale et de la décentralisation;</p>"
 
+DEFAULT_FINANCE_ADVICES_TEMPLATE = {
+    "simple":
+        u"<p>Considérant l'avis {type_translated} {by} {adviser} "
+        u"remis en date du {advice_given_on_localized},</p>",
+
+    "simple_not_given":
+        u"<p>Considérant l'avis non rendu par {prefix} {adviser}</p>",
+
+    "legal":
+        u"<p>Considérant la transmission du dossier {to} {adviser} "
+        u"pour avis préalable en date du {item_transmitted_on_localized},</p>"
+        u"<p>Considérant l'avis {type_translated} {by} {adviser} "
+        u"remis en date du {advice_given_on_localized},</p>",
+
+    "legal_not_given":
+        u"<p>Considérant la transmission du dossier {to} {adviser} "
+        u"pour avis préalable en date du {item_transmitted_on_localized},</p>"
+        u"<p>Considérant l'avis non rendu par {prefix} {adviser},</p>",
+
+    "initiative":
+        u"<p>Considérant l'avis d'initiative {type_translated} {to} {adviser} "
+        u"remis en date du {advice_given_on_localized},</p>"
+}
+
 SAMPLE_TEXT = u"<p><strong>Lorem ipsum dolor sit amet</strong>, consectetur adipiscing elit. " \
     u"Aliquam efficitur sapien quam, vitae auctor augue iaculis eget. <BR />Nulla blandit enim lectus. " \
     u"Ut in nunc ligula. Nunc nec magna et mi dictum molestie eu vitae est.<BR />Vestibulum justo erat, " \
