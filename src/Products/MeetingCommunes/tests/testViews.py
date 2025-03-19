@@ -17,10 +17,13 @@ class testViews(MeetingCommunesTestCase, pmtv):
 
     def test_pm_deliberation_for_restapi(self):
         """Complete test as we have additional data."""
+        cfg = self.meetingConfig
+        # make sure no query for now as no customAdvisers
+        collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID)
+        collection.setQuery([])
         item, view, helper, data = super(testViews, self).test_pm_deliberation_for_restapi()
         self.assertEqual(data["deliberation_finance_advice"], "")
         # add a financial advice
-        cfg = self.meetingConfig
         cfg.setItemAdviceStates((self._stateMappingFor('itemcreated'), ))
         cfg.setItemAdviceEditStates((self._stateMappingFor('itemcreated'), ))
         cfg.setItemAdviceViewStates((self._stateMappingFor('itemcreated'), ))
@@ -31,7 +34,6 @@ class testViews(MeetingCommunesTestCase, pmtv):
               'for_item_created_from': '2016/08/08',
               'delay': '5',
               'delay_label': ''}, ])
-        collection = getattr(cfg.searches.searches_items, FINANCE_ADVICES_COLLECTION_ID)
         collection.setQuery([
             {'i': 'portal_type',
              'o': 'plone.app.querystring.operation.selection.is',
@@ -44,13 +46,13 @@ class testViews(MeetingCommunesTestCase, pmtv):
             '{0}__rowid__unique_id_123'.format(self.vendors_uid), ))
         item._update_after_edit()
         data = helper.deliberation_for_restapi()
+        localized_now = item.restrictedTraverse('@@plone').toLocalizedTime(DateTime())
         self.assertEqual(
             data["deliberation_finance_advice"],
             DEFAULT_FINANCE_ADVICES_TEMPLATE["legal_not_given"].format(
                 to="au",
                 adviser="Vendors",
-                item_transmitted_on_localized=
-                    item.restrictedTraverse('@@plone').toLocalizedTime(DateTime()),
+                item_transmitted_on_localized=localized_now,
                 prefix="le").encode('utf-8'))
 
 
