@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.12 (unreleased)
+4.2.12 (2025-03-24)
 -------------------
 
 - Added possibility to get generated finance advice for restapi in
