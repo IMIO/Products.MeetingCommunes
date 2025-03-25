@@ -34,6 +34,8 @@ class testViews(MeetingCommunesTestCase, pmtv):
               'for_item_created_from': '2016/08/08',
               'delay': '5',
               'delay_label': ''}, ])
+        # make sure enabled and correct query in case called from custom code
+        collection.enabled = True
         collection.setQuery([
             {'i': 'portal_type',
              'o': 'plone.app.querystring.operation.selection.is',
