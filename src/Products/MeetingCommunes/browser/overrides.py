@@ -17,10 +17,10 @@ from Products.PloneMeeting.browser.views import ItemDocumentGenerationHelperView
 from Products.PloneMeeting.browser.views import MeetingDocumentGenerationHelperView
 from Products.PloneMeeting.utils import get_annexes
 from zope.component import getAdapter
+from zope.i18n import translate
 
 import cgi
 
-from zope.i18n import translate
 
 
 class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
@@ -750,10 +750,10 @@ class MCFolderDocumentGenerationHelperView(FolderDocumentGenerationHelperView):
             res = self.get_all_items_dghv_with_advice(brains, finance_advice_ids)
         return res
 
-    def get_finance_advices_stats(self, brains, finance_advice_ids=[], reception_date_wf_state="wait_advices_"):
+    def get_finance_advices_stats(self, brains, finance_advice_ids=[]):
         """
-        Printed on a list of all the items with a finance advice asked on it.
-        We handle finance advice history to get the last advice given and all of the previx
+        Print a list of all the items with a finance advice asked on it
+        with additional information related to the advice, like completeness history, wf history, etc.
         """
         results = []
         tool = api.portal.get_tool("portal_plonemeeting")
@@ -776,31 +776,26 @@ class MCFolderDocumentGenerationHelperView(FolderDocumentGenerationHelperView):
                 filter(lambda x: x["action"] and "wait_advices_" in x["action"], item_wf_history)
             )
             filtered_item_history.sort(key=lambda x: x["time"], reverse=True)
-
-            import ipdb
-
-            ipdb.set_trace()  # TODO: REMOVE BEFORE FLIGHT -------------------------------------------------
-
             completeness = translate(item.getCompleteness(), domain="PloneMeeting", context=self.context.REQUEST)
             completeness_history = ""
-            for cc_history in item.completeness_changes_history:
-                completeness_history += "{0}: {1} à {2}<br/>".format(
-                    translate(cc_history["action"], domain="PloneMeeting", context=self.context.REQUEST),
-                    cc_history["actor"],
-                    cc_history["time"].strftime("%d/%m/%Y %H:%M"),
-                )
-            incompleteness_count = len(
-                list(filter(lambda x: x["action"] and "incomplete" in x["action"], item.completeness_changes_history))
-            )
-
-
+            incompleteness_count = 0
             workflow_history = ""
-            for advice_history in given_advice.workflow_history:
-                completeness_history += "{0}: {1} à {2}<br/>".format(
-                    translate(advice_history["action"], domain="PloneMeeting", context=self.context.REQUEST),
-                    advice_history["actor"],
-                    advice_history["time"].strftime("%d/%m/%Y %H:%M"),
+            if given_advice:
+                for cc_history in item.completeness_changes_history:
+                    completeness_history += u"{0}: {1} - {2}<br/>".format(
+                        translate(cc_history["action"], domain="PloneMeeting", context=self.context.REQUEST),
+                        cc_history["actor"],
+                        cc_history["time"].strftime("%d/%m/%Y %H:%M"),
+                    )
+                incompleteness_count = len(
+                    list(filter(lambda x: x["action"] and "incomplete" in x["action"], item.completeness_changes_history))
                 )
+                for advice_history in given_advice.workflow_history[given_advice.workflow_history.keys()[0]]:
+                    workflow_history += u"{0}: {1} - {2}<br/>".format(
+                        translate(advice_history["action"], domain="plone", context=self.context.REQUEST).replace("None", u"En création"),
+                        advice_history["actor"],
+                        advice_history["time"].strftime("%d/%m/%Y %H:%M"),
+                    )
 
             base_row = {
                 "item": item,
