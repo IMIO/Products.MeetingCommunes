@@ -8,8 +8,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.13 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Fixed advice `item_transmitted_on_localized` date computation that was only
+  considering `item_advice_states` from `MeetingConfig` and not from `organization`.
+  [gbastien]
 
 4.2.12 (2025-03-24)
 -------------------

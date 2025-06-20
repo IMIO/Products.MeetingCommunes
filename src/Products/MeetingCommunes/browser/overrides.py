@@ -335,12 +335,12 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             # may return None anyway
         if advice:
             return 'delay_started_on' in advice and advice['delay_started_on'] \
-                   or self._getWorkFlowAdviceTransmissionDate() \
+                   or self._getWorkFlowAdviceTransmissionDate(advice) \
                    or None
 
         return None
 
-    def _getWorkFlowAdviceTransmissionDate(self):
+    def _getWorkFlowAdviceTransmissionDate(self, advice):
 
         """
         :return: The date as a string when the finance service received the advice request if no legal delay applies.
@@ -349,16 +349,18 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
         tool = api.portal.get_tool('portal_plonemeeting')
         cfg = tool.getMeetingConfig(self.context)
 
+        # use transitions for presenting an item to have correct order
         wf_present_transition = list(cfg.getTransitionsForPresentingAnItem())
-        item_advice_states = cfg.itemAdviceStates
+        item_advice_states = advice.get_item_advice_states()
 
         if 'itemfrozen' in item_advice_states and 'itemfreeze' not in wf_present_transition:
             wf_present_transition.append('itemfreeze')
 
         for item_transition in wf_present_transition:
-            event = getLastWFAction(self.context, item_transition)
-            if event and 'review_state' in event and event['review_state'] in item_advice_states:
-                return event['time']
+            if item_transition in item_advice_states:
+                event = getLastWFAction(self.context, item_transition)
+                if event and 'review_state' in event:
+                    return event['time']
 
         return None
 
