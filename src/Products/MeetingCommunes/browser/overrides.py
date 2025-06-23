@@ -6,6 +6,7 @@
 from collections import OrderedDict
 from collective.contact.plonegroup.utils import get_person_from_userid
 from imio.helpers.content import get_user_fullname
+from imio.helpers.content import uuidToObject
 from imio.history.interfaces import IImioHistory
 from imio.history.utils import getLastAction
 from imio.history.utils import getLastWFAction
@@ -337,13 +338,13 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
             return 'delay_started_on' in advice and advice['delay_started_on'] \
                    or self._getWorkFlowAdviceTransmissionDate(advice) \
                    or None
-
         return None
 
-    def _getWorkFlowAdviceTransmissionDate(self, advice):
+    def _getWorkFlowAdviceTransmissionDate(self, advice_info):
 
         """
-        :return: The date as a string when the finance service received the advice request if no legal delay applies.
+        :return: The date as a string when the finance service received
+                 the advice request if no legal delay applies.
         """
 
         tool = api.portal.get_tool('portal_plonemeeting')
@@ -351,17 +352,17 @@ class MCItemDocumentGenerationHelperView(ItemDocumentGenerationHelperView):
 
         # use transitions for presenting an item to have correct order
         wf_present_transition = list(cfg.getTransitionsForPresentingAnItem())
-        item_advice_states = advice.get_item_advice_states()
+        # get advice addable states
+        org = uuidToObject(advice_info['id'])
+        item_advice_states = org.get_item_advice_states(cfg=cfg)
 
         if 'itemfrozen' in item_advice_states and 'itemfreeze' not in wf_present_transition:
             wf_present_transition.append('itemfreeze')
 
         for item_transition in wf_present_transition:
-            if item_transition in item_advice_states:
-                event = getLastWFAction(self.context, item_transition)
-                if event and 'review_state' in event:
-                    return event['time']
-
+            event = getLastWFAction(self.context, item_transition)
+            if event and 'review_state' in event and event['review_state'] in item_advice_states:
+                return event['time']
         return None
 
     def print_item_state(self):
