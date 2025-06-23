@@ -9,7 +9,8 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 -------------------
 
 - Fixed advice `item_transmitted_on_localized` date computation that was only
-  considering `item_advice_states` from `MeetingConfig` and not from `organization`.
+  considering `item_advice_states` from `MeetingConfig` but it can also be
+  defined on the `organization` in which case it takes precedence.
   [gbastien]
 
 4.2.12 (2025-03-24)
