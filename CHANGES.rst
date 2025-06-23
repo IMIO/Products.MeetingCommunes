@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.13 (unreleased)
+4.2.13 (2025-06-23)
 -------------------
 
 - Fixed advice `item_transmitted_on_localized` date computation that was only
