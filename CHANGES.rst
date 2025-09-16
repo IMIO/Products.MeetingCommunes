@@ -8,8 +8,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.14 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Fixed the dashboard `Export` pod template that was not including advices
+  because wrong parameter `dirfin` was passed to `get_all_items_dghv_with_advice`
+  that expects a list of adviser uids for parameter `adviserUids=[]`.
+  [gbastien]
 
 4.2.13 (2025-06-23)
 -------------------
