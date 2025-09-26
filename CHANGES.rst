@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.14 (unreleased)
+4.2.14 (2025-09-26)
 -------------------
 
 - Fixed the dashboard `Export` pod template that was not including advices
