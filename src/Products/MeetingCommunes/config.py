@@ -74,7 +74,7 @@ DEFAULT_FINANCE_ADVICES_TEMPLATE = {
         u"<p>Considérant l'avis non rendu par {prefix} {adviser},</p>",
 
     "initiative":
-        u"<p>Considérant l'avis d'initiative {type_translated} {to} {adviser} "
+        u"<p>Considérant l'avis d'initiative {type_translated} {by} {adviser} "
         u"remis en date du {advice_given_on_localized},</p>"
 }
 

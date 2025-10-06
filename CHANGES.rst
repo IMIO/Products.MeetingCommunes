@@ -8,8 +8,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.15 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Fixed `config.DEFAULT_FINANCE_ADVICES_TEMPLATE['initiative']` pattern,
+  use `{by}` instead `{to}`.
+  [gbastien]
 
 4.2.14 (2025-09-26)
 -------------------
