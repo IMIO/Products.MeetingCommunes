@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.15 (unreleased)
+4.2.15 (2025-10-07)
 -------------------
 
 - Fixed `config.DEFAULT_FINANCE_ADVICES_TEMPLATE['initiative']` pattern,
