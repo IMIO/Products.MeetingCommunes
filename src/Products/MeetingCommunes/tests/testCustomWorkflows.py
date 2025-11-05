@@ -166,7 +166,7 @@ class testCustomWorkflows(MeetingCommunesTestCase):
                            category='development',
                            optionalAdvisers=('%s__rowid__unique_id_001' % self.vendors_uid, ))
         self.changeUser('pmReviewer2')
-        vendors_advice_portal_type = item.adapted()._advicePortalTypeForAdviser(self.vendors_uid)
+        vendors_advice_portal_type = self.tool._advicePortalTypeForAdviser(self.vendors_uid)
         cfg.setDefaultAdviceHiddenDuringRedaction([vendors_advice_portal_type])
         vendors_advice = self.addAdvice(
             item,
@@ -215,7 +215,7 @@ class testCustomWorkflows(MeetingCommunesTestCase):
                            category='development',
                            optionalAdvisers=(self.vendors_uid, ))
         self.changeUser('pmReviewer2')
-        vendors_advice_portal_type = item.adapted()._advicePortalTypeForAdviser(self.vendors_uid)
+        vendors_advice_portal_type = self.tool._advicePortalTypeForAdviser(self.vendors_uid)
         cfg.setDefaultAdviceHiddenDuringRedaction([vendors_advice_portal_type])
         vendors_advice = self.addAdvice(
             item,
