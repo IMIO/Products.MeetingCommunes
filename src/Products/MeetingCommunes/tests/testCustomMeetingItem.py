@@ -183,7 +183,7 @@ class testCustomMeetingItem(MeetingCommunesTestCase):
         self.assertEqual(cfg.adapted().getUsedFinanceGroupIds(item), [self.developers_uid])
         advice = createContentInContainer(
             item,
-            item.adapted()._advicePortalTypeForAdviser(self.developers_uid),
+            self.tool._advicePortalTypeForAdviser(self.developers_uid),
             **{'advice_group': self.developers_uid,
                'advice_type': u'positive',
                'advice_comment': richtextval(u'My comment'),
