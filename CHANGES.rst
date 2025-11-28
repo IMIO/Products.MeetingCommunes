@@ -8,8 +8,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.16 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Adapatble method `MeetingIem._advicePortalTypeForAdviser` was moved to
+  `ToolPloneMeeting` (no more adaptable).
+  [gbastien]
 
 4.2.15 (2025-10-07)
 -------------------
