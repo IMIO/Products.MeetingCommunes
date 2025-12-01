@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.16rc1 (unreleased)
+4.2.16rc1 (2025-12-01)
 ----------------------
 
 - Adapatble method `MeetingIem._advicePortalTypeForAdviser` was moved to
