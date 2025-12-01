@@ -8,8 +8,9 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.16rc2 (unreleased)
 ----------------------
 
-- Nothing changed yet.
-
+- `PloneMeetingTestCase.addAdvice` was renamed to `PloneMeetingTestCase.add_advice`
+  now that it relies on `utils._add_advice`.
+  [gbastien]
 
 4.2.16rc1 (2025-12-01)
 ----------------------

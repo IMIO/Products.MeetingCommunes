@@ -168,7 +168,7 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         self.changeUser('pmReviewer2')
         vendors_advice_portal_type = self.tool._advicePortalTypeForAdviser(self.vendors_uid)
         cfg.setDefaultAdviceHiddenDuringRedaction([vendors_advice_portal_type])
-        vendors_advice = self.addAdvice(
+        vendors_advice = self.add_advice(
             item,
             **{'advice_group': self.vendors_uid,
                'advice_type': u'positive_with_remarks',
@@ -217,7 +217,7 @@ class testCustomWorkflows(MeetingCommunesTestCase):
         self.changeUser('pmReviewer2')
         vendors_advice_portal_type = self.tool._advicePortalTypeForAdviser(self.vendors_uid)
         cfg.setDefaultAdviceHiddenDuringRedaction([vendors_advice_portal_type])
-        vendors_advice = self.addAdvice(
+        vendors_advice = self.add_advice(
             item,
             **{'advice_group': self.vendors_uid,
                'advice_type': u'positive_with_remarks',
