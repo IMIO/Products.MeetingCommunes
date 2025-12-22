@@ -5,7 +5,7 @@ Products.MeetingCommunes Changelog
 The Products.MeetingCommunes version must be the same as the Products.PloneMeeting version
 
 
-4.2.16 (unreleased)
+4.2.16 (2025-12-22)
 -------------------
 
 - `PloneMeetingTestCase.addAdvice` was renamed to `PloneMeetingTestCase.add_advice`
