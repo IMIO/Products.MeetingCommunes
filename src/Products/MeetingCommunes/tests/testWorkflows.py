@@ -58,9 +58,12 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.assertRaises(Unauthorized, self.addAnnex, item1)
         self.addAnnex(item1, relatedTo='item_decision')
         self.failIf(self.transitions(item1))  # He may trigger no more action
-        self.failIf(self.hasPermission(AddAnnex, item1))
+        self.assertFalse(self.hasPermission(AddAnnex, item1))
+        self.assertTrue(self.hasPermission(AddAnnexDecision, item1))
         # pmManager creates a meeting
         self.changeUser('pmManager')
+        self.assertTrue(self.hasPermission(AddAnnex, item1))
+        self.assertTrue(self.hasPermission(AddAnnexDecision, item1))
         meeting = self.create('Meeting')
         self.addAnnex(item1, relatedTo='item_decision')
         # pmCreator2 creates and proposes an item
@@ -97,11 +100,9 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         # So now we should have 3 normal item (2 recurring + 1) and one late item in the meeting
         self.failUnless(len(meeting.get_items()) == 4)
         self.failUnless(len(meeting.get_items(list_types='late')) == 1)
-        self.changeUser('pmManager')
         item1.setDecision(self.decisionText)
 
         # pmManager adds a decision for item2, and decides both meeting and item
-        self.changeUser('pmManager')
         item2.setDecision(self.decisionText)
         self.addAnnex(item2, relatedTo='item_decision')
         self.do(meeting, 'decide')
@@ -112,12 +113,24 @@ class testWorkflows(MeetingCommunesTestCase, pmtw):
         self.failIf(self.hasPermission(View, item1))
         self.changeUser('pmReviewer2')
         self.failIf(self.hasPermission(View, item1))
+        # when item2 is frozen, not able to add annex
+        self.assertEqual(item2.query_state(), "itemfrozen")
+        self.assertFalse(self.hasPermission(AddAnnex, item2))
+        self.assertFalse(self.hasPermission(AddAnnexDecision, item2))
 
         # meeting may be closed or set back to frozen
         self.changeUser('pmManager')
         self.assertEqual(self.transitions(meeting), ['backToFrozen', 'close'])
-        self.changeUser('pmManager')
         self.do(meeting, 'close')
+
+        # when item2 is accepted, able to add decision annex
+        self.assertEqual(item2.query_state(), "accepted")
+        self.changeUser('pmCreator2')
+        self.assertFalse(self.hasPermission(AddAnnex, item2))
+        self.assertTrue(self.hasPermission(AddAnnexDecision, item2))
+        self.changeUser('pmReviewer2')
+        self.assertFalse(self.hasPermission(AddAnnex, item2))
+        self.assertTrue(self.hasPermission(AddAnnexDecision, item2))
 
     def _testWholeDecisionProcessCouncil(self):
         """
