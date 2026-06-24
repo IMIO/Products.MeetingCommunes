@@ -8,8 +8,10 @@ The Products.MeetingCommunes version must be the same as the Products.PloneMeeti
 4.2.17 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Adapted follow-up templates to test if show_field follow-up.
+  [gbastien]
+- Added sample icons for `Annex to sign` and `Signed annex` annexes types.
+  [gbastien]
 
 4.2.16 (2025-12-22)
 -------------------
