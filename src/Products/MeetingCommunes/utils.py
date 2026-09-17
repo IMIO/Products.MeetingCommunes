@@ -24,4 +24,5 @@ def get_finance_advice_esign_signatories(item, cfg, signature_numbers=['1'], pos
         return {}
     item_fin_advice_uid = item_fin_advice_uids[0]
     userid = item.getAdviceDataFor(item, adviser_uid=item_fin_advice_uid)['creator_id']
-    return get_advice_esign_signatories(item, userid, signature_numbers=signature_numbers, position_types=position_types, **kwargs)
+    return get_advice_esign_signatories(
+        item, userid, signature_numbers=signature_numbers, position_types=position_types, **kwargs)
